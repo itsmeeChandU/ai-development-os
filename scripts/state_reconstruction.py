@@ -1,6 +1,4 @@
 #!/usr/bin/env python3
-import json
-import os
 
 def generate_report():
     report = "# State Reconstruction Report\n\n## Current State\n- System is nominal\n"

@@ -1,1 +1,3 @@
-# Legal Review Status\nPending review by qualified counsel.
+# Legal Review Status
+
+Pending review by qualified counsel.

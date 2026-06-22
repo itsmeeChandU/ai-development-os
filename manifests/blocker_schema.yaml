@@ -7,4 +7,7 @@ properties:
       properties:
         id: {type: string}
         description: {type: string}
-        status: {type: string}
+        status:
+          type: string
+          enum: [open, blocked, resolved]
+      required: [id, description, status]

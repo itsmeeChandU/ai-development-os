@@ -52,8 +52,10 @@ def scaffold(name: str, idea: str, output_dir: Path, proj_type: str = "default")
     )
     if proj_type in ["webapp", "dataapp", "agentservice"]:
         template_dir = ROOT / "templates" / proj_type
-        if (template_dir / "README.md").exists():
+        try:
             shutil.copy2(template_dir / "README.md", project / f"{proj_type}_scaffold.md")
+        except FileNotFoundError:
+            print(f"Warning: Template README.md not found in {template_dir}")
     _write(
         project / "system_review_graph" / "README.md",
         "# System Review Graph\n\nCreate code, data, flow, proof, task, resource, hardware, simulation, compliance, and blocker maps here.\n",
