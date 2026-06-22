@@ -1,0 +1,92 @@
+"""Validate the AI Development OS repository structure."""
+
+from __future__ import annotations
+
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parent.parent
+
+REQUIRED = [
+    "README.md",
+    "AGENTS.md",
+    "CONTRIBUTING.md",
+    "CONTRIBUTOR_TERMS.md",
+    "DCO.txt",
+    "GOVERNANCE.md",
+    "LICENSE",
+    "NOTICE.md",
+    "DISCLAIMER.md",
+    "ROADMAP.md",
+    "SECURITY.md",
+    "TRADEMARKS.md",
+    "docs/LICENSING.md",
+    "docs/COMMERCIAL_AND_ASSOCIATION.md",
+    "docs/INSTRUCTION_NORMALIZATION.md",
+    "docs/COMPLEXITY_ROUTER.md",
+    "docs/AGENTIC_COMPANY_MODEL.md",
+    "docs/DELIVERY_ESTIMATION.md",
+    "docs/AI_NATIVE_DELIVERY.md",
+    "docs/SYSTEM_REVIEW_GRAPH.md",
+    "docs/STATE_RECONSTRUCTION.md",
+    "docs/AI_LIFECYCLE.md",
+    "docs/BIDIRECTIONAL_PRODUCT_LOOP.md",
+    "docs/PROMPT_TO_PRODUCT.md",
+    "docs/COMPLEX_PRODUCT_PLAYBOOK.md",
+    "docs/TOOL_BREEDING_GROUND.md",
+    "docs/STRATEGY_RESEARCH_PLAYBOOK.md",
+    "docs/TOOLCHAIN.md",
+    "docs/OPEN_SOURCE_RESOURCES.md",
+    "docs/RESEARCH_INTAKE.md",
+    "docs/CODEX_USAGE.md",
+    "manifests/tool_registry.yaml",
+    "manifests/agent_lanes.yaml",
+    ".github/pull_request_template.md",
+    ".github/ISSUE_TEMPLATE/bug_report.md",
+    ".github/ISSUE_TEMPLATE/process_gap.md",
+    "examples/README.md",
+    "examples/calculator_app_prompt.txt",
+    "examples/calculator_app_expected/COMPLEXITY_CLASSIFICATION.md",
+    "examples/hardware_os_startup_prompt.txt",
+    "examples/hardware_os_startup_expected/COMPLEXITY_CLASSIFICATION.md",
+    "examples/hardware_os_startup_expected/INSTRUCTION_CONTRACT.md",
+    "examples/hardware_os_startup_expected/ARCHITECTURE_OVERVIEW.md",
+    "examples/hardware_os_startup_expected/DELIVERY_ESTIMATE.md",
+    "examples/hardware_os_startup_expected/TOOL_DECISION_RECORD.md",
+    "templates/STARTUP_BRIEF.md",
+    "templates/INSTRUCTION_CONTRACT.md",
+    "templates/COMPLEXITY_CLASSIFICATION.md",
+    "templates/AGENT_TASK_SPEC.md",
+    "templates/DELIVERY_ESTIMATE.md",
+    "templates/ARCHITECTURE_OVERVIEW.md",
+    "templates/WORK_PACKAGE.md",
+    "templates/ESTIMATE_VS_ACTUAL.md",
+    "templates/COMPLEX_PRODUCT_SPEC.md",
+    "templates/HARDWARE_RESEARCH_RECORD.md",
+    "templates/TOOL_DECISION_RECORD.md",
+    "templates/PROCUREMENT_AND_LAB_PLAN.md",
+    "templates/MODULE_CONTRACT.md",
+    "templates/HANDOFF.md",
+    "templates/PROOF_GATE.md",
+    "templates/CURRENT_STATE_PROMPT.md",
+    "templates/STATE_RECONSTRUCTION_REPORT.md",
+    "templates/RESEARCH_RECORD.md",
+    "templates/NEXT_AGENT_PROMPT.md",
+    ".agents/skills/ai-native-delivery/SKILL.md",
+    "scripts/self_test_flow.py",
+]
+
+
+def main() -> int:
+    missing = [path for path in REQUIRED if not (ROOT / path).exists()]
+    if missing:
+        print("AI Dev OS check: FAIL")
+        for path in missing:
+            print(f"missing: {path}")
+        return 1
+    print("AI Dev OS check: PASS")
+    print(f"required_files={len(REQUIRED)}")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
