@@ -14,7 +14,7 @@ def _write(path: Path, text: str) -> None:
     path.write_text(text, encoding="utf-8")
 
 
-def scaffold(name: str, idea: str, output_dir: Path) -> Path:
+def scaffold(name: str, idea: str, output_dir: Path, proj_type: str = "default") -> Path:
     slug = name.strip().lower().replace(" ", "-")
     project = output_dir / slug
     project.mkdir(parents=True, exist_ok=True)
@@ -48,8 +48,14 @@ def scaffold(name: str, idea: str, output_dir: Path) -> Path:
     shutil.copy2(ROOT / "templates" / "PROCUREMENT_AND_LAB_PLAN.md", project / "hardware" / "PROCUREMENT_AND_LAB_PLAN.md")
     _write(
         project / "README.md",
-        f"# {name}\n\nIdea: {idea}\n\nStart by filling `docs/STARTUP_BRIEF.md` and `system_review_graph/`.\n",
+        f"# {name}\n\nIdea: {idea}\nType: {proj_type}\n\nStart by filling `docs/STARTUP_BRIEF.md` and `system_review_graph/`.\n",
     )
+    if proj_type in ["webapp", "dataapp", "agentservice"]:
+        template_dir = ROOT / "templates" / proj_type
+        try:
+            shutil.copy2(template_dir / "README.md", project / f"{proj_type}_scaffold.md")
+        except FileNotFoundError:
+            print(f"Warning: Template README.md not found in {template_dir}")
     _write(
         project / "system_review_graph" / "README.md",
         "# System Review Graph\n\nCreate code, data, flow, proof, task, resource, hardware, simulation, compliance, and blocker maps here.\n",
@@ -77,9 +83,10 @@ def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--name", required=True)
     parser.add_argument("--idea", required=True)
+    parser.add_argument("--type", dest="proj_type", choices=["default", "webapp", "dataapp", "agentservice"], default="default")
     parser.add_argument("--output-dir", type=Path, default=Path.cwd())
     args = parser.parse_args()
-    project = scaffold(args.name, args.idea, args.output_dir)
+    project = scaffold(args.name, args.idea, args.output_dir, args.proj_type)
     print(project)
     return 0
 

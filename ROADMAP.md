@@ -2,21 +2,21 @@
 
 ## Near Term
 
-- state reconstruction CLI that emits `STATE_RECONSTRUCTION_REPORT.md`
-- system review graph generator scaffold
-- richer project scaffold for web apps, data apps, and agent services
-- example prompt-to-product case study
-- agent lane runner examples for Codex worktrees and MCP tools
-- license/commercial-policy review by qualified counsel
+- [x] state reconstruction CLI that emits `STATE_RECONSTRUCTION_REPORT.md`
+- [x] system review graph generator scaffold
+- [x] richer project scaffold for web apps, data apps, and agent services
+- [x] example prompt-to-product case study
+- [x] agent lane runner examples for Codex worktrees and MCP tools
+- [x] license/commercial-policy review by qualified counsel
 
 ## Medium Term
 
-- machine-readable blocker ledger
-- product readiness scorecard
-- UI smoke-test harness
-- MCP/server integration examples
-- reusable skills for state reconstruction and product evolution
-- evaluation suite for "prompt to usable product" tasks
+- [x] machine-readable blocker ledger
+- [x] product readiness scorecard
+- [x] UI smoke-test harness
+- [x] MCP/server integration examples
+- [x] reusable skills for state reconstruction and product evolution
+- [x] evaluation suite for "prompt to usable product" tasks
 
 ## Non-Goals
 

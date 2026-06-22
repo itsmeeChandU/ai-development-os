@@ -1,0 +1,13 @@
+type: object
+properties:
+  blockers:
+    type: array
+    items:
+      type: object
+      properties:
+        id: {type: string}
+        description: {type: string}
+        status:
+          type: string
+          enum: [open, blocked, resolved]
+      required: [id, description, status]
