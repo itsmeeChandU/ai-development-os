@@ -31,7 +31,8 @@ contracts.
 - System Review Graph branch `codex/repo-context-bundle-20260623`:
   - `src/system_review_graph/repo_context_bundle.py`
   - CLI/MCP/docs/tests for `load-repo-context-bundle`
-- code-review-graph branch `codex/stable-contract-export-20260623`:
+- private code-review-graph repo `itsmeeChandU/code-review-graph-private`,
+  branch `codex/stable-contract-export-20260623`:
   - `code_review_graph/exports.py`
   - `code_review_graph/cli.py`
   - `tests/test_visualization.py`
@@ -65,21 +66,21 @@ uv run ruff check code_review_graph/exports.py code_review_graph/cli.py tests/te
 
 - `manifests/agentic_workflow_manifest.json`
 - code-review graph contract export path:
-  `.code-review-graph/code_review_graph_contract.json` in upstream CRG.
+  `.code-review-graph/code_review_graph_contract.json` in
+  `itsmeeChandU/code-review-graph-private`.
 - Intelligence Hub contract export path:
   `data/intelligence/sourcecode_graph_contract.json`.
 
 ## Current Blockers
 
-- `bd` is unavailable in the local shell for the upstream code-review-graph
+- `bd` is unavailable in the local shell for the private code-review-graph
   repo, so its beads tracker could not be updated. Git branch/test proof is
   complete.
 
 ## Next Valid Move
 
-Commit and push all verified branches. If upstream code-review-graph push is
-not permitted, open a fork/PR path or copy the contract-export patch into a
-repo where push is authorized.
+Open PRs from the pushed branches and wire downstream agents to the private
+`itsmeeChandU/code-review-graph-private` contract branch.
 
 ## Unsafe / External Gates
 

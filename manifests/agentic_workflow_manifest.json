@@ -49,7 +49,7 @@
     {
       "id": "code-review-graph",
       "role": "code_contract_layer",
-      "repository": "https://github.com/tirth8205/code-review-graph",
+      "repository": "https://github.com/itsmeeChandU/code-review-graph-private",
       "responsibilities": [
         "export stable JSON contracts for files, modules, symbols, imports, edges, tests, generated artifacts, and risk/ownership hints",
         "give SRG and agents a code-level reference without requiring full source rereads",

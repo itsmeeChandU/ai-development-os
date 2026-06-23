@@ -66,9 +66,10 @@ Do not use Ruflo as:
 
 System Review Graph answers what the system does, trusts, blocks, and should
 inspect next. The code-review graph answers what code exists and how it
-connects. Prefer the upstream `tirth8205/code-review-graph` contract export
-when available; repo-local exporters can emit compatible contracts for existing
-systems such as Intelligence Hub. The workflow needs both:
+connects. Use the private `itsmeeChandU/code-review-graph-private` repo as the
+working contract implementation; repo-local exporters can emit compatible
+contracts for existing systems such as Intelligence Hub. The workflow needs
+both:
 
 ```text
 startup idea -> AI Development OS contract -> SRG context bundle
