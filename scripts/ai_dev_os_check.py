@@ -26,6 +26,7 @@ REQUIRED = [
     "docs/AGENTIC_COMPANY_MODEL.md",
     "docs/DELIVERY_ESTIMATION.md",
     "docs/AI_NATIVE_DELIVERY.md",
+    "docs/AGENTIC_WORKFLOW_INTEGRATION.md",
     "docs/SYSTEM_REVIEW_GRAPH.md",
     "docs/STATE_RECONSTRUCTION.md",
     "docs/AI_LIFECYCLE.md",
@@ -40,6 +41,7 @@ REQUIRED = [
     "docs/CODEX_USAGE.md",
     "manifests/tool_registry.yaml",
     "manifests/agent_lanes.yaml",
+    "manifests/agentic_workflow_manifest.json",
     ".github/pull_request_template.md",
     ".github/ISSUE_TEMPLATE/bug_report.md",
     ".github/ISSUE_TEMPLATE/process_gap.md",
@@ -71,8 +73,10 @@ REQUIRED = [
     "templates/STATE_RECONSTRUCTION_REPORT.md",
     "templates/RESEARCH_RECORD.md",
     "templates/NEXT_AGENT_PROMPT.md",
+    "templates/WORKFLOW_AUTOMATION.md",
     ".agents/skills/ai-native-delivery/SKILL.md",
     "scripts/self_test_flow.py",
+    "scripts/workflow_manifest_check.py",
 ]
 
 

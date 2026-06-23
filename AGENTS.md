@@ -59,3 +59,6 @@ A task is done only when all of these are true:
 - Use skills for repeatable workflows.
 - Use generated reports as truth surfaces.
 - Use research only to fill a repo-proven capability gap.
+- For durable multi-repo agentic workflow work, use
+  `manifests/agentic_workflow_manifest.json` as the machine-readable contract
+  and `docs/AGENTIC_WORKFLOW_INTEGRATION.md` as the concise human guide.

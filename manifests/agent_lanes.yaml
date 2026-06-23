@@ -6,6 +6,16 @@ coordinator:
     - generated artifact refresh
     - final verification
     - release notes
+    - GitHub version-control truth
+    - Ruflo coordination boundary
+    - workflow manifest
+agent_modes:
+  - research
+  - architect
+  - surgeon
+  - reviewer
+  - merge
+  - goal
 default_lanes:
   - lane: instruction-normalization
     goal: "Convert messy or evolving user instructions into a stable execution contract."

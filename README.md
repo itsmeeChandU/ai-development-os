@@ -73,6 +73,7 @@ AILM means AI Lifecycle Management:
 - `docs/AGENTIC_COMPANY_MODEL.md`: AI-native company operating model.
 - `docs/DELIVERY_ESTIMATION.md`: architecture, lane, cost, and timeline estimation.
 - `docs/AI_NATIVE_DELIVERY.md`: how to run AI-native development at scale.
+- `docs/AGENTIC_WORKFLOW_INTEGRATION.md`: durable GitHub/Ruflo/worktree/SRG/code-review graph workflow.
 - `docs/SYSTEM_REVIEW_GRAPH.md`: the audit graph pattern that worked.
 - `docs/STATE_RECONSTRUCTION.md`: how to recover actual product state from a prompt and repo truth.
 - `docs/AI_LIFECYCLE.md`: AI-native lifecycle, different from human SDLC.
@@ -87,6 +88,7 @@ AILM means AI Lifecycle Management:
 - `docs/CODEX_USAGE.md`: how to use Codex, worktrees, skills, MCP, and subagents.
 - `manifests/tool_registry.yaml`: machine-readable tool registry.
 - `manifests/agent_lanes.yaml`: default multi-agent lanes.
+- `manifests/agentic_workflow_manifest.json`: machine-readable coordinator workflow for agents and LLMs.
 - `templates/*`: prompts/specs/handoffs for agents.
 - `scripts/ai_dev_os_check.py`: validates this operating kit.
 - `scripts/scaffold_project.py`: creates a new AI-native project skeleton.
