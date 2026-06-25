@@ -9,6 +9,28 @@
     "coordination_memory": "Ruflo",
     "boundary": "Ruflo records coordination only. Repo files, generated artifacts, tests, and GitHub history remain canonical."
   },
+  "automation_runtime": {
+    "runner": "scripts/agentic_workflow_orchestrator.py",
+    "safe_default": "dry_run",
+    "commands": {
+      "prompt-to-product": "Normalize an idea and emit a product packet with lane plan.",
+      "emit-slash-commands": "Materialize slash command specs for agents and LLMs.",
+      "command-spec": "Render one slash command packet with required inputs and proof gates.",
+      "lane-packet": "Emit one bounded worker packet with owned files and proof commands.",
+      "routine-report": "Emit safe background routine commands and input blockers.",
+      "scheduler-plan": "Emit a scheduler-ready plan for routine invocation.",
+      "ci-fix": "Emit a CI failure repair handoff without weakening proof gates.",
+      "automation-check": "Validate runtime packet builders without external side effects."
+    },
+    "effectful_execution_rule": "Commands default to dry-run or packet generation. Network, push, live, paid, legal, or external effects require explicit operator intent, clean repo proof, and passing gates.",
+    "generated_artifacts": [
+      "system_review_graph/prompt_to_product_packet.json",
+      "system_review_graph/slash_command_specs.json",
+      "system_review_graph/automation_runtime_report.json",
+      "system_review_graph/scheduler_plan.json",
+      "handoffs/ci_fix_<check>.json"
+    ]
+  },
   "slash_commands": [
     {
       "id": "normalize",
@@ -232,9 +254,12 @@
         "python scripts/ai_dev_os_check.py",
         "python scripts/workflow_manifest_check.py",
         "python scripts/agentic_workflow_orchestrator.py validate",
+        "python scripts/agentic_workflow_orchestrator.py automation-check",
+        "python scripts/eval_suite.py --manifest manifests/agentic_execution_manifest.json --out system_review_graph/eval_report.ci.json",
+        "python scripts/blocker_ledger.py validate --input system_review_graph/blockers.jsonl --allow-missing --out system_review_graph/blocker_ledger_report.ci.json",
         "python scripts/self_test_flow.py"
       ],
-      "gates": ["manifest_valid", "execution_manifest_valid", "self_test_passed"]
+      "gates": ["manifest_valid", "execution_manifest_valid", "automation_runtime_valid", "eval_suite_passed", "blocker_ledger_valid", "self_test_passed"]
     },
     {
       "id": "srg_context_bundle_ci",

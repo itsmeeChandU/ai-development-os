@@ -80,6 +80,14 @@ REQUIRED = [
     "scripts/self_test_flow.py",
     "scripts/workflow_manifest_check.py",
     "scripts/agentic_workflow_orchestrator.py",
+    "system_review_graph/prompt_to_product_packet.json",
+    "system_review_graph/slash_command_specs.json",
+    "system_review_graph/lane_packet_workflow-coordinator.json",
+    "system_review_graph/automation_runtime_report.json",
+    "system_review_graph/scheduler_plan.json",
+    "system_review_graph/eval_report.json",
+    "system_review_graph/blocker_ledger_report.json",
+    "handoffs/ci_fix_workflow-manifest-ci.json",
 ]
 
 

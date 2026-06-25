@@ -1,0 +1,45 @@
+{
+  "blockers": [],
+  "eval_count": 5,
+  "generated_at": "2026-06-25T05:24:02+00:00",
+  "manifest": "manifests/agentic_execution_manifest.json",
+  "proof_boundary": "This eval suite validates execution-loop structure. It does not replace lane-specific tests or runtime smoke checks.",
+  "rows": [
+    {
+      "id": "lane_packet_completeness",
+      "measurement": "scripts/agentic_workflow_orchestrator.py validate",
+      "missing_fields": [],
+      "pass_condition": "No missing lane packet fields.",
+      "status": "pass"
+    },
+    {
+      "id": "contract_section_coverage",
+      "measurement": "scripts/workflow_manifest_check.py",
+      "missing_fields": [],
+      "pass_condition": "All required sections are present in the workflow contract.",
+      "status": "pass"
+    },
+    {
+      "id": "branch_freshness",
+      "measurement": "git fetch origin && git merge-base --is-ancestor origin/main HEAD",
+      "missing_fields": [],
+      "pass_condition": "Branch contains origin/main or is rebased before merge.",
+      "status": "pass"
+    },
+    {
+      "id": "handoff_completeness",
+      "measurement": "handoff schema review",
+      "missing_fields": [],
+      "pass_condition": "Required fields are complete and evidence-backed.",
+      "status": "pass"
+    },
+    {
+      "id": "main_push_readiness",
+      "measurement": "post-merge checks and git status",
+      "missing_fields": [],
+      "pass_condition": "Target main branch is clean after passing checks and push.",
+      "status": "pass"
+    }
+  ],
+  "status": "pass"
+}

@@ -141,3 +141,24 @@ python3 scripts/agentic_workflow_orchestrator.py emit \
 
 The emitted plan is a machine-readable coordination surface. It does not replace
 source inspection, tests, generated artifacts, or GitHub branch proof.
+
+To start from a single product prompt, emit the first runnable packet:
+
+```bash
+python3 scripts/agentic_workflow_orchestrator.py prompt-to-product \
+  --name "my-startup" \
+  --idea "Build the first verified product loop" \
+  --out-dir system_review_graph
+python3 scripts/agentic_workflow_orchestrator.py emit-slash-commands \
+  --out-dir system_review_graph
+python3 scripts/agentic_workflow_orchestrator.py routine-report \
+  --out-dir system_review_graph
+python3 scripts/agentic_workflow_orchestrator.py scheduler-plan \
+  --out-dir system_review_graph
+```
+
+Those commands create the local automation layer: normalized product packet,
+slash command specs, lane packets, background routine report, scheduler plan,
+and CI-fix handoff packets. They default to packet generation; effectful
+network, push, paid, live, legal, or external actions still require explicit
+operator intent and passing proof gates.

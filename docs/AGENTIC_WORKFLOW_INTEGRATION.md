@@ -98,6 +98,7 @@ Validate and emit an execution plan with:
 
 ```bash
 python3 scripts/agentic_workflow_orchestrator.py validate
+python3 scripts/agentic_workflow_orchestrator.py automation-check
 python3 scripts/agentic_workflow_orchestrator.py emit \
   --goal "Build the first verified product loop" \
   --out-dir system_review_graph
@@ -106,3 +107,32 @@ python3 scripts/agentic_workflow_orchestrator.py emit \
 The plan can be handed to agents or LLMs as bounded context. It is still only a
 coordination surface; completion requires changed files, focused checks,
 generated artifacts, GitHub branch state, and a handoff or blocker row.
+
+## Prompt-To-Product Runtime
+
+The local runtime now materializes the operating flow into files:
+
+```bash
+python3 scripts/agentic_workflow_orchestrator.py prompt-to-product \
+  --name "my-startup" \
+  --idea "Build a product with proof gates" \
+  --out-dir system_review_graph
+python3 scripts/agentic_workflow_orchestrator.py emit-slash-commands \
+  --out-dir system_review_graph
+python3 scripts/agentic_workflow_orchestrator.py lane-packet \
+  --lane workflow-coordinator \
+  --goal "Own the first proof loop" \
+  --out-dir system_review_graph
+python3 scripts/agentic_workflow_orchestrator.py routine-report \
+  --out-dir system_review_graph
+python3 scripts/agentic_workflow_orchestrator.py scheduler-plan \
+  --out-dir system_review_graph
+python3 scripts/agentic_workflow_orchestrator.py ci-fix \
+  --check-name workflow_manifest_ci \
+  --out-dir handoffs
+```
+
+This gives agents runnable packets for slash commands, lane work, safe
+background routines, scheduler wiring, and CI repair. The runtime intentionally
+defaults to dry-run packet generation so external effects remain behind
+explicit proof gates.
