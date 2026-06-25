@@ -33,6 +33,7 @@ def main() -> int:
         PROJECT / "src" / "importer_source_readiness" / "continuation.py",
         PROJECT / "src" / "importer_source_readiness" / "investor_readiness.py",
         PROJECT / "src" / "importer_source_readiness" / "board_readiness.py",
+        PROJECT / "src" / "importer_source_readiness" / "operator_workflow.py",
         PROJECT / "src" / "importer_source_readiness" / "operator_report.py",
         PROJECT / "src" / "importer_source_readiness" / "operator_screenshots.py",
         PROJECT / "tests" / "test_readiness.py",
@@ -40,6 +41,7 @@ def main() -> int:
         PROJECT / "tests" / "test_continuation.py",
         PROJECT / "tests" / "test_investor_readiness.py",
         PROJECT / "tests" / "test_board_go_live.py",
+        PROJECT / "tests" / "test_operator_workflow.py",
         PROJECT / "tests" / "test_operator_screenshots.py",
         PROJECT / "scripts" / "run_readiness.py",
         PROJECT / "scripts" / "run_external_gates.py",
@@ -47,6 +49,7 @@ def main() -> int:
         PROJECT / "scripts" / "plan_continuation.py",
         PROJECT / "scripts" / "build_vc_pitch_packet.py",
         PROJECT / "scripts" / "build_board_go_live_packet.py",
+        PROJECT / "scripts" / "run_operator_workflow.py",
         PROJECT / "scripts" / "check_product.py",
         PROJECT / "docs" / "PRODUCT_AUTOMATION_RUNBOOK.md",
         PROJECT / "docs" / "PRODUCT_STATUS.md",
@@ -56,6 +59,7 @@ def main() -> int:
         PROJECT / "system_review_graph" / "continuation_plan.json",
         PROJECT / "system_review_graph" / "vc_pitch_readiness_report.json",
         PROJECT / "system_review_graph" / "board_go_live_readiness_report.json",
+        PROJECT / "system_review_graph" / "operator_workflow_report.json",
         PROJECT / "system_review_graph" / "operator_dashboard.html",
         PROJECT / "system_review_graph" / "operator_screenshot_manifest.json",
         PROJECT / "system_review_graph" / "operator_screenshots" / "operator-dashboard.png",
@@ -80,10 +84,11 @@ def main() -> int:
         ["python3", "-m", "unittest", "discover", "-s", "tests", "-p", "test_*.py"],
         ["python3", "scripts/run_readiness.py"],
         ["python3", "scripts/run_external_gates.py"],
-        ["python3", "scripts/export_operator_dashboard.py"],
         ["python3", "scripts/plan_continuation.py"],
         ["python3", "scripts/build_vc_pitch_packet.py"],
         ["python3", "scripts/build_board_go_live_packet.py"],
+        ["python3", "scripts/run_operator_workflow.py"],
+        ["python3", "scripts/export_operator_dashboard.py"],
         ["python3", "scripts/check_product.py"],
     ]
     for command in commands:
@@ -127,6 +132,9 @@ def main() -> int:
     )
     board = json.loads(
         (PROJECT / "system_review_graph" / "board_go_live_readiness_report.json").read_text(encoding="utf-8")
+    )
+    workflow = json.loads(
+        (PROJECT / "system_review_graph" / "operator_workflow_report.json").read_text(encoding="utf-8")
     )
     screenshot_manifest = json.loads(
         (PROJECT / "system_review_graph" / "operator_screenshot_manifest.json").read_text(encoding="utf-8")
@@ -174,6 +182,25 @@ def main() -> int:
             print("Product project check: FAIL")
             print(f"board go-live report missing {key}")
             return 1
+    if (
+        workflow.get("status") != "operator_workflow_ready_internal"
+        or workflow.get("operator_can_use_now") is not True
+        or workflow.get("work_queue_count", 0) < 20
+    ):
+        print("Product project check: FAIL")
+        print("operator workflow report missing internal-ready work queue")
+        return 1
+    workflow_types = set(workflow.get("work_queue_counts_by_type", {}))
+    expected_workflow_types = {
+        "source_card_review",
+        "external_evidence_gate",
+        "continuation_lane",
+        "human_approval_gate",
+    }
+    if not expected_workflow_types.issubset(workflow_types):
+        print("Product project check: FAIL")
+        print("operator workflow report missing required queue row types")
+        return 1
     if screenshot_manifest.get("status") != "screenshots_ready":
         print("Product project check: FAIL")
         print("operator screenshot manifest should have screenshots_ready status")
@@ -187,6 +214,10 @@ def main() -> int:
         print("Product project check: FAIL")
         print("operator dashboard missing screenshot gallery")
         return 1
+    if "Operator Work Queue" not in dashboard_html or "Canada Tools" not in dashboard_html:
+        print("Product project check: FAIL")
+        print("operator dashboard missing work queue")
+        return 1
 
     print("Product project check: PASS")
     print(f"project={PROJECT.relative_to(ROOT)}")
@@ -197,6 +228,8 @@ def main() -> int:
     print(f"startup_status={continuation['status']}")
     print(f"vc_pitch_status={vc_pitch['status']}")
     print(f"board_go_live_status={board['status']}")
+    print(f"operator_workflow_status={workflow['status']}")
+    print(f"operator_work_queue_count={workflow['work_queue_count']}")
     print(f"operator_screenshots={screenshot_manifest['screenshot_count']}")
     return 0
 

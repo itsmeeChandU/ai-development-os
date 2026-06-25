@@ -68,10 +68,11 @@ def main() -> int:
         [sys.executable, "-m", "unittest", "discover", "-s", "tests", "-p", "test_*.py"],
         [sys.executable, "scripts/run_readiness.py"],
         [sys.executable, "scripts/run_external_gates.py"],
-        [sys.executable, "scripts/export_operator_dashboard.py"],
         [sys.executable, "scripts/plan_continuation.py"],
         [sys.executable, "scripts/build_vc_pitch_packet.py"],
         [sys.executable, "scripts/build_board_go_live_packet.py"],
+        [sys.executable, "scripts/run_operator_workflow.py"],
+        [sys.executable, "scripts/export_operator_dashboard.py"],
     ]
     for command in commands:
         result = _run(command)
@@ -88,6 +89,7 @@ def main() -> int:
     continuation = _load_json(ROOT / "system_review_graph" / "continuation_plan.json")
     vc_pitch = _load_json(ROOT / "system_review_graph" / "vc_pitch_readiness_report.json")
     board = _load_json(ROOT / "system_review_graph" / "board_go_live_readiness_report.json")
+    workflow = _load_json(ROOT / "system_review_graph" / "operator_workflow_report.json")
     screenshot_manifest_path = ROOT / "system_review_graph" / "operator_screenshot_manifest.json"
     screenshot_manifest = _load_json(screenshot_manifest_path) if screenshot_manifest_path.exists() else {}
     expected = {
@@ -111,6 +113,10 @@ def main() -> int:
         dashboard_html = (ROOT / "system_review_graph" / "operator_dashboard.html").read_text(encoding="utf-8")
         if "Operator Screenshots" not in dashboard_html:
             failures.append("operator dashboard should include the screenshot gallery")
+        if "Operator Work Queue" not in dashboard_html:
+            failures.append("operator dashboard should include the operator work queue")
+        if "Canada Tools" not in dashboard_html:
+            failures.append("operator dashboard should link Canadian tool references")
     if not screenshot_manifest_path.exists():
         failures.append("operator screenshot manifest was not generated")
     if screenshot_manifest.get("status") != "screenshots_ready":
@@ -162,6 +168,27 @@ def main() -> int:
     for claim in ("public_launch_ready", "legal_advice_ready", "financial_advice_ready"):
         if claim not in board_closed_claims:
             failures.append(f"board go-live packet must keep {claim} closed")
+    if workflow.get("status") != "operator_workflow_ready_internal":
+        failures.append(f"operator workflow expected internal ready, got {workflow.get('status')!r}")
+    if workflow.get("operator_can_use_now") is not True:
+        failures.append("operator workflow should be usable for internal review now")
+    if workflow.get("work_queue_count", 0) < 20:
+        failures.append("operator workflow should include source, gate, lane, and human-approval rows")
+    workflow_types = set(workflow.get("work_queue_counts_by_type", {}))
+    for row_type in (
+        "source_card_review",
+        "external_evidence_gate",
+        "continuation_lane",
+        "human_approval_gate",
+    ):
+        if row_type not in workflow_types:
+            failures.append(f"operator workflow must include {row_type} rows")
+    if workflow.get("unsafe_gates_closed") is not True:
+        failures.append("operator workflow must keep unsafe gates closed")
+    workflow_closed_claims = set(workflow.get("closed_claims", []))
+    for claim in ("public_launch_ready", "customs_or_tariff_advice_ready", "supplier_recommendation_ready"):
+        if claim not in workflow_closed_claims:
+            failures.append(f"operator workflow must keep {claim} closed")
     failures.extend(_validate_blockers(ROOT / "system_review_graph" / "blockers.jsonl"))
     failures.extend(_validate_blocker_rows(external.get("blockers", []), "external_gate_report.blockers"))
 
@@ -179,6 +206,8 @@ def main() -> int:
     print(f"startup_status={continuation['status']}")
     print(f"vc_pitch_status={vc_pitch['status']}")
     print(f"board_go_live_status={board['status']}")
+    print(f"operator_workflow_status={workflow['status']}")
+    print(f"operator_work_queue_count={workflow['work_queue_count']}")
     print("unsafe_gates=closed")
     return 0
 

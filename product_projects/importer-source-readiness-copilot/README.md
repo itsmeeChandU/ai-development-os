@@ -31,10 +31,11 @@ buyer validation, and launch claims stay closed.
 python3 -m unittest discover -s tests -p 'test_*.py'
 python3 scripts/run_readiness.py
 python3 scripts/run_external_gates.py
-python3 scripts/export_operator_dashboard.py
 python3 scripts/plan_continuation.py
 python3 scripts/build_vc_pitch_packet.py
 python3 scripts/build_board_go_live_packet.py
+python3 scripts/run_operator_workflow.py
+python3 scripts/export_operator_dashboard.py
 python3 scripts/check_product.py
 ```
 
@@ -46,6 +47,7 @@ system_review_graph/external_gate_report.json
 system_review_graph/continuation_plan.json
 system_review_graph/vc_pitch_readiness_report.json
 system_review_graph/board_go_live_readiness_report.json
+system_review_graph/operator_workflow_report.json
 system_review_graph/operator_screenshot_manifest.json
 system_review_graph/blockers.jsonl
 system_review_graph/operator_dashboard.html
@@ -119,9 +121,12 @@ commitments.
 ## Next Valid Move
 
 Use `system_review_graph/operator_dashboard.html` as the operator surface,
-including its generated screenshot gallery. Screenshot artifacts belong in
-`system_review_graph/operator_screenshots/` and are indexed in
-`system_review_graph/operator_screenshot_manifest.json`.
+including its generated work queue and screenshot gallery. Use
+`system_review_graph/operator_workflow_report.json` as the machine-readable
+operator queue: source-card actions, external evidence gates, continuation
+lanes, human approval gates, Canadian tool references, and closed claims.
+Screenshot artifacts belong in `system_review_graph/operator_screenshots/` and
+are indexed in `system_review_graph/operator_screenshot_manifest.json`.
 Use `docs/STARTUP_LIFECYCLE.md` as the startup/R&D lifecycle surface.
 Use `system_review_graph/continuation_plan.json` as the continuation surface.
 Use `investor/vc_pitch_deck.md` and `investor/one_pager.md` for private VC

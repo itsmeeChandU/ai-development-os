@@ -26,6 +26,10 @@
     .screenshot-summary { min-width: 132px; border: 1px solid var(--line); background: #fff; border-radius: 6px; padding: 10px 12px; text-align: right; }
     .screenshot-summary span { display: block; color: var(--muted); font-size: 12px; overflow-wrap: anywhere; }
     .screenshot-summary strong { display: block; font-size: 28px; }
+    .workflow-summary { min-width: 158px; border: 1px solid var(--line); background: var(--accent-soft); border-radius: 6px; padding: 10px 12px; text-align: right; }
+    .workflow-summary span { display: block; color: var(--muted); font-size: 12px; overflow-wrap: anywhere; }
+    .workflow-summary strong { display: block; font-size: 28px; }
+    .workflow-summary em { display: block; color: var(--accent); font-size: 12px; font-style: normal; font-weight: 700; }
     .screenshot-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; margin-top: 16px; }
     .screenshot-card { border: 1px solid var(--line); border-radius: 6px; overflow: hidden; background: #fff; }
     .screenshot-card img { display: block; width: 100%; aspect-ratio: 16 / 10; object-fit: contain; background: #111820; border-bottom: 1px solid var(--line); }
@@ -60,6 +64,42 @@
     <div class="metric"><div class="label">Total blockers</div><div class="value">20</div></div>
   </section>
 
+  <section class="operator-workflow" aria-labelledby="operator-workflow-title">
+    <div class="section-heading">
+      <div>
+        <h2 id="operator-workflow-title">Operator Work Queue</h2>
+        <p>This workflow is an operator workbench for internal review. It coordinates generated reports, Canadian reference tools, continuation lanes, and human approval gates; it does not prove external-world readiness, customs/tariff correctness, buyer demand, legal/financial approval, supplier quality, or production launch approval.</p>
+      </div>
+      <div class="workflow-summary">
+        <span>operator workflow ready internal</span>
+        <strong>31</strong>
+        <em>usable now: yes</em>
+      </div>
+    </div>
+    <table>
+      <thead><tr><th>Priority</th><th>Type</th><th>Owner</th><th>Status</th><th>Next Valid Move</th><th>Canada Tools</th></tr></thead>
+      <tbody><tr><td><strong>90</strong></td><td>human approval gate</td><td>Canadian trade compliance reviewer simulation</td><td>approval required</td><td>Send the country matrix and source packet to a licensed Canadian customs broker or qualified compliance reviewer.</td><td>n/a</td></tr>
+<tr><td><strong>90</strong></td><td>human approval gate</td><td>data</td><td>approval required</td><td>Add a no-write refresh proof and source-rights approval.</td><td>n/a</td></tr>
+<tr><td><strong>90</strong></td><td>human approval gate</td><td>data source reviewer simulation</td><td>approval required</td><td>Implement a dated no-write refresh proof and attach source-rights approval before external source claims.</td><td>n/a</td></tr>
+<tr><td><strong>90</strong></td><td>human approval gate</td><td>founder</td><td>approval required</td><td>Approve a 12-month operating plan and first 90-day budget before commitments.</td><td>n/a</td></tr>
+<tr><td><strong>90</strong></td><td>human approval gate</td><td>financial advisor simulation</td><td>approval required</td><td>Founder and finance reviewer should approve a 12-month budget, pricing experiment, and cash runway before spend commitments.</td><td>n/a</td></tr>
+<tr><td><strong>90</strong></td><td>human approval gate</td><td>legal</td><td>approval required</td><td>Have counsel/privacy reviewer approve terms, privacy posture, liability boundary, and claims.</td><td>n/a</td></tr>
+<tr><td><strong>90</strong></td><td>human approval gate</td><td>legal and privacy reviewer simulation</td><td>approval required</td><td>Have Canadian counsel/privacy reviewer approve terms, privacy copy, liability boundaries, and investor language.</td><td>n/a</td></tr>
+<tr><td><strong>90</strong></td><td>human approval gate</td><td>product operator</td><td>approval required</td><td>Board reviews the generated brief and either approves a private beta or sends corrections.</td><td>n/a</td></tr>
+<tr><td><strong>90</strong></td><td>human approval gate</td><td>compliance</td><td>approval required</td><td>Route the generated packet to a licensed Canadian customs broker or qualified reviewer.</td><td>n/a</td></tr>
+<tr><td><strong>90</strong></td><td>human approval gate</td><td>security</td><td>approval required</td><td>Approve private beta deployment controls before external users.</td><td>n/a</td></tr>
+<tr><td><strong>90</strong></td><td>human approval gate</td><td>security and operations reviewer simulation</td><td>approval required</td><td>Approve a controlled private beta environment with access control, logging, incident response, and rollback owner.</td><td>n/a</td></tr>
+<tr><td><strong>86</strong></td><td>external evidence gate</td><td>compliance</td><td>blocked external input</td><td>Have a licensed Canadian customs broker or qualified Canadian trade/food compliance reviewer verify CBSA/CARM importer obligations, tariff classification, CFIA AIRS requirements, import controls, sanctions screening, and claim language.</td><td><a href='https://inspection.canada.ca/en/importing-food-plants-animals/airs'>cfia-airs</a></td></tr>
+<tr><td><strong>86</strong></td><td>external evidence gate</td><td>compliance</td><td>blocked external input</td><td>Have a licensed Canadian customs broker or qualified Canadian trade/food compliance reviewer verify CBSA/CARM importer obligations, tariff classification, CFIA AIRS requirements, import controls, sanctions screening, and claim language.</td><td><a href='https://www.cbsa-asfc.gc.ca/trade-commerce/tariff-tarif/2026/menu-eng.html'>cbsa-customs-tariff-2026</a>, <a href='https://www.cbsa-asfc.gc.ca/services/cb-cd/cb-cd-eng.html'>cbsa-licensed-customs-brokers</a></td></tr>
+<tr><td><strong>86</strong></td><td>external evidence gate</td><td>operator</td><td>blocked external input</td><td>Keep the product internal until buyer validation, contracts, compliance review, and operator support are proven.</td><td><a href='https://www.canada.ca/en/services/business/start/planning.html'>canada-business-planning</a>, <a href='https://www.bdc.ca/en/articles-tools/entrepreneur-toolkit/templates-business-guides/financial-plan-template'>bdc-financial-plan-template</a>, <a href='https://www.priv.gc.ca/en/privacy-topics/privacy-laws-in-canada/the-personal-information-protection-and-electronic-documents-act-pipeda/pipeda_brief/'>pipeda-brief</a>, <a href='https://www.cyber.gc.ca/en/guidance/baseline-cyber-security-controls-small-and-medium-organizations'>cyber-centre-baseline-controls</a></td></tr>
+<tr><td><strong>86</strong></td><td>external evidence gate</td><td>compliance</td><td>blocked external input</td><td>Get qualified Canadian review for country matrix, tariff treatment, CFIA food import obligations, sanctions screening, and claims language.</td><td><a href='https://www.cbsa-asfc.gc.ca/services/cb-cd/cb-cd-eng.html'>cbsa-licensed-customs-brokers</a>, <a href='https://www.priv.gc.ca/en/privacy-topics/privacy-laws-in-canada/the-personal-information-protection-and-electronic-documents-act-pipeda/pipeda_brief/'>pipeda-brief</a></td></tr>
+<tr><td><strong>82</strong></td><td>external evidence gate</td><td>compliance</td><td>blocked external input</td><td>Have a licensed Canadian customs broker or qualified Canadian trade/food compliance reviewer verify CBSA/CARM importer obligations, tariff classification, CFIA AIRS requirements, import controls, sanctions screening, and claim language.</td><td><a href='https://www.international.gc.ca/controls-controles/about-a_propos/impor/permits-licences.aspx?lang=eng'>gac-import-controls</a></td></tr>
+<tr><td><strong>82</strong></td><td>external evidence gate</td><td>compliance</td><td>blocked external input</td><td>Have a licensed Canadian customs broker or qualified Canadian trade/food compliance reviewer verify CBSA/CARM importer obligations, tariff classification, CFIA AIRS requirements, import controls, sanctions screening, and claim language.</td><td><a href='https://www.cbsa-asfc.gc.ca/import/menu-eng.html'>cbsa-import-commercial-goods</a></td></tr>
+<tr><td><strong>82</strong></td><td>external evidence gate</td><td>compliance</td><td>blocked external input</td><td>Have a licensed Canadian customs broker or qualified Canadian trade/food compliance reviewer verify CBSA/CARM importer obligations, tariff classification, CFIA AIRS requirements, import controls, sanctions screening, and claim language.</td><td><a href='https://www.international.gc.ca/world-monde/international_relations-relations_internationales/sanctions/consolidated-consolide.aspx?lang=eng'>canada-sanctions</a></td></tr></tbody>
+    </table>
+  </section>
+
+
   <section class="screenshots" aria-labelledby="operator-screenshots-title">
     <div class="section-heading">
       <div>
@@ -72,7 +112,7 @@
       </div>
     </div>
     <div class="screenshot-grid">
-<article class='screenshot-card'><a href='operator_screenshots/operator-dashboard.png' aria-label='Open Operator Dashboard'><img src='operator_screenshots/operator-dashboard.png' alt='Operator Dashboard' loading='lazy'></a><div class='screenshot-body'><h3>Operator Dashboard</h3><p class='path'>system_review_graph/operator_screenshots/operator-dashboard.png</p><dl><div><dt>Captured</dt><dd>2026-06-25T16:35:39+00:00</dd></div><div><dt>Media</dt><dd>image/png</dd></div><div><dt>Bytes</dt><dd>369331</dd></div><div><dt>SHA</dt><dd>609d509c7069</dd></div></dl><p class='boundary'>Visual review aid only; generated JSON reports and blocker ledgers remain readiness truth.</p></div></article>
+<article class='screenshot-card'><a href='operator_screenshots/operator-dashboard.png' aria-label='Open Operator Dashboard'><img src='operator_screenshots/operator-dashboard.png' alt='Operator Dashboard' loading='lazy'></a><div class='screenshot-body'><h3>Operator Dashboard</h3><p class='path'>system_review_graph/operator_screenshots/operator-dashboard.png</p><dl><div><dt>Captured</dt><dd>2026-06-25T17:32:42+00:00</dd></div><div><dt>Media</dt><dd>image/png</dd></div><div><dt>Bytes</dt><dd>369331</dd></div><div><dt>SHA</dt><dd>609d509c7069</dd></div></dl><p class='boundary'>Visual review aid only; generated JSON reports and blocker ledgers remain readiness truth.</p></div></article>
     </div>
   </section>
 

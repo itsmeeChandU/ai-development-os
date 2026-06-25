@@ -26,6 +26,7 @@ import/export source-proof idea.
 - `src/importer_source_readiness/continuation.py`
 - `src/importer_source_readiness/investor_readiness.py`
 - `src/importer_source_readiness/board_readiness.py`
+- `src/importer_source_readiness/operator_workflow.py`
 - `src/importer_source_readiness/operator_report.py`
 - `src/importer_source_readiness/operator_screenshots.py`
 - `src/importer_source_readiness/__init__.py`
@@ -43,12 +44,14 @@ import/export source-proof idea.
 - `scripts/plan_continuation.py`
 - `scripts/build_vc_pitch_packet.py`
 - `scripts/build_board_go_live_packet.py`
+- `scripts/run_operator_workflow.py`
 - `scripts/check_product.py`
 - `tests/test_readiness.py`
 - `tests/test_external_gates.py`
 - `tests/test_continuation.py`
 - `tests/test_investor_readiness.py`
 - `tests/test_board_go_live.py`
+- `tests/test_operator_workflow.py`
 - `tests/test_operator_screenshots.py`
 - `docs/STARTUP_BRIEF.md`
 - `docs/INSTRUCTION_CONTRACT.md`
@@ -64,10 +67,11 @@ import/export source-proof idea.
 python3 -m unittest discover -s tests -p 'test_*.py'
 python3 scripts/run_readiness.py
 python3 scripts/run_external_gates.py
-python3 scripts/export_operator_dashboard.py
 python3 scripts/plan_continuation.py
 python3 scripts/build_vc_pitch_packet.py
 python3 scripts/build_board_go_live_packet.py
+python3 scripts/run_operator_workflow.py
+python3 scripts/export_operator_dashboard.py
 python3 scripts/check_product.py
 python3 ../../scripts/blocker_ledger.py validate --input system_review_graph/blockers.jsonl --out /tmp/importer-source-readiness-blocker-ledger-report.json
 ```
@@ -81,12 +85,14 @@ python3 ../../scripts/blocker_ledger.py validate --input system_review_graph/blo
 - continuation plan: pass
 - VC pitch packet: pass
 - board go-live packet: pass
+- operator workflow queue: pass, 31 rows
 - blocker ledger: pass, 9 rows
 - readiness report: `system_review_graph/readiness_report.json`
 - external gate report: `system_review_graph/external_gate_report.json`
 - continuation plan: `system_review_graph/continuation_plan.json`
 - VC pitch readiness report: `system_review_graph/vc_pitch_readiness_report.json`
 - board go-live readiness report: `system_review_graph/board_go_live_readiness_report.json`
+- operator workflow report: `system_review_graph/operator_workflow_report.json`
 - operator dashboard: `system_review_graph/operator_dashboard.html`
 - operator screenshots: `system_review_graph/operator_screenshot_manifest.json`
   and `system_review_graph/operator_screenshots/operator-dashboard.png`
@@ -107,6 +113,7 @@ python3 ../../scripts/blocker_ledger.py validate --input system_review_graph/blo
 - `system_review_graph/continuation_plan.json`
 - `system_review_graph/vc_pitch_readiness_report.json`
 - `system_review_graph/board_go_live_readiness_report.json`
+- `system_review_graph/operator_workflow_report.json`
 - `system_review_graph/operator_dashboard.html`
 - `system_review_graph/operator_screenshot_manifest.json`
 - `system_review_graph/operator_screenshots/operator-dashboard.png`

@@ -17,6 +17,7 @@ src/importer_source_readiness/external_gates.py
 src/importer_source_readiness/continuation.py
 src/importer_source_readiness/investor_readiness.py
 src/importer_source_readiness/board_readiness.py
+src/importer_source_readiness/operator_workflow.py
 src/importer_source_readiness/operator_report.py
 src/importer_source_readiness/operator_screenshots.py
         |
@@ -26,6 +27,7 @@ system_review_graph/external_gate_report.json
 system_review_graph/continuation_plan.json
 system_review_graph/vc_pitch_readiness_report.json
 system_review_graph/board_go_live_readiness_report.json
+system_review_graph/operator_workflow_report.json
 system_review_graph/operator_screenshot_manifest.json
 system_review_graph/operator_dashboard.html
 system_review_graph/operator_screenshots/*.png
@@ -49,6 +51,7 @@ board/*.md
 | `src/importer_source_readiness/continuation.py` | convert external blockers into required continuation lanes |
 | `src/importer_source_readiness/investor_readiness.py` | build VC pitch readiness and diligence gates |
 | `src/importer_source_readiness/board_readiness.py` | build Canada-focused board/go-live candidate readiness |
+| `src/importer_source_readiness/operator_workflow.py` | compose source rows, evidence gates, continuation lanes, human approvals, and Canadian tool references into an operator queue |
 | `src/importer_source_readiness/operator_report.py` | render static operator dashboard |
 | `src/importer_source_readiness/operator_screenshots.py` | index operator-generated screenshot artifacts for dashboard review |
 | `scripts/run_readiness.py` | CLI entrypoint and report writer |
@@ -57,11 +60,13 @@ board/*.md
 | `scripts/plan_continuation.py` | continuation plan writer |
 | `scripts/build_vc_pitch_packet.py` | investor packet and pitch readiness writer |
 | `scripts/build_board_go_live_packet.py` | board packet and go-live candidate writer |
+| `scripts/run_operator_workflow.py` | operator work queue writer |
 | `tests/test_readiness.py` | proof for blocked-safe behavior |
 | `tests/test_external_gates.py` | proof for external-gate and dashboard behavior |
 | `tests/test_continuation.py` | proof that externally gated status keeps work in progress |
 | `tests/test_investor_readiness.py` | proof that pitch status keeps diligence and claim gates visible |
 | `tests/test_board_go_live.py` | proof that Canada board/go-live candidate status keeps human approval gates visible |
+| `tests/test_operator_workflow.py` | proof that the product has an operator work queue with Canadian tool references and closed claims |
 | `tests/test_operator_screenshots.py` | proof that screenshot artifacts are indexed and rendered without replacing generated truth |
 | `system_review_graph/` | generated packets, reports, blockers, handoff evidence |
 
@@ -82,10 +87,13 @@ board/*.md
     `system_review_graph/board_go_live_readiness_report.json`.
 13. Write board go-live brief, expert review packet, launch checklist, and
     financial operating model.
-14. Index operator screenshots in
+14. Compose `system_review_graph/operator_workflow_report.json` from source
+    cards, external gates, continuation lanes, human approval gates, Canadian
+    tools, closed claims, and proof commands.
+15. Index operator screenshots in
     `system_review_graph/operator_screenshot_manifest.json`.
-15. Render `system_review_graph/operator_dashboard.html` with the screenshot
-    gallery and generated proof boundary.
+16. Render `system_review_graph/operator_dashboard.html` with the operator
+    work queue, screenshot gallery, and generated proof boundary.
 
 ## Status Rules
 

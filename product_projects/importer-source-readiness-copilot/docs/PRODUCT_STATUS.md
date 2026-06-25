@@ -35,6 +35,7 @@ gate.
 - board go-live readiness report
 - launch-control checklist
 - financial operating model boundary
+- generated operator work queue
 - static operator dashboard
 - generated operator screenshot manifest and dashboard gallery
 - standalone product check

@@ -63,10 +63,14 @@ sources, datasets, contracts, or owners close them.
 Screenshots and UI smoke outputs belong inside the lifecycle only when they
 help a person inspect the product or operator state. They should be generated
 artifacts with stable paths and proof boundaries, not decorative assets.
+For recurring operator work, the product should also generate a work queue that
+combines source rows, evidence gates, continuation lanes, approval gates, proof
+commands, and closed claims.
 
 Preferred paths:
 
 ```text
+system_review_graph/operator_workflow_report.json
 system_review_graph/operator_screenshot_manifest.json
 system_review_graph/operator_screenshots/
 ```

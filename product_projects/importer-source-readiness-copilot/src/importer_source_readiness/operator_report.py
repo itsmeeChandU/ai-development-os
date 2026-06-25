@@ -26,6 +26,65 @@ def _display_value(value: Any) -> str:
     return str(value).replace("_", " ")
 
 
+def _work_queue_rows(workflow: dict[str, Any] | None) -> str:
+    if not workflow:
+        return "<tr><td colspan='6'>No operator workflow report found.</td></tr>"
+    queue = workflow.get("work_queue", [])
+    if not queue:
+        return "<tr><td colspan='6'>No operator queue rows.</td></tr>"
+    rows = []
+    for row in queue[:18]:
+        refs = row.get("canadian_tool_refs") or []
+        ref_html = ", ".join(
+            f"<a href='{escape(str(ref.get('source_url')))}'>{escape(str(ref.get('id')))}</a>"
+            for ref in refs[:4]
+        )
+        if len(refs) > 4:
+            ref_html += f" +{len(refs) - 4}"
+        rows.append(
+            "<tr>"
+            f"<td><strong>{escape(str(row.get('priority')))}</strong></td>"
+            f"<td>{escape(_display_value(row.get('type')))}</td>"
+            f"<td>{escape(str(row.get('owner')))}</td>"
+            f"<td>{escape(_display_value(row.get('status')))}</td>"
+            f"<td>{escape(str(row.get('next_valid_move')))}</td>"
+            f"<td>{ref_html or 'n/a'}</td>"
+            "</tr>"
+        )
+    return "\n".join(rows)
+
+
+def _render_operator_workflow(workflow: dict[str, Any] | None) -> str:
+    status = "missing workflow"
+    count = 0
+    can_use = "unknown"
+    boundary = "Operator workflow report is required for day-to-day use."
+    if workflow:
+        status = _display_value(workflow.get("status") or status)
+        count = int(workflow.get("work_queue_count") or 0)
+        can_use = "yes" if workflow.get("operator_can_use_now") else "no"
+        boundary = str(workflow.get("proof_boundary") or boundary)
+    return f"""
+  <section class="operator-workflow" aria-labelledby="operator-workflow-title">
+    <div class="section-heading">
+      <div>
+        <h2 id="operator-workflow-title">Operator Work Queue</h2>
+        <p>{escape(boundary)}</p>
+      </div>
+      <div class="workflow-summary">
+        <span>{escape(status)}</span>
+        <strong>{count}</strong>
+        <em>usable now: {escape(can_use)}</em>
+      </div>
+    </div>
+    <table>
+      <thead><tr><th>Priority</th><th>Type</th><th>Owner</th><th>Status</th><th>Next Valid Move</th><th>Canada Tools</th></tr></thead>
+      <tbody>{_work_queue_rows(workflow)}</tbody>
+    </table>
+  </section>
+"""
+
+
 def _screenshot_cards(manifest: dict[str, Any] | None) -> str:
     if not manifest:
         return """
@@ -102,6 +161,7 @@ def render_dashboard(
     readiness: dict[str, Any],
     external: dict[str, Any],
     screenshot_manifest: dict[str, Any] | None = None,
+    operator_workflow: dict[str, Any] | None = None,
 ) -> str:
     readiness_blockers = readiness.get("blockers", [])
     external_blockers = external.get("blockers", [])
@@ -141,6 +201,10 @@ def render_dashboard(
     .screenshot-summary {{ min-width: 132px; border: 1px solid var(--line); background: #fff; border-radius: 6px; padding: 10px 12px; text-align: right; }}
     .screenshot-summary span {{ display: block; color: var(--muted); font-size: 12px; overflow-wrap: anywhere; }}
     .screenshot-summary strong {{ display: block; font-size: 28px; }}
+    .workflow-summary {{ min-width: 158px; border: 1px solid var(--line); background: var(--accent-soft); border-radius: 6px; padding: 10px 12px; text-align: right; }}
+    .workflow-summary span {{ display: block; color: var(--muted); font-size: 12px; overflow-wrap: anywhere; }}
+    .workflow-summary strong {{ display: block; font-size: 28px; }}
+    .workflow-summary em {{ display: block; color: var(--accent); font-size: 12px; font-style: normal; font-weight: 700; }}
     .screenshot-grid {{ display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; margin-top: 16px; }}
     .screenshot-card {{ border: 1px solid var(--line); border-radius: 6px; overflow: hidden; background: #fff; }}
     .screenshot-card img {{ display: block; width: 100%; aspect-ratio: 16 / 10; object-fit: contain; background: #111820; border-bottom: 1px solid var(--line); }}
@@ -174,6 +238,7 @@ def render_dashboard(
     <div class="metric"><div class="label">Source rows</div><div class="value">{escape(str(readiness["row_count"]))}</div></div>
     <div class="metric"><div class="label">Total blockers</div><div class="value">{total_blockers}</div></div>
   </section>
+{_render_operator_workflow(operator_workflow)}
 {_render_screenshot_gallery(screenshot_manifest)}
   <h2>Readiness Blockers</h2>
   <table>
@@ -200,7 +265,11 @@ def write_dashboard(
     external: dict[str, Any],
     path: Path,
     screenshot_manifest: dict[str, Any] | None = None,
+    operator_workflow: dict[str, Any] | None = None,
 ) -> Path:
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(render_dashboard(readiness, external, screenshot_manifest), encoding="utf-8")
+    path.write_text(
+        render_dashboard(readiness, external, screenshot_manifest, operator_workflow),
+        encoding="utf-8",
+    )
     return path

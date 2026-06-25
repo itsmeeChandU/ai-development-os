@@ -65,6 +65,10 @@ If a product needs to reach board go-live review, completion also requires
 `system_review_graph/board_go_live_readiness_report.json` plus `board/*.md`
 with jurisdiction-specific tools, expert simulations, launch controls, and
 human approval gates.
+If a product has a recurring operator workflow, completion also requires
+`system_review_graph/operator_workflow_report.json` or an equivalent queue that
+names source-card actions, evidence gates, continuation lanes, approval gates,
+tool references, proof commands, closed claims, and next valid moves.
 If a product has an operator UI, completion also requires an operator-visible
 screenshot surface such as `system_review_graph/operator_screenshot_manifest.json`
 and screenshot artifacts that the dashboard can render. Screenshots are visual
@@ -151,6 +155,7 @@ In a product, wire the flow as a state machine:
 | lane_assigned | create worktree/branch/lane packet | worker handoff |
 | proof_running | run tests and artifact checks | proof report |
 | blocked_or_ready | publish blocker/readiness state | next valid move |
+| operator_workflow_ready | publish generated operator queue | source rows, evidence gates, continuation lanes, approvals, proof commands |
 | operator_visual_proof_ready | publish generated screenshots and manifest | operator screenshot gallery |
 | continuation_required | write continuation plan for externally gated work | evidence lanes and closed premature claims |
 | vc_pitch_ready | write investor packet and pitch readiness report | private pitch state and diligence lanes |

@@ -13,7 +13,7 @@
   "screenshots": [
     {
       "artifact_path": "system_review_graph/operator_screenshots/operator-dashboard.png",
-      "captured_at": "2026-06-25T16:35:39+00:00",
+      "captured_at": "2026-06-25T17:32:42+00:00",
       "claim_boundary": "Visual review aid only; generated JSON reports and blocker ledgers remain readiness truth.",
       "dashboard_src": "operator_screenshots/operator-dashboard.png",
       "file_name": "operator-dashboard.png",

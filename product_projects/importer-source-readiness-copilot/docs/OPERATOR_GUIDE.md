@@ -13,11 +13,9 @@ python3 scripts/check_product.py
 ```
 
 This command runs unit tests, regenerates readiness and external-gate reports,
-exports the operator dashboard, writes the continuation plan, and verifies that
-unsafe gates remain closed. It also writes the VC pitch packet and verifies
-that investor-facing claims remain bounded. It also writes the Canada-focused
-board/go-live packet and verifies that the product is only a controlled-private
-beta candidate with human approval gates.
+writes the continuation plan, writes the VC pitch packet, writes the
+Canada-focused board/go-live packet, builds the operator work queue, exports
+the operator dashboard, and verifies that unsafe gates remain closed.
 
 ## Operator Surface
 
@@ -28,7 +26,18 @@ system_review_graph/operator_dashboard.html
 ```
 
 The dashboard shows readiness status, external-gate status, official source
-references, blockers, next valid moves, and the generated screenshot gallery.
+references, blockers, next valid moves, the generated work queue, and the
+generated screenshot gallery.
+
+The machine-readable operator queue is:
+
+```text
+system_review_graph/operator_workflow_report.json
+```
+
+It combines source-card actions, external evidence gates, continuation lanes,
+human approval gates, Canadian tool references, closed claims, and proof
+commands. Treat it as the daily operating queue.
 
 Operator-generated screenshots are indexed in:
 

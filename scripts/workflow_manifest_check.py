@@ -95,6 +95,10 @@ def validate_manifest(manifest: dict[str, Any]) -> list[str]:
         "operator_evidence_artifacts", []
     ):
         errors.append("startup_lifecycle_development_rule must include operator screenshot manifest")
+    if "system_review_graph/operator_workflow_report.json" not in lifecycle.get(
+        "operator_evidence_artifacts", []
+    ):
+        errors.append("startup_lifecycle_development_rule must include operator workflow report")
 
     continuation = manifest.get("startup_continuation_rule") or {}
     if continuation.get("trigger_status") != "ready_with_external_gates":

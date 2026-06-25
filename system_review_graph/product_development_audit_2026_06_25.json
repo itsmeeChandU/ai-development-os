@@ -1,0 +1,156 @@
+{
+  "as_of": "2026-06-25T00:00:00+00:00",
+  "status": "local_product_loop_complete_with_external_gates",
+  "audited_repos": [
+    {
+      "id": "ai-development-os",
+      "role": "coordinator_layer",
+      "main_head_after_direct_integration": "04d4e340a3ac1fbba9726f4a90711e47268aa1b7",
+      "state": "coordinator manifests, product automation rules, startup lifecycle, and embedded product snapshot now include operator workflow requirements"
+    },
+    {
+      "id": "importer-source-readiness-copilot",
+      "role": "actual_product_repo",
+      "main_head_before_audit_fixes": "a835dbea08388dbd1059b1d7131964c7d546c4b2",
+      "state": "local product engine, Canada evidence registry, continuation lanes, investor packet, board packet, operator workflow queue, dashboard, screenshots, tests, and proof gate"
+    },
+    {
+      "id": "system-review-graph",
+      "role": "context_bundle_layer",
+      "main_head_before_audit_fixes": "4a9b64d365654932aff2c6cf14480177d1efaf7d",
+      "state": "context-bundle tests recognize operator evidence artifacts, now extended for operator_workflow_report"
+    },
+    {
+      "id": "code-review-graph-private",
+      "role": "code_contract_layer",
+      "main_head_before_audit_fixes": "ffd312bef9b3a5be7361ddaf07a6cc08a766c244",
+      "state": "stable contract export recognizes generated product artifacts, now extended for operator_workflow_report"
+    }
+  ],
+  "request_audit": {
+    "user_requested": [
+      "direct main integration instead of leaving PRs as parallel truth",
+      "audit prior requests, responses, development, reports, and real product development expectations",
+      "complete an actual product, not just a demo",
+      "include startup lifecycle, R&D, subject-expertise simulation, research/data routing, and external/human gates",
+      "focus Canada tooling and external evidence gates",
+      "show operator-generated screenshots",
+      "prepare docs for people to use the product automatically",
+      "do necessary changes from the audit and keep unsafe claims honest"
+    ],
+    "response_risk_found": [
+      "Earlier status could sound too complete if read as public launch or fully operational startup readiness.",
+      "The product had strong reports and a dashboard, but it needed a daily operator workflow queue to feel like an actual usable product.",
+      "Helper repos recognized screenshots and board artifacts but did not yet treat the operator work queue as a first-class generated artifact."
+    ],
+    "direction_taken": [
+      "Fast-forwarded proven feature branches into main.",
+      "Kept AI subject synthesis as first-pass review only.",
+      "Kept legal, financial, customs, tariff, buyer, supplier, contract, data-rights, production deployment, and public-launch claims closed.",
+      "Added operator_workflow_report as the product workbench artifact and propagated it through coordinator, SRG, and code-review graph contracts."
+    ]
+  },
+  "real_product_development_audit": {
+    "working_now": [
+      "source-card readiness evaluation",
+      "external evidence gate routing",
+      "blocker ledger and continuation lanes",
+      "Canada official/quasi-official tool registry",
+      "AI-simulated expert review packet with human approval gates",
+      "private VC pitch packet with diligence boundaries",
+      "board go-live packet for controlled private beta review",
+      "operator workflow queue for source cards, evidence gates, continuation lanes, human approvals, Canadian tools, proof commands, and closed claims",
+      "static operator dashboard with work queue and screenshot gallery",
+      "local tests, product checks, and CI proof gates"
+    ],
+    "not_claimed": [
+      "public launch readiness",
+      "production deployment approval",
+      "buyer validation or PMF",
+      "revenue proof",
+      "customs, tariff, CFIA, import/export, legal, privacy, or financial advice",
+      "supplier recommendation readiness",
+      "signed contracts or source/data rights approval",
+      "qualified Canadian broker/compliance/legal/finance/security signoff"
+    ],
+    "real_startup_gap_that_cannot_be_faked_by_ai": [
+      "dated buyer/operator feedback",
+      "qualified Canadian customs/trade/food compliance review",
+      "legal/privacy review",
+      "finance/founder approval",
+      "source rights and repeatable refresh proof",
+      "commercial/source/data contracts",
+      "restricted-party screening record",
+      "private beta deployment controls and support owner"
+    ]
+  },
+  "audit_driven_changes": [
+    {
+      "repo": "importer-source-readiness-copilot",
+      "change": "Added src/importer_source_readiness/operator_workflow.py, scripts/run_operator_workflow.py, tests/test_operator_workflow.py, and system_review_graph/operator_workflow_report.json.",
+      "effect": "Turns the product from separate reports into an operator workbench with a prioritized queue."
+    },
+    {
+      "repo": "importer-source-readiness-copilot",
+      "change": "Updated operator dashboard to render Operator Work Queue with Canada tool references before screenshot proof.",
+      "effect": "A user can inspect what to do next from the product surface."
+    },
+    {
+      "repo": "ai-development-os",
+      "change": "Updated product checks, manifests, docs, and embedded product snapshot to require operator_workflow_report.",
+      "effect": "Future prompt-to-product runs treat operator workflow as durable product proof."
+    },
+    {
+      "repo": "system-review-graph",
+      "change": "Updated context-bundle test fixture to include operator_workflow_report.",
+      "effect": "SRG exposes the workbench artifact type to agents."
+    },
+    {
+      "repo": "code-review-graph-private",
+      "change": "Updated generated artifact export contract and tests for operator_workflow_report.",
+      "effect": "Code-review graph exports stable contract context for the new product artifact."
+    }
+  ],
+  "official_canada_evidence_checked": [
+    {
+      "name": "CBSA CARM",
+      "url": "https://www.cbsa-asfc.gc.ca/services/carm-gcra/menu-eng.html",
+      "boundary": "commercial goods accounting reference only; not account setup proof"
+    },
+    {
+      "name": "CBSA Import Commercial Goods Into Canada",
+      "url": "https://www.cbsa-asfc.gc.ca/import/menu-eng.html",
+      "boundary": "import workflow reference only; not customs advice"
+    },
+    {
+      "name": "CBSA Customs Tariff 2026",
+      "url": "https://www.cbsa-asfc.gc.ca/trade-commerce/tariff-tarif/2026/menu-eng.html",
+      "boundary": "tariff starting point only; classification needs qualified review"
+    },
+    {
+      "name": "CFIA AIRS",
+      "url": "https://inspection.canada.ca/en/importing-food-plants-animals/airs",
+      "boundary": "food import requirement reference only; CFIA/legal review still required"
+    },
+    {
+      "name": "Global Affairs Canada import controls",
+      "url": "https://www.international.gc.ca/controls-controles/about-a_propos/impor/permits-licences.aspx?lang=eng",
+      "boundary": "controlled import orientation only; permit applicability requires review"
+    },
+    {
+      "name": "Canadian sanctions list",
+      "url": "https://www.international.gc.ca/world-monde/international_relations-relations_internationales/sanctions/consolidated-consolide.aspx?lang=eng",
+      "boundary": "screening source only; dated screening record and reviewer signoff required"
+    }
+  ],
+  "completion_verdict": {
+    "actual_product_stage": "board_go_live_candidate_with_human_approval_gates",
+    "operator_stage": "operator_workflow_ready_internal",
+    "vc_stage": "vc_pitch_ready_with_diligence_gates",
+    "startup_stage": "startup_in_progress",
+    "is_demo_only": false,
+    "is_fully_operational_or_launch_ready": false,
+    "why_not_launch_ready": "Generated reports prove local product operation and board/private-beta review readiness, but external-world proof requires buyers, qualified Canadian reviewers, contracts, data rights, security/ops approval, and board/operator approval.",
+    "next_valid_move": "Use system_review_graph/operator_workflow_report.json as the daily work queue; assign owners for the human approval gates before any external launch claim changes."
+  }
+}

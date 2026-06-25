@@ -14,12 +14,14 @@ if str(SRC) not in sys.path:
 
 from importer_source_readiness import (
     build_external_gate_report,
+    build_operator_workflow,
     build_screenshot_manifest,
     evaluate_cards,
     load_cards,
     load_json,
     write_dashboard,
     write_json,
+    write_operator_workflow,
     write_report,
     write_screenshot_manifest,
 )
@@ -48,6 +50,25 @@ def main() -> int:
         write_json(external, external_path)
     readiness = _read(readiness_path)
     external = _read(external_path)
+    workflow = None
+    workflow_inputs = [
+        ROOT / "system_review_graph" / "continuation_plan.json",
+        ROOT / "system_review_graph" / "board_go_live_readiness_report.json",
+        ROOT / "data" / "canada_tool_registry.json",
+    ]
+    if all(path.exists() for path in workflow_inputs):
+        workflow = build_operator_workflow(
+            readiness=readiness,
+            external=external,
+            continuation=load_json(ROOT / "system_review_graph" / "continuation_plan.json"),
+            board=load_json(ROOT / "system_review_graph" / "board_go_live_readiness_report.json"),
+            canada_tools=load_json(ROOT / "data" / "canada_tool_registry.json"),
+            generated_at="2026-06-25T00:00:00+00:00",
+        )
+        write_operator_workflow(
+            workflow,
+            ROOT / "system_review_graph" / "operator_workflow_report.json",
+        )
     screenshots = build_screenshot_manifest(
         repo_root=ROOT,
         screenshot_dir=ROOT / "system_review_graph" / "operator_screenshots",
@@ -62,6 +83,7 @@ def main() -> int:
         external,
         ROOT / "system_review_graph" / "operator_dashboard.html",
         screenshot_manifest=screenshots,
+        operator_workflow=workflow,
     )
     print(
         json.dumps(
