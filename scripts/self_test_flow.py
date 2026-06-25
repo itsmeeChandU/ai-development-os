@@ -20,6 +20,7 @@ REQUIRED_FOR_FLOW = [
     "docs/TOOL_BREEDING_GROUND.md",
     "docs/PRODUCT_AUTOMATION_GUIDE.md",
     "docs/AGENTIC_WORKFLOW_INTEGRATION.md",
+    "docs/STARTUP_CONTINUATION_RULE.md",
     "manifests/agentic_execution_manifest.json",
     "manifests/internal_repo_registry.json",
     "manifests/research_data_router.json",
@@ -56,15 +57,19 @@ REQUIRED_FOR_FLOW = [
     "product_projects/importer-source-readiness-copilot/data/official_source_registry.json",
     "product_projects/importer-source-readiness-copilot/src/importer_source_readiness/readiness.py",
     "product_projects/importer-source-readiness-copilot/src/importer_source_readiness/external_gates.py",
+    "product_projects/importer-source-readiness-copilot/src/importer_source_readiness/continuation.py",
     "product_projects/importer-source-readiness-copilot/src/importer_source_readiness/operator_report.py",
     "product_projects/importer-source-readiness-copilot/scripts/run_readiness.py",
     "product_projects/importer-source-readiness-copilot/scripts/run_external_gates.py",
     "product_projects/importer-source-readiness-copilot/scripts/export_operator_dashboard.py",
+    "product_projects/importer-source-readiness-copilot/scripts/plan_continuation.py",
     "product_projects/importer-source-readiness-copilot/scripts/check_product.py",
     "product_projects/importer-source-readiness-copilot/tests/test_readiness.py",
     "product_projects/importer-source-readiness-copilot/tests/test_external_gates.py",
+    "product_projects/importer-source-readiness-copilot/tests/test_continuation.py",
     "product_projects/importer-source-readiness-copilot/system_review_graph/readiness_report.json",
     "product_projects/importer-source-readiness-copilot/system_review_graph/external_gate_report.json",
+    "product_projects/importer-source-readiness-copilot/system_review_graph/continuation_plan.json",
     "product_projects/importer-source-readiness-copilot/system_review_graph/operator_dashboard.html",
     "product_projects/importer-source-readiness-copilot/system_review_graph/blockers.jsonl",
     "product_projects/importer-source-readiness-copilot/handoffs/product_completion_handoff.md",
@@ -154,6 +159,10 @@ def main() -> int:
         if not (project / "docs" / "PRODUCT_AUTOMATION_RUNBOOK.md").exists():
             print("AI Dev OS self-test: FAIL")
             print("generated project missing product automation runbook")
+            return 1
+        if "continuation_plan.json" not in generated_agents:
+            print("AI Dev OS self-test: FAIL")
+            print("generated AGENTS.md missing startup continuation rule")
             return 1
 
     print("AI Dev OS self-test: PASS")

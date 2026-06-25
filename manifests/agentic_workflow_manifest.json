@@ -21,6 +21,31 @@
     ],
     "coordination_memory": "Ruflo may record memory, hooks, swarms, and route decisions, but it never overrides repo files, tests, generated artifacts, or GitHub history."
   },
+  "startup_continuation_rule": {
+    "trigger_status": "ready_with_external_gates",
+    "required_artifact": "system_review_graph/continuation_plan.json",
+    "required_status": "startup_in_progress",
+    "required_boolean": {"must_continue": true},
+    "minimum_lanes": [
+      "buyer-validation",
+      "qualified-compliance-review",
+      "country-matrix-review",
+      "source-rights-freshness",
+      "contract-terms",
+      "restricted-party-screening",
+      "launch-approval"
+    ],
+    "closed_claims_while_continuing": [
+      "fully_operational",
+      "launch_ready",
+      "buyer_validated",
+      "qualified_compliance_ready",
+      "customs_or_tariff_advice_ready",
+      "supplier_recommendation_ready",
+      "commercially_ready"
+    ],
+    "proof_boundary": "Local software completion is not startup completion. ready_with_external_gates requires a continuation plan before operational, launch, legal, customs, supplier, buyer, or commercial claims."
+  },
   "repo_roles": [
     {
       "id": "ai-development-os",
@@ -74,12 +99,13 @@
       "repository": "https://github.com/itsmeeChandU/importer-source-readiness-copilot",
       "responsibilities": [
         "hold the actual importer/exporter source readiness product implementation",
-        "keep local product logic, generated readiness reports, external-gate reports, operator dashboards, blocker ledgers, and product handoffs current",
+        "keep local product logic, generated readiness reports, external-gate reports, continuation plans, operator dashboards, blocker ledgers, and product handoffs current",
         "preserve external gates for source freshness, import/export compliance, contracts, buyer validation, and launch claims"
       ],
       "primary_artifacts": [
         "system_review_graph/readiness_report.json",
         "system_review_graph/external_gate_report.json",
+        "system_review_graph/continuation_plan.json",
         "system_review_graph/operator_dashboard.html",
         "system_review_graph/blockers.jsonl",
         "docs/PRODUCT_STATUS.md",
@@ -295,6 +321,7 @@
     "generated_docs": "agent context surfaces, not proof of runtime behavior by themselves",
     "code_review_graph": "orientation and contract, not a substitute for reading source before edits",
     "system_review_graph": "system map and bounded context, not private data or runtime proof",
+    "startup_continuation": "ready_with_external_gates is useful internal software, not startup completion; continuation lanes stay open until external evidence closes them",
     "unsafe_actions": "closed unless explicit repo gates and user intent prove readiness"
   },
   "code_review_graph_contract": {

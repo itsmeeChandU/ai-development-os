@@ -28,6 +28,14 @@
       "trigger": "goal checkpoint"
     },
     {
+      "cadence": "before completion claims for product/startup work",
+      "command": "python3 scripts/agentic_workflow_orchestrator.py routine-report --routine startup_continuation_sweep --out-dir system_review_graph",
+      "effectful": false,
+      "id": "startup_continuation_sweep",
+      "proof_output": "system_review_graph/continuation_plan.json",
+      "trigger": "readiness or external-gate status is ready_with_external_gates"
+    },
+    {
       "cadence": "overnight when requested and safe",
       "command": "python3 scripts/agentic_workflow_orchestrator.py routine-report --routine nightly_eval_loop --out-dir system_review_graph",
       "effectful": false,
@@ -44,7 +52,7 @@
       "trigger": "GitHub check failure"
     }
   ],
-  "generated_at": "2026-06-25T06:17:47+00:00",
+  "generated_at": "2026-06-25T15:18:34+00:00",
   "kind": "scheduler_plan",
   "proof_boundary": "This is a scheduler plan, not a daemon. It is safe to commit and can be handed to an external runner.",
   "scheduler": "operator, cron, CI, or Codex goal loop can call these commands"

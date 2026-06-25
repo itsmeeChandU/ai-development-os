@@ -52,6 +52,7 @@ REQUIRED_ROUTINES = {
     "branch_freshness_check",
     "context_bundle_refresh",
     "stale_blocker_sweep",
+    "startup_continuation_sweep",
     "nightly_eval_loop",
     "ci_failure_triage",
 }
@@ -60,6 +61,7 @@ REQUIRED_EVALS = {
     "contract_section_coverage",
     "branch_freshness",
     "handoff_completeness",
+    "ready_with_external_gates_continuation",
     "main_push_readiness",
 }
 REQUIRED_LANE_FIELDS = {

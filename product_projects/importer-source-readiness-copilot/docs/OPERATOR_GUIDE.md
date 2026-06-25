@@ -13,7 +13,8 @@ python3 scripts/check_product.py
 ```
 
 This command runs unit tests, regenerates readiness and external-gate reports,
-exports the operator dashboard, and verifies that unsafe gates remain closed.
+exports the operator dashboard, writes the continuation plan, and verifies that
+unsafe gates remain closed.
 
 ## Operator Surface
 
@@ -25,6 +26,17 @@ system_review_graph/operator_dashboard.html
 
 The dashboard shows readiness status, external-gate status, official source
 references, blockers, and next valid moves.
+
+Open the continuation plan when deciding what work continues next:
+
+```text
+system_review_graph/continuation_plan.json
+```
+
+If the readiness or external-gate status is `ready_with_external_gates`, the
+continuation status must stay `startup_in_progress`. That is the repo-enforced
+signal that the software loop can be useful internally while the startup is not
+yet fully operational or launch ready.
 
 ## What Is Stopping External Use
 
@@ -51,3 +63,12 @@ External use stays blocked until these records are updated with real evidence:
 
 Do not set a gate to `verified` unless dated evidence is attached and the
 responsible owner can defend it.
+
+## Daily Continuation Loop
+
+1. Run `python3 scripts/check_product.py`.
+2. Read `system_review_graph/continuation_plan.json`.
+3. Pick one lane with `status: blocked_external_input`.
+4. Collect the lane evidence or write the blocker reason and next valid move.
+5. Rerun the proof gate before changing any operational, launch, legal,
+   customs, tariff, supplier, buyer, or commercial claim.

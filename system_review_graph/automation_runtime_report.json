@@ -21,10 +21,10 @@
       "unsafe_to_bypass": true
     }
   ],
-  "generated_at": "2026-06-25T06:17:47+00:00",
+  "generated_at": "2026-06-25T15:18:34+00:00",
   "kind": "background_routine_report",
   "proof_boundary": "Routine reports describe safe commands and blockers. Effectful execution still requires explicit operator intent.",
-  "routine_count": 5,
+  "routine_count": 6,
   "routines": [
     {
       "allowed_effects": [
@@ -89,6 +89,24 @@
       "proof_output": "current blocker table",
       "status": "ready",
       "trigger": "goal checkpoint"
+    },
+    {
+      "allowed_effects": [
+        "read generated reports",
+        "write continuation plan",
+        "write blocker rows"
+      ],
+      "cadence": "before completion claims for product/startup work",
+      "commands": [],
+      "dry_run_default": true,
+      "id": "startup_continuation_sweep",
+      "missing_inputs": [],
+      "prohibited_effects": [
+        "claim fully operational or launch ready while must_continue is true"
+      ],
+      "proof_output": "system_review_graph/continuation_plan.json",
+      "status": "ready",
+      "trigger": "readiness or external-gate status is ready_with_external_gates"
     },
     {
       "allowed_effects": [

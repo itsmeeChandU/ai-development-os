@@ -11,11 +11,13 @@ data/official_source_registry.json
         v
 src/importer_source_readiness/readiness.py
 src/importer_source_readiness/external_gates.py
+src/importer_source_readiness/continuation.py
 src/importer_source_readiness/operator_report.py
         |
         v
 system_review_graph/readiness_report.json
 system_review_graph/external_gate_report.json
+system_review_graph/continuation_plan.json
 system_review_graph/operator_dashboard.html
 ```
 
@@ -29,12 +31,15 @@ system_review_graph/operator_dashboard.html
 | `data/official_source_registry.json` | official source references and claim boundaries |
 | `src/importer_source_readiness/readiness.py` | evaluate source cards and produce blocker rows |
 | `src/importer_source_readiness/external_gates.py` | evaluate country and evidence gates |
+| `src/importer_source_readiness/continuation.py` | convert external blockers into required continuation lanes |
 | `src/importer_source_readiness/operator_report.py` | render static operator dashboard |
 | `scripts/run_readiness.py` | CLI entrypoint and report writer |
 | `scripts/run_external_gates.py` | external-gate report writer |
 | `scripts/export_operator_dashboard.py` | dashboard exporter |
+| `scripts/plan_continuation.py` | continuation plan writer |
 | `tests/test_readiness.py` | proof for blocked-safe behavior |
 | `tests/test_external_gates.py` | proof for external-gate and dashboard behavior |
+| `tests/test_continuation.py` | proof that externally gated status keeps work in progress |
 | `system_review_graph/` | generated packets, reports, blockers, handoff evidence |
 
 ## Data Flow
@@ -47,7 +52,8 @@ system_review_graph/operator_dashboard.html
 6. Write report to `system_review_graph/readiness_report.json`.
 7. Evaluate country, buyer, expert, contract, source-rights, and launch gates.
 8. Write `system_review_graph/external_gate_report.json`.
-9. Render `system_review_graph/operator_dashboard.html`.
+9. Convert blockers into `system_review_graph/continuation_plan.json`.
+10. Render `system_review_graph/operator_dashboard.html`.
 
 ## Status Rules
 
@@ -58,6 +64,9 @@ system_review_graph/operator_dashboard.html
 | `blocked_unsafe` | an unsafe external counter or unsupported claim opened |
 
 The expected local product status is `ready_with_external_gates`.
+That is not a final startup status. If either gate report is
+`ready_with_external_gates`, the continuation plan must say
+`startup_in_progress` and `must_continue: true`.
 
 ## Proof Boundary
 

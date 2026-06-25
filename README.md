@@ -75,6 +75,7 @@ AILM means AI Lifecycle Management:
 - `docs/AI_NATIVE_DELIVERY.md`: how to run AI-native development at scale.
 - `docs/PRODUCT_AUTOMATION_GUIDE.md`: how product teams can automate idea-to-lane workflows inside a product.
 - `docs/AGENTIC_WORKFLOW_INTEGRATION.md`: durable GitHub/Ruflo/worktree/SRG/code-review graph workflow.
+- `docs/STARTUP_CONTINUATION_RULE.md`: prevents externally gated products from being marked fully done too early.
 - `docs/SYSTEM_REVIEW_GRAPH.md`: the audit graph pattern that worked.
 - `docs/STATE_RECONSTRUCTION.md`: how to recover actual product state from a prompt and repo truth.
 - `docs/AI_LIFECYCLE.md`: AI-native lifecycle, different from human SDLC.
@@ -128,6 +129,13 @@ or cited research, it must call it a blocker and write the next valid move.
 For complex products, local software completion is not enough. Hardware,
 firmware/OS, simulation, bench validation, procurement, compliance, and field
 operation must each have evidence or blocker rows.
+
+For startup/product work, `ready_with_external_gates` is also not final. It
+means the software loop can be used internally while the startup remains
+`startup_in_progress`. A product repo must write
+`system_review_graph/continuation_plan.json` with `must_continue: true` and
+next evidence lanes until buyer, expert, country, contract, data, screening,
+and launch gates are closed.
 
 ## Multi-Repo Execution
 

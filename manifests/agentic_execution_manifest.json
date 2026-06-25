@@ -126,7 +126,7 @@
       "purpose": "Keep a long-running objective active across proof loops until complete or explicitly blocked.",
       "required_inputs": ["objective", "repos", "done_predicates"],
       "outputs": ["goal_status", "proof_summary", "remaining_blockers"],
-      "proof_gates": ["done_predicates_checked", "blockers_have_next_valid_move"]
+      "proof_gates": ["done_predicates_checked", "blockers_have_next_valid_move", "ready_with_external_gates_has_continuation_plan"]
     }
   ],
   "skills": [
@@ -190,6 +190,14 @@
       "allowed_effects": ["read blocker ledgers", "mark stale blockers with next_valid_move"],
       "prohibited_effects": ["close blocker without evidence"],
       "proof_output": "current blocker table"
+    },
+    {
+      "id": "startup_continuation_sweep",
+      "cadence": "before completion claims for product/startup work",
+      "trigger": "readiness or external-gate status is ready_with_external_gates",
+      "allowed_effects": ["read generated reports", "write continuation plan", "write blocker rows"],
+      "prohibited_effects": ["claim fully operational or launch ready while must_continue is true"],
+      "proof_output": "system_review_graph/continuation_plan.json"
     },
     {
       "id": "nightly_eval_loop",
@@ -355,6 +363,13 @@
       "failure_output": "handoff blocker"
     },
     {
+      "id": "ready_with_external_gates_continuation",
+      "predicate": "Any product reporting ready_with_external_gates has system_review_graph/continuation_plan.json with status startup_in_progress, must_continue true, continuation lanes, and premature completion claims closed.",
+      "measurement": "scripts/product_project_check.py",
+      "pass_condition": "Continuation plan exists and proves the next evidence lanes before final product claims.",
+      "failure_output": "continuation blocker with next_valid_move to generate or repair continuation_plan.json"
+    },
+    {
       "id": "main_push_readiness",
       "predicate": "Main receives only verified slices requested by the user.",
       "measurement": "post-merge checks and git status",
@@ -435,6 +450,7 @@
     "Generated docs and graphs are bounded context, not runtime proof.",
     "Code-review graph contracts orient code review, but source files and tests remain required.",
     "Ruflo memory is coordination state, not a completion claim.",
+    "ready_with_external_gates requires system_review_graph/continuation_plan.json and cannot be reported as fully operational or launch ready while must_continue is true.",
     "Unsafe, paid, live, legal, or external actions stay closed without explicit user intent and repo proof."
   ]
 }

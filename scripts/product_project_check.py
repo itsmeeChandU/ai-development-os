@@ -26,17 +26,21 @@ def main() -> int:
         PROJECT / "data" / "official_source_registry.json",
         PROJECT / "src" / "importer_source_readiness" / "readiness.py",
         PROJECT / "src" / "importer_source_readiness" / "external_gates.py",
+        PROJECT / "src" / "importer_source_readiness" / "continuation.py",
         PROJECT / "src" / "importer_source_readiness" / "operator_report.py",
         PROJECT / "tests" / "test_readiness.py",
         PROJECT / "tests" / "test_external_gates.py",
+        PROJECT / "tests" / "test_continuation.py",
         PROJECT / "scripts" / "run_readiness.py",
         PROJECT / "scripts" / "run_external_gates.py",
         PROJECT / "scripts" / "export_operator_dashboard.py",
+        PROJECT / "scripts" / "plan_continuation.py",
         PROJECT / "scripts" / "check_product.py",
         PROJECT / "docs" / "PRODUCT_AUTOMATION_RUNBOOK.md",
         PROJECT / "docs" / "PRODUCT_STATUS.md",
         PROJECT / "docs" / "OPERATOR_GUIDE.md",
         PROJECT / "system_review_graph" / "external_gate_report.json",
+        PROJECT / "system_review_graph" / "continuation_plan.json",
         PROJECT / "system_review_graph" / "operator_dashboard.html",
         PROJECT / "handoffs" / "product_completion_handoff.md",
     ]
@@ -52,6 +56,7 @@ def main() -> int:
         ["python3", "scripts/run_readiness.py"],
         ["python3", "scripts/run_external_gates.py"],
         ["python3", "scripts/export_operator_dashboard.py"],
+        ["python3", "scripts/plan_continuation.py"],
         ["python3", "scripts/check_product.py"],
     ]
     for command in commands:
@@ -87,6 +92,9 @@ def main() -> int:
     external = json.loads(
         (PROJECT / "system_review_graph" / "external_gate_report.json").read_text(encoding="utf-8")
     )
+    continuation = json.loads(
+        (PROJECT / "system_review_graph" / "continuation_plan.json").read_text(encoding="utf-8")
+    )
     if report.get("status") != "ready_with_external_gates" or report.get("blocker_count") != 9:
         print("Product project check: FAIL")
         print("unexpected product readiness report")
@@ -95,12 +103,28 @@ def main() -> int:
         print("Product project check: FAIL")
         print("unexpected external gate report")
         return 1
+    if (
+        continuation.get("status") != "startup_in_progress"
+        or continuation.get("must_continue") is not True
+        or continuation.get("lane_count", 0) < 5
+    ):
+        print("Product project check: FAIL")
+        print("unexpected continuation plan")
+        return 1
+    closed_claims = set(continuation.get("closed_claims", []))
+    required_closed_claims = {"fully_operational", "launch_ready", "commercially_ready"}
+    if not required_closed_claims.issubset(closed_claims):
+        print("Product project check: FAIL")
+        print("continuation plan does not close premature completion claims")
+        return 1
 
     print("Product project check: PASS")
     print(f"project={PROJECT.relative_to(ROOT)}")
     print(f"status={report['status']}")
     print(f"blocker_count={report['blocker_count']}")
     print(f"external_blocker_count={external['blocker_count']}")
+    print(f"continuation_lanes={continuation['lane_count']}")
+    print(f"startup_status={continuation['status']}")
     return 0
 
 

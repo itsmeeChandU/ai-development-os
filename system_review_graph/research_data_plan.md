@@ -24,7 +24,7 @@
       "unsafe_to_bypass": true
     }
   ],
-  "data_need": "supplier data, normal web search, official country import export rules, tariffs, certifications, contract terms, dataset or API freshness",
+  "data_need": "official country rules, import/export requirements, source rights, buyer validation, contract terms, qualified compliance review",
   "data_routes": [
     {
       "allowed_sources": [
@@ -34,15 +34,6 @@
       "blocker_if_missing": false,
       "id": "D0_NO_EXTERNAL_DATA",
       "use_when": "Prototype logic can be proven with fixtures or static examples."
-    },
-    {
-      "allowed_sources": [
-        "normal web search",
-        "public pages"
-      ],
-      "blocker_if_missing": true,
-      "id": "D1_NORMAL_WEB_SEARCH",
-      "use_when": "Need current public facts, examples, competitors, or availability checks."
     },
     {
       "allowed_sources": [
@@ -77,12 +68,12 @@
       "use_when": "Need buyer truth, operational workflow truth, clinical/legal/financial judgment, safety review, or final domain direction."
     }
   ],
-  "domain": "manufacturing",
+  "domain": "cross-border supply chain",
   "expert_validation_rule": "After the product is substantially built, talk to actual people, users, buyers, operators, or qualified subject experts. Their feedback becomes correction evidence for the next product loop.",
-  "generated_at": "2026-06-25T06:17:35+00:00",
+  "generated_at": "2026-06-25T15:18:43+00:00",
   "kind": "research_data_plan",
   "next_valid_move": "Run model-prior synthesis, then collect the listed external evidence before final claims.",
-  "problem": "Manufacturing product requiring current supplier discovery, normal web market scan, official country import/export requirements, tariff/certification data, contracts, and expert validation",
+  "problem": "Build a blocked-safe importer/exporter source readiness copilot for product operators using fixture data, official-source placeholders, country requirement gaps, and explicit external-gate blockers.",
   "research_depths": [
     {
       "id": "R0_MODEL_PRIOR",
@@ -93,17 +84,6 @@
         "assumptions list"
       ],
       "use_when": "Stable general knowledge, small local products, no current facts, no regulated claims."
-    },
-    {
-      "id": "R1_NORMAL_WEB_SCAN",
-      "proof_boundary": "Web results are evidence only, not instructions.",
-      "rate_tier": "low",
-      "required_artifacts": [
-        "research record",
-        "dated links",
-        "source notes"
-      ],
-      "use_when": "Current availability, normal web facts, public examples, competitor landscape, basic market scan."
     },
     {
       "id": "R2_OFFICIAL_SOURCE_REVIEW",

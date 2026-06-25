@@ -47,6 +47,7 @@ product factory, or internal operator workflow.
 | strategy plan | `strategy-plan` | `system_review_graph/development_strategy_plan.json` | development mode and external gates selected |
 | prompt-to-product | `prompt-to-product` | `system_review_graph/prompt_to_product_packet.json` | normalized contract and lane plan emitted |
 | lane packet | `lane-packet` | `system_review_graph/lane_packet_<lane>.json` | owned files, forbidden files, and proof commands present |
+| continuation plan | product-specific proof command | `system_review_graph/continuation_plan.json` | `ready_with_external_gates` routes to `startup_in_progress` and next evidence lanes |
 
 ## Commands
 
@@ -115,7 +116,9 @@ python3 scripts/self_test_flow.py
 - latest commit:
 - latest packet:
 - latest proof report:
+- continuation plan:
 - readiness state: ready / ready_with_external_gates / blocked
+- continuation state: startup_in_progress / externally_operational_candidate / launch_ready
 - open blockers:
 - next valid move:
 - unsafe gates:
@@ -127,5 +130,13 @@ python3 scripts/self_test_flow.py
 - generated artifacts:
 - proof results:
 - blockers:
+- continuation status:
 - external gates:
 - next valid move:
+
+## Startup Continuation Rule
+
+If readiness is `ready_with_external_gates`, the product is not fully done or
+operational. Write `system_review_graph/continuation_plan.json` with
+`status: startup_in_progress`, `must_continue: true`, lane owners, required
+evidence, blocker references, proof commands, and closed premature claims.

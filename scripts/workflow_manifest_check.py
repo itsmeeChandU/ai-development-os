@@ -16,6 +16,7 @@ REQUIRED_TOP_LEVEL = {
     "purpose",
     "execution_manifest",
     "canonical_truth",
+    "startup_continuation_rule",
     "repo_roles",
     "agent_modes",
     "version_control_rules",
@@ -74,6 +75,15 @@ def validate_manifest(manifest: dict[str, Any]) -> list[str]:
     gates = set((manifest.get("blocker_schema") or {}).get("gate_values", []))
     if gates != {"closed", "open", "not_applicable"}:
         errors.append("blocker_schema.gate_values must be closed/open/not_applicable")
+
+    continuation = manifest.get("startup_continuation_rule") or {}
+    if continuation.get("trigger_status") != "ready_with_external_gates":
+        errors.append("startup_continuation_rule.trigger_status must be ready_with_external_gates")
+    required_artifact = continuation.get("required_artifact")
+    if required_artifact != "system_review_graph/continuation_plan.json":
+        errors.append("startup_continuation_rule.required_artifact must be system_review_graph/continuation_plan.json")
+    if "fully_operational" not in continuation.get("closed_claims_while_continuing", []):
+        errors.append("startup_continuation_rule must close fully_operational claims while continuing")
 
     return errors
 

@@ -85,15 +85,17 @@
         "docs/OPERATOR_GUIDE.md",
         "system_review_graph/readiness_report.json",
         "system_review_graph/external_gate_report.json",
+        "system_review_graph/continuation_plan.json",
         "system_review_graph/operator_dashboard.html"
       ],
       "proof_commands": [
         "python3 scripts/check_product.py",
         "python3 scripts/run_external_gates.py",
         "python3 scripts/export_operator_dashboard.py",
+        "python3 scripts/plan_continuation.py",
         "python3 -m unittest discover -s tests -p 'test_*.py'"
       ],
-      "allowed_use": "Hold the actual importer/exporter source readiness product implementation and proof artifacts."
+      "allowed_use": "Hold the actual importer/exporter source readiness product implementation, continuation lanes, and proof artifacts."
     },
     {
       "id": "future-product-repo",

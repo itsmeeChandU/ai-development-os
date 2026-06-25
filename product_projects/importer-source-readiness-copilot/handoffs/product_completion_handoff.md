@@ -11,14 +11,16 @@ import/export source-proof idea.
 - source idea: Intelligence Hub `IQ-0197` importer/exporter source-proof lane
 - product repo: `itsmeeChandU/importer-source-readiness-copilot`
 - product repo URL: `https://github.com/itsmeeChandU/importer-source-readiness-copilot`
-- product repo commit: `5252a23`
+- product repo state: pushed on private GitHub `main`
 - local repo: `/Users/chandu/Workspace/OpenSource/importer-source-readiness-copilot`
-- status: `ready_with_external_gates`
+- local software status: `ready_with_external_gates`
+- startup continuation status: `startup_in_progress`
 
 ## Changed Files
 
 - `src/importer_source_readiness/readiness.py`
 - `src/importer_source_readiness/external_gates.py`
+- `src/importer_source_readiness/continuation.py`
 - `src/importer_source_readiness/operator_report.py`
 - `src/importer_source_readiness/__init__.py`
 - `data/sample_source_cards.json`
@@ -28,9 +30,11 @@ import/export source-proof idea.
 - `scripts/run_readiness.py`
 - `scripts/run_external_gates.py`
 - `scripts/export_operator_dashboard.py`
+- `scripts/plan_continuation.py`
 - `scripts/check_product.py`
 - `tests/test_readiness.py`
 - `tests/test_external_gates.py`
+- `tests/test_continuation.py`
 - `docs/STARTUP_BRIEF.md`
 - `docs/INSTRUCTION_CONTRACT.md`
 - `docs/ARCHITECTURE_OVERVIEW.md`
@@ -46,6 +50,7 @@ python3 -m unittest discover -s tests -p 'test_*.py'
 python3 scripts/run_readiness.py
 python3 scripts/run_external_gates.py
 python3 scripts/export_operator_dashboard.py
+python3 scripts/plan_continuation.py
 python3 scripts/check_product.py
 python3 ../../scripts/blocker_ledger.py validate --input system_review_graph/blockers.jsonl --out /tmp/importer-source-readiness-blocker-ledger-report.json
 ```
@@ -56,9 +61,11 @@ python3 ../../scripts/blocker_ledger.py validate --input system_review_graph/blo
 - product CLI: pass
 - external gate CLI: pass
 - operator dashboard export: pass
+- continuation plan: pass
 - blocker ledger: pass, 9 rows
 - readiness report: `system_review_graph/readiness_report.json`
 - external gate report: `system_review_graph/external_gate_report.json`
+- continuation plan: `system_review_graph/continuation_plan.json`
 - operator dashboard: `system_review_graph/operator_dashboard.html`
 - product repo proof: pushed to private GitHub `main`
 
@@ -72,6 +79,7 @@ python3 ../../scripts/blocker_ledger.py validate --input system_review_graph/blo
 - `system_review_graph/lane_packet_workflow-coordinator.json`
 - `system_review_graph/readiness_report.json`
 - `system_review_graph/external_gate_report.json`
+- `system_review_graph/continuation_plan.json`
 - `system_review_graph/operator_dashboard.html`
 - `system_review_graph/blockers.jsonl`
 - `system_review_graph/blocker_ledger_report.json`
@@ -103,5 +111,7 @@ All unsafe gates remain closed:
 ## Next Valid Move
 
 Continue the product by adding current official-source refreshes, defining a
-country requirements matrix, and collecting qualified review before any
-external, commercial, or public claim.
+country requirements matrix, collecting qualified review, and closing the
+evidence lanes in `system_review_graph/continuation_plan.json` before any
+external, commercial, operational, launch, supplier, buyer, customs, tariff, or
+public claim.

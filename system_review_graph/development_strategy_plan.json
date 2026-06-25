@@ -3,16 +3,6 @@
     {
       "evidence": "manifests/development_strategy_router.json",
       "gate": "closed",
-      "id": "strategy:m4_hardware_manufacturing:external-inputs",
-      "issue": "development mode needs external inputs before final readiness",
-      "module": "development_strategy_router",
-      "next_valid_move": "Collect or block: manufacturer quotes, component lead times, certification needs, prototype/bench access",
-      "owner": "architect",
-      "unsafe_to_bypass": true
-    },
-    {
-      "evidence": "manifests/development_strategy_router.json",
-      "gate": "closed",
       "id": "strategy:m5_cross_border_supply_chain:external-inputs",
       "issue": "development mode needs external inputs before final readiness",
       "module": "development_strategy_router",
@@ -23,10 +13,10 @@
     {
       "evidence": "manifests/development_strategy_router.json",
       "gate": "closed",
-      "id": "strategy:m6_commercial_contract_dependent:external-inputs",
+      "id": "strategy:m1_data_api_product:external-inputs",
       "issue": "development mode needs external inputs before final readiness",
       "module": "development_strategy_router",
-      "next_valid_move": "Collect or block: written contract, licensing terms, commercial/legal review",
+      "next_valid_move": "Collect or block: API terms, credentials, rate limits, source rights",
       "owner": "architect",
       "unsafe_to_bypass": true
     }
@@ -61,22 +51,21 @@
       "launch_gate"
     ]
   },
-  "field": "manufacturing",
+  "field": "cross-border supply chain",
   "field_playbooks": [
     {
-      "default_mode": "M4_HARDWARE_MANUFACTURING",
-      "field": "manufacturing",
+      "default_mode": "M1_DATA_API_PRODUCT",
+      "field": "data_product",
       "first_agents": [
-        "hardware",
-        "procurement",
-        "simulation",
-        "manufacturing"
+        "research",
+        "data",
+        "surgeon",
+        "reviewer"
       ],
       "first_artifacts": [
-        "BOM",
-        "supplier shortlist",
-        "manufacturing assumptions",
-        "prototype blockers"
+        "source contract",
+        "fixture",
+        "freshness policy"
       ]
     },
     {
@@ -93,51 +82,12 @@
         "tariff/customs evidence",
         "logistics blockers"
       ]
-    },
-    {
-      "default_mode": "M6_COMMERCIAL_CONTRACT_DEPENDENT",
-      "field": "contract_dependent",
-      "first_agents": [
-        "legal",
-        "operations",
-        "reviewer"
-      ],
-      "first_artifacts": [
-        "contract checklist",
-        "terms blocker",
-        "responsibility boundary"
-      ]
     }
   ],
-  "generated_at": "2026-06-25T06:18:58+00:00",
-  "idea": "Manufacturing product requiring supplier discovery, country import/export checks, contracts, and logistics",
+  "generated_at": "2026-06-25T15:18:43+00:00",
+  "idea": "Build a blocked-safe importer/exporter source readiness copilot for product operators using fixture data, official-source placeholders, country requirement gaps, and explicit external-gate blockers.",
   "kind": "development_strategy_plan",
   "modes": [
-    {
-      "agent_mix": [
-        "research",
-        "hardware",
-        "simulation",
-        "procurement",
-        "manufacturing",
-        "reviewer"
-      ],
-      "external_inputs": [
-        "manufacturer quotes",
-        "component lead times",
-        "certification needs",
-        "prototype/bench access"
-      ],
-      "id": "M4_HARDWARE_MANUFACTURING",
-      "proof_gates": [
-        "datasheets",
-        "BOM",
-        "supplier shortlist",
-        "simulation or bench blocker",
-        "manufacturing plan"
-      ],
-      "use_when": "Physical products, electronics, embedded systems, devices, robotics, components, manufacturing, or procurement."
-    },
     {
       "agent_mix": [
         "research",
@@ -163,23 +113,25 @@
     {
       "agent_mix": [
         "research",
-        "legal",
-        "operations",
+        "data",
+        "architect",
+        "surgeon",
         "reviewer"
       ],
       "external_inputs": [
-        "written contract",
-        "licensing terms",
-        "commercial/legal review"
+        "API terms",
+        "credentials",
+        "rate limits",
+        "source rights"
       ],
-      "id": "M6_COMMERCIAL_CONTRACT_DEPENDENT",
+      "id": "M1_DATA_API_PRODUCT",
       "proof_gates": [
-        "contract checklist",
-        "terms review blocker",
-        "responsibility boundary",
-        "launch no-claim gate"
+        "data source contract",
+        "fixture",
+        "freshness check",
+        "integration test"
       ],
-      "use_when": "Needs partner agreements, manufacturing contracts, licensing, data contracts, SLAs, resale rights, or commercial exceptions."
+      "use_when": "Products that require APIs, data feeds, credentials, freshness, lineage, rights, or repeatable ingestion."
     }
   ],
   "next_valid_move": "Assign agents by mode, collect external inputs, and keep final claims blocked until evidence exists.",

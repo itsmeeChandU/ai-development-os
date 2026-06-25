@@ -28,6 +28,8 @@ should convert a user idea into artifacts that agents can execute safely:
 5. context bundle: SRG and code-review graph context for bounded source review
 6. lane packet: allowed files, forbidden files, proof commands, and handoff
 7. proof report: tests, generated artifacts, blockers, and launch state
+8. continuation plan: required next lanes when the product is only internally
+   ready with external gates
 
 ## Minimum Product Integration
 
@@ -44,6 +46,9 @@ Add these pieces to the product or product-factory repo:
 
 The product must treat generated packets as coordination surfaces. Completion
 still requires code/data changes, tests, generated artifacts, and branch proof.
+If a product reports `ready_with_external_gates`, completion also requires a
+`system_review_graph/continuation_plan.json` artifact that keeps the startup
+`startup_in_progress` and names the next evidence lanes.
 
 ## Input Contract
 
@@ -125,6 +130,7 @@ In a product, wire the flow as a state machine:
 | lane_assigned | create worktree/branch/lane packet | worker handoff |
 | proof_running | run tests and artifact checks | proof report |
 | blocked_or_ready | publish blocker/readiness state | next valid move |
+| continuation_required | write continuation plan for externally gated work | evidence lanes and closed premature claims |
 
 Do not skip from `idea_received` to `lane_assigned` for complex products. The
 router is what prevents the product from treating manufacturing, regulated,
@@ -168,6 +174,24 @@ For these, the product must collect dated source records, official-source
 evidence, datasets/API contracts, qualified expert review, user feedback, or a
 blocker row with `next_valid_move`.
 
+## Startup Continuation Rule
+
+`ready_with_external_gates` means the local software loop can be useful
+internally. It does not mean the startup is done, operational, launch ready,
+commercially ready, legally ready, buyer validated, supplier ready, or
+customs/tariff ready.
+
+When this status appears, the product must write
+`system_review_graph/continuation_plan.json` with:
+
+- `status: startup_in_progress`
+- `must_continue: true`
+- evidence lanes for buyer validation, qualified review, country rules, source
+  rights/freshness, contracts, restricted-party screening, and launch approval
+- `closed_claims` that include `fully_operational`, `launch_ready`, and
+  `commercially_ready`
+- `next_valid_move` for the next evidence lane
+
 ## CI And Scheduled Automation
 
 Use CI to keep the automation surface honest:
@@ -210,4 +234,5 @@ The product automation is working when:
 - missing data/contracts/experts become blocker rows
 - tests and generated artifact checks run in CI
 - the operator surface shows ready vs blocked with `next_valid_move`
+- externally gated products generate continuation lanes before completion claims
 - no external effect opens without explicit approval and proof

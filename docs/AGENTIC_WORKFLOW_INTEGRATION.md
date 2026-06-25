@@ -145,6 +145,26 @@ The coordinator should move quickly where software proof is enough and slow
 down only at external gates. External inputs are not chat blockers; they become
 machine-readable blocker rows with owner, evidence, gate, and next valid move.
 
+## Startup Continuation Rule
+
+`ready_with_external_gates` is a useful internal software state, not final
+startup completion. When any product readiness or external-gate report has that
+status, the product repo must generate:
+
+```text
+system_review_graph/continuation_plan.json
+```
+
+That plan must keep the product `startup_in_progress`, set
+`must_continue: true`, list the next evidence lanes, and close premature claims
+such as `fully_operational`, `launch_ready`, and `commercially_ready`.
+
+The difference is important: AI agents can build the local product loop quickly,
+but current country rules, source rights, buyer demand, contracts, qualified
+review, screening, and public launch approval still require evidence or blocker
+rows. A coordinator must not mark the long-running goal complete until those
+lanes are closed or the goal was explicitly scoped as local-only.
+
 ## Prompt-To-Product Runtime
 
 The local runtime now materializes the operating flow into files:

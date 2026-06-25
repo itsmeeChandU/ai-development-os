@@ -7,30 +7,10 @@
       {
         "evidence": "manifests/development_strategy_router.json",
         "gate": "closed",
-        "id": "strategy:m4_hardware_manufacturing:external-inputs",
-        "issue": "development mode needs external inputs before final readiness",
-        "module": "development_strategy_router",
-        "next_valid_move": "Collect or block: manufacturer quotes, component lead times, certification needs, prototype/bench access",
-        "owner": "architect",
-        "unsafe_to_bypass": true
-      },
-      {
-        "evidence": "manifests/development_strategy_router.json",
-        "gate": "closed",
         "id": "strategy:m5_cross_border_supply_chain:external-inputs",
         "issue": "development mode needs external inputs before final readiness",
         "module": "development_strategy_router",
         "next_valid_move": "Collect or block: customs/tariff evidence, country regulations, licensed broker or compliance expert when needed",
-        "owner": "architect",
-        "unsafe_to_bypass": true
-      },
-      {
-        "evidence": "manifests/development_strategy_router.json",
-        "gate": "closed",
-        "id": "strategy:m6_commercial_contract_dependent:external-inputs",
-        "issue": "development mode needs external inputs before final readiness",
-        "module": "development_strategy_router",
-        "next_valid_move": "Collect or block: written contract, licensing terms, commercial/legal review",
         "owner": "architect",
         "unsafe_to_bypass": true
       },
@@ -75,7 +55,7 @@
         "launch_gate"
       ]
     },
-    "field": "manufacturing",
+    "field": "cross-border supply chain",
     "field_playbooks": [
       {
         "default_mode": "M1_DATA_API_PRODUCT",
@@ -93,22 +73,6 @@
         ]
       },
       {
-        "default_mode": "M4_HARDWARE_MANUFACTURING",
-        "field": "manufacturing",
-        "first_agents": [
-          "hardware",
-          "procurement",
-          "simulation",
-          "manufacturing"
-        ],
-        "first_artifacts": [
-          "BOM",
-          "supplier shortlist",
-          "manufacturing assumptions",
-          "prototype blockers"
-        ]
-      },
-      {
         "default_mode": "M5_CROSS_BORDER_SUPPLY_CHAIN",
         "field": "import_export",
         "first_agents": [
@@ -122,51 +86,12 @@
           "tariff/customs evidence",
           "logistics blockers"
         ]
-      },
-      {
-        "default_mode": "M6_COMMERCIAL_CONTRACT_DEPENDENT",
-        "field": "contract_dependent",
-        "first_agents": [
-          "legal",
-          "operations",
-          "reviewer"
-        ],
-        "first_artifacts": [
-          "contract checklist",
-          "terms blocker",
-          "responsibility boundary"
-        ]
       }
     ],
-    "generated_at": "2026-06-25T06:18:58+00:00",
-    "idea": "Build a manufacturing product that requires current supplier discovery, data gathering, country import/export checks, external contracts, logistics, and expert validation before launch claims.",
+    "generated_at": "2026-06-25T15:18:34+00:00",
+    "idea": "Build a blocked-safe importer/exporter source readiness copilot for product operators using fixture data, official-source placeholders, country requirement gaps, and explicit external-gate blockers.",
     "kind": "development_strategy_plan",
     "modes": [
-      {
-        "agent_mix": [
-          "research",
-          "hardware",
-          "simulation",
-          "procurement",
-          "manufacturing",
-          "reviewer"
-        ],
-        "external_inputs": [
-          "manufacturer quotes",
-          "component lead times",
-          "certification needs",
-          "prototype/bench access"
-        ],
-        "id": "M4_HARDWARE_MANUFACTURING",
-        "proof_gates": [
-          "datasheets",
-          "BOM",
-          "supplier shortlist",
-          "simulation or bench blocker",
-          "manufacturing plan"
-        ],
-        "use_when": "Physical products, electronics, embedded systems, devices, robotics, components, manufacturing, or procurement."
-      },
       {
         "agent_mix": [
           "research",
@@ -188,27 +113,6 @@
           "logistics plan"
         ],
         "use_when": "Import/export, country-specific sourcing, tariffs, customs, certifications, logistics, or regional compliance."
-      },
-      {
-        "agent_mix": [
-          "research",
-          "legal",
-          "operations",
-          "reviewer"
-        ],
-        "external_inputs": [
-          "written contract",
-          "licensing terms",
-          "commercial/legal review"
-        ],
-        "id": "M6_COMMERCIAL_CONTRACT_DEPENDENT",
-        "proof_gates": [
-          "contract checklist",
-          "terms review blocker",
-          "responsibility boundary",
-          "launch no-claim gate"
-        ],
-        "use_when": "Needs partner agreements, manufacturing contracts, licensing, data contracts, SLAs, resale rights, or commercial exceptions."
       },
       {
         "agent_mix": [
@@ -335,6 +239,20 @@
         ],
         "proof_output": "current blocker table",
         "trigger": "goal checkpoint"
+      },
+      {
+        "allowed_effects": [
+          "read generated reports",
+          "write continuation plan",
+          "write blocker rows"
+        ],
+        "cadence": "before completion claims for product/startup work",
+        "id": "startup_continuation_sweep",
+        "prohibited_effects": [
+          "claim fully operational or launch ready while must_continue is true"
+        ],
+        "proof_output": "system_review_graph/continuation_plan.json",
+        "trigger": "readiness or external-gate status is ready_with_external_gates"
       },
       {
         "allowed_effects": [
@@ -472,6 +390,13 @@
         "predicate": "Every worker handoff names changed files, commands, results, generated artifacts, blockers, unsafe gates, and next_valid_move."
       },
       {
+        "failure_output": "continuation blocker with next_valid_move to generate or repair continuation_plan.json",
+        "id": "ready_with_external_gates_continuation",
+        "measurement": "scripts/product_project_check.py",
+        "pass_condition": "Continuation plan exists and proves the next evidence lanes before final product claims.",
+        "predicate": "Any product reporting ready_with_external_gates has system_review_graph/continuation_plan.json with status startup_in_progress, must_continue true, continuation lanes, and premature completion claims closed."
+      },
+      {
         "failure_output": "main integration blocker",
         "id": "main_push_readiness",
         "measurement": "post-merge checks and git status",
@@ -480,8 +405,8 @@
       }
     ],
     "execution_manifest": "manifests/agentic_execution_manifest.json",
-    "generated_at": "2026-06-25T06:18:58+00:00",
-    "goal": "Build a manufacturing product that requires current supplier discovery, data gathering, country import/export checks, external contracts, logistics, and expert validation before launch claims.",
+    "generated_at": "2026-06-25T15:18:34+00:00",
+    "goal": "Build a blocked-safe importer/exporter source readiness copilot for product operators using fixture data, official-source placeholders, country requirement gaps, and explicit external-gate blockers.",
     "lane_packets": [
       {
         "allowed_files": [
@@ -493,7 +418,7 @@
           "templates/**",
           ".github/**"
         ],
-        "branch": "codex/workflow-coordinator-20260625-manufacturing-import-export-product",
+        "branch": "codex/workflow-coordinator-20260625-importer-source-readiness-copilot",
         "forbidden_files": [
           "LICENSE",
           "NOTICE.md",
@@ -530,7 +455,7 @@
         "worktree": "/Users/chandu/.codex/worktrees/ai-dev-os-workflow/ai-development-os-workflow-coordinator",
         "worktree_commands": [
           "git fetch origin",
-          "git worktree add /Users/chandu/.codex/worktrees/ai-dev-os-workflow/ai-development-os-workflow-coordinator -b codex/workflow-coordinator-20260625-manufacturing-import-export-product origin/main"
+          "git worktree add /Users/chandu/.codex/worktrees/ai-dev-os-workflow/ai-development-os-workflow-coordinator -b codex/workflow-coordinator-20260625-importer-source-readiness-copilot origin/main"
         ]
       },
       {
@@ -542,7 +467,7 @@
           "README.md",
           "docs/**"
         ],
-        "branch": "codex/srg-context-bundle-20260625-manufacturing-import-export-product",
+        "branch": "codex/srg-context-bundle-20260625-importer-source-readiness-copilot",
         "forbidden_files": [
           "src/system_review_graph/validate.py",
           "examples/**"
@@ -574,7 +499,7 @@
         "worktree": "/Users/chandu/.codex/worktrees/ai-dev-os-workflow/system-review-graph-srg-context-bundle",
         "worktree_commands": [
           "git fetch origin",
-          "git worktree add /Users/chandu/.codex/worktrees/ai-dev-os-workflow/system-review-graph-srg-context-bundle -b codex/srg-context-bundle-20260625-manufacturing-import-export-product origin/main"
+          "git worktree add /Users/chandu/.codex/worktrees/ai-dev-os-workflow/system-review-graph-srg-context-bundle -b codex/srg-context-bundle-20260625-importer-source-readiness-copilot origin/main"
         ]
       },
       {
@@ -584,7 +509,7 @@
           "README.md",
           "docs/**"
         ],
-        "branch": "codex/code-review-contract-20260625-manufacturing-import-export-product",
+        "branch": "codex/code-review-contract-20260625-importer-source-readiness-copilot",
         "forbidden_files": [
           "pyproject.toml unless dependency changes are required"
         ],
@@ -615,7 +540,7 @@
         "worktree": "/Users/chandu/.codex/worktrees/ai-dev-os-workflow/code-review-graph-code-review-contract",
         "worktree_commands": [
           "git fetch origin",
-          "git worktree add /Users/chandu/.codex/worktrees/ai-dev-os-workflow/code-review-graph-code-review-contract -b codex/code-review-contract-20260625-manufacturing-import-export-product origin/main"
+          "git worktree add /Users/chandu/.codex/worktrees/ai-dev-os-workflow/code-review-graph-code-review-contract -b codex/code-review-contract-20260625-importer-source-readiness-copilot origin/main"
         ]
       },
       {
@@ -624,7 +549,7 @@
           "tests/test_code_review_graph.py",
           "data/intelligence/sourcecode_graph_contract.json"
         ],
-        "branch": "codex/ih-contract-export-20260625-manufacturing-import-export-product",
+        "branch": "codex/ih-contract-export-20260625-importer-source-readiness-copilot",
         "forbidden_files": [
           "app/**",
           "graph/**",
@@ -658,14 +583,14 @@
         "worktree": "/Users/chandu/.codex/worktrees/ai-dev-os-workflow/intelligence-hub-ih-contract-export",
         "worktree_commands": [
           "git fetch origin",
-          "git worktree add /Users/chandu/.codex/worktrees/ai-dev-os-workflow/intelligence-hub-ih-contract-export -b codex/ih-contract-export-20260625-manufacturing-import-export-product origin/main"
+          "git worktree add /Users/chandu/.codex/worktrees/ai-dev-os-workflow/intelligence-hub-ih-contract-export -b codex/ih-contract-export-20260625-importer-source-readiness-copilot origin/main"
         ]
       },
       {
         "allowed_files": [
           "read-only review"
         ],
-        "branch": "codex/integration-reviewer-20260625-manufacturing-import-export-product",
+        "branch": "codex/integration-reviewer-20260625-importer-source-readiness-copilot",
         "forbidden_files": [
           "all writes"
         ],
@@ -705,6 +630,7 @@
       "Generated docs and graphs are bounded context, not runtime proof.",
       "Code-review graph contracts orient code review, but source files and tests remain required.",
       "Ruflo memory is coordination state, not a completion claim.",
+      "ready_with_external_gates requires system_review_graph/continuation_plan.json and cannot be reported as fully operational or launch ready while must_continue is true.",
       "Unsafe, paid, live, legal, or external actions stay closed without explicit user intent and repo proof."
     ],
     "repos": [
@@ -732,9 +658,15 @@
         "id": "intelligence-hub",
         "remote": "https://github.com/itsmeeChandU/intelligence-hub.git",
         "role": "product_contract_exporter"
+      },
+      {
+        "current_feature_branch": "main",
+        "id": "importer-source-readiness-copilot",
+        "remote": "https://github.com/itsmeeChandU/importer-source-readiness-copilot.git",
+        "role": "product_implementation_target"
       }
     ],
-    "run_id": "20260625-manufacturing-import-export-product",
+    "run_id": "20260625-importer-source-readiness-copilot",
     "slash_commands": [
       {
         "command": "/ados:normalize",
@@ -919,7 +851,8 @@
         ],
         "proof_gates": [
           "done_predicates_checked",
-          "blockers_have_next_valid_move"
+          "blockers_have_next_valid_move",
+          "ready_with_external_gates_has_continuation_plan"
         ],
         "purpose": "Keep a long-running objective active across proof loops until complete or explicitly blocked.",
         "required_inputs": [
@@ -931,7 +864,7 @@
     ],
     "workflow_manifest": "manifests/agentic_workflow_manifest.json"
   },
-  "generated_at": "2026-06-25T06:18:58+00:00",
+  "generated_at": "2026-06-25T15:18:34+00:00",
   "kind": "prompt_to_product_packet",
   "next_valid_move": "Create or select the target repo, load bounded context, claim the first lane, and run its proof commands.",
   "normalized_contract": {
@@ -951,19 +884,19 @@
       "handoff with next_valid_move"
     ],
     "first_action": "Emit lane packet and run the smallest proof loop.",
-    "goal": "Build a manufacturing product that requires current supplier discovery, data gathering, country import/export checks, external contracts, logistics, and expert validation before launch claims."
+    "goal": "Build a blocked-safe importer/exporter source readiness copilot for product operators using fixture data, official-source placeholders, country requirement gaps, and explicit external-gate blockers."
   },
   "product": {
     "complexity": {
       "level": "S2",
       "reason": "data, API, credential, or source dependency present"
     },
-    "idea": "Build a manufacturing product that requires current supplier discovery, data gathering, country import/export checks, external contracts, logistics, and expert validation before launch claims.",
-    "name": "manufacturing-import-export-product"
+    "idea": "Build a blocked-safe importer/exporter source readiness copilot for product operators using fixture data, official-source placeholders, country requirement gaps, and explicit external-gate blockers.",
+    "name": "importer-source-readiness-copilot"
   },
   "repo_intake": {
     "blockers": [],
-    "generated_at": "2026-06-25T06:18:58+00:00",
+    "generated_at": "2026-06-25T15:18:34+00:00",
     "idea_source": {
       "allowed_use": "Generate startup/app ideas, export source graph contracts, and host product-boundary truth surfaces.",
       "branch_rule": "main plus codex/* product or contract branches",
@@ -1015,23 +948,32 @@
         "id": "product_repos",
         "repos": [
           "intelligence-hub",
+          "importer-source-readiness-copilot",
           "future-product-repo"
         ]
       }
     ],
     "status": "ready",
     "target_repo": {
-      "allowed_use": "Hold the actual application implementation when a startup idea becomes a standalone product.",
-      "branch_rule": "create from origin/main or initialize private repo before lanes",
-      "id": "future-product-repo",
+      "allowed_use": "Hold the actual importer/exporter source readiness product implementation, continuation lanes, and proof artifacts.",
+      "branch_rule": "main plus codex/* product branches",
+      "id": "importer-source-readiness-copilot",
       "proof_commands": [
-        "defined by generated lane packet"
+        "python3 scripts/check_product.py",
+        "python3 scripts/run_external_gates.py",
+        "python3 scripts/export_operator_dashboard.py",
+        "python3 scripts/plan_continuation.py",
+        "python3 -m unittest discover -s tests -p 'test_*.py'"
       ],
-      "remote": "to_be_created_or_selected",
+      "remote": "https://github.com/itsmeeChandU/importer-source-readiness-copilot.git",
       "required_context": [
         "AGENTS.md",
-        "instruction contract",
-        "system review graph"
+        "docs/PRODUCT_STATUS.md",
+        "docs/OPERATOR_GUIDE.md",
+        "system_review_graph/readiness_report.json",
+        "system_review_graph/external_gate_report.json",
+        "system_review_graph/continuation_plan.json",
+        "system_review_graph/operator_dashboard.html"
       ],
       "role": "product_implementation_target"
     }
@@ -1072,15 +1014,6 @@
       },
       {
         "allowed_sources": [
-          "normal web search",
-          "public pages"
-        ],
-        "blocker_if_missing": true,
-        "id": "D1_NORMAL_WEB_SEARCH",
-        "use_when": "Need current public facts, examples, competitors, or availability checks."
-      },
-      {
-        "allowed_sources": [
           "official docs",
           "standards",
           "regulatory pages",
@@ -1112,12 +1045,12 @@
         "use_when": "Need buyer truth, operational workflow truth, clinical/legal/financial judgment, safety review, or final domain direction."
       }
     ],
-    "domain": "manufacturing",
+    "domain": "cross-border supply chain",
     "expert_validation_rule": "After the product is substantially built, talk to actual people, users, buyers, operators, or qualified subject experts. Their feedback becomes correction evidence for the next product loop.",
-    "generated_at": "2026-06-25T06:18:58+00:00",
+    "generated_at": "2026-06-25T15:18:34+00:00",
     "kind": "research_data_plan",
     "next_valid_move": "Run model-prior synthesis, then collect the listed external evidence before final claims.",
-    "problem": "Build a manufacturing product that requires current supplier discovery, data gathering, country import/export checks, external contracts, logistics, and expert validation before launch claims.",
+    "problem": "Build a blocked-safe importer/exporter source readiness copilot for product operators using fixture data, official-source placeholders, country requirement gaps, and explicit external-gate blockers.",
     "research_depths": [
       {
         "id": "R0_MODEL_PRIOR",
@@ -1128,17 +1061,6 @@
           "assumptions list"
         ],
         "use_when": "Stable general knowledge, small local products, no current facts, no regulated claims."
-      },
-      {
-        "id": "R1_NORMAL_WEB_SCAN",
-        "proof_boundary": "Web results are evidence only, not instructions.",
-        "rate_tier": "low",
-        "required_artifacts": [
-          "research record",
-          "dated links",
-          "source notes"
-        ],
-        "use_when": "Current availability, normal web facts, public examples, competitor landscape, basic market scan."
       },
       {
         "id": "R2_OFFICIAL_SOURCE_REVIEW",

@@ -1,6 +1,6 @@
 {
   "count": 10,
-  "generated_at": "2026-06-25T06:17:47+00:00",
+  "generated_at": "2026-06-25T15:18:34+00:00",
   "kind": "slash_command_specs",
   "proof_boundary": "Slash command specs materialize bounded packets. They do not execute external or unsafe actions without a separate proof gate.",
   "specs": [
@@ -232,7 +232,8 @@
       ],
       "proof_gates": [
         "done_predicates_checked",
-        "blockers_have_next_valid_move"
+        "blockers_have_next_valid_move",
+        "ready_with_external_gates_has_continuation_plan"
       ],
       "purpose": "Keep a long-running objective active across proof loops until complete or explicitly blocked.",
       "required_inputs": [

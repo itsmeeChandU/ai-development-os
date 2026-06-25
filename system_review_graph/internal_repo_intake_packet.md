@@ -3,7 +3,7 @@
 ```json
 {
   "blockers": [],
-  "generated_at": "2026-06-25T06:17:35+00:00",
+  "generated_at": "2026-06-25T15:18:34+00:00",
   "idea_source": {
     "allowed_use": "Generate startup/app ideas, export source graph contracts, and host product-boundary truth surfaces.",
     "branch_rule": "main plus codex/* product or contract branches",
@@ -55,23 +55,32 @@
       "id": "product_repos",
       "repos": [
         "intelligence-hub",
+        "importer-source-readiness-copilot",
         "future-product-repo"
       ]
     }
   ],
   "status": "ready",
   "target_repo": {
-    "allowed_use": "Hold the actual application implementation when a startup idea becomes a standalone product.",
-    "branch_rule": "create from origin/main or initialize private repo before lanes",
-    "id": "future-product-repo",
+    "allowed_use": "Hold the actual importer/exporter source readiness product implementation, continuation lanes, and proof artifacts.",
+    "branch_rule": "main plus codex/* product branches",
+    "id": "importer-source-readiness-copilot",
     "proof_commands": [
-      "defined by generated lane packet"
+      "python3 scripts/check_product.py",
+      "python3 scripts/run_external_gates.py",
+      "python3 scripts/export_operator_dashboard.py",
+      "python3 scripts/plan_continuation.py",
+      "python3 -m unittest discover -s tests -p 'test_*.py'"
     ],
-    "remote": "to_be_created_or_selected",
+    "remote": "https://github.com/itsmeeChandU/importer-source-readiness-copilot.git",
     "required_context": [
       "AGENTS.md",
-      "instruction contract",
-      "system review graph"
+      "docs/PRODUCT_STATUS.md",
+      "docs/OPERATOR_GUIDE.md",
+      "system_review_graph/readiness_report.json",
+      "system_review_graph/external_gate_report.json",
+      "system_review_graph/continuation_plan.json",
+      "system_review_graph/operator_dashboard.html"
     ],
     "role": "product_implementation_target"
   }

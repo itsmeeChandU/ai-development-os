@@ -69,6 +69,7 @@ def main() -> int:
         [sys.executable, "scripts/run_readiness.py"],
         [sys.executable, "scripts/run_external_gates.py"],
         [sys.executable, "scripts/export_operator_dashboard.py"],
+        [sys.executable, "scripts/plan_continuation.py"],
     ]
     for command in commands:
         result = _run(command)
@@ -82,6 +83,7 @@ def main() -> int:
     report_path = ROOT / "system_review_graph" / "readiness_report.json"
     report = _load_json(report_path)
     external = _load_json(ROOT / "system_review_graph" / "external_gate_report.json")
+    continuation = _load_json(ROOT / "system_review_graph" / "continuation_plan.json")
     expected = {
         "status": "ready_with_external_gates",
         "row_count": 2,
@@ -99,6 +101,16 @@ def main() -> int:
         failures.append("external gate report should include country, buyer, expert, contract, data, and launch blockers")
     if not (ROOT / "system_review_graph" / "operator_dashboard.html").exists():
         failures.append("operator dashboard was not generated")
+    if continuation.get("status") != "startup_in_progress":
+        failures.append(f"continuation status expected startup_in_progress, got {continuation.get('status')!r}")
+    if continuation.get("must_continue") is not True:
+        failures.append("continuation plan must require continued evidence lanes")
+    if continuation.get("lane_count", 0) < 5:
+        failures.append("continuation plan should include buyer, compliance, country, data, contract, screening, and launch lanes")
+    closed_claims = set(continuation.get("closed_claims", []))
+    for claim in ("fully_operational", "launch_ready", "commercially_ready"):
+        if claim not in closed_claims:
+            failures.append(f"continuation plan must keep {claim} closed")
     failures.extend(_validate_blockers(ROOT / "system_review_graph" / "blockers.jsonl"))
     failures.extend(_validate_blocker_rows(external.get("blockers", []), "external_gate_report.blockers"))
 
@@ -112,6 +124,8 @@ def main() -> int:
     print(f"status={report['status']}")
     print(f"blocker_count={report['blocker_count']}")
     print(f"external_blocker_count={external['blocker_count']}")
+    print(f"continuation_lanes={continuation['lane_count']}")
+    print(f"startup_status={continuation['status']}")
     print("unsafe_gates=closed")
     return 0
 

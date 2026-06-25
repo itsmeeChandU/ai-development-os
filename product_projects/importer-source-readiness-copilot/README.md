@@ -32,6 +32,7 @@ python3 -m unittest discover -s tests -p 'test_*.py'
 python3 scripts/run_readiness.py
 python3 scripts/run_external_gates.py
 python3 scripts/export_operator_dashboard.py
+python3 scripts/plan_continuation.py
 python3 scripts/check_product.py
 ```
 
@@ -40,6 +41,7 @@ The product CLI writes:
 ```text
 system_review_graph/readiness_report.json
 system_review_graph/external_gate_report.json
+system_review_graph/continuation_plan.json
 system_review_graph/blockers.jsonl
 system_review_graph/operator_dashboard.html
 ```
@@ -54,6 +56,11 @@ ready_with_external_gates
 
 That means the local product logic works, but final product claims remain
 blocked until real external evidence exists.
+
+`ready_with_external_gates` is never a final startup status. The product check
+also writes `system_review_graph/continuation_plan.json`; that plan must say
+`startup_in_progress`, `must_continue: true`, and list the next buyer,
+compliance, country, data, contract, screening, and launch evidence lanes.
 
 ## External Gates Kept Closed
 
@@ -72,7 +79,9 @@ blocked until real external evidence exists.
 ## Next Valid Move
 
 Use `system_review_graph/operator_dashboard.html` as the operator surface.
-The product can now show exactly what is stopping external use. To open any
-external claim gate, attach dated evidence to `data/evidence_packets.json`,
-verify country rows in `data/country_requirements_matrix.json`, and rerun
+Use `system_review_graph/continuation_plan.json` as the continuation surface.
+The product can now show exactly what is stopping external use and which lane
+must move next. To open any external claim gate, attach dated evidence to
+`data/evidence_packets.json`, verify country rows in
+`data/country_requirements_matrix.json`, and rerun
 `python3 scripts/check_product.py`.

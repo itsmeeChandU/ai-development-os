@@ -16,13 +16,14 @@ Before meaningful work, read:
 7. `docs/AI_NATIVE_DELIVERY.md`
 8. `docs/PRODUCT_AUTOMATION_GUIDE.md`
 9. `docs/SYSTEM_REVIEW_GRAPH.md`
-10. `manifests/tool_registry.yaml`
-11. `manifests/agentic_workflow_manifest.json`
-12. `manifests/agentic_execution_manifest.json`
-13. `manifests/internal_repo_registry.json`
-14. `manifests/research_data_router.json`
-15. `manifests/development_strategy_router.json`
-16. the relevant template in `templates/`
+10. `docs/STARTUP_CONTINUATION_RULE.md`
+11. `manifests/tool_registry.yaml`
+12. `manifests/agentic_workflow_manifest.json`
+13. `manifests/agentic_execution_manifest.json`
+14. `manifests/internal_repo_registry.json`
+15. `manifests/research_data_router.json`
+16. `manifests/development_strategy_router.json`
+17. the relevant template in `templates/`
 
 ## Operating Rules
 
@@ -45,6 +46,7 @@ Before meaningful work, read:
 - Contributions must follow `CONTRIBUTING.md`, `CONTRIBUTOR_TERMS.md`, and `DCO.txt`.
 - For hardware, OS, regulated, or physical-world products, use `docs/COMPLEX_PRODUCT_PLAYBOOK.md` and add simulation/bench/compliance blockers.
 - For prompt-to-product work, run repo intake, research/data routing, and development strategy routing before assigning implementation lanes.
+- For prompt-to-product work, `ready_with_external_gates` means continue with `system_review_graph/continuation_plan.json`; never report fully done, operational, launch ready, legally ready, customs/tariff ready, supplier ready, buyer validated, or commercially ready while `must_continue` is true.
 - Treat AI model subject synthesis as a first-pass hypothesis; current facts, datasets, official rules, contracts, country import/export needs, and final subject direction need evidence, qualified people, or blocker rows.
 - For broad tool selection, use `docs/TOOL_BREEDING_GROUND.md` and write a tool decision record before adopting major dependencies.
 - Update durable instructions only when a mistake repeats or a workflow becomes stable.
@@ -57,6 +59,7 @@ A task is done only when all of these are true:
 - tests or checks were added/updated where useful
 - generated artifacts reflect current truth
 - all known blockers have owner, reason, evidence, and next valid move
+- startup/product work with external gates has a continuation plan, or the goal was explicitly scoped as local-only
 - unsafe or effectful actions remain closed unless explicitly proven and intended
 - handoff file names changed files, commands run, results, blockers, and next move
 

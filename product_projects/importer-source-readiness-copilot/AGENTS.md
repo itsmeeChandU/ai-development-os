@@ -31,6 +31,7 @@ Before meaningful work, read:
 - Keep the first useful product loop small enough to test locally.
 - Use fixture data until real data rights, credentials, freshness, and source lineage are proven.
 - Keep external effects closed by default: no paid calls, live sends, legal claims, production deploys, or public launch claims without explicit approval and proof.
+- Treat `ready_with_external_gates` as `startup_in_progress`, not done. Generate and follow `system_review_graph/continuation_plan.json` before any fully operational, launch, commercial, supplier, customs, tariff, buyer, or legal readiness claim.
 - Write missing data, API, expert, legal, procurement, or compliance inputs as blocker rows with `next_valid_move`.
 - Every implementation lane needs allowed files, forbidden files, proof commands, generated artifacts, and a handoff.
 - Do not claim completion without code/data changes where required, tests or smoke checks, generated artifacts, blockers, and next valid move.
@@ -44,6 +45,7 @@ python3 -m unittest discover -s tests -p 'test_*.py'
 python3 scripts/run_readiness.py
 python3 scripts/run_external_gates.py
 python3 scripts/export_operator_dashboard.py
+python3 scripts/plan_continuation.py
 python3 scripts/check_product.py
 ```
 
