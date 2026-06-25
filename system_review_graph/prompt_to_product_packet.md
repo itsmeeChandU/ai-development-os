@@ -88,8 +88,8 @@
         ]
       }
     ],
-    "generated_at": "2026-06-25T15:18:34+00:00",
-    "idea": "Build a blocked-safe importer/exporter source readiness copilot for product operators using fixture data, official-source placeholders, country requirement gaps, and explicit external-gate blockers.",
+    "generated_at": "2026-06-25T15:46:03+00:00",
+    "idea": "Build a blocked-safe importer/exporter source readiness copilot for product operators using fixture data, official-source placeholders, country requirement gaps, explicit external-gate blockers, and a private VC pitch readiness packet.",
     "kind": "development_strategy_plan",
     "modes": [
       {
@@ -256,6 +256,20 @@
       },
       {
         "allowed_effects": [
+          "read generated reports",
+          "write investor packet",
+          "write VC pitch readiness report"
+        ],
+        "cadence": "before investor pitch claims",
+        "id": "vc_pitch_readiness_sweep",
+        "prohibited_effects": [
+          "claim revenue, PMF, legal, financing, compliance, buyer, supplier, customs, tariff, public launch, or full operational proof without evidence"
+        ],
+        "proof_output": "system_review_graph/vc_pitch_readiness_report.json",
+        "trigger": "product needs VC pitch readiness"
+      },
+      {
+        "allowed_effects": [
           "run idempotent tests",
           "run validators",
           "write eval report"
@@ -397,6 +411,13 @@
         "predicate": "Any product reporting ready_with_external_gates has system_review_graph/continuation_plan.json with status startup_in_progress, must_continue true, continuation lanes, and premature completion claims closed."
       },
       {
+        "failure_output": "VC pitch blocker with next_valid_move to generate or repair investor packet",
+        "id": "vc_pitch_readiness",
+        "measurement": "scripts/product_project_check.py",
+        "pass_condition": "VC pitch packet is ready for private investor conversations without claiming launch, revenue, PMF, compliance, buyer, supplier, customs, tariff, or financing proof.",
+        "predicate": "A product marked pitch-ready has vc_pitch_readiness_report.json, investor artifacts, sourced claim boundaries, diligence lanes, and premature launch/revenue/PMF/compliance claims closed."
+      },
+      {
         "failure_output": "main integration blocker",
         "id": "main_push_readiness",
         "measurement": "post-merge checks and git status",
@@ -405,8 +426,8 @@
       }
     ],
     "execution_manifest": "manifests/agentic_execution_manifest.json",
-    "generated_at": "2026-06-25T15:18:34+00:00",
-    "goal": "Build a blocked-safe importer/exporter source readiness copilot for product operators using fixture data, official-source placeholders, country requirement gaps, and explicit external-gate blockers.",
+    "generated_at": "2026-06-25T15:46:03+00:00",
+    "goal": "Build a blocked-safe importer/exporter source readiness copilot for product operators using fixture data, official-source placeholders, country requirement gaps, explicit external-gate blockers, and a private VC pitch readiness packet.",
     "lane_packets": [
       {
         "allowed_files": [
@@ -631,6 +652,7 @@
       "Code-review graph contracts orient code review, but source files and tests remain required.",
       "Ruflo memory is coordination state, not a completion claim.",
       "ready_with_external_gates requires system_review_graph/continuation_plan.json and cannot be reported as fully operational or launch ready while must_continue is true.",
+      "VC pitch readiness requires system_review_graph/vc_pitch_readiness_report.json and cannot be used as legal, securities, revenue, PMF, launch, compliance, buyer, supplier, customs, or tariff proof.",
       "Unsafe, paid, live, legal, or external actions stay closed without explicit user intent and repo proof."
     ],
     "repos": [
@@ -864,7 +886,7 @@
     ],
     "workflow_manifest": "manifests/agentic_workflow_manifest.json"
   },
-  "generated_at": "2026-06-25T15:18:34+00:00",
+  "generated_at": "2026-06-25T15:46:03+00:00",
   "kind": "prompt_to_product_packet",
   "next_valid_move": "Create or select the target repo, load bounded context, claim the first lane, and run its proof commands.",
   "normalized_contract": {
@@ -884,19 +906,19 @@
       "handoff with next_valid_move"
     ],
     "first_action": "Emit lane packet and run the smallest proof loop.",
-    "goal": "Build a blocked-safe importer/exporter source readiness copilot for product operators using fixture data, official-source placeholders, country requirement gaps, and explicit external-gate blockers."
+    "goal": "Build a blocked-safe importer/exporter source readiness copilot for product operators using fixture data, official-source placeholders, country requirement gaps, explicit external-gate blockers, and a private VC pitch readiness packet."
   },
   "product": {
     "complexity": {
       "level": "S2",
       "reason": "data, API, credential, or source dependency present"
     },
-    "idea": "Build a blocked-safe importer/exporter source readiness copilot for product operators using fixture data, official-source placeholders, country requirement gaps, and explicit external-gate blockers.",
+    "idea": "Build a blocked-safe importer/exporter source readiness copilot for product operators using fixture data, official-source placeholders, country requirement gaps, explicit external-gate blockers, and a private VC pitch readiness packet.",
     "name": "importer-source-readiness-copilot"
   },
   "repo_intake": {
     "blockers": [],
-    "generated_at": "2026-06-25T15:18:34+00:00",
+    "generated_at": "2026-06-25T15:46:03+00:00",
     "idea_source": {
       "allowed_use": "Generate startup/app ideas, export source graph contracts, and host product-boundary truth surfaces.",
       "branch_rule": "main plus codex/* product or contract branches",
@@ -955,7 +977,7 @@
     ],
     "status": "ready",
     "target_repo": {
-      "allowed_use": "Hold the actual importer/exporter source readiness product implementation, continuation lanes, and proof artifacts.",
+      "allowed_use": "Hold the actual importer/exporter source readiness product implementation, continuation lanes, VC pitch packet, and proof artifacts.",
       "branch_rule": "main plus codex/* product branches",
       "id": "importer-source-readiness-copilot",
       "proof_commands": [
@@ -963,6 +985,7 @@
         "python3 scripts/run_external_gates.py",
         "python3 scripts/export_operator_dashboard.py",
         "python3 scripts/plan_continuation.py",
+        "python3 scripts/build_vc_pitch_packet.py",
         "python3 -m unittest discover -s tests -p 'test_*.py'"
       ],
       "remote": "https://github.com/itsmeeChandU/importer-source-readiness-copilot.git",
@@ -973,6 +996,7 @@
         "system_review_graph/readiness_report.json",
         "system_review_graph/external_gate_report.json",
         "system_review_graph/continuation_plan.json",
+        "system_review_graph/vc_pitch_readiness_report.json",
         "system_review_graph/operator_dashboard.html"
       ],
       "role": "product_implementation_target"
@@ -1047,10 +1071,10 @@
     ],
     "domain": "cross-border supply chain",
     "expert_validation_rule": "After the product is substantially built, talk to actual people, users, buyers, operators, or qualified subject experts. Their feedback becomes correction evidence for the next product loop.",
-    "generated_at": "2026-06-25T15:18:34+00:00",
+    "generated_at": "2026-06-25T15:46:03+00:00",
     "kind": "research_data_plan",
     "next_valid_move": "Run model-prior synthesis, then collect the listed external evidence before final claims.",
-    "problem": "Build a blocked-safe importer/exporter source readiness copilot for product operators using fixture data, official-source placeholders, country requirement gaps, and explicit external-gate blockers.",
+    "problem": "Build a blocked-safe importer/exporter source readiness copilot for product operators using fixture data, official-source placeholders, country requirement gaps, explicit external-gate blockers, and a private VC pitch readiness packet.",
     "research_depths": [
       {
         "id": "R0_MODEL_PRIOR",

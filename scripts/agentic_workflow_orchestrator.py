@@ -53,6 +53,7 @@ REQUIRED_ROUTINES = {
     "context_bundle_refresh",
     "stale_blocker_sweep",
     "startup_continuation_sweep",
+    "vc_pitch_readiness_sweep",
     "nightly_eval_loop",
     "ci_failure_triage",
 }
@@ -62,6 +63,7 @@ REQUIRED_EVALS = {
     "branch_freshness",
     "handoff_completeness",
     "ready_with_external_gates_continuation",
+    "vc_pitch_readiness",
     "main_push_readiness",
 }
 REQUIRED_LANE_FIELDS = {

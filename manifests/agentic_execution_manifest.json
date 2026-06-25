@@ -200,6 +200,14 @@
       "proof_output": "system_review_graph/continuation_plan.json"
     },
     {
+      "id": "vc_pitch_readiness_sweep",
+      "cadence": "before investor pitch claims",
+      "trigger": "product needs VC pitch readiness",
+      "allowed_effects": ["read generated reports", "write investor packet", "write VC pitch readiness report"],
+      "prohibited_effects": ["claim revenue, PMF, legal, financing, compliance, buyer, supplier, customs, tariff, public launch, or full operational proof without evidence"],
+      "proof_output": "system_review_graph/vc_pitch_readiness_report.json"
+    },
+    {
       "id": "nightly_eval_loop",
       "cadence": "overnight when requested and safe",
       "trigger": "long-running goal with bounded proof commands",
@@ -370,6 +378,13 @@
       "failure_output": "continuation blocker with next_valid_move to generate or repair continuation_plan.json"
     },
     {
+      "id": "vc_pitch_readiness",
+      "predicate": "A product marked pitch-ready has vc_pitch_readiness_report.json, investor artifacts, sourced claim boundaries, diligence lanes, and premature launch/revenue/PMF/compliance claims closed.",
+      "measurement": "scripts/product_project_check.py",
+      "pass_condition": "VC pitch packet is ready for private investor conversations without claiming launch, revenue, PMF, compliance, buyer, supplier, customs, tariff, or financing proof.",
+      "failure_output": "VC pitch blocker with next_valid_move to generate or repair investor packet"
+    },
+    {
       "id": "main_push_readiness",
       "predicate": "Main receives only verified slices requested by the user.",
       "measurement": "post-merge checks and git status",
@@ -451,6 +466,7 @@
     "Code-review graph contracts orient code review, but source files and tests remain required.",
     "Ruflo memory is coordination state, not a completion claim.",
     "ready_with_external_gates requires system_review_graph/continuation_plan.json and cannot be reported as fully operational or launch ready while must_continue is true.",
+    "VC pitch readiness requires system_review_graph/vc_pitch_readiness_report.json and cannot be used as legal, securities, revenue, PMF, launch, compliance, buyer, supplier, customs, or tariff proof.",
     "Unsafe, paid, live, legal, or external actions stay closed without explicit user intent and repo proof."
   ]
 }

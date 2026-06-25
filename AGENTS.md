@@ -17,13 +17,14 @@ Before meaningful work, read:
 8. `docs/PRODUCT_AUTOMATION_GUIDE.md`
 9. `docs/SYSTEM_REVIEW_GRAPH.md`
 10. `docs/STARTUP_CONTINUATION_RULE.md`
-11. `manifests/tool_registry.yaml`
-12. `manifests/agentic_workflow_manifest.json`
-13. `manifests/agentic_execution_manifest.json`
-14. `manifests/internal_repo_registry.json`
-15. `manifests/research_data_router.json`
-16. `manifests/development_strategy_router.json`
-17. the relevant template in `templates/`
+11. `docs/VC_PITCH_READINESS.md`
+12. `manifests/tool_registry.yaml`
+13. `manifests/agentic_workflow_manifest.json`
+14. `manifests/agentic_execution_manifest.json`
+15. `manifests/internal_repo_registry.json`
+16. `manifests/research_data_router.json`
+17. `manifests/development_strategy_router.json`
+18. the relevant template in `templates/`
 
 ## Operating Rules
 
@@ -47,6 +48,7 @@ Before meaningful work, read:
 - For hardware, OS, regulated, or physical-world products, use `docs/COMPLEX_PRODUCT_PLAYBOOK.md` and add simulation/bench/compliance blockers.
 - For prompt-to-product work, run repo intake, research/data routing, and development strategy routing before assigning implementation lanes.
 - For prompt-to-product work, `ready_with_external_gates` means continue with `system_review_graph/continuation_plan.json`; never report fully done, operational, launch ready, legally ready, customs/tariff ready, supplier ready, buyer validated, or commercially ready while `must_continue` is true.
+- For VC pitch readiness, generate `system_review_graph/vc_pitch_readiness_report.json` and investor artifacts; pitch-ready can mean private investor conversation ready with diligence gates, not launch ready or securities/legal/compliance proof.
 - Treat AI model subject synthesis as a first-pass hypothesis; current facts, datasets, official rules, contracts, country import/export needs, and final subject direction need evidence, qualified people, or blocker rows.
 - For broad tool selection, use `docs/TOOL_BREEDING_GROUND.md` and write a tool decision record before adopting major dependencies.
 - Update durable instructions only when a mistake repeats or a workflow becomes stable.
@@ -60,6 +62,7 @@ A task is done only when all of these are true:
 - generated artifacts reflect current truth
 - all known blockers have owner, reason, evidence, and next valid move
 - startup/product work with external gates has a continuation plan, or the goal was explicitly scoped as local-only
+- VC-pitch work has investor sources, claim boundaries, diligence lanes, and closed premature claims
 - unsafe or effectful actions remain closed unless explicitly proven and intended
 - handoff file names changed files, commands run, results, blockers, and next move
 

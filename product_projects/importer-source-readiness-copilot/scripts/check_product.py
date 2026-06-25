@@ -70,6 +70,7 @@ def main() -> int:
         [sys.executable, "scripts/run_external_gates.py"],
         [sys.executable, "scripts/export_operator_dashboard.py"],
         [sys.executable, "scripts/plan_continuation.py"],
+        [sys.executable, "scripts/build_vc_pitch_packet.py"],
     ]
     for command in commands:
         result = _run(command)
@@ -84,6 +85,7 @@ def main() -> int:
     report = _load_json(report_path)
     external = _load_json(ROOT / "system_review_graph" / "external_gate_report.json")
     continuation = _load_json(ROOT / "system_review_graph" / "continuation_plan.json")
+    vc_pitch = _load_json(ROOT / "system_review_graph" / "vc_pitch_readiness_report.json")
     expected = {
         "status": "ready_with_external_gates",
         "row_count": 2,
@@ -111,6 +113,22 @@ def main() -> int:
     for claim in ("fully_operational", "launch_ready", "commercially_ready"):
         if claim not in closed_claims:
             failures.append(f"continuation plan must keep {claim} closed")
+    if vc_pitch.get("status") != "vc_pitch_ready_with_diligence_gates":
+        failures.append(f"VC pitch status expected ready with diligence gates, got {vc_pitch.get('status')!r}")
+    if len(vc_pitch.get("diligence_lanes", [])) < 6:
+        failures.append("VC pitch packet should include buyer, design-partner, compliance, data, business, and legal diligence lanes")
+    pitch_closed_claims = set(vc_pitch.get("closed_claims", []))
+    for claim in ("fully_operational", "public_launch_ready", "revenue_proven"):
+        if claim not in pitch_closed_claims:
+            failures.append(f"VC pitch packet must keep {claim} closed")
+    for path in (
+        "investor/vc_pitch_deck.md",
+        "investor/one_pager.md",
+        "investor/demo_script.md",
+        "investor/diligence_room_index.md",
+    ):
+        if not (ROOT / path).exists():
+            failures.append(f"missing investor artifact: {path}")
     failures.extend(_validate_blockers(ROOT / "system_review_graph" / "blockers.jsonl"))
     failures.extend(_validate_blocker_rows(external.get("blockers", []), "external_gate_report.blockers"))
 
@@ -126,6 +144,7 @@ def main() -> int:
     print(f"external_blocker_count={external['blocker_count']}")
     print(f"continuation_lanes={continuation['lane_count']}")
     print(f"startup_status={continuation['status']}")
+    print(f"vc_pitch_status={vc_pitch['status']}")
     print("unsafe_gates=closed")
     return 0
 

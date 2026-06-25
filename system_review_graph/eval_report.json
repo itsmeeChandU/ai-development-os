@@ -1,7 +1,7 @@
 {
   "blockers": [],
-  "eval_count": 6,
-  "generated_at": "2026-06-25T15:18:44+00:00",
+  "eval_count": 7,
+  "generated_at": "2026-06-25T15:46:12+00:00",
   "manifest": "manifests/agentic_execution_manifest.json",
   "proof_boundary": "This eval suite validates execution-loop structure. It does not replace lane-specific tests or runtime smoke checks.",
   "rows": [
@@ -38,6 +38,13 @@
       "measurement": "scripts/product_project_check.py",
       "missing_fields": [],
       "pass_condition": "Continuation plan exists and proves the next evidence lanes before final product claims.",
+      "status": "pass"
+    },
+    {
+      "id": "vc_pitch_readiness",
+      "measurement": "scripts/product_project_check.py",
+      "missing_fields": [],
+      "pass_condition": "VC pitch packet is ready for private investor conversations without claiming launch, revenue, PMF, compliance, buyer, supplier, customs, tariff, or financing proof.",
       "status": "pass"
     },
     {

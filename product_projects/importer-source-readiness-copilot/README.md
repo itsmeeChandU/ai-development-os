@@ -33,6 +33,7 @@ python3 scripts/run_readiness.py
 python3 scripts/run_external_gates.py
 python3 scripts/export_operator_dashboard.py
 python3 scripts/plan_continuation.py
+python3 scripts/build_vc_pitch_packet.py
 python3 scripts/check_product.py
 ```
 
@@ -42,8 +43,13 @@ The product CLI writes:
 system_review_graph/readiness_report.json
 system_review_graph/external_gate_report.json
 system_review_graph/continuation_plan.json
+system_review_graph/vc_pitch_readiness_report.json
 system_review_graph/blockers.jsonl
 system_review_graph/operator_dashboard.html
+investor/vc_pitch_deck.md
+investor/one_pager.md
+investor/demo_script.md
+investor/diligence_room_index.md
 ```
 
 ## Expected State
@@ -61,6 +67,17 @@ blocked until real external evidence exists.
 also writes `system_review_graph/continuation_plan.json`; that plan must say
 `startup_in_progress`, `must_continue: true`, and list the next buyer,
 compliance, country, data, contract, screening, and launch evidence lanes.
+
+The expected investor-pitch status is:
+
+```text
+vc_pitch_ready_with_diligence_gates
+```
+
+That means the product has a private VC conversation packet, evidence-backed
+claim boundaries, and a demo script. It still does not prove launch readiness,
+revenue, product-market fit, buyer validation, supplier readiness, or legal /
+customs / tariff readiness.
 
 ## External Gates Kept Closed
 
@@ -80,6 +97,8 @@ compliance, country, data, contract, screening, and launch evidence lanes.
 
 Use `system_review_graph/operator_dashboard.html` as the operator surface.
 Use `system_review_graph/continuation_plan.json` as the continuation surface.
+Use `investor/vc_pitch_deck.md` and `investor/one_pager.md` for private VC
+conversations.
 The product can now show exactly what is stopping external use and which lane
 must move next. To open any external claim gate, attach dated evidence to
 `data/evidence_packets.json`, verify country rows in

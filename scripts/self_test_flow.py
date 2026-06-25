@@ -21,6 +21,7 @@ REQUIRED_FOR_FLOW = [
     "docs/PRODUCT_AUTOMATION_GUIDE.md",
     "docs/AGENTIC_WORKFLOW_INTEGRATION.md",
     "docs/STARTUP_CONTINUATION_RULE.md",
+    "docs/VC_PITCH_READINESS.md",
     "manifests/agentic_execution_manifest.json",
     "manifests/internal_repo_registry.json",
     "manifests/research_data_router.json",
@@ -55,23 +56,32 @@ REQUIRED_FOR_FLOW = [
     "product_projects/importer-source-readiness-copilot/data/country_requirements_matrix.json",
     "product_projects/importer-source-readiness-copilot/data/evidence_packets.json",
     "product_projects/importer-source-readiness-copilot/data/official_source_registry.json",
+    "product_projects/importer-source-readiness-copilot/data/investor_evidence.json",
     "product_projects/importer-source-readiness-copilot/src/importer_source_readiness/readiness.py",
     "product_projects/importer-source-readiness-copilot/src/importer_source_readiness/external_gates.py",
     "product_projects/importer-source-readiness-copilot/src/importer_source_readiness/continuation.py",
+    "product_projects/importer-source-readiness-copilot/src/importer_source_readiness/investor_readiness.py",
     "product_projects/importer-source-readiness-copilot/src/importer_source_readiness/operator_report.py",
     "product_projects/importer-source-readiness-copilot/scripts/run_readiness.py",
     "product_projects/importer-source-readiness-copilot/scripts/run_external_gates.py",
     "product_projects/importer-source-readiness-copilot/scripts/export_operator_dashboard.py",
     "product_projects/importer-source-readiness-copilot/scripts/plan_continuation.py",
+    "product_projects/importer-source-readiness-copilot/scripts/build_vc_pitch_packet.py",
     "product_projects/importer-source-readiness-copilot/scripts/check_product.py",
     "product_projects/importer-source-readiness-copilot/tests/test_readiness.py",
     "product_projects/importer-source-readiness-copilot/tests/test_external_gates.py",
     "product_projects/importer-source-readiness-copilot/tests/test_continuation.py",
+    "product_projects/importer-source-readiness-copilot/tests/test_investor_readiness.py",
     "product_projects/importer-source-readiness-copilot/system_review_graph/readiness_report.json",
     "product_projects/importer-source-readiness-copilot/system_review_graph/external_gate_report.json",
     "product_projects/importer-source-readiness-copilot/system_review_graph/continuation_plan.json",
+    "product_projects/importer-source-readiness-copilot/system_review_graph/vc_pitch_readiness_report.json",
     "product_projects/importer-source-readiness-copilot/system_review_graph/operator_dashboard.html",
     "product_projects/importer-source-readiness-copilot/system_review_graph/blockers.jsonl",
+    "product_projects/importer-source-readiness-copilot/investor/vc_pitch_deck.md",
+    "product_projects/importer-source-readiness-copilot/investor/one_pager.md",
+    "product_projects/importer-source-readiness-copilot/investor/demo_script.md",
+    "product_projects/importer-source-readiness-copilot/investor/diligence_room_index.md",
     "product_projects/importer-source-readiness-copilot/handoffs/product_completion_handoff.md",
     "system_review_graph/internal_repo_intake_packet.json",
     "system_review_graph/research_data_plan.json",
@@ -163,6 +173,10 @@ def main() -> int:
         if "continuation_plan.json" not in generated_agents:
             print("AI Dev OS self-test: FAIL")
             print("generated AGENTS.md missing startup continuation rule")
+            return 1
+        if "vc_pitch_readiness_report.json" not in generated_agents:
+            print("AI Dev OS self-test: FAIL")
+            print("generated AGENTS.md missing VC pitch readiness rule")
             return 1
 
     print("AI Dev OS self-test: PASS")

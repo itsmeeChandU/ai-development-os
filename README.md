@@ -76,6 +76,7 @@ AILM means AI Lifecycle Management:
 - `docs/PRODUCT_AUTOMATION_GUIDE.md`: how product teams can automate idea-to-lane workflows inside a product.
 - `docs/AGENTIC_WORKFLOW_INTEGRATION.md`: durable GitHub/Ruflo/worktree/SRG/code-review graph workflow.
 - `docs/STARTUP_CONTINUATION_RULE.md`: prevents externally gated products from being marked fully done too early.
+- `docs/VC_PITCH_READINESS.md`: investor packet, evidence, diligence, and claim-boundary standard.
 - `docs/SYSTEM_REVIEW_GRAPH.md`: the audit graph pattern that worked.
 - `docs/STATE_RECONSTRUCTION.md`: how to recover actual product state from a prompt and repo truth.
 - `docs/AI_LIFECYCLE.md`: AI-native lifecycle, different from human SDLC.
@@ -136,6 +137,12 @@ means the software loop can be used internally while the startup remains
 `system_review_graph/continuation_plan.json` with `must_continue: true` and
 next evidence lanes until buyer, expert, country, contract, data, screening,
 and launch gates are closed.
+
+For VC work, pitch-ready is a separate state. It requires
+`system_review_graph/vc_pitch_readiness_report.json`, investor artifacts,
+source-backed claim boundaries, a demo script, a draft ask/use-of-funds, and
+visible diligence lanes. It still does not prove revenue, PMF, buyer validation,
+compliance approval, public launch readiness, or legal/financing approval.
 
 ## Multi-Repo Execution
 

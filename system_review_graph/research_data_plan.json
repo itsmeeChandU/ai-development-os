@@ -21,7 +21,7 @@
       "unsafe_to_bypass": true
     }
   ],
-  "data_need": "official country rules, import/export requirements, source rights, buyer validation, contract terms, qualified compliance review",
+  "data_need": "official country rules, import/export requirements, source rights, buyer validation, contract terms, qualified compliance review, investor pitch evidence",
   "data_routes": [
     {
       "allowed_sources": [
@@ -67,10 +67,10 @@
   ],
   "domain": "cross-border supply chain",
   "expert_validation_rule": "After the product is substantially built, talk to actual people, users, buyers, operators, or qualified subject experts. Their feedback becomes correction evidence for the next product loop.",
-  "generated_at": "2026-06-25T15:18:43+00:00",
+  "generated_at": "2026-06-25T15:46:12+00:00",
   "kind": "research_data_plan",
   "next_valid_move": "Run model-prior synthesis, then collect the listed external evidence before final claims.",
-  "problem": "Build a blocked-safe importer/exporter source readiness copilot for product operators using fixture data, official-source placeholders, country requirement gaps, and explicit external-gate blockers.",
+  "problem": "Build a blocked-safe importer/exporter source readiness copilot for product operators using fixture data, official-source placeholders, country requirement gaps, explicit external-gate blockers, and a private VC pitch readiness packet.",
   "research_depths": [
     {
       "id": "R0_MODEL_PRIOR",

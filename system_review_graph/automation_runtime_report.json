@@ -21,10 +21,10 @@
       "unsafe_to_bypass": true
     }
   ],
-  "generated_at": "2026-06-25T15:18:34+00:00",
+  "generated_at": "2026-06-25T15:46:03+00:00",
   "kind": "background_routine_report",
   "proof_boundary": "Routine reports describe safe commands and blockers. Effectful execution still requires explicit operator intent.",
-  "routine_count": 6,
+  "routine_count": 7,
   "routines": [
     {
       "allowed_effects": [
@@ -107,6 +107,24 @@
       "proof_output": "system_review_graph/continuation_plan.json",
       "status": "ready",
       "trigger": "readiness or external-gate status is ready_with_external_gates"
+    },
+    {
+      "allowed_effects": [
+        "read generated reports",
+        "write investor packet",
+        "write VC pitch readiness report"
+      ],
+      "cadence": "before investor pitch claims",
+      "commands": [],
+      "dry_run_default": true,
+      "id": "vc_pitch_readiness_sweep",
+      "missing_inputs": [],
+      "prohibited_effects": [
+        "claim revenue, PMF, legal, financing, compliance, buyer, supplier, customs, tariff, public launch, or full operational proof without evidence"
+      ],
+      "proof_output": "system_review_graph/vc_pitch_readiness_report.json",
+      "status": "ready",
+      "trigger": "product needs VC pitch readiness"
     },
     {
       "allowed_effects": [

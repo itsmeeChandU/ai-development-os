@@ -48,6 +48,7 @@ product factory, or internal operator workflow.
 | prompt-to-product | `prompt-to-product` | `system_review_graph/prompt_to_product_packet.json` | normalized contract and lane plan emitted |
 | lane packet | `lane-packet` | `system_review_graph/lane_packet_<lane>.json` | owned files, forbidden files, and proof commands present |
 | continuation plan | product-specific proof command | `system_review_graph/continuation_plan.json` | `ready_with_external_gates` routes to `startup_in_progress` and next evidence lanes |
+| VC pitch readiness | product-specific proof command | `system_review_graph/vc_pitch_readiness_report.json` | private pitch state has sources, claim boundaries, and diligence lanes |
 
 ## Commands
 
@@ -117,8 +118,10 @@ python3 scripts/self_test_flow.py
 - latest packet:
 - latest proof report:
 - continuation plan:
+- VC pitch report:
 - readiness state: ready / ready_with_external_gates / blocked
 - continuation state: startup_in_progress / externally_operational_candidate / launch_ready
+- pitch state: vc_pitch_ready_with_diligence_gates / vc_pitch_blocked / not_applicable
 - open blockers:
 - next valid move:
 - unsafe gates:
@@ -140,3 +143,11 @@ If readiness is `ready_with_external_gates`, the product is not fully done or
 operational. Write `system_review_graph/continuation_plan.json` with
 `status: startup_in_progress`, `must_continue: true`, lane owners, required
 evidence, blocker references, proof commands, and closed premature claims.
+
+## VC Pitch Readiness Rule
+
+If the product needs to be pitched to investors, write
+`system_review_graph/vc_pitch_readiness_report.json` plus `investor/*.md`.
+Keep diligence lanes visible and keep revenue, PMF, buyer validation,
+compliance, financing, launch, customs/tariff, and supplier-readiness claims
+closed unless proven.

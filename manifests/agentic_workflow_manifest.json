@@ -46,6 +46,35 @@
     ],
     "proof_boundary": "Local software completion is not startup completion. ready_with_external_gates requires a continuation plan before operational, launch, legal, customs, supplier, buyer, or commercial claims."
   },
+  "vc_pitch_readiness_rule": {
+    "ready_status": "vc_pitch_ready_with_diligence_gates",
+    "required_artifact": "system_review_graph/vc_pitch_readiness_report.json",
+    "required_investor_artifacts": [
+      "investor/vc_pitch_deck.md",
+      "investor/one_pager.md",
+      "investor/demo_script.md",
+      "investor/diligence_room_index.md"
+    ],
+    "minimum_diligence_lanes": [
+      "buyer discovery",
+      "design partner or pilot intent",
+      "qualified compliance review",
+      "data rights and freshness",
+      "business model and willingness-to-pay",
+      "legal and financing review"
+    ],
+    "closed_claims_without_proof": [
+      "public_launch_ready",
+      "fully_operational",
+      "revenue_proven",
+      "product_market_fit_proven",
+      "qualified_compliance_ready",
+      "customs_or_tariff_advice_ready",
+      "supplier_recommendation_ready",
+      "buyer_validated"
+    ],
+    "proof_boundary": "VC pitch readiness supports private investor conversations with sourced claims and visible diligence lanes. It is not legal, securities, launch, revenue, PMF, compliance, buyer, supplier, customs, or tariff proof."
+  },
   "repo_roles": [
     {
       "id": "ai-development-os",
@@ -99,13 +128,14 @@
       "repository": "https://github.com/itsmeeChandU/importer-source-readiness-copilot",
       "responsibilities": [
         "hold the actual importer/exporter source readiness product implementation",
-        "keep local product logic, generated readiness reports, external-gate reports, continuation plans, operator dashboards, blocker ledgers, and product handoffs current",
+        "keep local product logic, generated readiness reports, external-gate reports, continuation plans, VC pitch readiness packets, operator dashboards, blocker ledgers, and product handoffs current",
         "preserve external gates for source freshness, import/export compliance, contracts, buyer validation, and launch claims"
       ],
       "primary_artifacts": [
         "system_review_graph/readiness_report.json",
         "system_review_graph/external_gate_report.json",
         "system_review_graph/continuation_plan.json",
+        "system_review_graph/vc_pitch_readiness_report.json",
         "system_review_graph/operator_dashboard.html",
         "system_review_graph/blockers.jsonl",
         "docs/PRODUCT_STATUS.md",
@@ -322,6 +352,7 @@
     "code_review_graph": "orientation and contract, not a substitute for reading source before edits",
     "system_review_graph": "system map and bounded context, not private data or runtime proof",
     "startup_continuation": "ready_with_external_gates is useful internal software, not startup completion; continuation lanes stay open until external evidence closes them",
+    "vc_pitch_readiness": "private investor pitch readiness needs sourced claims and diligence lanes; it is not revenue, PMF, launch, legal, compliance, or financing proof",
     "unsafe_actions": "closed unless explicit repo gates and user intent prove readiness"
   },
   "code_review_graph_contract": {

@@ -1,6 +1,6 @@
 {
   "count": 10,
-  "generated_at": "2026-06-25T15:18:34+00:00",
+  "generated_at": "2026-06-25T15:46:03+00:00",
   "kind": "slash_command_specs",
   "proof_boundary": "Slash command specs materialize bounded packets. They do not execute external or unsafe actions without a separate proof gate.",
   "specs": [

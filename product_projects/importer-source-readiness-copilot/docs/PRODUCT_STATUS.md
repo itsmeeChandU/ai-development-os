@@ -9,8 +9,10 @@ readiness gates, writes
 `system_review_graph/readiness_report.json`, writes
 `system_review_graph/external_gate_report.json`, writes
 `system_review_graph/continuation_plan.json`, writes
+`system_review_graph/vc_pitch_readiness_report.json`, writes
 `system_review_graph/blockers.jsonl`, exports
-`system_review_graph/operator_dashboard.html`, and passes the local proof gate.
+`system_review_graph/operator_dashboard.html`, writes investor pitch artifacts,
+and passes the local proof gate.
 
 ## Ready Now
 
@@ -23,6 +25,8 @@ readiness gates, writes
 - buyer/expert/contract/source-rights evidence packets
 - external-gate report
 - startup continuation plan
+- VC pitch readiness report
+- investor pitch deck, one-pager, demo script, and diligence-room index
 - static operator dashboard
 - standalone product check
 - CI workflow for the proof gate
@@ -35,6 +39,17 @@ readiness gates, writes
 - commercial/source contract claims
 - legal/compliance readiness
 - public launch claims
+
+## Ready For Private VC Pitch
+
+- pitch packet status: `vc_pitch_ready_with_diligence_gates`
+- demo proof: `python3 scripts/check_product.py`
+- pitch deck: `investor/vc_pitch_deck.md`
+- one-pager: `investor/one_pager.md`
+- demo script: `investor/demo_script.md`
+- diligence index: `investor/diligence_room_index.md`
+
+This is a private investor conversation state, not a public launch state.
 
 ## Next Valid Move
 

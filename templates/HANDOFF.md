@@ -18,6 +18,8 @@
 
 ## Continuation Status
 
+## VC Pitch Status
+
 ## Next Valid Move
 
 ## Unsafe / External Gates

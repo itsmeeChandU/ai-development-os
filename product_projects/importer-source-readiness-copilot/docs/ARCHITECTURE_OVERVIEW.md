@@ -12,13 +12,16 @@ data/official_source_registry.json
 src/importer_source_readiness/readiness.py
 src/importer_source_readiness/external_gates.py
 src/importer_source_readiness/continuation.py
+src/importer_source_readiness/investor_readiness.py
 src/importer_source_readiness/operator_report.py
         |
         v
 system_review_graph/readiness_report.json
 system_review_graph/external_gate_report.json
 system_review_graph/continuation_plan.json
+system_review_graph/vc_pitch_readiness_report.json
 system_review_graph/operator_dashboard.html
+investor/*.md
 ```
 
 ## Modules
@@ -32,14 +35,17 @@ system_review_graph/operator_dashboard.html
 | `src/importer_source_readiness/readiness.py` | evaluate source cards and produce blocker rows |
 | `src/importer_source_readiness/external_gates.py` | evaluate country and evidence gates |
 | `src/importer_source_readiness/continuation.py` | convert external blockers into required continuation lanes |
+| `src/importer_source_readiness/investor_readiness.py` | build VC pitch readiness and diligence gates |
 | `src/importer_source_readiness/operator_report.py` | render static operator dashboard |
 | `scripts/run_readiness.py` | CLI entrypoint and report writer |
 | `scripts/run_external_gates.py` | external-gate report writer |
 | `scripts/export_operator_dashboard.py` | dashboard exporter |
 | `scripts/plan_continuation.py` | continuation plan writer |
+| `scripts/build_vc_pitch_packet.py` | investor packet and pitch readiness writer |
 | `tests/test_readiness.py` | proof for blocked-safe behavior |
 | `tests/test_external_gates.py` | proof for external-gate and dashboard behavior |
 | `tests/test_continuation.py` | proof that externally gated status keeps work in progress |
+| `tests/test_investor_readiness.py` | proof that pitch status keeps diligence and claim gates visible |
 | `system_review_graph/` | generated packets, reports, blockers, handoff evidence |
 
 ## Data Flow
@@ -53,7 +59,9 @@ system_review_graph/operator_dashboard.html
 7. Evaluate country, buyer, expert, contract, source-rights, and launch gates.
 8. Write `system_review_graph/external_gate_report.json`.
 9. Convert blockers into `system_review_graph/continuation_plan.json`.
-10. Render `system_review_graph/operator_dashboard.html`.
+10. Convert pitch evidence into `system_review_graph/vc_pitch_readiness_report.json`.
+11. Write investor pitch, one-pager, demo, and diligence artifacts.
+12. Render `system_review_graph/operator_dashboard.html`.
 
 ## Status Rules
 
@@ -67,6 +75,10 @@ The expected local product status is `ready_with_external_gates`.
 That is not a final startup status. If either gate report is
 `ready_with_external_gates`, the continuation plan must say
 `startup_in_progress` and `must_continue: true`.
+
+The expected investor status is `vc_pitch_ready_with_diligence_gates`. It
+means a private VC pitch is supported by a demo, sources, and diligence lanes;
+it does not mean the product is launch ready or externally operational.
 
 ## Proof Boundary
 

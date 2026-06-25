@@ -30,6 +30,8 @@ should convert a user idea into artifacts that agents can execute safely:
 7. proof report: tests, generated artifacts, blockers, and launch state
 8. continuation plan: required next lanes when the product is only internally
    ready with external gates
+9. VC pitch packet: investor-safe claims, demo script, diligence lanes, and
+   pitch readiness report
 
 ## Minimum Product Integration
 
@@ -49,6 +51,9 @@ still requires code/data changes, tests, generated artifacts, and branch proof.
 If a product reports `ready_with_external_gates`, completion also requires a
 `system_review_graph/continuation_plan.json` artifact that keeps the startup
 `startup_in_progress` and names the next evidence lanes.
+If a product needs to be pitched to investors, completion also requires
+`system_review_graph/vc_pitch_readiness_report.json` plus investor artifacts
+with claim boundaries and open diligence lanes.
 
 ## Input Contract
 
@@ -131,6 +136,7 @@ In a product, wire the flow as a state machine:
 | proof_running | run tests and artifact checks | proof report |
 | blocked_or_ready | publish blocker/readiness state | next valid move |
 | continuation_required | write continuation plan for externally gated work | evidence lanes and closed premature claims |
+| vc_pitch_ready | write investor packet and pitch readiness report | private pitch state and diligence lanes |
 
 Do not skip from `idea_received` to `lane_assigned` for complex products. The
 router is what prevents the product from treating manufacturing, regulated,
@@ -192,6 +198,22 @@ When this status appears, the product must write
   `commercially_ready`
 - `next_valid_move` for the next evidence lane
 
+## VC Pitch Readiness Rule
+
+`vc_pitch_ready_with_diligence_gates` means a product is ready for a private VC
+conversation with a demo, cited sources, bounded claims, a draft ask, and open
+diligence lanes. It does not mean public launch, revenue, product-market fit,
+buyer validation, legal/compliance approval, customs/tariff advice readiness,
+supplier readiness, or financing documents are complete.
+
+Generate:
+
+- `system_review_graph/vc_pitch_readiness_report.json`
+- `investor/vc_pitch_deck.md`
+- `investor/one_pager.md`
+- `investor/demo_script.md`
+- `investor/diligence_room_index.md`
+
 ## CI And Scheduled Automation
 
 Use CI to keep the automation surface honest:
@@ -235,4 +257,5 @@ The product automation is working when:
 - tests and generated artifact checks run in CI
 - the operator surface shows ready vs blocked with `next_valid_move`
 - externally gated products generate continuation lanes before completion claims
+- investor-pitch products generate VC readiness artifacts before pitch claims
 - no external effect opens without explicit approval and proof

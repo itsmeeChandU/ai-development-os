@@ -17,6 +17,7 @@ REQUIRED_TOP_LEVEL = {
     "execution_manifest",
     "canonical_truth",
     "startup_continuation_rule",
+    "vc_pitch_readiness_rule",
     "repo_roles",
     "agent_modes",
     "version_control_rules",
@@ -84,6 +85,14 @@ def validate_manifest(manifest: dict[str, Any]) -> list[str]:
         errors.append("startup_continuation_rule.required_artifact must be system_review_graph/continuation_plan.json")
     if "fully_operational" not in continuation.get("closed_claims_while_continuing", []):
         errors.append("startup_continuation_rule must close fully_operational claims while continuing")
+
+    pitch_rule = manifest.get("vc_pitch_readiness_rule") or {}
+    if pitch_rule.get("required_artifact") != "system_review_graph/vc_pitch_readiness_report.json":
+        errors.append("vc_pitch_readiness_rule.required_artifact must be system_review_graph/vc_pitch_readiness_report.json")
+    if pitch_rule.get("ready_status") != "vc_pitch_ready_with_diligence_gates":
+        errors.append("vc_pitch_readiness_rule.ready_status must be vc_pitch_ready_with_diligence_gates")
+    if "revenue_proven" not in pitch_rule.get("closed_claims_without_proof", []):
+        errors.append("vc_pitch_readiness_rule must close revenue_proven claims without proof")
 
     return errors
 
