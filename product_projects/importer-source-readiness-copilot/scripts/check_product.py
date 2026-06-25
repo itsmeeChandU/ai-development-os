@@ -117,6 +117,13 @@ def main() -> int:
             failures.append("operator dashboard should include the operator work queue")
         if "Canada Tools" not in dashboard_html:
             failures.append("operator dashboard should link Canadian tool references")
+    for path in (
+        "scripts/serve_operator_app.py",
+        "src/importer_source_readiness/operator_app.py",
+        "tests/test_operator_app.py",
+    ):
+        if not (ROOT / path).exists():
+            failures.append(f"missing local operator app file: {path}")
     if not screenshot_manifest_path.exists():
         failures.append("operator screenshot manifest was not generated")
     if screenshot_manifest.get("status") != "screenshots_ready":

@@ -19,15 +19,28 @@ the operator dashboard, and verifies that unsafe gates remain closed.
 
 ## Operator Surface
 
-Open:
+Run:
+
+```bash
+python3 scripts/serve_operator_app.py
+```
+
+Then open the printed local URL. The server exposes the dashboard plus JSON
+routes such as `/api/operator-workflow`, `/api/readiness`, and
+`/api/external-gates`.
+
+The generated dashboard artifact is:
 
 ```text
 system_review_graph/operator_dashboard.html
 ```
 
-The dashboard shows readiness status, external-gate status, official source
+The app shows readiness status, external-gate status, official source
 references, blockers, next valid moves, the generated work queue, and the
 generated screenshot gallery.
+
+This is the internal operator application. It is not a public customer app,
+customs/tariff advice product, supplier marketplace, or external launch surface.
 
 The machine-readable operator queue is:
 

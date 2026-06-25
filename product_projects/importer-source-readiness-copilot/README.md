@@ -25,7 +25,19 @@ The current implementation is intentionally local-first. It uses fixtures to
 prove product control logic while external data, contracts, compliance review,
 buyer validation, and launch claims stay closed.
 
-## Run
+## Product Surface
+
+The application a user can use today is the internal operator app:
+
+```bash
+python3 scripts/serve_operator_app.py
+```
+
+It opens a local browser surface for source-card readiness, the operator work
+queue, Canada reference tools, blockers, screenshots, and proof boundaries.
+This is not yet an external customer/importer SaaS app.
+
+## Run Proof
 
 ```bash
 python3 -m unittest discover -s tests -p 'test_*.py'

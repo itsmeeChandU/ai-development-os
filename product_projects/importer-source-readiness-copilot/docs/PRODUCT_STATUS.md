@@ -17,6 +17,15 @@ readiness gates, writes
 artifacts, writes Canada-focused board artifacts, and passes the local proof
 gate.
 
+The current usable application is the local internal operator app served by:
+
+```bash
+python3 scripts/serve_operator_app.py
+```
+
+This is the surface an operator or founder can use today. It is not yet an
+external customer/importer SaaS app.
+
 ## Ready Now
 
 - local source-card readiness evaluation
@@ -36,6 +45,7 @@ gate.
 - launch-control checklist
 - financial operating model boundary
 - generated operator work queue
+- local operator app server
 - static operator dashboard
 - generated operator screenshot manifest and dashboard gallery
 - standalone product check
