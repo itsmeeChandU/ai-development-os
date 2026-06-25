@@ -16,7 +16,12 @@ Before meaningful work, read:
 7. `docs/AI_NATIVE_DELIVERY.md`
 8. `docs/SYSTEM_REVIEW_GRAPH.md`
 9. `manifests/tool_registry.yaml`
-10. the relevant template in `templates/`
+10. `manifests/agentic_workflow_manifest.json`
+11. `manifests/agentic_execution_manifest.json`
+12. `manifests/internal_repo_registry.json`
+13. `manifests/research_data_router.json`
+14. `manifests/development_strategy_router.json`
+15. the relevant template in `templates/`
 
 ## Operating Rules
 
@@ -38,6 +43,8 @@ Before meaningful work, read:
 - Do not imply Sai Chandra or AI Development OS is responsible for derivative products built with this toolkit.
 - Contributions must follow `CONTRIBUTING.md`, `CONTRIBUTOR_TERMS.md`, and `DCO.txt`.
 - For hardware, OS, regulated, or physical-world products, use `docs/COMPLEX_PRODUCT_PLAYBOOK.md` and add simulation/bench/compliance blockers.
+- For prompt-to-product work, run repo intake, research/data routing, and development strategy routing before assigning implementation lanes.
+- Treat AI model subject synthesis as a first-pass hypothesis; current facts, datasets, official rules, contracts, country import/export needs, and final subject direction need evidence, qualified people, or blocker rows.
 - For broad tool selection, use `docs/TOOL_BREEDING_GROUND.md` and write a tool decision record before adopting major dependencies.
 - Update durable instructions only when a mistake repeats or a workflow becomes stable.
 
@@ -61,4 +68,7 @@ A task is done only when all of these are true:
 - Use research only to fill a repo-proven capability gap.
 - For durable multi-repo agentic workflow work, use
   `manifests/agentic_workflow_manifest.json` as the machine-readable contract
-  and `docs/AGENTIC_WORKFLOW_INTEGRATION.md` as the concise human guide.
+  `manifests/agentic_execution_manifest.json` as the runnable command contract,
+  the internal repo, research/data, and strategy routers for prompt-to-product
+  selection, and `docs/AGENTIC_WORKFLOW_INTEGRATION.md` as the concise human
+  guide.

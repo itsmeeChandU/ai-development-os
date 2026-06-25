@@ -1,7 +1,7 @@
 {
   "blockers": [],
   "eval_count": 5,
-  "generated_at": "2026-06-25T05:24:02+00:00",
+  "generated_at": "2026-06-25T06:17:47+00:00",
   "manifest": "manifests/agentic_execution_manifest.json",
   "proof_boundary": "This eval suite validates execution-loop structure. It does not replace lane-specific tests or runtime smoke checks.",
   "rows": [

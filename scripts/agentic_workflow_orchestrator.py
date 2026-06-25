@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
@@ -12,6 +13,9 @@ from uuid import uuid4
 ROOT = Path(__file__).resolve().parent.parent
 WORKFLOW_MANIFEST = ROOT / "manifests" / "agentic_workflow_manifest.json"
 EXECUTION_MANIFEST = ROOT / "manifests" / "agentic_execution_manifest.json"
+INTERNAL_REPO_REGISTRY = ROOT / "manifests" / "internal_repo_registry.json"
+RESEARCH_DATA_ROUTER = ROOT / "manifests" / "research_data_router.json"
+DEVELOPMENT_STRATEGY_ROUTER = ROOT / "manifests" / "development_strategy_router.json"
 
 REQUIRED_EXECUTION_FIELDS = {
     "version",
@@ -35,6 +39,9 @@ REQUIRED_EXECUTION_FIELDS = {
 REQUIRED_COMMANDS = {
     "/ados:normalize",
     "/ados:context-bundle",
+    "/ados:repo-intake",
+    "/ados:research-plan",
+    "/ados:strategy-plan",
     "/ados:lane",
     "/ados:proof",
     "/ados:review",
@@ -152,7 +159,7 @@ def validate_execution_manifest(
             errors.append(f"lane {lane_id} must define proof commands")
         if not lane.get("allowed_files"):
             errors.append(f"lane {lane_id} must define allowed_files")
-    if not lane.get("forbidden_files"):
+        if not lane.get("forbidden_files"):
             errors.append(f"lane {lane_id} must define forbidden_files")
 
     boundary = str((execution.get("canonical_truth") or {}).get("boundary") or "").lower()
@@ -184,11 +191,45 @@ def validate_execution_manifest(
         "scheduler-plan",
         "ci-fix",
         "automation-check",
+        "repo-intake",
+        "research-plan",
+        "strategy-plan",
     }
     missing_runtime = sorted(required_runtime - set(runtime_commands))
     if missing_runtime:
         errors.append(f"automation runtime missing commands: {', '.join(missing_runtime)}")
 
+    return errors
+
+
+def validate_support_manifests(
+    registry: dict[str, Any], research_router: dict[str, Any], strategy_router: dict[str, Any]
+) -> list[str]:
+    errors: list[str] = []
+    repo_ids = _ids(registry.get("repos", []))
+    required_repos = {"ai-development-os", "system-review-graph", "code-review-graph", "intelligence-hub"}
+    missing_repos = sorted(required_repos - repo_ids)
+    if missing_repos:
+        errors.append(f"internal repo registry missing repos: {', '.join(missing_repos)}")
+    research_ids = _ids(research_router.get("research_depths", []))
+    data_ids = _ids(research_router.get("data_routes", []))
+    if "R0_MODEL_PRIOR" not in research_ids or "R5_EXPERT_OR_USER_VALIDATION" not in research_ids:
+        errors.append("research router must include model-prior and expert-validation depths")
+    if "D1_NORMAL_WEB_SEARCH" not in data_ids or "D4_HUMAN_EXPERT_OR_USER" not in data_ids:
+        errors.append("research router must include normal web and human expert data routes")
+    mode_ids = _ids(strategy_router.get("development_modes", []))
+    required_modes = {
+        "M0_SOFTWARE_LOCAL",
+        "M1_DATA_API_PRODUCT",
+        "M2_AI_ML_PRODUCT",
+        "M3_REGULATED_OR_HIGH_STAKES",
+        "M4_HARDWARE_MANUFACTURING",
+        "M5_CROSS_BORDER_SUPPLY_CHAIN",
+        "M6_COMMERCIAL_CONTRACT_DEPENDENT",
+    }
+    missing_modes = sorted(required_modes - mode_ids)
+    if missing_modes:
+        errors.append(f"development strategy router missing modes: {', '.join(missing_modes)}")
     return errors
 
 
@@ -519,6 +560,240 @@ def build_ci_fix_packet(
     }
 
 
+def build_repo_intake_packet(
+    registry: dict[str, Any], *, idea_source: str = "intelligence-hub", target_repo: str = ""
+) -> dict[str, Any]:
+    repos = _rows_by_id(registry.get("repos", []))
+    source = repos.get(idea_source)
+    target = repos.get(target_repo) if target_repo else repos.get("future-product-repo")
+    blockers = []
+    if source is None:
+        blockers.append(
+            {
+                "id": f"repo-intake:{idea_source}:unknown-source",
+                "module": "internal_repo_registry",
+                "issue": "idea source repo is not registered",
+                "owner": "workflow-coordinator",
+                "evidence": str(INTERNAL_REPO_REGISTRY.relative_to(ROOT)),
+                "gate": "closed",
+                "next_valid_move": "Add the repo to the internal registry or select a registered idea source.",
+                "unsafe_to_bypass": True,
+            }
+        )
+    if target is None:
+        blockers.append(
+            {
+                "id": f"repo-intake:{target_repo}:unknown-target",
+                "module": "internal_repo_registry",
+                "issue": "target repo is not registered",
+                "owner": "workflow-coordinator",
+                "evidence": str(INTERNAL_REPO_REGISTRY.relative_to(ROOT)),
+                "gate": "closed",
+                "next_valid_move": "Add the target repo or use future-product-repo until created.",
+                "unsafe_to_bypass": True,
+            }
+        )
+    return {
+        "generated_at": _now(),
+        "kind": "internal_repo_intake",
+        "idea_source": source or {"id": idea_source, "status": "unknown"},
+        "target_repo": target or {"id": target_repo, "status": "unknown"},
+        "repo_groups": registry.get("repo_groups", []),
+        "intake_rules": registry.get("intake_rules", []),
+        "status": "ready" if not blockers else "blocked",
+        "blockers": blockers,
+        "next_valid_move": (
+            "Load source idea packet, select product target repo, then emit lane packet."
+            if not blockers
+            else "Resolve repo intake blockers before assigning implementation lanes."
+        ),
+    }
+
+
+def _route_research(problem: str, domain: str = "", data_need: str = "") -> tuple[list[str], list[str]]:
+    text = " ".join([problem, domain, data_need]).lower()
+    research = ["R0_MODEL_PRIOR"]
+    data_routes = ["D0_NO_EXTERNAL_DATA"]
+    if any(term in text for term in ["latest", "current", "today", "competitor", "market", "web"]):
+        research.append("R1_NORMAL_WEB_SCAN")
+        data_routes.append("D1_NORMAL_WEB_SEARCH")
+    if any(
+        term in text
+        for term in [
+            "api",
+            "sdk",
+            "law",
+            "legal",
+            "standard",
+            "regulation",
+            "pricing",
+            "official",
+            "country",
+            "import",
+            "export",
+            "tariff",
+            "customs",
+            "certification",
+        ]
+    ):
+        research.append("R2_OFFICIAL_SOURCE_REVIEW")
+        data_routes.append("D2_PRIMARY_OFFICIAL_SOURCE")
+    if any(
+        term in text
+        for term in [
+            "dataset",
+            "data",
+            "database",
+            "feed",
+            "credential",
+            "fresh",
+            "rate limit",
+            "paid",
+            "supplier",
+            "manufacturer",
+            "tariff",
+            "logistics",
+        ]
+    ):
+        research.append("R3_STRUCTURED_DATA_REQUIRED")
+        data_routes.append("D3_DATASET_OR_API")
+    if any(term in text for term in ["ambiguous", "unknown", "feasibility", "deep", "manufacturing", "supply", "import", "export"]):
+        research.append("R4_DEEP_RESEARCH")
+    if any(
+        term in text
+        for term in [
+            "medical",
+            "clinical",
+            "finance",
+            "trading",
+            "legal",
+            "safety",
+            "expert",
+            "buyer",
+            "manufacturing",
+            "import",
+            "export",
+            "contract",
+            "country",
+        ]
+    ):
+        research.append("R5_EXPERT_OR_USER_VALIDATION")
+        data_routes.append("D4_HUMAN_EXPERT_OR_USER")
+    return list(dict.fromkeys(research)), list(dict.fromkeys(data_routes))
+
+
+def build_research_plan(
+    router: dict[str, Any], *, problem: str, domain: str = "", data_need: str = ""
+) -> dict[str, Any]:
+    research_ids, data_route_ids = _route_research(problem, domain, data_need)
+    research_by_id = _rows_by_id(router.get("research_depths", []))
+    data_by_id = _rows_by_id(router.get("data_routes", []))
+    research_rows = [research_by_id[item] for item in research_ids if item in research_by_id]
+    data_rows = [data_by_id[item] for item in data_route_ids if item in data_by_id]
+    blockers = []
+    for row in research_rows:
+        if row.get("id") in {"R3_STRUCTURED_DATA_REQUIRED", "R5_EXPERT_OR_USER_VALIDATION"}:
+            blockers.append(
+                {
+                    "id": f"research:{row['id'].lower()}:external-input",
+                    "module": "research_data_router",
+                    "issue": "external data or human validation is required before final product claims",
+                    "owner": "research",
+                    "evidence": str(RESEARCH_DATA_ROUTER.relative_to(ROOT)),
+                    "gate": "closed",
+                    "next_valid_move": "Create the source/expert plan and collect dated evidence.",
+                    "unsafe_to_bypass": True,
+                }
+            )
+    return {
+        "generated_at": _now(),
+        "kind": "research_data_plan",
+        "problem": problem,
+        "domain": domain,
+        "data_need": data_need,
+        "research_depths": research_rows,
+        "data_routes": data_rows,
+        "routing_rules": router.get("routing_rules", []),
+        "expert_validation_rule": router.get("expert_validation_rule", ""),
+        "blockers": blockers,
+        "status": "ready_with_external_gates" if blockers else "ready",
+        "next_valid_move": (
+            "Run model-prior synthesis, then collect the listed external evidence before final claims."
+            if blockers
+            else "Proceed with model-prior synthesis and local proof loop."
+        ),
+    }
+
+
+def _route_strategy(idea: str, field: str = "", country: str = "") -> list[str]:
+    text = " ".join([idea, field, country]).lower()
+    tokens = set(re.findall(r"[a-z0-9]+", text))
+    modes = []
+    if any(term in text for term in ["manufacturing", "factory", "hardware", "device", "bom", "supplier"]):
+        modes.append("M4_HARDWARE_MANUFACTURING")
+    if any(term in text for term in ["import", "export", "country", "tariff", "customs", "logistics"]):
+        modes.append("M5_CROSS_BORDER_SUPPLY_CHAIN")
+    if any(term in text for term in ["contract", "license", "partner", "sla", "manufacturer agreement"]):
+        modes.append("M6_COMMERCIAL_CONTRACT_DEPENDENT")
+    if any(term in text for term in ["medical", "legal", "finance", "trading", "safety", "regulated"]):
+        modes.append("M3_REGULATED_OR_HIGH_STAKES")
+    if any(term in text for term in ["model", "retrieval", "training", "evaluation"]) or tokens.intersection(
+        {"ai", "ml", "llm"}
+    ):
+        modes.append("M2_AI_ML_PRODUCT")
+    if any(term in text for term in ["data", "api", "feed", "database", "credential"]):
+        modes.append("M1_DATA_API_PRODUCT")
+    if not modes:
+        modes.append("M0_SOFTWARE_LOCAL")
+    return list(dict.fromkeys(modes))
+
+
+def build_strategy_plan(
+    strategy_router: dict[str, Any], *, idea: str, field: str = "", country: str = ""
+) -> dict[str, Any]:
+    mode_ids = _route_strategy(idea, field, country)
+    modes_by_id = _rows_by_id(strategy_router.get("development_modes", []))
+    modes = [modes_by_id[item] for item in mode_ids if item in modes_by_id]
+    playbooks = [
+        row
+        for row in strategy_router.get("field_playbooks", [])
+        if row.get("default_mode") in mode_ids or (field and row.get("field") == field)
+    ]
+    external_blockers = []
+    for mode in modes:
+        if mode.get("external_inputs"):
+            external_blockers.append(
+                {
+                    "id": f"strategy:{mode['id'].lower()}:external-inputs",
+                    "module": "development_strategy_router",
+                    "issue": "development mode needs external inputs before final readiness",
+                    "owner": "architect",
+                    "evidence": str(DEVELOPMENT_STRATEGY_ROUTER.relative_to(ROOT)),
+                    "gate": "closed",
+                    "next_valid_move": f"Collect or block: {', '.join(mode['external_inputs'])}",
+                    "unsafe_to_bypass": True,
+                }
+            )
+    return {
+        "generated_at": _now(),
+        "kind": "development_strategy_plan",
+        "idea": idea,
+        "field": field,
+        "country": country,
+        "modes": modes,
+        "field_playbooks": playbooks,
+        "country_requirements_template": strategy_router.get("country_requirements_template", {}),
+        "external_contract_template": strategy_router.get("external_contract_template", {}),
+        "blockers": external_blockers,
+        "status": "ready_with_external_gates" if external_blockers else "ready",
+        "next_valid_move": (
+            "Assign agents by mode, collect external inputs, and keep final claims blocked until evidence exists."
+            if external_blockers
+            else "Proceed with software-local proof loop."
+        ),
+    }
+
+
 def _estimate_complexity(idea: str) -> dict[str, str]:
     text = idea.lower()
     if any(term in text for term in ["hardware", "firmware", "robot", "device", "chip", "os"]):
@@ -533,26 +808,60 @@ def _estimate_complexity(idea: str) -> dict[str, str]:
 
 
 def build_prompt_to_product_packet(
-    *, workflow: dict[str, Any], execution: dict[str, Any], name: str, idea: str
+    *,
+    workflow: dict[str, Any],
+    execution: dict[str, Any],
+    registry: dict[str, Any],
+    research_router: dict[str, Any],
+    strategy_router: dict[str, Any],
+    name: str,
+    idea: str,
+    field: str = "",
+    country: str = "",
+    idea_source: str = "intelligence-hub",
+    target_repo: str = "",
 ) -> dict[str, Any]:
     complexity = _estimate_complexity(idea)
     run_id = f"{datetime.now(timezone.utc).strftime('%Y%m%d')}-{_slug(name)}"
     plan = build_plan(workflow=workflow, execution=execution, goal=idea, run_id=run_id)
+    research_plan = build_research_plan(
+        research_router,
+        problem=idea,
+        domain=field,
+        data_need="",
+    )
+    strategy_plan = build_strategy_plan(
+        strategy_router,
+        idea=idea,
+        field=field,
+        country=country,
+    )
+    repo_intake = build_repo_intake_packet(
+        registry,
+        idea_source=idea_source,
+        target_repo=target_repo,
+    )
     return {
         "generated_at": _now(),
         "kind": "prompt_to_product_packet",
         "product": {"name": name, "idea": idea, "complexity": complexity},
+        "repo_intake": repo_intake,
+        "research_data_plan": research_plan,
+        "development_strategy_plan": strategy_plan,
         "normalized_contract": {
             "goal": idea,
             "constraints": [
                 "Use repo truth over chat memory.",
                 "Keep unsafe, paid, legal, live, or external effects closed by default.",
                 "Produce code/data/tests/generated artifacts or a blocker row.",
+                "Treat AI model subject expertise as a first-pass hypothesis until external evidence or experts validate high-impact claims.",
             ],
             "evidence_required": [
                 "git branch/status proof",
                 "system review graph or context bundle",
                 "code-review graph contract when source scope is broad",
+                "research/data plan with source, data, and expert gates",
+                "development strategy plan for the product field",
                 "focused tests or smoke checks",
                 "handoff with next_valid_move",
             ],
@@ -567,6 +876,9 @@ def build_prompt_to_product_packet(
             "/ados:review",
             "/ados:merge",
             "/ados:goal",
+            "/ados:repo-intake",
+            "/ados:research-plan",
+            "/ados:strategy-plan",
         ],
         "next_valid_move": (
             "Create or select the target repo, load bounded context, claim the "
@@ -630,9 +942,20 @@ def _load_pair() -> tuple[dict[str, Any], dict[str, Any]]:
     return _read_json(WORKFLOW_MANIFEST), _read_json(EXECUTION_MANIFEST)
 
 
+def _load_all() -> tuple[dict[str, Any], dict[str, Any], dict[str, Any], dict[str, Any], dict[str, Any]]:
+    return (
+        _read_json(WORKFLOW_MANIFEST),
+        _read_json(EXECUTION_MANIFEST),
+        _read_json(INTERNAL_REPO_REGISTRY),
+        _read_json(RESEARCH_DATA_ROUTER),
+        _read_json(DEVELOPMENT_STRATEGY_ROUTER),
+    )
+
+
 def _cmd_validate(_args: argparse.Namespace) -> int:
-    workflow, execution = _load_pair()
+    workflow, execution, registry, research_router, strategy_router = _load_all()
     errors = validate_execution_manifest(workflow, execution)
+    errors.extend(validate_support_manifests(registry, research_router, strategy_router))
     if errors:
         print("Agentic workflow orchestrator: FAIL")
         for error in errors:
@@ -666,8 +989,9 @@ def _cmd_plan(args: argparse.Namespace) -> int:
 
 
 def _cmd_prompt_to_product(args: argparse.Namespace) -> int:
-    workflow, execution = _load_pair()
+    workflow, execution, registry, research_router, strategy_router = _load_all()
     errors = validate_execution_manifest(workflow, execution)
+    errors.extend(validate_support_manifests(registry, research_router, strategy_router))
     if errors:
         for error in errors:
             print(f"ERROR: {error}")
@@ -675,14 +999,74 @@ def _cmd_prompt_to_product(args: argparse.Namespace) -> int:
     packet = build_prompt_to_product_packet(
         workflow=workflow,
         execution=execution,
+        registry=registry,
+        research_router=research_router,
+        strategy_router=strategy_router,
         name=args.name,
         idea=args.idea,
+        field=args.field,
+        country=args.country,
+        idea_source=args.idea_source,
+        target_repo=args.target_repo,
     )
     out_dir = Path(args.out_dir)
     json_path = out_dir / "prompt_to_product_packet.json"
     md_path = out_dir / "prompt_to_product_packet.md"
     _write_json(json_path, packet)
     _write_text(md_path, _format_key_value_markdown("Prompt To Product Packet", packet))
+    print(json_path)
+    print(md_path)
+    return 0
+
+
+def _cmd_repo_intake(args: argparse.Namespace) -> int:
+    registry = _read_json(INTERNAL_REPO_REGISTRY)
+    packet = build_repo_intake_packet(
+        registry,
+        idea_source=args.idea_source,
+        target_repo=args.target_repo,
+    )
+    out_dir = Path(args.out_dir)
+    json_path = out_dir / "internal_repo_intake_packet.json"
+    md_path = out_dir / "internal_repo_intake_packet.md"
+    _write_json(json_path, packet)
+    _write_text(md_path, _format_key_value_markdown("Internal Repo Intake Packet", packet))
+    print(json_path)
+    print(md_path)
+    return 0 if packet["status"] == "ready" else 1
+
+
+def _cmd_research_plan(args: argparse.Namespace) -> int:
+    router = _read_json(RESEARCH_DATA_ROUTER)
+    plan = build_research_plan(
+        router,
+        problem=args.problem,
+        domain=args.domain,
+        data_need=args.data_need,
+    )
+    out_dir = Path(args.out_dir)
+    json_path = out_dir / "research_data_plan.json"
+    md_path = out_dir / "research_data_plan.md"
+    _write_json(json_path, plan)
+    _write_text(md_path, _format_key_value_markdown("Research Data Plan", plan))
+    print(json_path)
+    print(md_path)
+    return 0
+
+
+def _cmd_strategy_plan(args: argparse.Namespace) -> int:
+    router = _read_json(DEVELOPMENT_STRATEGY_ROUTER)
+    plan = build_strategy_plan(
+        router,
+        idea=args.idea,
+        field=args.field,
+        country=args.country,
+    )
+    out_dir = Path(args.out_dir)
+    json_path = out_dir / "development_strategy_plan.json"
+    md_path = out_dir / "development_strategy_plan.md"
+    _write_json(json_path, plan)
+    _write_text(md_path, _format_key_value_markdown("Development Strategy Plan", plan))
     print(json_path)
     print(md_path)
     return 0
@@ -789,8 +1173,9 @@ def _cmd_ci_fix(args: argparse.Namespace) -> int:
 
 
 def _cmd_automation_check(_args: argparse.Namespace) -> int:
-    workflow, execution = _load_pair()
+    workflow, execution, registry, research_router, strategy_router = _load_all()
     errors = validate_execution_manifest(workflow, execution)
+    errors.extend(validate_support_manifests(registry, research_router, strategy_router))
     if errors:
         print("Automation check: FAIL")
         for error in errors:
@@ -799,6 +1184,9 @@ def _cmd_automation_check(_args: argparse.Namespace) -> int:
     packet = build_prompt_to_product_packet(
         workflow=workflow,
         execution=execution,
+        registry=registry,
+        research_router=research_router,
+        strategy_router=strategy_router,
         name="smoke",
         idea="Build a small local app with proof gates.",
     )
@@ -806,6 +1194,18 @@ def _cmd_automation_check(_args: argparse.Namespace) -> int:
     routines = build_routine_report(execution)
     scheduler = build_scheduler_plan(execution)
     ci_fix = build_ci_fix_packet(execution=execution, check_name="workflow_manifest_ci")
+    repo_intake = build_repo_intake_packet(registry, idea_source="intelligence-hub")
+    research_plan = build_research_plan(
+        research_router,
+        problem="Manufacturing product with import/export country requirements and data sources.",
+        domain="manufacturing",
+    )
+    strategy_plan = build_strategy_plan(
+        strategy_router,
+        idea="Manufacturing product with import/export country requirements.",
+        field="manufacturing",
+        country="US",
+    )
     if not packet["execution_plan"]["lane_packets"]:
         print("Automation check: FAIL")
         print("error: prompt-to-product packet has no lanes")
@@ -825,6 +1225,18 @@ def _cmd_automation_check(_args: argparse.Namespace) -> int:
     if not ci_fix["lane"]["proof_commands"]:
         print("Automation check: FAIL")
         print("error: ci fix packet has no proof commands")
+        return 1
+    if repo_intake["status"] != "ready":
+        print("Automation check: FAIL")
+        print("error: repo intake packet is blocked")
+        return 1
+    if "R5_EXPERT_OR_USER_VALIDATION" not in [row["id"] for row in research_plan["research_depths"]]:
+        print("Automation check: FAIL")
+        print("error: manufacturing/import/export route must include expert validation")
+        return 1
+    if "M4_HARDWARE_MANUFACTURING" not in [row["id"] for row in strategy_plan["modes"]]:
+        print("Automation check: FAIL")
+        print("error: manufacturing strategy mode missing")
         return 1
     print("Automation check: PASS")
     print(f"slash_commands={specs['count']}")
@@ -874,8 +1286,32 @@ def main(argv: list[str] | None = None) -> int:
     )
     prompt_to_product.add_argument("--name", required=True)
     prompt_to_product.add_argument("--idea", required=True)
+    prompt_to_product.add_argument("--field", default="")
+    prompt_to_product.add_argument("--country", default="")
+    prompt_to_product.add_argument("--idea-source", default="intelligence-hub")
+    prompt_to_product.add_argument("--target-repo", default="")
     prompt_to_product.add_argument("--out-dir", default="system_review_graph")
     prompt_to_product.set_defaults(func=_cmd_prompt_to_product)
+
+    repo_intake = sub.add_parser("repo-intake", help="Write internal repo intake packet")
+    repo_intake.add_argument("--idea-source", default="intelligence-hub")
+    repo_intake.add_argument("--target-repo", default="")
+    repo_intake.add_argument("--out-dir", default="system_review_graph")
+    repo_intake.set_defaults(func=_cmd_repo_intake)
+
+    research_plan = sub.add_parser("research-plan", help="Write research and data routing plan")
+    research_plan.add_argument("--problem", required=True)
+    research_plan.add_argument("--domain", default="")
+    research_plan.add_argument("--data-need", default="")
+    research_plan.add_argument("--out-dir", default="system_review_graph")
+    research_plan.set_defaults(func=_cmd_research_plan)
+
+    strategy_plan = sub.add_parser("strategy-plan", help="Write field-specific development strategy plan")
+    strategy_plan.add_argument("--idea", required=True)
+    strategy_plan.add_argument("--field", default="")
+    strategy_plan.add_argument("--country", default="")
+    strategy_plan.add_argument("--out-dir", default="system_review_graph")
+    strategy_plan.set_defaults(func=_cmd_strategy_plan)
 
     command_spec = sub.add_parser("command-spec", help="Print one slash command packet")
     command_spec.add_argument("--command", required=True)

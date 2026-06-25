@@ -2,8 +2,8 @@
 
 ```json
 {
-  "count": 7,
-  "generated_at": "2026-06-25T05:24:02+00:00",
+  "count": 10,
+  "generated_at": "2026-06-25T06:17:47+00:00",
   "kind": "slash_command_specs",
   "proof_boundary": "Slash command specs materialize bounded packets. They do not execute external or unsafe actions without a separate proof gate.",
   "specs": [
@@ -51,6 +51,79 @@
       "runner": {
         "dry_run_default": true,
         "materialize_command": "python3 scripts/agentic_workflow_orchestrator.py command-spec --command context-bundle",
+        "script": "scripts/agentic_workflow_orchestrator.py"
+      }
+    },
+    {
+      "command": "/ados:repo-intake",
+      "id": "repo-intake",
+      "mode": "architect",
+      "outputs": [
+        "internal_repo_intake_packet",
+        "repo_blockers"
+      ],
+      "proof_gates": [
+        "repo_registered",
+        "target_repo_selected_or_blocked"
+      ],
+      "purpose": "Select internal/helper repos, product repo target, and repo-truth boundaries before lanes.",
+      "required_inputs": [
+        "idea_source",
+        "target_repo"
+      ],
+      "runner": {
+        "dry_run_default": true,
+        "materialize_command": "python3 scripts/agentic_workflow_orchestrator.py command-spec --command repo-intake",
+        "script": "scripts/agentic_workflow_orchestrator.py"
+      }
+    },
+    {
+      "command": "/ados:research-plan",
+      "id": "research-plan",
+      "mode": "research",
+      "outputs": [
+        "research_data_plan",
+        "research_blockers",
+        "data_blockers"
+      ],
+      "proof_gates": [
+        "research_depth_selected",
+        "external_gates_written"
+      ],
+      "purpose": "Decide model-prior, web, official-source, dataset, deep-research, and expert-validation depth.",
+      "required_inputs": [
+        "problem",
+        "domain",
+        "data_need"
+      ],
+      "runner": {
+        "dry_run_default": true,
+        "materialize_command": "python3 scripts/agentic_workflow_orchestrator.py command-spec --command research-plan",
+        "script": "scripts/agentic_workflow_orchestrator.py"
+      }
+    },
+    {
+      "command": "/ados:strategy-plan",
+      "id": "strategy-plan",
+      "mode": "architect",
+      "outputs": [
+        "development_strategy_plan",
+        "external_contract_blockers",
+        "country_requirement_blockers"
+      ],
+      "proof_gates": [
+        "development_mode_selected",
+        "external_inputs_blocked_or_sourced"
+      ],
+      "purpose": "Choose the field-specific development mode, agents, proof gates, external contracts, and procurement/compliance blockers.",
+      "required_inputs": [
+        "idea",
+        "field",
+        "country"
+      ],
+      "runner": {
+        "dry_run_default": true,
+        "materialize_command": "python3 scripts/agentic_workflow_orchestrator.py command-spec --command strategy-plan",
         "script": "scripts/agentic_workflow_orchestrator.py"
       }
     },

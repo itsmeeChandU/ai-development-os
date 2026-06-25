@@ -35,12 +35,18 @@
       "emit-slash-commands": "Materialize slash command specs for agents and LLMs.",
       "lane-packet": "Emit one bounded worker packet with owned files and proof commands.",
       "prompt-to-product": "Normalize an idea and emit a product packet with lane plan.",
+      "repo-intake": "Select internal/helper repos and product-target repo boundaries for an idea.",
+      "research-plan": "Route subject expertise, web research, official sources, datasets, and expert validation.",
       "routine-report": "Emit safe background routine commands and input blockers.",
-      "scheduler-plan": "Emit a scheduler-ready plan for routine invocation."
+      "scheduler-plan": "Emit a scheduler-ready plan for routine invocation.",
+      "strategy-plan": "Choose field-specific development mode, agents, external inputs, contracts, and proof gates."
     },
     "effectful_execution_rule": "Commands default to dry-run or packet generation. Network, push, live, paid, legal, or external effects require explicit operator intent, clean repo proof, and passing gates.",
     "generated_artifacts": [
       "system_review_graph/prompt_to_product_packet.json",
+      "system_review_graph/internal_repo_intake_packet.json",
+      "system_review_graph/research_data_plan.json",
+      "system_review_graph/development_strategy_plan.json",
       "system_review_graph/slash_command_specs.json",
       "system_review_graph/automation_runtime_report.json",
       "system_review_graph/scheduler_plan.json",
@@ -235,8 +241,8 @@
     }
   ],
   "execution_manifest": "manifests/agentic_execution_manifest.json",
-  "generated_at": "2026-06-25T05:24:02+00:00",
-  "goal": "Complete prompt-to-product automation runtime",
+  "generated_at": "2026-06-25T06:17:35+00:00",
+  "goal": "Complete internal repo, research data, and development strategy routing",
   "lane_packets": [
     {
       "allowed_files": [
@@ -526,6 +532,64 @@
         "srg_manifest",
         "optional_documentation_graph",
         "optional_code_review_graph_contract"
+      ]
+    },
+    {
+      "command": "/ados:repo-intake",
+      "id": "repo-intake",
+      "mode": "architect",
+      "outputs": [
+        "internal_repo_intake_packet",
+        "repo_blockers"
+      ],
+      "proof_gates": [
+        "repo_registered",
+        "target_repo_selected_or_blocked"
+      ],
+      "purpose": "Select internal/helper repos, product repo target, and repo-truth boundaries before lanes.",
+      "required_inputs": [
+        "idea_source",
+        "target_repo"
+      ]
+    },
+    {
+      "command": "/ados:research-plan",
+      "id": "research-plan",
+      "mode": "research",
+      "outputs": [
+        "research_data_plan",
+        "research_blockers",
+        "data_blockers"
+      ],
+      "proof_gates": [
+        "research_depth_selected",
+        "external_gates_written"
+      ],
+      "purpose": "Decide model-prior, web, official-source, dataset, deep-research, and expert-validation depth.",
+      "required_inputs": [
+        "problem",
+        "domain",
+        "data_need"
+      ]
+    },
+    {
+      "command": "/ados:strategy-plan",
+      "id": "strategy-plan",
+      "mode": "architect",
+      "outputs": [
+        "development_strategy_plan",
+        "external_contract_blockers",
+        "country_requirement_blockers"
+      ],
+      "proof_gates": [
+        "development_mode_selected",
+        "external_inputs_blocked_or_sourced"
+      ],
+      "purpose": "Choose the field-specific development mode, agents, proof gates, external contracts, and procurement/compliance blockers.",
+      "required_inputs": [
+        "idea",
+        "field",
+        "country"
       ]
     },
     {

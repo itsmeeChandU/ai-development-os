@@ -2,7 +2,7 @@
 
 ```json
 {
-  "generated_at": "2026-06-25T05:24:02+00:00",
+  "generated_at": "2026-06-25T06:17:47+00:00",
   "goal": "Own the first prompt-to-product proof loop",
   "handoff_required_fields": [
     "lane",

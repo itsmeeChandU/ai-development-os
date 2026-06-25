@@ -24,7 +24,7 @@
       "unsafe_to_bypass": true
     }
   ],
-  "generated_at": "2026-06-25T05:24:02+00:00",
+  "generated_at": "2026-06-25T06:17:47+00:00",
   "kind": "background_routine_report",
   "proof_boundary": "Routine reports describe safe commands and blockers. Effectful execution still requires explicit operator intent.",
   "routine_count": 5,

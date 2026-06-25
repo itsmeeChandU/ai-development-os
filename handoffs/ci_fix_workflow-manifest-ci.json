@@ -11,7 +11,7 @@
   ],
   "check_name": "workflow_manifest_ci",
   "failure_excerpt": "",
-  "generated_at": "2026-06-25T05:24:02+00:00",
+  "generated_at": "2026-06-25T06:17:47+00:00",
   "kind": "ci_fix_handoff",
   "known_job": {
     "commands": [

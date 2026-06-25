@@ -1,0 +1,75 @@
+{
+  "blockers": [],
+  "generated_at": "2026-06-25T06:17:35+00:00",
+  "idea_source": {
+    "allowed_use": "Generate startup/app ideas, export source graph contracts, and host product-boundary truth surfaces.",
+    "branch_rule": "main plus codex/* product or contract branches",
+    "id": "intelligence-hub",
+    "proof_commands": [
+      "/Users/chandu/Workspace/Finance/intelligence-hub/.venv/bin/python -m pytest tests/test_code_review_graph.py -q"
+    ],
+    "remote": "https://github.com/itsmeeChandU/intelligence-hub.git",
+    "required_context": [
+      "sourcecode_graph_contract.json",
+      "Venture Studio idea packet when available"
+    ],
+    "role": "idea_source_and_product_boundary"
+  },
+  "intake_rules": [
+    "Treat user or Intelligence Hub idea packets as claims until repo evidence and research/data routes validate them.",
+    "Select existing internal repos only when their role matches the product lane.",
+    "Create a new private product repo when the idea should not modify an existing product boundary.",
+    "Keep Ruflo as coordination memory only; do not use it as repo truth.",
+    "Write missing repo access, missing credentials, missing data, or missing expert review as blocker rows with next_valid_move."
+  ],
+  "kind": "internal_repo_intake",
+  "next_valid_move": "Load source idea packet, select product target repo, then emit lane packet.",
+  "repo_groups": [
+    {
+      "description": "Repos or systems that can originate startup/application ideas.",
+      "id": "idea_sources",
+      "repos": [
+        "intelligence-hub"
+      ]
+    },
+    {
+      "description": "Repos that normalize, route, schedule, and prove prompt-to-product work.",
+      "id": "coordination_layer",
+      "repos": [
+        "ai-development-os"
+      ]
+    },
+    {
+      "description": "Repos that provide bounded system and code context for agents.",
+      "id": "context_layers",
+      "repos": [
+        "system-review-graph",
+        "code-review-graph"
+      ]
+    },
+    {
+      "description": "Repos that may contain product implementation, generated source truth, or downstream app work.",
+      "id": "product_repos",
+      "repos": [
+        "intelligence-hub",
+        "future-product-repo"
+      ]
+    }
+  ],
+  "status": "ready",
+  "target_repo": {
+    "allowed_use": "Hold the actual application implementation when a startup idea becomes a standalone product.",
+    "branch_rule": "create from origin/main or initialize private repo before lanes",
+    "id": "future-product-repo",
+    "proof_commands": [
+      "defined by generated lane packet"
+    ],
+    "remote": "to_be_created_or_selected",
+    "required_context": [
+      "AGENTS.md",
+      "instruction contract",
+      "system review graph"
+    ],
+    "role": "product_implementation_target"
+  }
+}

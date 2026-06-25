@@ -85,7 +85,8 @@ The machine-readable source of this workflow is
 The runnable execution contract lives in
 `manifests/agentic_execution_manifest.json`. It defines:
 
-- slash commands such as `/ados:normalize`, `/ados:lane`,
+- slash commands such as `/ados:normalize`, `/ados:repo-intake`,
+  `/ados:research-plan`, `/ados:strategy-plan`, `/ados:lane`,
   `/ados:proof`, `/ados:merge`, and `/ados:goal`
 - skills and their proof boundaries
 - background routines for branch freshness, context refresh, stale blockers,
@@ -108,14 +109,67 @@ The plan can be handed to agents or LLMs as bounded context. It is still only a
 coordination surface; completion requires changed files, focused checks,
 generated artifacts, GitHub branch state, and a handoff or blocker row.
 
+## Research And Strategy Routing
+
+Prompt-to-product is not one development path. The coordinator must choose the
+minimum useful external context and the right agent mix for the product field:
+
+- `manifests/internal_repo_registry.json` declares which internal/helper repos
+  can originate ideas, coordinate work, provide context, export code-review
+  graph contracts, or hold product implementation.
+- `manifests/research_data_router.json` separates model-prior synthesis,
+  normal web scans, official-source review, structured data/API needs, deep
+  research, and real user or subject-expert validation.
+- `manifests/development_strategy_router.json` chooses field modes for local
+  software, data/API products, AI/ML products, regulated/high-stakes work,
+  hardware/manufacturing, cross-border supply chains, and contract-dependent
+  products.
+
+AI model subject knowledge is acceptable for first-pass hypotheses and product
+drafting. It is not proof for current facts, buyer demand, country rules,
+tariffs, certifications, supplier availability, contracts, safety, medical,
+legal, financial, or launch claims. Those require dated source records,
+official-source evidence, datasets/API contracts, qualified experts, or blocker
+rows with `next_valid_move`.
+
+For manufacturing, import/export, and contract-heavy ideas, the expected flow
+is:
+
+```text
+idea packet -> repo intake -> research/data plan -> development strategy plan
+-> country requirements matrix / supplier data / contract blockers
+-> implementation lanes -> proof loops -> expert/user correction loop
+```
+
+The coordinator should move quickly where software proof is enough and slow
+down only at external gates. External inputs are not chat blockers; they become
+machine-readable blocker rows with owner, evidence, gate, and next valid move.
+
 ## Prompt-To-Product Runtime
 
 The local runtime now materializes the operating flow into files:
 
 ```bash
+python3 scripts/agentic_workflow_orchestrator.py repo-intake \
+  --idea-source intelligence-hub \
+  --target-repo future-product-repo \
+  --out-dir system_review_graph
+python3 scripts/agentic_workflow_orchestrator.py research-plan \
+  --problem "Manufacturing product requiring supplier data, country import/export requirements, contracts, and expert validation" \
+  --domain manufacturing \
+  --data-need "supplier data, official country rules, tariffs, certifications, contract terms" \
+  --out-dir system_review_graph
+python3 scripts/agentic_workflow_orchestrator.py strategy-plan \
+  --idea "Manufacturing product requiring supplier discovery, country import/export checks, contracts, and logistics" \
+  --field manufacturing \
+  --country US \
+  --out-dir system_review_graph
 python3 scripts/agentic_workflow_orchestrator.py prompt-to-product \
   --name "my-startup" \
   --idea "Build a product with proof gates" \
+  --field software \
+  --idea-source intelligence-hub \
+  --target-repo future-product-repo \
   --out-dir system_review_graph
 python3 scripts/agentic_workflow_orchestrator.py emit-slash-commands \
   --out-dir system_review_graph
@@ -133,6 +187,7 @@ python3 scripts/agentic_workflow_orchestrator.py ci-fix \
 ```
 
 This gives agents runnable packets for slash commands, lane work, safe
-background routines, scheduler wiring, and CI repair. The runtime intentionally
-defaults to dry-run packet generation so external effects remain behind
-explicit proof gates.
+background routines, scheduler wiring, CI repair, research/data routing, and
+field-specific development strategy. The runtime intentionally defaults to
+dry-run packet generation so external effects remain behind explicit proof
+gates.

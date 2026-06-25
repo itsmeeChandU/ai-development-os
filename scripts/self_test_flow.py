@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -14,6 +15,11 @@ REQUIRED_FOR_FLOW = [
     "docs/DELIVERY_ESTIMATION.md",
     "docs/COMPLEX_PRODUCT_PLAYBOOK.md",
     "docs/TOOL_BREEDING_GROUND.md",
+    "docs/AGENTIC_WORKFLOW_INTEGRATION.md",
+    "manifests/agentic_execution_manifest.json",
+    "manifests/internal_repo_registry.json",
+    "manifests/research_data_router.json",
+    "manifests/development_strategy_router.json",
     "templates/COMPLEXITY_CLASSIFICATION.md",
     "templates/INSTRUCTION_CONTRACT.md",
     "templates/STATE_RECONSTRUCTION_REPORT.md",
@@ -32,6 +38,9 @@ REQUIRED_FOR_FLOW = [
     "examples/hardware_os_startup_expected/ARCHITECTURE_OVERVIEW.md",
     "examples/hardware_os_startup_expected/DELIVERY_ESTIMATE.md",
     "examples/hardware_os_startup_expected/TOOL_DECISION_RECORD.md",
+    "system_review_graph/internal_repo_intake_packet.json",
+    "system_review_graph/research_data_plan.json",
+    "system_review_graph/development_strategy_plan.json",
 ]
 
 REQUIRED_TOOL_TERMS = [
@@ -75,6 +84,29 @@ def main() -> int:
     if "S0/S1" not in calculator or "S4" not in hardware:
         print("AI Dev OS self-test: FAIL")
         print("complexity routing examples are not distinct")
+        return 1
+
+    research_router = json.loads((ROOT / "manifests/research_data_router.json").read_text(encoding="utf-8"))
+    strategy_router = json.loads(
+        (ROOT / "manifests/development_strategy_router.json").read_text(encoding="utf-8")
+    )
+    research_ids = {row.get("id") for row in research_router.get("research_depths", [])}
+    data_ids = {row.get("id") for row in research_router.get("data_routes", [])}
+    mode_ids = {row.get("id") for row in strategy_router.get("development_modes", [])}
+    required_research = {"R0_MODEL_PRIOR", "R1_NORMAL_WEB_SCAN", "R4_DEEP_RESEARCH", "R5_EXPERT_OR_USER_VALIDATION"}
+    required_data = {"D1_NORMAL_WEB_SEARCH", "D2_PRIMARY_OFFICIAL_SOURCE", "D3_DATASET_OR_API", "D4_HUMAN_EXPERT_OR_USER"}
+    required_modes = {"M0_SOFTWARE_LOCAL", "M4_HARDWARE_MANUFACTURING", "M5_CROSS_BORDER_SUPPLY_CHAIN"}
+    if not required_research.issubset(research_ids):
+        print("AI Dev OS self-test: FAIL")
+        print("research router missing required depths")
+        return 1
+    if not required_data.issubset(data_ids):
+        print("AI Dev OS self-test: FAIL")
+        print("research router missing required data routes")
+        return 1
+    if not required_modes.issubset(mode_ids):
+        print("AI Dev OS self-test: FAIL")
+        print("strategy router missing required modes")
         return 1
 
     print("AI Dev OS self-test: PASS")

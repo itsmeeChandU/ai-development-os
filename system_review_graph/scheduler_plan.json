@@ -41,7 +41,7 @@
       "trigger": "GitHub check failure"
     }
   ],
-  "generated_at": "2026-06-25T05:24:02+00:00",
+  "generated_at": "2026-06-25T06:17:47+00:00",
   "kind": "scheduler_plan",
   "proof_boundary": "This is a scheduler plan, not a daemon. It is safe to commit and can be handed to an external runner.",
   "scheduler": "operator, cron, CI, or Codex goal loop can call these commands"

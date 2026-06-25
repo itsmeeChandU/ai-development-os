@@ -145,9 +145,26 @@ source inspection, tests, generated artifacts, or GitHub branch proof.
 To start from a single product prompt, emit the first runnable packet:
 
 ```bash
+python3 scripts/agentic_workflow_orchestrator.py repo-intake \
+  --idea-source intelligence-hub \
+  --target-repo future-product-repo \
+  --out-dir system_review_graph
+python3 scripts/agentic_workflow_orchestrator.py research-plan \
+  --problem "Manufacturing product requiring supplier data, import/export rules, contracts, and expert validation" \
+  --domain manufacturing \
+  --data-need "supplier data, official country rules, tariffs, certifications, contract terms" \
+  --out-dir system_review_graph
+python3 scripts/agentic_workflow_orchestrator.py strategy-plan \
+  --idea "Manufacturing product requiring supplier discovery, country import/export checks, contracts, and logistics" \
+  --field manufacturing \
+  --country US \
+  --out-dir system_review_graph
 python3 scripts/agentic_workflow_orchestrator.py prompt-to-product \
   --name "my-startup" \
   --idea "Build the first verified product loop" \
+  --field software \
+  --idea-source intelligence-hub \
+  --target-repo future-product-repo \
   --out-dir system_review_graph
 python3 scripts/agentic_workflow_orchestrator.py emit-slash-commands \
   --out-dir system_review_graph
@@ -158,7 +175,11 @@ python3 scripts/agentic_workflow_orchestrator.py scheduler-plan \
 ```
 
 Those commands create the local automation layer: normalized product packet,
+internal repo intake packet, research/data plan, development strategy plan,
 slash command specs, lane packets, background routine report, scheduler plan,
-and CI-fix handoff packets. They default to packet generation; effectful
-network, push, paid, live, legal, or external actions still require explicit
-operator intent and passing proof gates.
+and CI-fix handoff packets. AI model subject synthesis is allowed as the first
+hypothesis, but current facts, datasets, official rules, external contracts,
+country import/export requirements, and serious product claims must be routed
+through the research/data and strategy plans. Effectful network, push, paid,
+live, legal, or external actions still require explicit operator intent and
+passing proof gates.
