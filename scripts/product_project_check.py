@@ -25,20 +25,26 @@ def main() -> int:
         PROJECT / "data" / "evidence_packets.json",
         PROJECT / "data" / "official_source_registry.json",
         PROJECT / "data" / "investor_evidence.json",
+        PROJECT / "data" / "canada_tool_registry.json",
+        PROJECT / "data" / "expert_review_simulations.json",
+        PROJECT / "data" / "launch_controls.json",
         PROJECT / "src" / "importer_source_readiness" / "readiness.py",
         PROJECT / "src" / "importer_source_readiness" / "external_gates.py",
         PROJECT / "src" / "importer_source_readiness" / "continuation.py",
         PROJECT / "src" / "importer_source_readiness" / "investor_readiness.py",
+        PROJECT / "src" / "importer_source_readiness" / "board_readiness.py",
         PROJECT / "src" / "importer_source_readiness" / "operator_report.py",
         PROJECT / "tests" / "test_readiness.py",
         PROJECT / "tests" / "test_external_gates.py",
         PROJECT / "tests" / "test_continuation.py",
         PROJECT / "tests" / "test_investor_readiness.py",
+        PROJECT / "tests" / "test_board_go_live.py",
         PROJECT / "scripts" / "run_readiness.py",
         PROJECT / "scripts" / "run_external_gates.py",
         PROJECT / "scripts" / "export_operator_dashboard.py",
         PROJECT / "scripts" / "plan_continuation.py",
         PROJECT / "scripts" / "build_vc_pitch_packet.py",
+        PROJECT / "scripts" / "build_board_go_live_packet.py",
         PROJECT / "scripts" / "check_product.py",
         PROJECT / "docs" / "PRODUCT_AUTOMATION_RUNBOOK.md",
         PROJECT / "docs" / "PRODUCT_STATUS.md",
@@ -46,11 +52,16 @@ def main() -> int:
         PROJECT / "system_review_graph" / "external_gate_report.json",
         PROJECT / "system_review_graph" / "continuation_plan.json",
         PROJECT / "system_review_graph" / "vc_pitch_readiness_report.json",
+        PROJECT / "system_review_graph" / "board_go_live_readiness_report.json",
         PROJECT / "system_review_graph" / "operator_dashboard.html",
         PROJECT / "investor" / "vc_pitch_deck.md",
         PROJECT / "investor" / "one_pager.md",
         PROJECT / "investor" / "demo_script.md",
         PROJECT / "investor" / "diligence_room_index.md",
+        PROJECT / "board" / "board_go_live_brief.md",
+        PROJECT / "board" / "expert_review_packet.md",
+        PROJECT / "board" / "launch_control_checklist.md",
+        PROJECT / "board" / "financial_operating_model.md",
         PROJECT / "handoffs" / "product_completion_handoff.md",
     ]
     missing = [path.relative_to(ROOT) for path in required if not path.exists()]
@@ -67,6 +78,7 @@ def main() -> int:
         ["python3", "scripts/export_operator_dashboard.py"],
         ["python3", "scripts/plan_continuation.py"],
         ["python3", "scripts/build_vc_pitch_packet.py"],
+        ["python3", "scripts/build_board_go_live_packet.py"],
         ["python3", "scripts/check_product.py"],
     ]
     for command in commands:
@@ -108,6 +120,9 @@ def main() -> int:
     vc_pitch = json.loads(
         (PROJECT / "system_review_graph" / "vc_pitch_readiness_report.json").read_text(encoding="utf-8")
     )
+    board = json.loads(
+        (PROJECT / "system_review_graph" / "board_go_live_readiness_report.json").read_text(encoding="utf-8")
+    )
     if report.get("status") != "ready_with_external_gates" or report.get("blocker_count") != 9:
         print("Product project check: FAIL")
         print("unexpected product readiness report")
@@ -138,6 +153,19 @@ def main() -> int:
         print("Product project check: FAIL")
         print("VC pitch report missing diligence lanes or investor evidence")
         return 1
+    if board.get("status") != "board_go_live_candidate_with_human_approval_gates":
+        print("Product project check: FAIL")
+        print("unexpected board go-live readiness report")
+        return 1
+    if board.get("primary_market") != "Canada" or board.get("human_approval_gate_count", 0) < 10:
+        print("Product project check: FAIL")
+        print("board go-live report missing Canada focus or approval gates")
+        return 1
+    for key in ("canadian_tools_ready", "simulated_expert_reviews_ready", "launch_controls_ready"):
+        if board.get(key) is not True:
+            print("Product project check: FAIL")
+            print(f"board go-live report missing {key}")
+            return 1
 
     print("Product project check: PASS")
     print(f"project={PROJECT.relative_to(ROOT)}")
@@ -147,6 +175,7 @@ def main() -> int:
     print(f"continuation_lanes={continuation['lane_count']}")
     print(f"startup_status={continuation['status']}")
     print(f"vc_pitch_status={vc_pitch['status']}")
+    print(f"board_go_live_status={board['status']}")
     return 0
 
 

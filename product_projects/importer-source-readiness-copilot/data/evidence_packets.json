@@ -15,7 +15,7 @@
     "owner": "compliance",
     "evidence": "No qualified customs, food safety, or legal review attached.",
     "issue": "qualified compliance review is missing",
-    "next_valid_move": "Get qualified review for country matrix, HTS/tariff treatment, FDA seafood obligations, and claims language."
+    "next_valid_move": "Get qualified Canadian review for country matrix, tariff treatment, CFIA food import obligations, sanctions screening, and claims language."
   },
   {
     "id": "commercial-source-contract",

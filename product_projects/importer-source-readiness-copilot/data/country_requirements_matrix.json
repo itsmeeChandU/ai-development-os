@@ -1,10 +1,19 @@
 [
   {
-    "id": "us-frozen-tuna-fillet-030487",
-    "country": "US",
+    "id": "ca-frozen-tuna-fillet-030487",
+    "country": "CA",
     "product_category": "frozen tuna fillets",
     "hs_code": "0304870000",
-    "official_sources": ["usitc-hts", "cbp-basic-import-export", "fda-imported-seafood", "fda-human-food-imports"],
+    "official_sources": [
+      "cbsa-carm",
+      "cbsa-import-commercial-goods",
+      "cbsa-customs-tariff-2026",
+      "cfia-airs",
+      "gac-import-controls",
+      "justice-import-control-list",
+      "canada-sanctions",
+      "cbsa-licensed-customs-brokers"
+    ],
     "import_rules_status": "requires_qualified_review",
     "export_rules_status": "requires_qualified_review",
     "tariff_status": "requires_qualified_review",
@@ -14,23 +23,6 @@
     "claims_allowed": false,
     "owner": "compliance",
     "last_checked": "2026-06-25",
-    "next_valid_move": "Have a licensed customs broker or qualified compliance reviewer verify HTS classification, FDA seafood import obligations, restricted-party screening, and importer record obligations."
-  },
-  {
-    "id": "ca-importer-discovery-030487",
-    "country": "CA",
-    "product_category": "frozen tuna fillets",
-    "hs_code": "0304870000",
-    "official_sources": ["canada-cid"],
-    "import_rules_status": "requires_qualified_review",
-    "export_rules_status": "not_verified",
-    "tariff_status": "not_verified",
-    "food_safety_status": "not_verified",
-    "restricted_party_status": "missing",
-    "broker_or_expert_review_status": "missing",
-    "claims_allowed": false,
-    "owner": "compliance",
-    "last_checked": "2026-06-25",
-    "next_valid_move": "Use CID only for importer-discovery orientation, then verify product requirements with qualified Canadian import/export and food compliance review."
+    "next_valid_move": "Have a licensed Canadian customs broker or qualified Canadian trade/food compliance reviewer verify CBSA/CARM importer obligations, tariff classification, CFIA AIRS requirements, import controls, sanctions screening, and claim language."
   }
 ]

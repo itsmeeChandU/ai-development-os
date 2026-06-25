@@ -1,5 +1,5 @@
 {
-  "blocker_count": 26,
+  "blocker_count": 20,
   "closed_claims": [
     "fully_operational",
     "launch_ready",
@@ -10,7 +10,7 @@
     "commercially_ready"
   ],
   "external_gate_status": "ready_with_external_gates",
-  "generated_at": "2026-06-25T15:49:38+00:00",
+  "generated_at": "2026-06-25T16:21:51+00:00",
   "lane_count": 7,
   "lanes": [
     {
@@ -64,7 +64,7 @@
       "unsafe_to_bypass": true
     },
     {
-      "blocker_count": 9,
+      "blocker_count": 6,
       "blockers": [
         {
           "evidence": "Canadian Importers Database",
@@ -92,67 +92,37 @@
           "id": "qualified-compliance-review:evidence-missing",
           "issue": "qualified compliance review is missing",
           "module": "legal_compliance",
-          "next_valid_move": "Get qualified review for country matrix, HTS/tariff treatment, FDA seafood obligations, and claims language.",
+          "next_valid_move": "Get qualified Canadian review for country matrix, tariff treatment, CFIA food import obligations, sanctions screening, and claims language.",
           "owner": "compliance",
           "source_report": "external_gate_report"
         },
         {
-          "evidence": "us-frozen-tuna-fillet-030487",
+          "evidence": "ca-frozen-tuna-fillet-030487",
           "gate": "closed",
-          "id": "us-frozen-tuna-fillet-030487:broker_or_expert_review_status",
+          "id": "ca-frozen-tuna-fillet-030487:broker_or_expert_review_status",
           "issue": "broker or qualified expert review is missing",
           "module": "expert_review",
-          "next_valid_move": "Have a licensed customs broker or qualified compliance reviewer verify HTS classification, FDA seafood import obligations, restricted-party screening, and importer record obligations.",
+          "next_valid_move": "Have a licensed Canadian customs broker or qualified Canadian trade/food compliance reviewer verify CBSA/CARM importer obligations, tariff classification, CFIA AIRS requirements, import controls, sanctions screening, and claim language.",
           "owner": "compliance",
           "source_report": "external_gate_report"
         },
         {
-          "evidence": "ca-importer-discovery-030487",
+          "evidence": "ca-frozen-tuna-fillet-030487",
           "gate": "closed",
-          "id": "ca-importer-discovery-030487:broker_or_expert_review_status",
-          "issue": "broker or qualified expert review is missing",
-          "module": "expert_review",
-          "next_valid_move": "Use CID only for importer-discovery orientation, then verify product requirements with qualified Canadian import/export and food compliance review.",
-          "owner": "compliance",
-          "source_report": "external_gate_report"
-        },
-        {
-          "evidence": "us-frozen-tuna-fillet-030487",
-          "gate": "closed",
-          "id": "us-frozen-tuna-fillet-030487:tariff_status",
+          "id": "ca-frozen-tuna-fillet-030487:tariff_status",
           "issue": "tariff or HS classification is not qualified",
           "module": "tariff_classification",
-          "next_valid_move": "Have a licensed customs broker or qualified compliance reviewer verify HTS classification, FDA seafood import obligations, restricted-party screening, and importer record obligations.",
+          "next_valid_move": "Have a licensed Canadian customs broker or qualified Canadian trade/food compliance reviewer verify CBSA/CARM importer obligations, tariff classification, CFIA AIRS requirements, import controls, sanctions screening, and claim language.",
           "owner": "compliance",
           "source_report": "external_gate_report"
         },
         {
-          "evidence": "ca-importer-discovery-030487",
+          "evidence": "ca-frozen-tuna-fillet-030487",
           "gate": "closed",
-          "id": "ca-importer-discovery-030487:tariff_status",
-          "issue": "tariff or HS classification is not qualified",
-          "module": "tariff_classification",
-          "next_valid_move": "Use CID only for importer-discovery orientation, then verify product requirements with qualified Canadian import/export and food compliance review.",
-          "owner": "compliance",
-          "source_report": "external_gate_report"
-        },
-        {
-          "evidence": "us-frozen-tuna-fillet-030487",
-          "gate": "closed",
-          "id": "us-frozen-tuna-fillet-030487:food_safety_status",
+          "id": "ca-frozen-tuna-fillet-030487:food_safety_status",
           "issue": "food safety requirements are not qualified",
           "module": "food_safety",
-          "next_valid_move": "Have a licensed customs broker or qualified compliance reviewer verify HTS classification, FDA seafood import obligations, restricted-party screening, and importer record obligations.",
-          "owner": "compliance",
-          "source_report": "external_gate_report"
-        },
-        {
-          "evidence": "ca-importer-discovery-030487",
-          "gate": "closed",
-          "id": "ca-importer-discovery-030487:food_safety_status",
-          "issue": "food safety requirements are not qualified",
-          "module": "food_safety",
-          "next_valid_move": "Use CID only for importer-discovery orientation, then verify product requirements with qualified Canadian import/export and food compliance review.",
+          "next_valid_move": "Have a licensed Canadian customs broker or qualified Canadian trade/food compliance reviewer verify CBSA/CARM importer obligations, tariff classification, CFIA AIRS requirements, import controls, sanctions screening, and claim language.",
           "owner": "compliance",
           "source_report": "external_gate_report"
         }
@@ -177,45 +147,25 @@
       "unsafe_to_bypass": true
     },
     {
-      "blocker_count": 5,
+      "blocker_count": 3,
       "blockers": [
         {
-          "evidence": "us-frozen-tuna-fillet-030487",
+          "evidence": "ca-frozen-tuna-fillet-030487",
           "gate": "closed",
-          "id": "us-frozen-tuna-fillet-030487:import_rules_status",
+          "id": "ca-frozen-tuna-fillet-030487:import_rules_status",
           "issue": "qualified import-rules review is missing",
           "module": "country_import_rules",
-          "next_valid_move": "Have a licensed customs broker or qualified compliance reviewer verify HTS classification, FDA seafood import obligations, restricted-party screening, and importer record obligations.",
+          "next_valid_move": "Have a licensed Canadian customs broker or qualified Canadian trade/food compliance reviewer verify CBSA/CARM importer obligations, tariff classification, CFIA AIRS requirements, import controls, sanctions screening, and claim language.",
           "owner": "compliance",
           "source_report": "external_gate_report"
         },
         {
-          "evidence": "ca-importer-discovery-030487",
+          "evidence": "ca-frozen-tuna-fillet-030487",
           "gate": "closed",
-          "id": "ca-importer-discovery-030487:import_rules_status",
-          "issue": "qualified import-rules review is missing",
-          "module": "country_import_rules",
-          "next_valid_move": "Use CID only for importer-discovery orientation, then verify product requirements with qualified Canadian import/export and food compliance review.",
-          "owner": "compliance",
-          "source_report": "external_gate_report"
-        },
-        {
-          "evidence": "us-frozen-tuna-fillet-030487",
-          "gate": "closed",
-          "id": "us-frozen-tuna-fillet-030487:export_rules_status",
+          "id": "ca-frozen-tuna-fillet-030487:export_rules_status",
           "issue": "qualified export-rules review is missing",
           "module": "country_export_rules",
-          "next_valid_move": "Have a licensed customs broker or qualified compliance reviewer verify HTS classification, FDA seafood import obligations, restricted-party screening, and importer record obligations.",
-          "owner": "compliance",
-          "source_report": "external_gate_report"
-        },
-        {
-          "evidence": "ca-importer-discovery-030487",
-          "gate": "closed",
-          "id": "ca-importer-discovery-030487:export_rules_status",
-          "issue": "qualified export-rules review is missing",
-          "module": "country_export_rules",
-          "next_valid_move": "Use CID only for importer-discovery orientation, then verify product requirements with qualified Canadian import/export and food compliance review.",
+          "next_valid_move": "Have a licensed Canadian customs broker or qualified Canadian trade/food compliance reviewer verify CBSA/CARM importer obligations, tariff classification, CFIA AIRS requirements, import controls, sanctions screening, and claim language.",
           "owner": "compliance",
           "source_report": "external_gate_report"
         },
@@ -231,7 +181,7 @@
         }
       ],
       "id": "country-matrix-review",
-      "next_valid_move": "Have a licensed customs broker or qualified compliance reviewer verify HTS classification, FDA seafood import obligations, restricted-party screening, and importer record obligations.",
+      "next_valid_move": "Have a licensed Canadian customs broker or qualified Canadian trade/food compliance reviewer verify CBSA/CARM importer obligations, tariff classification, CFIA AIRS requirements, import controls, sanctions screening, and claim language.",
       "owner": "compliance",
       "proof_command": "Update data/country_requirements_matrix.json and rerun python3 scripts/run_external_gates.py.",
       "required_evidence": [
@@ -349,31 +299,21 @@
       "unsafe_to_bypass": true
     },
     {
-      "blocker_count": 2,
+      "blocker_count": 1,
       "blockers": [
         {
-          "evidence": "us-frozen-tuna-fillet-030487",
+          "evidence": "ca-frozen-tuna-fillet-030487",
           "gate": "closed",
-          "id": "us-frozen-tuna-fillet-030487:restricted_party_status",
+          "id": "ca-frozen-tuna-fillet-030487:restricted_party_status",
           "issue": "restricted-party screening is not complete",
           "module": "restricted_party_screening",
-          "next_valid_move": "Have a licensed customs broker or qualified compliance reviewer verify HTS classification, FDA seafood import obligations, restricted-party screening, and importer record obligations.",
-          "owner": "compliance",
-          "source_report": "external_gate_report"
-        },
-        {
-          "evidence": "ca-importer-discovery-030487",
-          "gate": "closed",
-          "id": "ca-importer-discovery-030487:restricted_party_status",
-          "issue": "restricted-party screening is not complete",
-          "module": "restricted_party_screening",
-          "next_valid_move": "Use CID only for importer-discovery orientation, then verify product requirements with qualified Canadian import/export and food compliance review.",
+          "next_valid_move": "Have a licensed Canadian customs broker or qualified Canadian trade/food compliance reviewer verify CBSA/CARM importer obligations, tariff classification, CFIA AIRS requirements, import controls, sanctions screening, and claim language.",
           "owner": "compliance",
           "source_report": "external_gate_report"
         }
       ],
       "id": "restricted-party-screening",
-      "next_valid_move": "Have a licensed customs broker or qualified compliance reviewer verify HTS classification, FDA seafood import obligations, restricted-party screening, and importer record obligations.",
+      "next_valid_move": "Have a licensed Canadian customs broker or qualified Canadian trade/food compliance reviewer verify CBSA/CARM importer obligations, tariff classification, CFIA AIRS requirements, import controls, sanctions screening, and claim language.",
       "owner": "compliance",
       "proof_command": "Update country matrix/evidence packets and rerun python3 scripts/run_external_gates.py.",
       "required_evidence": [
@@ -425,7 +365,7 @@
   "not_done_reasons": [
     "readiness report is internally usable but externally gated",
     "external gate report still has missing evidence",
-    "26 blocker rows require external evidence or qualified review"
+    "20 blocker rows require external evidence or qualified review"
   ],
   "proof_boundary": "Local software completion is not startup completion. ready_with_external_gates means continue with evidence lanes before operational, launch, legal, customs, supplier, buyer, or commercial claims.",
   "readiness_status": "ready_with_external_gates",

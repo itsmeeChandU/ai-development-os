@@ -18,6 +18,7 @@ REQUIRED_TOP_LEVEL = {
     "canonical_truth",
     "startup_continuation_rule",
     "vc_pitch_readiness_rule",
+    "board_go_live_readiness_rule",
     "repo_roles",
     "agent_modes",
     "version_control_rules",
@@ -93,6 +94,14 @@ def validate_manifest(manifest: dict[str, Any]) -> list[str]:
         errors.append("vc_pitch_readiness_rule.ready_status must be vc_pitch_ready_with_diligence_gates")
     if "revenue_proven" not in pitch_rule.get("closed_claims_without_proof", []):
         errors.append("vc_pitch_readiness_rule must close revenue_proven claims without proof")
+
+    board_rule = manifest.get("board_go_live_readiness_rule") or {}
+    if board_rule.get("required_artifact") != "system_review_graph/board_go_live_readiness_report.json":
+        errors.append("board_go_live_readiness_rule.required_artifact must be system_review_graph/board_go_live_readiness_report.json")
+    if board_rule.get("ready_status") != "board_go_live_candidate_with_human_approval_gates":
+        errors.append("board_go_live_readiness_rule.ready_status must be board_go_live_candidate_with_human_approval_gates")
+    if "public_launch_ready" not in board_rule.get("closed_claims_without_approval", []):
+        errors.append("board_go_live_readiness_rule must close public_launch_ready claims without approval")
 
     return errors
 

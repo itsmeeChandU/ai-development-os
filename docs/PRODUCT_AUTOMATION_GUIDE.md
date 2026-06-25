@@ -32,6 +32,8 @@ should convert a user idea into artifacts that agents can execute safely:
    ready with external gates
 9. VC pitch packet: investor-safe claims, demo script, diligence lanes, and
    pitch readiness report
+10. board go-live packet: jurisdiction tools, expert-agent review lanes,
+    launch controls, human approval gates, and board readiness report
 
 ## Minimum Product Integration
 
@@ -54,6 +56,10 @@ If a product reports `ready_with_external_gates`, completion also requires a
 If a product needs to be pitched to investors, completion also requires
 `system_review_graph/vc_pitch_readiness_report.json` plus investor artifacts
 with claim boundaries and open diligence lanes.
+If a product needs to reach board go-live review, completion also requires
+`system_review_graph/board_go_live_readiness_report.json` plus `board/*.md`
+with jurisdiction-specific tools, expert simulations, launch controls, and
+human approval gates.
 
 ## Input Contract
 
@@ -137,6 +143,7 @@ In a product, wire the flow as a state machine:
 | blocked_or_ready | publish blocker/readiness state | next valid move |
 | continuation_required | write continuation plan for externally gated work | evidence lanes and closed premature claims |
 | vc_pitch_ready | write investor packet and pitch readiness report | private pitch state and diligence lanes |
+| board_go_live_candidate | write board packet and go-live readiness report | controlled private beta candidate and human approval gates |
 
 Do not skip from `idea_received` to `lane_assigned` for complex products. The
 router is what prevents the product from treating manufacturing, regulated,
@@ -214,6 +221,22 @@ Generate:
 - `investor/demo_script.md`
 - `investor/diligence_room_index.md`
 
+## Board Go-Live Readiness Rule
+
+`board_go_live_candidate_with_human_approval_gates` means a product is ready
+for board review and controlled-private-beta decisioning. It does not mean
+public launch, production deployment, legal advice, financial advice,
+customs/tariff advice, regulated compliance, buyer validation, revenue, PMF, or
+supplier readiness.
+
+Generate:
+
+- `system_review_graph/board_go_live_readiness_report.json`
+- `board/board_go_live_brief.md`
+- `board/expert_review_packet.md`
+- `board/launch_control_checklist.md`
+- `board/financial_operating_model.md`
+
 ## CI And Scheduled Automation
 
 Use CI to keep the automation surface honest:
@@ -258,4 +281,5 @@ The product automation is working when:
 - the operator surface shows ready vs blocked with `next_valid_move`
 - externally gated products generate continuation lanes before completion claims
 - investor-pitch products generate VC readiness artifacts before pitch claims
+- go-live products generate board readiness artifacts before launch claims
 - no external effect opens without explicit approval and proof

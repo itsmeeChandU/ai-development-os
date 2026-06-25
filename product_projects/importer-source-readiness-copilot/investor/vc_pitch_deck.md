@@ -14,7 +14,7 @@ The copilot turns source cards into readiness reports, blocker ledgers, operator
 
 ## 4. Why Now
 
-Global and U.S. trade remain large, current rules shift, and AI-native operators can move faster only when evidence gates are explicit.
+Global and Canadian trade remain large, current rules shift, and AI-native operators can move faster only when evidence gates are explicit.
 
 ## 5. Wedge
 
@@ -62,8 +62,9 @@ Open lanes remain visible and are part of the pitch, not hidden. They are buyer 
 
 ## Sources
 
-- World Trade Organization Global Trade Outlook and Statistics: https://www.wto.org/english/res_e/publications_e/trade_outlook25_e.htm (Use for market context only; do not use as TAM/SAM/SOM proof without a separate market model.)
-- U.S. Census Bureau International Trade Data: https://www.census.gov/foreign-trade/data/ (Use to support data-source availability; do not claim a specific revenue market size until a dated TAM model is produced.)
-- U.S. Customs and Border Protection Basic Importing and Exporting: https://www.cbp.gov/trade/basic-import-export (Use to explain workflow complexity; do not provide customs, tariff, or import/export advice.)
-- U.S. Customs and Border Protection Trade Statistics: https://www.cbp.gov/newsroom/stats/trade (Use as official context; do not quote dollar figures without refreshing the source on the pitch date.)
-- FDA Imported Seafood Safety Program: https://www.fda.gov/food/importing-food-products-united-states/imported-seafood-safety-program (Use to explain why qualified review matters; do not claim FDA approval or compliance readiness.)
+- World Trade Organization Global Trade Outlook and Statistics: https://www.wto.org/english/res_e/publications_e/trade_outlook25_e.htm (Use for market context only; do not use as TAM/SAM/SOM proof without a separate Canadian market model.)
+- ISED Trade Data Online: https://ised-isde.canada.ca/site/trade-data-online/en/overview (Use to support data-source availability; do not claim Canadian revenue market size until a dated TAM model is produced.)
+- Canadian Importers Database: https://ised-isde.canada.ca/site/ised/en/research-and-business-intelligence/canadian-importers-database (Use for discovery only; do not claim buyer validation, supplier recommendation, or current customer intent.)
+- CBSA Import Commercial Goods Into Canada: https://www.cbsa-asfc.gc.ca/import/menu-eng.html (Use to explain workflow complexity; do not provide customs, tariff, or import/export advice.)
+- CBSA Customs Tariff 2026: https://www.cbsa-asfc.gc.ca/trade-commerce/tariff-tarif/2026/menu-eng.html (Use as official orientation; product classification and tariff treatment require qualified review.)
+- CFIA Automated Import Reference System: https://inspection.canada.ca/en/importing-food-plants-animals/airs (Use to explain why qualified food-import review matters; do not claim CFIA approval or compliance readiness.)

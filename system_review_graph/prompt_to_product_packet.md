@@ -13,19 +13,9 @@
         "next_valid_move": "Collect or block: customs/tariff evidence, country regulations, licensed broker or compliance expert when needed",
         "owner": "architect",
         "unsafe_to_bypass": true
-      },
-      {
-        "evidence": "manifests/development_strategy_router.json",
-        "gate": "closed",
-        "id": "strategy:m1_data_api_product:external-inputs",
-        "issue": "development mode needs external inputs before final readiness",
-        "module": "development_strategy_router",
-        "next_valid_move": "Collect or block: API terms, credentials, rate limits, source rights",
-        "owner": "architect",
-        "unsafe_to_bypass": true
       }
     ],
-    "country": "US",
+    "country": "CA",
     "country_requirements_template": {
       "proof_boundary": "Country and import/export requirements must come from current official sources or qualified logistics/compliance experts before action.",
       "required_fields": [
@@ -55,23 +45,8 @@
         "launch_gate"
       ]
     },
-    "field": "cross-border supply chain",
+    "field": "import_export",
     "field_playbooks": [
-      {
-        "default_mode": "M1_DATA_API_PRODUCT",
-        "field": "data_product",
-        "first_agents": [
-          "research",
-          "data",
-          "surgeon",
-          "reviewer"
-        ],
-        "first_artifacts": [
-          "source contract",
-          "fixture",
-          "freshness policy"
-        ]
-      },
       {
         "default_mode": "M5_CROSS_BORDER_SUPPLY_CHAIN",
         "field": "import_export",
@@ -88,8 +63,8 @@
         ]
       }
     ],
-    "generated_at": "2026-06-25T15:46:03+00:00",
-    "idea": "Build a blocked-safe importer/exporter source readiness copilot for product operators using fixture data, official-source placeholders, country requirement gaps, explicit external-gate blockers, and a private VC pitch readiness packet.",
+    "generated_at": "2026-06-25T16:18:28+00:00",
+    "idea": "Canada-focused importer source readiness copilot with board go-live gates",
     "kind": "development_strategy_plan",
     "modes": [
       {
@@ -113,29 +88,6 @@
           "logistics plan"
         ],
         "use_when": "Import/export, country-specific sourcing, tariffs, customs, certifications, logistics, or regional compliance."
-      },
-      {
-        "agent_mix": [
-          "research",
-          "data",
-          "architect",
-          "surgeon",
-          "reviewer"
-        ],
-        "external_inputs": [
-          "API terms",
-          "credentials",
-          "rate limits",
-          "source rights"
-        ],
-        "id": "M1_DATA_API_PRODUCT",
-        "proof_gates": [
-          "data source contract",
-          "fixture",
-          "freshness check",
-          "integration test"
-        ],
-        "use_when": "Products that require APIs, data feeds, credentials, freshness, lineage, rights, or repeatable ingestion."
       }
     ],
     "next_valid_move": "Assign agents by mode, collect external inputs, and keep final claims blocked until evidence exists.",
@@ -193,6 +145,8 @@
         "system_review_graph/slash_command_specs.json",
         "system_review_graph/automation_runtime_report.json",
         "system_review_graph/scheduler_plan.json",
+        "product_projects/<product>/system_review_graph/board_go_live_readiness_report.json",
+        "product_projects/<product>/board/board_go_live_brief.md",
         "handoffs/ci_fix_<check>.json"
       ],
       "runner": "scripts/agentic_workflow_orchestrator.py",
@@ -267,6 +221,20 @@
         ],
         "proof_output": "system_review_graph/vc_pitch_readiness_report.json",
         "trigger": "product needs VC pitch readiness"
+      },
+      {
+        "allowed_effects": [
+          "read generated reports",
+          "write board packet",
+          "write board go-live readiness report"
+        ],
+        "cadence": "before go-live, board, private beta, or launch-readiness claims",
+        "id": "board_go_live_readiness_sweep",
+        "prohibited_effects": [
+          "claim public launch, production deployment, legal, financial, compliance, buyer, revenue, PMF, supplier, customs, tariff, or regulated proof without qualified human approval"
+        ],
+        "proof_output": "system_review_graph/board_go_live_readiness_report.json",
+        "trigger": "product needs board go-live readiness"
       },
       {
         "allowed_effects": [
@@ -418,6 +386,13 @@
         "predicate": "A product marked pitch-ready has vc_pitch_readiness_report.json, investor artifacts, sourced claim boundaries, diligence lanes, and premature launch/revenue/PMF/compliance claims closed."
       },
       {
+        "failure_output": "Board go-live blocker with next_valid_move to generate or repair board packet",
+        "id": "board_go_live_readiness",
+        "measurement": "scripts/product_project_check.py",
+        "pass_condition": "Board packet is ready for controlled private beta decisioning without claiming public launch, production deployment, legal, financial, compliance, buyer, revenue, PMF, supplier, customs, or tariff proof.",
+        "predicate": "A product marked board-go-live candidate has board_go_live_readiness_report.json, board artifacts, jurisdiction tools, expert simulations, launch controls, human approval gates, and premature public launch/legal/financial/compliance claims closed."
+      },
+      {
         "failure_output": "main integration blocker",
         "id": "main_push_readiness",
         "measurement": "post-merge checks and git status",
@@ -426,8 +401,8 @@
       }
     ],
     "execution_manifest": "manifests/agentic_execution_manifest.json",
-    "generated_at": "2026-06-25T15:46:03+00:00",
-    "goal": "Build a blocked-safe importer/exporter source readiness copilot for product operators using fixture data, official-source placeholders, country requirement gaps, explicit external-gate blockers, and a private VC pitch readiness packet.",
+    "generated_at": "2026-06-25T16:18:28+00:00",
+    "goal": "Canada-focused importer source readiness copilot with board go-live gates",
     "lane_packets": [
       {
         "allowed_files": [
@@ -653,6 +628,7 @@
       "Ruflo memory is coordination state, not a completion claim.",
       "ready_with_external_gates requires system_review_graph/continuation_plan.json and cannot be reported as fully operational or launch ready while must_continue is true.",
       "VC pitch readiness requires system_review_graph/vc_pitch_readiness_report.json and cannot be used as legal, securities, revenue, PMF, launch, compliance, buyer, supplier, customs, or tariff proof.",
+      "Board go-live readiness requires system_review_graph/board_go_live_readiness_report.json and cannot be used as public launch, production deployment, legal, financial, compliance, buyer, revenue, PMF, supplier, customs, tariff, or regulated proof without qualified human approval.",
       "Unsafe, paid, live, legal, or external actions stay closed without explicit user intent and repo proof."
     ],
     "repos": [
@@ -886,7 +862,7 @@
     ],
     "workflow_manifest": "manifests/agentic_workflow_manifest.json"
   },
-  "generated_at": "2026-06-25T15:46:03+00:00",
+  "generated_at": "2026-06-25T16:18:28+00:00",
   "kind": "prompt_to_product_packet",
   "next_valid_move": "Create or select the target repo, load bounded context, claim the first lane, and run its proof commands.",
   "normalized_contract": {
@@ -906,19 +882,19 @@
       "handoff with next_valid_move"
     ],
     "first_action": "Emit lane packet and run the smallest proof loop.",
-    "goal": "Build a blocked-safe importer/exporter source readiness copilot for product operators using fixture data, official-source placeholders, country requirement gaps, explicit external-gate blockers, and a private VC pitch readiness packet."
+    "goal": "Canada-focused importer source readiness copilot with board go-live gates"
   },
   "product": {
     "complexity": {
       "level": "S2",
       "reason": "data, API, credential, or source dependency present"
     },
-    "idea": "Build a blocked-safe importer/exporter source readiness copilot for product operators using fixture data, official-source placeholders, country requirement gaps, explicit external-gate blockers, and a private VC pitch readiness packet.",
+    "idea": "Canada-focused importer source readiness copilot with board go-live gates",
     "name": "importer-source-readiness-copilot"
   },
   "repo_intake": {
     "blockers": [],
-    "generated_at": "2026-06-25T15:46:03+00:00",
+    "generated_at": "2026-06-25T16:18:28+00:00",
     "idea_source": {
       "allowed_use": "Generate startup/app ideas, export source graph contracts, and host product-boundary truth surfaces.",
       "branch_rule": "main plus codex/* product or contract branches",
@@ -977,7 +953,7 @@
     ],
     "status": "ready",
     "target_repo": {
-      "allowed_use": "Hold the actual importer/exporter source readiness product implementation, continuation lanes, VC pitch packet, and proof artifacts.",
+      "allowed_use": "Hold the actual importer/exporter source readiness product implementation, continuation lanes, VC pitch packet, board go-live packet, and proof artifacts.",
       "branch_rule": "main plus codex/* product branches",
       "id": "importer-source-readiness-copilot",
       "proof_commands": [
@@ -986,6 +962,7 @@
         "python3 scripts/export_operator_dashboard.py",
         "python3 scripts/plan_continuation.py",
         "python3 scripts/build_vc_pitch_packet.py",
+        "python3 scripts/build_board_go_live_packet.py",
         "python3 -m unittest discover -s tests -p 'test_*.py'"
       ],
       "remote": "https://github.com/itsmeeChandU/importer-source-readiness-copilot.git",
@@ -997,6 +974,7 @@
         "system_review_graph/external_gate_report.json",
         "system_review_graph/continuation_plan.json",
         "system_review_graph/vc_pitch_readiness_report.json",
+        "system_review_graph/board_go_live_readiness_report.json",
         "system_review_graph/operator_dashboard.html"
       ],
       "role": "product_implementation_target"
@@ -1004,16 +982,6 @@
   },
   "research_data_plan": {
     "blockers": [
-      {
-        "evidence": "manifests/research_data_router.json",
-        "gate": "closed",
-        "id": "research:r3_structured_data_required:external-input",
-        "issue": "external data or human validation is required before final product claims",
-        "module": "research_data_router",
-        "next_valid_move": "Create the source/expert plan and collect dated evidence.",
-        "owner": "research",
-        "unsafe_to_bypass": true
-      },
       {
         "evidence": "manifests/research_data_router.json",
         "gate": "closed",
@@ -1049,17 +1017,6 @@
       },
       {
         "allowed_sources": [
-          "public datasets",
-          "licensed APIs",
-          "repo fixtures",
-          "data contracts"
-        ],
-        "blocker_if_missing": true,
-        "id": "D3_DATASET_OR_API",
-        "use_when": "Need repeatable structured data, API credentials, database access, freshness, or rights."
-      },
-      {
-        "allowed_sources": [
           "subject expert",
           "buyer/user interview",
           "qualified reviewer"
@@ -1069,12 +1026,12 @@
         "use_when": "Need buyer truth, operational workflow truth, clinical/legal/financial judgment, safety review, or final domain direction."
       }
     ],
-    "domain": "cross-border supply chain",
+    "domain": "import_export",
     "expert_validation_rule": "After the product is substantially built, talk to actual people, users, buyers, operators, or qualified subject experts. Their feedback becomes correction evidence for the next product loop.",
-    "generated_at": "2026-06-25T15:46:03+00:00",
+    "generated_at": "2026-06-25T16:18:28+00:00",
     "kind": "research_data_plan",
     "next_valid_move": "Run model-prior synthesis, then collect the listed external evidence before final claims.",
-    "problem": "Build a blocked-safe importer/exporter source readiness copilot for product operators using fixture data, official-source placeholders, country requirement gaps, explicit external-gate blockers, and a private VC pitch readiness packet.",
+    "problem": "Canada-focused importer source readiness copilot with board go-live gates",
     "research_depths": [
       {
         "id": "R0_MODEL_PRIOR",
@@ -1096,18 +1053,6 @@
           "proof commands"
         ],
         "use_when": "APIs, SDKs, library behavior, pricing, rules, docs, regulations, standards, or vendor claims."
-      },
-      {
-        "id": "R3_STRUCTURED_DATA_REQUIRED",
-        "proof_boundary": "Do not claim product readiness until data access, freshness, lineage, and rights are proven or blocked.",
-        "rate_tier": "high",
-        "required_artifacts": [
-          "data source contract",
-          "freshness policy",
-          "rights/credential blocker",
-          "fixtures"
-        ],
-        "use_when": "The product depends on datasets, fresh data, paid APIs, credentials, source rights, or repeatable data pipelines."
       },
       {
         "id": "R4_DEEP_RESEARCH",

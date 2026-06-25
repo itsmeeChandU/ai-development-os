@@ -14,7 +14,7 @@
       "unsafe_to_bypass": true
     }
   ],
-  "country": "US",
+  "country": "CA",
   "country_requirements_template": {
     "proof_boundary": "Country and import/export requirements must come from current official sources or qualified logistics/compliance experts before action.",
     "required_fields": [
@@ -44,7 +44,7 @@
       "launch_gate"
     ]
   },
-  "field": "cross-border supply chain",
+  "field": "import_export",
   "field_playbooks": [
     {
       "default_mode": "M5_CROSS_BORDER_SUPPLY_CHAIN",
@@ -62,8 +62,8 @@
       ]
     }
   ],
-  "generated_at": "2026-06-25T15:46:12+00:00",
-  "idea": "Build a blocked-safe importer/exporter source readiness copilot with VC pitch readiness.",
+  "generated_at": "2026-06-25T16:18:27+00:00",
+  "idea": "Canada-focused importer source readiness copilot with board go-live gates",
   "kind": "development_strategy_plan",
   "modes": [
     {

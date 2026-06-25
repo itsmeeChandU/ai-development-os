@@ -44,6 +44,14 @@
       "trigger": "product needs VC pitch readiness"
     },
     {
+      "cadence": "before go-live, board, private beta, or launch-readiness claims",
+      "command": "python3 scripts/agentic_workflow_orchestrator.py routine-report --routine board_go_live_readiness_sweep --out-dir system_review_graph",
+      "effectful": false,
+      "id": "board_go_live_readiness_sweep",
+      "proof_output": "system_review_graph/board_go_live_readiness_report.json",
+      "trigger": "product needs board go-live readiness"
+    },
+    {
       "cadence": "overnight when requested and safe",
       "command": "python3 scripts/agentic_workflow_orchestrator.py routine-report --routine nightly_eval_loop --out-dir system_review_graph",
       "effectful": false,
@@ -60,7 +68,7 @@
       "trigger": "GitHub check failure"
     }
   ],
-  "generated_at": "2026-06-25T15:46:03+00:00",
+  "generated_at": "2026-06-25T16:18:27+00:00",
   "kind": "scheduler_plan",
   "proof_boundary": "This is a scheduler plan, not a daemon. It is safe to commit and can be handed to an external runner.",
   "scheduler": "operator, cron, CI, or Codex goal loop can call these commands"

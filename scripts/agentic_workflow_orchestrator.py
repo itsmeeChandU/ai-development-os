@@ -54,6 +54,7 @@ REQUIRED_ROUTINES = {
     "stale_blocker_sweep",
     "startup_continuation_sweep",
     "vc_pitch_readiness_sweep",
+    "board_go_live_readiness_sweep",
     "nightly_eval_loop",
     "ci_failure_triage",
 }
@@ -64,6 +65,7 @@ REQUIRED_EVALS = {
     "handoff_completeness",
     "ready_with_external_gates_continuation",
     "vc_pitch_readiness",
+    "board_go_live_readiness",
     "main_push_readiness",
 }
 REQUIRED_LANE_FIELDS = {

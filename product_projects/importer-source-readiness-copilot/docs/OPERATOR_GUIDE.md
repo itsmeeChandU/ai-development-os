@@ -15,7 +15,9 @@ python3 scripts/check_product.py
 This command runs unit tests, regenerates readiness and external-gate reports,
 exports the operator dashboard, writes the continuation plan, and verifies that
 unsafe gates remain closed. It also writes the VC pitch packet and verifies
-that investor-facing claims remain bounded.
+that investor-facing claims remain bounded. It also writes the Canada-focused
+board/go-live packet and verifies that the product is only a controlled-private
+beta candidate with human approval gates.
 
 ## Operator Surface
 
@@ -54,6 +56,22 @@ private investor conversation with clear diligence lanes; it does not open
 public launch, revenue, PMF, compliance, supplier, buyer-validation, customs, or
 tariff claims.
 
+Open the board packet for go-live review:
+
+```text
+board/board_go_live_brief.md
+board/expert_review_packet.md
+board/launch_control_checklist.md
+board/financial_operating_model.md
+system_review_graph/board_go_live_readiness_report.json
+```
+
+The expected board status is
+`board_go_live_candidate_with_human_approval_gates`. It allows the board to
+decide whether a controlled private beta should start. It does not open public
+launch, production deployment, legal advice, financial advice, customs/tariff
+advice, CFIA compliance, buyer validation, revenue, or PMF claims.
+
 ## What Is Stopping External Use
 
 The current stopping surface is generated in:
@@ -72,6 +90,9 @@ External use stays blocked until these records are updated with real evidence:
 
 - qualified customs/import/export review
 - qualified food safety or legal/compliance review
+- Canadian privacy/PIPEDA and public-claim legal review
+- founder/accountant/finance approval for projections, spend, and financing terms
+- security/ops approval for deployment, access, incident response, support, and rollback
 - written commercial/source/data contracts
 - buyer or operator validation
 - repeatable source-rights and freshness proof
@@ -98,3 +119,13 @@ responsible owner can defend it.
 4. Keep the diligence lanes open in the conversation rather than hiding them.
 5. Do not send fundraising documents as legal or securities documents until
    counsel reviews the terms.
+
+## Board Go-Live Loop
+
+1. Run `python3 scripts/check_product.py`.
+2. Read `system_review_graph/board_go_live_readiness_report.json`.
+3. Open `board/board_go_live_brief.md` and `board/launch_control_checklist.md`.
+4. Treat AI-simulated expert lanes as first-pass review, not final signoff.
+5. Board may approve a controlled private beta only after assigning owners for
+   Canadian customs/compliance, legal/privacy, finance, data, and security
+   approval gates.

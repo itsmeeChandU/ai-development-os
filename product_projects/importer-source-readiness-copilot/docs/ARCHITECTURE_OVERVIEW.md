@@ -7,12 +7,16 @@ data/sample_source_cards.json
 data/country_requirements_matrix.json
 data/evidence_packets.json
 data/official_source_registry.json
+data/canada_tool_registry.json
+data/expert_review_simulations.json
+data/launch_controls.json
         |
         v
 src/importer_source_readiness/readiness.py
 src/importer_source_readiness/external_gates.py
 src/importer_source_readiness/continuation.py
 src/importer_source_readiness/investor_readiness.py
+src/importer_source_readiness/board_readiness.py
 src/importer_source_readiness/operator_report.py
         |
         v
@@ -20,8 +24,10 @@ system_review_graph/readiness_report.json
 system_review_graph/external_gate_report.json
 system_review_graph/continuation_plan.json
 system_review_graph/vc_pitch_readiness_report.json
+system_review_graph/board_go_live_readiness_report.json
 system_review_graph/operator_dashboard.html
 investor/*.md
+board/*.md
 ```
 
 ## Modules
@@ -32,20 +38,26 @@ investor/*.md
 | `data/country_requirements_matrix.json` | country-specific requirement review rows |
 | `data/evidence_packets.json` | buyer, expert, contract, source-rights, and launch evidence gates |
 | `data/official_source_registry.json` | official source references and claim boundaries |
+| `data/canada_tool_registry.json` | Canadian official tools for board/go-live review |
+| `data/expert_review_simulations.json` | AI-simulated expert review lanes with human approval gates |
+| `data/launch_controls.json` | controlled private beta and go-live approval controls |
 | `src/importer_source_readiness/readiness.py` | evaluate source cards and produce blocker rows |
 | `src/importer_source_readiness/external_gates.py` | evaluate country and evidence gates |
 | `src/importer_source_readiness/continuation.py` | convert external blockers into required continuation lanes |
 | `src/importer_source_readiness/investor_readiness.py` | build VC pitch readiness and diligence gates |
+| `src/importer_source_readiness/board_readiness.py` | build Canada-focused board/go-live candidate readiness |
 | `src/importer_source_readiness/operator_report.py` | render static operator dashboard |
 | `scripts/run_readiness.py` | CLI entrypoint and report writer |
 | `scripts/run_external_gates.py` | external-gate report writer |
 | `scripts/export_operator_dashboard.py` | dashboard exporter |
 | `scripts/plan_continuation.py` | continuation plan writer |
 | `scripts/build_vc_pitch_packet.py` | investor packet and pitch readiness writer |
+| `scripts/build_board_go_live_packet.py` | board packet and go-live candidate writer |
 | `tests/test_readiness.py` | proof for blocked-safe behavior |
 | `tests/test_external_gates.py` | proof for external-gate and dashboard behavior |
 | `tests/test_continuation.py` | proof that externally gated status keeps work in progress |
 | `tests/test_investor_readiness.py` | proof that pitch status keeps diligence and claim gates visible |
+| `tests/test_board_go_live.py` | proof that Canada board/go-live candidate status keeps human approval gates visible |
 | `system_review_graph/` | generated packets, reports, blockers, handoff evidence |
 
 ## Data Flow
@@ -61,7 +73,11 @@ investor/*.md
 9. Convert blockers into `system_review_graph/continuation_plan.json`.
 10. Convert pitch evidence into `system_review_graph/vc_pitch_readiness_report.json`.
 11. Write investor pitch, one-pager, demo, and diligence artifacts.
-12. Render `system_review_graph/operator_dashboard.html`.
+12. Convert Canadian tools, expert simulations, and launch controls into
+    `system_review_graph/board_go_live_readiness_report.json`.
+13. Write board go-live brief, expert review packet, launch checklist, and
+    financial operating model.
+14. Render `system_review_graph/operator_dashboard.html`.
 
 ## Status Rules
 
@@ -79,6 +95,12 @@ That is not a final startup status. If either gate report is
 The expected investor status is `vc_pitch_ready_with_diligence_gates`. It
 means a private VC pitch is supported by a demo, sources, and diligence lanes;
 it does not mean the product is launch ready or externally operational.
+
+The expected board status is
+`board_go_live_candidate_with_human_approval_gates`. It means the Canada-focused
+implementation can be placed in front of a board for controlled-private-beta
+decisioning. It does not mean public launch, production deployment, customs,
+tariff, CFIA, legal, financial, buyer, revenue, or PMF proof.
 
 ## Proof Boundary
 

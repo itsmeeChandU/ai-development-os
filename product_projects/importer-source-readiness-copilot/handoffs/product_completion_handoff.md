@@ -16,6 +16,8 @@ import/export source-proof idea.
 - local software status: `ready_with_external_gates`
 - startup continuation status: `startup_in_progress`
 - VC pitch status: `vc_pitch_ready_with_diligence_gates`
+- board go-live status: `board_go_live_candidate_with_human_approval_gates`
+- primary market: Canada
 
 ## Changed Files
 
@@ -23,6 +25,7 @@ import/export source-proof idea.
 - `src/importer_source_readiness/external_gates.py`
 - `src/importer_source_readiness/continuation.py`
 - `src/importer_source_readiness/investor_readiness.py`
+- `src/importer_source_readiness/board_readiness.py`
 - `src/importer_source_readiness/operator_report.py`
 - `src/importer_source_readiness/__init__.py`
 - `data/sample_source_cards.json`
@@ -30,16 +33,21 @@ import/export source-proof idea.
 - `data/evidence_packets.json`
 - `data/official_source_registry.json`
 - `data/investor_evidence.json`
+- `data/canada_tool_registry.json`
+- `data/expert_review_simulations.json`
+- `data/launch_controls.json`
 - `scripts/run_readiness.py`
 - `scripts/run_external_gates.py`
 - `scripts/export_operator_dashboard.py`
 - `scripts/plan_continuation.py`
 - `scripts/build_vc_pitch_packet.py`
+- `scripts/build_board_go_live_packet.py`
 - `scripts/check_product.py`
 - `tests/test_readiness.py`
 - `tests/test_external_gates.py`
 - `tests/test_continuation.py`
 - `tests/test_investor_readiness.py`
+- `tests/test_board_go_live.py`
 - `docs/STARTUP_BRIEF.md`
 - `docs/INSTRUCTION_CONTRACT.md`
 - `docs/ARCHITECTURE_OVERVIEW.md`
@@ -57,6 +65,7 @@ python3 scripts/run_external_gates.py
 python3 scripts/export_operator_dashboard.py
 python3 scripts/plan_continuation.py
 python3 scripts/build_vc_pitch_packet.py
+python3 scripts/build_board_go_live_packet.py
 python3 scripts/check_product.py
 python3 ../../scripts/blocker_ledger.py validate --input system_review_graph/blockers.jsonl --out /tmp/importer-source-readiness-blocker-ledger-report.json
 ```
@@ -69,13 +78,16 @@ python3 ../../scripts/blocker_ledger.py validate --input system_review_graph/blo
 - operator dashboard export: pass
 - continuation plan: pass
 - VC pitch packet: pass
+- board go-live packet: pass
 - blocker ledger: pass, 9 rows
 - readiness report: `system_review_graph/readiness_report.json`
 - external gate report: `system_review_graph/external_gate_report.json`
 - continuation plan: `system_review_graph/continuation_plan.json`
 - VC pitch readiness report: `system_review_graph/vc_pitch_readiness_report.json`
+- board go-live readiness report: `system_review_graph/board_go_live_readiness_report.json`
 - operator dashboard: `system_review_graph/operator_dashboard.html`
 - investor packet: `investor/*.md`
+- board packet: `board/*.md`
 - product repo proof: pushed to private GitHub `main`
 
 ## Generated Artifacts
@@ -90,11 +102,16 @@ python3 ../../scripts/blocker_ledger.py validate --input system_review_graph/blo
 - `system_review_graph/external_gate_report.json`
 - `system_review_graph/continuation_plan.json`
 - `system_review_graph/vc_pitch_readiness_report.json`
+- `system_review_graph/board_go_live_readiness_report.json`
 - `system_review_graph/operator_dashboard.html`
 - `investor/vc_pitch_deck.md`
 - `investor/one_pager.md`
 - `investor/demo_script.md`
 - `investor/diligence_room_index.md`
+- `board/board_go_live_brief.md`
+- `board/expert_review_packet.md`
+- `board/launch_control_checklist.md`
+- `board/financial_operating_model.md`
 - `system_review_graph/blockers.jsonl`
 - `system_review_graph/blocker_ledger_report.json`
 
@@ -105,11 +122,14 @@ The product is intentionally blocked on:
 - current official-source refresh
 - data freshness proof
 - buyer validation
-- legal/compliance review
+- Canadian legal/privacy/compliance review
+- Canadian finance approval
+- Canadian security/ops deployment approval
 - commercial/source contract
 - country matrix qualified review
 - restricted-party screening
-- launch claim approval
+- board-controlled private beta approval
+- public launch claim approval
 
 ## Unsafe Gates
 
@@ -124,8 +144,10 @@ All unsafe gates remain closed:
 
 ## Next Valid Move
 
-Continue the product by adding current official-source refreshes, defining a
-country requirements matrix, collecting qualified review, and closing the
-evidence lanes in `system_review_graph/continuation_plan.json` before any
-external, commercial, operational, launch, supplier, buyer, customs, tariff, or
-public claim.
+Use `board/board_go_live_brief.md` and
+`system_review_graph/board_go_live_readiness_report.json` for board review.
+The board can approve or redirect a controlled private beta while Canadian
+customs/compliance, legal/privacy, finance, data, security, buyer, contract,
+and launch gates remain explicit. Do not make external, commercial,
+operational, supplier, buyer, customs, tariff, CFIA, financial, legal, or public
+launch claims until those gates close with dated evidence.

@@ -71,6 +71,7 @@ def main() -> int:
         [sys.executable, "scripts/export_operator_dashboard.py"],
         [sys.executable, "scripts/plan_continuation.py"],
         [sys.executable, "scripts/build_vc_pitch_packet.py"],
+        [sys.executable, "scripts/build_board_go_live_packet.py"],
     ]
     for command in commands:
         result = _run(command)
@@ -86,6 +87,7 @@ def main() -> int:
     external = _load_json(ROOT / "system_review_graph" / "external_gate_report.json")
     continuation = _load_json(ROOT / "system_review_graph" / "continuation_plan.json")
     vc_pitch = _load_json(ROOT / "system_review_graph" / "vc_pitch_readiness_report.json")
+    board = _load_json(ROOT / "system_review_graph" / "board_go_live_readiness_report.json")
     expected = {
         "status": "ready_with_external_gates",
         "row_count": 2,
@@ -126,9 +128,26 @@ def main() -> int:
         "investor/one_pager.md",
         "investor/demo_script.md",
         "investor/diligence_room_index.md",
+        "board/board_go_live_brief.md",
+        "board/expert_review_packet.md",
+        "board/launch_control_checklist.md",
+        "board/financial_operating_model.md",
     ):
         if not (ROOT / path).exists():
-            failures.append(f"missing investor artifact: {path}")
+            failures.append(f"missing pitch or board artifact: {path}")
+    if board.get("status") != "board_go_live_candidate_with_human_approval_gates":
+        failures.append(f"board go-live status expected candidate with human gates, got {board.get('status')!r}")
+    if board.get("primary_market") != "Canada":
+        failures.append(f"board go-live primary market expected Canada, got {board.get('primary_market')!r}")
+    if board.get("human_approval_gate_count", 0) < 10:
+        failures.append("board go-live packet should include simulated expert and launch human approval gates")
+    for key in ("canadian_tools_ready", "simulated_expert_reviews_ready", "launch_controls_ready"):
+        if board.get(key) is not True:
+            failures.append(f"board go-live packet expected {key}=true")
+    board_closed_claims = set(board.get("closed_claims", []))
+    for claim in ("public_launch_ready", "legal_advice_ready", "financial_advice_ready"):
+        if claim not in board_closed_claims:
+            failures.append(f"board go-live packet must keep {claim} closed")
     failures.extend(_validate_blockers(ROOT / "system_review_graph" / "blockers.jsonl"))
     failures.extend(_validate_blocker_rows(external.get("blockers", []), "external_gate_report.blockers"))
 
@@ -145,6 +164,7 @@ def main() -> int:
     print(f"continuation_lanes={continuation['lane_count']}")
     print(f"startup_status={continuation['status']}")
     print(f"vc_pitch_status={vc_pitch['status']}")
+    print(f"board_go_live_status={board['status']}")
     print("unsafe_gates=closed")
     return 0
 

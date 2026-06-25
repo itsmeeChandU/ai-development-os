@@ -1,123 +1,63 @@
 {
-  "blocker_count": 17,
+  "blocker_count": 11,
   "blockers": [
     {
-      "evidence": "us-frozen-tuna-fillet-030487",
+      "evidence": "ca-frozen-tuna-fillet-030487",
       "gate": "closed",
-      "id": "us-frozen-tuna-fillet-030487:import_rules_status",
+      "id": "ca-frozen-tuna-fillet-030487:import_rules_status",
       "issue": "qualified import-rules review is missing",
       "module": "country_import_rules",
-      "next_valid_move": "Have a licensed customs broker or qualified compliance reviewer verify HTS classification, FDA seafood import obligations, restricted-party screening, and importer record obligations.",
+      "next_valid_move": "Have a licensed Canadian customs broker or qualified Canadian trade/food compliance reviewer verify CBSA/CARM importer obligations, tariff classification, CFIA AIRS requirements, import controls, sanctions screening, and claim language.",
       "owner": "compliance",
       "unsafe_to_bypass": true
     },
     {
-      "evidence": "us-frozen-tuna-fillet-030487",
+      "evidence": "ca-frozen-tuna-fillet-030487",
       "gate": "closed",
-      "id": "us-frozen-tuna-fillet-030487:export_rules_status",
+      "id": "ca-frozen-tuna-fillet-030487:export_rules_status",
       "issue": "qualified export-rules review is missing",
       "module": "country_export_rules",
-      "next_valid_move": "Have a licensed customs broker or qualified compliance reviewer verify HTS classification, FDA seafood import obligations, restricted-party screening, and importer record obligations.",
+      "next_valid_move": "Have a licensed Canadian customs broker or qualified Canadian trade/food compliance reviewer verify CBSA/CARM importer obligations, tariff classification, CFIA AIRS requirements, import controls, sanctions screening, and claim language.",
       "owner": "compliance",
       "unsafe_to_bypass": true
     },
     {
-      "evidence": "us-frozen-tuna-fillet-030487",
+      "evidence": "ca-frozen-tuna-fillet-030487",
       "gate": "closed",
-      "id": "us-frozen-tuna-fillet-030487:tariff_status",
+      "id": "ca-frozen-tuna-fillet-030487:tariff_status",
       "issue": "tariff or HS classification is not qualified",
       "module": "tariff_classification",
-      "next_valid_move": "Have a licensed customs broker or qualified compliance reviewer verify HTS classification, FDA seafood import obligations, restricted-party screening, and importer record obligations.",
+      "next_valid_move": "Have a licensed Canadian customs broker or qualified Canadian trade/food compliance reviewer verify CBSA/CARM importer obligations, tariff classification, CFIA AIRS requirements, import controls, sanctions screening, and claim language.",
       "owner": "compliance",
       "unsafe_to_bypass": true
     },
     {
-      "evidence": "us-frozen-tuna-fillet-030487",
+      "evidence": "ca-frozen-tuna-fillet-030487",
       "gate": "closed",
-      "id": "us-frozen-tuna-fillet-030487:food_safety_status",
+      "id": "ca-frozen-tuna-fillet-030487:food_safety_status",
       "issue": "food safety requirements are not qualified",
       "module": "food_safety",
-      "next_valid_move": "Have a licensed customs broker or qualified compliance reviewer verify HTS classification, FDA seafood import obligations, restricted-party screening, and importer record obligations.",
+      "next_valid_move": "Have a licensed Canadian customs broker or qualified Canadian trade/food compliance reviewer verify CBSA/CARM importer obligations, tariff classification, CFIA AIRS requirements, import controls, sanctions screening, and claim language.",
       "owner": "compliance",
       "unsafe_to_bypass": true
     },
     {
-      "evidence": "us-frozen-tuna-fillet-030487",
+      "evidence": "ca-frozen-tuna-fillet-030487",
       "gate": "closed",
-      "id": "us-frozen-tuna-fillet-030487:restricted_party_status",
+      "id": "ca-frozen-tuna-fillet-030487:restricted_party_status",
       "issue": "restricted-party screening is not complete",
       "module": "restricted_party_screening",
-      "next_valid_move": "Have a licensed customs broker or qualified compliance reviewer verify HTS classification, FDA seafood import obligations, restricted-party screening, and importer record obligations.",
+      "next_valid_move": "Have a licensed Canadian customs broker or qualified Canadian trade/food compliance reviewer verify CBSA/CARM importer obligations, tariff classification, CFIA AIRS requirements, import controls, sanctions screening, and claim language.",
       "owner": "compliance",
       "unsafe_to_bypass": true
     },
     {
-      "evidence": "us-frozen-tuna-fillet-030487",
+      "evidence": "ca-frozen-tuna-fillet-030487",
       "gate": "closed",
-      "id": "us-frozen-tuna-fillet-030487:broker_or_expert_review_status",
+      "id": "ca-frozen-tuna-fillet-030487:broker_or_expert_review_status",
       "issue": "broker or qualified expert review is missing",
       "module": "expert_review",
-      "next_valid_move": "Have a licensed customs broker or qualified compliance reviewer verify HTS classification, FDA seafood import obligations, restricted-party screening, and importer record obligations.",
-      "owner": "compliance",
-      "unsafe_to_bypass": true
-    },
-    {
-      "evidence": "ca-importer-discovery-030487",
-      "gate": "closed",
-      "id": "ca-importer-discovery-030487:import_rules_status",
-      "issue": "qualified import-rules review is missing",
-      "module": "country_import_rules",
-      "next_valid_move": "Use CID only for importer-discovery orientation, then verify product requirements with qualified Canadian import/export and food compliance review.",
-      "owner": "compliance",
-      "unsafe_to_bypass": true
-    },
-    {
-      "evidence": "ca-importer-discovery-030487",
-      "gate": "closed",
-      "id": "ca-importer-discovery-030487:export_rules_status",
-      "issue": "qualified export-rules review is missing",
-      "module": "country_export_rules",
-      "next_valid_move": "Use CID only for importer-discovery orientation, then verify product requirements with qualified Canadian import/export and food compliance review.",
-      "owner": "compliance",
-      "unsafe_to_bypass": true
-    },
-    {
-      "evidence": "ca-importer-discovery-030487",
-      "gate": "closed",
-      "id": "ca-importer-discovery-030487:tariff_status",
-      "issue": "tariff or HS classification is not qualified",
-      "module": "tariff_classification",
-      "next_valid_move": "Use CID only for importer-discovery orientation, then verify product requirements with qualified Canadian import/export and food compliance review.",
-      "owner": "compliance",
-      "unsafe_to_bypass": true
-    },
-    {
-      "evidence": "ca-importer-discovery-030487",
-      "gate": "closed",
-      "id": "ca-importer-discovery-030487:food_safety_status",
-      "issue": "food safety requirements are not qualified",
-      "module": "food_safety",
-      "next_valid_move": "Use CID only for importer-discovery orientation, then verify product requirements with qualified Canadian import/export and food compliance review.",
-      "owner": "compliance",
-      "unsafe_to_bypass": true
-    },
-    {
-      "evidence": "ca-importer-discovery-030487",
-      "gate": "closed",
-      "id": "ca-importer-discovery-030487:restricted_party_status",
-      "issue": "restricted-party screening is not complete",
-      "module": "restricted_party_screening",
-      "next_valid_move": "Use CID only for importer-discovery orientation, then verify product requirements with qualified Canadian import/export and food compliance review.",
-      "owner": "compliance",
-      "unsafe_to_bypass": true
-    },
-    {
-      "evidence": "ca-importer-discovery-030487",
-      "gate": "closed",
-      "id": "ca-importer-discovery-030487:broker_or_expert_review_status",
-      "issue": "broker or qualified expert review is missing",
-      "module": "expert_review",
-      "next_valid_move": "Use CID only for importer-discovery orientation, then verify product requirements with qualified Canadian import/export and food compliance review.",
+      "next_valid_move": "Have a licensed Canadian customs broker or qualified Canadian trade/food compliance reviewer verify CBSA/CARM importer obligations, tariff classification, CFIA AIRS requirements, import controls, sanctions screening, and claim language.",
       "owner": "compliance",
       "unsafe_to_bypass": true
     },
@@ -137,7 +77,7 @@
       "id": "qualified-compliance-review:evidence-missing",
       "issue": "qualified compliance review is missing",
       "module": "legal_compliance",
-      "next_valid_move": "Get qualified review for country matrix, HTS/tariff treatment, FDA seafood obligations, and claims language.",
+      "next_valid_move": "Get qualified Canadian review for country matrix, tariff treatment, CFIA food import obligations, sanctions screening, and claims language.",
       "owner": "compliance",
       "unsafe_to_bypass": true
     },
@@ -175,20 +115,11 @@
   "country_matrix_rows": [
     {
       "claims_allowed": false,
-      "country": "US",
-      "gate_state": "closed",
-      "hs_code": "0304870000",
-      "id": "us-frozen-tuna-fillet-030487",
-      "official_source_count": 4,
-      "product_category": "frozen tuna fillets"
-    },
-    {
-      "claims_allowed": false,
       "country": "CA",
       "gate_state": "closed",
       "hs_code": "0304870000",
-      "id": "ca-importer-discovery-030487",
-      "official_source_count": 1,
+      "id": "ca-frozen-tuna-fillet-030487",
+      "official_source_count": 8,
       "product_category": "frozen tuna fillets"
     }
   ],
@@ -234,38 +165,73 @@
   "official_sources": [
     {
       "accessed_at": "2026-06-25",
+      "claim_boundary": "Reference source only; does not prove CARM registration, accounting setup, duty payment readiness, or customs advice.",
+      "id": "cbsa-carm",
+      "name": "CBSA Assessment and Revenue Management (CARM)",
+      "url": "https://www.cbsa-asfc.gc.ca/services/carm-gcra/menu-eng.html"
+    },
+    {
+      "accessed_at": "2026-06-25",
+      "claim_boundary": "Reference source only; does not replace CBSA, broker, customs, or legal review.",
+      "id": "cbsa-import-commercial-goods",
+      "name": "CBSA Import Commercial Goods Into Canada",
+      "url": "https://www.cbsa-asfc.gc.ca/import/menu-eng.html"
+    },
+    {
+      "accessed_at": "2026-06-25",
+      "claim_boundary": "Reference source only; classification and tariff treatment require qualified review.",
+      "id": "cbsa-customs-tariff-2026",
+      "name": "CBSA Customs Tariff 2026",
+      "url": "https://www.cbsa-asfc.gc.ca/trade-commerce/tariff-tarif/2026/menu-eng.html"
+    },
+    {
+      "accessed_at": "2026-06-25",
+      "claim_boundary": "Reference source only; product-specific food import compliance requires qualified review and source verification.",
+      "id": "cfia-airs",
+      "name": "CFIA Automated Import Reference System (AIRS)",
+      "url": "https://inspection.canada.ca/en/importing-food-plants-animals/airs"
+    },
+    {
+      "accessed_at": "2026-06-25",
+      "claim_boundary": "Reference source only; does not prove whether a specific product requires an import permit.",
+      "id": "gac-import-controls",
+      "name": "Global Affairs Canada Import Controls and Import Permits",
+      "url": "https://www.international.gc.ca/controls-controles/about-a_propos/impor/permits-licences.aspx?lang=eng"
+    },
+    {
+      "accessed_at": "2026-06-25",
+      "claim_boundary": "Reference source only; legal interpretation and product applicability require qualified review.",
+      "id": "justice-import-control-list",
+      "name": "Justice Laws Import Control List",
+      "url": "https://laws-lois.justice.gc.ca/eng/regulations/c.r.c.%2C_c._604/index.html"
+    },
+    {
+      "accessed_at": "2026-06-25",
+      "claim_boundary": "Reference source only; screening results require dated search records and reviewer signoff.",
+      "id": "canada-sanctions",
+      "name": "Global Affairs Canada Consolidated Canadian Autonomous Sanctions List",
+      "url": "https://www.international.gc.ca/world-monde/international_relations-relations_internationales/sanctions/consolidated-consolide.aspx?lang=eng"
+    },
+    {
+      "accessed_at": "2026-06-25",
+      "claim_boundary": "Reference source only; does not prove market size, buyer demand, or revenue.",
+      "id": "ised-trade-data-online",
+      "name": "ISED Trade Data Online",
+      "url": "https://ised-isde.canada.ca/site/trade-data-online/en/overview"
+    },
+    {
+      "accessed_at": "2026-06-25",
       "claim_boundary": "Reference source only; does not prove buyer validation, supplier fit, customs advice, or freshness of a specific product row.",
       "id": "canada-cid",
       "name": "Canadian Importers Database",
-      "url": "https://www.ised-isde.canada.ca/site/canadian-importers-database/en"
+      "url": "https://ised-isde.canada.ca/site/ised/en/research-and-business-intelligence/canadian-importers-database"
     },
     {
       "accessed_at": "2026-06-25",
-      "claim_boundary": "Reference source only; classification and duty treatment require qualified review.",
-      "id": "usitc-hts",
-      "name": "USITC Harmonized Tariff Schedule",
-      "url": "https://hts.usitc.gov/"
-    },
-    {
-      "accessed_at": "2026-06-25",
-      "claim_boundary": "Reference source only; does not replace broker, customs, or legal review.",
-      "id": "cbp-basic-import-export",
-      "name": "U.S. Customs and Border Protection Basic Importing and Exporting",
-      "url": "https://www.cbp.gov/trade/basic-import-export"
-    },
-    {
-      "accessed_at": "2026-06-25",
-      "claim_boundary": "Reference source only; product-specific food safety compliance requires qualified review.",
-      "id": "fda-imported-seafood",
-      "name": "FDA Imported Seafood Safety Program",
-      "url": "https://www.fda.gov/food/importing-food-products-united-states/imported-seafood-safety-program"
-    },
-    {
-      "accessed_at": "2026-06-25",
-      "claim_boundary": "Reference source only; importer obligations and records require qualified review.",
-      "id": "fda-human-food-imports",
-      "name": "FDA Importing Human Foods",
-      "url": "https://www.fda.gov/industry/importing-fda-regulated-products/importing-human-foods"
+      "claim_boundary": "Reference source only; does not prove a broker relationship, review, or signoff.",
+      "id": "cbsa-licensed-customs-brokers",
+      "name": "CBSA Licensed Customs Brokers",
+      "url": "https://www.cbsa-asfc.gc.ca/services/cb-cd/cb-cd-eng.html"
     }
   ],
   "proof_boundary": "This report proves the local product can route external gates. It does not prove legal, customs, tariff, supplier, buyer, logistics, or launch readiness.",

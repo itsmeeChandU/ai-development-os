@@ -86,3 +86,9 @@ At minimum, pitch-ready products should expose these open lanes:
 
 Open diligence lanes are allowed in a VC pitch if they are visible. They are
 not allowed to be hidden behind a fake completion claim.
+
+## Handoff To Board Readiness
+
+If the user asks for go-live, board approval, or launch readiness, the product
+must advance to `docs/BOARD_GO_LIVE_READINESS.md`. VC pitch readiness alone is
+not enough.

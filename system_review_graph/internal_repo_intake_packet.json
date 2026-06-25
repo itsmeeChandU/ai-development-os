@@ -1,6 +1,6 @@
 {
   "blockers": [],
-  "generated_at": "2026-06-25T15:46:03+00:00",
+  "generated_at": "2026-06-25T16:18:27+00:00",
   "idea_source": {
     "allowed_use": "Generate startup/app ideas, export source graph contracts, and host product-boundary truth surfaces.",
     "branch_rule": "main plus codex/* product or contract branches",
@@ -59,7 +59,7 @@
   ],
   "status": "ready",
   "target_repo": {
-    "allowed_use": "Hold the actual importer/exporter source readiness product implementation, continuation lanes, VC pitch packet, and proof artifacts.",
+    "allowed_use": "Hold the actual importer/exporter source readiness product implementation, continuation lanes, VC pitch packet, board go-live packet, and proof artifacts.",
     "branch_rule": "main plus codex/* product branches",
     "id": "importer-source-readiness-copilot",
     "proof_commands": [
@@ -68,6 +68,7 @@
       "python3 scripts/export_operator_dashboard.py",
       "python3 scripts/plan_continuation.py",
       "python3 scripts/build_vc_pitch_packet.py",
+      "python3 scripts/build_board_go_live_packet.py",
       "python3 -m unittest discover -s tests -p 'test_*.py'"
     ],
     "remote": "https://github.com/itsmeeChandU/importer-source-readiness-copilot.git",
@@ -79,6 +80,7 @@
       "system_review_graph/external_gate_report.json",
       "system_review_graph/continuation_plan.json",
       "system_review_graph/vc_pitch_readiness_report.json",
+      "system_review_graph/board_go_live_readiness_report.json",
       "system_review_graph/operator_dashboard.html"
     ],
     "role": "product_implementation_target"

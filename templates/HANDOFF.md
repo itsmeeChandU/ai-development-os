@@ -20,6 +20,8 @@
 
 ## VC Pitch Status
 
+## Board Go-Live Status
+
 ## Next Valid Move
 
 ## Unsafe / External Gates

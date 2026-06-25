@@ -1,0 +1,162 @@
+[
+  {
+    "id": "cbsa-carm",
+    "name": "CBSA Assessment and Revenue Management (CARM)",
+    "category": "customs_accounting",
+    "jurisdiction": "CA",
+    "source_url": "https://www.cbsa-asfc.gc.ca/services/carm-gcra/menu-eng.html",
+    "accessed_at": "2026-06-25",
+    "board_use": "Importer duty/tax accounting and account-readiness gate.",
+    "claim_boundary": "Orientation only; does not prove importer registration, duty/tax readiness, or CARM account control."
+  },
+  {
+    "id": "cbsa-import-commercial-goods",
+    "name": "CBSA Import Commercial Goods Into Canada",
+    "category": "import_workflow",
+    "jurisdiction": "CA",
+    "source_url": "https://www.cbsa-asfc.gc.ca/import/menu-eng.html",
+    "accessed_at": "2026-06-25",
+    "board_use": "Canadian import workflow baseline for go-live checklist design.",
+    "claim_boundary": "Orientation only; does not replace CBSA, customs broker, or legal advice."
+  },
+  {
+    "id": "cbsa-customs-tariff-2026",
+    "name": "CBSA Customs Tariff 2026",
+    "category": "tariff_classification",
+    "jurisdiction": "CA",
+    "source_url": "https://www.cbsa-asfc.gc.ca/trade-commerce/tariff-tarif/2026/menu-eng.html",
+    "accessed_at": "2026-06-25",
+    "board_use": "Canadian tariff-classification evidence source for the compliance lane.",
+    "claim_boundary": "Orientation only; tariff classification needs qualified review."
+  },
+  {
+    "id": "cfia-airs",
+    "name": "CFIA Automated Import Reference System",
+    "category": "food_import_requirements",
+    "jurisdiction": "CA",
+    "source_url": "https://inspection.canada.ca/en/importing-food-plants-animals/airs",
+    "accessed_at": "2026-06-25",
+    "board_use": "CFIA-regulated commodity requirements lookup for food-import review.",
+    "claim_boundary": "Reference only; CFIA AIRS and applicable law need qualified review before product claims."
+  },
+  {
+    "id": "cfia-airs-avs",
+    "name": "CFIA AIRS Verification Service",
+    "category": "food_import_api",
+    "jurisdiction": "CA",
+    "source_url": "https://inspection.canada.ca/en/importing-food-plants-animals/airs/avs",
+    "accessed_at": "2026-06-25",
+    "board_use": "Potential future API-style verification integration requiring access credentials.",
+    "claim_boundary": "Access and usage rights are not proven; AVS credentials remain an implementation blocker."
+  },
+  {
+    "id": "gac-import-controls",
+    "name": "Global Affairs Canada Import Controls and Import Permits",
+    "category": "controlled_imports",
+    "jurisdiction": "CA",
+    "source_url": "https://www.international.gc.ca/controls-controles/about-a_propos/impor/permits-licences.aspx?lang=eng",
+    "accessed_at": "2026-06-25",
+    "board_use": "Controlled-product and import-permit review lane.",
+    "claim_boundary": "Orientation only; product applicability and permits require qualified review."
+  },
+  {
+    "id": "justice-import-control-list",
+    "name": "Justice Laws Import Control List",
+    "category": "legal_reference",
+    "jurisdiction": "CA",
+    "source_url": "https://laws-lois.justice.gc.ca/eng/regulations/c.r.c.%2C_c._604/index.html",
+    "accessed_at": "2026-06-25",
+    "board_use": "Legal reference point for controlled imports.",
+    "claim_boundary": "Reference only; legal interpretation requires qualified counsel or compliance reviewer."
+  },
+  {
+    "id": "canada-sanctions",
+    "name": "Consolidated Canadian Autonomous Sanctions List",
+    "category": "restricted_party_screening",
+    "jurisdiction": "CA",
+    "source_url": "https://www.international.gc.ca/world-monde/international_relations-relations_internationales/sanctions/consolidated-consolide.aspx?lang=eng",
+    "accessed_at": "2026-06-25",
+    "board_use": "Canadian restricted-party screening source.",
+    "claim_boundary": "Screening evidence must be dated and reviewed; source presence alone does not clear parties."
+  },
+  {
+    "id": "ised-trade-data-online",
+    "name": "ISED Trade Data Online",
+    "category": "trade_data",
+    "jurisdiction": "CA",
+    "source_url": "https://ised-isde.canada.ca/site/trade-data-online/en/overview",
+    "accessed_at": "2026-06-25",
+    "board_use": "Canadian trade-data source for market and source research.",
+    "claim_boundary": "Data availability only; market size and demand claims need a dated model."
+  },
+  {
+    "id": "canada-cid",
+    "name": "Canadian Importers Database",
+    "category": "importer_discovery",
+    "jurisdiction": "CA",
+    "source_url": "https://ised-isde.canada.ca/site/ised/en/research-and-business-intelligence/canadian-importers-database",
+    "accessed_at": "2026-06-25",
+    "board_use": "Importer discovery and buyer-research seed list.",
+    "claim_boundary": "Discovery only; does not prove buyer validation or supplier recommendation."
+  },
+  {
+    "id": "cbsa-licensed-customs-brokers",
+    "name": "CBSA Licensed Customs Brokers",
+    "category": "qualified_reviewer_discovery",
+    "jurisdiction": "CA",
+    "source_url": "https://www.cbsa-asfc.gc.ca/services/cb-cd/cb-cd-eng.html",
+    "accessed_at": "2026-06-25",
+    "board_use": "Source for finding a qualified Canadian customs broker review lane.",
+    "claim_boundary": "Directory only; does not create a broker relationship or signoff."
+  },
+  {
+    "id": "bizpal",
+    "name": "BizPaL",
+    "category": "permits_licences",
+    "jurisdiction": "CA",
+    "source_url": "https://bizpal.ca/",
+    "accessed_at": "2026-06-25",
+    "board_use": "Canadian permit and licence discovery lane by location and business activity.",
+    "claim_boundary": "Discovery only; actual permits/licences need jurisdiction-specific confirmation."
+  },
+  {
+    "id": "canada-business-planning",
+    "name": "Canada.ca Planning a Business",
+    "category": "business_planning",
+    "jurisdiction": "CA",
+    "source_url": "https://www.canada.ca/en/services/business/start/planning.html",
+    "accessed_at": "2026-06-25",
+    "board_use": "Canadian business planning and structure readiness reference.",
+    "claim_boundary": "Planning reference only; does not replace accounting, tax, or legal advice."
+  },
+  {
+    "id": "bdc-financial-plan-template",
+    "name": "BDC Financial Plan Template",
+    "category": "financial_planning",
+    "jurisdiction": "CA",
+    "source_url": "https://www.bdc.ca/en/articles-tools/entrepreneur-toolkit/templates-business-guides/financial-plan-template",
+    "accessed_at": "2026-06-25",
+    "board_use": "Canadian financial-planning structure for funding and runway assumptions.",
+    "claim_boundary": "Template reference only; financial projections need founder/accountant review."
+  },
+  {
+    "id": "pipeda-brief",
+    "name": "Office of the Privacy Commissioner of Canada PIPEDA Requirements in Brief",
+    "category": "privacy",
+    "jurisdiction": "CA",
+    "source_url": "https://www.priv.gc.ca/en/privacy-topics/privacy-laws-in-canada/the-personal-information-protection-and-electronic-documents-act-pipeda/pipeda_brief/",
+    "accessed_at": "2026-06-25",
+    "board_use": "Canadian private-sector privacy review lane.",
+    "claim_boundary": "Privacy orientation only; legal/privacy counsel review remains required before launch."
+  },
+  {
+    "id": "cyber-centre-baseline-controls",
+    "name": "Canadian Centre for Cyber Security Baseline Cyber Security Controls",
+    "category": "cybersecurity",
+    "jurisdiction": "CA",
+    "source_url": "https://www.cyber.gc.ca/en/guidance/baseline-cyber-security-controls-small-and-medium-organizations",
+    "accessed_at": "2026-06-25",
+    "board_use": "Canadian small/medium organization cybersecurity baseline for launch controls.",
+    "claim_boundary": "Security baseline orientation only; implementation and audit evidence are separate gates."
+  }
+]

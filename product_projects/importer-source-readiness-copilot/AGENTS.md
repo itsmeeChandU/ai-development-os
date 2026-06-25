@@ -47,6 +47,7 @@ python3 scripts/run_external_gates.py
 python3 scripts/export_operator_dashboard.py
 python3 scripts/plan_continuation.py
 python3 scripts/build_vc_pitch_packet.py
+python3 scripts/build_board_go_live_packet.py
 python3 scripts/check_product.py
 ```
 

@@ -10,9 +10,10 @@ readiness gates, writes
 `system_review_graph/external_gate_report.json`, writes
 `system_review_graph/continuation_plan.json`, writes
 `system_review_graph/vc_pitch_readiness_report.json`, writes
+`system_review_graph/board_go_live_readiness_report.json`, writes
 `system_review_graph/blockers.jsonl`, exports
 `system_review_graph/operator_dashboard.html`, writes investor pitch artifacts,
-and passes the local proof gate.
+writes Canada-focused board artifacts, and passes the local proof gate.
 
 ## Ready Now
 
@@ -27,6 +28,11 @@ and passes the local proof gate.
 - startup continuation plan
 - VC pitch readiness report
 - investor pitch deck, one-pager, demo script, and diligence-room index
+- Canada official tool registry
+- simulated expert review packet
+- board go-live readiness report
+- launch-control checklist
+- financial operating model boundary
 - static operator dashboard
 - standalone product check
 - CI workflow for the proof gate
@@ -51,12 +57,29 @@ and passes the local proof gate.
 
 This is a private investor conversation state, not a public launch state.
 
+## Ready For Board Go-Live Review
+
+- board status: `board_go_live_candidate_with_human_approval_gates`
+- primary market: Canada
+- board brief: `board/board_go_live_brief.md`
+- expert review packet: `board/expert_review_packet.md`
+- launch checklist: `board/launch_control_checklist.md`
+- financial operating model: `board/financial_operating_model.md`
+- machine report: `system_review_graph/board_go_live_readiness_report.json`
+
+This is the board-review stage for a controlled private beta. It is not public
+launch approval, production deployment approval, legal advice, financial advice,
+customs/tariff advice, CFIA compliance approval, buyer validation, or revenue
+proof. The AI-built system has completed simulated expert review lanes and
+keeps real human approvals explicit.
+
 ## Next Valid Move
 
 The product now tells operators what is stopping external use. Remaining work
 requires real evidence: dated buyer/operator feedback, written contracts,
-source-rights approval, repeatable official-source refresh proof, and qualified
-import/export or food compliance review.
+source-rights approval, repeatable Canadian official-source refresh proof,
+qualified Canadian import/export or food compliance review, legal/privacy
+approval, finance approval, and operator/security signoff.
 
 Do not report the product as fully operational or launch ready while
 `system_review_graph/continuation_plan.json` says `must_continue: true`.

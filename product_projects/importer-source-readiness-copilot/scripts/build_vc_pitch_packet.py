@@ -49,7 +49,7 @@ def _write_pitch_deck(report: dict[str, Any]) -> Path:
         ),
         (
             "4. Why Now",
-            "Global and U.S. trade remain large, current rules shift, and AI-native "
+            "Global and Canadian trade remain large, current rules shift, and AI-native "
             "operators can move faster only when evidence gates are explicit.",
         ),
         (

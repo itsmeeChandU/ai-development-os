@@ -21,10 +21,10 @@
       "unsafe_to_bypass": true
     }
   ],
-  "generated_at": "2026-06-25T15:46:03+00:00",
+  "generated_at": "2026-06-25T16:18:27+00:00",
   "kind": "background_routine_report",
   "proof_boundary": "Routine reports describe safe commands and blockers. Effectful execution still requires explicit operator intent.",
-  "routine_count": 7,
+  "routine_count": 8,
   "routines": [
     {
       "allowed_effects": [
@@ -125,6 +125,24 @@
       "proof_output": "system_review_graph/vc_pitch_readiness_report.json",
       "status": "ready",
       "trigger": "product needs VC pitch readiness"
+    },
+    {
+      "allowed_effects": [
+        "read generated reports",
+        "write board packet",
+        "write board go-live readiness report"
+      ],
+      "cadence": "before go-live, board, private beta, or launch-readiness claims",
+      "commands": [],
+      "dry_run_default": true,
+      "id": "board_go_live_readiness_sweep",
+      "missing_inputs": [],
+      "prohibited_effects": [
+        "claim public launch, production deployment, legal, financial, compliance, buyer, revenue, PMF, supplier, customs, tariff, or regulated proof without qualified human approval"
+      ],
+      "proof_output": "system_review_graph/board_go_live_readiness_report.json",
+      "status": "ready",
+      "trigger": "product needs board go-live readiness"
     },
     {
       "allowed_effects": [

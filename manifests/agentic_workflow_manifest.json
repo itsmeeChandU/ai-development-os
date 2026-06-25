@@ -75,6 +75,39 @@
     ],
     "proof_boundary": "VC pitch readiness supports private investor conversations with sourced claims and visible diligence lanes. It is not legal, securities, launch, revenue, PMF, compliance, buyer, supplier, customs, or tariff proof."
   },
+  "board_go_live_readiness_rule": {
+    "ready_status": "board_go_live_candidate_with_human_approval_gates",
+    "required_artifact": "system_review_graph/board_go_live_readiness_report.json",
+    "required_board_artifacts": [
+      "board/board_go_live_brief.md",
+      "board/expert_review_packet.md",
+      "board/launch_control_checklist.md",
+      "board/financial_operating_model.md"
+    ],
+    "minimum_sections": [
+      "primary market or jurisdiction",
+      "jurisdiction-specific tools",
+      "simulated expert review lanes",
+      "launch controls",
+      "human approval gates",
+      "closed claims",
+      "allowed next stage",
+      "proof boundary"
+    ],
+    "closed_claims_without_approval": [
+      "public_launch_ready",
+      "production_deploy_approved",
+      "legal_advice_ready",
+      "financial_advice_ready",
+      "qualified_compliance_ready",
+      "customs_or_tariff_advice_ready",
+      "buyer_validated",
+      "revenue_proven",
+      "product_market_fit_proven",
+      "supplier_recommendation_ready"
+    ],
+    "proof_boundary": "Board go-live readiness means a controlled private beta candidate with jurisdiction tools, simulated expert lanes, launch controls, and visible human approval gates. It is not public launch, production deployment, legal, financial, compliance, buyer, revenue, PMF, supplier, customs, or tariff proof."
+  },
   "repo_roles": [
     {
       "id": "ai-development-os",
@@ -128,7 +161,7 @@
       "repository": "https://github.com/itsmeeChandU/importer-source-readiness-copilot",
       "responsibilities": [
         "hold the actual importer/exporter source readiness product implementation",
-        "keep local product logic, generated readiness reports, external-gate reports, continuation plans, VC pitch readiness packets, operator dashboards, blocker ledgers, and product handoffs current",
+        "keep local product logic, generated readiness reports, external-gate reports, continuation plans, VC pitch readiness packets, board go-live readiness packets, operator dashboards, blocker ledgers, and product handoffs current",
         "preserve external gates for source freshness, import/export compliance, contracts, buyer validation, and launch claims"
       ],
       "primary_artifacts": [
@@ -136,6 +169,7 @@
         "system_review_graph/external_gate_report.json",
         "system_review_graph/continuation_plan.json",
         "system_review_graph/vc_pitch_readiness_report.json",
+        "system_review_graph/board_go_live_readiness_report.json",
         "system_review_graph/operator_dashboard.html",
         "system_review_graph/blockers.jsonl",
         "docs/PRODUCT_STATUS.md",
@@ -353,6 +387,7 @@
     "system_review_graph": "system map and bounded context, not private data or runtime proof",
     "startup_continuation": "ready_with_external_gates is useful internal software, not startup completion; continuation lanes stay open until external evidence closes them",
     "vc_pitch_readiness": "private investor pitch readiness needs sourced claims and diligence lanes; it is not revenue, PMF, launch, legal, compliance, or financing proof",
+    "board_go_live_readiness": "board readiness means controlled private beta candidate with human approval gates; it is not public launch, production deployment, legal, financial, compliance, buyer, revenue, PMF, supplier, customs, or tariff proof",
     "unsafe_actions": "closed unless explicit repo gates and user intent prove readiness"
   },
   "code_review_graph_contract": {

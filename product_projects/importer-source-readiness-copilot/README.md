@@ -34,6 +34,7 @@ python3 scripts/run_external_gates.py
 python3 scripts/export_operator_dashboard.py
 python3 scripts/plan_continuation.py
 python3 scripts/build_vc_pitch_packet.py
+python3 scripts/build_board_go_live_packet.py
 python3 scripts/check_product.py
 ```
 
@@ -44,12 +45,17 @@ system_review_graph/readiness_report.json
 system_review_graph/external_gate_report.json
 system_review_graph/continuation_plan.json
 system_review_graph/vc_pitch_readiness_report.json
+system_review_graph/board_go_live_readiness_report.json
 system_review_graph/blockers.jsonl
 system_review_graph/operator_dashboard.html
 investor/vc_pitch_deck.md
 investor/one_pager.md
 investor/demo_script.md
 investor/diligence_room_index.md
+board/board_go_live_brief.md
+board/expert_review_packet.md
+board/launch_control_checklist.md
+board/financial_operating_model.md
 ```
 
 ## Expected State
@@ -79,6 +85,20 @@ claim boundaries, and a demo script. It still does not prove launch readiness,
 revenue, product-market fit, buyer validation, supplier readiness, or legal /
 customs / tariff readiness.
 
+The expected board/go-live status is:
+
+```text
+board_go_live_candidate_with_human_approval_gates
+```
+
+That means the Canada-focused implementation is ready for board review and a
+controlled-private-beta decision. The AI-built system has simulated product,
+Canadian trade compliance, financial, legal/privacy, data, and security/ops
+review lanes, plus a Canadian tool registry and launch controls. It still
+requires human approval before public launch, production deployment,
+legal/financial/customs/tariff/CFIA claims, buyer validation, or spend
+commitments.
+
 ## External Gates Kept Closed
 
 - buyer validation
@@ -92,13 +112,16 @@ customs / tariff readiness.
 - paid actions
 - external sends
 - customs/tariff/import-export advice
+- public go-live or production deployment approval
+- Canadian legal/privacy/finance/compliance signoff
 
 ## Next Valid Move
 
 Use `system_review_graph/operator_dashboard.html` as the operator surface.
 Use `system_review_graph/continuation_plan.json` as the continuation surface.
 Use `investor/vc_pitch_deck.md` and `investor/one_pager.md` for private VC
-conversations.
+conversations. Use `board/board_go_live_brief.md` and
+`system_review_graph/board_go_live_readiness_report.json` for board review.
 The product can now show exactly what is stopping external use and which lane
 must move next. To open any external claim gate, attach dated evidence to
 `data/evidence_packets.json`, verify country rows in

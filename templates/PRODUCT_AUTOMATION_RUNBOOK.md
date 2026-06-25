@@ -49,6 +49,7 @@ product factory, or internal operator workflow.
 | lane packet | `lane-packet` | `system_review_graph/lane_packet_<lane>.json` | owned files, forbidden files, and proof commands present |
 | continuation plan | product-specific proof command | `system_review_graph/continuation_plan.json` | `ready_with_external_gates` routes to `startup_in_progress` and next evidence lanes |
 | VC pitch readiness | product-specific proof command | `system_review_graph/vc_pitch_readiness_report.json` | private pitch state has sources, claim boundaries, and diligence lanes |
+| board go-live readiness | product-specific proof command | `system_review_graph/board_go_live_readiness_report.json` | controlled private beta candidate has jurisdiction tools, expert lanes, launch controls, and human approval gates |
 
 ## Commands
 
@@ -119,9 +120,11 @@ python3 scripts/self_test_flow.py
 - latest proof report:
 - continuation plan:
 - VC pitch report:
+- board go-live report:
 - readiness state: ready / ready_with_external_gates / blocked
 - continuation state: startup_in_progress / externally_operational_candidate / launch_ready
 - pitch state: vc_pitch_ready_with_diligence_gates / vc_pitch_blocked / not_applicable
+- board state: board_go_live_candidate_with_human_approval_gates / board_go_live_blocked / not_applicable
 - open blockers:
 - next valid move:
 - unsafe gates:
@@ -151,3 +154,12 @@ If the product needs to be pitched to investors, write
 Keep diligence lanes visible and keep revenue, PMF, buyer validation,
 compliance, financing, launch, customs/tariff, and supplier-readiness claims
 closed unless proven.
+
+## Board Go-Live Readiness Rule
+
+If the product needs to reach board go-live review, write
+`system_review_graph/board_go_live_readiness_report.json` plus `board/*.md`.
+Keep jurisdiction-specific tools, simulated expert lanes, launch controls, and
+human approval gates visible. Public launch, production deployment, legal,
+financial, compliance, buyer, revenue, PMF, and supplier claims remain closed
+unless proven and approved.

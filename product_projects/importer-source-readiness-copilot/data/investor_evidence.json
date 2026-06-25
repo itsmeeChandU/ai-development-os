@@ -6,42 +6,51 @@
     "source_url": "https://www.wto.org/english/res_e/publications_e/trade_outlook25_e.htm",
     "accessed_at": "2026-06-25",
     "claim": "Global trade is a large, active market with current WTO forecasts and statistics published for 2025 and 2026.",
-    "claim_boundary": "Use for market context only; do not use as TAM/SAM/SOM proof without a separate market model."
+    "claim_boundary": "Use for market context only; do not use as TAM/SAM/SOM proof without a separate Canadian market model."
   },
   {
-    "id": "census-international-trade-data",
+    "id": "ised-trade-data-online",
     "type": "official_trade_data",
-    "source_name": "U.S. Census Bureau International Trade Data",
-    "source_url": "https://www.census.gov/foreign-trade/data/",
+    "source_name": "ISED Trade Data Online",
+    "source_url": "https://ised-isde.canada.ca/site/trade-data-online/en/overview",
     "accessed_at": "2026-06-25",
-    "claim": "U.S. import/export data is available from official Census trade releases, APIs, and historical data resources.",
-    "claim_boundary": "Use to support data-source availability; do not claim a specific revenue market size until a dated TAM model is produced."
+    "claim": "Canada provides official trade-data tooling for customized reports on Canadian and U.S. goods trade with over 200 countries.",
+    "claim_boundary": "Use to support data-source availability; do not claim Canadian revenue market size until a dated TAM model is produced."
   },
   {
-    "id": "cbp-basic-import-export",
-    "type": "regulatory_workflow",
-    "source_name": "U.S. Customs and Border Protection Basic Importing and Exporting",
-    "source_url": "https://www.cbp.gov/trade/basic-import-export",
+    "id": "canada-cid",
+    "type": "market_scale",
+    "source_name": "Canadian Importers Database",
+    "source_url": "https://ised-isde.canada.ca/site/ised/en/research-and-business-intelligence/canadian-importers-database",
     "accessed_at": "2026-06-25",
-    "claim": "Importing/exporting requires compliance with official rules and shared responsibility between CBP and the trade community.",
+    "claim": "The Canadian Importers Database provides importer-discovery orientation by product, city, and country of origin.",
+    "claim_boundary": "Use for discovery only; do not claim buyer validation, supplier recommendation, or current customer intent."
+  },
+  {
+    "id": "cbsa-commercial-imports",
+    "type": "regulatory_workflow",
+    "source_name": "CBSA Import Commercial Goods Into Canada",
+    "source_url": "https://www.cbsa-asfc.gc.ca/import/menu-eng.html",
+    "accessed_at": "2026-06-25",
+    "claim": "Canadian commercial import work requires preparation, classification, duty/tax review, shipping, examination, reporting, and release workflows.",
     "claim_boundary": "Use to explain workflow complexity; do not provide customs, tariff, or import/export advice."
   },
   {
-    "id": "cbp-trade-statistics",
-    "type": "market_scale",
-    "source_name": "U.S. Customs and Border Protection Trade Statistics",
-    "source_url": "https://www.cbp.gov/newsroom/stats/trade",
+    "id": "cbsa-customs-tariff-2026",
+    "type": "regulatory_workflow",
+    "source_name": "CBSA Customs Tariff 2026",
+    "source_url": "https://www.cbsa-asfc.gc.ca/trade-commerce/tariff-tarif/2026/menu-eng.html",
     "accessed_at": "2026-06-25",
-    "claim": "CBP publishes trade statistics and import value context for U.S. goods flows.",
-    "claim_boundary": "Use as official context; do not quote dollar figures without refreshing the source on the pitch date."
+    "claim": "Canada publishes a 2026 Customs Tariff and tariff-classification guidance through CBSA.",
+    "claim_boundary": "Use as official orientation; product classification and tariff treatment require qualified review."
   },
   {
-    "id": "fda-imported-seafood-program",
+    "id": "cfia-airs",
     "type": "compliance_complexity",
-    "source_name": "FDA Imported Seafood Safety Program",
-    "source_url": "https://www.fda.gov/food/importing-food-products-united-states/imported-seafood-safety-program",
+    "source_name": "CFIA Automated Import Reference System",
+    "source_url": "https://inspection.canada.ca/en/importing-food-plants-animals/airs",
     "accessed_at": "2026-06-25",
-    "claim": "Imported seafood is subject to FDA safety oversight, HACCP-related compliance, inspections, sampling, and import safety programs.",
-    "claim_boundary": "Use to explain why qualified review matters; do not claim FDA approval or compliance readiness."
+    "claim": "CFIA AIRS is a reference tool for Canadian import requirements for CFIA-regulated commodities.",
+    "claim_boundary": "Use to explain why qualified food-import review matters; do not claim CFIA approval or compliance readiness."
   }
 ]
