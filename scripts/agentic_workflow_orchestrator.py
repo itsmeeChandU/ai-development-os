@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import argparse
 import json
-from datetime import UTC, datetime
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
@@ -175,8 +175,8 @@ def build_plan(
     repo_filter: str = "",
     run_id: str = "",
 ) -> dict[str, Any]:
-    generated_at = datetime.now(UTC).replace(microsecond=0).isoformat()
-    date_id = run_id or datetime.now(UTC).strftime("%Y%m%d")
+    generated_at = datetime.now(timezone.utc).replace(microsecond=0).isoformat()
+    date_id = run_id or datetime.now(timezone.utc).strftime("%Y%m%d")
     orchestration = execution["multi_repo_orchestration"]
     worktree_root = orchestration["worktree_root"]
     branch_prefix = orchestration["branch_prefix"]
