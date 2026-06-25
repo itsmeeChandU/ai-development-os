@@ -1,0 +1,254 @@
+# Slash Command Specs
+
+```json
+{
+  "count": 10,
+  "generated_at": "2026-06-25T12:51:15+00:00",
+  "kind": "slash_command_specs",
+  "proof_boundary": "Slash command specs materialize bounded packets. They do not execute external or unsafe actions without a separate proof gate.",
+  "specs": [
+    {
+      "command": "/ados:normalize",
+      "id": "normalize",
+      "mode": "architect",
+      "outputs": [
+        "instruction_contract",
+        "complexity_classification",
+        "first_next_action"
+      ],
+      "proof_gates": [
+        "repo_status_checked",
+        "constraints_written"
+      ],
+      "purpose": "Convert a fuzzy idea or evolving instruction into a task contract.",
+      "required_inputs": [
+        "user_request",
+        "repo_path"
+      ],
+      "runner": {
+        "dry_run_default": true,
+        "materialize_command": "python3 scripts/agentic_workflow_orchestrator.py command-spec --command normalize",
+        "script": "scripts/agentic_workflow_orchestrator.py"
+      }
+    },
+    {
+      "command": "/ados:context-bundle",
+      "id": "context-bundle",
+      "mode": "architect",
+      "outputs": [
+        "repo_context_bundle",
+        "proof_boundaries"
+      ],
+      "proof_gates": [
+        "missing_context_has_next_valid_move"
+      ],
+      "purpose": "Load bounded SRG, documentation graph, and code-review graph context before lane assignment.",
+      "required_inputs": [
+        "srg_manifest",
+        "optional_documentation_graph",
+        "optional_code_review_graph_contract"
+      ],
+      "runner": {
+        "dry_run_default": true,
+        "materialize_command": "python3 scripts/agentic_workflow_orchestrator.py command-spec --command context-bundle",
+        "script": "scripts/agentic_workflow_orchestrator.py"
+      }
+    },
+    {
+      "command": "/ados:repo-intake",
+      "id": "repo-intake",
+      "mode": "architect",
+      "outputs": [
+        "internal_repo_intake_packet",
+        "repo_blockers"
+      ],
+      "proof_gates": [
+        "repo_registered",
+        "target_repo_selected_or_blocked"
+      ],
+      "purpose": "Select internal/helper repos, product repo target, and repo-truth boundaries before lanes.",
+      "required_inputs": [
+        "idea_source",
+        "target_repo"
+      ],
+      "runner": {
+        "dry_run_default": true,
+        "materialize_command": "python3 scripts/agentic_workflow_orchestrator.py command-spec --command repo-intake",
+        "script": "scripts/agentic_workflow_orchestrator.py"
+      }
+    },
+    {
+      "command": "/ados:research-plan",
+      "id": "research-plan",
+      "mode": "research",
+      "outputs": [
+        "research_data_plan",
+        "research_blockers",
+        "data_blockers"
+      ],
+      "proof_gates": [
+        "research_depth_selected",
+        "external_gates_written"
+      ],
+      "purpose": "Decide model-prior, web, official-source, dataset, deep-research, and expert-validation depth.",
+      "required_inputs": [
+        "problem",
+        "domain",
+        "data_need"
+      ],
+      "runner": {
+        "dry_run_default": true,
+        "materialize_command": "python3 scripts/agentic_workflow_orchestrator.py command-spec --command research-plan",
+        "script": "scripts/agentic_workflow_orchestrator.py"
+      }
+    },
+    {
+      "command": "/ados:strategy-plan",
+      "id": "strategy-plan",
+      "mode": "architect",
+      "outputs": [
+        "development_strategy_plan",
+        "external_contract_blockers",
+        "country_requirement_blockers"
+      ],
+      "proof_gates": [
+        "development_mode_selected",
+        "external_inputs_blocked_or_sourced"
+      ],
+      "purpose": "Choose the field-specific development mode, agents, proof gates, external contracts, and procurement/compliance blockers.",
+      "required_inputs": [
+        "idea",
+        "field",
+        "country"
+      ],
+      "runner": {
+        "dry_run_default": true,
+        "materialize_command": "python3 scripts/agentic_workflow_orchestrator.py command-spec --command strategy-plan",
+        "script": "scripts/agentic_workflow_orchestrator.py"
+      }
+    },
+    {
+      "command": "/ados:lane",
+      "id": "lane",
+      "mode": "surgeon",
+      "outputs": [
+        "lane_packet",
+        "worktree_commands",
+        "handoff_template"
+      ],
+      "proof_gates": [
+        "owned_files_declared",
+        "forbidden_files_declared",
+        "proof_commands_declared"
+      ],
+      "purpose": "Create a bounded worker packet with allowed files, forbidden files, proof commands, and handoff path.",
+      "required_inputs": [
+        "goal",
+        "repo_id",
+        "lane_id"
+      ],
+      "runner": {
+        "dry_run_default": true,
+        "materialize_command": "python3 scripts/agentic_workflow_orchestrator.py command-spec --command lane",
+        "script": "scripts/agentic_workflow_orchestrator.py"
+      }
+    },
+    {
+      "command": "/ados:proof",
+      "id": "proof",
+      "mode": "reviewer",
+      "outputs": [
+        "proof_result",
+        "blocker_rows"
+      ],
+      "proof_gates": [
+        "commands_recorded",
+        "failures_have_next_valid_move"
+      ],
+      "purpose": "Run or inspect focused proof commands and generated artifact checks for one lane.",
+      "required_inputs": [
+        "lane_packet",
+        "changed_files"
+      ],
+      "runner": {
+        "dry_run_default": true,
+        "materialize_command": "python3 scripts/agentic_workflow_orchestrator.py command-spec --command proof",
+        "script": "scripts/agentic_workflow_orchestrator.py"
+      }
+    },
+    {
+      "command": "/ados:review",
+      "id": "review",
+      "mode": "reviewer",
+      "outputs": [
+        "review_findings",
+        "merge_blockers"
+      ],
+      "proof_gates": [
+        "findings_have_file_refs",
+        "residual_risk_written"
+      ],
+      "purpose": "Review a lane branch for regressions, missing proof, forbidden touches, and unsupported claims.",
+      "required_inputs": [
+        "branch",
+        "base_branch",
+        "handoff"
+      ],
+      "runner": {
+        "dry_run_default": true,
+        "materialize_command": "python3 scripts/agentic_workflow_orchestrator.py command-spec --command review",
+        "script": "scripts/agentic_workflow_orchestrator.py"
+      }
+    },
+    {
+      "command": "/ados:merge",
+      "id": "merge",
+      "mode": "merge",
+      "outputs": [
+        "merge_result",
+        "post_merge_proof",
+        "push_ref"
+      ],
+      "proof_gates": [
+        "branch_fresh",
+        "post_merge_checks_pass"
+      ],
+      "purpose": "Integrate verified branches into the target branch and refresh final truth artifacts.",
+      "required_inputs": [
+        "verified_branch",
+        "target_branch"
+      ],
+      "runner": {
+        "dry_run_default": true,
+        "materialize_command": "python3 scripts/agentic_workflow_orchestrator.py command-spec --command merge",
+        "script": "scripts/agentic_workflow_orchestrator.py"
+      }
+    },
+    {
+      "command": "/ados:goal",
+      "id": "goal",
+      "mode": "goal",
+      "outputs": [
+        "goal_status",
+        "proof_summary",
+        "remaining_blockers"
+      ],
+      "proof_gates": [
+        "done_predicates_checked",
+        "blockers_have_next_valid_move"
+      ],
+      "purpose": "Keep a long-running objective active across proof loops until complete or explicitly blocked.",
+      "required_inputs": [
+        "objective",
+        "repos",
+        "done_predicates"
+      ],
+      "runner": {
+        "dry_run_default": true,
+        "materialize_command": "python3 scripts/agentic_workflow_orchestrator.py command-spec --command goal",
+        "script": "scripts/agentic_workflow_orchestrator.py"
+      }
+    }
+  ]
+}
+```

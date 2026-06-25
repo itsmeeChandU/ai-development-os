@@ -1,0 +1,8 @@
+{
+  "blockers": [],
+  "generated_at": "2026-06-25T13:00:42+00:00",
+  "path": "demo_projects/importer-source-readiness-copilot/system_review_graph/blockers.jsonl",
+  "proof_boundary": "The blocker ledger validates blocker shape. It does not close blockers without evidence.",
+  "row_count": 9,
+  "status": "pass"
+}

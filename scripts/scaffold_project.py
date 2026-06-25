@@ -14,6 +14,55 @@ def _write(path: Path, text: str) -> None:
     path.write_text(text, encoding="utf-8")
 
 
+def _project_agents(name: str, idea: str, proj_type: str) -> str:
+    return f"""# Agent Instructions
+
+This is a scaffolded AI Development OS product project.
+
+## Product
+
+- name: {name}
+- type: {proj_type}
+- idea: {idea}
+
+## First Read
+
+Before meaningful work, read:
+
+1. `README.md`
+2. `docs/STARTUP_BRIEF.md`
+3. `docs/INSTRUCTION_CONTRACT.md`
+4. `docs/DELIVERY_ESTIMATE.md`
+5. `docs/ARCHITECTURE_OVERVIEW.md`
+6. `docs/WORK_PACKAGE.md`
+7. `docs/PRODUCT_AUTOMATION_RUNBOOK.md`
+8. `system_review_graph/README.md`
+9. `system_review_graph/STATE_RECONSTRUCTION_REPORT.md`
+
+## Operating Rules
+
+- Treat this repo as truth; treat prompts and generated packets as claims until verified.
+- Fill the startup brief and instruction contract before broad implementation.
+- Keep the first useful product loop small enough to test locally.
+- Use fixture data until real data rights, credentials, freshness, and source lineage are proven.
+- Keep external effects closed by default: no paid calls, live sends, legal claims, production deploys, or public launch claims without explicit approval and proof.
+- Write missing data, API, expert, legal, procurement, or compliance inputs as blocker rows with `next_valid_move`.
+- Every implementation lane needs allowed files, forbidden files, proof commands, generated artifacts, and a handoff.
+- Do not claim completion without code/data changes where required, tests or smoke checks, generated artifacts, blockers, and next valid move.
+
+## Proof Defaults
+
+Start with local checks:
+
+```bash
+python3 -m unittest discover -s tests -p 'test_*.py'
+python3 scripts/run_demo.py
+```
+
+Add stronger proof commands as the project grows.
+"""
+
+
 def scaffold(name: str, idea: str, output_dir: Path, proj_type: str = "default") -> Path:
     slug = name.strip().lower().replace(" ", "-")
     project = output_dir / slug
@@ -33,7 +82,7 @@ def scaffold(name: str, idea: str, output_dir: Path, proj_type: str = "default")
         "operations",
     ]:
         (project / folder).mkdir(exist_ok=True)
-    shutil.copy2(ROOT / "AGENTS.md", project / "AGENTS.md")
+    _write(project / "AGENTS.md", _project_agents(name, idea, proj_type))
     shutil.copy2(ROOT / "templates" / "STARTUP_BRIEF.md", project / "docs" / "STARTUP_BRIEF.md")
     shutil.copy2(ROOT / "templates" / "INSTRUCTION_CONTRACT.md", project / "docs" / "INSTRUCTION_CONTRACT.md")
     shutil.copy2(ROOT / "templates" / "DELIVERY_ESTIMATE.md", project / "docs" / "DELIVERY_ESTIMATE.md")
@@ -46,6 +95,7 @@ def scaffold(name: str, idea: str, output_dir: Path, proj_type: str = "default")
     shutil.copy2(ROOT / "templates" / "HARDWARE_RESEARCH_RECORD.md", project / "research" / "HARDWARE_RESEARCH_RECORD.md")
     shutil.copy2(ROOT / "templates" / "TOOL_DECISION_RECORD.md", project / "research" / "TOOL_DECISION_RECORD.md")
     shutil.copy2(ROOT / "templates" / "PROCUREMENT_AND_LAB_PLAN.md", project / "hardware" / "PROCUREMENT_AND_LAB_PLAN.md")
+    shutil.copy2(ROOT / "templates" / "PRODUCT_AUTOMATION_RUNBOOK.md", project / "docs" / "PRODUCT_AUTOMATION_RUNBOOK.md")
     _write(
         project / "README.md",
         f"# {name}\n\nIdea: {idea}\nType: {proj_type}\n\nStart by filling `docs/STARTUP_BRIEF.md` and `system_review_graph/`.\n",

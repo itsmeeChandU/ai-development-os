@@ -3,7 +3,10 @@
 from __future__ import annotations
 
 import json
+import tempfile
 from pathlib import Path
+
+from scaffold_project import scaffold
 
 ROOT = Path(__file__).resolve().parent.parent
 
@@ -41,6 +44,17 @@ REQUIRED_FOR_FLOW = [
     "examples/hardware_os_startup_expected/DELIVERY_ESTIMATE.md",
     "examples/hardware_os_startup_expected/TOOL_DECISION_RECORD.md",
     "examples/prompt-to-product-case-study.md",
+    "demo_projects/README.md",
+    "demo_projects/importer-source-readiness-copilot/README.md",
+    "demo_projects/importer-source-readiness-copilot/AGENTS.md",
+    "demo_projects/importer-source-readiness-copilot/docs/PRODUCT_AUTOMATION_RUNBOOK.md",
+    "demo_projects/importer-source-readiness-copilot/data/sample_source_cards.json",
+    "demo_projects/importer-source-readiness-copilot/src/importer_source_readiness/readiness.py",
+    "demo_projects/importer-source-readiness-copilot/scripts/run_demo.py",
+    "demo_projects/importer-source-readiness-copilot/tests/test_readiness.py",
+    "demo_projects/importer-source-readiness-copilot/system_review_graph/demo_readiness_report.json",
+    "demo_projects/importer-source-readiness-copilot/system_review_graph/blockers.jsonl",
+    "demo_projects/importer-source-readiness-copilot/handoffs/demo_completion_handoff.md",
     "system_review_graph/internal_repo_intake_packet.json",
     "system_review_graph/research_data_plan.json",
     "system_review_graph/development_strategy_plan.json",
@@ -111,6 +125,23 @@ def main() -> int:
         print("AI Dev OS self-test: FAIL")
         print("strategy router missing required modes")
         return 1
+
+    with tempfile.TemporaryDirectory() as tmp:
+        project = scaffold(
+            "self-test-data-app",
+            "Build a fixture-only data app for scaffold verification.",
+            Path(tmp),
+            "dataapp",
+        )
+        generated_agents = (project / "AGENTS.md").read_text(encoding="utf-8")
+        if "scaffolded AI Development OS product project" not in generated_agents:
+            print("AI Dev OS self-test: FAIL")
+            print("generated AGENTS.md is not project-local")
+            return 1
+        if not (project / "docs" / "PRODUCT_AUTOMATION_RUNBOOK.md").exists():
+            print("AI Dev OS self-test: FAIL")
+            print("generated project missing product automation runbook")
+            return 1
 
     print("AI Dev OS self-test: PASS")
     print(f"flow_files={len(REQUIRED_FOR_FLOW)}")
