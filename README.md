@@ -98,7 +98,7 @@ AILM means AI Lifecycle Management:
 - `scripts/scaffold_project.py`: creates a new AI-native project skeleton.
 - `.github/*`: issue, PR, and CI community health files.
 - `examples/*`: self-test prompts for tiny and complex products.
-- `demo_projects/importer-source-readiness-copilot`: end-to-end product automation rehearsal project sourced from Intelligence Hub.
+- `product_projects/importer-source-readiness-copilot`: standalone product seed sourced from Intelligence Hub and published privately at `itsmeeChandU/importer-source-readiness-copilot`.
 
 ## License
 
@@ -190,11 +190,11 @@ passing proof gates.
 For product teams integrating this into an app, operator UI, or product
 factory, start with `docs/PRODUCT_AUTOMATION_GUIDE.md` and fill in
 `templates/PRODUCT_AUTOMATION_RUNBOOK.md`. The case study in
-`examples/prompt-to-product-case-study.md` shows the demo flow for a
+`examples/prompt-to-product-case-study.md` shows the product flow for a
 manufacturing/import-export product.
 
-To run the bundled demo product:
+To run the bundled product seed:
 
 ```bash
-python3 scripts/demo_project_check.py
+python3 scripts/product_project_check.py
 ```

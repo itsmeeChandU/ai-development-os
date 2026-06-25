@@ -56,7 +56,7 @@ Start with local checks:
 
 ```bash
 python3 -m unittest discover -s tests -p 'test_*.py'
-python3 scripts/run_demo.py
+python3 scripts/run_product.py
 ```
 
 Add stronger proof commands as the project grows.

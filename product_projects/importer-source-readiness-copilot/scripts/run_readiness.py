@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Run the importer source readiness demo."""
+"""Run the importer source readiness product loop."""
 
 from __future__ import annotations
 
@@ -22,7 +22,7 @@ def main() -> int:
     parser.add_argument(
         "--out",
         type=Path,
-        default=ROOT / "system_review_graph" / "demo_readiness_report.json",
+        default=ROOT / "system_review_graph" / "readiness_report.json",
     )
     parser.add_argument(
         "--blockers-out",

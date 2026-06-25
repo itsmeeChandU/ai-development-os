@@ -1,6 +1,6 @@
 # Agent Instructions
 
-This is a scaffolded AI Development OS product project.
+This is a standalone AI Development OS product project.
 
 ## Product
 
@@ -19,8 +19,9 @@ Before meaningful work, read:
 5. `docs/ARCHITECTURE_OVERVIEW.md`
 6. `docs/WORK_PACKAGE.md`
 7. `docs/PRODUCT_AUTOMATION_RUNBOOK.md`
-8. `system_review_graph/README.md`
-9. `system_review_graph/STATE_RECONSTRUCTION_REPORT.md`
+8. `docs/PRODUCT_STATUS.md`
+9. `system_review_graph/README.md`
+10. `system_review_graph/STATE_RECONSTRUCTION_REPORT.md`
 
 ## Operating Rules
 
@@ -39,7 +40,8 @@ Start with local checks:
 
 ```bash
 python3 -m unittest discover -s tests -p 'test_*.py'
-python3 scripts/run_demo.py
+python3 scripts/run_readiness.py
+python3 scripts/check_product.py
 ```
 
 Add stronger proof commands as the project grows.

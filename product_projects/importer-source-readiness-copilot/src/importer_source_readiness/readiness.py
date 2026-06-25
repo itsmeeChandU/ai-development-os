@@ -1,4 +1,4 @@
-"""Source readiness evaluator for the importer/exporter demo project.
+"""Source readiness evaluator for the importer/exporter product.
 
 The evaluator is intentionally conservative. It turns fixture and official
 source rows into operator readiness reports, but it does not make customs,
@@ -72,7 +72,7 @@ def _evaluate_card(card: dict[str, Any]) -> dict[str, Any]:
                 Blocker(
                     id=_blocker_id(card, f"unsafe-{counter}"),
                     module="unsafe_external_gate",
-                    issue=f"{counter} must remain zero in this demo",
+                    issue=f"{counter} must remain zero in this product",
                     evidence=evidence,
                     owner="operator",
                     gate="closed",

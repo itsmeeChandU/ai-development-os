@@ -1,4 +1,4 @@
-"""Fixture-only importer/exporter source readiness demo."""
+"""Importer/exporter source readiness product loop."""
 
 from .readiness import evaluate_cards, load_cards, write_report
 

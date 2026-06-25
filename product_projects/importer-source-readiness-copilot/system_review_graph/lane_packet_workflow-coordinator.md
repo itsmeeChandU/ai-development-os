@@ -1,6 +1,9 @@
+# Lane Packet
+
+```json
 {
   "generated_at": "2026-06-25T12:51:15+00:00",
-  "goal": "Complete importer source readiness copilot demo product",
+  "goal": "Complete importer source readiness copilot product loop",
   "handoff_required_fields": [
     "lane",
     "branch_or_worktree",
@@ -67,3 +70,4 @@
   "unsafe_or_external_gates": "closed unless explicit user intent and repo proof open them",
   "worker_prompt": "Read AGENTS.md and the lane packet. Work only inside allowed_files, avoid forbidden_files, run proof_commands, refresh generated artifacts when applicable, and write a handoff or blocker row."
 }
+```

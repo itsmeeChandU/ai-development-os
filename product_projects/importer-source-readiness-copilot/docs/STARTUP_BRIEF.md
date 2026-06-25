@@ -44,7 +44,7 @@ machine-readable readiness report with blocker rows.
 
 ## Data Needed
 
-Current demo:
+Current product loop:
 
 - local fixture source cards
 - official-source URL placeholders
@@ -59,7 +59,7 @@ Production later:
 
 ## External APIs Needed
 
-None for this demo.
+None for the completed local loop.
 
 ## Risks
 
@@ -81,7 +81,7 @@ None for this demo.
 ## Done When
 
 - tests pass
-- `scripts/run_demo.py` writes `system_review_graph/demo_readiness_report.json`
+- `scripts/run_readiness.py` writes `system_review_graph/readiness_report.json`
 - report status is `ready_with_external_gates`
 - unsafe external counters remain zero
 - blockers name the next valid move

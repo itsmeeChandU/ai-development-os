@@ -23,7 +23,7 @@
     {
       "id": "product_repos",
       "description": "Repos that may contain product implementation, generated source truth, or downstream app work.",
-      "repos": ["intelligence-hub", "future-product-repo"]
+      "repos": ["intelligence-hub", "importer-source-readiness-copilot", "future-product-repo"]
     }
   ],
   "repos": [
@@ -73,6 +73,18 @@
         "/Users/chandu/Workspace/Finance/intelligence-hub/.venv/bin/python -m pytest tests/test_code_review_graph.py -q"
       ],
       "allowed_use": "Generate startup/app ideas, export source graph contracts, and host product-boundary truth surfaces."
+    },
+    {
+      "id": "importer-source-readiness-copilot",
+      "role": "product_implementation_target",
+      "remote": "https://github.com/itsmeeChandU/importer-source-readiness-copilot.git",
+      "branch_rule": "main plus codex/* product branches",
+      "required_context": ["AGENTS.md", "docs/PRODUCT_STATUS.md", "system_review_graph/readiness_report.json"],
+      "proof_commands": [
+        "python3 scripts/check_product.py",
+        "python3 -m unittest discover -s tests -p 'test_*.py'"
+      ],
+      "allowed_use": "Hold the actual importer/exporter source readiness product implementation and proof artifacts."
     },
     {
       "id": "future-product-repo",

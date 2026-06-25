@@ -406,6 +406,12 @@
         "remote": "https://github.com/itsmeeChandU/intelligence-hub.git",
         "role": "product_contract_exporter",
         "current_feature_branch": "codex/code-review-graph-contract-20260623"
+      },
+      {
+        "id": "importer-source-readiness-copilot",
+        "remote": "https://github.com/itsmeeChandU/importer-source-readiness-copilot.git",
+        "role": "product_implementation_target",
+        "current_feature_branch": "main"
       }
     ]
   },

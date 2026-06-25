@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate the bundled importer source readiness demo project."""
+"""Validate the bundled importer source readiness product project."""
 
 from __future__ import annotations
 
@@ -9,7 +9,7 @@ import tempfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-PROJECT = ROOT / "demo_projects" / "importer-source-readiness-copilot"
+PROJECT = ROOT / "product_projects" / "importer-source-readiness-copilot"
 
 
 def _run(command: list[str], cwd: Path) -> subprocess.CompletedProcess[str]:
@@ -23,25 +23,28 @@ def main() -> int:
         PROJECT / "data" / "sample_source_cards.json",
         PROJECT / "src" / "importer_source_readiness" / "readiness.py",
         PROJECT / "tests" / "test_readiness.py",
-        PROJECT / "scripts" / "run_demo.py",
+        PROJECT / "scripts" / "run_readiness.py",
+        PROJECT / "scripts" / "check_product.py",
         PROJECT / "docs" / "PRODUCT_AUTOMATION_RUNBOOK.md",
-        PROJECT / "handoffs" / "demo_completion_handoff.md",
+        PROJECT / "docs" / "PRODUCT_STATUS.md",
+        PROJECT / "handoffs" / "product_completion_handoff.md",
     ]
     missing = [path.relative_to(ROOT) for path in required if not path.exists()]
     if missing:
-        print("Demo project check: FAIL")
+        print("Product project check: FAIL")
         for path in missing:
             print(f"missing: {path}")
         return 1
 
     commands = [
         ["python3", "-m", "unittest", "discover", "-s", "tests", "-p", "test_*.py"],
-        ["python3", "scripts/run_demo.py"],
+        ["python3", "scripts/run_readiness.py"],
+        ["python3", "scripts/check_product.py"],
     ]
     for command in commands:
         result = _run(command, PROJECT)
         if result.returncode != 0:
-            print("Demo project check: FAIL")
+            print("Product project check: FAIL")
             print(f"command: {' '.join(command)}")
             print(result.stdout)
             print(result.stderr)
@@ -53,27 +56,27 @@ def main() -> int:
             "scripts/blocker_ledger.py",
             "validate",
             "--input",
-            "demo_projects/importer-source-readiness-copilot/system_review_graph/blockers.jsonl",
+            "product_projects/importer-source-readiness-copilot/system_review_graph/blockers.jsonl",
             "--out",
-            str(Path(tempfile.gettempdir()) / "ados-demo-project-blockers.json"),
+            str(Path(tempfile.gettempdir()) / "ados-product-project-blockers.json"),
         ],
         ROOT,
     )
     if blocker_result.returncode != 0:
-        print("Demo project check: FAIL")
+        print("Product project check: FAIL")
         print(blocker_result.stdout)
         print(blocker_result.stderr)
         return blocker_result.returncode
 
     report = json.loads(
-        (PROJECT / "system_review_graph" / "demo_readiness_report.json").read_text(encoding="utf-8")
+        (PROJECT / "system_review_graph" / "readiness_report.json").read_text(encoding="utf-8")
     )
     if report.get("status") != "ready_with_external_gates" or report.get("blocker_count") != 9:
-        print("Demo project check: FAIL")
-        print("unexpected demo readiness report")
+        print("Product project check: FAIL")
+        print("unexpected product readiness report")
         return 1
 
-    print("Demo project check: PASS")
+    print("Product project check: PASS")
     print(f"project={PROJECT.relative_to(ROOT)}")
     print(f"status={report['status']}")
     print(f"blocker_count={report['blocker_count']}")

@@ -41,7 +41,7 @@ external reviewers.
 ## Done Criteria
 
 - tests pass
-- demo CLI writes report
+- product CLI writes report
 - report status is `ready_with_external_gates`
 - unsafe counters remain zero
 - standalone GitHub repo status is either pushed or blocked with next valid move

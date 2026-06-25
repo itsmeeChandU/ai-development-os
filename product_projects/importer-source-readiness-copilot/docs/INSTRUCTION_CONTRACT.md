@@ -2,7 +2,7 @@
 
 ## Goal
 
-Create a complete local demo product that evaluates importer/exporter source
+Create a complete local product loop that evaluates importer/exporter source
 readiness from fixtures and keeps all external gates closed.
 
 ## Current-State Claims
@@ -43,7 +43,7 @@ Allowed files:
 
 - `src/importer_source_readiness/**`
 - `tests/**`
-- `scripts/run_demo.py`
+- `scripts/run_readiness.py`
 - `data/sample_source_cards.json`
 - `docs/**`
 - `system_review_graph/**`
@@ -60,7 +60,7 @@ Forbidden without new approval:
 
 | Gate | State | Reason |
 |---|---|---|
-| external sends | closed | demo must be fixture-only |
+| external sends | closed | local product loop must be fixture-only |
 | paid actions | closed | no commercial operation allowed |
 | customs/tariff advice | closed | requires qualified review and official current source proof |
 | buyer validation claims | closed | no dated buyer evidence |
@@ -72,5 +72,5 @@ Run:
 
 ```bash
 python3 -m unittest discover -s tests -p 'test_*.py'
-python3 scripts/run_demo.py
+python3 scripts/run_readiness.py
 ```

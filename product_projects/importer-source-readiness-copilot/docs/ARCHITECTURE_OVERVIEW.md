@@ -9,7 +9,7 @@ data/sample_source_cards.json
 src/importer_source_readiness/readiness.py
         |
         v
-system_review_graph/demo_readiness_report.json
+system_review_graph/readiness_report.json
 ```
 
 ## Modules
@@ -18,7 +18,7 @@ system_review_graph/demo_readiness_report.json
 |---|---|
 | `data/sample_source_cards.json` | fixture source and gate rows |
 | `src/importer_source_readiness/readiness.py` | evaluate source cards and produce blocker rows |
-| `scripts/run_demo.py` | CLI entrypoint and report writer |
+| `scripts/run_readiness.py` | CLI entrypoint and report writer |
 | `tests/test_readiness.py` | proof for blocked-safe behavior |
 | `system_review_graph/` | generated packets, reports, blockers, handoff evidence |
 
@@ -29,7 +29,7 @@ system_review_graph/demo_readiness_report.json
 3. Check official-source, freshness, buyer, legal, and contract gates.
 4. Emit row-level status.
 5. Flatten blockers into a report.
-6. Write report to `system_review_graph/demo_readiness_report.json`.
+6. Write report to `system_review_graph/readiness_report.json`.
 
 ## Status Rules
 
@@ -39,7 +39,7 @@ system_review_graph/demo_readiness_report.json
 | `ready_with_external_gates` | local logic works but external evidence is still missing |
 | `blocked_unsafe` | an unsafe external counter or unsupported claim opened |
 
-The expected demo status is `ready_with_external_gates`.
+The expected local product status is `ready_with_external_gates`.
 
 ## Proof Boundary
 

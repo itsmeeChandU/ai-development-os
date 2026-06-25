@@ -67,6 +67,22 @@
         "sourcecode_graph.json",
         "sourcecode_graph_summary.md"
       ]
+    },
+    {
+      "id": "importer-source-readiness-copilot",
+      "role": "product_implementation_target",
+      "repository": "https://github.com/itsmeeChandU/importer-source-readiness-copilot",
+      "responsibilities": [
+        "hold the actual importer/exporter source readiness product implementation",
+        "keep local product logic, generated readiness reports, blocker ledgers, and product handoffs current",
+        "preserve external gates for source freshness, import/export compliance, contracts, buyer validation, and launch claims"
+      ],
+      "primary_artifacts": [
+        "system_review_graph/readiness_report.json",
+        "system_review_graph/blockers.jsonl",
+        "docs/PRODUCT_STATUS.md",
+        "handoffs/product_completion_handoff.md"
+      ]
     }
   ],
   "agent_modes": [
