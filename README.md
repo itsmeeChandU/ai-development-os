@@ -89,8 +89,10 @@ AILM means AI Lifecycle Management:
 - `manifests/tool_registry.yaml`: machine-readable tool registry.
 - `manifests/agent_lanes.yaml`: default multi-agent lanes.
 - `manifests/agentic_workflow_manifest.json`: machine-readable coordinator workflow for agents and LLMs.
+- `manifests/agentic_execution_manifest.json`: slash-command, routine, CI, eval, and lane-packet contract.
 - `templates/*`: prompts/specs/handoffs for agents.
 - `scripts/ai_dev_os_check.py`: validates this operating kit.
+- `scripts/agentic_workflow_orchestrator.py`: validates and emits multi-repo execution plans.
 - `scripts/scaffold_project.py`: creates a new AI-native project skeleton.
 - `.github/*`: issue, PR, and CI community health files.
 - `examples/*`: self-test prompts for tiny and complex products.
@@ -123,3 +125,19 @@ or cited research, it must call it a blocker and write the next valid move.
 For complex products, local software completion is not enough. Hardware,
 firmware/OS, simulation, bench validation, procurement, compliance, and field
 operation must each have evidence or blocker rows.
+
+## Multi-Repo Execution
+
+For durable agentic delivery, validate the workflow contract and emit a bounded
+lane plan before spawning workers:
+
+```bash
+python3 scripts/workflow_manifest_check.py
+python3 scripts/agentic_workflow_orchestrator.py validate
+python3 scripts/agentic_workflow_orchestrator.py emit \
+  --goal "Build the first verified product loop" \
+  --out-dir system_review_graph
+```
+
+The emitted plan is a machine-readable coordination surface. It does not replace
+source inspection, tests, generated artifacts, or GitHub branch proof.

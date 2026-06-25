@@ -3,6 +3,12 @@
   "date_checked": "2026-06-23",
   "name": "ai_development_os_agentic_workflow",
   "purpose": "Coordinate AI agents, worktrees, GitHub, Ruflo, System Review Graph, and code-review graph contracts from startup idea to verified application handoff.",
+  "execution_manifest": {
+    "path": "manifests/agentic_execution_manifest.json",
+    "validator": "scripts/agentic_workflow_orchestrator.py validate",
+    "planner": "scripts/agentic_workflow_orchestrator.py plan",
+    "purpose": "Runnable command, routine, CI, eval, and lane-packet contract for agents and LLMs."
+  },
   "canonical_truth": {
     "version_control": "GitHub",
     "repo_truth": [

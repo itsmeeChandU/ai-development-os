@@ -14,6 +14,7 @@ REQUIRED_TOP_LEVEL = {
     "date_checked",
     "name",
     "purpose",
+    "execution_manifest",
     "canonical_truth",
     "repo_roles",
     "agent_modes",
@@ -62,6 +63,13 @@ def validate_manifest(manifest: dict[str, Any]) -> list[str]:
     ruflo_boundary = str((manifest.get("ruflo_rules") or {}).get("required_boundary") or "")
     if "repo truth" not in ruflo_boundary.lower():
         errors.append("ruflo boundary must say repo truth remains outside Ruflo")
+
+    execution_manifest = manifest.get("execution_manifest") or {}
+    execution_path = execution_manifest.get("path")
+    if execution_path != "manifests/agentic_execution_manifest.json":
+        errors.append("execution_manifest.path must be manifests/agentic_execution_manifest.json")
+    elif not (ROOT / execution_path).exists():
+        errors.append("execution manifest path does not exist")
 
     gates = set((manifest.get("blocker_schema") or {}).get("gate_values", []))
     if gates != {"closed", "open", "not_applicable"}:

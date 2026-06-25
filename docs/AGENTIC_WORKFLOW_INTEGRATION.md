@@ -79,3 +79,30 @@ startup idea -> AI Development OS contract -> SRG context bundle
 
 The machine-readable source of this workflow is
 `manifests/agentic_workflow_manifest.json`.
+
+## Execution Surface
+
+The runnable execution contract lives in
+`manifests/agentic_execution_manifest.json`. It defines:
+
+- slash commands such as `/ados:normalize`, `/ados:lane`,
+  `/ados:proof`, `/ados:merge`, and `/ados:goal`
+- skills and their proof boundaries
+- background routines for branch freshness, context refresh, stale blockers,
+  overnight eval loops, and CI failure triage
+- parallel agent lane packets with allowed files, forbidden files, proof
+  commands, and handoff requirements
+- CI/CD jobs, eval loops, supervision rules, and multi-repo integration rules
+
+Validate and emit an execution plan with:
+
+```bash
+python3 scripts/agentic_workflow_orchestrator.py validate
+python3 scripts/agentic_workflow_orchestrator.py emit \
+  --goal "Build the first verified product loop" \
+  --out-dir system_review_graph
+```
+
+The plan can be handed to agents or LLMs as bounded context. It is still only a
+coordination surface; completion requires changed files, focused checks,
+generated artifacts, GitHub branch state, and a handoff or blocker row.

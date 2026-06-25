@@ -14,4 +14,5 @@ jobs:
           python-version: "3.12"
       - run: python scripts/ai_dev_os_check.py
       - run: python scripts/workflow_manifest_check.py
+      - run: python scripts/agentic_workflow_orchestrator.py validate
       - run: python scripts/self_test_flow.py
