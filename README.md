@@ -73,6 +73,7 @@ AILM means AI Lifecycle Management:
 - `docs/AGENTIC_COMPANY_MODEL.md`: AI-native company operating model.
 - `docs/DELIVERY_ESTIMATION.md`: architecture, lane, cost, and timeline estimation.
 - `docs/AI_NATIVE_DELIVERY.md`: how to run AI-native development at scale.
+- `docs/PRODUCT_AUTOMATION_GUIDE.md`: how product teams can automate idea-to-lane workflows inside a product.
 - `docs/AGENTIC_WORKFLOW_INTEGRATION.md`: durable GitHub/Ruflo/worktree/SRG/code-review graph workflow.
 - `docs/SYSTEM_REVIEW_GRAPH.md`: the audit graph pattern that worked.
 - `docs/STATE_RECONSTRUCTION.md`: how to recover actual product state from a prompt and repo truth.
@@ -91,6 +92,7 @@ AILM means AI Lifecycle Management:
 - `manifests/agentic_workflow_manifest.json`: machine-readable coordinator workflow for agents and LLMs.
 - `manifests/agentic_execution_manifest.json`: slash-command, routine, CI, eval, and lane-packet contract.
 - `templates/*`: prompts/specs/handoffs for agents.
+- `templates/PRODUCT_AUTOMATION_RUNBOOK.md`: fill-in runbook for product teams integrating the automation flow.
 - `scripts/ai_dev_os_check.py`: validates this operating kit.
 - `scripts/agentic_workflow_orchestrator.py`: validates and emits multi-repo execution plans.
 - `scripts/scaffold_project.py`: creates a new AI-native project skeleton.
@@ -183,3 +185,9 @@ country import/export requirements, and serious product claims must be routed
 through the research/data and strategy plans. Effectful network, push, paid,
 live, legal, or external actions still require explicit operator intent and
 passing proof gates.
+
+For product teams integrating this into an app, operator UI, or product
+factory, start with `docs/PRODUCT_AUTOMATION_GUIDE.md` and fill in
+`templates/PRODUCT_AUTOMATION_RUNBOOK.md`. The case study in
+`examples/prompt-to-product-case-study.md` shows the demo flow for a
+manufacturing/import-export product.

@@ -14,14 +14,15 @@ Before meaningful work, read:
 5. `docs/AGENTIC_COMPANY_MODEL.md`
 6. `docs/DELIVERY_ESTIMATION.md`
 7. `docs/AI_NATIVE_DELIVERY.md`
-8. `docs/SYSTEM_REVIEW_GRAPH.md`
-9. `manifests/tool_registry.yaml`
-10. `manifests/agentic_workflow_manifest.json`
-11. `manifests/agentic_execution_manifest.json`
-12. `manifests/internal_repo_registry.json`
-13. `manifests/research_data_router.json`
-14. `manifests/development_strategy_router.json`
-15. the relevant template in `templates/`
+8. `docs/PRODUCT_AUTOMATION_GUIDE.md`
+9. `docs/SYSTEM_REVIEW_GRAPH.md`
+10. `manifests/tool_registry.yaml`
+11. `manifests/agentic_workflow_manifest.json`
+12. `manifests/agentic_execution_manifest.json`
+13. `manifests/internal_repo_registry.json`
+14. `manifests/research_data_router.json`
+15. `manifests/development_strategy_router.json`
+16. the relevant template in `templates/`
 
 ## Operating Rules
 
@@ -68,7 +69,7 @@ A task is done only when all of these are true:
 - Use research only to fill a repo-proven capability gap.
 - For durable multi-repo agentic workflow work, use
   `manifests/agentic_workflow_manifest.json` as the machine-readable contract
-  `manifests/agentic_execution_manifest.json` as the runnable command contract,
+  and `manifests/agentic_execution_manifest.json` as the runnable command contract,
   the internal repo, research/data, and strategy routers for prompt-to-product
   selection, and `docs/AGENTIC_WORKFLOW_INTEGRATION.md` as the concise human
   guide.

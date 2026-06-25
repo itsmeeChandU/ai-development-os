@@ -9,4 +9,5 @@ Current examples:
 - `calculator_app_expected/`: expected lightweight output.
 - `hardware_os_startup_prompt.txt`: complex S4 product.
 - `hardware_os_startup_expected/`: expected complex output.
-
+- `prompt-to-product-case-study.md`: product automation walkthrough showing
+  repo intake, research/data routing, strategy routing, and external gates.
