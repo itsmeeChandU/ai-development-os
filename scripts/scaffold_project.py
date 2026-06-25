@@ -31,18 +31,21 @@ Before meaningful work, read:
 
 1. `README.md`
 2. `docs/STARTUP_BRIEF.md`
-3. `docs/INSTRUCTION_CONTRACT.md`
-4. `docs/DELIVERY_ESTIMATE.md`
-5. `docs/ARCHITECTURE_OVERVIEW.md`
-6. `docs/WORK_PACKAGE.md`
-7. `docs/PRODUCT_AUTOMATION_RUNBOOK.md`
-8. `system_review_graph/README.md`
-9. `system_review_graph/STATE_RECONSTRUCTION_REPORT.md`
+3. `docs/STARTUP_LIFECYCLE.md`
+4. `docs/INSTRUCTION_CONTRACT.md`
+5. `docs/DELIVERY_ESTIMATE.md`
+6. `docs/ARCHITECTURE_OVERVIEW.md`
+7. `docs/WORK_PACKAGE.md`
+8. `docs/PRODUCT_AUTOMATION_RUNBOOK.md`
+9. `system_review_graph/README.md`
+10. `system_review_graph/STATE_RECONSTRUCTION_REPORT.md`
 
 ## Operating Rules
 
 - Treat this repo as truth; treat prompts and generated packets as claims until verified.
 - Fill the startup brief and instruction contract before broad implementation.
+- Keep `docs/STARTUP_LIFECYCLE.md` current with the lifecycle stage, R&D loops,
+  operator evidence, validation lanes, and next valid move.
 - Keep the first useful product loop small enough to test locally.
 - Use fixture data until real data rights, credentials, freshness, and source lineage are proven.
 - Keep external effects closed by default: no paid calls, live sends, legal claims, production deploys, or public launch claims without explicit approval and proof.
@@ -87,6 +90,7 @@ def scaffold(name: str, idea: str, output_dir: Path, proj_type: str = "default")
         (project / folder).mkdir(exist_ok=True)
     _write(project / "AGENTS.md", _project_agents(name, idea, proj_type))
     shutil.copy2(ROOT / "templates" / "STARTUP_BRIEF.md", project / "docs" / "STARTUP_BRIEF.md")
+    shutil.copy2(ROOT / "templates" / "STARTUP_LIFECYCLE.md", project / "docs" / "STARTUP_LIFECYCLE.md")
     shutil.copy2(ROOT / "templates" / "INSTRUCTION_CONTRACT.md", project / "docs" / "INSTRUCTION_CONTRACT.md")
     shutil.copy2(ROOT / "templates" / "DELIVERY_ESTIMATE.md", project / "docs" / "DELIVERY_ESTIMATE.md")
     shutil.copy2(ROOT / "templates" / "ARCHITECTURE_OVERVIEW.md", project / "docs" / "ARCHITECTURE_OVERVIEW.md")

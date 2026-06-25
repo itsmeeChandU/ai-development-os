@@ -12,8 +12,10 @@ readiness gates, writes
 `system_review_graph/vc_pitch_readiness_report.json`, writes
 `system_review_graph/board_go_live_readiness_report.json`, writes
 `system_review_graph/blockers.jsonl`, exports
-`system_review_graph/operator_dashboard.html`, writes investor pitch artifacts,
-writes Canada-focused board artifacts, and passes the local proof gate.
+`system_review_graph/operator_dashboard.html`, writes
+`system_review_graph/operator_screenshot_manifest.json`, writes investor pitch
+artifacts, writes Canada-focused board artifacts, and passes the local proof
+gate.
 
 ## Ready Now
 
@@ -34,6 +36,7 @@ writes Canada-focused board artifacts, and passes the local proof gate.
 - launch-control checklist
 - financial operating model boundary
 - static operator dashboard
+- generated operator screenshot manifest and dashboard gallery
 - standalone product check
 - CI workflow for the proof gate
 

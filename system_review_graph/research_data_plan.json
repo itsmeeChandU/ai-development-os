@@ -21,7 +21,7 @@
       "unsafe_to_bypass": true
     }
   ],
-  "data_need": "Canadian official tools, current trade data, CFIA/CBSA requirements, sanctions screening, privacy/security references, financial planning assumptions, and qualified human approvals",
+  "data_need": "Canadian official tools, current trade data, CFIA/CBSA requirements, sanctions screening, privacy/security references, financial planning assumptions, generated operator screenshots, startup lifecycle R&D evidence, and qualified human approvals",
   "data_routes": [
     {
       "allowed_sources": [
@@ -76,10 +76,10 @@
   ],
   "domain": "import_export",
   "expert_validation_rule": "After the product is substantially built, talk to actual people, users, buyers, operators, or qualified subject experts. Their feedback becomes correction evidence for the next product loop.",
-  "generated_at": "2026-06-25T16:18:27+00:00",
+  "generated_at": "2026-06-25T16:46:34+00:00",
   "kind": "research_data_plan",
   "next_valid_move": "Run model-prior synthesis, then collect the listed external evidence before final claims.",
-  "problem": "Build a Canada-focused importer source readiness product requiring CBSA/CARM, tariff, CFIA AIRS, import controls, sanctions, buyer validation, finance, privacy, security, and board go-live review",
+  "problem": "Build a Canada-focused importer source readiness product requiring CBSA/CARM, tariff, CFIA AIRS, import controls, sanctions, buyer validation, finance, privacy, security, board go-live review, and operator screenshot evidence",
   "research_depths": [
     {
       "id": "R0_MODEL_PRIOR",

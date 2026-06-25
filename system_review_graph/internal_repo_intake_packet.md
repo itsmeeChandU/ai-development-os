@@ -3,7 +3,7 @@
 ```json
 {
   "blockers": [],
-  "generated_at": "2026-06-25T16:18:27+00:00",
+  "generated_at": "2026-06-25T16:46:22+00:00",
   "idea_source": {
     "allowed_use": "Generate startup/app ideas, export source graph contracts, and host product-boundary truth surfaces.",
     "branch_rule": "main plus codex/* product or contract branches",
@@ -78,12 +78,14 @@
     "required_context": [
       "AGENTS.md",
       "docs/PRODUCT_STATUS.md",
+      "docs/STARTUP_LIFECYCLE.md",
       "docs/OPERATOR_GUIDE.md",
       "system_review_graph/readiness_report.json",
       "system_review_graph/external_gate_report.json",
       "system_review_graph/continuation_plan.json",
       "system_review_graph/vc_pitch_readiness_report.json",
       "system_review_graph/board_go_live_readiness_report.json",
+      "system_review_graph/operator_screenshot_manifest.json",
       "system_review_graph/operator_dashboard.html"
     ],
     "role": "product_implementation_target"

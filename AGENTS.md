@@ -14,18 +14,19 @@ Before meaningful work, read:
 5. `docs/AGENTIC_COMPANY_MODEL.md`
 6. `docs/DELIVERY_ESTIMATION.md`
 7. `docs/AI_NATIVE_DELIVERY.md`
-8. `docs/PRODUCT_AUTOMATION_GUIDE.md`
-9. `docs/SYSTEM_REVIEW_GRAPH.md`
-10. `docs/STARTUP_CONTINUATION_RULE.md`
-11. `docs/VC_PITCH_READINESS.md`
-12. `docs/BOARD_GO_LIVE_READINESS.md`
-13. `manifests/tool_registry.yaml`
-14. `manifests/agentic_workflow_manifest.json`
-15. `manifests/agentic_execution_manifest.json`
-16. `manifests/internal_repo_registry.json`
-17. `manifests/research_data_router.json`
-18. `manifests/development_strategy_router.json`
-19. the relevant template in `templates/`
+8. `docs/STARTUP_LIFECYCLE_DEVELOPMENT.md`
+9. `docs/PRODUCT_AUTOMATION_GUIDE.md`
+10. `docs/SYSTEM_REVIEW_GRAPH.md`
+11. `docs/STARTUP_CONTINUATION_RULE.md`
+12. `docs/VC_PITCH_READINESS.md`
+13. `docs/BOARD_GO_LIVE_READINESS.md`
+14. `manifests/tool_registry.yaml`
+15. `manifests/agentic_workflow_manifest.json`
+16. `manifests/agentic_execution_manifest.json`
+17. `manifests/internal_repo_registry.json`
+18. `manifests/research_data_router.json`
+19. `manifests/development_strategy_router.json`
+20. the relevant template in `templates/`
 
 ## Operating Rules
 
@@ -52,6 +53,8 @@ Before meaningful work, read:
 - For VC pitch readiness, generate `system_review_graph/vc_pitch_readiness_report.json` and investor artifacts; pitch-ready can mean private investor conversation ready with diligence gates, not launch ready or securities/legal/compliance proof.
 - For board/go-live readiness, generate `system_review_graph/board_go_live_readiness_report.json` plus `board/*.md`; board-ready means controlled private beta candidate with jurisdiction tools, simulated expert lanes, launch controls, and human approval gates, not public launch or qualified legal/financial/compliance proof.
 - Treat AI model subject synthesis as a first-pass hypothesis; current facts, datasets, official rules, contracts, country import/export needs, and final subject direction need evidence, qualified people, or blocker rows.
+- For startup lifecycle work, record the current lifecycle stage and use R&D
+  loops for bounded experiments, not vague planning.
 - For broad tool selection, use `docs/TOOL_BREEDING_GROUND.md` and write a tool decision record before adopting major dependencies.
 - Update durable instructions only when a mistake repeats or a workflow becomes stable.
 
@@ -75,6 +78,9 @@ A task is done only when all of these are true:
 - Use MCP/connectors for live external context.
 - Use skills for repeatable workflows.
 - Use generated reports as truth surfaces.
+- When visual proof matters, publish operator-generated screenshots through a
+  generated manifest or gallery; screenshots are review aids, not replacements
+  for reports, tests, blocker ledgers, or approval gates.
 - Use research only to fill a repo-proven capability gap.
 - For durable multi-repo agentic workflow work, use
   `manifests/agentic_workflow_manifest.json` as the machine-readable contract

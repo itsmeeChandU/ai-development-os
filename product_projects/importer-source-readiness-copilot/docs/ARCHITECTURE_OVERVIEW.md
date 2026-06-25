@@ -18,6 +18,7 @@ src/importer_source_readiness/continuation.py
 src/importer_source_readiness/investor_readiness.py
 src/importer_source_readiness/board_readiness.py
 src/importer_source_readiness/operator_report.py
+src/importer_source_readiness/operator_screenshots.py
         |
         v
 system_review_graph/readiness_report.json
@@ -25,7 +26,9 @@ system_review_graph/external_gate_report.json
 system_review_graph/continuation_plan.json
 system_review_graph/vc_pitch_readiness_report.json
 system_review_graph/board_go_live_readiness_report.json
+system_review_graph/operator_screenshot_manifest.json
 system_review_graph/operator_dashboard.html
+system_review_graph/operator_screenshots/*.png
 investor/*.md
 board/*.md
 ```
@@ -47,6 +50,7 @@ board/*.md
 | `src/importer_source_readiness/investor_readiness.py` | build VC pitch readiness and diligence gates |
 | `src/importer_source_readiness/board_readiness.py` | build Canada-focused board/go-live candidate readiness |
 | `src/importer_source_readiness/operator_report.py` | render static operator dashboard |
+| `src/importer_source_readiness/operator_screenshots.py` | index operator-generated screenshot artifacts for dashboard review |
 | `scripts/run_readiness.py` | CLI entrypoint and report writer |
 | `scripts/run_external_gates.py` | external-gate report writer |
 | `scripts/export_operator_dashboard.py` | dashboard exporter |
@@ -58,6 +62,7 @@ board/*.md
 | `tests/test_continuation.py` | proof that externally gated status keeps work in progress |
 | `tests/test_investor_readiness.py` | proof that pitch status keeps diligence and claim gates visible |
 | `tests/test_board_go_live.py` | proof that Canada board/go-live candidate status keeps human approval gates visible |
+| `tests/test_operator_screenshots.py` | proof that screenshot artifacts are indexed and rendered without replacing generated truth |
 | `system_review_graph/` | generated packets, reports, blockers, handoff evidence |
 
 ## Data Flow
@@ -77,7 +82,10 @@ board/*.md
     `system_review_graph/board_go_live_readiness_report.json`.
 13. Write board go-live brief, expert review packet, launch checklist, and
     financial operating model.
-14. Render `system_review_graph/operator_dashboard.html`.
+14. Index operator screenshots in
+    `system_review_graph/operator_screenshot_manifest.json`.
+15. Render `system_review_graph/operator_dashboard.html` with the screenshot
+    gallery and generated proof boundary.
 
 ## Status Rules
 

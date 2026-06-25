@@ -18,7 +18,8 @@ This project uses an Intelligence Hub import/export source-proof idea to build:
 - unit tests
 - blocked-safe readiness report
 - external-gate report
-- static operator dashboard
+- continuation, VC pitch, and board go-live readiness packets
+- static operator dashboard with generated screenshot gallery
 - blocker ledger validation
 - completion handoff
 

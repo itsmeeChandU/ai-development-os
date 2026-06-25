@@ -57,11 +57,12 @@ AILM means AI Lifecycle Management:
 4. Reconstruct: convert prompt, repo, data, and runtime evidence into current state.
 5. Estimate: produce architecture, lane plan, tool/data needs, and timeline.
 6. Instrument: create reports, generated artifacts, and tests.
-7. Lane split: assign bounded agents with owned files and proof commands.
-8. Make: implement code/data/UI/integration slices.
-9. Verify: run focused tests, lint, generated report checks, and smoke tests.
-10. Launch: produce a single operator surface with current truth and blockers.
-11. Monitor: keep recurring checks, stale-artifact alerts, and handoffs.
+7. R&D: run bounded experiments, source checks, simulations, and tool decisions.
+8. Lane split: assign bounded agents with owned files and proof commands.
+9. Make: implement code/data/operator/integration slices.
+10. Verify: run focused tests, lint, generated report checks, and smoke tests.
+11. Launch: produce a single operator surface with current truth, blockers, and generated visual proof when operator experience matters.
+12. Monitor: keep recurring checks, stale-artifact alerts, and handoffs.
 
 ## What This Repo Contains
 
@@ -73,6 +74,7 @@ AILM means AI Lifecycle Management:
 - `docs/AGENTIC_COMPANY_MODEL.md`: AI-native company operating model.
 - `docs/DELIVERY_ESTIMATION.md`: architecture, lane, cost, and timeline estimation.
 - `docs/AI_NATIVE_DELIVERY.md`: how to run AI-native development at scale.
+- `docs/STARTUP_LIFECYCLE_DEVELOPMENT.md`: startup lifecycle, R&D loops, validation, pitch, board/private beta, and launch gates.
 - `docs/PRODUCT_AUTOMATION_GUIDE.md`: how product teams can automate idea-to-lane workflows inside a product.
 - `docs/AGENTIC_WORKFLOW_INTEGRATION.md`: durable GitHub/Ruflo/worktree/SRG/code-review graph workflow.
 - `docs/STARTUP_CONTINUATION_RULE.md`: prevents externally gated products from being marked fully done too early.

@@ -14,12 +14,14 @@ if str(SRC) not in sys.path:
 
 from importer_source_readiness import (
     build_external_gate_report,
+    build_screenshot_manifest,
     evaluate_cards,
     load_cards,
     load_json,
     write_dashboard,
     write_json,
     write_report,
+    write_screenshot_manifest,
 )
 
 
@@ -46,8 +48,31 @@ def main() -> int:
         write_json(external, external_path)
     readiness = _read(readiness_path)
     external = _read(external_path)
-    out = write_dashboard(readiness, external, ROOT / "system_review_graph" / "operator_dashboard.html")
-    print(json.dumps({"out": str(out), "total_blockers": readiness["blocker_count"] + external["blocker_count"]}))
+    screenshots = build_screenshot_manifest(
+        repo_root=ROOT,
+        screenshot_dir=ROOT / "system_review_graph" / "operator_screenshots",
+        generated_at="2026-06-25T00:00:00+00:00",
+    )
+    manifest_path = write_screenshot_manifest(
+        screenshots,
+        ROOT / "system_review_graph" / "operator_screenshot_manifest.json",
+    )
+    out = write_dashboard(
+        readiness,
+        external,
+        ROOT / "system_review_graph" / "operator_dashboard.html",
+        screenshot_manifest=screenshots,
+    )
+    print(
+        json.dumps(
+            {
+                "out": str(out),
+                "screenshot_manifest": str(manifest_path),
+                "screenshot_count": screenshots["screenshot_count"],
+                "total_blockers": readiness["blocker_count"] + external["blocker_count"],
+            }
+        )
+    )
     return 0
 
 

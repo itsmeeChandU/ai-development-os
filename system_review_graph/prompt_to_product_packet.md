@@ -63,8 +63,8 @@
         ]
       }
     ],
-    "generated_at": "2026-06-25T16:18:28+00:00",
-    "idea": "Canada-focused importer source readiness copilot with board go-live gates",
+    "generated_at": "2026-06-25T16:46:34+00:00",
+    "idea": "Canada-focused importer source readiness copilot with startup lifecycle R&D, operator screenshot evidence, and board go-live gates",
     "kind": "development_strategy_plan",
     "modes": [
       {
@@ -145,7 +145,10 @@
         "system_review_graph/slash_command_specs.json",
         "system_review_graph/automation_runtime_report.json",
         "system_review_graph/scheduler_plan.json",
+        "product_projects/<product>/docs/STARTUP_LIFECYCLE.md",
         "product_projects/<product>/system_review_graph/board_go_live_readiness_report.json",
+        "product_projects/<product>/system_review_graph/operator_screenshot_manifest.json",
+        "product_projects/<product>/system_review_graph/operator_screenshots/*",
         "product_projects/<product>/board/board_go_live_brief.md",
         "handoffs/ci_fix_<check>.json"
       ],
@@ -401,8 +404,8 @@
       }
     ],
     "execution_manifest": "manifests/agentic_execution_manifest.json",
-    "generated_at": "2026-06-25T16:18:28+00:00",
-    "goal": "Canada-focused importer source readiness copilot with board go-live gates",
+    "generated_at": "2026-06-25T16:46:34+00:00",
+    "goal": "Canada-focused importer source readiness copilot with startup lifecycle R&D, operator screenshot evidence, and board go-live gates",
     "lane_packets": [
       {
         "allowed_files": [
@@ -626,6 +629,7 @@
       "Generated docs and graphs are bounded context, not runtime proof.",
       "Code-review graph contracts orient code review, but source files and tests remain required.",
       "Ruflo memory is coordination state, not a completion claim.",
+      "Operator screenshots are visual review aids for the operator experience, not substitutes for generated reports, tests, blocker ledgers, or approval gates.",
       "ready_with_external_gates requires system_review_graph/continuation_plan.json and cannot be reported as fully operational or launch ready while must_continue is true.",
       "VC pitch readiness requires system_review_graph/vc_pitch_readiness_report.json and cannot be used as legal, securities, revenue, PMF, launch, compliance, buyer, supplier, customs, or tariff proof.",
       "Board go-live readiness requires system_review_graph/board_go_live_readiness_report.json and cannot be used as public launch, production deployment, legal, financial, compliance, buyer, revenue, PMF, supplier, customs, tariff, or regulated proof without qualified human approval.",
@@ -862,7 +866,7 @@
     ],
     "workflow_manifest": "manifests/agentic_workflow_manifest.json"
   },
-  "generated_at": "2026-06-25T16:18:28+00:00",
+  "generated_at": "2026-06-25T16:46:34+00:00",
   "kind": "prompt_to_product_packet",
   "next_valid_move": "Create or select the target repo, load bounded context, claim the first lane, and run its proof commands.",
   "normalized_contract": {
@@ -882,19 +886,19 @@
       "handoff with next_valid_move"
     ],
     "first_action": "Emit lane packet and run the smallest proof loop.",
-    "goal": "Canada-focused importer source readiness copilot with board go-live gates"
+    "goal": "Canada-focused importer source readiness copilot with startup lifecycle R&D, operator screenshot evidence, and board go-live gates"
   },
   "product": {
     "complexity": {
       "level": "S2",
       "reason": "data, API, credential, or source dependency present"
     },
-    "idea": "Canada-focused importer source readiness copilot with board go-live gates",
+    "idea": "Canada-focused importer source readiness copilot with startup lifecycle R&D, operator screenshot evidence, and board go-live gates",
     "name": "importer-source-readiness-copilot"
   },
   "repo_intake": {
     "blockers": [],
-    "generated_at": "2026-06-25T16:18:28+00:00",
+    "generated_at": "2026-06-25T16:46:34+00:00",
     "idea_source": {
       "allowed_use": "Generate startup/app ideas, export source graph contracts, and host product-boundary truth surfaces.",
       "branch_rule": "main plus codex/* product or contract branches",
@@ -969,12 +973,14 @@
       "required_context": [
         "AGENTS.md",
         "docs/PRODUCT_STATUS.md",
+        "docs/STARTUP_LIFECYCLE.md",
         "docs/OPERATOR_GUIDE.md",
         "system_review_graph/readiness_report.json",
         "system_review_graph/external_gate_report.json",
         "system_review_graph/continuation_plan.json",
         "system_review_graph/vc_pitch_readiness_report.json",
         "system_review_graph/board_go_live_readiness_report.json",
+        "system_review_graph/operator_screenshot_manifest.json",
         "system_review_graph/operator_dashboard.html"
       ],
       "role": "product_implementation_target"
@@ -1028,10 +1034,10 @@
     ],
     "domain": "import_export",
     "expert_validation_rule": "After the product is substantially built, talk to actual people, users, buyers, operators, or qualified subject experts. Their feedback becomes correction evidence for the next product loop.",
-    "generated_at": "2026-06-25T16:18:28+00:00",
+    "generated_at": "2026-06-25T16:46:34+00:00",
     "kind": "research_data_plan",
     "next_valid_move": "Run model-prior synthesis, then collect the listed external evidence before final claims.",
-    "problem": "Canada-focused importer source readiness copilot with board go-live gates",
+    "problem": "Canada-focused importer source readiness copilot with startup lifecycle R&D, operator screenshot evidence, and board go-live gates",
     "research_depths": [
       {
         "id": "R0_MODEL_PRIOR",

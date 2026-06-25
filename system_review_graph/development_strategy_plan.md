@@ -62,8 +62,8 @@
       ]
     }
   ],
-  "generated_at": "2026-06-25T16:18:27+00:00",
-  "idea": "Canada-focused importer source readiness copilot with board go-live gates",
+  "generated_at": "2026-06-25T16:46:34+00:00",
+  "idea": "Canada-focused importer source readiness copilot with startup lifecycle R&D, operator screenshot evidence, and board go-live gates",
   "kind": "development_strategy_plan",
   "modes": [
     {

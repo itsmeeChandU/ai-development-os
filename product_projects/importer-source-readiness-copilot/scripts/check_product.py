@@ -88,6 +88,8 @@ def main() -> int:
     continuation = _load_json(ROOT / "system_review_graph" / "continuation_plan.json")
     vc_pitch = _load_json(ROOT / "system_review_graph" / "vc_pitch_readiness_report.json")
     board = _load_json(ROOT / "system_review_graph" / "board_go_live_readiness_report.json")
+    screenshot_manifest_path = ROOT / "system_review_graph" / "operator_screenshot_manifest.json"
+    screenshot_manifest = _load_json(screenshot_manifest_path) if screenshot_manifest_path.exists() else {}
     expected = {
         "status": "ready_with_external_gates",
         "row_count": 2,
@@ -105,6 +107,18 @@ def main() -> int:
         failures.append("external gate report should include country, buyer, expert, contract, data, and launch blockers")
     if not (ROOT / "system_review_graph" / "operator_dashboard.html").exists():
         failures.append("operator dashboard was not generated")
+    else:
+        dashboard_html = (ROOT / "system_review_graph" / "operator_dashboard.html").read_text(encoding="utf-8")
+        if "Operator Screenshots" not in dashboard_html:
+            failures.append("operator dashboard should include the screenshot gallery")
+    if not screenshot_manifest_path.exists():
+        failures.append("operator screenshot manifest was not generated")
+    if screenshot_manifest.get("status") != "screenshots_ready":
+        failures.append("operator screenshot manifest should have screenshots_ready status")
+    if screenshot_manifest.get("screenshot_count", 0) < 1:
+        failures.append("operator screenshot manifest should include at least one generated screenshot")
+    if "proof_boundary" not in screenshot_manifest:
+        failures.append("operator screenshot manifest must include a proof boundary")
     if continuation.get("status") != "startup_in_progress":
         failures.append(f"continuation status expected startup_in_progress, got {continuation.get('status')!r}")
     if continuation.get("must_continue") is not True:

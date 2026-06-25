@@ -34,11 +34,13 @@ def main() -> int:
         PROJECT / "src" / "importer_source_readiness" / "investor_readiness.py",
         PROJECT / "src" / "importer_source_readiness" / "board_readiness.py",
         PROJECT / "src" / "importer_source_readiness" / "operator_report.py",
+        PROJECT / "src" / "importer_source_readiness" / "operator_screenshots.py",
         PROJECT / "tests" / "test_readiness.py",
         PROJECT / "tests" / "test_external_gates.py",
         PROJECT / "tests" / "test_continuation.py",
         PROJECT / "tests" / "test_investor_readiness.py",
         PROJECT / "tests" / "test_board_go_live.py",
+        PROJECT / "tests" / "test_operator_screenshots.py",
         PROJECT / "scripts" / "run_readiness.py",
         PROJECT / "scripts" / "run_external_gates.py",
         PROJECT / "scripts" / "export_operator_dashboard.py",
@@ -48,12 +50,15 @@ def main() -> int:
         PROJECT / "scripts" / "check_product.py",
         PROJECT / "docs" / "PRODUCT_AUTOMATION_RUNBOOK.md",
         PROJECT / "docs" / "PRODUCT_STATUS.md",
+        PROJECT / "docs" / "STARTUP_LIFECYCLE.md",
         PROJECT / "docs" / "OPERATOR_GUIDE.md",
         PROJECT / "system_review_graph" / "external_gate_report.json",
         PROJECT / "system_review_graph" / "continuation_plan.json",
         PROJECT / "system_review_graph" / "vc_pitch_readiness_report.json",
         PROJECT / "system_review_graph" / "board_go_live_readiness_report.json",
         PROJECT / "system_review_graph" / "operator_dashboard.html",
+        PROJECT / "system_review_graph" / "operator_screenshot_manifest.json",
+        PROJECT / "system_review_graph" / "operator_screenshots" / "operator-dashboard.png",
         PROJECT / "investor" / "vc_pitch_deck.md",
         PROJECT / "investor" / "one_pager.md",
         PROJECT / "investor" / "demo_script.md",
@@ -123,6 +128,9 @@ def main() -> int:
     board = json.loads(
         (PROJECT / "system_review_graph" / "board_go_live_readiness_report.json").read_text(encoding="utf-8")
     )
+    screenshot_manifest = json.loads(
+        (PROJECT / "system_review_graph" / "operator_screenshot_manifest.json").read_text(encoding="utf-8")
+    )
     if report.get("status") != "ready_with_external_gates" or report.get("blocker_count") != 9:
         print("Product project check: FAIL")
         print("unexpected product readiness report")
@@ -166,6 +174,19 @@ def main() -> int:
             print("Product project check: FAIL")
             print(f"board go-live report missing {key}")
             return 1
+    if screenshot_manifest.get("status") != "screenshots_ready":
+        print("Product project check: FAIL")
+        print("operator screenshot manifest should have screenshots_ready status")
+        return 1
+    if screenshot_manifest.get("screenshot_count", 0) < 1:
+        print("Product project check: FAIL")
+        print("operator screenshot manifest should include at least one generated screenshot")
+        return 1
+    dashboard_html = (PROJECT / "system_review_graph" / "operator_dashboard.html").read_text(encoding="utf-8")
+    if "Operator Screenshots" not in dashboard_html or "operator_screenshots/operator-dashboard.png" not in dashboard_html:
+        print("Product project check: FAIL")
+        print("operator dashboard missing screenshot gallery")
+        return 1
 
     print("Product project check: PASS")
     print(f"project={PROJECT.relative_to(ROOT)}")
@@ -176,6 +197,7 @@ def main() -> int:
     print(f"startup_status={continuation['status']}")
     print(f"vc_pitch_status={vc_pitch['status']}")
     print(f"board_go_live_status={board['status']}")
+    print(f"operator_screenshots={screenshot_manifest['screenshot_count']}")
     return 0
 
 

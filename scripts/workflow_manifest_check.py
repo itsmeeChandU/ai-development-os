@@ -16,6 +16,7 @@ REQUIRED_TOP_LEVEL = {
     "purpose",
     "execution_manifest",
     "canonical_truth",
+    "startup_lifecycle_development_rule",
     "startup_continuation_rule",
     "vc_pitch_readiness_rule",
     "board_go_live_readiness_rule",
@@ -77,6 +78,23 @@ def validate_manifest(manifest: dict[str, Any]) -> list[str]:
     gates = set((manifest.get("blocker_schema") or {}).get("gate_values", []))
     if gates != {"closed", "open", "not_applicable"}:
         errors.append("blocker_schema.gate_values must be closed/open/not_applicable")
+
+    lifecycle = manifest.get("startup_lifecycle_development_rule") or {}
+    if lifecycle.get("required_doc") != "docs/STARTUP_LIFECYCLE_DEVELOPMENT.md":
+        errors.append("startup_lifecycle_development_rule.required_doc must be docs/STARTUP_LIFECYCLE_DEVELOPMENT.md")
+    if lifecycle.get("required_template") != "templates/STARTUP_LIFECYCLE.md":
+        errors.append("startup_lifecycle_development_rule.required_template must be templates/STARTUP_LIFECYCLE.md")
+    lifecycle_stages = set(lifecycle.get("stage_sequence", []))
+    for stage in ("rd_exploration", "operator_evidence", "learning_loop"):
+        if stage not in lifecycle_stages:
+            errors.append(f"startup_lifecycle_development_rule must include {stage}")
+    rd_fields = set(lifecycle.get("r_and_d_loop_fields", []))
+    if "hypothesis" not in rd_fields or "next_valid_move" not in rd_fields:
+        errors.append("startup_lifecycle_development_rule must define R&D hypothesis and next_valid_move fields")
+    if "system_review_graph/operator_screenshot_manifest.json" not in lifecycle.get(
+        "operator_evidence_artifacts", []
+    ):
+        errors.append("startup_lifecycle_development_rule must include operator screenshot manifest")
 
     continuation = manifest.get("startup_continuation_rule") or {}
     if continuation.get("trigger_status") != "ready_with_external_gates":

@@ -46,6 +46,7 @@ system_review_graph/external_gate_report.json
 system_review_graph/continuation_plan.json
 system_review_graph/vc_pitch_readiness_report.json
 system_review_graph/board_go_live_readiness_report.json
+system_review_graph/operator_screenshot_manifest.json
 system_review_graph/blockers.jsonl
 system_review_graph/operator_dashboard.html
 investor/vc_pitch_deck.md
@@ -117,7 +118,11 @@ commitments.
 
 ## Next Valid Move
 
-Use `system_review_graph/operator_dashboard.html` as the operator surface.
+Use `system_review_graph/operator_dashboard.html` as the operator surface,
+including its generated screenshot gallery. Screenshot artifacts belong in
+`system_review_graph/operator_screenshots/` and are indexed in
+`system_review_graph/operator_screenshot_manifest.json`.
+Use `docs/STARTUP_LIFECYCLE.md` as the startup/R&D lifecycle surface.
 Use `system_review_graph/continuation_plan.json` as the continuation surface.
 Use `investor/vc_pitch_deck.md` and `investor/one_pager.md` for private VC
 conversations. Use `board/board_go_live_brief.md` and

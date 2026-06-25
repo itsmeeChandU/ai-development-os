@@ -28,11 +28,12 @@ should convert a user idea into artifacts that agents can execute safely:
 5. context bundle: SRG and code-review graph context for bounded source review
 6. lane packet: allowed files, forbidden files, proof commands, and handoff
 7. proof report: tests, generated artifacts, blockers, and launch state
-8. continuation plan: required next lanes when the product is only internally
+8. operator screenshot surface: generated screenshots and visual proof manifest
+9. continuation plan: required next lanes when the product is only internally
    ready with external gates
-9. VC pitch packet: investor-safe claims, demo script, diligence lanes, and
+10. VC pitch packet: investor-safe claims, demo script, diligence lanes, and
    pitch readiness report
-10. board go-live packet: jurisdiction tools, expert-agent review lanes,
+11. board go-live packet: jurisdiction tools, expert-agent review lanes,
     launch controls, human approval gates, and board readiness report
 
 ## Minimum Product Integration
@@ -50,6 +51,10 @@ Add these pieces to the product or product-factory repo:
 
 The product must treat generated packets as coordination surfaces. Completion
 still requires code/data changes, tests, generated artifacts, and branch proof.
+For startup-style product work, the product should also maintain
+`docs/STARTUP_LIFECYCLE.md` or an equivalent lifecycle artifact that names the
+current stage, R&D loops, operator evidence, validation blockers, and next
+valid move.
 If a product reports `ready_with_external_gates`, completion also requires a
 `system_review_graph/continuation_plan.json` artifact that keeps the startup
 `startup_in_progress` and names the next evidence lanes.
@@ -60,6 +65,11 @@ If a product needs to reach board go-live review, completion also requires
 `system_review_graph/board_go_live_readiness_report.json` plus `board/*.md`
 with jurisdiction-specific tools, expert simulations, launch controls, and
 human approval gates.
+If a product has an operator UI, completion also requires an operator-visible
+screenshot surface such as `system_review_graph/operator_screenshot_manifest.json`
+and screenshot artifacts that the dashboard can render. Screenshots are visual
+proof aids; generated reports, tests, blocker ledgers, and approval gates remain
+canonical.
 
 ## Input Contract
 
@@ -141,6 +151,7 @@ In a product, wire the flow as a state machine:
 | lane_assigned | create worktree/branch/lane packet | worker handoff |
 | proof_running | run tests and artifact checks | proof report |
 | blocked_or_ready | publish blocker/readiness state | next valid move |
+| operator_visual_proof_ready | publish generated screenshots and manifest | operator screenshot gallery |
 | continuation_required | write continuation plan for externally gated work | evidence lanes and closed premature claims |
 | vc_pitch_ready | write investor packet and pitch readiness report | private pitch state and diligence lanes |
 | board_go_live_candidate | write board packet and go-live readiness report | controlled private beta candidate and human approval gates |
@@ -279,6 +290,7 @@ The product automation is working when:
 - missing data/contracts/experts become blocker rows
 - tests and generated artifact checks run in CI
 - the operator surface shows ready vs blocked with `next_valid_move`
+- operator-generated screenshots are visible through a generated manifest and gallery when UI behavior matters
 - externally gated products generate continuation lanes before completion claims
 - investor-pitch products generate VC readiness artifacts before pitch claims
 - go-live products generate board readiness artifacts before launch claims

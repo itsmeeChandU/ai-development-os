@@ -27,6 +27,7 @@ import/export source-proof idea.
 - `src/importer_source_readiness/investor_readiness.py`
 - `src/importer_source_readiness/board_readiness.py`
 - `src/importer_source_readiness/operator_report.py`
+- `src/importer_source_readiness/operator_screenshots.py`
 - `src/importer_source_readiness/__init__.py`
 - `data/sample_source_cards.json`
 - `data/country_requirements_matrix.json`
@@ -48,6 +49,7 @@ import/export source-proof idea.
 - `tests/test_continuation.py`
 - `tests/test_investor_readiness.py`
 - `tests/test_board_go_live.py`
+- `tests/test_operator_screenshots.py`
 - `docs/STARTUP_BRIEF.md`
 - `docs/INSTRUCTION_CONTRACT.md`
 - `docs/ARCHITECTURE_OVERVIEW.md`
@@ -86,6 +88,8 @@ python3 ../../scripts/blocker_ledger.py validate --input system_review_graph/blo
 - VC pitch readiness report: `system_review_graph/vc_pitch_readiness_report.json`
 - board go-live readiness report: `system_review_graph/board_go_live_readiness_report.json`
 - operator dashboard: `system_review_graph/operator_dashboard.html`
+- operator screenshots: `system_review_graph/operator_screenshot_manifest.json`
+  and `system_review_graph/operator_screenshots/operator-dashboard.png`
 - investor packet: `investor/*.md`
 - board packet: `board/*.md`
 - product repo proof: pushed to private GitHub `main`
@@ -104,6 +108,8 @@ python3 ../../scripts/blocker_ledger.py validate --input system_review_graph/blo
 - `system_review_graph/vc_pitch_readiness_report.json`
 - `system_review_graph/board_go_live_readiness_report.json`
 - `system_review_graph/operator_dashboard.html`
+- `system_review_graph/operator_screenshot_manifest.json`
+- `system_review_graph/operator_screenshots/operator-dashboard.png`
 - `investor/vc_pitch_deck.md`
 - `investor/one_pager.md`
 - `investor/demo_script.md`

@@ -1,0 +1,33 @@
+{
+  "allowed_media_types": [
+    "image/jpeg",
+    "image/png",
+    "image/svg+xml",
+    "image/webp"
+  ],
+  "generated_at": "2026-06-25T00:00:00+00:00",
+  "next_valid_move": "Review the screenshot cards in system_review_graph/operator_dashboard.html.",
+  "proof_boundary": "Operator screenshots are visual evidence artifacts. They help review the current operator experience, but generated reports, blocker ledgers, tests, and human approval gates remain canonical for readiness claims.",
+  "screenshot_count": 1,
+  "screenshot_dir": "system_review_graph/operator_screenshots",
+  "screenshots": [
+    {
+      "artifact_path": "system_review_graph/operator_screenshots/operator-dashboard.png",
+      "captured_at": "2026-06-25T16:35:39+00:00",
+      "claim_boundary": "Visual review aid only; generated JSON reports and blocker ledgers remain readiness truth.",
+      "dashboard_src": "operator_screenshots/operator-dashboard.png",
+      "file_name": "operator-dashboard.png",
+      "generated_by": "operator",
+      "height": 1600,
+      "id": "operator-screenshot:system_review_graph/operator_screenshots/operator-dashboard.png",
+      "media_type": "image/png",
+      "sha256": "609d509c7069e8d37792ae74ad2fdb43ac2ae33000f3c6b473e37f04dcca6060",
+      "size_bytes": 369331,
+      "source": "operator_generated_screenshot",
+      "title": "Operator Dashboard",
+      "width": 1440
+    }
+  ],
+  "status": "screenshots_ready",
+  "version": 1
+}

@@ -28,7 +28,18 @@ system_review_graph/operator_dashboard.html
 ```
 
 The dashboard shows readiness status, external-gate status, official source
-references, blockers, and next valid moves.
+references, blockers, next valid moves, and the generated screenshot gallery.
+
+Operator-generated screenshots are indexed in:
+
+```text
+system_review_graph/operator_screenshot_manifest.json
+system_review_graph/operator_screenshots/
+```
+
+The screenshot gallery is visual evidence only. Generated JSON reports,
+blocker ledgers, tests, and human approval gates remain canonical for readiness
+claims.
 
 Open the continuation plan when deciding what work continues next:
 

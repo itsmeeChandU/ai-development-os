@@ -43,6 +43,11 @@ Use this instead:
 For complex products, add hardware, firmware/OS, simulation, bench validation,
 procurement, compliance, and field-operation stages before claiming completion.
 
+For startup products, use `docs/STARTUP_LIFECYCLE_DEVELOPMENT.md` to keep the
+idea, research routing, R&D experiments, product slice, operator evidence,
+validation, VC readiness, board/private beta, launch, and learning loop in one
+stage-aware surface.
+
 ## New Definition Of Requirements
 
 For AI, a requirement is weak until it has:

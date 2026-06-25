@@ -50,6 +50,7 @@ product factory, or internal operator workflow.
 | continuation plan | product-specific proof command | `system_review_graph/continuation_plan.json` | `ready_with_external_gates` routes to `startup_in_progress` and next evidence lanes |
 | VC pitch readiness | product-specific proof command | `system_review_graph/vc_pitch_readiness_report.json` | private pitch state has sources, claim boundaries, and diligence lanes |
 | board go-live readiness | product-specific proof command | `system_review_graph/board_go_live_readiness_report.json` | controlled private beta candidate has jurisdiction tools, expert lanes, launch controls, and human approval gates |
+| operator screenshots | product-specific proof command | `system_review_graph/operator_screenshot_manifest.json` | operator-generated screenshots are indexed and visible in the operator surface |
 
 ## Commands
 
@@ -121,6 +122,7 @@ python3 scripts/self_test_flow.py
 - continuation plan:
 - VC pitch report:
 - board go-live report:
+- operator screenshot manifest:
 - readiness state: ready / ready_with_external_gates / blocked
 - continuation state: startup_in_progress / externally_operational_candidate / launch_ready
 - pitch state: vc_pitch_ready_with_diligence_gates / vc_pitch_blocked / not_applicable

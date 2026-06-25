@@ -16,6 +16,7 @@ REQUIRED_FOR_FLOW = [
     "docs/STATE_RECONSTRUCTION.md",
     "docs/AGENTIC_COMPANY_MODEL.md",
     "docs/DELIVERY_ESTIMATION.md",
+    "docs/STARTUP_LIFECYCLE_DEVELOPMENT.md",
     "docs/COMPLEX_PRODUCT_PLAYBOOK.md",
     "docs/TOOL_BREEDING_GROUND.md",
     "docs/PRODUCT_AUTOMATION_GUIDE.md",
@@ -28,6 +29,7 @@ REQUIRED_FOR_FLOW = [
     "manifests/research_data_router.json",
     "manifests/development_strategy_router.json",
     "templates/COMPLEXITY_CLASSIFICATION.md",
+    "templates/STARTUP_LIFECYCLE.md",
     "templates/INSTRUCTION_CONTRACT.md",
     "templates/STATE_RECONSTRUCTION_REPORT.md",
     "templates/ARCHITECTURE_OVERVIEW.md",
@@ -52,6 +54,7 @@ REQUIRED_FOR_FLOW = [
     "product_projects/importer-source-readiness-copilot/AGENTS.md",
     "product_projects/importer-source-readiness-copilot/docs/PRODUCT_AUTOMATION_RUNBOOK.md",
     "product_projects/importer-source-readiness-copilot/docs/PRODUCT_STATUS.md",
+    "product_projects/importer-source-readiness-copilot/docs/STARTUP_LIFECYCLE.md",
     "product_projects/importer-source-readiness-copilot/docs/OPERATOR_GUIDE.md",
     "product_projects/importer-source-readiness-copilot/data/sample_source_cards.json",
     "product_projects/importer-source-readiness-copilot/data/country_requirements_matrix.json",
@@ -67,6 +70,7 @@ REQUIRED_FOR_FLOW = [
     "product_projects/importer-source-readiness-copilot/src/importer_source_readiness/investor_readiness.py",
     "product_projects/importer-source-readiness-copilot/src/importer_source_readiness/board_readiness.py",
     "product_projects/importer-source-readiness-copilot/src/importer_source_readiness/operator_report.py",
+    "product_projects/importer-source-readiness-copilot/src/importer_source_readiness/operator_screenshots.py",
     "product_projects/importer-source-readiness-copilot/scripts/run_readiness.py",
     "product_projects/importer-source-readiness-copilot/scripts/run_external_gates.py",
     "product_projects/importer-source-readiness-copilot/scripts/export_operator_dashboard.py",
@@ -79,12 +83,15 @@ REQUIRED_FOR_FLOW = [
     "product_projects/importer-source-readiness-copilot/tests/test_continuation.py",
     "product_projects/importer-source-readiness-copilot/tests/test_investor_readiness.py",
     "product_projects/importer-source-readiness-copilot/tests/test_board_go_live.py",
+    "product_projects/importer-source-readiness-copilot/tests/test_operator_screenshots.py",
     "product_projects/importer-source-readiness-copilot/system_review_graph/readiness_report.json",
     "product_projects/importer-source-readiness-copilot/system_review_graph/external_gate_report.json",
     "product_projects/importer-source-readiness-copilot/system_review_graph/continuation_plan.json",
     "product_projects/importer-source-readiness-copilot/system_review_graph/vc_pitch_readiness_report.json",
     "product_projects/importer-source-readiness-copilot/system_review_graph/board_go_live_readiness_report.json",
     "product_projects/importer-source-readiness-copilot/system_review_graph/operator_dashboard.html",
+    "product_projects/importer-source-readiness-copilot/system_review_graph/operator_screenshot_manifest.json",
+    "product_projects/importer-source-readiness-copilot/system_review_graph/operator_screenshots/operator-dashboard.png",
     "product_projects/importer-source-readiness-copilot/system_review_graph/blockers.jsonl",
     "product_projects/importer-source-readiness-copilot/investor/vc_pitch_deck.md",
     "product_projects/importer-source-readiness-copilot/investor/one_pager.md",
@@ -193,6 +200,10 @@ def main() -> int:
         if "board_go_live_readiness_report.json" not in generated_agents:
             print("AI Dev OS self-test: FAIL")
             print("generated AGENTS.md missing board go-live readiness rule")
+            return 1
+        if "STARTUP_LIFECYCLE.md" not in generated_agents:
+            print("AI Dev OS self-test: FAIL")
+            print("generated AGENTS.md missing startup lifecycle rule")
             return 1
 
     print("AI Dev OS self-test: PASS")

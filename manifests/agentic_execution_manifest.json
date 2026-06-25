@@ -34,7 +34,10 @@
       "system_review_graph/slash_command_specs.json",
       "system_review_graph/automation_runtime_report.json",
       "system_review_graph/scheduler_plan.json",
+      "product_projects/<product>/docs/STARTUP_LIFECYCLE.md",
       "product_projects/<product>/system_review_graph/board_go_live_readiness_report.json",
+      "product_projects/<product>/system_review_graph/operator_screenshot_manifest.json",
+      "product_projects/<product>/system_review_graph/operator_screenshots/*",
       "product_projects/<product>/board/board_go_live_brief.md",
       "handoffs/ci_fix_<check>.json"
     ]
@@ -482,6 +485,7 @@
     "Generated docs and graphs are bounded context, not runtime proof.",
     "Code-review graph contracts orient code review, but source files and tests remain required.",
     "Ruflo memory is coordination state, not a completion claim.",
+    "Operator screenshots are visual review aids for the operator experience, not substitutes for generated reports, tests, blocker ledgers, or approval gates.",
     "ready_with_external_gates requires system_review_graph/continuation_plan.json and cannot be reported as fully operational or launch ready while must_continue is true.",
     "VC pitch readiness requires system_review_graph/vc_pitch_readiness_report.json and cannot be used as legal, securities, revenue, PMF, launch, compliance, buyer, supplier, customs, or tariff proof.",
     "Board go-live readiness requires system_review_graph/board_go_live_readiness_report.json and cannot be used as public launch, production deployment, legal, financial, compliance, buyer, revenue, PMF, supplier, customs, tariff, or regulated proof without qualified human approval.",
