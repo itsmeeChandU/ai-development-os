@@ -20,8 +20,9 @@ Before meaningful work, read:
 6. `docs/WORK_PACKAGE.md`
 7. `docs/PRODUCT_AUTOMATION_RUNBOOK.md`
 8. `docs/PRODUCT_STATUS.md`
-9. `system_review_graph/README.md`
-10. `system_review_graph/STATE_RECONSTRUCTION_REPORT.md`
+9. `docs/OPERATOR_GUIDE.md`
+10. `system_review_graph/README.md`
+11. `system_review_graph/STATE_RECONSTRUCTION_REPORT.md`
 
 ## Operating Rules
 
@@ -41,6 +42,8 @@ Start with local checks:
 ```bash
 python3 -m unittest discover -s tests -p 'test_*.py'
 python3 scripts/run_readiness.py
+python3 scripts/run_external_gates.py
+python3 scripts/export_operator_dashboard.py
 python3 scripts/check_product.py
 ```
 

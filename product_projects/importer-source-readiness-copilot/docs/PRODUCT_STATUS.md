@@ -2,9 +2,12 @@
 
 ## Current State
 
-The first local product loop is complete. The product reads source cards,
-evaluates readiness gates, writes `system_review_graph/readiness_report.json`,
-writes `system_review_graph/blockers.jsonl`, and passes the local proof gate.
+The first local product loop is complete and the operator-gate layer is now
+implemented. The product reads source cards, evaluates readiness gates, writes
+`system_review_graph/readiness_report.json`, writes
+`system_review_graph/external_gate_report.json`, writes
+`system_review_graph/blockers.jsonl`, exports
+`system_review_graph/operator_dashboard.html`, and passes the local proof gate.
 
 ## Ready Now
 
@@ -12,6 +15,11 @@ writes `system_review_graph/blockers.jsonl`, and passes the local proof gate.
 - unsafe external counter detection
 - blocker ledger emission
 - deterministic readiness report
+- official-source registry
+- country requirements matrix
+- buyer/expert/contract/source-rights evidence packets
+- external-gate report
+- static operator dashboard
 - standalone product check
 - CI workflow for the proof gate
 
@@ -26,6 +34,7 @@ writes `system_review_graph/blockers.jsonl`, and passes the local proof gate.
 
 ## Next Valid Move
 
-Add current official-source refreshes and a country requirements matrix only
-after source rights, data freshness, and qualified compliance review are
-available.
+The product now tells operators what is stopping external use. Remaining work
+requires real evidence: dated buyer/operator feedback, written contracts,
+source-rights approval, repeatable official-source refresh proof, and qualified
+import/export or food compliance review.

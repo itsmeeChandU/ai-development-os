@@ -21,12 +21,23 @@ def main() -> int:
         PROJECT / "README.md",
         PROJECT / "AGENTS.md",
         PROJECT / "data" / "sample_source_cards.json",
+        PROJECT / "data" / "country_requirements_matrix.json",
+        PROJECT / "data" / "evidence_packets.json",
+        PROJECT / "data" / "official_source_registry.json",
         PROJECT / "src" / "importer_source_readiness" / "readiness.py",
+        PROJECT / "src" / "importer_source_readiness" / "external_gates.py",
+        PROJECT / "src" / "importer_source_readiness" / "operator_report.py",
         PROJECT / "tests" / "test_readiness.py",
+        PROJECT / "tests" / "test_external_gates.py",
         PROJECT / "scripts" / "run_readiness.py",
+        PROJECT / "scripts" / "run_external_gates.py",
+        PROJECT / "scripts" / "export_operator_dashboard.py",
         PROJECT / "scripts" / "check_product.py",
         PROJECT / "docs" / "PRODUCT_AUTOMATION_RUNBOOK.md",
         PROJECT / "docs" / "PRODUCT_STATUS.md",
+        PROJECT / "docs" / "OPERATOR_GUIDE.md",
+        PROJECT / "system_review_graph" / "external_gate_report.json",
+        PROJECT / "system_review_graph" / "operator_dashboard.html",
         PROJECT / "handoffs" / "product_completion_handoff.md",
     ]
     missing = [path.relative_to(ROOT) for path in required if not path.exists()]
@@ -39,6 +50,8 @@ def main() -> int:
     commands = [
         ["python3", "-m", "unittest", "discover", "-s", "tests", "-p", "test_*.py"],
         ["python3", "scripts/run_readiness.py"],
+        ["python3", "scripts/run_external_gates.py"],
+        ["python3", "scripts/export_operator_dashboard.py"],
         ["python3", "scripts/check_product.py"],
     ]
     for command in commands:
@@ -71,15 +84,23 @@ def main() -> int:
     report = json.loads(
         (PROJECT / "system_review_graph" / "readiness_report.json").read_text(encoding="utf-8")
     )
+    external = json.loads(
+        (PROJECT / "system_review_graph" / "external_gate_report.json").read_text(encoding="utf-8")
+    )
     if report.get("status") != "ready_with_external_gates" or report.get("blocker_count") != 9:
         print("Product project check: FAIL")
         print("unexpected product readiness report")
+        return 1
+    if external.get("status") != "ready_with_external_gates" or external.get("blocker_count", 0) < 10:
+        print("Product project check: FAIL")
+        print("unexpected external gate report")
         return 1
 
     print("Product project check: PASS")
     print(f"project={PROJECT.relative_to(ROOT)}")
     print(f"status={report['status']}")
     print(f"blocker_count={report['blocker_count']}")
+    print(f"external_blocker_count={external['blocker_count']}")
     return 0
 
 

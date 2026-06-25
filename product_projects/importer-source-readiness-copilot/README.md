@@ -30,6 +30,8 @@ buyer validation, and launch claims stay closed.
 ```bash
 python3 -m unittest discover -s tests -p 'test_*.py'
 python3 scripts/run_readiness.py
+python3 scripts/run_external_gates.py
+python3 scripts/export_operator_dashboard.py
 python3 scripts/check_product.py
 ```
 
@@ -37,7 +39,9 @@ The product CLI writes:
 
 ```text
 system_review_graph/readiness_report.json
+system_review_graph/external_gate_report.json
 system_review_graph/blockers.jsonl
+system_review_graph/operator_dashboard.html
 ```
 
 ## Expected State
@@ -58,12 +62,17 @@ blocked until real external evidence exists.
 - commercial/source contracts
 - current data freshness
 - official country/import/export requirements
+- qualified broker/expert review
+- source rights and refresh policy
+- public launch claims
 - paid actions
 - external sends
 - customs/tariff/import-export advice
 
 ## Next Valid Move
 
-Wire current official-source refreshes, add country requirement matrices, and
-collect qualified buyer/compliance review before any external, commercial, or
-public claim.
+Use `system_review_graph/operator_dashboard.html` as the operator surface.
+The product can now show exactly what is stopping external use. To open any
+external claim gate, attach dated evidence to `data/evidence_packets.json`,
+verify country rows in `data/country_requirements_matrix.json`, and rerun
+`python3 scripts/check_product.py`.

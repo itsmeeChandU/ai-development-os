@@ -1,0 +1,281 @@
+{
+  "blocker_count": 17,
+  "blockers": [
+    {
+      "evidence": "us-frozen-tuna-fillet-030487",
+      "gate": "closed",
+      "id": "us-frozen-tuna-fillet-030487:import_rules_status",
+      "issue": "qualified import-rules review is missing",
+      "module": "country_import_rules",
+      "next_valid_move": "Have a licensed customs broker or qualified compliance reviewer verify HTS classification, FDA seafood import obligations, restricted-party screening, and importer record obligations.",
+      "owner": "compliance",
+      "unsafe_to_bypass": true
+    },
+    {
+      "evidence": "us-frozen-tuna-fillet-030487",
+      "gate": "closed",
+      "id": "us-frozen-tuna-fillet-030487:export_rules_status",
+      "issue": "qualified export-rules review is missing",
+      "module": "country_export_rules",
+      "next_valid_move": "Have a licensed customs broker or qualified compliance reviewer verify HTS classification, FDA seafood import obligations, restricted-party screening, and importer record obligations.",
+      "owner": "compliance",
+      "unsafe_to_bypass": true
+    },
+    {
+      "evidence": "us-frozen-tuna-fillet-030487",
+      "gate": "closed",
+      "id": "us-frozen-tuna-fillet-030487:tariff_status",
+      "issue": "tariff or HS classification is not qualified",
+      "module": "tariff_classification",
+      "next_valid_move": "Have a licensed customs broker or qualified compliance reviewer verify HTS classification, FDA seafood import obligations, restricted-party screening, and importer record obligations.",
+      "owner": "compliance",
+      "unsafe_to_bypass": true
+    },
+    {
+      "evidence": "us-frozen-tuna-fillet-030487",
+      "gate": "closed",
+      "id": "us-frozen-tuna-fillet-030487:food_safety_status",
+      "issue": "food safety requirements are not qualified",
+      "module": "food_safety",
+      "next_valid_move": "Have a licensed customs broker or qualified compliance reviewer verify HTS classification, FDA seafood import obligations, restricted-party screening, and importer record obligations.",
+      "owner": "compliance",
+      "unsafe_to_bypass": true
+    },
+    {
+      "evidence": "us-frozen-tuna-fillet-030487",
+      "gate": "closed",
+      "id": "us-frozen-tuna-fillet-030487:restricted_party_status",
+      "issue": "restricted-party screening is not complete",
+      "module": "restricted_party_screening",
+      "next_valid_move": "Have a licensed customs broker or qualified compliance reviewer verify HTS classification, FDA seafood import obligations, restricted-party screening, and importer record obligations.",
+      "owner": "compliance",
+      "unsafe_to_bypass": true
+    },
+    {
+      "evidence": "us-frozen-tuna-fillet-030487",
+      "gate": "closed",
+      "id": "us-frozen-tuna-fillet-030487:broker_or_expert_review_status",
+      "issue": "broker or qualified expert review is missing",
+      "module": "expert_review",
+      "next_valid_move": "Have a licensed customs broker or qualified compliance reviewer verify HTS classification, FDA seafood import obligations, restricted-party screening, and importer record obligations.",
+      "owner": "compliance",
+      "unsafe_to_bypass": true
+    },
+    {
+      "evidence": "ca-importer-discovery-030487",
+      "gate": "closed",
+      "id": "ca-importer-discovery-030487:import_rules_status",
+      "issue": "qualified import-rules review is missing",
+      "module": "country_import_rules",
+      "next_valid_move": "Use CID only for importer-discovery orientation, then verify product requirements with qualified Canadian import/export and food compliance review.",
+      "owner": "compliance",
+      "unsafe_to_bypass": true
+    },
+    {
+      "evidence": "ca-importer-discovery-030487",
+      "gate": "closed",
+      "id": "ca-importer-discovery-030487:export_rules_status",
+      "issue": "qualified export-rules review is missing",
+      "module": "country_export_rules",
+      "next_valid_move": "Use CID only for importer-discovery orientation, then verify product requirements with qualified Canadian import/export and food compliance review.",
+      "owner": "compliance",
+      "unsafe_to_bypass": true
+    },
+    {
+      "evidence": "ca-importer-discovery-030487",
+      "gate": "closed",
+      "id": "ca-importer-discovery-030487:tariff_status",
+      "issue": "tariff or HS classification is not qualified",
+      "module": "tariff_classification",
+      "next_valid_move": "Use CID only for importer-discovery orientation, then verify product requirements with qualified Canadian import/export and food compliance review.",
+      "owner": "compliance",
+      "unsafe_to_bypass": true
+    },
+    {
+      "evidence": "ca-importer-discovery-030487",
+      "gate": "closed",
+      "id": "ca-importer-discovery-030487:food_safety_status",
+      "issue": "food safety requirements are not qualified",
+      "module": "food_safety",
+      "next_valid_move": "Use CID only for importer-discovery orientation, then verify product requirements with qualified Canadian import/export and food compliance review.",
+      "owner": "compliance",
+      "unsafe_to_bypass": true
+    },
+    {
+      "evidence": "ca-importer-discovery-030487",
+      "gate": "closed",
+      "id": "ca-importer-discovery-030487:restricted_party_status",
+      "issue": "restricted-party screening is not complete",
+      "module": "restricted_party_screening",
+      "next_valid_move": "Use CID only for importer-discovery orientation, then verify product requirements with qualified Canadian import/export and food compliance review.",
+      "owner": "compliance",
+      "unsafe_to_bypass": true
+    },
+    {
+      "evidence": "ca-importer-discovery-030487",
+      "gate": "closed",
+      "id": "ca-importer-discovery-030487:broker_or_expert_review_status",
+      "issue": "broker or qualified expert review is missing",
+      "module": "expert_review",
+      "next_valid_move": "Use CID only for importer-discovery orientation, then verify product requirements with qualified Canadian import/export and food compliance review.",
+      "owner": "compliance",
+      "unsafe_to_bypass": true
+    },
+    {
+      "evidence": "No dated buyer, importer, broker, or operator feedback attached.",
+      "gate": "closed",
+      "id": "buyer-validation:evidence-missing",
+      "issue": "buyer/operator validation is missing",
+      "module": "buyer_validation",
+      "next_valid_move": "Collect dated buyer or operator feedback, including no-fit/no-budget evidence, and attach it to the evidence packet.",
+      "owner": "product",
+      "unsafe_to_bypass": true
+    },
+    {
+      "evidence": "No qualified customs, food safety, or legal review attached.",
+      "gate": "closed",
+      "id": "qualified-compliance-review:evidence-missing",
+      "issue": "qualified compliance review is missing",
+      "module": "legal_compliance",
+      "next_valid_move": "Get qualified review for country matrix, HTS/tariff treatment, FDA seafood obligations, and claims language.",
+      "owner": "compliance",
+      "unsafe_to_bypass": true
+    },
+    {
+      "evidence": "No written source, data, supplier, broker, buyer, or commercial terms attached.",
+      "gate": "closed",
+      "id": "commercial-source-contract:evidence-missing",
+      "issue": "commercial/source contract is missing",
+      "module": "commercial_contract",
+      "next_valid_move": "Attach written terms for data/source rights, supplier/buyer contact use, liability boundary, and termination.",
+      "owner": "operations",
+      "unsafe_to_bypass": true
+    },
+    {
+      "evidence": "Official source registry exists, but no repeatable dated refresh job or source-rights review is attached.",
+      "gate": "closed",
+      "id": "source-rights-and-freshness:evidence-missing",
+      "issue": "repeatable data freshness and source rights are not proven",
+      "module": "data_freshness",
+      "next_valid_move": "Define source rights, refresh cadence, freshness SLA, and a no-write refresh proof before product claims.",
+      "owner": "data",
+      "unsafe_to_bypass": true
+    },
+    {
+      "evidence": "No public release, legal copy, compliance signoff, or support workflow attached.",
+      "gate": "closed",
+      "id": "launch-claims:evidence-missing",
+      "issue": "public or commercial launch claims are not allowed",
+      "module": "launch_readiness",
+      "next_valid_move": "Keep the product internal until buyer validation, contracts, compliance review, and operator support are proven.",
+      "owner": "operator",
+      "unsafe_to_bypass": true
+    }
+  ],
+  "country_matrix_rows": [
+    {
+      "claims_allowed": false,
+      "country": "US",
+      "gate_state": "closed",
+      "hs_code": "0304870000",
+      "id": "us-frozen-tuna-fillet-030487",
+      "official_source_count": 4,
+      "product_category": "frozen tuna fillets"
+    },
+    {
+      "claims_allowed": false,
+      "country": "CA",
+      "gate_state": "closed",
+      "hs_code": "0304870000",
+      "id": "ca-importer-discovery-030487",
+      "official_source_count": 1,
+      "product_category": "frozen tuna fillets"
+    }
+  ],
+  "evidence_gates": [
+    {
+      "gate_state": "closed",
+      "id": "buyer-validation",
+      "module": "buyer_validation",
+      "owner": "product",
+      "status": "missing"
+    },
+    {
+      "gate_state": "closed",
+      "id": "qualified-compliance-review",
+      "module": "legal_compliance",
+      "owner": "compliance",
+      "status": "missing"
+    },
+    {
+      "gate_state": "closed",
+      "id": "commercial-source-contract",
+      "module": "commercial_contract",
+      "owner": "operations",
+      "status": "missing"
+    },
+    {
+      "gate_state": "closed",
+      "id": "source-rights-and-freshness",
+      "module": "data_freshness",
+      "owner": "data",
+      "status": "needs_review"
+    },
+    {
+      "gate_state": "closed",
+      "id": "launch-claims",
+      "module": "launch_readiness",
+      "owner": "operator",
+      "status": "missing"
+    }
+  ],
+  "generated_at": "2026-06-25T00:00:00+00:00",
+  "next_valid_move": "Collect dated official-source refresh evidence, country matrix review, buyer feedback, contract terms, and qualified compliance review before external or public claims.",
+  "official_sources": [
+    {
+      "accessed_at": "2026-06-25",
+      "claim_boundary": "Reference source only; does not prove buyer validation, supplier fit, customs advice, or freshness of a specific product row.",
+      "id": "canada-cid",
+      "name": "Canadian Importers Database",
+      "url": "https://www.ised-isde.canada.ca/site/canadian-importers-database/en"
+    },
+    {
+      "accessed_at": "2026-06-25",
+      "claim_boundary": "Reference source only; classification and duty treatment require qualified review.",
+      "id": "usitc-hts",
+      "name": "USITC Harmonized Tariff Schedule",
+      "url": "https://hts.usitc.gov/"
+    },
+    {
+      "accessed_at": "2026-06-25",
+      "claim_boundary": "Reference source only; does not replace broker, customs, or legal review.",
+      "id": "cbp-basic-import-export",
+      "name": "U.S. Customs and Border Protection Basic Importing and Exporting",
+      "url": "https://www.cbp.gov/trade/basic-import-export"
+    },
+    {
+      "accessed_at": "2026-06-25",
+      "claim_boundary": "Reference source only; product-specific food safety compliance requires qualified review.",
+      "id": "fda-imported-seafood",
+      "name": "FDA Imported Seafood Safety Program",
+      "url": "https://www.fda.gov/food/importing-food-products-united-states/imported-seafood-safety-program"
+    },
+    {
+      "accessed_at": "2026-06-25",
+      "claim_boundary": "Reference source only; importer obligations and records require qualified review.",
+      "id": "fda-human-food-imports",
+      "name": "FDA Importing Human Foods",
+      "url": "https://www.fda.gov/industry/importing-fda-regulated-products/importing-human-foods"
+    }
+  ],
+  "proof_boundary": "This report proves the local product can route external gates. It does not prove legal, customs, tariff, supplier, buyer, logistics, or launch readiness.",
+  "status": "ready_with_external_gates",
+  "unsafe_gates": {
+    "customs_or_tariff_claims_made": 0,
+    "external_api_calls_run": 0,
+    "external_sends_run": 0,
+    "import_export_advice_claims_made": 0,
+    "paid_actions_run": 0,
+    "supplier_recommendation_claims_made": 0
+  }
+}

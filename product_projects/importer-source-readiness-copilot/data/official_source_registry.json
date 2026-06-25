@@ -1,0 +1,42 @@
+[
+  {
+    "id": "canada-cid",
+    "name": "Canadian Importers Database",
+    "url": "https://www.ised-isde.canada.ca/site/canadian-importers-database/en",
+    "accessed_at": "2026-06-25",
+    "evidence_role": "importer discovery orientation",
+    "claim_boundary": "Reference source only; does not prove buyer validation, supplier fit, customs advice, or freshness of a specific product row."
+  },
+  {
+    "id": "usitc-hts",
+    "name": "USITC Harmonized Tariff Schedule",
+    "url": "https://hts.usitc.gov/",
+    "accessed_at": "2026-06-25",
+    "evidence_role": "tariff classification lookup starting point",
+    "claim_boundary": "Reference source only; classification and duty treatment require qualified review."
+  },
+  {
+    "id": "cbp-basic-import-export",
+    "name": "U.S. Customs and Border Protection Basic Importing and Exporting",
+    "url": "https://www.cbp.gov/trade/basic-import-export",
+    "accessed_at": "2026-06-25",
+    "evidence_role": "import/export process orientation",
+    "claim_boundary": "Reference source only; does not replace broker, customs, or legal review."
+  },
+  {
+    "id": "fda-imported-seafood",
+    "name": "FDA Imported Seafood Safety Program",
+    "url": "https://www.fda.gov/food/importing-food-products-united-states/imported-seafood-safety-program",
+    "accessed_at": "2026-06-25",
+    "evidence_role": "seafood import safety orientation",
+    "claim_boundary": "Reference source only; product-specific food safety compliance requires qualified review."
+  },
+  {
+    "id": "fda-human-food-imports",
+    "name": "FDA Importing Human Foods",
+    "url": "https://www.fda.gov/industry/importing-fda-regulated-products/importing-human-foods",
+    "accessed_at": "2026-06-25",
+    "evidence_role": "FDA-regulated food import orientation",
+    "claim_boundary": "Reference source only; importer obligations and records require qualified review."
+  }
+]

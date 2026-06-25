@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Importer Source Readiness Copilot</title>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; margin: 32px; color: #172026; }
+    main { max-width: 1180px; margin: 0 auto; }
+    h1, h2 { margin-bottom: 8px; }
+    .grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin: 20px 0; }
+    .metric { border: 1px solid #ccd5df; border-radius: 6px; padding: 14px; background: #f7f9fb; }
+    .label { color: #52616f; font-size: 13px; }
+    .value { font-size: 22px; font-weight: 700; margin-top: 6px; }
+    table { width: 100%; border-collapse: collapse; margin: 14px 0 28px; }
+    th, td { text-align: left; border-bottom: 1px solid #dce3ea; padding: 9px; vertical-align: top; }
+    th { background: #eef3f7; }
+    .closed { color: #9f2f2f; font-weight: 700; }
+    .note { background: #fff7df; border: 1px solid #ead28a; padding: 12px; border-radius: 6px; }
+  </style>
+</head>
+<body>
+<main>
+  <h1>Importer Source Readiness Copilot</h1>
+  <p class="note">Local product logic is complete. External claims remain closed until the listed evidence gates are satisfied by dated official sources, contracts, buyers, and qualified review.</p>
+  <section class="grid">
+    <div class="metric"><div class="label">Readiness status</div><div class="value">ready_with_external_gates</div></div>
+    <div class="metric"><div class="label">External gate status</div><div class="value">ready_with_external_gates</div></div>
+    <div class="metric"><div class="label">Source rows</div><div class="value">2</div></div>
+    <div class="metric"><div class="label">Total blockers</div><div class="value">26</div></div>
+  </section>
+  <h2>Readiness Blockers</h2>
+  <table>
+    <thead><tr><th>ID</th><th>Module</th><th>Owner</th><th>Issue</th><th>Next Valid Move</th></tr></thead>
+    <tbody><tr><td>frozen-tuna-fillet-readiness:freshness-not-proven</td><td>data_freshness</td><td>data</td><td>data freshness is not proven for product claims</td><td>Run a dated refresh or mark the row as fixture-only.</td></tr>
+<tr><td>frozen-tuna-fillet-readiness:buyer-validation-missing</td><td>buyer_validation</td><td>product</td><td>buyer validation is missing</td><td>Collect dated buyer feedback or no-fit evidence before commercial claims.</td></tr>
+<tr><td>frozen-tuna-fillet-readiness:legal-review-missing</td><td>legal_compliance</td><td>compliance</td><td>legal/compliance review is missing</td><td>Get qualified review before legal, customs, import/export, or public claims.</td></tr>
+<tr><td>frozen-tuna-fillet-readiness:contract-missing</td><td>commercial_contract</td><td>operations</td><td>commercial/source contract is missing</td><td>Attach written source, supplier, buyer, or commercial terms before readiness claims.</td></tr>
+<tr><td>country-requirement-template:official-source-missing</td><td>official_source_review</td><td>research</td><td>official source URL is missing or the row is fixture-only</td><td>Attach a current official source URL and access date before source claims.</td></tr>
+<tr><td>country-requirement-template:freshness-not-proven</td><td>data_freshness</td><td>data</td><td>data freshness is not proven for product claims</td><td>Run a dated refresh or mark the row as fixture-only.</td></tr>
+<tr><td>country-requirement-template:buyer-validation-missing</td><td>buyer_validation</td><td>product</td><td>buyer validation is missing</td><td>Collect dated buyer feedback or no-fit evidence before commercial claims.</td></tr>
+<tr><td>country-requirement-template:legal-review-missing</td><td>legal_compliance</td><td>compliance</td><td>legal/compliance review is missing</td><td>Get qualified review before legal, customs, import/export, or public claims.</td></tr>
+<tr><td>country-requirement-template:contract-missing</td><td>commercial_contract</td><td>operations</td><td>commercial/source contract is missing</td><td>Attach written source, supplier, buyer, or commercial terms before readiness claims.</td></tr></tbody>
+  </table>
+  <h2>External Gate Blockers</h2>
+  <table>
+    <thead><tr><th>ID</th><th>Module</th><th>Owner</th><th>Issue</th><th>Next Valid Move</th></tr></thead>
+    <tbody><tr><td>us-frozen-tuna-fillet-030487:import_rules_status</td><td>country_import_rules</td><td>compliance</td><td>qualified import-rules review is missing</td><td>Have a licensed customs broker or qualified compliance reviewer verify HTS classification, FDA seafood import obligations, restricted-party screening, and importer record obligations.</td></tr>
+<tr><td>us-frozen-tuna-fillet-030487:export_rules_status</td><td>country_export_rules</td><td>compliance</td><td>qualified export-rules review is missing</td><td>Have a licensed customs broker or qualified compliance reviewer verify HTS classification, FDA seafood import obligations, restricted-party screening, and importer record obligations.</td></tr>
+<tr><td>us-frozen-tuna-fillet-030487:tariff_status</td><td>tariff_classification</td><td>compliance</td><td>tariff or HS classification is not qualified</td><td>Have a licensed customs broker or qualified compliance reviewer verify HTS classification, FDA seafood import obligations, restricted-party screening, and importer record obligations.</td></tr>
+<tr><td>us-frozen-tuna-fillet-030487:food_safety_status</td><td>food_safety</td><td>compliance</td><td>food safety requirements are not qualified</td><td>Have a licensed customs broker or qualified compliance reviewer verify HTS classification, FDA seafood import obligations, restricted-party screening, and importer record obligations.</td></tr>
+<tr><td>us-frozen-tuna-fillet-030487:restricted_party_status</td><td>restricted_party_screening</td><td>compliance</td><td>restricted-party screening is not complete</td><td>Have a licensed customs broker or qualified compliance reviewer verify HTS classification, FDA seafood import obligations, restricted-party screening, and importer record obligations.</td></tr>
+<tr><td>us-frozen-tuna-fillet-030487:broker_or_expert_review_status</td><td>expert_review</td><td>compliance</td><td>broker or qualified expert review is missing</td><td>Have a licensed customs broker or qualified compliance reviewer verify HTS classification, FDA seafood import obligations, restricted-party screening, and importer record obligations.</td></tr>
+<tr><td>ca-importer-discovery-030487:import_rules_status</td><td>country_import_rules</td><td>compliance</td><td>qualified import-rules review is missing</td><td>Use CID only for importer-discovery orientation, then verify product requirements with qualified Canadian import/export and food compliance review.</td></tr>
+<tr><td>ca-importer-discovery-030487:export_rules_status</td><td>country_export_rules</td><td>compliance</td><td>qualified export-rules review is missing</td><td>Use CID only for importer-discovery orientation, then verify product requirements with qualified Canadian import/export and food compliance review.</td></tr>
+<tr><td>ca-importer-discovery-030487:tariff_status</td><td>tariff_classification</td><td>compliance</td><td>tariff or HS classification is not qualified</td><td>Use CID only for importer-discovery orientation, then verify product requirements with qualified Canadian import/export and food compliance review.</td></tr>
+<tr><td>ca-importer-discovery-030487:food_safety_status</td><td>food_safety</td><td>compliance</td><td>food safety requirements are not qualified</td><td>Use CID only for importer-discovery orientation, then verify product requirements with qualified Canadian import/export and food compliance review.</td></tr>
+<tr><td>ca-importer-discovery-030487:restricted_party_status</td><td>restricted_party_screening</td><td>compliance</td><td>restricted-party screening is not complete</td><td>Use CID only for importer-discovery orientation, then verify product requirements with qualified Canadian import/export and food compliance review.</td></tr>
+<tr><td>ca-importer-discovery-030487:broker_or_expert_review_status</td><td>expert_review</td><td>compliance</td><td>broker or qualified expert review is missing</td><td>Use CID only for importer-discovery orientation, then verify product requirements with qualified Canadian import/export and food compliance review.</td></tr>
+<tr><td>buyer-validation:evidence-missing</td><td>buyer_validation</td><td>product</td><td>buyer/operator validation is missing</td><td>Collect dated buyer or operator feedback, including no-fit/no-budget evidence, and attach it to the evidence packet.</td></tr>
+<tr><td>qualified-compliance-review:evidence-missing</td><td>legal_compliance</td><td>compliance</td><td>qualified compliance review is missing</td><td>Get qualified review for country matrix, HTS/tariff treatment, FDA seafood obligations, and claims language.</td></tr>
+<tr><td>commercial-source-contract:evidence-missing</td><td>commercial_contract</td><td>operations</td><td>commercial/source contract is missing</td><td>Attach written terms for data/source rights, supplier/buyer contact use, liability boundary, and termination.</td></tr>
+<tr><td>source-rights-and-freshness:evidence-missing</td><td>data_freshness</td><td>data</td><td>repeatable data freshness and source rights are not proven</td><td>Define source rights, refresh cadence, freshness SLA, and a no-write refresh proof before product claims.</td></tr>
+<tr><td>launch-claims:evidence-missing</td><td>launch_readiness</td><td>operator</td><td>public or commercial launch claims are not allowed</td><td>Keep the product internal until buyer validation, contracts, compliance review, and operator support are proven.</td></tr></tbody>
+  </table>
+  <h2>Official Source Registry</h2>
+  <ul><li><a href='https://www.ised-isde.canada.ca/site/canadian-importers-database/en'>Canadian Importers Database</a> - accessed 2026-06-25; Reference source only; does not prove buyer validation, supplier fit, customs advice, or freshness of a specific product row.</li>
+<li><a href='https://hts.usitc.gov/'>USITC Harmonized Tariff Schedule</a> - accessed 2026-06-25; Reference source only; classification and duty treatment require qualified review.</li>
+<li><a href='https://www.cbp.gov/trade/basic-import-export'>U.S. Customs and Border Protection Basic Importing and Exporting</a> - accessed 2026-06-25; Reference source only; does not replace broker, customs, or legal review.</li>
+<li><a href='https://www.fda.gov/food/importing-food-products-united-states/imported-seafood-safety-program'>FDA Imported Seafood Safety Program</a> - accessed 2026-06-25; Reference source only; product-specific food safety compliance requires qualified review.</li>
+<li><a href='https://www.fda.gov/industry/importing-fda-regulated-products/importing-human-foods'>FDA Importing Human Foods</a> - accessed 2026-06-25; Reference source only; importer obligations and records require qualified review.</li></ul>
+  <h2>Unsafe Gates</h2>
+  <p class="closed">All unsafe gates are closed: no external sends, paid actions, customs/tariff claims, import/export advice claims, or supplier recommendations were made.</p>
+</main>
+</body>
+</html>

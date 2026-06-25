@@ -42,6 +42,8 @@ external reviewers.
 
 - tests pass
 - product CLI writes report
+- external-gate report writes country, buyer, expert, contract, data, and launch blockers
+- static operator dashboard renders current stopping surface
 - report status is `ready_with_external_gates`
 - unsafe counters remain zero
 - standalone GitHub repo status is either pushed or blocked with next valid move

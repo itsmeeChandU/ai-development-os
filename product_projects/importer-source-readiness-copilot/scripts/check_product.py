@@ -52,10 +52,23 @@ def _validate_blockers(path: Path) -> list[str]:
     return errors
 
 
+def _validate_blocker_rows(rows: list[dict[str, Any]], label: str) -> list[str]:
+    errors: list[str] = []
+    for index, row in enumerate(rows, start=1):
+        missing = sorted(REQUIRED_BLOCKER_FIELDS - set(row))
+        if missing:
+            errors.append(f"{label}:{index}: missing {', '.join(missing)}")
+        if row.get("gate") not in VALID_GATES:
+            errors.append(f"{label}:{index}: invalid gate {row.get('gate')!r}")
+    return errors
+
+
 def main() -> int:
     commands = [
         [sys.executable, "-m", "unittest", "discover", "-s", "tests", "-p", "test_*.py"],
         [sys.executable, "scripts/run_readiness.py"],
+        [sys.executable, "scripts/run_external_gates.py"],
+        [sys.executable, "scripts/export_operator_dashboard.py"],
     ]
     for command in commands:
         result = _run(command)
@@ -68,6 +81,7 @@ def main() -> int:
 
     report_path = ROOT / "system_review_graph" / "readiness_report.json"
     report = _load_json(report_path)
+    external = _load_json(ROOT / "system_review_graph" / "external_gate_report.json")
     expected = {
         "status": "ready_with_external_gates",
         "row_count": 2,
@@ -79,7 +93,14 @@ def main() -> int:
         for key, value in expected.items()
         if report.get(key) != value
     ]
+    if external.get("status") != "ready_with_external_gates":
+        failures.append(f"external gate status expected ready_with_external_gates, got {external.get('status')!r}")
+    if external.get("blocker_count", 0) < 10:
+        failures.append("external gate report should include country, buyer, expert, contract, data, and launch blockers")
+    if not (ROOT / "system_review_graph" / "operator_dashboard.html").exists():
+        failures.append("operator dashboard was not generated")
     failures.extend(_validate_blockers(ROOT / "system_review_graph" / "blockers.jsonl"))
+    failures.extend(_validate_blocker_rows(external.get("blockers", []), "external_gate_report.blockers"))
 
     if failures:
         print("Product check: FAIL")
@@ -90,6 +111,7 @@ def main() -> int:
     print("Product check: PASS")
     print(f"status={report['status']}")
     print(f"blocker_count={report['blocker_count']}")
+    print(f"external_blocker_count={external['blocker_count']}")
     print("unsafe_gates=closed")
     return 0
 

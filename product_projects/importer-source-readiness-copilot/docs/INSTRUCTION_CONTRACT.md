@@ -12,6 +12,8 @@ readiness from fixtures and keeps all external gates closed.
 | Intelligence Hub can supply a source-proof import/export idea | proven | `built/importer_export_source_proof_packet/packet.py` in Intelligence Hub |
 | The product can run without external data | proven | `data/sample_source_cards.json` |
 | The product can produce blocker rows | proven by test target | `src/importer_source_readiness/readiness.py` |
+| The product can expose what is stopping external use | proven by test target | `src/importer_source_readiness/external_gates.py` |
+| The product can render an operator surface | proven by test target | `system_review_graph/operator_dashboard.html` |
 
 ## Constraints
 
@@ -24,8 +26,8 @@ readiness from fixtures and keeps all external gates closed.
 
 ## Non-Goals
 
-- production web UI
-- real importer lookup refresh
+- live production web service
+- live importer lookup refresh
 - contract signing workflow
 - qualified legal/compliance review
 - buyer discovery automation
@@ -35,6 +37,8 @@ readiness from fixtures and keeps all external gates closed.
 - unit tests
 - CLI smoke run
 - generated readiness report
+- generated external-gate report
+- static operator dashboard
 - blocker rows with `next_valid_move`
 
 ## Scope
@@ -44,7 +48,12 @@ Allowed files:
 - `src/importer_source_readiness/**`
 - `tests/**`
 - `scripts/run_readiness.py`
+- `scripts/run_external_gates.py`
+- `scripts/export_operator_dashboard.py`
 - `data/sample_source_cards.json`
+- `data/country_requirements_matrix.json`
+- `data/evidence_packets.json`
+- `data/official_source_registry.json`
 - `docs/**`
 - `system_review_graph/**`
 - `handoffs/**`
@@ -73,4 +82,7 @@ Run:
 ```bash
 python3 -m unittest discover -s tests -p 'test_*.py'
 python3 scripts/run_readiness.py
+python3 scripts/run_external_gates.py
+python3 scripts/export_operator_dashboard.py
+python3 scripts/check_product.py
 ```

@@ -17,6 +17,8 @@ This project uses an Intelligence Hub import/export source-proof idea to build:
 - local product implementation
 - unit tests
 - blocked-safe readiness report
+- external-gate report
+- static operator dashboard
 - blocker ledger validation
 - completion handoff
 
