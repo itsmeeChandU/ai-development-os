@@ -157,11 +157,62 @@ def _render_screenshot_gallery(manifest: dict[str, Any] | None) -> str:
 """
 
 
+def _customer_packet_rows(customer_workflow: dict[str, Any] | None) -> str:
+    if not customer_workflow:
+        return "<tr><td colspan='6'>No customer source-packet workflow generated.</td></tr>"
+    packets = customer_workflow.get("packets", [])
+    if not packets:
+        return "<tr><td colspan='6'>No customer source packets found.</td></tr>"
+    rows = []
+    for packet in packets:
+        rows.append(
+            "<tr>"
+            f"<td><a href='/source-packets/{escape(str(packet.get('packet_id')))}'>{escape(str(packet.get('packet_name')))}</a></td>"
+            f"<td>{escape(str(packet.get('product_name')))}</td>"
+            f"<td>{escape(str(packet.get('customer_visible_status')))}</td>"
+            f"<td>{escape(str(packet.get('evidence_count')))}</td>"
+            f"<td>{escape(str(packet.get('blocker_count')))}</td>"
+            f"<td>{escape(str(packet.get('next_valid_move')))}</td>"
+            "</tr>"
+        )
+    return "\n".join(rows)
+
+
+def _render_customer_workflow(customer_workflow: dict[str, Any] | None) -> str:
+    status = "missing customer workflow"
+    count = 0
+    boundary = "Customer source-packet workflow has not been generated."
+    if customer_workflow:
+        status = _display_value(customer_workflow.get("display_status") or customer_workflow.get("status") or status)
+        count = int(customer_workflow.get("packet_count") or 0)
+        boundary = str(customer_workflow.get("proof_boundary") or boundary)
+    return f"""
+  <section class="customer-workflow" aria-labelledby="customer-workflow-title">
+    <div class="section-heading">
+      <div>
+        <h2 id="customer-workflow-title">Customer Source Packet Workflow</h2>
+        <p>{escape(boundary)}</p>
+      </div>
+      <div class="workflow-summary">
+        <span>{escape(status)}</span>
+        <strong>{count}</strong>
+        <em><a href="/source-packets/new">new packet</a></em>
+      </div>
+    </div>
+    <table>
+      <thead><tr><th>Packet</th><th>Product</th><th>Status</th><th>Evidence</th><th>Blockers</th><th>Next Valid Move</th></tr></thead>
+      <tbody>{_customer_packet_rows(customer_workflow)}</tbody>
+    </table>
+  </section>
+"""
+
+
 def render_dashboard(
     readiness: dict[str, Any],
     external: dict[str, Any],
     screenshot_manifest: dict[str, Any] | None = None,
     operator_workflow: dict[str, Any] | None = None,
+    customer_workflow: dict[str, Any] | None = None,
 ) -> str:
     readiness_blockers = readiness.get("blockers", [])
     external_blockers = external.get("blockers", [])
@@ -239,6 +290,7 @@ def render_dashboard(
     <div class="metric"><div class="label">Total blockers</div><div class="value">{total_blockers}</div></div>
   </section>
 {_render_operator_workflow(operator_workflow)}
+{_render_customer_workflow(customer_workflow)}
 {_render_screenshot_gallery(screenshot_manifest)}
   <h2>Readiness Blockers</h2>
   <table>
@@ -266,10 +318,11 @@ def write_dashboard(
     path: Path,
     screenshot_manifest: dict[str, Any] | None = None,
     operator_workflow: dict[str, Any] | None = None,
+    customer_workflow: dict[str, Any] | None = None,
 ) -> Path:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(
-        render_dashboard(readiness, external, screenshot_manifest, operator_workflow),
+        render_dashboard(readiness, external, screenshot_manifest, operator_workflow, customer_workflow),
         encoding="utf-8",
     )
     return path

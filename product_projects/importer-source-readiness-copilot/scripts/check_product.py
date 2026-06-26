@@ -72,7 +72,9 @@ def main() -> int:
         [sys.executable, "scripts/build_vc_pitch_packet.py"],
         [sys.executable, "scripts/build_board_go_live_packet.py"],
         [sys.executable, "scripts/run_operator_workflow.py"],
+        [sys.executable, "scripts/run_customer_workflow.py"],
         [sys.executable, "scripts/export_operator_dashboard.py"],
+        [sys.executable, "scripts/audit_external_package.py", "--root", "."],
     ]
     for command in commands:
         result = _run(command)
@@ -90,6 +92,8 @@ def main() -> int:
     vc_pitch = _load_json(ROOT / "system_review_graph" / "vc_pitch_readiness_report.json")
     board = _load_json(ROOT / "system_review_graph" / "board_go_live_readiness_report.json")
     workflow = _load_json(ROOT / "system_review_graph" / "operator_workflow_report.json")
+    customer = _load_json(ROOT / "system_review_graph" / "customer_readiness_report.json")
+    evidence_ledger = _load_json(ROOT / "system_review_graph" / "evidence_ledger.json")
     screenshot_manifest_path = ROOT / "system_review_graph" / "operator_screenshot_manifest.json"
     screenshot_manifest = _load_json(screenshot_manifest_path) if screenshot_manifest_path.exists() else {}
     expected = {
@@ -117,13 +121,35 @@ def main() -> int:
             failures.append("operator dashboard should include the operator work queue")
         if "Canada Tools" not in dashboard_html:
             failures.append("operator dashboard should link Canadian tool references")
+        if "Customer Source Packet Workflow" not in dashboard_html:
+            failures.append("operator dashboard should include the customer source-packet workflow")
+        if "/source-packets/packet-frozen-tuna-canada-001" not in dashboard_html:
+            failures.append("operator dashboard should link the customer source-packet route")
     for path in (
         "scripts/serve_operator_app.py",
         "src/importer_source_readiness/operator_app.py",
+        "src/importer_source_readiness/source_packet_workflow.py",
         "tests/test_operator_app.py",
+        "tests/test_source_packet_workflow.py",
+        "tests/test_external_package_audit.py",
+        "scripts/run_customer_workflow.py",
+        "scripts/audit_external_package.py",
+        "data/customer_source_packets.json",
+        "data/evidence_ledger.json",
+        "CUSTOMER_SOURCE_PACKET_SPEC.md",
+        "SOURCE_OF_TRUTH.md",
+        "RUN_RESULTS.md",
+        "REDACTION_REPORT.md",
+        "REVIEW_USE_TERMS.md",
+        "OFFLINE_REPRODUCTION.md",
+        "PACKAGE_AUDIT.md",
+        "system_review_graph/customer_readiness_report.json",
+        "system_review_graph/customer_readiness_report.md",
+        "system_review_graph/customer_source_packets.json",
+        "system_review_graph/evidence_ledger.json",
     ):
         if not (ROOT / path).exists():
-            failures.append(f"missing local operator app file: {path}")
+            failures.append(f"missing required product file: {path}")
     if not screenshot_manifest_path.exists():
         failures.append("operator screenshot manifest was not generated")
     if screenshot_manifest.get("status") != "screenshots_ready":
@@ -196,6 +222,28 @@ def main() -> int:
     for claim in ("public_launch_ready", "customs_or_tariff_advice_ready", "supplier_recommendation_ready"):
         if claim not in workflow_closed_claims:
             failures.append(f"operator workflow must keep {claim} closed")
+    if customer.get("status") != "customer_workflow_ready_internal":
+        failures.append(f"customer workflow expected internal ready, got {customer.get('status')!r}")
+    if customer.get("display_status") != "Internal operator ready - external claims blocked":
+        failures.append(f"customer workflow display status is unsafe or unexpected: {customer.get('display_status')!r}")
+    if customer.get("packet_count", 0) < 1:
+        failures.append("customer workflow should include at least one source packet")
+    if customer.get("blocker_count", 0) < 1:
+        failures.append("customer workflow must keep external-claim blockers visible")
+    customer_closed_claims = set(customer.get("blocked_claims", []))
+    for claim in (
+        "tariff_confirmed",
+        "cfia_compliant",
+        "supplier_recommended",
+        "buyer_validated",
+        "ready_to_import",
+    ):
+        if claim not in customer_closed_claims:
+            failures.append(f"customer workflow must keep {claim} blocked")
+    if evidence_ledger.get("status") != "evidence_ledger_ready_internal":
+        failures.append(f"evidence ledger expected internal ready, got {evidence_ledger.get('status')!r}")
+    if evidence_ledger.get("evidence_count", 0) < 3:
+        failures.append("evidence ledger should include customer, CID, and official Canadian reference evidence")
     failures.extend(_validate_blockers(ROOT / "system_review_graph" / "blockers.jsonl"))
     failures.extend(_validate_blocker_rows(external.get("blockers", []), "external_gate_report.blockers"))
 
@@ -215,6 +263,10 @@ def main() -> int:
     print(f"board_go_live_status={board['status']}")
     print(f"operator_workflow_status={workflow['status']}")
     print(f"operator_work_queue_count={workflow['work_queue_count']}")
+    print(f"customer_workflow_status={customer['status']}")
+    print(f"customer_packet_count={customer['packet_count']}")
+    print(f"customer_blocker_count={customer['blocker_count']}")
+    print(f"evidence_ledger_status={evidence_ledger['status']}")
     print("unsafe_gates=closed")
     return 0
 

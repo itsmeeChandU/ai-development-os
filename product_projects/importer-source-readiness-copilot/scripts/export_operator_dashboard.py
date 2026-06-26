@@ -13,6 +13,7 @@ if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
 from importer_source_readiness import (
+    build_customer_workflow,
     build_external_gate_report,
     build_operator_workflow,
     build_screenshot_manifest,
@@ -25,6 +26,7 @@ from importer_source_readiness import (
     write_report,
     write_screenshot_manifest,
 )
+from importer_source_readiness.source_packet_workflow import load_json_list, write_json as write_source_json
 
 
 def _read(path: Path) -> dict:
@@ -74,6 +76,24 @@ def main() -> int:
         screenshot_dir=ROOT / "system_review_graph" / "operator_screenshots",
         generated_at="2026-06-25T00:00:00+00:00",
     )
+    customer_workflow = build_customer_workflow(
+        source_packets=load_json_list(ROOT / "data" / "customer_source_packets.json"),
+        evidence_items=load_json_list(ROOT / "data" / "evidence_ledger.json"),
+        official_sources=load_json(ROOT / "data" / "official_source_registry.json"),
+        generated_at="2026-06-25T00:00:00+00:00",
+    )
+    write_source_json(
+        customer_workflow,
+        ROOT / "system_review_graph" / "customer_readiness_report.json",
+    )
+    write_source_json(
+        customer_workflow["packets"],
+        ROOT / "system_review_graph" / "customer_source_packets.json",
+    )
+    write_source_json(
+        customer_workflow["evidence_ledger"],
+        ROOT / "system_review_graph" / "evidence_ledger.json",
+    )
     manifest_path = write_screenshot_manifest(
         screenshots,
         ROOT / "system_review_graph" / "operator_screenshot_manifest.json",
@@ -84,6 +104,7 @@ def main() -> int:
         ROOT / "system_review_graph" / "operator_dashboard.html",
         screenshot_manifest=screenshots,
         operator_workflow=workflow,
+        customer_workflow=customer_workflow,
     )
     print(
         json.dumps(
@@ -91,6 +112,7 @@ def main() -> int:
                 "out": str(out),
                 "screenshot_manifest": str(manifest_path),
                 "screenshot_count": screenshots["screenshot_count"],
+                "customer_packet_count": customer_workflow["packet_count"],
                 "total_blockers": readiness["blocker_count"] + external["blocker_count"],
             }
         )

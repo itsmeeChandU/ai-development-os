@@ -8,10 +8,13 @@ from .operator_workflow import build_operator_workflow, write_operator_workflow
 from .operator_report import render_dashboard, write_dashboard
 from .operator_screenshots import build_screenshot_manifest, write_screenshot_manifest
 from .readiness import evaluate_cards, load_cards, write_report
+from .source_packet_workflow import build_customer_workflow, build_evidence_ledger
 
 __all__ = [
     "build_continuation_plan",
     "build_board_go_live_readiness",
+    "build_customer_workflow",
+    "build_evidence_ledger",
     "build_external_gate_report",
     "build_operator_workflow",
     "build_screenshot_manifest",

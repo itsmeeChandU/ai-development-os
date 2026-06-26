@@ -6,7 +6,8 @@ import threading
 import unittest
 from pathlib import Path
 from urllib.error import HTTPError
-from urllib.request import urlopen
+from urllib.parse import urlencode
+from urllib.request import HTTPRedirectHandler, Request, build_opener, urlopen
 
 ROOT = Path(__file__).resolve().parent.parent
 SRC = ROOT / "src"
@@ -45,6 +46,8 @@ class OperatorAppTests(unittest.TestCase):
 
         self.assertEqual(payload["surface"], "local_operator_application")
         self.assertEqual(payload["operator_status"], "operator_workflow_ready_internal")
+        self.assertEqual(payload["customer_workflow_status"], "customer_workflow_ready_internal")
+        self.assertGreaterEqual(payload["customer_packet_count"], 1)
         self.assertFalse("public_launch_claim" in payload["allowed_use"])
 
     def test_api_operator_workflow_returns_queue(self) -> None:
@@ -59,6 +62,85 @@ class OperatorAppTests(unittest.TestCase):
             urlopen(f"{self.base_url}/../../pyproject.toml", timeout=5)
 
         self.assertEqual(ctx.exception.code, 404)
+
+    def test_route_specific_artifact_roots_block_traversal(self) -> None:
+        blocked_paths = [
+            "/system_review_graph/../README.md",
+            "/system_review_graph/%2e%2e/README.md",
+            "/operator_screenshots/../readiness_report.json",
+            "/operator_screenshots/%2e%2e/readiness_report.json",
+        ]
+        for path in blocked_paths:
+            with self.subTest(path=path):
+                with self.assertRaises(HTTPError) as ctx:
+                    urlopen(f"{self.base_url}{path}", timeout=5)
+                self.assertIn(ctx.exception.code, {403, 404})
+
+    def test_customer_source_packet_routes_render_safe_report(self) -> None:
+        with urlopen(f"{self.base_url}/source-packets", timeout=5) as response:
+            listing = response.read().decode("utf-8")
+        self.assertEqual(response.status, 200)
+        self.assertIn("Customer Source Packet", listing)
+        self.assertIn("Internal operator ready - external claims blocked", listing)
+
+        packet_url = f"{self.base_url}/source-packets/packet-frozen-tuna-canada-001/readiness-report"
+        with urlopen(packet_url, timeout=5) as response:
+            report = response.read().decode("utf-8")
+        self.assertEqual(response.status, 200)
+        self.assertIn("Readiness Report", report)
+        self.assertIn("tariff_confirmed", report)
+        self.assertNotIn("safe_to_import", report)
+
+    def test_customer_source_packet_post_creates_local_readiness_report(self) -> None:
+        generated_paths = [
+            ROOT / "system_review_graph" / "customer_source_packets.json",
+            ROOT / "system_review_graph" / "evidence_ledger.json",
+            ROOT / "system_review_graph" / "customer_readiness_report.json",
+            ROOT / "system_review_graph" / "customer_readiness_report.md",
+        ]
+        backups = {
+            path: path.read_text(encoding="utf-8") if path.exists() else None
+            for path in generated_paths
+        }
+        body = urlencode(
+            {
+                "packet_name": "Local test packet",
+                "product_name": "Local test product",
+                "product_category": "food_import",
+                "origin_country": "Mexico",
+                "destination_country": "Canada",
+                "supplier_name": "Local Supplier",
+                "supplier_country": "Mexico",
+                "source_url": "https://example.com/source",
+                "intended_use": "Local source readiness review",
+            }
+        ).encode("utf-8")
+        request = Request(
+            f"{self.base_url}/source-packets",
+            data=body,
+            method="POST",
+            headers={"Content-Type": "application/x-www-form-urlencoded"},
+        )
+
+        class NoRedirect(HTTPRedirectHandler):
+            def redirect_request(self, req, fp, code, msg, headers, newurl):  # type: ignore[no-untyped-def]
+                return None
+
+        try:
+            opener = build_opener(NoRedirect)
+            with self.assertRaises(HTTPError) as ctx:
+                opener.open(request, timeout=5)
+            self.assertEqual(ctx.exception.code, 303)
+            self.assertIn(
+                "/source-packets/packet-local-test-product/readiness-report",
+                ctx.exception.headers["Location"],
+            )
+        finally:
+            for path, content in backups.items():
+                if content is None:
+                    path.unlink(missing_ok=True)
+                else:
+                    path.write_text(content, encoding="utf-8")
 
 
 if __name__ == "__main__":
