@@ -168,7 +168,7 @@
     "blockers": [
       {
         "claim_blocked": "Source Freshness",
-        "created_at": "2026-06-26T13:16:04+00:00",
+        "created_at": "2026-06-26T13:41:30+00:00",
         "evidence": "source packet packet-frozen-tuna-canada-001",
         "evidence_required": "Fresh official-source refresh record with accessed_at, last_verified_at, content_hash, HTTP status, and reviewer boundary.",
         "gate": "closed",
@@ -199,7 +199,7 @@
       },
       {
         "claim_blocked": "Source Freshness",
-        "created_at": "2026-06-26T13:16:04+00:00",
+        "created_at": "2026-06-26T13:41:30+00:00",
         "evidence": "source packet packet-frozen-tuna-canada-001",
         "evidence_required": "Fresh official-source refresh record with accessed_at, last_verified_at, content_hash, HTTP status, and reviewer boundary.",
         "gate": "closed",
@@ -230,7 +230,7 @@
       },
       {
         "claim_blocked": "Source Freshness",
-        "created_at": "2026-06-26T13:16:04+00:00",
+        "created_at": "2026-06-26T13:41:30+00:00",
         "evidence": "source packet packet-frozen-tuna-canada-001",
         "evidence_required": "Fresh official-source refresh record with accessed_at, last_verified_at, content_hash, HTTP status, and reviewer boundary.",
         "gate": "closed",
@@ -261,7 +261,7 @@
       },
       {
         "claim_blocked": "Compliance Review",
-        "created_at": "2026-06-26T13:16:04+00:00",
+        "created_at": "2026-06-26T13:41:30+00:00",
         "evidence": "source packet packet-frozen-tuna-canada-001",
         "evidence_required": "Dated restricted-party screening record with source and reviewer boundary.",
         "gate": "closed",
@@ -292,7 +292,7 @@
       },
       {
         "claim_blocked": "Compliance Review",
-        "created_at": "2026-06-26T13:16:04+00:00",
+        "created_at": "2026-06-26T13:41:30+00:00",
         "evidence": "source packet packet-frozen-tuna-canada-001",
         "evidence_required": "Scoped Canadian import/export, food, customs, or broker review finding.",
         "gate": "closed",
@@ -323,7 +323,7 @@
       },
       {
         "claim_blocked": "Buyer Validation",
-        "created_at": "2026-06-26T13:16:04+00:00",
+        "created_at": "2026-06-26T13:41:30+00:00",
         "evidence": "source packet packet-frozen-tuna-canada-001",
         "evidence_required": "Dated buyer/operator feedback tied to the packet and intended use.",
         "gate": "closed",
@@ -354,7 +354,7 @@
       },
       {
         "claim_blocked": "Source Rights / Contract",
-        "created_at": "2026-06-26T13:16:04+00:00",
+        "created_at": "2026-06-26T13:41:30+00:00",
         "evidence": "source packet packet-frozen-tuna-canada-001",
         "evidence_required": "Signed source-rights, data-rights, or commercial terms record.",
         "gate": "closed",

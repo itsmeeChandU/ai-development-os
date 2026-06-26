@@ -1,0 +1,73 @@
+{
+  "package_name": "importer-source-readiness-go-live-external-review-20260626T133719Z",
+  "prepared_at": "2026-06-26T13:37:19Z",
+  "product": "Importer Source Readiness Copilot",
+  "review_scope": "External expert review of the local go-live stage contract, Stage 0 plus go-live States 1-18.",
+  "source_heads": {
+    "ai_development_os_main": "4a2551611f1250779b1f1a8918283bea13b47d9a",
+    "standalone_importer_source_readiness_copilot_main": "99b78dd1e9e572b910f65dfedea6658917347074"
+  },
+  "status": {
+    "development_contract": "development_complete_local_go_live_contract",
+    "software": "ready_with_external_gates",
+    "startup": "startup_in_progress",
+    "board": "board_go_live_candidate_with_human_approval_gates",
+    "public_launch_ready": false,
+    "unsafe_gates": "closed"
+  },
+  "stage_contract": {
+    "stage_count": 19,
+    "implemented_stage_count": 19,
+    "go_live_state_count": 18,
+    "runbook_stage_range": "0-18",
+    "stage_18_status": "public_go_live_subset_defined_blocked_until_approval"
+  },
+  "included_paths": [
+    "START_HERE.md",
+    "SOURCE_HEADS.md",
+    "README.md",
+    "SOURCE_OF_TRUTH.md",
+    "RUN_RESULTS.md",
+    "REVIEW_USE_TERMS.md",
+    "REDACTION_REPORT.md",
+    "PACKAGE_AUDIT.md",
+    "OFFLINE_REPRODUCTION.md",
+    "THOROUGH_COMPLETION_AUDIT.md",
+    "docs/GO_LIVE_READINESS.md",
+    "docs/PRODUCT_STATUS.md",
+    "docs/PUBLIC_TRADE_READINESS.md",
+    "docs/SECURITY_PRIVACY.md",
+    "docs/AI_DATA_POLICY.md",
+    "docs/DOCUMENT_PROCESSING.md",
+    "docs/DEPLOYMENT.md",
+    "system_review_graph/all_stage_readiness_report.json",
+    "system_review_graph/readiness_report.json",
+    "system_review_graph/public_trade_readiness_manifest.json",
+    "system_review_graph/private_beta_readiness_checklist.json",
+    "system_review_graph/deployment_readiness_report.json",
+    "system_review_graph/expert_review_packet_packet-frozen-tuna-canada-001.md",
+    "system_review_graph/ui_ux_audit_report.json",
+    "system_review_graph/external_gate_report.json",
+    "system_review_graph/continuation_plan.json",
+    "system_review_graph/board_go_live_readiness_report.json",
+    "system_review_graph/vc_pitch_readiness_report.json",
+    "system_review_graph/operator_workflow_report.json",
+    "system_review_graph/customer_readiness_report.json",
+    "system_review_graph/evidence_ledger.json",
+    "board/expert_review_packet.md",
+    "board/launch_control_checklist.md",
+    "board/board_go_live_brief.md"
+  ],
+  "required_external_review_roles": [
+    "UX/product usability reviewer",
+    "security/public-upload reviewer",
+    "privacy/legal reviewer",
+    "AI safety and prompt-injection reviewer",
+    "trade-boundary or customs-language reviewer",
+    "freight/logistics reviewer",
+    "report-language reviewer",
+    "DevOps/production readiness reviewer",
+    "billing/payment reviewer"
+  ],
+  "proof_boundary": "This package proves local code, generated artifacts, tests, and review-package hygiene. It does not prove buyer validation, customs/tariff correctness, legal/privacy approval, qualified trade review, production hosting, live payment activation, private-beta outcomes, or public launch approval."
+}
