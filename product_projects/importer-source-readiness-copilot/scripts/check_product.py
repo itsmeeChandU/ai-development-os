@@ -127,6 +127,7 @@ def main() -> int:
         [sys.executable, "scripts/run_completion_platform.py"],
         [sys.executable, "scripts/run_product_operations.py"],
         [sys.executable, "scripts/export_operator_dashboard.py"],
+        [sys.executable, "scripts/run_final_go_live_review.py"],
         [sys.executable, "scripts/audit_external_package.py", "--root", "."],
     ]
     for command in commands:
@@ -180,6 +181,10 @@ def main() -> int:
     launch_operations = _load_json(ROOT / "system_review_graph" / "launch_operations_report.json")
     all_stages = _load_json(ROOT / "system_review_graph" / "all_stage_readiness_report.json")
     product_operations = _load_json(ROOT / "system_review_graph" / "product_operations_report.json")
+    final_go_live = _load_json(ROOT / "system_review_graph" / "final_go_live_decision_report.json")
+    current_sources = _load_json(ROOT / "system_review_graph" / "current_external_gate_research.json")
+    reviewer_wave_plan = _load_json(ROOT / "system_review_graph" / "reviewer_wave_execution_plan.json")
+    private_beta_smoke = _load_json(ROOT / "system_review_graph" / "private_beta_smoke_test_plan.json")
     external_review = _load_json(ROOT / "system_review_graph" / "external_review_findings_report.json")
     ai_assisted_review = _load_json(ROOT / "system_review_graph" / "ai_assisted_external_review_plan.json")
     ai_assisted_findings = _load_json(ROOT / "system_review_graph" / "ai_assisted_external_review_findings_report.json")
@@ -249,8 +254,14 @@ def main() -> int:
         "scripts/run_product_operations.py",
         "scripts/audit_external_package.py",
         "scripts/build_external_review_packet.py",
+        "scripts/run_final_go_live_review.py",
+        "scripts/package_external_review.py",
         "data/customer_source_packets.json",
         "data/evidence_ledger.json",
+        "START_HERE.md",
+        "WHAT_WE_ARE_BUILDING.md",
+        "CURRENT_SLICE_VS_TARGET_PRODUCT.md",
+        "FINAL_GO_LIVE_HANDOFF.md",
         "CUSTOMER_SOURCE_PACKET_SPEC.md",
         "SOURCE_OF_TRUTH.md",
         "RUN_RESULTS.md",
@@ -306,6 +317,10 @@ def main() -> int:
         "system_review_graph/all_stage_readiness_report.json",
         "system_review_graph/product_operations_report.json",
         "system_review_graph/product_operations_log.json",
+        "system_review_graph/final_go_live_decision_report.json",
+        "system_review_graph/current_external_gate_research.json",
+        "system_review_graph/reviewer_wave_execution_plan.json",
+        "system_review_graph/private_beta_smoke_test_plan.json",
         "system_review_graph/external_review_findings_report.json",
         "system_review_graph/external_review_blocker_ledger.jsonl",
         "system_review_graph/ai_assisted_external_review_plan.json",
@@ -789,6 +804,28 @@ def main() -> int:
         failures.append("product operations must not create external effects")
     if product_operations.get("claims_opened") is not False:
         failures.append("product operations must not open external claims")
+    if final_go_live.get("status") != "local_go_live_contract_complete_public_launch_blocked":
+        failures.append(f"final go-live status unexpected: {final_go_live.get('status')!r}")
+    if final_go_live.get("local_contract_complete") is not True:
+        failures.append("final go-live report should confirm the local Stage 0-18 contract is complete")
+    if final_go_live.get("public_launch_ready") is not False:
+        failures.append("final go-live report must keep public_launch_ready=false")
+    if final_go_live.get("hosted_private_beta_ready") is not False:
+        failures.append("final go-live report must keep hosted_private_beta_ready=false")
+    if final_go_live.get("unsafe_gates_closed") is not True:
+        failures.append("final go-live report must keep unsafe gates closed")
+    if len(final_go_live.get("public_launch_blockers", [])) < 6:
+        failures.append("final go-live report should list concrete public-launch blockers")
+    if current_sources.get("status") != "current_external_gate_research_ready":
+        failures.append("current external gate research artifact should be ready")
+    if current_sources.get("source_count", 0) < 8:
+        failures.append("current external gate research should include dated official/primary source anchors")
+    if reviewer_wave_plan.get("status") != "reviewer_wave_execution_plan_ready":
+        failures.append("reviewer wave execution plan should be ready")
+    if reviewer_wave_plan.get("wave_count") != 3:
+        failures.append("reviewer wave execution plan should include three waves")
+    if private_beta_smoke.get("status") != "private_beta_smoke_test_plan_ready_blocked_until_wave_1_and_staging":
+        failures.append("private beta smoke test plan should stay blocked until Wave 1 and staging")
     operation_coverage = product_operations.get("execution_coverage", {})
     for key in (
         "data_intake",
@@ -1013,6 +1050,9 @@ def main() -> int:
     print(f"launch_operations={launch_operations['status']}")
     print(f"product_operations={product_operations['status']}")
     print(f"product_operation_count={product_operations['operation_count']}")
+    print(f"final_go_live_status={final_go_live['status']}")
+    print(f"final_public_launch_ready={final_go_live['public_launch_ready']}")
+    print(f"current_external_source_anchors={current_sources['source_count']}")
     print(f"external_review_status={external_review['status']}")
     print(f"external_review_required={external_review['required_review_count']}")
     print(f"external_review_completed={external_review['completed_review_count']}")

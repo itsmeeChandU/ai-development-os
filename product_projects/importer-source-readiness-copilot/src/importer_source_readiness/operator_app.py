@@ -380,10 +380,17 @@ def _public_report_body(packet: dict[str, Any], report_type: str) -> str:
     for evidence in packet.get("evidence_items", []):
         if evidence.get("evidence_type") != "customer_uploaded_document":
             continue
+        intelligence = evidence.get("document_intelligence") or {}
+        detected = (intelligence.get("detected_document_type") or {}).get("label") or evidence.get("document_type") or "unknown document"
+        facts = intelligence.get("facts_used") or []
+        missing_fields = intelligence.get("missing_or_unconfirmed_fields") or []
         document_rows.append(
             "- "
             f"{evidence.get('title')}: {evidence.get('extraction_status') or evidence.get('ledger_status')} "
             f"(confidence: {evidence.get('extraction_confidence') or 'unknown'}, "
+            f"detected: {detected}, "
+            f"facts used: {', '.join(str(item) for item in facts[:4]) or 'none'}, "
+            f"still needs: {', '.join(str(item) for item in missing_fields[:4]) or 'field confirmation'}, "
             f"confirmation: {evidence.get('confirmation_status') or 'not_confirmed'})"
         )
     report_labels = {
@@ -745,6 +752,35 @@ def _render_action_bar(packet: dict[str, Any]) -> str:
 
 def _list_items(rows: list[Any]) -> str:
     return "".join(f"<li>{escape(str(row))}</li>" for row in rows)
+
+
+def _list_or_note(rows: list[Any], note: str) -> str:
+    return _list_items(rows) if rows else f"<li>{escape(note)}</li>"
+
+
+def _document_intelligence_rows(packet: dict[str, Any]) -> str:
+    rows = []
+    for evidence in packet.get("evidence_items", []):
+        if evidence.get("evidence_type") != "customer_uploaded_document":
+            continue
+        intelligence = evidence.get("document_intelligence") or {}
+        detected = intelligence.get("detected_document_type") or evidence.get("document_type_guess") or {}
+        label = detected.get("label") or evidence.get("document_type") or "Unknown trade document"
+        facts = intelligence.get("facts_used") or []
+        missing = intelligence.get("missing_or_unconfirmed_fields") or []
+        text_quality = intelligence.get("text_quality") or evidence.get("text_quality") or {}
+        rows.append(
+            "<tr>"
+            f"<td>{escape(str(evidence.get('original_filename') or evidence.get('title') or evidence.get('filename')))}"
+            f"<br><small>{escape(str(evidence.get('document_processing_mode') or evidence.get('extraction_status') or 'metadata_only'))}"
+            f" | text: {escape(str(text_quality.get('status') or 'unknown'))}</small></td>"
+            f"<td>{escape(str(label))}<br><small>{escape(str(detected.get('confidence') or evidence.get('extraction_confidence') or 'low'))} confidence</small></td>"
+            f"<td><ul>{_list_or_note(facts, 'No business fields could be safely read yet.')}</ul></td>"
+            f"<td><ul>{_list_or_note(missing, 'User confirmation and qualified review still required.')}</ul></td>"
+            f"<td>{escape(str(intelligence.get('next_valid_move') or 'Confirm fields or upload a clearer/searchable PDF.'))}</td>"
+            "</tr>"
+        )
+    return "".join(rows)
 
 
 def _render_landing() -> str:
@@ -1513,17 +1549,7 @@ def _render_public_result(workflow: dict[str, Any], packet: dict[str, Any]) -> s
         "</tr>"
         for lane in packet.get("readiness_lanes", [])
     )
-    document_rows = "".join(
-        "<tr>"
-        f"<td>{escape(str(evidence.get('title')))}</td>"
-        f"<td>{escape(str(evidence.get('document_processing_mode') or evidence.get('extraction_status') or 'metadata_only'))}</td>"
-        f"<td>{escape(str(evidence.get('extraction_confidence') or 'unknown'))}</td>"
-        f"<td>{escape(str((evidence.get('cost_estimate') or {}).get('estimated_credits', 0)))}</td>"
-        f"<td>{escape(str((evidence.get('ocr_blocker') or {}).get('status') or 'not_required'))}</td>"
-        "</tr>"
-        for evidence in packet.get("evidence_items", [])
-        if evidence.get("evidence_type") == "customer_uploaded_document"
-    )
+    document_rows = _document_intelligence_rows(packet)
     missing = _list_items(packet.get("evidence_summary", {}).get("missing_items", []))
     questions = _list_items(packet.get("buyer_broker_questions", []))
     actions = f"""
@@ -1563,9 +1589,9 @@ def _render_public_result(workflow: dict[str, Any], packet: dict[str, Any]) -> s
   <thead><tr><th>Lane</th><th>Scope</th><th>Status</th><th>Next</th></tr></thead>
   <tbody>{lanes}</tbody>
 </table>
-<h2>Uploaded Document Triage</h2>
+<h2>Uploaded Document Intelligence</h2>
 <table>
-  <thead><tr><th>Document</th><th>Mode</th><th>Confidence</th><th>Estimated credits</th><th>OCR gate</th></tr></thead>
+  <thead><tr><th>Document</th><th>Detected Type</th><th>Facts Used</th><th>Still Missing Or Unconfirmed</th><th>Next</th></tr></thead>
   <tbody>{document_rows or '<tr><td colspan="5">No uploaded documents yet.</td></tr>'}</tbody>
 </table>
 <h2>Missing Evidence</h2>
@@ -1582,6 +1608,22 @@ def _render_public_result(workflow: dict[str, Any], packet: dict[str, Any]) -> s
 
 def _chatgpt_safe_summary(packet: dict[str, Any]) -> dict[str, Any]:
     evidence = packet.get("evidence_summary", {})
+    document_context = []
+    for row in packet.get("evidence_items", []):
+        if row.get("evidence_type") != "customer_uploaded_document":
+            continue
+        intelligence = row.get("document_intelligence") or {}
+        detected = intelligence.get("detected_document_type") or row.get("document_type_guess") or {}
+        document_context.append(
+            {
+                "document": row.get("original_filename") or row.get("title"),
+                "detected_type": detected.get("label") or "Unknown trade document",
+                "intelligence_status": intelligence.get("status") or "document_intelligence_needs_input",
+                "facts_used_count": len(intelligence.get("facts_used") or []),
+                "missing_or_unconfirmed_fields": intelligence.get("missing_or_unconfirmed_fields") or [],
+                "safe_use": intelligence.get("safe_use") or "Draft metadata only; file contents are not included.",
+            }
+        )
     return {
         "status": "chatgpt_safe_summary_ready",
         "packet_id": packet.get("packet_id"),
@@ -1600,6 +1642,7 @@ def _chatgpt_safe_summary(packet: dict[str, Any]) -> dict[str, Any]:
             "claims that tariff, CFIA, legal, customs, buyer, or shipment readiness is approved",
         ],
         "safe_questions": packet.get("buyer_broker_questions", [])[:8],
+        "document_context": document_context,
         "blocked_claims": packet.get("blocked_claims_display", []),
         "next_valid_move": packet.get("next_valid_move"),
         "proof_boundary": "This summary is safe for drafting questions. It is not a substitute for expert review or current official source proof.",
@@ -1617,13 +1660,21 @@ def _render_public_confirm(workflow: dict[str, Any], packet: dict[str, Any]) -> 
         confidence = evidence.get("field_confidence") or {}
         notes = evidence.get("parser_notes") or []
         ocr_blocker = evidence.get("ocr_blocker") or {}
+        intelligence = evidence.get("document_intelligence") or {}
+        detected = intelligence.get("detected_document_type") or evidence.get("document_type_guess") or {}
+        facts = intelligence.get("facts_used") or []
+        missing = intelligence.get("missing_or_unconfirmed_fields") or []
         field_rows.append(
             "<tr>"
             f"<td>{escape(str(evidence.get('title')))}</td>"
             f"<td>{escape(str(evidence.get('extraction_status') or evidence.get('ledger_status')))}"
             f"<br><small>{escape(str(ocr_blocker.get('status') or 'OCR not required'))}</small></td>"
             f"<td>{escape(str(evidence.get('extraction_confidence') or 'low'))}</td>"
-            f"<td>{escape(json.dumps(extracted, sort_keys=True))}<br>"
+            f"<td><strong>{escape(str(detected.get('label') or evidence.get('document_type') or 'Unknown trade document'))}</strong><br>"
+            f"{escape(str(intelligence.get('summary') or 'Draft metadata only.'))}<br>"
+            f"<small>Facts used: {escape('; '.join(str(item) for item in facts) or 'none')}</small><br>"
+            f"<small>Still missing: {escape('; '.join(str(item) for item in missing) or 'field confirmation and qualified review')}</small><br>"
+            f"<small>Raw fields: {escape(json.dumps(extracted, sort_keys=True))}</small><br>"
             f"<small>Field confidence: {escape(json.dumps(confidence, sort_keys=True))}</small><br>"
             f"<small>Parser notes: {escape(', '.join(str(note) for note in notes) or 'none')}</small></td>"
             "</tr>"
@@ -2128,6 +2179,13 @@ def _render_packet_evidence(packet: dict[str, Any]) -> str:
     for evidence in packet.get("evidence_items", []):
         route = _route_for_evidence(packet, evidence)
         redaction = redaction_preview_for_evidence(evidence)
+        intelligence = evidence.get("document_intelligence") or {}
+        detected = intelligence.get("detected_document_type") or evidence.get("document_type_guess") or {}
+        facts = intelligence.get("facts_used") or []
+        document_use = (
+            f"{detected.get('label') or 'Evidence metadata'}: "
+            f"{'; '.join(str(item) for item in facts[:3]) or intelligence.get('summary') or 'No document facts extracted yet.'}"
+        )
         rows.append(
             "<tr>"
             f"<td>{escape(str(evidence.get('evidence_id')))}</td>"
@@ -2140,6 +2198,7 @@ def _render_packet_evidence(packet: dict[str, Any]) -> str:
             f"<td>{escape(str(route.get('allowed')))}</td>"
             f"<td>{escape(str(redaction.get('redaction_status')))}</td>"
             f"<td>{escape(str(evidence.get('claim_supported')))}</td>"
+            f"<td>{escape(str(document_use))}</td>"
             f"<td>{escape(str(evidence.get('review_required')))}</td>"
             f"<td>{escape(str(evidence.get('claim_boundary')))}</td>"
             "</tr>"
@@ -2168,8 +2227,8 @@ def _render_packet_evidence(packet: dict[str, Any]) -> str:
   <button type="submit">Upload Evidence</button>
 </form>
 <table>
-  <thead><tr><th>ID</th><th>Type</th><th>Status</th><th>Rights</th><th>Freshness</th><th>Sensitivity</th><th>AI Mode</th><th>AI Allowed</th><th>Redaction</th><th>Claim Supported</th><th>Review Required</th><th>Boundary</th></tr></thead>
-  <tbody>{''.join(rows) or '<tr><td colspan="12">No evidence.</td></tr>'}</tbody>
+  <thead><tr><th>ID</th><th>Type</th><th>Status</th><th>Rights</th><th>Freshness</th><th>Sensitivity</th><th>AI Mode</th><th>AI Allowed</th><th>Redaction</th><th>Claim Supported</th><th>Document Use</th><th>Review Required</th><th>Boundary</th></tr></thead>
+  <tbody>{''.join(rows) or '<tr><td colspan="13">No evidence.</td></tr>'}</tbody>
 </table>
 """
     return _render_page("Packet Evidence", body)
@@ -2899,6 +2958,9 @@ def build_operator_app_handler(repo_root: Path) -> type[BaseHTTPRequestHandler]:
                 relative_path = saved_path.relative_to(repo_root).as_posix()
                 triage_fields = triage.get("extracted_fields") or {}
                 field_confidence = triage.get("field_confidence") or {}
+                document_intelligence = triage.get("document_intelligence") or {}
+                document_type_guess = triage.get("document_type_guess") or {}
+                text_quality = triage.get("text_quality") or {}
                 ocr_required = bool(triage.get("ocr_required"))
                 audit_base = {
                     "packet_id": packet_id,
@@ -2962,6 +3024,9 @@ def build_operator_app_handler(repo_root: Path) -> type[BaseHTTPRequestHandler]:
                         "ocr_blocker": triage["ocr_blocker"],
                         "cost_estimate": triage["cost_estimate"],
                         "parser_notes": triage["parser_notes"],
+                        "text_quality": text_quality,
+                        "document_type_guess": document_type_guess,
+                        "document_intelligence": document_intelligence,
                         "field_confidence": field_confidence,
                         "user_confirmation_required": True,
                         "expires_at": expires_at,
@@ -3000,6 +3065,9 @@ def build_operator_app_handler(repo_root: Path) -> type[BaseHTTPRequestHandler]:
                         "ocr_blocker": triage["ocr_blocker"],
                         "cost_estimate": triage["cost_estimate"],
                         "parser_notes": triage["parser_notes"],
+                        "text_quality": text_quality,
+                        "document_type_guess": document_type_guess,
+                        "document_intelligence": document_intelligence,
                         "field_confidence": field_confidence,
                         "native_text_excerpt": triage["native_text_excerpt"],
                         "user_confirmation_required": True,

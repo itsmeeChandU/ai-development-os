@@ -35,7 +35,7 @@ state is local readiness with external gates closed.
 
 ## Suggested Source Anchors
 
-- Add current sources if you search the web for this role.
+- Stripe go-live checklist: https://docs.stripe.com/get-started/checklist/go-live
 
 ## Task
 

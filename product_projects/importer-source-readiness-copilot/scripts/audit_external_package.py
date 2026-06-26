@@ -149,7 +149,7 @@ def audit_zip(path: Path) -> list[str]:
 def main() -> int:
     parser = argparse.ArgumentParser(description="Audit external review package hygiene.")
     parser.add_argument("--root", default="", help="Directory to audit")
-    parser.add_argument("--zip", default="", help="Zip file to audit")
+    parser.add_argument("--zip", action="append", default=[], help="Zip file to audit; may be passed multiple times")
     args = parser.parse_args()
 
     errors: list[str] = []
@@ -158,8 +158,8 @@ def main() -> int:
         root = Path(args.root).resolve()
         errors.extend(audit_root(root))
         audited.append(str(root))
-    if args.zip:
-        zip_path = Path(args.zip).resolve()
+    for zip_arg in args.zip:
+        zip_path = Path(zip_arg).resolve()
         errors.extend(audit_zip(zip_path))
         audited.append(f"{zip_path} sha256={_sha256(zip_path)}")
     if not args.root and not args.zip:

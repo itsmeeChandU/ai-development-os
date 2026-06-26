@@ -50,6 +50,8 @@ class ExternalReviewWorkflowTests(unittest.TestCase):
         self.assertEqual(plan["required_role_count"], 9)
         self.assertIn("security-public-upload", plan["research_anchors"])
         self.assertIn("ai-safety", plan["research_anchors"])
+        self.assertIn("devops-production-readiness", plan["research_anchors"])
+        self.assertIn("billing-payment", plan["research_anchors"])
 
     def test_ai_assisted_wave_1_findings_are_simulated_blockers(self) -> None:
         reviews = build_ai_assisted_simulated_reviews("2026-06-26T00:00:00Z")

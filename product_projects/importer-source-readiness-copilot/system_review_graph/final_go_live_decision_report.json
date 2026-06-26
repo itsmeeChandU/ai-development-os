@@ -1,0 +1,66 @@
+{
+  "continuation_must_continue": true,
+  "current_label": "development_complete_local_go_live_contract; external_validation_pending",
+  "external_review_counts": {
+    "ai_assisted_private_beta_blocking_findings": 5,
+    "ai_assisted_simulated_findings": 5,
+    "completed": 0,
+    "pending": 9,
+    "pending_blocker_rows": 9,
+    "required": 9
+  },
+  "generated_at": "2026-06-26T17:28:42Z",
+  "hosted_private_beta_ready": false,
+  "local_contract_complete": true,
+  "must_not_claim": [
+    "public_launch_approved",
+    "production_deployment_approved",
+    "legal_or_customs_advice_ready",
+    "tariff_confirmed",
+    "cfia_cleared",
+    "supplier_verified",
+    "buyer_validated",
+    "payment_activation_approved",
+    "private_beta_approved"
+  ],
+  "next_valid_moves": [
+    "Freeze and distribute executive and technical review packages.",
+    "Run Wave 1 external review or solo simulated review remediation while keeping real approval gates closed.",
+    "Fix every local P0/P1 that can be fixed today and rerun proof.",
+    "Provision staging and collect deployment/security/privacy evidence before real users.",
+    "Run private-beta smoke only after Wave 1/staging gates are satisfied.",
+    "Hold public go/no-go only after private-beta, expert-review, hosting, privacy/security, support, and rollback evidence exists."
+  ],
+  "proof_boundary": "This report completes the local go-live decision surface. It does not approve public launch, hosted private beta, legal/privacy/security readiness, customs/tariff/CFIA readiness, buyer/supplier validation, freight readiness, or payment activation.",
+  "public_launch_blockers": [
+    "real Wave 1 external review findings and signoff",
+    "five-user usability smoke evidence",
+    "staging deployment with TLS/secrets/storage/logging/rollback proof",
+    "qualified privacy/legal/security approval",
+    "qualified trade/customs/CFIA/report-language approval before stronger claims",
+    "payment review and live webhook/tax/refund/support proof before checkout",
+    "private-beta outcomes and named public go/no-go owner approval"
+  ],
+  "public_launch_ready": false,
+  "safe_public_launch_scope_today": [],
+  "safe_review_or_demo_scope_today": [
+    "local app demo on localhost",
+    "external review package delivery",
+    "AI-assisted simulated review and remediation",
+    "staging preparation without real customer data"
+  ],
+  "safe_to_run_locally_today": true,
+  "safe_to_send_external_review_package_today": true,
+  "source_statuses": {
+    "ai_assisted_review": "ai_assisted_wave_1_reviewed_with_blockers",
+    "all_stages": "all_local_stages_implemented_with_external_gates",
+    "customer_workflow": "customer_workflow_ready_internal",
+    "deployment": "deployable_local_stack_ready_with_external_hosting_gates",
+    "external_gate": "ready_with_external_gates",
+    "external_review": "external_review_ready_findings_pending",
+    "readiness": "ready_with_external_gates",
+    "runtime": "private_beta_candidate_with_external_human_gates"
+  },
+  "status": "local_go_live_contract_complete_public_launch_blocked",
+  "unsafe_gates_closed": true
+}

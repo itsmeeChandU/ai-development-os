@@ -15,6 +15,16 @@ has provided the decision.
 - NIST AI Risk Management Framework: https://www.nist.gov/itl/ai-risk-management-framework
   - use: AI risk framing, governance, measurement, and monitoring review anchor.
 
+### Billing/Payment Review
+
+- Stripe go-live checklist: https://docs.stripe.com/get-started/checklist/go-live
+  - use: Live checkout, webhook, support, refund, and payment activation review anchor.
+
+### DevOps/Production Readiness Review
+
+- Canadian Centre for Cyber Security baseline controls: https://www.cyber.gc.ca/en/guidance/baseline-cyber-security-controls-small-and-medium-organizations
+  - use: Hosted private-beta operations, access control, backup, monitoring, and incident-response review anchor.
+
 ### Privacy/Legal Review
 
 - Office of the Privacy Commissioner of Canada PIPEDA guidance: https://www.priv.gc.ca/en/privacy-topics/privacy-laws-in-canada/the-personal-information-protection-and-electronic-documents-act-pipeda/
@@ -140,7 +150,9 @@ qualified external approval.
   ],
   "reviewer_role": "DevOps/Production Readiness Review",
   "searched_at": "2026-06-26T14:36:31Z",
-  "source_urls": []
+  "source_urls": [
+    "https://www.cyber.gc.ca/en/guidance/baseline-cyber-security-controls-small-and-medium-organizations"
+  ]
 }
 ```
 

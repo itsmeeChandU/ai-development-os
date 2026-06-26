@@ -1,0 +1,48 @@
+{
+  "blocked_until": [
+    "real Wave 1 review decisions received",
+    "P0/P1 Wave 1 findings fixed or explicitly blocking",
+    "staging deployment proof exists",
+    "privacy/security/legal owner accepts scoped beta data handling"
+  ],
+  "generated_at": "2026-06-26T17:28:42Z",
+  "minimum_users": [
+    {
+      "count": 2,
+      "segment": "beginner_user_no_documents"
+    },
+    {
+      "count": 2,
+      "segment": "document_holding_import_or_export_user"
+    },
+    {
+      "count": 1,
+      "segment": "operator_or_consultant_style_user"
+    },
+    {
+      "count": 1,
+      "optional_before_private_beta": true,
+      "segment": "reviewer_broker_or_freight_forwarder_style_user"
+    }
+  ],
+  "next_valid_move": "Run only after Wave 1 review and staging proof; record dated outcomes as evidence rows.",
+  "proof_boundary": "This plan does not prove user validation. Real user outcomes must be collected before public launch.",
+  "status": "private_beta_smoke_test_plan_ready_blocked_until_wave_1_and_staging",
+  "success_metrics": {
+    "complete_core_flow_without_help": "5 of 5 required users",
+    "critical_upload_or_privacy_incidents": 0,
+    "unresolved_p0_p1_findings": 0,
+    "unsafe_approval_misunderstanding": 0
+  },
+  "tasks": [
+    "/start beginner starter flow",
+    "/trade-check PDF upload quick check",
+    "confirm extracted fields",
+    "download starter and missing-evidence reports",
+    "save packet or open workspace",
+    "delete files or request deletion",
+    "open ChatGPT-safe summary",
+    "open buyer/broker packet",
+    "read blocked claims and next valid move"
+  ]
+}

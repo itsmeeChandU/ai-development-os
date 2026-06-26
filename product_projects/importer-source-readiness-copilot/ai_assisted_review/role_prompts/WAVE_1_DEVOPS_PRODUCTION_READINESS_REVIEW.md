@@ -36,7 +36,7 @@ state is local readiness with external gates closed.
 
 ## Suggested Source Anchors
 
-- Add current sources if you search the web for this role.
+- Canadian Centre for Cyber Security baseline controls: https://www.cyber.gc.ca/en/guidance/baseline-cyber-security-controls-small-and-medium-organizations
 
 ## Task
 

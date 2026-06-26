@@ -1,0 +1,164 @@
+[
+  {
+    "actor_type": "customer",
+    "actor_user_id": "user-customer-001",
+    "after_json": {
+      "generated_filename": "document-001.pdf",
+      "original_filename": "Complete-Transformation-Blueprint.pdf",
+      "size_bytes": 1728526
+    },
+    "created_at": "2026-06-26T16:35:53+00:00",
+    "entity_id": "packet-organic-turmeric-powder:document-001.pdf",
+    "entity_type": "PublicUpload",
+    "event_id": "packet-organic-turmeric-powder:document-001.pdf:public_upload_received:2026-06-26T16:35:53+00:00",
+    "event_type": "public_upload_received",
+    "ip_address": "local-dev",
+    "organization_id": "org-importer-demo",
+    "packet_id": "packet-organic-turmeric-powder",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.5 Safari/605.1.15"
+  },
+  {
+    "actor_type": "customer",
+    "actor_user_id": "user-customer-001",
+    "after_json": {
+      "document_processing_mode": "native_text",
+      "extraction_status": "native_text_extracted_needs_confirmation",
+      "ocr_required": false,
+      "parse_confidence_score": 0.62
+    },
+    "created_at": "2026-06-26T16:35:53+00:00",
+    "entity_id": "packet-organic-turmeric-powder:document-001.pdf",
+    "entity_type": "PublicUpload",
+    "event_id": "packet-organic-turmeric-powder:document-001.pdf:public_pdf_triaged:2026-06-26T16:35:53+00:00",
+    "event_type": "public_pdf_triaged",
+    "ip_address": "local-dev",
+    "organization_id": "org-importer-demo",
+    "packet_id": "packet-organic-turmeric-powder",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.5 Safari/605.1.15"
+  },
+  {
+    "actor_type": "customer",
+    "actor_user_id": "user-customer-001",
+    "after_json": {
+      "direct_file_serving": false,
+      "relative_path": "system_review_graph/public_uploads/packet-organic-turmeric-powder/quarantine/document-001.pdf"
+    },
+    "created_at": "2026-06-26T16:35:53+00:00",
+    "entity_id": "packet-organic-turmeric-powder:document-001.pdf",
+    "entity_type": "PublicUpload",
+    "event_id": "packet-organic-turmeric-powder:document-001.pdf:public_upload_quarantined:2026-06-26T16:35:53+00:00",
+    "event_type": "public_upload_quarantined",
+    "ip_address": "local-dev",
+    "organization_id": "org-importer-demo",
+    "packet_id": "packet-organic-turmeric-powder",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.5 Safari/605.1.15"
+  },
+  {
+    "actor_type": "customer",
+    "actor_user_id": "user-customer-001",
+    "after_json": {
+      "generated_filename": "document-001.pdf",
+      "original_filename": "demo-commercial-invoice.pdf",
+      "size_bytes": 296
+    },
+    "created_at": "2026-06-26T16:47:26+00:00",
+    "entity_id": "packet-demo-turmeric-invoice:document-001.pdf",
+    "entity_type": "PublicUpload",
+    "event_id": "packet-demo-turmeric-invoice:document-001.pdf:public_upload_received:2026-06-26T16:47:26+00:00",
+    "event_type": "public_upload_received",
+    "ip_address": "local-dev",
+    "organization_id": "org-importer-demo",
+    "packet_id": "packet-demo-turmeric-invoice",
+    "user_agent": "Python-urllib/3.11"
+  },
+  {
+    "actor_type": "customer",
+    "actor_user_id": "user-customer-001",
+    "after_json": {
+      "document_processing_mode": "native_text",
+      "extraction_status": "native_text_extracted_needs_confirmation",
+      "ocr_required": false,
+      "parse_confidence_score": 0.62
+    },
+    "created_at": "2026-06-26T16:47:26+00:00",
+    "entity_id": "packet-demo-turmeric-invoice:document-001.pdf",
+    "entity_type": "PublicUpload",
+    "event_id": "packet-demo-turmeric-invoice:document-001.pdf:public_pdf_triaged:2026-06-26T16:47:26+00:00",
+    "event_type": "public_pdf_triaged",
+    "ip_address": "local-dev",
+    "organization_id": "org-importer-demo",
+    "packet_id": "packet-demo-turmeric-invoice",
+    "user_agent": "Python-urllib/3.11"
+  },
+  {
+    "actor_type": "customer",
+    "actor_user_id": "user-customer-001",
+    "after_json": {
+      "direct_file_serving": false,
+      "relative_path": "system_review_graph/public_uploads/packet-demo-turmeric-invoice/quarantine/document-001.pdf"
+    },
+    "created_at": "2026-06-26T16:47:26+00:00",
+    "entity_id": "packet-demo-turmeric-invoice:document-001.pdf",
+    "entity_type": "PublicUpload",
+    "event_id": "packet-demo-turmeric-invoice:document-001.pdf:public_upload_quarantined:2026-06-26T16:47:26+00:00",
+    "event_type": "public_upload_quarantined",
+    "ip_address": "local-dev",
+    "organization_id": "org-importer-demo",
+    "packet_id": "packet-demo-turmeric-invoice",
+    "user_agent": "Python-urllib/3.11"
+  },
+  {
+    "actor_type": "customer",
+    "actor_user_id": "user-customer-001",
+    "after_json": {
+      "generated_filename": "document-001.pdf",
+      "original_filename": "demo-commercial-invoice.pdf",
+      "size_bytes": 296
+    },
+    "created_at": "2026-06-26T16:49:50+00:00",
+    "entity_id": "packet-demo-turmeric-invoice:document-001.pdf",
+    "entity_type": "PublicUpload",
+    "event_id": "packet-demo-turmeric-invoice:document-001.pdf:public_upload_received:2026-06-26T16:49:50+00:00",
+    "event_type": "public_upload_received",
+    "ip_address": "local-dev",
+    "organization_id": "org-importer-demo",
+    "packet_id": "packet-demo-turmeric-invoice",
+    "user_agent": "Python-urllib/3.11"
+  },
+  {
+    "actor_type": "customer",
+    "actor_user_id": "user-customer-001",
+    "after_json": {
+      "document_processing_mode": "native_text",
+      "extraction_status": "native_text_extracted_needs_confirmation",
+      "ocr_required": false,
+      "parse_confidence_score": 0.62
+    },
+    "created_at": "2026-06-26T16:49:50+00:00",
+    "entity_id": "packet-demo-turmeric-invoice:document-001.pdf",
+    "entity_type": "PublicUpload",
+    "event_id": "packet-demo-turmeric-invoice:document-001.pdf:public_pdf_triaged:2026-06-26T16:49:50+00:00",
+    "event_type": "public_pdf_triaged",
+    "ip_address": "local-dev",
+    "organization_id": "org-importer-demo",
+    "packet_id": "packet-demo-turmeric-invoice",
+    "user_agent": "Python-urllib/3.11"
+  },
+  {
+    "actor_type": "customer",
+    "actor_user_id": "user-customer-001",
+    "after_json": {
+      "direct_file_serving": false,
+      "relative_path": "system_review_graph/public_uploads/packet-demo-turmeric-invoice/quarantine/document-001.pdf"
+    },
+    "created_at": "2026-06-26T16:49:50+00:00",
+    "entity_id": "packet-demo-turmeric-invoice:document-001.pdf",
+    "entity_type": "PublicUpload",
+    "event_id": "packet-demo-turmeric-invoice:document-001.pdf:public_upload_quarantined:2026-06-26T16:49:50+00:00",
+    "event_type": "public_upload_quarantined",
+    "ip_address": "local-dev",
+    "organization_id": "org-importer-demo",
+    "packet_id": "packet-demo-turmeric-invoice",
+    "user_agent": "Python-urllib/3.11"
+  }
+]

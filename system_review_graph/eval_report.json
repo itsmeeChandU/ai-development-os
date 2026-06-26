@@ -1,7 +1,7 @@
 {
   "blockers": [],
   "eval_count": 9,
-  "generated_at": "2026-06-26T10:21:24+00:00",
+  "generated_at": "2026-06-26T17:28:42+00:00",
   "manifest": "/Users/chandu/Documents/intelligance os/manifests/agentic_execution_manifest.json",
   "proof_boundary": "This eval suite validates execution-loop structure. It does not replace lane-specific tests or runtime smoke checks.",
   "rows": [

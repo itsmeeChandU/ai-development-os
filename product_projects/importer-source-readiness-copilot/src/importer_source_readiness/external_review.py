@@ -74,6 +74,13 @@ AI_ASSISTED_REVIEW_SOURCES = {
             "use": "Canadian privacy-law self-check anchor for notices, consent, access, retention, and safeguards.",
         }
     ],
+    "devops-production-readiness": [
+        {
+            "label": "Canadian Centre for Cyber Security baseline controls",
+            "url": "https://www.cyber.gc.ca/en/guidance/baseline-cyber-security-controls-small-and-medium-organizations",
+            "use": "Hosted private-beta operations, access control, backup, monitoring, and incident-response review anchor.",
+        }
+    ],
     "trade-boundary-customs-language": [
         {
             "label": "CBSA importing commercial goods",
@@ -85,6 +92,13 @@ AI_ASSISTED_REVIEW_SOURCES = {
             "url": "https://inspection.canada.ca/en/importing-food-plants-animals",
             "use": "Food/agriculture import-control boundary anchor for report wording.",
         },
+    ],
+    "billing-payment": [
+        {
+            "label": "Stripe go-live checklist",
+            "url": "https://docs.stripe.com/get-started/checklist/go-live",
+            "use": "Live checkout, webhook, support, refund, and payment activation review anchor.",
+        }
     ],
 }
 

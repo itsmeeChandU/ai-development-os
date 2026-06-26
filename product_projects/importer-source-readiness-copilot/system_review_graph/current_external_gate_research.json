@@ -1,0 +1,100 @@
+{
+  "blocked_claims": [
+    "customs_or_tariff_ready",
+    "cfia_or_food_import_ready",
+    "privacy_legal_ready",
+    "security_ready",
+    "ai_safety_ready",
+    "payment_ready",
+    "public_launch_ready"
+  ],
+  "generated_at": "2026-06-26T17:28:42Z",
+  "next_valid_move": "Use these dated anchors in scoped external review; do not treat them as qualified approval.",
+  "proof_boundary": "This artifact records dated official/primary source anchors for reviewer work. It does not prove legal, customs, tariff, CFIA, privacy, security, AI, payment, or public-launch readiness.",
+  "research_mode": "official_or_primary_source_anchor_snapshot",
+  "source_anchors": [
+    {
+      "checked_at": "2026-06-26",
+      "gate": "canada_commercial_import_boundary",
+      "product_rule": "Keep import-readiness claims blocked until current official-source review and qualified customs/trade review exist.",
+      "publisher": "Canada Border Services Agency",
+      "source_name": "CBSA - Import commercial goods into Canada",
+      "source_url": "https://www.cbsa-asfc.gc.ca/import/menu-eng.html",
+      "why_it_matters": "Public reports must not imply goods are ready to import or that CBSA accounting/release requirements are satisfied."
+    },
+    {
+      "checked_at": "2026-06-26",
+      "gate": "canada_food_import_boundary",
+      "product_rule": "Keep CFIA/food-safety claims blocked until AIRS/current-source and qualified review evidence exists.",
+      "publisher": "Canadian Food Inspection Agency",
+      "source_name": "CFIA - Importing food, plants or animals",
+      "source_url": "https://inspection.canada.ca/en/importing-food-plants-animals",
+      "why_it_matters": "Food, plant, animal, and related products can require permits, licences, rules, forms, and current commodity-specific review."
+    },
+    {
+      "checked_at": "2026-06-26",
+      "gate": "canada_food_airs_boundary",
+      "product_rule": "Treat AIRS/source refresh as a blocker surface, not as automated approval.",
+      "publisher": "Canadian Food Inspection Agency",
+      "source_name": "CFIA - Automated Import Reference System",
+      "source_url": "https://inspection.canada.ca/en/importing-food-plants-animals/airs",
+      "why_it_matters": "AIRS is the current reference route for CFIA-regulated commodity import requirements."
+    },
+    {
+      "checked_at": "2026-06-26",
+      "gate": "privacy_pipeda_boundary",
+      "product_rule": "Keep hosted beta blocked until privacy notice, retention/deletion plan, processor inventory, and qualified privacy/legal review exist.",
+      "publisher": "Office of the Privacy Commissioner of Canada",
+      "source_name": "OPC - PIPEDA fair information principles",
+      "source_url": "https://www.priv.gc.ca/en/privacy-topics/privacy-laws-in-canada/the-personal-information-protection-and-electronic-documents-act-pipeda/p_principle/",
+      "why_it_matters": "Hosted use with customer trade documents needs accountability, purpose, consent, limiting collection, safeguards, access, and retention/deletion controls."
+    },
+    {
+      "checked_at": "2026-06-26",
+      "gate": "public_upload_security_boundary",
+      "product_rule": "Keep public uploads local/private-beta only until hosted malware scanning, storage isolation, rate limits, and qualified security review exist.",
+      "publisher": "OWASP",
+      "source_name": "OWASP File Upload Cheat Sheet",
+      "source_url": "https://cheatsheetseries.owasp.org/cheatsheets/File_Upload_Cheat_Sheet.html",
+      "why_it_matters": "Public uploads need allowlists, safe storage, handler-mediated access, malware/sandbox controls, and resource limits."
+    },
+    {
+      "checked_at": "2026-06-26",
+      "gate": "canada_security_ops_boundary",
+      "product_rule": "Keep production/private-beta deployment blocked until dated staging and operations evidence exists.",
+      "publisher": "Canadian Centre for Cyber Security",
+      "source_name": "Canadian Centre for Cyber Security - Baseline Cyber Security Controls for Small and Medium Organizations",
+      "source_url": "https://www.cyber.gc.ca/en/guidance/baseline-cyber-security-controls-small-and-medium-organizations",
+      "why_it_matters": "Hosted private beta needs baseline operational controls, monitoring, backup/restore, access control, and incident response ownership."
+    },
+    {
+      "checked_at": "2026-06-26",
+      "gate": "ai_safety_prompt_injection_boundary",
+      "product_rule": "Keep AI output fail-closed; AI can create blockers only and cannot open claim gates.",
+      "publisher": "OWASP Gen AI Security Project",
+      "source_name": "OWASP LLM01:2025 Prompt Injection",
+      "source_url": "https://genai.owasp.org/llmrisk/llm01-prompt-injection/",
+      "why_it_matters": "Uploaded PDFs and retrieved text can contain direct or indirect prompt injection that attempts to alter model behavior."
+    },
+    {
+      "checked_at": "2026-06-26",
+      "gate": "ai_risk_management_boundary",
+      "product_rule": "Keep AI provider use blocked until policy, monitoring, redaction, incident response, and qualified review are complete.",
+      "publisher": "NIST",
+      "source_name": "NIST AI Risk Management Framework",
+      "source_url": "https://www.nist.gov/itl/ai-risk-management-framework",
+      "why_it_matters": "AI-enabled document and review workflows need governance, mapping, measurement, and management before real customer use."
+    },
+    {
+      "checked_at": "2026-06-26",
+      "gate": "payment_activation_boundary",
+      "product_rule": "Keep live checkout disabled until pricing validation, payment review, live webhook proof, tax/refund policy, and support ownership exist.",
+      "publisher": "Stripe",
+      "source_name": "Stripe go-live checklist",
+      "source_url": "https://docs.stripe.com/get-started/checklist/go-live",
+      "why_it_matters": "Live payments need live-mode configuration, webhooks, tax/refund/support decisions, and payment-flow validation."
+    }
+  ],
+  "source_count": 9,
+  "status": "current_external_gate_research_ready"
+}

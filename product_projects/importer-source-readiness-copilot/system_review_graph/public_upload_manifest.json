@@ -1,0 +1,236 @@
+{
+  "audit_event_types": [
+    "public_upload_received",
+    "public_pdf_triaged",
+    "public_upload_quarantined",
+    "public_fields_confirmed",
+    "public_upload_deleted"
+  ],
+  "packets": [
+    {
+      "audit_events": [
+        "public_upload_received",
+        "public_pdf_triaged",
+        "public_upload_quarantined"
+      ],
+      "created_at": "2026-06-26T16:35:53+00:00",
+      "delete_route": "/api/public/packets/packet-organic-turmeric-powder/delete-files",
+      "expires_at": "2026-06-27T16:35:53+00:00",
+      "file_count": 1,
+      "files": [
+        {
+          "content_type": "application/pdf",
+          "cost_estimate": {
+            "estimated_credits": 0,
+            "external_charge_created": false,
+            "ocr_pages": 0,
+            "requires_user_approval": false
+          },
+          "document_processing_mode": "native_text",
+          "expires_at": "2026-06-27T16:35:53+00:00",
+          "extraction_confidence": "medium",
+          "extraction_status": "native_text_extracted_needs_confirmation",
+          "field_confidence": {
+            "country_mentions": "not_found",
+            "hs_code": "not_found",
+            "invoice_or_reference": "not_found"
+          },
+          "filename": "document-001.pdf",
+          "has_native_text": true,
+          "ocr_blocker": {
+            "external_charge_created": false,
+            "next_valid_move": "",
+            "reason": "",
+            "status": "not_required"
+          },
+          "ocr_recommended": false,
+          "ocr_required": false,
+          "original_filename": "Complete-Transformation-Blueprint.pdf",
+          "page_count_estimate": 1,
+          "page_count_source": "fallback_page_tokens",
+          "parse_confidence_score": 0.62,
+          "parser_notes": [
+            "flate_stream_decoded",
+            "text_recovered_from_content_stream"
+          ],
+          "relative_path": "system_review_graph/public_uploads/packet-organic-turmeric-powder/quarantine/document-001.pdf",
+          "sha256": "f68b576b8573e6352c4d12de9f1a7d0b72ab7e6c36fb623701bf716805efaef6",
+          "size_bytes": 1728526,
+          "user_confirmation_required": true
+        }
+      ],
+      "packet_id": "packet-organic-turmeric-powder",
+      "parser_sandbox_status": "local_bounded_parser_complete",
+      "rate_limit_bucket": "public_quick_check",
+      "retention_notice": "Public quick-check uploads are local draft artifacts and should be deleted or expired after processing.",
+      "shareable_status": "blocked_until_user_confirmation"
+    },
+    {
+      "audit_events": [
+        "public_upload_received",
+        "public_pdf_triaged",
+        "public_upload_quarantined"
+      ],
+      "created_at": "2026-06-26T16:49:50+00:00",
+      "delete_route": "/api/public/packets/packet-demo-turmeric-invoice/delete-files",
+      "expires_at": "2026-06-27T16:49:50+00:00",
+      "file_count": 1,
+      "files": [
+        {
+          "content_type": "application/pdf",
+          "cost_estimate": {
+            "estimated_credits": 0,
+            "external_charge_created": false,
+            "ocr_pages": 0,
+            "requires_user_approval": false
+          },
+          "document_intelligence": {
+            "claim_boundary": "Document intelligence organizes uploaded evidence for draft review only; qualified review and current official sources are still required.",
+            "confidence": "medium",
+            "detected_document_type": {
+              "confidence": "high",
+              "expected_fields": [
+                "invoice_or_reference",
+                "hs_code",
+                "origin_country",
+                "destination_country",
+                "buyer_or_importer",
+                "supplier_or_exporter",
+                "amounts"
+              ],
+              "label": "Commercial invoice",
+              "signals": [
+                "commercial invoice",
+                "invoice number",
+                "buyer"
+              ],
+              "type": "commercial_invoice"
+            },
+            "extraction_status": "native_text_extracted_needs_confirmation",
+            "facts_used": [
+              "HS/tariff code: 0910.30",
+              "invoice/reference: INV-DEMO-2026",
+              "country mentions: India",
+              "supplier/exporter: Example Exporter Pvt Ltd FOB",
+              "buyer/importer: Example Canada Buyer supplier",
+              "Incoterms: FOB"
+            ],
+            "filename": "demo-commercial-invoice.pdf",
+            "missing_or_unconfirmed_fields": [
+              "commercial amount"
+            ],
+            "next_valid_move": "Confirm or correct the extracted fields before sharing buyer, broker, or expert packets.",
+            "safe_use": "Use these fields only as draft packet context; they do not prove authenticity or compliance.",
+            "status": "document_intelligence_ready",
+            "summary": "Detected a likely commercial invoice and extracted draft fields for confirmation.",
+            "text_quality": {
+              "printable_ratio": 1.0,
+              "reason": "usable_native_text",
+              "signal_terms": [
+                "buyer",
+                "destination",
+                "exporter",
+                "hs code",
+                "invoice",
+                "origin",
+                "supplier"
+              ],
+              "status": "usable",
+              "word_count": 20
+            }
+          },
+          "document_processing_mode": "native_text",
+          "document_type_guess": {
+            "confidence": "high",
+            "expected_fields": [
+              "invoice_or_reference",
+              "hs_code",
+              "origin_country",
+              "destination_country",
+              "buyer_or_importer",
+              "supplier_or_exporter",
+              "amounts"
+            ],
+            "label": "Commercial invoice",
+            "signals": [
+              "commercial invoice",
+              "invoice number",
+              "buyer"
+            ],
+            "type": "commercial_invoice"
+          },
+          "expires_at": "2026-06-27T16:49:50+00:00",
+          "extraction_confidence": "medium",
+          "extraction_status": "native_text_extracted_needs_confirmation",
+          "field_confidence": {
+            "amounts": "not_found",
+            "buyer_or_importer": "medium",
+            "country_mentions": "medium",
+            "dates": "not_found",
+            "hs_code": "medium",
+            "incoterms": "medium",
+            "invoice_or_reference": "medium",
+            "product_description": "not_found",
+            "quantities": "not_found",
+            "supplier_or_exporter": "medium"
+          },
+          "filename": "document-001.pdf",
+          "has_native_text": true,
+          "ocr_blocker": {
+            "external_charge_created": false,
+            "next_valid_move": "",
+            "reason": "",
+            "status": "not_required"
+          },
+          "ocr_recommended": false,
+          "ocr_required": false,
+          "original_filename": "demo-commercial-invoice.pdf",
+          "page_count_estimate": 1,
+          "page_count_source": "page_objects",
+          "parse_confidence_score": 0.62,
+          "parser_notes": [
+            "text_recovered_from_content_stream"
+          ],
+          "relative_path": "system_review_graph/public_uploads/packet-demo-turmeric-invoice/quarantine/document-001.pdf",
+          "sha256": "ef5e2ff759a3ceb977fa264c0210c7a781f901b9d3eea525ccaa4e9c31285f97",
+          "size_bytes": 296,
+          "text_quality": {
+            "printable_ratio": 1.0,
+            "reason": "usable_native_text",
+            "signal_terms": [
+              "buyer",
+              "destination",
+              "exporter",
+              "hs code",
+              "invoice",
+              "origin",
+              "supplier"
+            ],
+            "status": "usable",
+            "word_count": 20
+          },
+          "user_confirmation_required": true
+        }
+      ],
+      "packet_id": "packet-demo-turmeric-invoice",
+      "parser_sandbox_status": "local_bounded_parser_complete",
+      "rate_limit_bucket": "public_quick_check",
+      "retention_notice": "Public quick-check uploads are local draft artifacts and should be deleted or expired after processing.",
+      "shareable_status": "blocked_until_user_confirmation"
+    }
+  ],
+  "parser_sandbox": {
+    "direct_file_serving": false,
+    "mode": "local_bounded_metadata_parser",
+    "no_network_fetch": true,
+    "no_shell_execution": true
+  },
+  "rate_limit": {
+    "bucket": "public_quick_check",
+    "implementation_status": "local_policy_ready_hosted_enforcement_required",
+    "limit": 6,
+    "window_minutes": 10
+  },
+  "retention": "delete_route_or_24_hour_expiry",
+  "status": "public_upload_manifest_ready"
+}

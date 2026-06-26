@@ -1,0 +1,291 @@
+{
+  "decision_values_allowed": [
+    "approve_within_scope",
+    "block",
+    "needs_more_evidence",
+    "out_of_scope",
+    "wrong_reviewer_type"
+  ],
+  "generated_at": "2026-06-26T17:28:42Z",
+  "next_valid_move": "Send Wave 1 packets first; convert every finding into a blocker or scoped approval condition.",
+  "proof_boundary": "This is an execution plan. It is not evidence that any reviewer has approved the product.",
+  "status": "reviewer_wave_execution_plan_ready",
+  "wave_1_gate": "blocks_hosted_private_beta_until_real_findings_resolved",
+  "wave_2_gate": "blocks_stronger_trade_freight_report_claims_until_real_findings_resolved",
+  "wave_3_gate": "blocks_monetization_or_public_scale_until_real_findings_resolved",
+  "wave_count": 3,
+  "waves": {
+    "1": [
+      {
+        "affected_stage": "hosted_private_beta",
+        "ai_assisted_prompt_path": "ai_assisted_review/role_prompts/WAVE_1_UX_PRODUCT_REVIEW.md",
+        "blocks_private_beta": true,
+        "blocks_public_launch": true,
+        "next_valid_move": "Send Wave 1 UX/product packet, collect structured findings, fix every P0 before private beta.",
+        "owner": "product/UX reviewer",
+        "primary_artifacts": [
+          "README.md",
+          "docs/GO_LIVE_READINESS.md",
+          "system_review_graph/operator_dashboard.html",
+          "system_review_graph/customer_readiness_report.md",
+          "system_review_graph/public_trade_readiness_manifest.json"
+        ],
+        "required_decision": "Private-beta usability decision with P0/P1 findings listed.",
+        "research_anchors": [],
+        "retest_command": "python3 scripts/check_product.py",
+        "reviewer_packet_path": "reviewer_packets/WAVE_1_UX_PRODUCT_REVIEW.md",
+        "reviewer_role": "UX/Product Usability Review",
+        "role_id": "ux-product",
+        "scope": "Can a target importer/exporter understand the flow, blockers, generated reports, and next valid move without unsafe advice?",
+        "severity_floor": "P0",
+        "template_path": "external_review_findings/UX_PRODUCT_REVIEW.md",
+        "wave": 1
+      },
+      {
+        "affected_stage": "hosted_private_beta",
+        "ai_assisted_prompt_path": "ai_assisted_review/role_prompts/WAVE_1_SECURITY_PUBLIC_UPLOAD_REVIEW.md",
+        "blocks_private_beta": true,
+        "blocks_public_launch": true,
+        "next_valid_move": "Send Wave 1 security packet, collect structured findings, fix every P0 before hosted private beta.",
+        "owner": "security reviewer",
+        "primary_artifacts": [
+          "docs/SECURITY_PRIVACY.md",
+          "docs/DEPLOYMENT.md",
+          "system_review_graph/public_upload_policy.json",
+          "system_review_graph/auth_rbac_matrix.json",
+          "src/importer_source_readiness/operator_app.py"
+        ],
+        "required_decision": "Public upload, file handling, auth/RBAC, and deployment security decision.",
+        "research_anchors": [
+          {
+            "label": "OWASP File Upload Cheat Sheet",
+            "url": "https://cheatsheetseries.owasp.org/cheatsheets/File_Upload_Cheat_Sheet.html",
+            "use": "Public upload, validation, storage, malware, and access-control review anchor."
+          }
+        ],
+        "retest_command": "python3 -m unittest tests/test_operator_app.py tests/test_document_processing.py",
+        "reviewer_packet_path": "reviewer_packets/WAVE_1_SECURITY_PUBLIC_UPLOAD_REVIEW.md",
+        "reviewer_role": "Security/Public Upload Review",
+        "role_id": "security-public-upload",
+        "scope": "Review file upload, quarantine, auth/RBAC, scoped expert links, deletion controls, and public route exposure.",
+        "severity_floor": "P0",
+        "template_path": "external_review_findings/SECURITY_PUBLIC_UPLOAD_REVIEW.md",
+        "wave": 1
+      },
+      {
+        "affected_stage": "hosted_private_beta",
+        "ai_assisted_prompt_path": "ai_assisted_review/role_prompts/WAVE_1_PRIVACY_LEGAL_REVIEW.md",
+        "blocks_private_beta": true,
+        "blocks_public_launch": true,
+        "next_valid_move": "Send Wave 1 privacy/legal packet, collect structured findings, fix every P0 before private beta.",
+        "owner": "privacy/legal reviewer",
+        "primary_artifacts": [
+          "REVIEW_USE_TERMS.md",
+          "docs/AI_DATA_POLICY.md",
+          "docs/SECURITY_PRIVACY.md",
+          "system_review_graph/ai_data_policy.json",
+          "system_review_graph/deletion_requests.json"
+        ],
+        "required_decision": "Privacy, terms, data handling, and legal-claim boundary decision.",
+        "research_anchors": [
+          {
+            "label": "Office of the Privacy Commissioner of Canada PIPEDA guidance",
+            "url": "https://www.priv.gc.ca/en/privacy-topics/privacy-laws-in-canada/the-personal-information-protection-and-electronic-documents-act-pipeda/",
+            "use": "Canadian privacy-law self-check anchor for notices, consent, access, retention, and safeguards."
+          }
+        ],
+        "retest_command": "python3 scripts/check_product.py",
+        "reviewer_packet_path": "reviewer_packets/WAVE_1_PRIVACY_LEGAL_REVIEW.md",
+        "reviewer_role": "Privacy/Legal Review",
+        "role_id": "privacy-legal",
+        "scope": "Review upload notices, AI/data policy, retention/deletion controls, terms, and claim-boundary language.",
+        "severity_floor": "P0",
+        "template_path": "external_review_findings/PRIVACY_LEGAL_REVIEW.md",
+        "wave": 1
+      },
+      {
+        "affected_stage": "hosted_private_beta",
+        "ai_assisted_prompt_path": "ai_assisted_review/role_prompts/WAVE_1_AI_SAFETY_REVIEW.md",
+        "blocks_private_beta": true,
+        "blocks_public_launch": true,
+        "next_valid_move": "Send Wave 1 AI safety packet, collect structured findings, fix every P0 before private beta.",
+        "owner": "AI safety reviewer",
+        "primary_artifacts": [
+          "docs/AI_DATA_POLICY.md",
+          "system_review_graph/ai_model_router.json",
+          "system_review_graph/redaction_pipeline.json",
+          "system_review_graph/manual_no_ai_workflow.json",
+          "tests/test_operator_app.py"
+        ],
+        "required_decision": "AI data, prompt-injection, no-AI fallback, and redaction safety decision.",
+        "research_anchors": [
+          {
+            "label": "OWASP LLM01 Prompt Injection",
+            "url": "https://genai.owasp.org/llmrisk/llm01-prompt-injection/",
+            "use": "Prompt-injection and model-input/output risk review anchor."
+          },
+          {
+            "label": "NIST AI Risk Management Framework",
+            "url": "https://www.nist.gov/itl/ai-risk-management-framework",
+            "use": "AI risk framing, governance, measurement, and monitoring review anchor."
+          }
+        ],
+        "retest_command": "python3 -m unittest tests/test_operator_app.py tests/test_product_runtime.py",
+        "reviewer_packet_path": "reviewer_packets/WAVE_1_AI_SAFETY_REVIEW.md",
+        "reviewer_role": "AI Safety/Prompt Injection Review",
+        "role_id": "ai-safety",
+        "scope": "Review model routing, AI permission controls, redaction previews, manual fallback, and prompt-injection boundaries.",
+        "severity_floor": "P0",
+        "template_path": "external_review_findings/AI_SAFETY_REVIEW.md",
+        "wave": 1
+      },
+      {
+        "affected_stage": "hosted_private_beta",
+        "ai_assisted_prompt_path": "ai_assisted_review/role_prompts/WAVE_1_DEVOPS_PRODUCTION_READINESS_REVIEW.md",
+        "blocks_private_beta": true,
+        "blocks_public_launch": true,
+        "next_valid_move": "Send Wave 1 DevOps packet, collect structured findings, fix every P0 before hosted private beta.",
+        "owner": "DevOps/production reviewer",
+        "primary_artifacts": [
+          "Dockerfile",
+          "compose.yaml",
+          ".env.example",
+          "docs/DEPLOYMENT.md",
+          "system_review_graph/deployment_readiness_report.json"
+        ],
+        "required_decision": "Hosted private-beta readiness decision for infrastructure, config, secrets, logging, and rollback.",
+        "research_anchors": [
+          {
+            "label": "Canadian Centre for Cyber Security baseline controls",
+            "url": "https://www.cyber.gc.ca/en/guidance/baseline-cyber-security-controls-small-and-medium-organizations",
+            "use": "Hosted private-beta operations, access control, backup, monitoring, and incident-response review anchor."
+          }
+        ],
+        "retest_command": "python3 scripts/check_product.py",
+        "reviewer_packet_path": "reviewer_packets/WAVE_1_DEVOPS_PRODUCTION_READINESS_REVIEW.md",
+        "reviewer_role": "DevOps/Production Readiness Review",
+        "role_id": "devops-production-readiness",
+        "scope": "Review Docker/Compose, env contract, deployment readiness, health routes, logging, and external hosting gaps.",
+        "severity_floor": "P0",
+        "template_path": "external_review_findings/DEVOPS_PRODUCTION_READINESS_REVIEW.md",
+        "wave": 1
+      }
+    ],
+    "2": [
+      {
+        "affected_stage": "stronger_trade_claims",
+        "ai_assisted_prompt_path": "ai_assisted_review/role_prompts/WAVE_2_TRADE_BOUNDARY_REVIEW.md",
+        "blocks_private_beta": false,
+        "blocks_public_launch": true,
+        "next_valid_move": "Send Wave 2 trade-boundary packet before any stronger trade/customs wording is used publicly.",
+        "owner": "trade compliance reviewer",
+        "primary_artifacts": [
+          "docs/PUBLIC_TRADE_READINESS.md",
+          "system_review_graph/claims_gate_matrix.json",
+          "system_review_graph/public_report_types.json",
+          "system_review_graph/generated_reports/starter_checklist_packet-frozen-tuna-canada-001.json"
+        ],
+        "required_decision": "Customs, tariff, CFIA, import/export wording and claim-boundary decision.",
+        "research_anchors": [
+          {
+            "label": "CBSA importing commercial goods",
+            "url": "https://www.cbsa-asfc.gc.ca/import/menu-eng.html",
+            "use": "Canadian import/customs boundary and official-source language anchor."
+          },
+          {
+            "label": "CFIA importing food, plants, or animals",
+            "url": "https://inspection.canada.ca/en/importing-food-plants-animals",
+            "use": "Food/agriculture import-control boundary anchor for report wording."
+          }
+        ],
+        "retest_command": "python3 scripts/check_product.py",
+        "reviewer_packet_path": "reviewer_packets/WAVE_2_TRADE_BOUNDARY_REVIEW.md",
+        "reviewer_role": "Trade-Boundary/Customs-Language Review",
+        "role_id": "trade-boundary-customs-language",
+        "scope": "Review public report and UI language for unsupported customs, tariff, legal, CFIA, and import/export readiness claims.",
+        "severity_floor": "P1",
+        "template_path": "external_review_findings/TRADE_BOUNDARY_REVIEW.md",
+        "wave": 2
+      },
+      {
+        "affected_stage": "stronger_trade_claims",
+        "ai_assisted_prompt_path": "ai_assisted_review/role_prompts/WAVE_2_FREIGHT_LOGISTICS_REVIEW.md",
+        "blocks_private_beta": false,
+        "blocks_public_launch": true,
+        "next_valid_move": "Send Wave 2 freight/logistics packet before shipment or forwarder-readiness claims are strengthened.",
+        "owner": "freight/logistics reviewer",
+        "primary_artifacts": [
+          "system_review_graph/transport_readiness_report.json",
+          "system_review_graph/generated_reports/broker_packet_packet-frozen-tuna-canada-001.json",
+          "system_review_graph/public_report_types.json"
+        ],
+        "required_decision": "Forwarder packet, transport questions, and shipment-readiness boundary decision.",
+        "research_anchors": [],
+        "retest_command": "python3 scripts/check_product.py",
+        "reviewer_packet_path": "reviewer_packets/WAVE_2_FREIGHT_LOGISTICS_REVIEW.md",
+        "reviewer_role": "Freight/Logistics Review",
+        "role_id": "freight-logistics",
+        "scope": "Review transport readiness rows, broker/forwarder packets, Incoterms-style questions, and shipment-readiness boundaries.",
+        "severity_floor": "P1",
+        "template_path": "external_review_findings/FREIGHT_LOGISTICS_REVIEW.md",
+        "wave": 2
+      },
+      {
+        "affected_stage": "stronger_trade_claims",
+        "ai_assisted_prompt_path": "ai_assisted_review/role_prompts/WAVE_2_REPORT_LANGUAGE_REVIEW.md",
+        "blocks_private_beta": false,
+        "blocks_public_launch": true,
+        "next_valid_move": "Send Wave 2 report-language packet before public report language is treated as approved.",
+        "owner": "report-language reviewer",
+        "primary_artifacts": [
+          "system_review_graph/public_report_types.json",
+          "system_review_graph/generated_reports/missing_evidence_packet-frozen-tuna-canada-001.json",
+          "system_review_graph/generated_reports/chatgpt_safe_summary_packet-frozen-tuna-canada-001.json",
+          "system_review_graph/customer_readiness_report.md"
+        ],
+        "required_decision": "Generated PDF/report wording decision for customer-safe language.",
+        "research_anchors": [],
+        "retest_command": "python3 scripts/check_product.py",
+        "reviewer_packet_path": "reviewer_packets/WAVE_2_REPORT_LANGUAGE_REVIEW.md",
+        "reviewer_role": "Report-Language Review",
+        "role_id": "report-language",
+        "scope": "Review generated report types, missing-evidence language, buyer/broker packet wording, and customer-safe next moves.",
+        "severity_floor": "P1",
+        "template_path": "external_review_findings/REPORT_LANGUAGE_REVIEW.md",
+        "wave": 2
+      }
+    ],
+    "3": [
+      {
+        "affected_stage": "monetization_or_public_scale",
+        "ai_assisted_prompt_path": "ai_assisted_review/role_prompts/WAVE_3_BILLING_PAYMENT_REVIEW.md",
+        "blocks_private_beta": false,
+        "blocks_public_launch": true,
+        "next_valid_move": "Send Wave 3 billing/payment packet before enabling live checkout or monetized public scale.",
+        "owner": "billing/payment reviewer",
+        "primary_artifacts": [
+          "system_review_graph/billing_credit_controls.json",
+          "system_review_graph/billing_usage_ledger.json",
+          "system_review_graph/product_operations_report.json",
+          "README.md"
+        ],
+        "required_decision": "Billing, tax/invoice/refund/payment-flow decision before live checkout.",
+        "research_anchors": [
+          {
+            "label": "Stripe go-live checklist",
+            "url": "https://docs.stripe.com/get-started/checklist/go-live",
+            "use": "Live checkout, webhook, support, refund, and payment activation review anchor."
+          }
+        ],
+        "retest_command": "python3 -m unittest tests/test_product_runtime.py tests/test_completion_platform.py",
+        "reviewer_packet_path": "reviewer_packets/WAVE_3_BILLING_PAYMENT_REVIEW.md",
+        "reviewer_role": "Billing/Payment Review",
+        "role_id": "billing-payment",
+        "scope": "Review billing controls, usage ledger, pricing page, live-checkout disabled state, refund/tax/invoice gaps, and payment-flow blockers.",
+        "severity_floor": "P1",
+        "template_path": "external_review_findings/BILLING_PAYMENT_REVIEW.md",
+        "wave": 3
+      }
+    ]
+  }
+}

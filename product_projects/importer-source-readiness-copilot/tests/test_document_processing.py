@@ -21,7 +21,10 @@ class DocumentProcessingTests(unittest.TestCase):
             b"BT (Commercial Invoice number INV-1234) Tj "
             b"(HS code: 0902.30) Tj "
             b"(origin: India) Tj "
-            b"(destination: Canada) Tj ET\n"
+            b"(destination: Canada) Tj "
+            b"(buyer: Example Buyer Inc) Tj "
+            b"(supplier: Example Supplier Ltd) Tj "
+            b"(FOB) Tj ET\n"
             b"endstream\n"
             b"endobj\n%%EOF\n"
         )
@@ -35,10 +38,38 @@ class DocumentProcessingTests(unittest.TestCase):
         self.assertEqual(result["extracted_fields"]["hs_code"], "0902.30")
         self.assertEqual(result["extracted_fields"]["invoice_or_reference"], "INV-1234")
         self.assertIn("India", result["extracted_fields"]["country_mentions"])
+        self.assertIn("Canada", result["extracted_fields"]["country_mentions"])
+        self.assertEqual(result["extracted_fields"]["buyer_or_importer"], "Example Buyer Inc")
+        self.assertEqual(result["extracted_fields"]["supplier_or_exporter"], "Example Supplier Ltd")
+        self.assertEqual(result["extracted_fields"]["incoterms"], ["FOB"])
+        self.assertEqual(result["document_type_guess"]["type"], "commercial_invoice")
+        self.assertEqual(result["document_intelligence"]["status"], "document_intelligence_ready")
+        self.assertIn("HS/tariff code: 0902.30", result["document_intelligence"]["facts_used"])
+        self.assertIn("invoice/reference: INV-1234", result["document_intelligence"]["facts_used"])
+        self.assertEqual(result["text_quality"]["status"], "usable")
         self.assertEqual(result["ocr_blocker"]["status"], "not_required")
         self.assertEqual(result["cost_estimate"]["estimated_credits"], 0)
         self.assertTrue(result["user_confirmation_required"])
         self.assertEqual(len(result["sha256"]), 64)
+
+    def test_triage_does_not_treat_glyph_noise_as_document_text(self) -> None:
+        content = (
+            b"%PDF-1.4\n"
+            b"1 0 obj << /Type /Page >> endobj\n"
+            b"2 0 obj << /Length 80 >> stream\n"
+            b"BT (\\001\\002\\003\\004\\005\\006\\007) Tj ET\n"
+            b"endstream\n"
+            b"endobj\n%%EOF\n"
+        )
+
+        result = triage_pdf_upload("font-noise.pdf", content)
+
+        self.assertFalse(result["has_native_text"])
+        self.assertEqual(result["text_quality"]["status"], "not_usable")
+        self.assertEqual(result["document_processing_mode"], "ocr_required")
+        self.assertEqual(result["document_intelligence"]["status"], "document_intelligence_needs_input")
+        self.assertIn("could not read enough human-meaningful", result["document_intelligence"]["summary"])
+        self.assertEqual(result["document_intelligence"]["facts_used"], [])
 
     def test_triage_flags_ocr_and_blocks_invalid_or_encrypted_pdfs(self) -> None:
         scanned = (

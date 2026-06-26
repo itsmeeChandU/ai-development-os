@@ -231,7 +231,9 @@
           "review_origin": "ai_assisted_simulated_review",
           "reviewer_role": "DevOps/Production Readiness Review",
           "severity": "P0",
-          "web_sources_checked": []
+          "web_sources_checked": [
+            "https://www.cyber.gc.ca/en/guidance/baseline-cyber-security-controls-small-and-medium-organizations"
+          ]
         }
       ],
       "human_followup_required": true,
@@ -250,7 +252,9 @@
       ],
       "verdict": "blocked",
       "wave": 1,
-      "web_sources_checked": []
+      "web_sources_checked": [
+        "https://www.cyber.gc.ca/en/guidance/baseline-cyber-security-controls-small-and-medium-organizations"
+      ]
     }
   ],
   "status": "ai_assisted_wave_1_reviewed_with_blockers",

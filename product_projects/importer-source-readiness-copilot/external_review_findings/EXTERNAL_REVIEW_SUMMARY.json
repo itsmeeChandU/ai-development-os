@@ -147,7 +147,13 @@
         "system_review_graph/deployment_readiness_report.json"
       ],
       "required_decision": "Hosted private-beta readiness decision for infrastructure, config, secrets, logging, and rollback.",
-      "research_anchors": [],
+      "research_anchors": [
+        {
+          "label": "Canadian Centre for Cyber Security baseline controls",
+          "url": "https://www.cyber.gc.ca/en/guidance/baseline-cyber-security-controls-small-and-medium-organizations",
+          "use": "Hosted private-beta operations, access control, backup, monitoring, and incident-response review anchor."
+        }
+      ],
       "retest_command": "python3 scripts/check_product.py",
       "reviewer_packet_path": "reviewer_packets/WAVE_1_DEVOPS_PRODUCTION_READINESS_REVIEW.md",
       "reviewer_role": "DevOps/Production Readiness Review",
@@ -253,7 +259,13 @@
         "README.md"
       ],
       "required_decision": "Billing, tax/invoice/refund/payment-flow decision before live checkout.",
-      "research_anchors": [],
+      "research_anchors": [
+        {
+          "label": "Stripe go-live checklist",
+          "url": "https://docs.stripe.com/get-started/checklist/go-live",
+          "use": "Live checkout, webhook, support, refund, and payment activation review anchor."
+        }
+      ],
       "retest_command": "python3 -m unittest tests/test_product_runtime.py tests/test_completion_platform.py",
       "reviewer_packet_path": "reviewer_packets/WAVE_3_BILLING_PAYMENT_REVIEW.md",
       "reviewer_role": "Billing/Payment Review",

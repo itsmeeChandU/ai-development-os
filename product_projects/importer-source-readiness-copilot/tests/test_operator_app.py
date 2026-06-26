@@ -410,6 +410,10 @@ class OperatorAppTests(unittest.TestCase):
                 self.assertIn("Confirm Extracted Fields", result_html)
                 self.assertIn("Missing Evidence PDF", result_html)
                 self.assertIn("Delete Uploaded Files", result_html)
+                self.assertIn("Uploaded Document Intelligence", result_html)
+                self.assertIn("Commercial invoice", result_html)
+                self.assertIn("HS/tariff code: 0910.30", result_html)
+                self.assertIn("invoice/reference: TUR-1234", result_html)
                 self.assertNotIn("system_review_graph", result_html)
 
                 with urlopen(f"{self.base_url}/public/packets/packet-india-turmeric-export/confirm", timeout=5) as response:
@@ -417,6 +421,8 @@ class OperatorAppTests(unittest.TestCase):
                 self.assertIn("Confirm Extracted Fields", confirm_html)
                 self.assertIn("turmeric-product-spec.pdf", confirm_html)
                 self.assertIn("Field confidence", confirm_html)
+                self.assertIn("Facts used", confirm_html)
+                self.assertIn("Commercial invoice", confirm_html)
 
                 manifest = json.loads((ROOT / "system_review_graph" / "public_upload_manifest.json").read_text(encoding="utf-8"))
                 packet_manifest = next(row for row in manifest["packets"] if row["packet_id"] == "packet-india-turmeric-export")
@@ -427,6 +433,8 @@ class OperatorAppTests(unittest.TestCase):
                 self.assertTrue(packet_manifest["files"][0]["user_confirmation_required"])
                 self.assertEqual(packet_manifest["files"][0]["document_processing_mode"], "native_text")
                 self.assertEqual(packet_manifest["files"][0]["ocr_blocker"]["status"], "not_required")
+                self.assertEqual(packet_manifest["files"][0]["document_type_guess"]["type"], "commercial_invoice")
+                self.assertEqual(packet_manifest["files"][0]["document_intelligence"]["status"], "document_intelligence_ready")
                 self.assertIn("public_pdf_triaged", packet_manifest["audit_events"])
 
                 with self.assertRaises(HTTPError) as blocked_ctx:
@@ -483,6 +491,8 @@ class OperatorAppTests(unittest.TestCase):
                     safe_summary = json.loads(response.read().decode("utf-8"))
                 self.assertEqual(safe_summary["status"], "chatgpt_safe_summary_ready")
                 self.assertIn("Do not provide legal", safe_summary["copy_paste_summary"])
+                self.assertEqual(safe_summary["document_context"][0]["detected_type"], "Commercial invoice")
+                self.assertGreater(safe_summary["document_context"][0]["facts_used_count"], 0)
 
                 with urlopen(f"{self.base_url}/api/public/packets/packet-india-turmeric-export/reports/broker.pdf", timeout=5) as response:
                     pdf = response.read()

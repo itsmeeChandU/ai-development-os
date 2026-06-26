@@ -83,6 +83,7 @@ def main() -> int:
         PROJECT / "src" / "importer_source_readiness" / "product_operations.py",
         PROJECT / "src" / "importer_source_readiness" / "ai_review_validation.py",
         PROJECT / "src" / "importer_source_readiness" / "external_review.py",
+        PROJECT / "src" / "importer_source_readiness" / "final_go_live.py",
         PROJECT / "tests" / "test_readiness.py",
         PROJECT / "tests" / "test_external_gates.py",
         PROJECT / "tests" / "test_continuation.py",
@@ -98,6 +99,7 @@ def main() -> int:
         PROJECT / "tests" / "test_completion_platform.py",
         PROJECT / "tests" / "test_external_package_audit.py",
         PROJECT / "tests" / "test_external_review_workflow.py",
+        PROJECT / "tests" / "test_final_go_live.py",
         PROJECT / "scripts" / "run_readiness.py",
         PROJECT / "scripts" / "run_external_gates.py",
         PROJECT / "scripts" / "export_operator_dashboard.py",
@@ -112,6 +114,8 @@ def main() -> int:
         PROJECT / "scripts" / "run_product_operations.py",
         PROJECT / "scripts" / "build_external_review_packet.py",
         PROJECT / "scripts" / "audit_external_package.py",
+        PROJECT / "scripts" / "run_final_go_live_review.py",
+        PROJECT / "scripts" / "package_external_review.py",
         PROJECT / "scripts" / "check_product.py",
         PROJECT / "docs" / "PRODUCT_AUTOMATION_RUNBOOK.md",
         PROJECT / "docs" / "PRODUCT_STATUS.md",
@@ -181,6 +185,10 @@ def main() -> int:
         PROJECT / "system_review_graph" / "all_stage_readiness_report.json",
         PROJECT / "system_review_graph" / "product_operations_report.json",
         PROJECT / "system_review_graph" / "product_operations_log.json",
+        PROJECT / "system_review_graph" / "final_go_live_decision_report.json",
+        PROJECT / "system_review_graph" / "current_external_gate_research.json",
+        PROJECT / "system_review_graph" / "reviewer_wave_execution_plan.json",
+        PROJECT / "system_review_graph" / "private_beta_smoke_test_plan.json",
         PROJECT / "system_review_graph" / "external_review_findings_report.json",
         PROJECT / "system_review_graph" / "external_review_blocker_ledger.jsonl",
         PROJECT / "system_review_graph" / "ai_assisted_external_review_plan.json",
@@ -189,6 +197,10 @@ def main() -> int:
         PROJECT / "system_review_graph" / "expert_review_work_orders.json",
         PROJECT / "system_review_graph" / "team_workspace_activity.json",
         PROJECT / "system_review_graph" / "launch_operations_events.json",
+        PROJECT / "START_HERE.md",
+        PROJECT / "WHAT_WE_ARE_BUILDING.md",
+        PROJECT / "CURRENT_SLICE_VS_TARGET_PRODUCT.md",
+        PROJECT / "FINAL_GO_LIVE_HANDOFF.md",
         PROJECT / "system_review_graph" / "generated_reports" / "data_intake_packet-frozen-tuna-canada-001.json",
         PROJECT / "system_review_graph" / "generated_reports" / "missing_evidence_packet-frozen-tuna-canada-001.json",
         PROJECT / "system_review_graph" / "generated_reports" / "starter_checklist_packet-frozen-tuna-canada-001.json",
@@ -271,6 +283,7 @@ def main() -> int:
         ["python3", "scripts/run_policy_intelligence.py"],
         ["python3", "scripts/run_completion_platform.py"],
         ["python3", "scripts/run_product_operations.py"],
+        ["python3", "scripts/run_final_go_live_review.py"],
         ["python3", "scripts/build_external_review_packet.py"],
         ["python3", "scripts/export_operator_dashboard.py"],
         ["python3", "scripts/audit_external_package.py", "--root", "."],
@@ -442,6 +455,18 @@ def main() -> int:
     )
     product_operations = json.loads(
         (PROJECT / "system_review_graph" / "product_operations_report.json").read_text(encoding="utf-8")
+    )
+    final_go_live = json.loads(
+        (PROJECT / "system_review_graph" / "final_go_live_decision_report.json").read_text(encoding="utf-8")
+    )
+    current_sources = json.loads(
+        (PROJECT / "system_review_graph" / "current_external_gate_research.json").read_text(encoding="utf-8")
+    )
+    reviewer_wave_plan = json.loads(
+        (PROJECT / "system_review_graph" / "reviewer_wave_execution_plan.json").read_text(encoding="utf-8")
+    )
+    private_beta_smoke = json.loads(
+        (PROJECT / "system_review_graph" / "private_beta_smoke_test_plan.json").read_text(encoding="utf-8")
     )
     external_review = json.loads(
         (PROJECT / "system_review_graph" / "external_review_findings_report.json").read_text(encoding="utf-8")
@@ -979,9 +1004,23 @@ def main() -> int:
         print("Product project check: FAIL")
         print("launch operations report missing local operation proof")
         return 1
-    if all_stages.get("status") != "all_local_stages_implemented_with_external_gates" or all_stages.get("stage_count", 0) < 16:
+    if (
+        all_stages.get("status") != "all_local_stages_implemented_with_external_gates"
+        or all_stages.get("stage_count") != 19
+        or all_stages.get("implemented_stage_count") != 19
+        or all_stages.get("go_live_state_count") != 18
+        or all_stages.get("runbook_stage_range") != "0-18"
+    ):
         print("Product project check: FAIL")
-        print("all-stage readiness report is missing local stage coverage")
+        print("all-stage readiness report is missing exact Stage 0-18 local coverage")
+        return 1
+    public_go_live = next(
+        (row for row in all_stages.get("stages", []) if row.get("stage_id") == "stage-18"),
+        {},
+    )
+    if public_go_live.get("status") != "public_go_live_subset_defined_blocked_until_approval":
+        print("Product project check: FAIL")
+        print("stage-18 must keep public go-live blocked until owner approval")
         return 1
     if all_stages.get("operation_status") != "local_product_operations_executed":
         print("Product project check: FAIL")
@@ -1002,6 +1041,29 @@ def main() -> int:
     if product_operations.get("external_effects_created") is not False or product_operations.get("claims_opened") is not False:
         print("Product project check: FAIL")
         print("product operations opened an external effect or claim")
+        return 1
+    if (
+        final_go_live.get("status") != "local_go_live_contract_complete_public_launch_blocked"
+        or final_go_live.get("local_contract_complete") is not True
+        or final_go_live.get("public_launch_ready") is not False
+        or final_go_live.get("hosted_private_beta_ready") is not False
+        or final_go_live.get("unsafe_gates_closed") is not True
+        or len(final_go_live.get("public_launch_blockers", [])) < 6
+    ):
+        print("Product project check: FAIL")
+        print("final go-live decision must keep launch/private-beta blocked with concrete blockers")
+        return 1
+    if current_sources.get("status") != "current_external_gate_research_ready" or current_sources.get("source_count", 0) < 8:
+        print("Product project check: FAIL")
+        print("current external gate research must include dated source anchors")
+        return 1
+    if reviewer_wave_plan.get("status") != "reviewer_wave_execution_plan_ready" or reviewer_wave_plan.get("wave_count") != 3:
+        print("Product project check: FAIL")
+        print("reviewer wave execution plan must include three gated waves")
+        return 1
+    if private_beta_smoke.get("status") != "private_beta_smoke_test_plan_ready_blocked_until_wave_1_and_staging":
+        print("Product project check: FAIL")
+        print("private beta smoke plan must remain blocked until Wave 1 and staging proof")
         return 1
     if (
         external_review.get("status") != "external_review_ready_findings_pending"
@@ -1205,6 +1267,9 @@ def main() -> int:
     print(f"launch_operations={launch_operations['status']}")
     print(f"product_operations={product_operations['status']}")
     print(f"product_operation_count={product_operations['operation_count']}")
+    print(f"final_go_live_status={final_go_live['status']}")
+    print(f"final_public_launch_ready={final_go_live['public_launch_ready']}")
+    print(f"current_external_source_anchors={current_sources['source_count']}")
     print(f"external_review_status={external_review['status']}")
     print(f"external_review_required={external_review['required_review_count']}")
     print(f"external_review_completed={external_review['completed_review_count']}")
