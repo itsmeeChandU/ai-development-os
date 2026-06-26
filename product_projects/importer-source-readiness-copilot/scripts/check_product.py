@@ -122,6 +122,13 @@ def main() -> int:
     billing_controls = _load_json(ROOT / "system_review_graph" / "billing_credit_controls.json")
     agent_api = _load_json(ROOT / "system_review_graph" / "agent_api_manifest.json")
     traffic_pages = _load_json(ROOT / "system_review_graph" / "traffic_pages_manifest.json")
+    research_execution = _load_json(ROOT / "system_review_graph" / "research_execution_plan.json")
+    team_workspace = _load_json(ROOT / "system_review_graph" / "team_workspace_report.json")
+    expert_network = _load_json(ROOT / "system_review_graph" / "expert_network_report.json")
+    billing_usage = _load_json(ROOT / "system_review_graph" / "billing_usage_ledger.json")
+    agent_gateway = _load_json(ROOT / "system_review_graph" / "agent_api_gateway_contract.json")
+    launch_operations = _load_json(ROOT / "system_review_graph" / "launch_operations_report.json")
+    all_stages = _load_json(ROOT / "system_review_graph" / "all_stage_readiness_report.json")
     screenshot_manifest_path = ROOT / "system_review_graph" / "operator_screenshot_manifest.json"
     screenshot_manifest = _load_json(screenshot_manifest_path) if screenshot_manifest_path.exists() else {}
     expected = {
@@ -223,6 +230,13 @@ def main() -> int:
         "system_review_graph/billing_credit_controls.json",
         "system_review_graph/agent_api_manifest.json",
         "system_review_graph/traffic_pages_manifest.json",
+        "system_review_graph/research_execution_plan.json",
+        "system_review_graph/team_workspace_report.json",
+        "system_review_graph/expert_network_report.json",
+        "system_review_graph/billing_usage_ledger.json",
+        "system_review_graph/agent_api_gateway_contract.json",
+        "system_review_graph/launch_operations_report.json",
+        "system_review_graph/all_stage_readiness_report.json",
         "system_review_graph/source_refresh_runs.json",
         "system_review_graph/source_refresh_report_packet-frozen-tuna-canada-001.json",
         "system_review_graph/expert_review_packet_packet-frozen-tuna-canada-001.md",
@@ -231,6 +245,7 @@ def main() -> int:
         "compose.yaml",
         ".env.example",
         "docs/PUBLIC_TRADE_READINESS.md",
+        "docs/ALL_STAGES_COMPLETION.md",
         "docs/AI_DATA_POLICY.md",
         "docs/DOCUMENT_PROCESSING.md",
         "docs/OPPORTUNITY_SCANNER.md",
@@ -378,9 +393,18 @@ def main() -> int:
         "/tools/export-readiness",
         "/tools/document-check",
         "/opportunities",
+        "/country-coverage",
+        "/transport-readiness",
         "/reports/sample",
         "/pricing",
         "/billing",
+        "/billing/usage",
+        "/agent-api",
+        "/stages",
+        "/research-plan",
+        "/expert-network",
+        "/team-workspace",
+        "/launch-operations",
         "/ai-data-policy",
         "/security",
         "/public/packets/:packetId/result",
@@ -404,9 +428,16 @@ def main() -> int:
         "/api/opportunities",
         "/api/country-coverage",
         "/api/billing/controls",
+        "/api/billing/usage",
         "/api/agent-api",
+        "/api/agent-api/gateway",
         "/api/traffic-pages",
         "/api/transport-readiness",
+        "/api/stages",
+        "/api/research-plan",
+        "/api/expert-network",
+        "/api/team-workspace",
+        "/api/launch-operations",
     ):
         if route not in runtime.get("api_routes", []):
             failures.append(f"runtime state should expose public API route {route}")
@@ -439,8 +470,8 @@ def main() -> int:
     if manual_no_ai_workflow.get("status") != "manual_no_ai_workflow_ready":
         failures.append("manual/no-AI workflow artifact should be ready")
     requirement_ids = {row.get("id") for row in requirements_traceability.get("requirements", [])}
-    if len(requirements_traceability.get("requirements", [])) < 37:
-        failures.append("requirements traceability matrix should cover public, exporter, policy, and completion requirements")
+    if len(requirements_traceability.get("requirements", [])) < 43:
+        failures.append("requirements traceability matrix should cover public, exporter, policy, completion, and all-stage requirements")
     for requirement_id in (
         "REQ-PUBLIC-01",
         "REQ-EXPORT-01",
@@ -455,6 +486,12 @@ def main() -> int:
         "REQ-BILLING-01",
         "REQ-AGENT-01",
         "REQ-TRAFFIC-01",
+        "REQ-STAGE-01",
+        "REQ-RESEARCH-01",
+        "REQ-EXPERT-01",
+        "REQ-TEAM-01",
+        "REQ-API-GATEWAY-01",
+        "REQ-LAUNCH-OPS-01",
     ):
         if requirement_id not in requirement_ids:
             failures.append(f"requirements traceability matrix missing {requirement_id}")
@@ -466,10 +503,39 @@ def main() -> int:
         failures.append("public trade readiness manifest should expose quick-check API")
     if "/api/public/starter" not in public_trade.get("routes", {}).get("api", []):
         failures.append("public trade readiness manifest should expose starter API")
-    for route in ("/opportunities", "/reports/sample", "/pricing", "/security", "/tools/document-check"):
+    for route in (
+        "/opportunities",
+        "/country-coverage",
+        "/transport-readiness",
+        "/reports/sample",
+        "/pricing",
+        "/billing/usage",
+        "/agent-api",
+        "/stages",
+        "/research-plan",
+        "/expert-network",
+        "/team-workspace",
+        "/launch-operations",
+        "/security",
+        "/tools/document-check",
+    ):
         if route not in public_trade.get("routes", {}).get("ui", []):
             failures.append(f"public trade readiness manifest should expose {route}")
-    for route in ("/api/opportunities", "/api/country-coverage", "/api/billing/controls", "/api/agent-api", "/api/traffic-pages", "/api/transport-readiness"):
+    for route in (
+        "/api/opportunities",
+        "/api/country-coverage",
+        "/api/billing/controls",
+        "/api/billing/usage",
+        "/api/agent-api",
+        "/api/agent-api/gateway",
+        "/api/traffic-pages",
+        "/api/transport-readiness",
+        "/api/stages",
+        "/api/research-plan",
+        "/api/expert-network",
+        "/api/team-workspace",
+        "/api/launch-operations",
+    ):
         if route not in public_trade.get("routes", {}).get("api", []):
             failures.append(f"public trade readiness manifest should expose {route}")
     if "beginner_no_documents" not in public_trade.get("modes", {}):
@@ -509,7 +575,7 @@ def main() -> int:
         failures.append("policy source snapshots artifact should be ready")
     if policy_impact.get("status") != "policy_change_impact_report_ready":
         failures.append("policy change impact report should be ready")
-    if completion.get("status") != "completion_platform_contracts_ready_with_external_gates":
+    if completion.get("status") != "all_local_stages_implemented_with_external_gates":
         failures.append(f"completion platform status unexpected: {completion.get('status')!r}")
     if country_coverage.get("status") != "country_coverage_ready_with_claim_gates":
         failures.append("country coverage report should be ready with claim gates")
@@ -535,6 +601,22 @@ def main() -> int:
         failures.append("traffic pages manifest should be ready")
     if len(traffic_pages.get("pages", [])) < 10:
         failures.append("traffic pages manifest should include checklist and generator pages")
+    if research_execution.get("status") != "research_execution_ready_with_evidence_gates":
+        failures.append("research execution plan should be ready with evidence gates")
+    if team_workspace.get("status") != "team_workspace_ready_local_with_approval_gates":
+        failures.append("team workspace should be ready with approval gates")
+    if expert_network.get("status") != "expert_network_ready_local_with_human_review_gates":
+        failures.append("expert network should be ready with human review gates")
+    if billing_usage.get("status") != "billing_usage_ledger_ready_local_no_charges":
+        failures.append("billing usage ledger should be local with no charges")
+    if agent_gateway.get("status") != "agent_api_gateway_ready_local_dry_run":
+        failures.append("agent API gateway should be ready as local dry run")
+    if launch_operations.get("status") != "launch_operations_ready_for_private_beta_review":
+        failures.append("launch operations should be ready for private beta review")
+    if all_stages.get("status") != "all_local_stages_implemented_with_external_gates":
+        failures.append("all stage readiness report should mark local stages implemented")
+    if all_stages.get("stage_count", 0) < 16:
+        failures.append("all stage readiness report should include every local product stage")
     store_path = ROOT / "system_review_graph" / "customer_workflow.sqlite"
     if store_path.exists():
         with sqlite3.connect(store_path) as conn:
@@ -612,6 +694,13 @@ def main() -> int:
     print(f"billing_controls={billing_controls['status']}")
     print(f"agent_api={agent_api['status']}")
     print(f"traffic_pages={len(traffic_pages['pages'])}")
+    print(f"all_stages={all_stages['status']}")
+    print(f"research_execution={research_execution['status']}")
+    print(f"team_workspace={team_workspace['status']}")
+    print(f"expert_network={expert_network['status']}")
+    print(f"billing_usage={billing_usage['status']}")
+    print(f"agent_gateway={agent_gateway['status']}")
+    print(f"launch_operations={launch_operations['status']}")
     print(f"review_requests={len(review_requests)}")
     print(f"audit_events={len(audit_events['events'])}")
     print(f"deployment_status={deployment['status']}")

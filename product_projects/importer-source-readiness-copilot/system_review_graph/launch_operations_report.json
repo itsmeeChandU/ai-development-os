@@ -1,0 +1,44 @@
+{
+  "controls": [
+    {
+      "control": "feature_flags",
+      "external_gate": "owner approval required",
+      "status": "local_contract_ready"
+    },
+    {
+      "control": "support_queue",
+      "external_gate": "support owner required",
+      "status": "local_contract_ready"
+    },
+    {
+      "control": "rollback_plan",
+      "external_gate": "deployment owner required",
+      "status": "local_contract_ready"
+    },
+    {
+      "control": "monitoring",
+      "external_gate": "hosted observability required",
+      "status": "local_contract_ready"
+    },
+    {
+      "control": "incident_response",
+      "external_gate": "security owner required",
+      "status": "local_contract_ready"
+    },
+    {
+      "control": "outcome_log",
+      "external_gate": "real user/operator outcomes required",
+      "status": "local_contract_ready"
+    }
+  ],
+  "generated_at": "2026-06-26T09:54:41+00:00",
+  "packet_count": 1,
+  "private_beta_entry": {
+    "human_approval_required": true,
+    "local_product_ready": true,
+    "next_valid_move": "Use board/private-beta packet to approve or reject a controlled beta after human review gates are signed.",
+    "public_launch_allowed": false
+  },
+  "proof_boundary": "Launch operations are locally specified for private-beta review; they do not approve production deployment or public launch.",
+  "status": "launch_operations_ready_for_private_beta_review"
+}

@@ -65,9 +65,16 @@ API_ROUTES = {
     "/api/opportunities": "system_review_graph/opportunity_scanner_report.json",
     "/api/country-coverage": "system_review_graph/country_coverage_report.json",
     "/api/billing/controls": "system_review_graph/billing_credit_controls.json",
+    "/api/billing/usage": "system_review_graph/billing_usage_ledger.json",
     "/api/agent-api": "system_review_graph/agent_api_manifest.json",
+    "/api/agent-api/gateway": "system_review_graph/agent_api_gateway_contract.json",
     "/api/traffic-pages": "system_review_graph/traffic_pages_manifest.json",
     "/api/transport-readiness": "system_review_graph/transport_readiness_report.json",
+    "/api/stages": "system_review_graph/all_stage_readiness_report.json",
+    "/api/research-plan": "system_review_graph/research_execution_plan.json",
+    "/api/expert-network": "system_review_graph/expert_network_report.json",
+    "/api/team-workspace": "system_review_graph/team_workspace_report.json",
+    "/api/launch-operations": "system_review_graph/launch_operations_report.json",
 }
 
 STATIC_ROUTES = {
@@ -847,6 +854,80 @@ def _render_opportunities(repo_root: Path, workflow: dict[str, Any]) -> str:
     return _render_page("Opportunity Signals", body)
 
 
+def _render_country_coverage(repo_root: Path) -> str:
+    coverage = _load_graph_json(repo_root, "country_coverage_report.json")
+    rows = "".join(
+        "<tr>"
+        f"<td>{escape(str(row.get('country')))}</td>"
+        f"<td>{escape(str(row.get('coverage_tier')))}</td>"
+        f"<td>{escape(str(row.get('coverage_label')))}</td>"
+        f"<td>{escape(str(row.get('source_count')))}</td>"
+        f"<td>{escape(str(row.get('next_valid_move')))}</td>"
+        "</tr>"
+        for row in coverage.get("countries", [])
+    )
+    packet_rows = "".join(
+        "<tr>"
+        f"<td>{escape(str(row.get('packet_id')))}</td>"
+        f"<td>{escape(str(row.get('origin_country')))} -> {escape(str(row.get('destination_country')))}</td>"
+        f"<td>{escape(str(row.get('product_category')))}</td>"
+        f"<td>{escape(str(row.get('effective_coverage_tier')))}</td>"
+        f"<td>{escape(str(row.get('coverage_status')))}</td>"
+        "</tr>"
+        for row in coverage.get("packet_coverage", [])
+    )
+    body = f"""
+<section class="surface">
+  <h1>Country Coverage</h1>
+  <p class="lede">Coverage tiers show which countries are selectable, monitored, or template-ready inside the product.</p>
+  <p class="note">{escape(str(coverage.get('proof_boundary') or PRODUCT_BOUNDARY))}</p>
+</section>
+<section class="surface">
+  <h2>Countries</h2>
+  <table><thead><tr><th>Country</th><th>Tier</th><th>Support</th><th>Sources</th><th>Next</th></tr></thead><tbody>{rows}</tbody></table>
+</section>
+<section class="surface">
+  <h2>Packet Coverage</h2>
+  <table><thead><tr><th>Packet</th><th>Lane</th><th>Category</th><th>Effective Tier</th><th>Status</th></tr></thead><tbody>{packet_rows}</tbody></table>
+</section>
+"""
+    return _render_page("Country Coverage", body)
+
+
+def _render_transport_readiness(repo_root: Path) -> str:
+    transport = _load_graph_json(repo_root, "transport_readiness_report.json")
+    rows = "".join(
+        "<tr>"
+        f"<td>{escape(str(row.get('packet_id')))}</td>"
+        f"<td>{escape(str(row.get('status')))}</td>"
+        f"<td>{escape(', '.join(row.get('missing_transport_inputs', [])))}</td>"
+        f"<td>{escape(str(row.get('next_valid_move')))}</td>"
+        "</tr>"
+        for row in transport.get("rows", [])
+    )
+    questions = _list_items([
+        question
+        for row in transport.get("rows", [])
+        for question in row.get("freight_forwarder_questions", [])
+    ])
+    body = f"""
+<section class="surface">
+  <h1>Transport Readiness</h1>
+  <p class="lede">Prepare shipment and freight-forwarder questions before making cost, route, or shipment claims.</p>
+  <p class="note">{escape(str(transport.get('proof_boundary') or PRODUCT_BOUNDARY))}</p>
+</section>
+<section class="surface">
+  <h2>Packet Transport Rows</h2>
+  <table><thead><tr><th>Packet</th><th>Status</th><th>Missing Inputs</th><th>Next</th></tr></thead><tbody>{rows}</tbody></table>
+</section>
+<section class="surface">
+  <h2>Freight-Forwarder Questions</h2>
+  <ul>{questions}</ul>
+</section>
+"""
+    return _render_page("Transport Readiness", body)
+
+
 def _render_pricing(repo_root: Path) -> str:
     billing = _load_graph_json(repo_root, "billing_credit_controls.json")
     plan_rows = "".join(
@@ -890,6 +971,231 @@ def _render_pricing(repo_root: Path) -> str:
 </section>
 """
     return _render_page("Billing And Credits", body)
+
+
+def _render_billing_usage(repo_root: Path) -> str:
+    usage = _load_graph_json(repo_root, "billing_usage_ledger.json")
+    rows = "".join(
+        "<tr>"
+        f"<td>{escape(str(row.get('packet_id')))}</td>"
+        f"<td>{escape(str(row.get('action')))}</td>"
+        f"<td>{escape(str(row.get('estimated_credits')))}</td>"
+        f"<td>{escape(str(row.get('authorization_status')))}</td>"
+        f"<td>{escape(str(row.get('external_charge_created')))}</td>"
+        "</tr>"
+        for row in usage.get("usage_rows", [])
+    )
+    body = f"""
+<section class="surface">
+  <h1>Billing Usage</h1>
+  <p class="lede">Local usage rows estimate credit exposure and block heavy work before any paid or external action.</p>
+  <p class="note">{escape(str(usage.get('proof_boundary') or 'No live charges are created.'))}</p>
+</section>
+<section class="surface">
+  <table><thead><tr><th>Packet</th><th>Action</th><th>Credits</th><th>Authorization</th><th>External Charge</th></tr></thead><tbody>{rows}</tbody></table>
+</section>
+"""
+    return _render_page("Billing Usage", body)
+
+
+def _render_agent_api(repo_root: Path) -> str:
+    manifest = _load_graph_json(repo_root, "agent_api_manifest.json")
+    gateway = _load_graph_json(repo_root, "agent_api_gateway_contract.json")
+    tools = "".join(
+        "<tr>"
+        f"<td>{escape(str(row.get('tool')))}</td>"
+        f"<td>{escape(str(row.get('method')))}</td>"
+        f"<td>{escape(str(row.get('route')))}</td>"
+        f"<td>{escape(str(row.get('scope_required')))}</td>"
+        f"<td>{escape(str(row.get('billing_gate')))}</td>"
+        "</tr>"
+        for row in gateway.get("tools", [])
+    )
+    forbidden = _list_items(manifest.get("forbidden_tools", []))
+    body = f"""
+<section class="surface">
+  <h1>Agent API</h1>
+  <p class="lede">Agents can dry-run packet creation, reports, summaries, and billing quotes through scoped local tool contracts.</p>
+  <p class="note">{escape(str(gateway.get('proof_boundary') or manifest.get('proof_boundary') or PRODUCT_BOUNDARY))}</p>
+</section>
+<section class="surface">
+  <h2>Dry-Run Tools</h2>
+  <table><thead><tr><th>Tool</th><th>Method</th><th>Route</th><th>Scope</th><th>Billing</th></tr></thead><tbody>{tools}</tbody></table>
+</section>
+<section class="surface">
+  <h2>Forbidden Tools</h2>
+  <ul>{forbidden}</ul>
+</section>
+"""
+    return _render_page("Agent API", body)
+
+
+def _render_stage_overview(repo_root: Path) -> str:
+    stages = _load_graph_json(repo_root, "all_stage_readiness_report.json")
+    rows = "".join(
+        "<tr>"
+        f"<td>{escape(str(row.get('stage_id')))}</td>"
+        f"<td>{escape(str(row.get('name')))}</td>"
+        f"<td>{escape(str(row.get('status')))}</td>"
+        f"<td>{escape(', '.join(row.get('routes', [])))}</td>"
+        f"<td>{escape(str(row.get('next_valid_move')))}</td>"
+        "</tr>"
+        for row in stages.get("stages", [])
+    )
+    external = _list_items(stages.get("still_external", []))
+    body = f"""
+<section class="surface">
+  <h1>All Product Stages</h1>
+  <p class="lede">Every locally implementable stage is represented by usable routes, APIs, generated artifacts, and proof checks.</p>
+  <p class="note">{escape(str(stages.get('proof_boundary') or PRODUCT_BOUNDARY))}</p>
+  <div class="grid grid-3">
+    {_metric_card("Stage Status", stages.get("status"), "Local stages implemented.")}
+    {_metric_card("Stages", stages.get("stage_count"), "Usable local surfaces.")}
+    {_metric_card("External Gates", stages.get("external_gate_count"), "Still need real approval/evidence.")}
+  </div>
+</section>
+<section class="surface">
+  <h2>Stage Runtime</h2>
+  <table><thead><tr><th>ID</th><th>Stage</th><th>Status</th><th>Routes</th><th>Next</th></tr></thead><tbody>{rows}</tbody></table>
+</section>
+<section class="surface"><h2>Still External</h2><ul>{external}</ul></section>
+"""
+    return _render_page("All Product Stages", body)
+
+
+def _render_research_plan(repo_root: Path) -> str:
+    research = _load_graph_json(repo_root, "research_execution_plan.json")
+    rows = "".join(
+        "<tr>"
+        f"<td>{escape(str(row.get('packet_id')))}</td>"
+        f"<td>{escape(str(row.get('research_mode')))}</td>"
+        f"<td>{escape(', '.join(row.get('official_source_search', [])))}</td>"
+        f"<td>{escape(', '.join(row.get('dataset_or_api_needs', [])))}</td>"
+        f"<td>{escape(str(row.get('next_valid_move')))}</td>"
+        "</tr>"
+        for row in research.get("rows", [])
+    )
+    body = f"""
+<section class="surface">
+  <h1>Research Execution</h1>
+  <p class="lede">Routes each packet to model-prior, web, official-source, dataset, and expert/user validation lanes.</p>
+  <p class="note">{escape(str(research.get('proof_boundary') or PRODUCT_BOUNDARY))}</p>
+</section>
+<section class="surface">
+  <table><thead><tr><th>Packet</th><th>Mode</th><th>Official Sources</th><th>Dataset/API Needs</th><th>Next</th></tr></thead><tbody>{rows}</tbody></table>
+</section>
+"""
+    return _render_page("Research Execution", body)
+
+
+def _render_expert_network(repo_root: Path) -> str:
+    experts = _load_graph_json(repo_root, "expert_network_report.json")
+    role_rows = "".join(
+        "<tr>"
+        f"<td>{escape(str(row.get('label')))}</td>"
+        f"<td>{escape(str(row.get('scope')))}</td>"
+        "</tr>"
+        for row in experts.get("expert_roles", [])
+    )
+    queue_rows = "".join(
+        "<tr>"
+        f"<td>{escape(str(row.get('packet_id')))}</td>"
+        f"<td>{escape(str(row.get('role_id')))}</td>"
+        f"<td>{escape(str(row.get('status')))}</td>"
+        f"<td>{escape(str(row.get('simulated_agent_can_approve')))}</td>"
+        "</tr>"
+        for row in experts.get("review_queue", [])
+    )
+    body = f"""
+<section class="surface">
+  <h1>Expert Network</h1>
+  <p class="lede">Prepare scoped review packets for qualified people and keep AI simulation separate from human approval.</p>
+  <p class="note">{escape(str(experts.get('proof_boundary') or PRODUCT_BOUNDARY))}</p>
+</section>
+<section class="surface"><h2>Roles</h2><table><thead><tr><th>Role</th><th>Scope</th></tr></thead><tbody>{role_rows}</tbody></table></section>
+<section class="surface"><h2>Review Queue</h2><table><thead><tr><th>Packet</th><th>Role</th><th>Status</th><th>AI Can Approve</th></tr></thead><tbody>{queue_rows}</tbody></table></section>
+"""
+    return _render_page("Expert Network", body)
+
+
+def _render_team_workspace(repo_root: Path) -> str:
+    team = _load_graph_json(repo_root, "team_workspace_report.json")
+    rows = []
+    for workspace in team.get("workspaces", []):
+        for approval in workspace.get("approval_board", []):
+            rows.append(
+                "<tr>"
+                f"<td>{escape(str(workspace.get('packet_id')))}</td>"
+                f"<td>{escape(str(approval.get('gate')))}</td>"
+                f"<td>{escape(str(approval.get('owner')))}</td>"
+                f"<td>{escape(str(approval.get('status')))}</td>"
+                f"<td>{escape(str(workspace.get('next_valid_move')))}</td>"
+                "</tr>"
+            )
+    body = f"""
+<section class="surface">
+  <h1>Team Workspace</h1>
+  <p class="lede">Business/team roles, approval boards, and packet ownership are local coordination surfaces.</p>
+  <p class="note">{escape(str(team.get('proof_boundary') or PRODUCT_BOUNDARY))}</p>
+</section>
+<section class="surface">
+  <table><thead><tr><th>Packet</th><th>Gate</th><th>Owner</th><th>Status</th><th>Next</th></tr></thead><tbody>{''.join(rows)}</tbody></table>
+</section>
+"""
+    return _render_page("Team Workspace", body)
+
+
+def _render_launch_operations(repo_root: Path) -> str:
+    launch = _load_graph_json(repo_root, "launch_operations_report.json")
+    rows = "".join(
+        "<tr>"
+        f"<td>{escape(str(row.get('control')))}</td>"
+        f"<td>{escape(str(row.get('status')))}</td>"
+        f"<td>{escape(str(row.get('external_gate')))}</td>"
+        "</tr>"
+        for row in launch.get("controls", [])
+    )
+    entry = launch.get("private_beta_entry", {})
+    body = f"""
+<section class="surface">
+  <h1>Launch Operations</h1>
+  <p class="lede">Private-beta controls, support, rollback, monitoring, and outcome logging are specified locally.</p>
+  <p class="note">{escape(str(launch.get('proof_boundary') or PRODUCT_BOUNDARY))}</p>
+  <div class="grid grid-3">
+    {_metric_card("Local Product Ready", entry.get("local_product_ready"), "For private review only.")}
+    {_metric_card("Human Approval Required", entry.get("human_approval_required"), "No hidden launch gate.")}
+    {_metric_card("Public Launch Allowed", entry.get("public_launch_allowed"), "Must stay false.")}
+  </div>
+</section>
+<section class="surface">
+  <table><thead><tr><th>Control</th><th>Status</th><th>External Gate</th></tr></thead><tbody>{rows}</tbody></table>
+</section>
+"""
+    return _render_page("Launch Operations", body)
+
+
+def _render_traffic_page(repo_root: Path, slug: str) -> str | None:
+    traffic = _load_graph_json(repo_root, "traffic_pages_manifest.json")
+    page = next((row for row in traffic.get("pages", []) if row.get("slug") == slug), None)
+    if page is None:
+        return None
+    sections = _list_items(page.get("sections", []))
+    body = f"""
+<section class="surface">
+  <h1>{escape(str(page.get('title')))}</h1>
+  <p class="lede">Use this checklist page to orient the user, then route them into the actual readiness tool.</p>
+  <p class="note">{escape(str(page.get('claim_boundary')))}</p>
+  <div class="actions">
+    {_button_link("/start", "Start without documents", "sparkles")}
+    {_button_link("/trade-check", "Upload PDFs", "upload", tone="secondary")}
+  </div>
+</section>
+<section class="surface">
+  <h2>Page Sections</h2>
+  <ul>{sections}</ul>
+</section>
+"""
+    return _render_page(str(page.get("title")), body)
 
 
 def _render_sample_reports(repo_root: Path) -> str:
@@ -1834,9 +2140,18 @@ def _index_payload(repo_root: Path) -> dict[str, Any]:
                 "/tools/document-check",
                 "/tools/canadian-references",
                 "/opportunities",
+                "/country-coverage",
+                "/transport-readiness",
                 "/reports/sample",
                 "/pricing",
                 "/billing",
+                "/billing/usage",
+                "/agent-api",
+                "/stages",
+                "/research-plan",
+                "/expert-network",
+                "/team-workspace",
+                "/launch-operations",
                 "/ai-data-policy",
                 "/security",
                 "/public/packets/:id/result",
@@ -1853,6 +2168,14 @@ def _index_payload(repo_root: Path) -> dict[str, Any]:
                 "/api/public/packets/:id/reports/buyer.pdf",
                 "/api/public/packets/:id/reports/broker.pdf",
                 "/api/public/packets/:id/delete-files",
+                "/api/billing/usage",
+                "/api/agent-api/gateway",
+                "/api/stages",
+                "/api/research-plan",
+                "/api/expert-network",
+                "/api/team-workspace",
+                "/api/launch-operations",
+                "/api/agent-tools/:tool",
                 "/login",
                 "/signup",
                 "/onboarding",
@@ -1962,12 +2285,44 @@ def build_operator_app_handler(repo_root: Path) -> type[BaseHTTPRequestHandler]:
             if path == "/opportunities":
                 self._send_html(_render_opportunities(repo_root, workflow))
                 return
+            if path == "/country-coverage":
+                self._send_html(_render_country_coverage(repo_root))
+                return
+            if path == "/transport-readiness":
+                self._send_html(_render_transport_readiness(repo_root))
+                return
             if path == "/reports/sample":
                 self._send_html(_render_sample_reports(repo_root))
                 return
             if path in {"/pricing", "/billing"}:
                 self._send_html(_render_pricing(repo_root))
                 return
+            if path == "/billing/usage":
+                self._send_html(_render_billing_usage(repo_root))
+                return
+            if path == "/agent-api":
+                self._send_html(_render_agent_api(repo_root))
+                return
+            if path == "/stages":
+                self._send_html(_render_stage_overview(repo_root))
+                return
+            if path == "/research-plan":
+                self._send_html(_render_research_plan(repo_root))
+                return
+            if path == "/expert-network":
+                self._send_html(_render_expert_network(repo_root))
+                return
+            if path == "/team-workspace":
+                self._send_html(_render_team_workspace(repo_root))
+                return
+            if path == "/launch-operations":
+                self._send_html(_render_launch_operations(repo_root))
+                return
+            if path.startswith("/tools/"):
+                traffic_html = _render_traffic_page(repo_root, path.removeprefix("/tools/").strip("/"))
+                if traffic_html is not None:
+                    self._send_html(traffic_html)
+                    return
             if path == "/ai-data-policy":
                 self._send_html(_render_ai_data_policy(runtime, actor))
                 return
@@ -2551,6 +2906,24 @@ def build_operator_app_handler(repo_root: Path) -> type[BaseHTTPRequestHandler]:
             if path in API_ROUTES:
                 self._send_file(API_ROUTES[path], "application/json; charset=utf-8")
                 return
+            if path.startswith("/api/agent-tools/"):
+                tool_name = path.removeprefix("/api/agent-tools/").strip("/")
+                gateway = _load_graph_json(repo_root, "agent_api_gateway_contract.json")
+                tool = next((row for row in gateway.get("tools", []) if row.get("tool") == tool_name), None)
+                if tool is None:
+                    self.send_error(HTTPStatus.NOT_FOUND, "Agent tool not found")
+                    return
+                self._send_json(
+                    {
+                        "status": "agent_tool_dry_run_ready",
+                        "tool": tool,
+                        "actor": actor.get("role"),
+                        "external_effects_created": False,
+                        "can_open_claim_gate": False,
+                        "proof_boundary": gateway.get("proof_boundary"),
+                    }
+                )
+                return
             if path == "/api/customer-workflow":
                 self._send_json(workflow)
                 return
@@ -2686,6 +3059,27 @@ def build_operator_app_handler(repo_root: Path) -> type[BaseHTTPRequestHandler]:
             self.send_error(HTTPStatus.NOT_FOUND, "API route not found")
 
         def _handle_api_post(self, path: str, actor: dict[str, Any]) -> None:
+            if path.startswith("/api/agent-tools/"):
+                tool_name = path.removeprefix("/api/agent-tools/").strip("/")
+                fields = self._read_fields()
+                gateway = _load_graph_json(repo_root, "agent_api_gateway_contract.json")
+                tool = next((row for row in gateway.get("tools", []) if row.get("tool") == tool_name), None)
+                if tool is None:
+                    self.send_error(HTTPStatus.NOT_FOUND, "Agent tool not found")
+                    return
+                self._send_json(
+                    {
+                        "status": "agent_tool_dry_run_executed",
+                        "tool": tool_name,
+                        "packet_id": fields.get("packet_id") or "packet-frozen-tuna-canada-001",
+                        "dry_run": True,
+                        "external_effects_created": False,
+                        "credits_charged": 0,
+                        "can_open_claim_gate": False,
+                        "next_valid_move": "Use generated packet/report locally and collect human evidence before external claims.",
+                    }
+                )
+                return
             if path == "/api/public/starter":
                 self._handle_public_starter(actor)
                 return

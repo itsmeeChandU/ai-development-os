@@ -1,0 +1,251 @@
+{
+  "external_gate_count": 8,
+  "generated_at": "2026-06-26T09:54:41+00:00",
+  "implemented_stage_count": 16,
+  "proof_boundary": "All locally implementable product stages are represented by usable routes, APIs, artifacts, and tests. Real-world approvals remain explicit gates.",
+  "stage_count": 16,
+  "stages": [
+    {
+      "artifacts": [
+        "Starter Checklist.pdf"
+      ],
+      "can_use_locally_now": true,
+      "external_claims_opened": false,
+      "name": "Beginner starter",
+      "next_valid_move": "Use locally, collect real evidence, and keep external claims closed until owner or qualified-human approval.",
+      "routes": [
+        "/start"
+      ],
+      "stage_id": "stage-00",
+      "status": "implemented_local"
+    },
+    {
+      "artifacts": [
+        "public_upload_manifest.json"
+      ],
+      "can_use_locally_now": true,
+      "external_claims_opened": false,
+      "name": "PDF quick check",
+      "next_valid_move": "Use locally, collect real evidence, and keep external claims closed until owner or qualified-human approval.",
+      "routes": [
+        "/trade-check",
+        "/tools/document-check"
+      ],
+      "stage_id": "stage-01",
+      "status": "implemented_local"
+    },
+    {
+      "artifacts": [
+        "Missing Evidence Checklist.pdf"
+      ],
+      "can_use_locally_now": true,
+      "external_claims_opened": false,
+      "name": "Confirmation and missing evidence",
+      "next_valid_move": "Use locally, collect real evidence, and keep external claims closed until owner or qualified-human approval.",
+      "routes": [
+        "/public/packets/:id/confirm"
+      ],
+      "stage_id": "stage-02",
+      "status": "implemented_local"
+    },
+    {
+      "artifacts": [
+        "customer_workflow.sqlite"
+      ],
+      "can_use_locally_now": true,
+      "external_claims_opened": false,
+      "name": "Saved workspace",
+      "next_valid_move": "Use locally, collect real evidence, and keep external claims closed until owner or qualified-human approval.",
+      "routes": [
+        "/workspace",
+        "/packets"
+      ],
+      "stage_id": "stage-03",
+      "status": "implemented_local"
+    },
+    {
+      "artifacts": [
+        "ai_model_router.json"
+      ],
+      "can_use_locally_now": true,
+      "external_claims_opened": false,
+      "name": "AI/no-AI routing",
+      "next_valid_move": "Use locally, collect real evidence, and keep external claims closed until owner or qualified-human approval.",
+      "routes": [
+        "/settings/ai-data-policy",
+        "/ai-data-policy"
+      ],
+      "stage_id": "stage-04",
+      "status": "implemented_local_with_policy_gates"
+    },
+    {
+      "artifacts": [
+        "intelligence_hub_policy_monitor.json"
+      ],
+      "can_use_locally_now": true,
+      "external_claims_opened": false,
+      "name": "Policy source monitoring",
+      "next_valid_move": "Use locally, collect real evidence, and keep external claims closed until owner or qualified-human approval.",
+      "routes": [
+        "/packets/:id/source-monitoring"
+      ],
+      "stage_id": "stage-05",
+      "status": "implemented_local_with_refresh_gates"
+    },
+    {
+      "artifacts": [
+        "opportunity_scanner_report.json"
+      ],
+      "can_use_locally_now": true,
+      "external_claims_opened": false,
+      "name": "Opportunity scanner",
+      "next_valid_move": "Use locally, collect real evidence, and keep external claims closed until owner or qualified-human approval.",
+      "routes": [
+        "/opportunities"
+      ],
+      "stage_id": "stage-06",
+      "status": "opportunity_scanner_ready_with_research_gates"
+    },
+    {
+      "artifacts": [
+        "country_coverage_report.json"
+      ],
+      "can_use_locally_now": true,
+      "external_claims_opened": false,
+      "name": "Country coverage",
+      "next_valid_move": "Use locally, collect real evidence, and keep external claims closed until owner or qualified-human approval.",
+      "routes": [
+        "/country-coverage"
+      ],
+      "stage_id": "stage-07",
+      "status": "country_coverage_ready_with_claim_gates"
+    },
+    {
+      "artifacts": [
+        "transport_readiness_report.json"
+      ],
+      "can_use_locally_now": true,
+      "external_claims_opened": false,
+      "name": "Transport readiness",
+      "next_valid_move": "Use locally, collect real evidence, and keep external claims closed until owner or qualified-human approval.",
+      "routes": [
+        "/transport-readiness"
+      ],
+      "stage_id": "stage-08",
+      "status": "transport_readiness_ready_with_forwarder_gates"
+    },
+    {
+      "artifacts": [
+        "billing_credit_controls.json",
+        "billing_usage_ledger.json"
+      ],
+      "can_use_locally_now": true,
+      "external_claims_opened": false,
+      "name": "Billing and credits",
+      "next_valid_move": "Use locally, collect real evidence, and keep external claims closed until owner or qualified-human approval.",
+      "routes": [
+        "/pricing",
+        "/billing"
+      ],
+      "stage_id": "stage-09",
+      "status": "billing_credit_controls_ready_local_no_live_checkout"
+    },
+    {
+      "artifacts": [
+        "agent_api_manifest.json",
+        "agent_api_gateway_contract.json"
+      ],
+      "can_use_locally_now": true,
+      "external_claims_opened": false,
+      "name": "Agent/API layer",
+      "next_valid_move": "Use locally, collect real evidence, and keep external claims closed until owner or qualified-human approval.",
+      "routes": [
+        "/agent-api"
+      ],
+      "stage_id": "stage-10",
+      "status": "agent_api_gateway_ready_local_dry_run"
+    },
+    {
+      "artifacts": [
+        "traffic_pages_manifest.json"
+      ],
+      "can_use_locally_now": true,
+      "external_claims_opened": false,
+      "name": "Traffic and sample reports",
+      "next_valid_move": "Use locally, collect real evidence, and keep external claims closed until owner or qualified-human approval.",
+      "routes": [
+        "/reports/sample",
+        "/tools/:slug"
+      ],
+      "stage_id": "stage-11",
+      "status": "traffic_pages_manifest_ready"
+    },
+    {
+      "artifacts": [
+        "research_execution_plan.json"
+      ],
+      "can_use_locally_now": true,
+      "external_claims_opened": false,
+      "name": "Research execution",
+      "next_valid_move": "Use locally, collect real evidence, and keep external claims closed until owner or qualified-human approval.",
+      "routes": [
+        "/research-plan"
+      ],
+      "stage_id": "stage-12",
+      "status": "research_execution_ready_with_evidence_gates"
+    },
+    {
+      "artifacts": [
+        "expert_network_report.json"
+      ],
+      "can_use_locally_now": true,
+      "external_claims_opened": false,
+      "name": "Expert network",
+      "next_valid_move": "Use locally, collect real evidence, and keep external claims closed until owner or qualified-human approval.",
+      "routes": [
+        "/expert-network"
+      ],
+      "stage_id": "stage-13",
+      "status": "expert_network_ready_local_with_human_review_gates"
+    },
+    {
+      "artifacts": [
+        "team_workspace_report.json"
+      ],
+      "can_use_locally_now": true,
+      "external_claims_opened": false,
+      "name": "Team workspace",
+      "next_valid_move": "Use locally, collect real evidence, and keep external claims closed until owner or qualified-human approval.",
+      "routes": [
+        "/team-workspace"
+      ],
+      "stage_id": "stage-14",
+      "status": "team_workspace_ready_local_with_approval_gates"
+    },
+    {
+      "artifacts": [
+        "launch_operations_report.json"
+      ],
+      "can_use_locally_now": true,
+      "external_claims_opened": false,
+      "name": "Launch operations",
+      "next_valid_move": "Use locally, collect real evidence, and keep external claims closed until owner or qualified-human approval.",
+      "routes": [
+        "/launch-operations"
+      ],
+      "stage_id": "stage-15",
+      "status": "launch_operations_ready_for_private_beta_review"
+    }
+  ],
+  "status": "all_local_stages_implemented_with_external_gates",
+  "still_external": [
+    "public hosting approval",
+    "legal/privacy approval",
+    "customs/tariff/CFIA or regulated compliance approval",
+    "buyer validation",
+    "supplier/manufacturer validation",
+    "payment provider activation",
+    "real expert signoff",
+    "production observability and security signoff"
+  ]
+}

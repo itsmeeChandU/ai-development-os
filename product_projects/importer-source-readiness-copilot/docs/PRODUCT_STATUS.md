@@ -23,7 +23,8 @@ workflow, public trade readiness, exporter-mode, report-type, upload-policy,
 policy/source monitor, and requirements traceability artifacts.
 It now also writes completion-stage contracts for opportunity scanning,
 country coverage tiers, transport readiness, billing/credit controls, agent
-API rules, and traffic-first checklist pages.
+API rules, traffic-first checklist pages, research execution, expert network,
+team workspace, dry-run agent gateway, billing usage, and launch operations.
 
 The current usable application is the local private-beta product app served by:
 
@@ -45,7 +46,9 @@ downloads, `/workspace`, `/dashboard`,
 `/admin/gates`, `/admin/audit`, and
 `/admin/system-health`. Public completion routes include `/opportunities`,
 `/reports/sample`, `/pricing`, `/billing`, `/ai-data-policy`, `/security`, and
-`/tools/document-check`. It is hostable after real infrastructure and qualified
+`/tools/document-check`. The all-stage routes are `/stages`, `/country-coverage`,
+`/transport-readiness`, `/billing/usage`, `/agent-api`, `/research-plan`,
+`/expert-network`, `/team-workspace`, and `/launch-operations`. It is hostable after real infrastructure and qualified
 security/privacy/human review gates are completed.
 
 ## Ready Now
@@ -86,6 +89,13 @@ security/privacy/human review gates are completed.
 - billing/credit controls with live checkout disabled
 - scoped agent/API manifest with forbidden claim-opening tools
 - traffic-first checklist and generator page manifest
+- all-stage readiness runtime with stage-by-stage routes and APIs
+- research execution plan for model, web, official-source, dataset, and expert/user lanes
+- expert network and local review queue
+- business/team workspace approval board
+- billing usage ledger with no live charges
+- dry-run agent API gateway
+- launch operations controls for private-beta review
 - evidence ledger with proof boundaries
 - blocked-safe customer readiness report
 - source-packet export routes
@@ -210,6 +220,13 @@ and public launch claims.
 - billing controls: `system_review_graph/billing_credit_controls.json`
 - agent API: `system_review_graph/agent_api_manifest.json`
 - traffic pages: `system_review_graph/traffic_pages_manifest.json`
+- all-stage readiness: `system_review_graph/all_stage_readiness_report.json`
+- research execution: `system_review_graph/research_execution_plan.json`
+- expert network: `system_review_graph/expert_network_report.json`
+- team workspace: `system_review_graph/team_workspace_report.json`
+- billing usage ledger: `system_review_graph/billing_usage_ledger.json`
+- agent gateway: `system_review_graph/agent_api_gateway_contract.json`
+- launch operations: `system_review_graph/launch_operations_report.json`
 
 This is a local dry run of the public product flow. It supports beginner
 starter intake, PDF upload, quarantine metadata, native text/OCR triage,
@@ -221,6 +238,18 @@ sample reports, source monitoring, and safe summaries. It is not public
 hosting, approval, tariff confirmation, CFIA clearance, customs/legal advice,
 buyer validation, payment readiness, shipment readiness, or commercial
 readiness.
+
+## All Local Stages Implemented
+
+- stage report: `system_review_graph/all_stage_readiness_report.json`
+- status: `all_local_stages_implemented_with_external_gates`
+- local stage count: 16
+- route: `/stages`
+- proof: `python3 scripts/check_product.py`
+
+This means the local product has stage surfaces and proof checks for the
+entire product lifecycle that can be built without real-world approvals. It
+does not mean launch approval or external claim proof.
 
 ## Next Valid Move
 

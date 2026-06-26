@@ -86,6 +86,7 @@ def main() -> int:
         PROJECT / "docs" / "PRODUCT_STATUS.md",
         PROJECT / "docs" / "REQUIREMENTS_ANALYSIS.md",
         PROJECT / "docs" / "PUBLIC_TRADE_READINESS.md",
+        PROJECT / "docs" / "ALL_STAGES_COMPLETION.md",
         PROJECT / "docs" / "AI_DATA_POLICY.md",
         PROJECT / "docs" / "DOCUMENT_PROCESSING.md",
         PROJECT / "docs" / "OPPORTUNITY_SCANNER.md",
@@ -139,6 +140,13 @@ def main() -> int:
         PROJECT / "system_review_graph" / "billing_credit_controls.json",
         PROJECT / "system_review_graph" / "agent_api_manifest.json",
         PROJECT / "system_review_graph" / "traffic_pages_manifest.json",
+        PROJECT / "system_review_graph" / "research_execution_plan.json",
+        PROJECT / "system_review_graph" / "team_workspace_report.json",
+        PROJECT / "system_review_graph" / "expert_network_report.json",
+        PROJECT / "system_review_graph" / "billing_usage_ledger.json",
+        PROJECT / "system_review_graph" / "agent_api_gateway_contract.json",
+        PROJECT / "system_review_graph" / "launch_operations_report.json",
+        PROJECT / "system_review_graph" / "all_stage_readiness_report.json",
         PROJECT / "system_review_graph" / "source_refresh_runs.json",
         PROJECT / "system_review_graph" / "source_refresh_report_packet-frozen-tuna-canada-001.json",
         PROJECT / "system_review_graph" / "expert_review_packet_packet-frozen-tuna-canada-001.md",
@@ -305,6 +313,27 @@ def main() -> int:
     )
     traffic_pages = json.loads(
         (PROJECT / "system_review_graph" / "traffic_pages_manifest.json").read_text(encoding="utf-8")
+    )
+    research_execution = json.loads(
+        (PROJECT / "system_review_graph" / "research_execution_plan.json").read_text(encoding="utf-8")
+    )
+    team_workspace = json.loads(
+        (PROJECT / "system_review_graph" / "team_workspace_report.json").read_text(encoding="utf-8")
+    )
+    expert_network = json.loads(
+        (PROJECT / "system_review_graph" / "expert_network_report.json").read_text(encoding="utf-8")
+    )
+    billing_usage = json.loads(
+        (PROJECT / "system_review_graph" / "billing_usage_ledger.json").read_text(encoding="utf-8")
+    )
+    agent_gateway = json.loads(
+        (PROJECT / "system_review_graph" / "agent_api_gateway_contract.json").read_text(encoding="utf-8")
+    )
+    launch_operations = json.loads(
+        (PROJECT / "system_review_graph" / "launch_operations_report.json").read_text(encoding="utf-8")
+    )
+    all_stages = json.loads(
+        (PROJECT / "system_review_graph" / "all_stage_readiness_report.json").read_text(encoding="utf-8")
     )
     screenshot_manifest = json.loads(
         (PROJECT / "system_review_graph" / "operator_screenshot_manifest.json").read_text(encoding="utf-8")
@@ -586,7 +615,7 @@ def main() -> int:
         print("manual no-AI workflow is not ready")
         return 1
     requirement_ids = {row.get("id") for row in requirements_traceability.get("requirements", [])}
-    if len(requirements_traceability.get("requirements", [])) < 37:
+    if len(requirements_traceability.get("requirements", [])) < 43:
         print("Product project check: FAIL")
         print("requirements traceability matrix is incomplete")
         return 1
@@ -604,6 +633,12 @@ def main() -> int:
         "REQ-BILLING-01",
         "REQ-AGENT-01",
         "REQ-TRAFFIC-01",
+        "REQ-STAGE-01",
+        "REQ-RESEARCH-01",
+        "REQ-EXPERT-01",
+        "REQ-TEAM-01",
+        "REQ-API-GATEWAY-01",
+        "REQ-LAUNCH-OPS-01",
     ):
         if requirement_id not in requirement_ids:
             print("Product project check: FAIL")
@@ -621,12 +656,41 @@ def main() -> int:
         print("Product project check: FAIL")
         print("public trade readiness manifest missing starter API")
         return 1
-    for route in ("/opportunities", "/reports/sample", "/pricing", "/security", "/tools/document-check"):
+    for route in (
+        "/opportunities",
+        "/country-coverage",
+        "/transport-readiness",
+        "/reports/sample",
+        "/pricing",
+        "/billing/usage",
+        "/agent-api",
+        "/stages",
+        "/research-plan",
+        "/expert-network",
+        "/team-workspace",
+        "/launch-operations",
+        "/security",
+        "/tools/document-check",
+    ):
         if route not in public_trade.get("routes", {}).get("ui", []):
             print("Product project check: FAIL")
             print(f"public trade readiness manifest missing {route}")
             return 1
-    for route in ("/api/opportunities", "/api/country-coverage", "/api/billing/controls", "/api/agent-api", "/api/traffic-pages", "/api/transport-readiness"):
+    for route in (
+        "/api/opportunities",
+        "/api/country-coverage",
+        "/api/billing/controls",
+        "/api/billing/usage",
+        "/api/agent-api",
+        "/api/agent-api/gateway",
+        "/api/traffic-pages",
+        "/api/transport-readiness",
+        "/api/stages",
+        "/api/research-plan",
+        "/api/expert-network",
+        "/api/team-workspace",
+        "/api/launch-operations",
+    ):
         if route not in public_trade.get("routes", {}).get("api", []):
             print("Product project check: FAIL")
             print(f"public trade readiness manifest missing {route}")
@@ -688,7 +752,7 @@ def main() -> int:
         print("Product project check: FAIL")
         print("policy snapshot or impact artifact is missing")
         return 1
-    if completion.get("status") != "completion_platform_contracts_ready_with_external_gates":
+    if completion.get("status") != "all_local_stages_implemented_with_external_gates":
         print("Product project check: FAIL")
         print("completion platform artifact is missing or stale")
         return 1
@@ -721,6 +785,34 @@ def main() -> int:
     if traffic_pages.get("status") != "traffic_pages_manifest_ready" or len(traffic_pages.get("pages", [])) < 10:
         print("Product project check: FAIL")
         print("traffic pages artifact is missing checklist pages")
+        return 1
+    if research_execution.get("status") != "research_execution_ready_with_evidence_gates":
+        print("Product project check: FAIL")
+        print("research execution plan is missing or stale")
+        return 1
+    if team_workspace.get("status") != "team_workspace_ready_local_with_approval_gates":
+        print("Product project check: FAIL")
+        print("team workspace report is missing or stale")
+        return 1
+    if expert_network.get("status") != "expert_network_ready_local_with_human_review_gates":
+        print("Product project check: FAIL")
+        print("expert network report is missing or stale")
+        return 1
+    if billing_usage.get("status") != "billing_usage_ledger_ready_local_no_charges":
+        print("Product project check: FAIL")
+        print("billing usage ledger should be local with no charges")
+        return 1
+    if agent_gateway.get("status") != "agent_api_gateway_ready_local_dry_run":
+        print("Product project check: FAIL")
+        print("agent API gateway should be local dry run")
+        return 1
+    if launch_operations.get("status") != "launch_operations_ready_for_private_beta_review":
+        print("Product project check: FAIL")
+        print("launch operations report is missing or stale")
+        return 1
+    if all_stages.get("status") != "all_local_stages_implemented_with_external_gates" or all_stages.get("stage_count", 0) < 16:
+        print("Product project check: FAIL")
+        print("all-stage readiness report is missing local stage coverage")
         return 1
     store_path = PROJECT / "system_review_graph" / "customer_workflow.sqlite"
     with sqlite3.connect(store_path) as conn:
@@ -798,6 +890,13 @@ def main() -> int:
     print(f"billing_controls={billing_controls['status']}")
     print(f"agent_api={agent_api['status']}")
     print(f"traffic_pages={len(traffic_pages['pages'])}")
+    print(f"all_stages={all_stages['status']}")
+    print(f"research_execution={research_execution['status']}")
+    print(f"team_workspace={team_workspace['status']}")
+    print(f"expert_network={expert_network['status']}")
+    print(f"billing_usage={billing_usage['status']}")
+    print(f"agent_gateway={agent_gateway['status']}")
+    print(f"launch_operations={launch_operations['status']}")
     print(f"review_requests={len(review_requests)}")
     print(f"audit_events={len(audit_events['events'])}")
     print(f"deployment_status={deployment['status']}")

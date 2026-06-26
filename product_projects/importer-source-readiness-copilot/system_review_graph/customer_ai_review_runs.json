@@ -129,7 +129,7 @@
     "generated_at": "2026-06-25T00:00:00+00:00",
     "human_gate": "required_before_external_claims",
     "human_review_required": true,
-    "input_snapshot_hash": "7b7f8ccb0df90a34d489cf934c8383d10f7a4c4386e89a4568cb8803cb73d666",
+    "input_snapshot_hash": "6b02cc57b6152c81d1e244899b948c8cb63025d04093d4160dc68218e9ed5493",
     "model_mode": "metadata_only",
     "model_name": "deterministic-safety-rules",
     "model_name_or_endpoint": "local_rule_simulator",

@@ -1,0 +1,79 @@
+{
+  "expert_roles": [
+    {
+      "label": "Customs Broker / Trade Compliance",
+      "role_id": "customs_broker_or_trade_compliance",
+      "scope": "tariff, importer-of-record, customs process, broker packet review"
+    },
+    {
+      "label": "Food / Regulated Product Reviewer",
+      "role_id": "food_or_regulated_product_reviewer",
+      "scope": "CFIA or regulated product requirement review where applicable"
+    },
+    {
+      "label": "Freight Forwarder",
+      "role_id": "freight_forwarder",
+      "scope": "mode, route, packing, insurance, temperature, and shipment questions"
+    },
+    {
+      "label": "Privacy / Security Reviewer",
+      "role_id": "privacy_security_reviewer",
+      "scope": "uploaded customer evidence, AI processing, retention, and hosted controls"
+    },
+    {
+      "label": "Finance / Operations Reviewer",
+      "role_id": "finance_operator",
+      "scope": "credits, pricing, manual approval, and cost exposure"
+    }
+  ],
+  "generated_at": "2026-06-26T09:54:41+00:00",
+  "proof_boundary": "The product can prepare and route expert packets locally; real qualified review remains an external evidence gate.",
+  "review_queue": [
+    {
+      "next_valid_move": "Send scoped packet to a qualified person and record dated finding before opening any external claim.",
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "review_id": "review:packet-frozen-tuna-canada-001:customs_broker_or_trade_compliance",
+      "role_id": "customs_broker_or_trade_compliance",
+      "simulated_agent_can_approve": false,
+      "simulated_agent_can_prepare_questions": true,
+      "status": "ready_to_request_human_review"
+    },
+    {
+      "next_valid_move": "Send scoped packet to a qualified person and record dated finding before opening any external claim.",
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "review_id": "review:packet-frozen-tuna-canada-001:food_or_regulated_product_reviewer",
+      "role_id": "food_or_regulated_product_reviewer",
+      "simulated_agent_can_approve": false,
+      "simulated_agent_can_prepare_questions": true,
+      "status": "ready_to_request_human_review"
+    },
+    {
+      "next_valid_move": "Send scoped packet to a qualified person and record dated finding before opening any external claim.",
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "review_id": "review:packet-frozen-tuna-canada-001:freight_forwarder",
+      "role_id": "freight_forwarder",
+      "simulated_agent_can_approve": false,
+      "simulated_agent_can_prepare_questions": true,
+      "status": "ready_to_request_human_review"
+    },
+    {
+      "next_valid_move": "Send scoped packet to a qualified person and record dated finding before opening any external claim.",
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "review_id": "review:packet-frozen-tuna-canada-001:privacy_security_reviewer",
+      "role_id": "privacy_security_reviewer",
+      "simulated_agent_can_approve": false,
+      "simulated_agent_can_prepare_questions": true,
+      "status": "ready_to_request_human_review"
+    },
+    {
+      "next_valid_move": "Send scoped packet to a qualified person and record dated finding before opening any external claim.",
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "review_id": "review:packet-frozen-tuna-canada-001:finance_operator",
+      "role_id": "finance_operator",
+      "simulated_agent_can_approve": false,
+      "simulated_agent_can_prepare_questions": true,
+      "status": "ready_to_request_human_review"
+    }
+  ],
+  "status": "expert_network_ready_local_with_human_review_gates"
+}

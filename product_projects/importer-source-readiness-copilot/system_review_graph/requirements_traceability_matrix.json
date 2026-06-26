@@ -500,6 +500,88 @@
         "tests/test_completion_platform.py"
       ],
       "status": "implemented_manifest_and_routes"
+    },
+    {
+      "artifacts": [
+        "all_stage_readiness_report.json",
+        "completion_platform_manifest.json"
+      ],
+      "boundary": "All locally implementable stages have routes, APIs, and artifacts; real-world approvals remain external gates.",
+      "id": "REQ-STAGE-01",
+      "name": "All local product stages",
+      "proof": [
+        "tests/test_completion_platform.py",
+        "scripts/run_completion_platform.py"
+      ],
+      "status": "implemented_stage_runtime"
+    },
+    {
+      "artifacts": [
+        "research_execution_plan.json"
+      ],
+      "boundary": "Research routing chooses model-prior, web, official-source, dataset, and expert/user lanes; it does not prove the external facts.",
+      "id": "REQ-RESEARCH-01",
+      "name": "Research and data execution routing",
+      "proof": [
+        "tests/test_completion_platform.py"
+      ],
+      "status": "implemented_evidence_lane_router"
+    },
+    {
+      "artifacts": [
+        "expert_network_report.json",
+        "review_requests.json"
+      ],
+      "boundary": "The product can prepare and route scoped expert packets; real qualified findings remain external evidence.",
+      "id": "REQ-EXPERT-01",
+      "name": "Expert network and review routing",
+      "proof": [
+        "tests/test_completion_platform.py",
+        "tests/test_operator_app.py"
+      ],
+      "status": "implemented_local_review_network"
+    },
+    {
+      "artifacts": [
+        "team_workspace_report.json",
+        "auth_rbac_matrix.json"
+      ],
+      "boundary": "Team workspace roles and approval boards are local coordination surfaces, not real owner approval.",
+      "id": "REQ-TEAM-01",
+      "name": "Business/team workspace",
+      "proof": [
+        "tests/test_completion_platform.py",
+        "tests/test_operator_app.py"
+      ],
+      "status": "implemented_local_workspace"
+    },
+    {
+      "artifacts": [
+        "agent_api_gateway_contract.json",
+        "agent_api_manifest.json"
+      ],
+      "boundary": "Gateway tools execute as local dry-run contracts only; no public API, credentials, payments, or claim-opening authority are exposed.",
+      "id": "REQ-API-GATEWAY-01",
+      "name": "Agent API gateway dry-run",
+      "proof": [
+        "tests/test_completion_platform.py",
+        "tests/test_operator_app.py"
+      ],
+      "status": "implemented_local_dry_run_gateway"
+    },
+    {
+      "artifacts": [
+        "launch_operations_report.json",
+        "board_go_live_readiness_report.json"
+      ],
+      "boundary": "Launch operations are ready for private-beta review; production deployment and public launch require owner approval.",
+      "id": "REQ-LAUNCH-OPS-01",
+      "name": "Launch operations and private beta controls",
+      "proof": [
+        "tests/test_completion_platform.py",
+        "scripts/check_product.py"
+      ],
+      "status": "implemented_private_beta_ops_contract"
     }
   ],
   "status": "requirements_traceability_ready"

@@ -54,6 +54,13 @@ MUTABLE_GENERATED_PATHS = [
     ROOT / "system_review_graph" / "billing_credit_controls.json",
     ROOT / "system_review_graph" / "agent_api_manifest.json",
     ROOT / "system_review_graph" / "traffic_pages_manifest.json",
+    ROOT / "system_review_graph" / "research_execution_plan.json",
+    ROOT / "system_review_graph" / "team_workspace_report.json",
+    ROOT / "system_review_graph" / "expert_network_report.json",
+    ROOT / "system_review_graph" / "billing_usage_ledger.json",
+    ROOT / "system_review_graph" / "agent_api_gateway_contract.json",
+    ROOT / "system_review_graph" / "launch_operations_report.json",
+    ROOT / "system_review_graph" / "all_stage_readiness_report.json",
 ]
 
 
@@ -85,12 +92,22 @@ class OperatorAppTests(unittest.TestCase):
     def test_completion_stage_public_pages_and_api_exist(self) -> None:
         routes = {
             "/opportunities": "Opportunity Signals",
+            "/country-coverage": "Country Coverage",
+            "/transport-readiness": "Transport Readiness",
             "/pricing": "Billing And Credits",
             "/billing": "Billing And Credits",
+            "/billing/usage": "Billing Usage",
+            "/agent-api": "Agent API",
+            "/stages": "All Product Stages",
+            "/research-plan": "Research Execution",
+            "/expert-network": "Expert Network",
+            "/team-workspace": "Team Workspace",
+            "/launch-operations": "Launch Operations",
             "/reports/sample": "Sample Reports",
             "/ai-data-policy": "AI Data Policy",
             "/security": "Security And Privacy",
             "/tools/document-check": "Quick Trade Readiness Check",
+            "/tools/import-export-starter-checklist": "Import Export Starter Checklist",
             "/packets/packet-frozen-tuna-canada-001/source-monitoring": "Source Monitoring",
             "/packets/packet-frozen-tuna-canada-001/safe-summary": "ChatGPT-Safe Summary",
         }
@@ -105,9 +122,16 @@ class OperatorAppTests(unittest.TestCase):
             "/api/opportunities": "opportunity_scanner_ready_with_research_gates",
             "/api/country-coverage": "country_coverage_ready_with_claim_gates",
             "/api/billing/controls": "billing_credit_controls_ready_local_no_live_checkout",
+            "/api/billing/usage": "billing_usage_ledger_ready_local_no_charges",
             "/api/agent-api": "agent_api_manifest_ready_scoped_and_metered",
+            "/api/agent-api/gateway": "agent_api_gateway_ready_local_dry_run",
             "/api/traffic-pages": "traffic_pages_manifest_ready",
             "/api/transport-readiness": "transport_readiness_ready_with_forwarder_gates",
+            "/api/stages": "all_local_stages_implemented_with_external_gates",
+            "/api/research-plan": "research_execution_ready_with_evidence_gates",
+            "/api/expert-network": "expert_network_ready_local_with_human_review_gates",
+            "/api/team-workspace": "team_workspace_ready_local_with_approval_gates",
+            "/api/launch-operations": "launch_operations_ready_for_private_beta_review",
         }
         for path, expected_status in api_routes.items():
             with self.subTest(path=path):
@@ -115,6 +139,11 @@ class OperatorAppTests(unittest.TestCase):
                     payload = json.loads(response.read().decode("utf-8"))
                 self.assertEqual(response.status, 200)
                 self.assertEqual(payload["status"], expected_status)
+
+        with urlopen(f"{self.base_url}/api/agent-tools/generate_missing_evidence_report", timeout=5) as response:
+            dry_run = json.loads(response.read().decode("utf-8"))
+        self.assertEqual(dry_run["status"], "agent_tool_dry_run_ready")
+        self.assertFalse(dry_run["external_effects_created"])
 
     def test_beginner_start_creates_starter_packet(self) -> None:
         generated_paths = [

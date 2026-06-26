@@ -37,13 +37,20 @@ ai_policy_status=ai_data_policy_ready
 ai_router_status=ai_model_router_ready
 requirements_traceability>=37
 policy_monitor=intelligence_hub_policy_monitor_ready_with_external_refresh_gates
-completion_platform=completion_platform_contracts_ready_with_external_gates
+completion_platform=all_local_stages_implemented_with_external_gates
+all_stages=all_local_stages_implemented_with_external_gates
 opportunity_scanner=opportunity_scanner_ready_with_research_gates
 country_coverage=country_coverage_ready_with_claim_gates
 transport_readiness=transport_readiness_ready_with_forwarder_gates
 billing_controls=billing_credit_controls_ready_local_no_live_checkout
 agent_api=agent_api_manifest_ready_scoped_and_metered
 traffic_pages>=10
+research_execution=research_execution_ready_with_evidence_gates
+expert_network=expert_network_ready_local_with_human_review_gates
+team_workspace=team_workspace_ready_local_with_approval_gates
+billing_usage=billing_usage_ledger_ready_local_no_charges
+agent_gateway=agent_api_gateway_ready_local_dry_run
+launch_operations=launch_operations_ready_for_private_beta_review
 review_requests=1
 audit_events=3
 deployment_status=deployable_local_stack_ready_with_external_hosting_gates
@@ -67,5 +74,8 @@ fail-closed export-to-Canada claims. It also verifies opportunity-signal
 research gates, country coverage tiers, transport question packets,
 no-live-checkout billing controls, scoped agent/API rules, traffic-first page
 contracts, and the public pages/API routes that expose those artifacts.
+The latest proof also verifies all locally implementable stages, research
+execution, expert network, team workspace, dry-run agent gateway, billing
+usage ledger, and launch-operations surfaces.
 
 Any failure should become a blocker row or a targeted repair before review.

@@ -31,11 +31,17 @@ def main() -> int:
         json.dumps(
             {
                 "status": payload["status"],
+                "all_stage_status": payload["all_stage_readiness"]["status"],
                 "opportunity_status": payload["opportunity_scanner"]["status"],
                 "coverage_status": payload["country_coverage"]["status"],
                 "billing_status": payload["billing_credit_controls"]["status"],
                 "agent_api_status": payload["agent_api_manifest"]["status"],
+                "research_status": payload["research_execution_plan"]["status"],
+                "expert_network_status": payload["expert_network"]["status"],
+                "team_workspace_status": payload["team_workspace"]["status"],
+                "launch_operations_status": payload["launch_operations"]["status"],
                 "traffic_page_count": len(payload["traffic_pages_manifest"]["pages"]),
+                "stage_count": payload["all_stage_readiness"]["stage_count"],
                 "out": "system_review_graph/completion_platform_manifest.json",
             },
             sort_keys=True,

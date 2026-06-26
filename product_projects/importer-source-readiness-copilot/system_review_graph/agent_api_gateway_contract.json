@@ -1,0 +1,194 @@
+{
+  "billing_plans": [
+    {
+      "heavy_jobs": "blocked_requires_upgrade",
+      "id": "free",
+      "monthly_credits": 20,
+      "packet_limit": 3
+    },
+    {
+      "heavy_jobs": "metered",
+      "id": "pro",
+      "monthly_credits": 500,
+      "packet_limit": 50
+    },
+    {
+      "heavy_jobs": "metered_team",
+      "id": "business",
+      "monthly_credits": 5000,
+      "packet_limit": 500
+    },
+    {
+      "heavy_jobs": "private_contract",
+      "id": "enterprise",
+      "monthly_credits": "contract",
+      "packet_limit": "contract"
+    }
+  ],
+  "forbidden_tools": [
+    "approve_import",
+    "confirm_tariff",
+    "verify_supplier",
+    "validate_buyer",
+    "ship_goods",
+    "send_report_externally_without_confirmation"
+  ],
+  "generated_at": "2026-06-26T09:54:41+00:00",
+  "proof_boundary": "The gateway contract is executable as local dry-run routes; it does not expose a live public API, credentials, payment integration, or claim-opening authority.",
+  "status": "agent_api_gateway_ready_local_dry_run",
+  "tools": [
+    {
+      "billing_gate": "included_with_limits",
+      "example_request": {
+        "dry_run": true,
+        "external_effects_allowed": false,
+        "packet_id": "packet-frozen-tuna-canada-001"
+      },
+      "example_response": {
+        "can_open_claim_gate": false,
+        "external_effects_created": false,
+        "status": "accepted_for_local_dry_run"
+      },
+      "method": "GET",
+      "route": "/api/agent-tools/get_supported_countries",
+      "scope_required": "packet:read",
+      "tool": "get_supported_countries"
+    },
+    {
+      "billing_gate": "included_with_limits",
+      "example_request": {
+        "dry_run": true,
+        "external_effects_allowed": false,
+        "packet_id": "packet-frozen-tuna-canada-001"
+      },
+      "example_response": {
+        "can_open_claim_gate": false,
+        "external_effects_created": false,
+        "status": "accepted_for_local_dry_run"
+      },
+      "method": "GET",
+      "route": "/api/agent-tools/get_country_coverage",
+      "scope_required": "packet:read",
+      "tool": "get_country_coverage"
+    },
+    {
+      "billing_gate": "included_with_limits",
+      "example_request": {
+        "dry_run": true,
+        "external_effects_allowed": false,
+        "packet_id": "packet-frozen-tuna-canada-001"
+      },
+      "example_response": {
+        "can_open_claim_gate": false,
+        "external_effects_created": false,
+        "status": "accepted_for_local_dry_run"
+      },
+      "method": "POST",
+      "route": "/api/agent-tools/create_trade_packet",
+      "scope_required": "packet:write",
+      "tool": "create_trade_packet"
+    },
+    {
+      "billing_gate": "included_with_limits",
+      "example_request": {
+        "dry_run": true,
+        "external_effects_allowed": false,
+        "packet_id": "packet-frozen-tuna-canada-001"
+      },
+      "example_response": {
+        "can_open_claim_gate": false,
+        "external_effects_created": false,
+        "status": "accepted_for_local_dry_run"
+      },
+      "method": "POST",
+      "route": "/api/agent-tools/generate_starter_checklist",
+      "scope_required": "packet:write",
+      "tool": "generate_starter_checklist"
+    },
+    {
+      "billing_gate": "metered",
+      "example_request": {
+        "dry_run": true,
+        "external_effects_allowed": false,
+        "packet_id": "packet-frozen-tuna-canada-001"
+      },
+      "example_response": {
+        "can_open_claim_gate": false,
+        "external_effects_created": false,
+        "status": "accepted_for_local_dry_run"
+      },
+      "method": "POST",
+      "route": "/api/agent-tools/generate_missing_evidence_report",
+      "scope_required": "packet:write",
+      "tool": "generate_missing_evidence_report"
+    },
+    {
+      "billing_gate": "included_with_limits",
+      "example_request": {
+        "dry_run": true,
+        "external_effects_allowed": false,
+        "packet_id": "packet-frozen-tuna-canada-001"
+      },
+      "example_response": {
+        "can_open_claim_gate": false,
+        "external_effects_created": false,
+        "status": "accepted_for_local_dry_run"
+      },
+      "method": "POST",
+      "route": "/api/agent-tools/generate_chatgpt_safe_summary",
+      "scope_required": "packet:write",
+      "tool": "generate_chatgpt_safe_summary"
+    },
+    {
+      "billing_gate": "metered",
+      "example_request": {
+        "dry_run": true,
+        "external_effects_allowed": false,
+        "packet_id": "packet-frozen-tuna-canada-001"
+      },
+      "example_response": {
+        "can_open_claim_gate": false,
+        "external_effects_created": false,
+        "status": "accepted_for_local_dry_run"
+      },
+      "method": "POST",
+      "route": "/api/agent-tools/generate_broker_packet",
+      "scope_required": "packet:write",
+      "tool": "generate_broker_packet"
+    },
+    {
+      "billing_gate": "included_with_limits",
+      "example_request": {
+        "dry_run": true,
+        "external_effects_allowed": false,
+        "packet_id": "packet-frozen-tuna-canada-001"
+      },
+      "example_response": {
+        "can_open_claim_gate": false,
+        "external_effects_created": false,
+        "status": "accepted_for_local_dry_run"
+      },
+      "method": "GET",
+      "route": "/api/agent-tools/get_packet_status",
+      "scope_required": "packet:read",
+      "tool": "get_packet_status"
+    },
+    {
+      "billing_gate": "metered",
+      "example_request": {
+        "dry_run": true,
+        "external_effects_allowed": false,
+        "packet_id": "packet-frozen-tuna-canada-001"
+      },
+      "example_response": {
+        "can_open_claim_gate": false,
+        "external_effects_created": false,
+        "status": "accepted_for_local_dry_run"
+      },
+      "method": "POST",
+      "route": "/api/agent-tools/request_billing_quote",
+      "scope_required": "packet:read",
+      "tool": "request_billing_quote"
+    }
+  ]
+}

@@ -29,13 +29,21 @@ class CompletionPlatformTests(unittest.TestCase):
     def test_completion_platform_contracts_are_fail_closed(self) -> None:
         payload = self._payload()
 
-        self.assertEqual(payload["status"], "completion_platform_contracts_ready_with_external_gates")
+        self.assertEqual(payload["status"], "all_local_stages_implemented_with_external_gates")
         self.assertEqual(payload["country_coverage"]["status"], "country_coverage_ready_with_claim_gates")
         self.assertEqual(payload["opportunity_scanner"]["status"], "opportunity_scanner_ready_with_research_gates")
         self.assertEqual(payload["transport_readiness"]["status"], "transport_readiness_ready_with_forwarder_gates")
         self.assertEqual(payload["billing_credit_controls"]["status"], "billing_credit_controls_ready_local_no_live_checkout")
         self.assertEqual(payload["agent_api_manifest"]["status"], "agent_api_manifest_ready_scoped_and_metered")
         self.assertEqual(payload["traffic_pages_manifest"]["status"], "traffic_pages_manifest_ready")
+        self.assertEqual(payload["research_execution_plan"]["status"], "research_execution_ready_with_evidence_gates")
+        self.assertEqual(payload["team_workspace"]["status"], "team_workspace_ready_local_with_approval_gates")
+        self.assertEqual(payload["expert_network"]["status"], "expert_network_ready_local_with_human_review_gates")
+        self.assertEqual(payload["billing_usage_ledger"]["status"], "billing_usage_ledger_ready_local_no_charges")
+        self.assertEqual(payload["agent_api_gateway"]["status"], "agent_api_gateway_ready_local_dry_run")
+        self.assertEqual(payload["launch_operations"]["status"], "launch_operations_ready_for_private_beta_review")
+        self.assertEqual(payload["all_stage_readiness"]["status"], "all_local_stages_implemented_with_external_gates")
+        self.assertGreaterEqual(payload["all_stage_readiness"]["stage_count"], 16)
 
         self.assertGreaterEqual(payload["opportunity_scanner"]["signal_count"], 1)
         for signal in payload["opportunity_scanner"]["signals"]:
@@ -61,6 +69,8 @@ class CompletionPlatformTests(unittest.TestCase):
         self.assertIn("confirm_tariff", forbidden)
         self.assertTrue(all(row["can_open_claim_gate"] is False for row in agent["allowed_tools"]))
         self.assertGreaterEqual(len(payload["traffic_pages_manifest"]["pages"]), 10)
+        self.assertTrue(payload["launch_operations"]["private_beta_entry"]["local_product_ready"])
+        self.assertFalse(payload["launch_operations"]["private_beta_entry"]["public_launch_allowed"])
 
     def test_completion_platform_artifacts_are_written(self) -> None:
         payload = self._payload()
@@ -76,6 +86,13 @@ class CompletionPlatformTests(unittest.TestCase):
                 "billing_credit_controls.json",
                 "agent_api_manifest.json",
                 "traffic_pages_manifest.json",
+                "research_execution_plan.json",
+                "team_workspace_report.json",
+                "expert_network_report.json",
+                "billing_usage_ledger.json",
+                "agent_api_gateway_contract.json",
+                "launch_operations_report.json",
+                "all_stage_readiness_report.json",
             ):
                 self.assertTrue((root / "system_review_graph" / name).exists(), name)
 
