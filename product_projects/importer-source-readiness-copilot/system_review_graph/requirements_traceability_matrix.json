@@ -416,6 +416,90 @@
         "scripts/run_policy_intelligence.py"
       ],
       "status": "implemented_database_style_contract"
+    },
+    {
+      "artifacts": [
+        "opportunity_scanner_report.json",
+        "completion_platform_manifest.json"
+      ],
+      "boundary": "Opportunity rows are signals and research prompts, not recommendations, demand proof, margin proof, or buyer validation.",
+      "id": "REQ-OPPORTUNITY-01",
+      "name": "Opportunity scanner with research gates",
+      "proof": [
+        "tests/test_completion_platform.py",
+        "scripts/run_completion_platform.py"
+      ],
+      "status": "implemented_signal_contract"
+    },
+    {
+      "artifacts": [
+        "country_coverage_report.json",
+        "completion_platform_manifest.json"
+      ],
+      "boundary": "Coverage tiers describe product support level only; they are not country-specific legal, customs, tariff, or compliance correctness.",
+      "id": "REQ-COVERAGE-01",
+      "name": "Country coverage tiers",
+      "proof": [
+        "tests/test_completion_platform.py",
+        "scripts/run_completion_platform.py"
+      ],
+      "status": "implemented_claim_gated_contract"
+    },
+    {
+      "artifacts": [
+        "transport_readiness_report.json",
+        "completion_platform_manifest.json"
+      ],
+      "boundary": "Transport readiness prepares freight-forwarder questions; it does not guarantee routes, costs, carrier choice, or shipment readiness.",
+      "id": "REQ-TRANSPORT-01",
+      "name": "Transport readiness lane",
+      "proof": [
+        "tests/test_completion_platform.py",
+        "scripts/run_completion_platform.py"
+      ],
+      "status": "implemented_forwarder_question_contract"
+    },
+    {
+      "artifacts": [
+        "billing_credit_controls.json",
+        "completion_platform_manifest.json"
+      ],
+      "boundary": "Billing controls define plan, credit, and heavy-job authorization only; live checkout and invoicing are disabled.",
+      "id": "REQ-BILLING-01",
+      "name": "Billing and credit controls",
+      "proof": [
+        "tests/test_completion_platform.py",
+        "scripts/run_completion_platform.py"
+      ],
+      "status": "implemented_local_metering_contract"
+    },
+    {
+      "artifacts": [
+        "agent_api_manifest.json",
+        "completion_platform_manifest.json"
+      ],
+      "boundary": "Agents can create packets and reports through product gates only; no live public API gateway or claim-opening tool is exposed.",
+      "id": "REQ-AGENT-01",
+      "name": "Agent/API contract",
+      "proof": [
+        "tests/test_completion_platform.py",
+        "scripts/run_completion_platform.py"
+      ],
+      "status": "implemented_scoped_api_contract"
+    },
+    {
+      "artifacts": [
+        "traffic_pages_manifest.json",
+        "public_trade_readiness_manifest.json"
+      ],
+      "boundary": "Traffic/checklist pages educate and route to the tool; they are not legal, customs, tariff, supplier, buyer, or shipment advice.",
+      "id": "REQ-TRAFFIC-01",
+      "name": "Traffic-first public pages",
+      "proof": [
+        "tests/test_operator_app.py",
+        "tests/test_completion_platform.py"
+      ],
+      "status": "implemented_manifest_and_routes"
     }
   ],
   "status": "requirements_traceability_ready"

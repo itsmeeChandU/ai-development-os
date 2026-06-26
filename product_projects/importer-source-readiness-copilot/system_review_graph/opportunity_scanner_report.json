@@ -1,0 +1,32 @@
+{
+  "blocked_claims": [
+    "guaranteed_demand",
+    "profitable_product",
+    "confirmed_surplus",
+    "buyer_validated"
+  ],
+  "generated_at": "2026-06-26T09:34:26+00:00",
+  "proof_boundary": "Opportunity rows are signals and research prompts only, not recommendations, demand proof, margin proof, or buyer validation.",
+  "signal_count": 1,
+  "signals": [
+    {
+      "buyer_validation": "missing",
+      "category": "food_import",
+      "country": "Canada",
+      "coverage_confidence": 1,
+      "demand_signal": "unknown_requires_external_research",
+      "direction": "import",
+      "next_step": "create or continue readiness packet; collect real buyer, demand, source, and logistics evidence.",
+      "opportunity_signal": "possible opportunity signal",
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "recommendation_claim": "blocked",
+      "requirements_complexity": "high",
+      "signal_id": "opportunity:packet-frozen-tuna-canada-001",
+      "supply_or_surplus_signal": "unknown_requires_external_research",
+      "trade_growth_signal": "unknown_requires_dataset",
+      "transport_complexity": "unknown_until_dimensions_mode_and_temperature_requirements_known",
+      "trend_signal": "unknown_requires_dataset"
+    }
+  ],
+  "status": "opportunity_scanner_ready_with_research_gates"
+}

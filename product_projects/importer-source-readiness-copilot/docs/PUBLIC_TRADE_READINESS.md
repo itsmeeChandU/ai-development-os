@@ -11,17 +11,23 @@ Readiness Copilot is the internal readiness/blocker engine.
 3. Use `/tools` to choose import readiness, export readiness, buyer/broker
    packet building, document analysis, missing evidence checking, or PDF
    report generation.
-4. Use `/trade-check` or `/tools/export-readiness`.
-5. Select trade direction, origin, destination, product/category, HS code if
+4. Use `/opportunities` for signal-only opportunity research prompts, or
+   `/reports/sample` to inspect the PDF-first report set.
+5. Use `/pricing` or `/billing` to inspect local credit gates before heavy
+   OCR, AI, source-monitoring, private-AI, or agent/API work.
+6. Use `/trade-check`, `/tools/document-check`, or `/tools/export-readiness`.
+7. Select trade direction, origin, destination, product/category, HS code if
    known, exporter, Canadian buyer/importer, importer of record, and Incoterms.
-6. Upload at least one PDF and accept the AI/data notice. Uploaded PDFs are
+8. Upload at least one PDF and accept the AI/data notice. Uploaded PDFs are
    stored under generated quarantine names, triaged for native text/OCR need,
    and not directly served as public files.
-7. Confirm extracted metadata at `/public/packets/:id/confirm`.
-8. Review the result page at `/public/packets/:id/result`.
-9. Download the starter checklist, draft readiness PDF, missing evidence PDF,
+9. Confirm extracted metadata at `/public/packets/:id/confirm`.
+10. Review the result page at `/public/packets/:id/result`.
+11. Download the starter checklist, draft readiness PDF, missing evidence PDF,
    buyer-ready packet, or broker review packet.
-10. Use the ChatGPT-safe summary only for drafting questions, then delete
+12. Use `/packets/:id/source-monitoring` to inspect stale-source impact and
+    `/packets/:id/safe-summary` for external AI drafting text.
+13. Use the ChatGPT-safe summary only for drafting questions, then delete
     uploaded local files or create an account for a saved workspace.
 
 ## Export-To-Canada Mode
@@ -72,3 +78,10 @@ readiness.
 - `system_review_graph/public_upload_policy.json`
 - `system_review_graph/requirements_traceability_matrix.json`
 - `system_review_graph/intelligence_hub_policy_monitor.json`
+- `system_review_graph/completion_platform_manifest.json`
+- `system_review_graph/country_coverage_report.json`
+- `system_review_graph/opportunity_scanner_report.json`
+- `system_review_graph/transport_readiness_report.json`
+- `system_review_graph/billing_credit_controls.json`
+- `system_review_graph/agent_api_manifest.json`
+- `system_review_graph/traffic_pages_manifest.json`

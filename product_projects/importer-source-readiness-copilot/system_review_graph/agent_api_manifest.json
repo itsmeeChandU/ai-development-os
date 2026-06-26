@@ -1,0 +1,74 @@
+{
+  "allowed_tools": [
+    {
+      "billing_gate": "included_with_limits",
+      "can_open_claim_gate": false,
+      "name": "get_supported_countries",
+      "scope_required": "packet:read"
+    },
+    {
+      "billing_gate": "included_with_limits",
+      "can_open_claim_gate": false,
+      "name": "get_country_coverage",
+      "scope_required": "packet:read"
+    },
+    {
+      "billing_gate": "included_with_limits",
+      "can_open_claim_gate": false,
+      "name": "create_trade_packet",
+      "scope_required": "packet:write"
+    },
+    {
+      "billing_gate": "included_with_limits",
+      "can_open_claim_gate": false,
+      "name": "generate_starter_checklist",
+      "scope_required": "packet:write"
+    },
+    {
+      "billing_gate": "metered",
+      "can_open_claim_gate": false,
+      "name": "generate_missing_evidence_report",
+      "scope_required": "packet:write"
+    },
+    {
+      "billing_gate": "included_with_limits",
+      "can_open_claim_gate": false,
+      "name": "generate_chatgpt_safe_summary",
+      "scope_required": "packet:write"
+    },
+    {
+      "billing_gate": "metered",
+      "can_open_claim_gate": false,
+      "name": "generate_broker_packet",
+      "scope_required": "packet:write"
+    },
+    {
+      "billing_gate": "included_with_limits",
+      "can_open_claim_gate": false,
+      "name": "get_packet_status",
+      "scope_required": "packet:read"
+    },
+    {
+      "billing_gate": "metered",
+      "can_open_claim_gate": false,
+      "name": "request_billing_quote",
+      "scope_required": "packet:read"
+    }
+  ],
+  "forbidden_tools": [
+    "approve_import",
+    "confirm_tariff",
+    "verify_supplier",
+    "validate_buyer",
+    "ship_goods",
+    "send_report_externally_without_confirmation"
+  ],
+  "generated_at": "2026-06-26T09:34:26+00:00",
+  "proof_boundary": "This is a local API/MCP contract. It does not expose a live public API gateway or payment integration.",
+  "safety_rules": [
+    "Agents can create packets and reports only through backend claim/blocker rules.",
+    "Agents cannot approve import/export, tariff, supplier, buyer, shipment, or launch claims.",
+    "Billable or heavy jobs require plan/credit authorization before execution."
+  ],
+  "status": "agent_api_manifest_ready_scoped_and_metered"
+}

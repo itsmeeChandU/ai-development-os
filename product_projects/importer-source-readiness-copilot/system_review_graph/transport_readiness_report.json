@@ -1,0 +1,35 @@
+{
+  "blocked_claims": [
+    "shipping_cost_guaranteed",
+    "route_optimized",
+    "freight_forwarder_selected",
+    "shipment_ready"
+  ],
+  "generated_at": "2026-06-26T09:34:26+00:00",
+  "packet_count": 1,
+  "proof_boundary": "Transport readiness prepares questions only; it does not optimize routes, guarantee costs, or approve shipment.",
+  "rows": [
+    {
+      "freight_forwarder_questions": [
+        "What mode, route, ports, and transit constraints apply?",
+        "Are dimensions, gross weight, packaging, and palletization known?",
+        "Do Incoterms create buyer, seller, or DDP/importer responsibility?",
+        "Is temperature control, insurance, dangerous goods, or wood packaging review required?"
+      ],
+      "missing_transport_inputs": [
+        "Incoterms or delivery responsibility",
+        "Transport mode",
+        "dimensions/weight",
+        "packing list",
+        "insurance decision",
+        "ports",
+        "forwarder",
+        "Temperature/cold-chain requirement"
+      ],
+      "next_valid_move": "Collect shipment details and route to freight forwarder/broker review before transport cost or route claims.",
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "status": "transport_questions_ready_claims_blocked"
+    }
+  ],
+  "status": "transport_readiness_ready_with_forwarder_gates"
+}

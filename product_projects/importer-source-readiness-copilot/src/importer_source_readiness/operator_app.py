@@ -62,6 +62,12 @@ API_ROUTES = {
     "/api/board-go-live": "system_review_graph/board_go_live_readiness_report.json",
     "/api/operator-workflow": "system_review_graph/operator_workflow_report.json",
     "/api/operator-screenshots": "system_review_graph/operator_screenshot_manifest.json",
+    "/api/opportunities": "system_review_graph/opportunity_scanner_report.json",
+    "/api/country-coverage": "system_review_graph/country_coverage_report.json",
+    "/api/billing/controls": "system_review_graph/billing_credit_controls.json",
+    "/api/agent-api": "system_review_graph/agent_api_manifest.json",
+    "/api/traffic-pages": "system_review_graph/traffic_pages_manifest.json",
+    "/api/transport-readiness": "system_review_graph/transport_readiness_report.json",
 }
 
 STATIC_ROUTES = {
@@ -91,6 +97,15 @@ def _safe_join_under(base: Path, relative_path: str) -> Path | None:
 
 def _load_json(path: Path) -> Any:
     return json.loads(path.read_text(encoding="utf-8"))
+
+
+def _load_graph_json(repo_root: Path, artifact_name: str, default: dict[str, Any] | None = None) -> dict[str, Any]:
+    path = repo_root / "system_review_graph" / artifact_name
+    if path.exists():
+        payload = _load_json(path)
+        if isinstance(payload, dict):
+            return payload
+    return default or {"status": "artifact_missing", "proof_boundary": "Run the product checks to regenerate this artifact."}
 
 
 def _load_list_or_rows(path: Path, fallback: Path) -> list[dict[str, Any]]:
@@ -695,12 +710,16 @@ def _render_start_page() -> str:
 
 def _render_tool_selection() -> str:
     tools = [
+        ("Opportunity Scanner", "/opportunities", "Find possible opportunity signals and route them into research-gated packets."),
         ("Import Readiness Checker", "/tools/import-readiness", "Check Canada-side importer/source readiness gaps."),
         ("Export Readiness Checker", "/tools/export-readiness", "Build an Export-to-Canada packet for a foreign exporter."),
         ("Buyer/Broker Packet Builder", "/tools/buyer-broker-packet", "Prepare buyer and broker questions with blocked claims."),
         ("Trade Document Analyzer", "/trade-check", "Upload PDFs and draft extracted evidence metadata."),
+        ("Document Quick Check", "/tools/document-check", "Use the same upload flow with PDF triage and user confirmation."),
         ("Missing Evidence Checker", "/trade-check", "See missing documents, reviews, and next valid moves."),
         ("Readiness PDF Generator", "/trade-check", "Download draft readiness, buyer, and broker PDFs."),
+        ("Transport/Freight Forwarder Packet", "/reports/sample", "Review the freight-forwarder packet type and required questions."),
+        ("Pricing And Credits", "/pricing", "Inspect local metering rules before heavy jobs run."),
         ("Expert Review Packet Generator", "/trade-check", "Package evidence for scoped qualified review."),
     ]
     cards = "".join(
@@ -769,6 +788,259 @@ def _render_canadian_references(workflow: dict[str, Any]) -> str:
 </table>
 """
     return _render_page("Canadian References", body)
+
+
+def _render_opportunities(repo_root: Path, workflow: dict[str, Any]) -> str:
+    opportunity = _load_graph_json(repo_root, "opportunity_scanner_report.json")
+    coverage = _load_graph_json(repo_root, "country_coverage_report.json")
+    signal_rows = "".join(
+        "<tr>"
+        f"<td>{escape(str(row.get('category')))}</td>"
+        f"<td>{escape(str(row.get('country')))}</td>"
+        f"<td>{escape(str(row.get('opportunity_signal')))}</td>"
+        f"<td>{escape(str(row.get('demand_signal')))}</td>"
+        f"<td>{escape(str(row.get('requirements_complexity')))}</td>"
+        f"<td>{escape(str(row.get('next_step')))}</td>"
+        "</tr>"
+        for row in opportunity.get("signals", [])
+    )
+    coverage_rows = "".join(
+        "<tr>"
+        f"<td>{escape(str(row.get('country')))}</td>"
+        f"<td>{escape(str(row.get('coverage_tier')))}</td>"
+        f"<td>{escape(str(row.get('coverage_label')))}</td>"
+        f"<td>{escape(str(row.get('source_count')))}</td>"
+        f"<td>{escape(str(row.get('can_make_country_specific_claims')))}</td>"
+        "</tr>"
+        for row in coverage.get("countries", [])
+    )
+    body = f"""
+<section class="surface">
+  <h1>Opportunity Signals</h1>
+  <p class="lede">Find possible trade-readiness opportunities, then turn them into bounded packets before making decisions.</p>
+  <p class="note">{escape(str(opportunity.get('proof_boundary') or PRODUCT_BOUNDARY))}</p>
+  <div class="grid grid-3">
+    {_metric_card("Signals", opportunity.get("signal_count", len(opportunity.get("signals", []))), "Signal rows, not recommendations.")}
+    {_metric_card("Packets", workflow.get("packet_count", len(workflow.get("packets", []))), "Local packet context available.")}
+    {_metric_card("Coverage", coverage.get("status"), "Country-specific claims stay blocked.")}
+  </div>
+  <div class="actions">
+    {_button_link("/start", "Start packet", "sparkles")}
+    {_button_link("/trade-check", "Upload documents", "upload", tone="secondary")}
+  </div>
+</section>
+<section class="surface">
+  <h2>Signal Rows</h2>
+  <table>
+    <thead><tr><th>Category</th><th>Market</th><th>Signal</th><th>Demand Proof</th><th>Complexity</th><th>Next</th></tr></thead>
+    <tbody>{signal_rows or '<tr><td colspan="6">Run scripts/run_completion_platform.py to generate opportunity rows.</td></tr>'}</tbody>
+  </table>
+</section>
+<section class="surface">
+  <h2>Country Coverage</h2>
+  <table>
+    <thead><tr><th>Country</th><th>Tier</th><th>Support</th><th>Sources</th><th>Can Make Claims</th></tr></thead>
+    <tbody>{coverage_rows or '<tr><td colspan="5">Coverage artifact not generated yet.</td></tr>'}</tbody>
+  </table>
+</section>
+"""
+    return _render_page("Opportunity Signals", body)
+
+
+def _render_pricing(repo_root: Path) -> str:
+    billing = _load_graph_json(repo_root, "billing_credit_controls.json")
+    plan_rows = "".join(
+        "<tr>"
+        f"<td>{escape(str(row.get('id')))}</td>"
+        f"<td>{escape(str(row.get('packet_limit')))}</td>"
+        f"<td>{escape(str(row.get('monthly_credits')))}</td>"
+        f"<td>{escape(str(row.get('heavy_jobs')))}</td>"
+        "</tr>"
+        for row in billing.get("plans", [])
+    )
+    action_rows = "".join(
+        "<tr>"
+        f"<td>{escape(str(row.get('action')))}</td>"
+        f"<td>{escape(str(row.get('estimated_credits')))}</td>"
+        f"<td>{escape(str(row.get('heavy_job')))}</td>"
+        f"<td>{escape(str(row.get('free_plan_behavior')))}</td>"
+        f"<td>{escape(str(row.get('external_charge_created')))}</td>"
+        "</tr>"
+        for row in billing.get("billable_actions", [])
+    )
+    body = f"""
+<section class="surface">
+  <h1>Billing And Credits</h1>
+  <p class="lede">Plans, credits, and heavy-job gates are defined locally so expensive AI/OCR/API work can be controlled before execution.</p>
+  <p class="note">Live checkout enabled: {escape(str(billing.get('live_checkout_enabled', False)))}. {escape(str(billing.get('proof_boundary') or 'No live payment session is created.'))}</p>
+</section>
+<section class="surface">
+  <h2>Plans</h2>
+  <table>
+    <thead><tr><th>Plan</th><th>Packets</th><th>Credits</th><th>Heavy Jobs</th></tr></thead>
+    <tbody>{plan_rows or '<tr><td colspan="4">Billing artifact not generated yet.</td></tr>'}</tbody>
+  </table>
+</section>
+<section class="surface">
+  <h2>Billable Actions</h2>
+  <table>
+    <thead><tr><th>Action</th><th>Credits</th><th>Heavy</th><th>Free Plan</th><th>External Charge</th></tr></thead>
+    <tbody>{action_rows or '<tr><td colspan="5">No metered actions generated.</td></tr>'}</tbody>
+  </table>
+</section>
+"""
+    return _render_page("Billing And Credits", body)
+
+
+def _render_sample_reports(repo_root: Path) -> str:
+    reports = _load_graph_json(repo_root, "public_report_types.json")
+    traffic = _load_graph_json(repo_root, "traffic_pages_manifest.json")
+    report_cards = "".join(
+        "<div class='metric'>"
+        f"<div class='label'>{escape(str(report))}</div>"
+        "<div class='value'>Draft export</div>"
+        "<p>Generated only from packet evidence, blockers, and proof boundaries.</p>"
+        "</div>"
+        for report in reports.get("reports", [])
+    )
+    page_rows = "".join(
+        "<tr>"
+        f"<td>{escape(str(row.get('title')))}</td>"
+        f"<td>{escape(str(row.get('route')))}</td>"
+        f"<td>{escape(str(row.get('claim_boundary')))}</td>"
+        "</tr>"
+        for row in traffic.get("pages", [])
+    )
+    body = f"""
+<section class="surface">
+  <h1>Sample Reports</h1>
+  <p class="lede">Report templates are PDF-first and evidence-first. They show gaps, next moves, and blocked claims.</p>
+  <p class="note">Samples are product templates, not certificates, approvals, buyer validation, or legal/customs advice.</p>
+  <div class="actions">
+    {_button_link("/trade-check", "Generate from packet", "file-text")}
+    {_button_link("/opportunities", "View opportunities", "search", tone="secondary")}
+  </div>
+</section>
+<section class="grid">{report_cards}</section>
+<section class="surface">
+  <h2>Traffic Pages</h2>
+  <table>
+    <thead><tr><th>Page</th><th>Route</th><th>Boundary</th></tr></thead>
+    <tbody>{page_rows or '<tr><td colspan="3">Traffic pages manifest not generated yet.</td></tr>'}</tbody>
+  </table>
+</section>
+"""
+    return _render_page("Sample Reports", body)
+
+
+def _render_security_public(runtime: dict[str, Any]) -> str:
+    controls = runtime.get("security_controls", {})
+    upload = controls.get("upload_validation", {})
+    rows = "".join(
+        "<tr>"
+        f"<td>{escape(str(key))}</td>"
+        f"<td>{escape(json.dumps(value, sort_keys=True) if isinstance(value, (dict, list)) else str(value))}</td>"
+        "</tr>"
+        for key, value in controls.items()
+    )
+    body = f"""
+<section class="surface">
+  <h1>Security And Privacy</h1>
+  <p class="lede">The local product uses organization scoping, generated upload names, quarantine storage, RBAC, audit events, and route-scoped file access.</p>
+  <p class="note">Production TLS, secret manager, malware scanning, privacy/legal review, and hosted observability remain external gates.</p>
+  <div class="grid grid-3">
+    {_metric_card("Upload Limit", upload.get("max_bytes"), "Local public PDF limit.")}
+    {_metric_card("Direct File Serving", upload.get("direct_file_serving"), "Uploads stay behind route checks.")}
+    {_metric_card("AI Policy", controls.get("ai_data_policy"), "Organization-level controls.")}
+  </div>
+</section>
+<section class="surface">
+  <h2>Controls</h2>
+  <table>
+    <thead><tr><th>Control</th><th>Current Contract</th></tr></thead>
+    <tbody>{rows}</tbody>
+  </table>
+</section>
+"""
+    return _render_page("Security And Privacy", body)
+
+
+def _render_source_monitoring(repo_root: Path, workflow: dict[str, Any], packet: dict[str, Any]) -> str:
+    monitor = _load_graph_json(repo_root, "intelligence_hub_policy_monitor.json")
+    impact = _load_graph_json(repo_root, "policy_change_impact_report.json")
+    packet_id = str(packet.get("packet_id"))
+    impact_rows = [
+        row for row in impact.get("packet_source_impacts", []) if str(row.get("packet_id")) == packet_id
+    ]
+    if not impact_rows:
+        impact_rows = impact.get("packet_source_impacts", [])
+    source_rows = "".join(
+        "<tr>"
+        f"<td>{escape(str(row.get('name')))}</td>"
+        f"<td>{escape(str(row.get('source_id')))}</td>"
+        f"<td>{escape(str(row.get('refresh_mode')))}</td>"
+        f"<td>{escape(str(row.get('claim_boundary')))}</td>"
+        "</tr>"
+        for row in monitor.get("monitored_sources", [])[:12]
+    )
+    packet_rows = "".join(
+        "<tr>"
+        f"<td>{escape(str(row.get('packet_id')))}</td>"
+        f"<td>{escape(str(row.get('impact_status')))}</td>"
+        f"<td>{escape(', '.join(row.get('matched_source_ids', [])[:6]))}</td>"
+        f"<td>{escape(str(row.get('next_valid_move')))}</td>"
+        "</tr>"
+        for row in impact_rows
+    )
+    body = f"""
+<section class="surface">
+  <h1>Source Monitoring</h1>
+  <p class="lede">{escape(str(packet.get('packet_name')))} uses Intelligence Hub source snapshots to detect stale packet risk.</p>
+  <p class="note">{escape(str(monitor.get('proof_boundary') or workflow.get('proof_boundary') or PRODUCT_BOUNDARY))}</p>
+  <div class="grid grid-3">
+    {_metric_card("Monitor", monitor.get("status"), "Database-style local contract.")}
+    {_metric_card("Sources", monitor.get("monitored_source_count", 0), "Reference sources tracked.")}
+    {_metric_card("Stale Blockers", monitor.get("stale_source_blocker_count", 0), "Review gates stay closed.")}
+  </div>
+  <form method="post" action="/api/public/packets/{escape(packet_id)}/refresh-official-sources"><button type="submit">Refresh Official Sources</button></form>
+</section>
+<section class="surface">
+  <h2>Packet Impact</h2>
+  <table>
+    <thead><tr><th>Packet</th><th>Status</th><th>Matched Sources</th><th>Next</th></tr></thead>
+    <tbody>{packet_rows or '<tr><td colspan="4">No packet impact rows generated yet.</td></tr>'}</tbody>
+  </table>
+</section>
+<section class="surface">
+  <h2>Monitored Sources</h2>
+  <table>
+    <thead><tr><th>Name</th><th>ID</th><th>Refresh</th><th>Boundary</th></tr></thead>
+    <tbody>{source_rows or '<tr><td colspan="4">No monitored sources generated yet.</td></tr>'}</tbody>
+  </table>
+</section>
+"""
+    return _render_page("Source Monitoring", body)
+
+
+def _render_safe_summary_page(packet: dict[str, Any]) -> str:
+    summary = _chatgpt_safe_summary(packet)
+    body = f"""
+<section class="surface">
+  <h1>ChatGPT-Safe Summary</h1>
+  <p class="lede">Use this when drafting questions in an external AI chat without sharing uploaded file contents or private commercial details.</p>
+  <p class="note">{escape(str(summary.get('proof_boundary')))}</p>
+  <textarea rows="8" readonly>{escape(str(summary.get('copy_paste_summary')))}</textarea>
+</section>
+<section class="surface">
+  <h2>Safe Questions</h2>
+  <ul>{_list_items(summary.get('safe_questions', []))}</ul>
+  <h2>Do Not Include</h2>
+  <ul>{_list_items(summary.get('do_not_include', []))}</ul>
+  <h2>Blocked Claims</h2>
+  <ul>{_list_items(summary.get('blocked_claims', []))}</ul>
+</section>
+"""
+    return _render_page("ChatGPT-Safe Summary", body)
 
 
 def _render_public_result(workflow: dict[str, Any], packet: dict[str, Any]) -> str:
@@ -1335,7 +1607,7 @@ def _render_packet_detail(packet: dict[str, Any]) -> str:
 <p><span class="status">{escape(str(packet.get('customer_visible_status_label')))}</span></p>
 <p class="note">{escape(str(packet.get('safe_summary')))}</p>
 {_render_action_bar(packet)}
-<p><a href="/packets/{escape(str(packet.get('packet_id')))}/evidence">Evidence</a> | <a href="/packets/{escape(str(packet.get('packet_id')))}/blockers">Blockers</a> | <a href="/packets/{escape(str(packet.get('packet_id')))}/readiness">Readiness report</a> | <a href="/packets/{escape(str(packet.get('packet_id')))}/ai-reviews">AI reviews</a> | <a href="/packets/{escape(str(packet.get('packet_id')))}/reviews">Human reviews</a> | <a href="/packets/{escape(str(packet.get('packet_id')))}/reports">Reports</a> | <a href="/operator/queue">Operator queue</a></p>
+<p><a href="/packets/{escape(str(packet.get('packet_id')))}/evidence">Evidence</a> | <a href="/packets/{escape(str(packet.get('packet_id')))}/blockers">Blockers</a> | <a href="/packets/{escape(str(packet.get('packet_id')))}/readiness">Readiness report</a> | <a href="/packets/{escape(str(packet.get('packet_id')))}/source-monitoring">Source monitoring</a> | <a href="/packets/{escape(str(packet.get('packet_id')))}/safe-summary">Safe summary</a> | <a href="/packets/{escape(str(packet.get('packet_id')))}/ai-reviews">AI reviews</a> | <a href="/packets/{escape(str(packet.get('packet_id')))}/reviews">Human reviews</a> | <a href="/packets/{escape(str(packet.get('packet_id')))}/reports">Reports</a> | <a href="/operator/queue">Operator queue</a></p>
 <section class="grid">
   <div class="metric"><div class="label">Readiness</div><div class="value">{escape(str(packet.get('readiness_status_label')))}</div></div>
   <div class="metric"><div class="label">Evidence</div><div class="value">{escape(str(evidence_summary.get('summary')))}</div></div>
@@ -1559,7 +1831,14 @@ def _index_payload(repo_root: Path) -> dict[str, Any]:
                 "/tools/import-readiness",
                 "/tools/export-readiness",
                 "/tools/buyer-broker-packet",
+                "/tools/document-check",
                 "/tools/canadian-references",
+                "/opportunities",
+                "/reports/sample",
+                "/pricing",
+                "/billing",
+                "/ai-data-policy",
+                "/security",
                 "/public/packets/:id/result",
                 "/public/packets/:id/confirm",
                 "/workspace",
@@ -1587,6 +1866,8 @@ def _index_payload(repo_root: Path) -> dict[str, Any]:
                 "/packets/:id/ai-reviews",
                 "/packets/:id/reviews",
                 "/packets/:id/reports",
+                "/packets/:id/source-monitoring",
+                "/packets/:id/safe-summary",
                 "/packets/:id/settings",
                 "/settings/ai-data-policy",
                 "/source-packets",
@@ -1671,12 +1952,27 @@ def build_operator_app_handler(repo_root: Path) -> type[BaseHTTPRequestHandler]:
             if path == "/tools":
                 self._send_html(_render_tool_selection())
                 return
-            if path in {"/trade-check", "/tools/import-readiness", "/tools/export-readiness", "/tools/buyer-broker-packet"}:
+            if path in {"/trade-check", "/tools/import-readiness", "/tools/export-readiness", "/tools/buyer-broker-packet", "/tools/document-check"}:
                 default_direction = "import" if path == "/tools/import-readiness" else "export"
                 self._send_html(_render_public_trade_check(default_direction))
                 return
             if path == "/tools/canadian-references":
                 self._send_html(_render_canadian_references(workflow))
+                return
+            if path == "/opportunities":
+                self._send_html(_render_opportunities(repo_root, workflow))
+                return
+            if path == "/reports/sample":
+                self._send_html(_render_sample_reports(repo_root))
+                return
+            if path in {"/pricing", "/billing"}:
+                self._send_html(_render_pricing(repo_root))
+                return
+            if path == "/ai-data-policy":
+                self._send_html(_render_ai_data_policy(runtime, actor))
+                return
+            if path == "/security":
+                self._send_html(_render_security_public(runtime))
                 return
             if path.startswith("/public/packets/") and path.endswith("/result"):
                 packet_id = path.removeprefix("/public/packets/").removesuffix("/result").strip("/")
@@ -2786,6 +3082,12 @@ def build_operator_app_handler(repo_root: Path) -> type[BaseHTTPRequestHandler]:
                 return
             if view == "reports":
                 self._send_html(_render_packet_reports(workflow, packet))
+                return
+            if view == "source-monitoring":
+                self._send_html(_render_source_monitoring(repo_root, workflow, packet))
+                return
+            if view == "safe-summary":
+                self._send_html(_render_safe_summary_page(packet))
                 return
             if view == "settings":
                 self._send_html(_render_packet_settings(packet))

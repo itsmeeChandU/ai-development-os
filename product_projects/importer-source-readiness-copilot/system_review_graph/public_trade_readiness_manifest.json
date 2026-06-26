@@ -7,6 +7,16 @@
     "shipment_ready",
     "legal_or_customs_advice"
   ],
+  "completion_stage_contracts": {
+    "agent_api_manifest": "system_review_graph/agent_api_manifest.json",
+    "billing_credit_controls": "system_review_graph/billing_credit_controls.json",
+    "country_coverage": "system_review_graph/country_coverage_report.json",
+    "manifest": "system_review_graph/completion_platform_manifest.json",
+    "opportunity_scanner": "system_review_graph/opportunity_scanner_report.json",
+    "proof_boundary": "Completion contracts are local/private-beta product surfaces; external market, legal, customs, payment, and expert-review gates remain closed.",
+    "traffic_pages_manifest": "system_review_graph/traffic_pages_manifest.json",
+    "transport_readiness": "system_review_graph/transport_readiness_report.json"
+  },
   "intelligence_hub_policy_monitor": {
     "artifact": "system_review_graph/intelligence_hub_policy_monitor.json",
     "proof_boundary": "Source monitoring detects stale packet risk; it does not prove current compliance truth.",
@@ -16,8 +26,11 @@
   "internal_engine": "Importer Source Readiness Copilot",
   "modes": {
     "beginner_no_documents": "Creates a missing-evidence starter packet and checklist without requiring uploads.",
+    "billing_controls": "Estimates plan/credit gates locally; live checkout remains disabled.",
     "document_mode": "Quarantines uploaded PDFs, triages native text/OCR need, and requires user confirmation.",
-    "saved_workspace": "Local SQLite/artifact workspace with account CTA and external hosting gates."
+    "opportunity_scanner": "Shows possible opportunity signals and research prompts only.",
+    "saved_workspace": "Local SQLite/artifact workspace with account CTA and external hosting gates.",
+    "transport_readiness": "Creates freight-forwarder questions and blocks route/cost/shipment claims."
   },
   "promise": "Before you import or export, know what is missing. Turn a messy trade idea into an evidence-backed readiness packet that shows what is known, what is missing, which claims are blocked, and what review is required before moving forward.",
   "proof_boundary": "Trade Readiness Copilot organizes import/export evidence and blockers. It does not provide legal, customs, tariff, tax, CFIA, supplier, buyer, compliance, shipment, or launch advice.",
@@ -56,7 +69,13 @@
       "Level 2 free account - saved history and workspace",
       "Level 3 Pro - more packets and review workflows",
       "Level 4 Business - team/operator workbench",
-      "Level 5 Enterprise/private AI - customer-managed or private hosted model routing"
+      "Level 5 Enterprise/private AI - customer-managed or private hosted model routing",
+      "Level 6 opportunity scanner - signal-only research prompts",
+      "Level 7 country coverage - support tiers and claim gates",
+      "Level 8 transport readiness - freight-forwarder question packets",
+      "Level 9 billing/credits - local metering and heavy-job gates",
+      "Level 10 agent/API layer - scoped tool manifest",
+      "Level 11 traffic-first growth pages - checklists and sample reports"
     ],
     "status": "public_quick_check_ready_local_with_external_gates",
     "visible_modules": [
@@ -71,7 +90,13 @@
       "ChatGPT-Safe Summary",
       "Expert Review Packet",
       "Operator Workbench",
-      "Policy Source Monitor"
+      "Policy Source Monitor",
+      "Opportunity Scanner",
+      "Country Coverage",
+      "Transport Readiness",
+      "Billing/Credits",
+      "Agent API",
+      "Traffic Checklist Pages"
     ]
   },
   "routes": {
@@ -85,7 +110,13 @@
       "/api/public/packets/:id/reports/missing.pdf",
       "/api/public/packets/:id/reports/buyer.pdf",
       "/api/public/packets/:id/reports/broker.pdf",
-      "/api/public/packets/:id/delete-files"
+      "/api/public/packets/:id/delete-files",
+      "/api/opportunities",
+      "/api/country-coverage",
+      "/api/billing/controls",
+      "/api/agent-api",
+      "/api/traffic-pages",
+      "/api/transport-readiness"
     ],
     "ui": [
       "/",
@@ -95,6 +126,13 @@
       "/tools/import-readiness",
       "/tools/export-readiness",
       "/tools/buyer-broker-packet",
+      "/tools/document-check",
+      "/opportunities",
+      "/reports/sample",
+      "/pricing",
+      "/billing",
+      "/ai-data-policy",
+      "/security",
       "/public/packets/:packetId/result",
       "/public/packets/:packetId/confirm",
       "/workspace"

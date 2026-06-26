@@ -22,6 +22,7 @@ src/importer_source_readiness/operator_report.py
 src/importer_source_readiness/operator_screenshots.py
 src/importer_source_readiness/document_processing.py
 src/importer_source_readiness/policy_intelligence.py
+src/importer_source_readiness/completion_platform.py
         |
         v
 system_review_graph/readiness_report.json
@@ -37,6 +38,13 @@ system_review_graph/intelligence_hub_policy_monitor.json
 system_review_graph/policy_source_snapshots.json
 system_review_graph/policy_change_impact_report.json
 system_review_graph/policy_intelligence.sqlite
+system_review_graph/completion_platform_manifest.json
+system_review_graph/opportunity_scanner_report.json
+system_review_graph/country_coverage_report.json
+system_review_graph/transport_readiness_report.json
+system_review_graph/billing_credit_controls.json
+system_review_graph/agent_api_manifest.json
+system_review_graph/traffic_pages_manifest.json
 investor/*.md
 board/*.md
 ```
@@ -62,6 +70,7 @@ board/*.md
 | `src/importer_source_readiness/operator_screenshots.py` | index operator-generated screenshot artifacts for dashboard review |
 | `src/importer_source_readiness/document_processing.py` | triage public PDF uploads, native text extraction, OCR decision, hashes, and confirmation requirement |
 | `src/importer_source_readiness/policy_intelligence.py` | database-style Intelligence Hub source monitoring contract, source snapshots, packet impacts, and stale-source blockers |
+| `src/importer_source_readiness/completion_platform.py` | completion-stage contracts for opportunities, country coverage, transport readiness, billing, agent/API, and traffic pages |
 | `scripts/run_readiness.py` | CLI entrypoint and report writer |
 | `scripts/run_external_gates.py` | external-gate report writer |
 | `scripts/export_operator_dashboard.py` | dashboard exporter |
@@ -70,6 +79,7 @@ board/*.md
 | `scripts/build_board_go_live_packet.py` | board packet and go-live candidate writer |
 | `scripts/run_operator_workflow.py` | operator work queue writer |
 | `scripts/run_policy_intelligence.py` | Intelligence Hub policy/source monitor artifact writer |
+| `scripts/run_completion_platform.py` | completion-stage artifact writer |
 | `tests/test_readiness.py` | proof for blocked-safe behavior |
 | `tests/test_external_gates.py` | proof for external-gate and dashboard behavior |
 | `tests/test_continuation.py` | proof that externally gated status keeps work in progress |
@@ -106,6 +116,9 @@ board/*.md
 17. Generate Intelligence Hub-style source monitor artifacts with source
     hashes, diff-classifier placeholders, packet impact rows, stale-source
     blockers, and a SQLite policy intelligence store.
+18. Generate completion-stage platform artifacts for opportunity signals,
+    country coverage, transport questions, billing/credit gates, agent/API
+    rules, and traffic-first pages.
 
 ## Status Rules
 

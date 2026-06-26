@@ -75,6 +75,7 @@ def main() -> int:
         [sys.executable, "scripts/run_operator_workflow.py"],
         [sys.executable, "scripts/run_customer_workflow.py"],
         [sys.executable, "scripts/run_policy_intelligence.py"],
+        [sys.executable, "scripts/run_completion_platform.py"],
         [sys.executable, "scripts/export_operator_dashboard.py"],
         [sys.executable, "scripts/audit_external_package.py", "--root", "."],
     ]
@@ -114,6 +115,13 @@ def main() -> int:
     policy_monitor = _load_json(ROOT / "system_review_graph" / "intelligence_hub_policy_monitor.json")
     policy_snapshots = _load_json(ROOT / "system_review_graph" / "policy_source_snapshots.json")
     policy_impact = _load_json(ROOT / "system_review_graph" / "policy_change_impact_report.json")
+    completion = _load_json(ROOT / "system_review_graph" / "completion_platform_manifest.json")
+    country_coverage = _load_json(ROOT / "system_review_graph" / "country_coverage_report.json")
+    opportunity_scanner = _load_json(ROOT / "system_review_graph" / "opportunity_scanner_report.json")
+    transport_readiness = _load_json(ROOT / "system_review_graph" / "transport_readiness_report.json")
+    billing_controls = _load_json(ROOT / "system_review_graph" / "billing_credit_controls.json")
+    agent_api = _load_json(ROOT / "system_review_graph" / "agent_api_manifest.json")
+    traffic_pages = _load_json(ROOT / "system_review_graph" / "traffic_pages_manifest.json")
     screenshot_manifest_path = ROOT / "system_review_graph" / "operator_screenshot_manifest.json"
     screenshot_manifest = _load_json(screenshot_manifest_path) if screenshot_manifest_path.exists() else {}
     expected = {
@@ -157,14 +165,17 @@ def main() -> int:
         "src/importer_source_readiness/product_runtime.py",
         "src/importer_source_readiness/document_processing.py",
         "src/importer_source_readiness/policy_intelligence.py",
+        "src/importer_source_readiness/completion_platform.py",
         "src/importer_source_readiness/ai_review_validation.py",
         "tests/test_operator_app.py",
         "tests/test_source_packet_workflow.py",
         "tests/test_customer_store.py",
         "tests/test_product_runtime.py",
+        "tests/test_completion_platform.py",
         "tests/test_external_package_audit.py",
         "scripts/run_customer_workflow.py",
         "scripts/run_policy_intelligence.py",
+        "scripts/run_completion_platform.py",
         "scripts/audit_external_package.py",
         "data/customer_source_packets.json",
         "data/evidence_ledger.json",
@@ -205,6 +216,13 @@ def main() -> int:
         "system_review_graph/policy_source_snapshots.json",
         "system_review_graph/policy_change_impact_report.json",
         "system_review_graph/policy_intelligence.sqlite",
+        "system_review_graph/completion_platform_manifest.json",
+        "system_review_graph/country_coverage_report.json",
+        "system_review_graph/opportunity_scanner_report.json",
+        "system_review_graph/transport_readiness_report.json",
+        "system_review_graph/billing_credit_controls.json",
+        "system_review_graph/agent_api_manifest.json",
+        "system_review_graph/traffic_pages_manifest.json",
         "system_review_graph/source_refresh_runs.json",
         "system_review_graph/source_refresh_report_packet-frozen-tuna-canada-001.json",
         "system_review_graph/expert_review_packet_packet-frozen-tuna-canada-001.md",
@@ -213,6 +231,11 @@ def main() -> int:
         "compose.yaml",
         ".env.example",
         "docs/PUBLIC_TRADE_READINESS.md",
+        "docs/AI_DATA_POLICY.md",
+        "docs/DOCUMENT_PROCESSING.md",
+        "docs/OPPORTUNITY_SCANNER.md",
+        "docs/POLICY_MONITORING.md",
+        "docs/AGENT_API.md",
         "docs/SECURITY_PRIVACY.md",
         "docs/DEPLOYMENT.md",
     ):
@@ -353,9 +376,18 @@ def main() -> int:
     for route in (
         "/start",
         "/tools/export-readiness",
+        "/tools/document-check",
+        "/opportunities",
+        "/reports/sample",
+        "/pricing",
+        "/billing",
+        "/ai-data-policy",
+        "/security",
         "/public/packets/:packetId/result",
         "/public/packets/:packetId/confirm",
         "/workspace",
+        "/packets/:packetId/source-monitoring",
+        "/packets/:packetId/safe-summary",
     ):
         if route not in runtime.get("ui_routes", {}).get("customer", []):
             failures.append(f"runtime state should expose public UI route {route}")
@@ -369,6 +401,12 @@ def main() -> int:
         "/api/public/packets/:id/reports/broker.pdf",
         "/api/public/packets/:id/reports/missing.pdf",
         "/api/public/packets/:id/delete-files",
+        "/api/opportunities",
+        "/api/country-coverage",
+        "/api/billing/controls",
+        "/api/agent-api",
+        "/api/traffic-pages",
+        "/api/transport-readiness",
     ):
         if route not in runtime.get("api_routes", []):
             failures.append(f"runtime state should expose public API route {route}")
@@ -401,9 +439,23 @@ def main() -> int:
     if manual_no_ai_workflow.get("status") != "manual_no_ai_workflow_ready":
         failures.append("manual/no-AI workflow artifact should be ready")
     requirement_ids = {row.get("id") for row in requirements_traceability.get("requirements", [])}
-    if len(requirements_traceability.get("requirements", [])) < 31:
-        failures.append("requirements traceability matrix should cover public and exporter requirements")
-    for requirement_id in ("REQ-PUBLIC-01", "REQ-EXPORT-01", "REQ-EXPORT-09", "REQ-STARTER-01", "REQ-PDF-01", "REQ-CONFIRM-01", "REQ-IH-01"):
+    if len(requirements_traceability.get("requirements", [])) < 37:
+        failures.append("requirements traceability matrix should cover public, exporter, policy, and completion requirements")
+    for requirement_id in (
+        "REQ-PUBLIC-01",
+        "REQ-EXPORT-01",
+        "REQ-EXPORT-09",
+        "REQ-STARTER-01",
+        "REQ-PDF-01",
+        "REQ-CONFIRM-01",
+        "REQ-IH-01",
+        "REQ-OPPORTUNITY-01",
+        "REQ-COVERAGE-01",
+        "REQ-TRANSPORT-01",
+        "REQ-BILLING-01",
+        "REQ-AGENT-01",
+        "REQ-TRAFFIC-01",
+    ):
         if requirement_id not in requirement_ids:
             failures.append(f"requirements traceability matrix missing {requirement_id}")
     if public_trade.get("status") != "public_trade_readiness_ready_local":
@@ -414,10 +466,18 @@ def main() -> int:
         failures.append("public trade readiness manifest should expose quick-check API")
     if "/api/public/starter" not in public_trade.get("routes", {}).get("api", []):
         failures.append("public trade readiness manifest should expose starter API")
+    for route in ("/opportunities", "/reports/sample", "/pricing", "/security", "/tools/document-check"):
+        if route not in public_trade.get("routes", {}).get("ui", []):
+            failures.append(f"public trade readiness manifest should expose {route}")
+    for route in ("/api/opportunities", "/api/country-coverage", "/api/billing/controls", "/api/agent-api", "/api/traffic-pages", "/api/transport-readiness"):
+        if route not in public_trade.get("routes", {}).get("api", []):
+            failures.append(f"public trade readiness manifest should expose {route}")
     if "beginner_no_documents" not in public_trade.get("modes", {}):
         failures.append("public trade readiness manifest should expose beginner no-documents mode")
     if public_trade.get("intelligence_hub_policy_monitor", {}).get("status") != "database_style_contract_ready":
         failures.append("public manifest should expose the Intelligence Hub policy monitor contract")
+    if "completion_stage_contracts" not in public_trade:
+        failures.append("public manifest should expose completion-stage contracts")
     if exporter_mode.get("status") != "exporter_mode_requirements_ready":
         failures.append("exporter mode requirements manifest should be generated")
     if "exporter_side_readiness" not in exporter_mode.get("readiness_lanes", []):
@@ -426,6 +486,9 @@ def main() -> int:
         failures.append("public report types should include Broker Review Packet.pdf")
     if "Starter Checklist.pdf" not in public_reports.get("reports", []):
         failures.append("public report types should include Starter Checklist.pdf")
+    for report_name in ("Opportunity Research Report.pdf", "Policy Change Impact Report.pdf", "Broker/Freight-Forwarder Packet.pdf"):
+        if report_name not in public_reports.get("reports", []):
+            failures.append(f"public report types should include {report_name}")
     if public_upload_policy.get("notice_required") is not True:
         failures.append("public upload policy should require upload/AI notice")
     if public_upload_policy.get("quarantine") != "enabled":
@@ -446,6 +509,32 @@ def main() -> int:
         failures.append("policy source snapshots artifact should be ready")
     if policy_impact.get("status") != "policy_change_impact_report_ready":
         failures.append("policy change impact report should be ready")
+    if completion.get("status") != "completion_platform_contracts_ready_with_external_gates":
+        failures.append(f"completion platform status unexpected: {completion.get('status')!r}")
+    if country_coverage.get("status") != "country_coverage_ready_with_claim_gates":
+        failures.append("country coverage report should be ready with claim gates")
+    if opportunity_scanner.get("status") != "opportunity_scanner_ready_with_research_gates":
+        failures.append("opportunity scanner should be ready with research gates")
+    if opportunity_scanner.get("signal_count", 0) < 1:
+        failures.append("opportunity scanner should include at least one signal row")
+    if transport_readiness.get("status") != "transport_readiness_ready_with_forwarder_gates":
+        failures.append("transport readiness should be ready with forwarder gates")
+    if not transport_readiness.get("rows"):
+        failures.append("transport readiness should include packet rows")
+    if billing_controls.get("status") != "billing_credit_controls_ready_local_no_live_checkout":
+        failures.append("billing controls should be local and no-live-checkout")
+    if billing_controls.get("live_checkout_enabled") is not False:
+        failures.append("billing controls must keep live checkout disabled")
+    if agent_api.get("status") != "agent_api_manifest_ready_scoped_and_metered":
+        failures.append("agent API manifest should be scoped and metered")
+    forbidden_tools = set(agent_api.get("forbidden_tools", []))
+    for tool in ("approve_import", "confirm_tariff", "validate_buyer", "ship_goods"):
+        if tool not in forbidden_tools:
+            failures.append(f"agent API manifest must forbid {tool}")
+    if traffic_pages.get("status") != "traffic_pages_manifest_ready":
+        failures.append("traffic pages manifest should be ready")
+    if len(traffic_pages.get("pages", [])) < 10:
+        failures.append("traffic pages manifest should include checklist and generator pages")
     store_path = ROOT / "system_review_graph" / "customer_workflow.sqlite"
     if store_path.exists():
         with sqlite3.connect(store_path) as conn:
@@ -516,6 +605,13 @@ def main() -> int:
     print(f"public_trade_manifest={public_trade['status']}")
     print(f"exporter_mode_manifest={exporter_mode['status']}")
     print(f"policy_monitor={policy_monitor['status']}")
+    print(f"completion_platform={completion['status']}")
+    print(f"opportunity_scanner={opportunity_scanner['status']}")
+    print(f"country_coverage={country_coverage['status']}")
+    print(f"transport_readiness={transport_readiness['status']}")
+    print(f"billing_controls={billing_controls['status']}")
+    print(f"agent_api={agent_api['status']}")
+    print(f"traffic_pages={len(traffic_pages['pages'])}")
     print(f"review_requests={len(review_requests)}")
     print(f"audit_events={len(audit_events['events'])}")
     print(f"deployment_status={deployment['status']}")

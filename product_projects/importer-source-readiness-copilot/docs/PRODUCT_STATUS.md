@@ -21,6 +21,9 @@ artifacts, writes Canada-focused board artifacts, and passes the local proof
 gate. It also writes AI/data policy, model-router, redaction, no-AI/manual
 workflow, public trade readiness, exporter-mode, report-type, upload-policy,
 policy/source monitor, and requirements traceability artifacts.
+It now also writes completion-stage contracts for opportunity scanning,
+country coverage tiers, transport readiness, billing/credit controls, agent
+API rules, and traffic-first checklist pages.
 
 The current usable application is the local private-beta product app served by:
 
@@ -35,11 +38,14 @@ local private-beta review. It includes `/`, `/start`, `/tools`, `/trade-check`,
 downloads, `/workspace`, `/dashboard`,
 `/packets/new`,
 `/packets/:id/evidence`, `/packets/:id/blockers`, `/packets/:id/readiness`,
+`/packets/:id/source-monitoring`, `/packets/:id/safe-summary`,
 `/packets/:id/ai-reviews`, `/packets/:id/reviews`, `/packets/:id/reports`,
 `/settings/ai-data-policy`, scoped `/review/:token` pages,
 `/operator/queue`, `/operator/packets/:id`, `/admin/sources`,
 `/admin/gates`, `/admin/audit`, and
-`/admin/system-health`. It is hostable after real infrastructure and qualified
+`/admin/system-health`. Public completion routes include `/opportunities`,
+`/reports/sample`, `/pricing`, `/billing`, `/ai-data-policy`, `/security`, and
+`/tools/document-check`. It is hostable after real infrastructure and qualified
 security/privacy/human review gates are completed.
 
 ## Ready Now
@@ -74,6 +80,12 @@ security/privacy/human review gates are completed.
 - saved packet workspace backed by generated JSON and SQLite artifacts
 - Intelligence Hub database-style policy/source monitor contract
 - policy source snapshot, change impact, stale-source blocker, and SQLite store artifacts
+- opportunity scanner with signal-only research prompts
+- country coverage tiers with country-specific claim gates
+- transport readiness lane and freight-forwarder questions
+- billing/credit controls with live checkout disabled
+- scoped agent/API manifest with forbidden claim-opening tools
+- traffic-first checklist and generator page manifest
 - evidence ledger with proof boundaries
 - blocked-safe customer readiness report
 - source-packet export routes
@@ -192,14 +204,23 @@ and public launch claims.
 - exporter contract: `system_review_graph/exporter_mode_requirements.json`
 - upload policy: `system_review_graph/public_upload_policy.json`
 - policy monitor: `system_review_graph/intelligence_hub_policy_monitor.json`
+- opportunity scanner: `system_review_graph/opportunity_scanner_report.json`
+- country coverage: `system_review_graph/country_coverage_report.json`
+- transport readiness: `system_review_graph/transport_readiness_report.json`
+- billing controls: `system_review_graph/billing_credit_controls.json`
+- agent API: `system_review_graph/agent_api_manifest.json`
+- traffic pages: `system_review_graph/traffic_pages_manifest.json`
 
 This is a local dry run of the public product flow. It supports beginner
 starter intake, PDF upload, quarantine metadata, native text/OCR triage,
 AI/data notice acceptance, user confirmation, readiness preview, blocked
 claims, draft PDF download, safe summaries, saved workspace review, and
-delete-files. It is not public hosting, approval, tariff confirmation, CFIA
-clearance, customs/legal advice, buyer validation, shipment readiness, or
-commercial readiness.
+delete-files. The completion-stage routes add opportunity signals, country
+coverage visibility, pricing/credit controls, public policy/security pages,
+sample reports, source monitoring, and safe summaries. It is not public
+hosting, approval, tariff confirmation, CFIA clearance, customs/legal advice,
+buyer validation, payment readiness, shipment readiness, or commercial
+readiness.
 
 ## Next Valid Move
 

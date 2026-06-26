@@ -1,0 +1,74 @@
+{
+  "countries": [
+    {
+      "can_make_country_specific_claims": false,
+      "country": "Canada",
+      "coverage_label": "monitored sources",
+      "coverage_tier": 3,
+      "next_valid_move": "Add monitored official sources and expert-reviewed templates before country-specific claims.",
+      "source_count": 10
+    },
+    {
+      "can_make_country_specific_claims": false,
+      "country": "Generic",
+      "coverage_label": "selectable only",
+      "coverage_tier": 0,
+      "next_valid_move": "Add monitored official sources and expert-reviewed templates before country-specific claims.",
+      "source_count": 0
+    },
+    {
+      "can_make_country_specific_claims": false,
+      "country": "India",
+      "coverage_label": "generic starter checklist",
+      "coverage_tier": 1,
+      "next_valid_move": "Add monitored official sources and expert-reviewed templates before country-specific claims.",
+      "source_count": 0
+    },
+    {
+      "can_make_country_specific_claims": false,
+      "country": "United Kingdom",
+      "coverage_label": "generic starter checklist",
+      "coverage_tier": 1,
+      "next_valid_move": "Add monitored official sources and expert-reviewed templates before country-specific claims.",
+      "source_count": 0
+    },
+    {
+      "can_make_country_specific_claims": false,
+      "country": "United States",
+      "coverage_label": "generic starter checklist",
+      "coverage_tier": 1,
+      "next_valid_move": "Add monitored official sources and expert-reviewed templates before country-specific claims.",
+      "source_count": 0
+    },
+    {
+      "can_make_country_specific_claims": false,
+      "country": "Vietnam",
+      "coverage_label": "generic starter checklist",
+      "coverage_tier": 1,
+      "next_valid_move": "Add monitored official sources and expert-reviewed templates before country-specific claims.",
+      "source_count": 0
+    }
+  ],
+  "coverage_levels": {
+    "0": "selectable only",
+    "1": "generic starter checklist",
+    "2": "reference sources catalogued",
+    "3": "monitored sources",
+    "4": "category template support",
+    "5": "expert-reviewed templates"
+  },
+  "generated_at": "2026-06-26T09:34:26+00:00",
+  "packet_coverage": [
+    {
+      "coverage_status": "country_specific_claims_blocked",
+      "destination_country": "Canada",
+      "effective_coverage_tier": 1,
+      "next_valid_move": "Use generic readiness output unless both countries and category have monitored/expert-reviewed coverage.",
+      "origin_country": "Vietnam",
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "product_category": "food_import"
+    }
+  ],
+  "proof_boundary": "Coverage tiers describe product support level only; they do not prove country-specific legal, customs, tariff, or compliance correctness.",
+  "status": "country_coverage_ready_with_claim_gates"
+}

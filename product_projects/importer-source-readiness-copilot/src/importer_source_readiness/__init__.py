@@ -11,11 +11,13 @@ from .readiness import evaluate_cards, load_cards, write_report
 from .customer_store import inspect_customer_store, write_customer_store
 from .source_packet_workflow import build_customer_workflow, build_evidence_ledger
 from .product_runtime import build_runtime_state, write_runtime_artifacts
+from .completion_platform import build_completion_platform, write_completion_platform_artifacts
 
 __all__ = [
     "build_continuation_plan",
     "build_board_go_live_readiness",
     "build_customer_workflow",
+    "build_completion_platform",
     "build_evidence_ledger",
     "build_external_gate_report",
     "build_operator_workflow",
@@ -29,6 +31,7 @@ __all__ = [
     "render_dashboard",
     "write_dashboard",
     "write_customer_store",
+    "write_completion_platform_artifacts",
     "write_json",
     "write_operator_workflow",
     "write_runtime_artifacts",

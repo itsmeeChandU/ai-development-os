@@ -1,0 +1,119 @@
+{
+  "authorization_algorithm": [
+    "estimate cost",
+    "check plan and credits",
+    "block heavy free-plan jobs",
+    "reserve credits before worker execution",
+    "record usage",
+    "refund or adjust on failed worker job"
+  ],
+  "billable_actions": [
+    {
+      "action": "ocr_page",
+      "estimated_credits": 2,
+      "external_charge_created": false,
+      "free_plan_behavior": "blocked_requires_upgrade",
+      "heavy_job": true
+    },
+    {
+      "action": "ai_extraction",
+      "estimated_credits": 4,
+      "external_charge_created": false,
+      "free_plan_behavior": "blocked_requires_upgrade",
+      "heavy_job": true
+    },
+    {
+      "action": "large_document_packet",
+      "estimated_credits": 10,
+      "external_charge_created": false,
+      "free_plan_behavior": "blocked_requires_upgrade",
+      "heavy_job": true
+    },
+    {
+      "action": "saved_workspace",
+      "estimated_credits": 1,
+      "external_charge_created": false,
+      "free_plan_behavior": "allowed_with_limits",
+      "heavy_job": false
+    },
+    {
+      "action": "buyer_ready_packet",
+      "estimated_credits": 3,
+      "external_charge_created": false,
+      "free_plan_behavior": "allowed_with_limits",
+      "heavy_job": false
+    },
+    {
+      "action": "broker_ready_packet",
+      "estimated_credits": 3,
+      "external_charge_created": false,
+      "free_plan_behavior": "allowed_with_limits",
+      "heavy_job": false
+    },
+    {
+      "action": "source_monitoring",
+      "estimated_credits": 5,
+      "external_charge_created": false,
+      "free_plan_behavior": "blocked_requires_upgrade",
+      "heavy_job": true
+    },
+    {
+      "action": "opportunity_report",
+      "estimated_credits": 4,
+      "external_charge_created": false,
+      "free_plan_behavior": "blocked_requires_upgrade",
+      "heavy_job": true
+    },
+    {
+      "action": "expert_review_request",
+      "estimated_credits": 0,
+      "external_charge_created": false,
+      "free_plan_behavior": "blocked_requires_upgrade",
+      "heavy_job": true
+    },
+    {
+      "action": "private_ai",
+      "estimated_credits": 8,
+      "external_charge_created": false,
+      "free_plan_behavior": "blocked_requires_upgrade",
+      "heavy_job": true
+    },
+    {
+      "action": "api_agent_usage",
+      "estimated_credits": 2,
+      "external_charge_created": false,
+      "free_plan_behavior": "blocked_requires_upgrade",
+      "heavy_job": true
+    }
+  ],
+  "generated_at": "2026-06-26T09:34:26+00:00",
+  "live_checkout_enabled": false,
+  "plans": [
+    {
+      "heavy_jobs": "blocked_requires_upgrade",
+      "id": "free",
+      "monthly_credits": 20,
+      "packet_limit": 3
+    },
+    {
+      "heavy_jobs": "metered",
+      "id": "pro",
+      "monthly_credits": 500,
+      "packet_limit": 50
+    },
+    {
+      "heavy_jobs": "metered_team",
+      "id": "business",
+      "monthly_credits": 5000,
+      "packet_limit": 500
+    },
+    {
+      "heavy_jobs": "private_contract",
+      "id": "enterprise",
+      "monthly_credits": "contract",
+      "packet_limit": "contract"
+    }
+  ],
+  "proof_boundary": "Billing controls define metering and cost gates only; no live payment, invoice, or checkout session is created.",
+  "status": "billing_credit_controls_ready_local_no_live_checkout"
+}

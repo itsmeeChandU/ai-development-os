@@ -47,6 +47,13 @@ MUTABLE_GENERATED_PATHS = [
     ROOT / "system_review_graph" / "public_report_types.json",
     ROOT / "system_review_graph" / "public_upload_policy.json",
     ROOT / "system_review_graph" / "public_upload_manifest.json",
+    ROOT / "system_review_graph" / "completion_platform_manifest.json",
+    ROOT / "system_review_graph" / "country_coverage_report.json",
+    ROOT / "system_review_graph" / "opportunity_scanner_report.json",
+    ROOT / "system_review_graph" / "transport_readiness_report.json",
+    ROOT / "system_review_graph" / "billing_credit_controls.json",
+    ROOT / "system_review_graph" / "agent_api_manifest.json",
+    ROOT / "system_review_graph" / "traffic_pages_manifest.json",
 ]
 
 
@@ -74,6 +81,40 @@ class OperatorAppTests(unittest.TestCase):
         self.assertIn("know what is missing", html)
         self.assertIn("Start without documents", html)
         self.assertIn("PDF Triage", html)
+
+    def test_completion_stage_public_pages_and_api_exist(self) -> None:
+        routes = {
+            "/opportunities": "Opportunity Signals",
+            "/pricing": "Billing And Credits",
+            "/billing": "Billing And Credits",
+            "/reports/sample": "Sample Reports",
+            "/ai-data-policy": "AI Data Policy",
+            "/security": "Security And Privacy",
+            "/tools/document-check": "Quick Trade Readiness Check",
+            "/packets/packet-frozen-tuna-canada-001/source-monitoring": "Source Monitoring",
+            "/packets/packet-frozen-tuna-canada-001/safe-summary": "ChatGPT-Safe Summary",
+        }
+        for path, expected in routes.items():
+            with self.subTest(path=path):
+                with urlopen(f"{self.base_url}{path}", timeout=5) as response:
+                    body = response.read().decode("utf-8")
+                self.assertEqual(response.status, 200)
+                self.assertIn(expected, body)
+
+        api_routes = {
+            "/api/opportunities": "opportunity_scanner_ready_with_research_gates",
+            "/api/country-coverage": "country_coverage_ready_with_claim_gates",
+            "/api/billing/controls": "billing_credit_controls_ready_local_no_live_checkout",
+            "/api/agent-api": "agent_api_manifest_ready_scoped_and_metered",
+            "/api/traffic-pages": "traffic_pages_manifest_ready",
+            "/api/transport-readiness": "transport_readiness_ready_with_forwarder_gates",
+        }
+        for path, expected_status in api_routes.items():
+            with self.subTest(path=path):
+                with urlopen(f"{self.base_url}{path}", timeout=5) as response:
+                    payload = json.loads(response.read().decode("utf-8"))
+                self.assertEqual(response.status, 200)
+                self.assertEqual(payload["status"], expected_status)
 
     def test_beginner_start_creates_starter_packet(self) -> None:
         generated_paths = [
@@ -349,6 +390,8 @@ class OperatorAppTests(unittest.TestCase):
             "/packets/packet-frozen-tuna-canada-001/ai-reviews": "AI simulated reviews",
             "/packets/packet-frozen-tuna-canada-001/reviews": "Scoped review link",
             "/packets/packet-frozen-tuna-canada-001/reports": "Reports",
+            "/packets/packet-frozen-tuna-canada-001/source-monitoring": "Source Monitoring",
+            "/packets/packet-frozen-tuna-canada-001/safe-summary": "ChatGPT-Safe Summary",
             "/settings/ai-data-policy": "Requirement Traceability",
             "/privacy": "Privacy Notice",
             "/terms": "Terms",
