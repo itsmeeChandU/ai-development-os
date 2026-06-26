@@ -24,6 +24,8 @@ Repo files, generated reports, tests, and git history are the source of truth.
 - `system_review_graph/product_operations_report.json`
 - `system_review_graph/public_upload_policy.json`
 - `PRODUCT_REVIEW_REPORT.md`
+- `THOROUGH_COMPLETION_AUDIT.md`
+- `system_review_graph/thorough_completion_audit.json`
 
 ## Canonical Product Doctrine
 

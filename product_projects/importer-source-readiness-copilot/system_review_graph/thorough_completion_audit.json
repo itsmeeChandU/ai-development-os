@@ -1,0 +1,186 @@
+{
+  "status": "local_private_beta_complete_with_external_gates",
+  "correct_label": "local all-stage product implementation with external gates",
+  "external_claims_opened": false,
+  "unsafe_gates": "closed",
+  "local_product_complete_for_review": true,
+  "public_launch_ready": false,
+  "proof_commands": [
+    "python3 -m py_compile src/importer_source_readiness/*.py scripts/*.py",
+    "python3 -m unittest discover -s tests -p 'test_*.py'",
+    "python3 scripts/run_policy_intelligence.py",
+    "python3 scripts/run_completion_platform.py",
+    "python3 scripts/run_product_operations.py",
+    "python3 scripts/audit_external_package.py --root .",
+    "python3 scripts/check_product.py"
+  ],
+  "stage_audit": [
+    {
+      "id": "stage_00_beginner_start",
+      "status": "implemented_and_tested",
+      "evidence": [
+        "tests/test_operator_app.py",
+        "system_review_graph/customer_readiness_report.json"
+      ],
+      "external_gate": "all product-only outputs remain missing-evidence packets with external claims blocked"
+    },
+    {
+      "id": "stage_01_pdf_triage",
+      "status": "implemented_and_tested",
+      "evidence": [
+        "src/importer_source_readiness/document_processing.py",
+        "tests/test_document_processing.py",
+        "system_review_graph/public_upload_policy.json"
+      ],
+      "external_gate": "OCR and AI work require user approval and no external charge is created locally"
+    },
+    {
+      "id": "stage_02_confirmation",
+      "status": "implemented_and_tested",
+      "evidence": [
+        "tests/test_operator_app.py",
+        "system_review_graph/customer_readiness_report.json"
+      ],
+      "external_gate": "confirmation records draft packet context only"
+    },
+    {
+      "id": "stage_03_workspace",
+      "status": "implemented_local_private_beta",
+      "evidence": [
+        "system_review_graph/product_runtime_state.json",
+        "system_review_graph/auth_rbac_matrix.json",
+        "system_review_graph/customer_workflow.sqlite"
+      ],
+      "external_gate": "hosted identity, privacy, and deletion process need qualified review"
+    },
+    {
+      "id": "stage_04_ai_policy",
+      "status": "implemented_fail_closed",
+      "evidence": [
+        "system_review_graph/ai_model_router.json",
+        "system_review_graph/ai_data_policy.json",
+        "system_review_graph/customer_ai_review_runs.json"
+      ],
+      "external_gate": "live provider use requires configuration and review"
+    },
+    {
+      "id": "stage_05_policy_monitoring",
+      "status": "implemented_contract_no_live_fetch",
+      "evidence": [
+        "system_review_graph/intelligence_hub_policy_monitor.json",
+        "system_review_graph/policy_source_snapshots.json",
+        "system_review_graph/policy_intelligence.sqlite",
+        "tests/test_policy_intelligence.py"
+      ],
+      "external_gate": "robots, terms, official API rules, and qualified source policy must be reviewed before live fetch"
+    },
+    {
+      "id": "stage_06_opportunity",
+      "status": "implemented_signal_contract",
+      "evidence": [
+        "system_review_graph/opportunity_scanner_report.json",
+        "tests/test_completion_platform.py"
+      ],
+      "external_gate": "signals are not demand, margin, buyer, supplier, or recommendation proof"
+    },
+    {
+      "id": "stage_07_country_coverage",
+      "status": "implemented_claim_gated_tiers",
+      "evidence": [
+        "system_review_graph/country_coverage_report.json",
+        "tests/test_completion_platform.py"
+      ],
+      "external_gate": "country-specific claims remain blocked below Tier 5 expert-reviewed support"
+    },
+    {
+      "id": "stage_08_transport",
+      "status": "implemented_forwarder_packet",
+      "evidence": [
+        "system_review_graph/transport_readiness_report.json",
+        "tests/test_completion_platform.py"
+      ],
+      "external_gate": "transport output is questions and packet prep, not shipment readiness"
+    },
+    {
+      "id": "stage_09_billing",
+      "status": "implemented_local_metering_no_checkout",
+      "evidence": [
+        "system_review_graph/billing_credit_controls.json",
+        "system_review_graph/billing_usage_ledger.json",
+        "tests/test_completion_platform.py"
+      ],
+      "external_gate": "live checkout, charges, invoices, and payment capture are disabled"
+    },
+    {
+      "id": "stage_10_agent_api",
+      "status": "implemented_local_scoped_executor",
+      "evidence": [
+        "system_review_graph/agent_api_manifest.json",
+        "system_review_graph/agent_api_gateway_contract.json",
+        "tests/test_completion_platform.py"
+      ],
+      "external_gate": "agents cannot open external claims or perform paid/external effects"
+    },
+    {
+      "id": "stage_11_traffic_pages",
+      "status": "implemented_manifest_and_routes",
+      "evidence": [
+        "system_review_graph/traffic_pages_manifest.json",
+        "tests/test_operator_app.py"
+      ],
+      "external_gate": "traffic pages educate and route to tools, not advice"
+    },
+    {
+      "id": "stage_12_research",
+      "status": "implemented_evidence_router",
+      "evidence": [
+        "system_review_graph/research_execution_plan.json",
+        "system_review_graph/research_execution_runs.json"
+      ],
+      "external_gate": "research outputs require dated sources, datasets, users, or experts before claims"
+    },
+    {
+      "id": "stage_13_expert_review",
+      "status": "implemented_scoped_local",
+      "evidence": [
+        "system_review_graph/expert_network_report.json",
+        "system_review_graph/review_requests.json",
+        "tests/test_operator_app.py"
+      ],
+      "external_gate": "real qualified findings remain external evidence"
+    },
+    {
+      "id": "stage_14_team_workspace",
+      "status": "implemented_local_coordination",
+      "evidence": [
+        "system_review_graph/team_workspace_report.json",
+        "system_review_graph/team_workspace_activity.json",
+        "system_review_graph/auth_rbac_matrix.json"
+      ],
+      "external_gate": "organization rollout and invitations need hosted identity review"
+    },
+    {
+      "id": "stage_15_launch_private_beta",
+      "status": "implemented_private_beta_ops_contract",
+      "evidence": [
+        "system_review_graph/launch_operations_report.json",
+        "system_review_graph/deployment_readiness_report.json",
+        "scripts/check_product.py"
+      ],
+      "external_gate": "human approval, infrastructure, security, privacy, legal, and user testing remain required before public launch"
+    }
+  ],
+  "external_gates_that_must_remain_closed": [
+    "public_launch",
+    "production_hosting",
+    "legal_or_customs_or_tariff_or_cfia_advice",
+    "buyer_validation",
+    "supplier_verification",
+    "commercial_contracts",
+    "live_source_fetch_without_permission_review",
+    "live_ai_provider_without_configuration_review",
+    "live_checkout_or_payment_capture",
+    "shipment_or_import_or_export_approval"
+  ],
+  "review_position": "ready_for_external_review_as_local_private_beta_candidate"
+}
