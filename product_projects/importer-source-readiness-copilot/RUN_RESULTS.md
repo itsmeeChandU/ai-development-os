@@ -41,6 +41,8 @@ requirements_traceability>=44
 policy_monitor=intelligence_hub_policy_monitor_ready_with_external_refresh_gates
 completion_platform=all_local_stages_implemented_with_external_gates
 all_stages=all_local_stages_implemented_with_external_gates
+stage_count=19
+go_live_state_count=18
 opportunity_scanner=opportunity_scanner_ready_with_research_gates
 country_coverage=country_coverage_ready_with_claim_gates
 transport_readiness=transport_readiness_ready_with_forwarder_gates
@@ -98,12 +100,13 @@ expert finding submission, package-audit secret/missing-artifact failures,
 scheduled source-monitor permissions, upload audit events, parser sandbox
 policy, billing metering dimensions, agent/API confirmation rules, and
 beginner example starts that create real packets with unknowns preserved.
-The latest proof also verifies all locally implementable stages plus real local
-operation execution: data intake snapshot, official-source refresh/research
-run, missing-evidence report generation, starter checklist generation,
-ChatGPT-safe summary generation, broker/expert packet generation, expert work
-orders, local billing reservation with zero external charge, team workspace
-activity, launch-control event recording, agent-tool execution, SQLite
-persistence refresh, and the operation report consumed by the checker.
+The latest proof also verifies Stage 0 promise-freeze coverage plus go-live
+States 1-18 and real local operation execution: data intake snapshot,
+official-source refresh/research run, missing-evidence report generation,
+starter checklist generation, ChatGPT-safe summary generation,
+broker/expert packet generation, expert work orders, local billing reservation
+with zero external charge, team workspace activity, launch-control event
+recording, agent-tool execution, SQLite persistence refresh, and the operation
+report consumed by the checker.
 
 Any failure should become a blocker row or a targeted repair before review.

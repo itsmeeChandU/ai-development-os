@@ -5,6 +5,9 @@
   "unsafe_gates": "closed",
   "local_product_complete_for_review": true,
   "public_launch_ready": false,
+  "runbook_stage_range": "0-18",
+  "runbook_stage_count": 19,
+  "go_live_state_count": 18,
   "proof_commands": [
     "python3 -m py_compile src/importer_source_readiness/*.py scripts/*.py",
     "python3 -m unittest discover -s tests -p 'test_*.py'",
@@ -14,7 +17,7 @@
     "python3 scripts/audit_external_package.py --root .",
     "python3 scripts/check_product.py"
   ],
-  "stage_audit": [
+  "legacy_area_audit": [
     {
       "id": "stage_00_beginner_start",
       "status": "implemented_and_tested",
@@ -168,6 +171,201 @@
         "scripts/check_product.py"
       ],
       "external_gate": "human approval, infrastructure, security, privacy, legal, and user testing remain required before public launch"
+    }
+  ],
+  "runbook_stage_audit": [
+    {
+      "id": "stage_00_freeze_product_promise",
+      "status": "implemented_local_claim_language_frozen",
+      "evidence": [
+        "PRODUCT_DOCTRINE.md",
+        "docs/GO_LIVE_READINESS.md",
+        "system_review_graph/public_trade_readiness_manifest.json",
+        "system_review_graph/claims_gate_matrix.json"
+      ],
+      "external_gate": "qualified legal/customs/privacy review required before stronger claims"
+    },
+    {
+      "id": "stage_01_beginner_start_ux",
+      "status": "implemented_local",
+      "evidence": [
+        "system_review_graph/generated_reports/starter_checklist_packet-frozen-tuna-canada-001.json",
+        "system_review_graph/customer_readiness_report.json"
+      ],
+      "external_gate": "real beginner usability smoke still required"
+    },
+    {
+      "id": "stage_02_pdf_quick_check",
+      "status": "implemented_local",
+      "evidence": [
+        "src/importer_source_readiness/document_processing.py",
+        "system_review_graph/public_upload_policy.json",
+        "tests/test_document_processing.py"
+      ],
+      "external_gate": "hosted upload security and OCR cost controls require review"
+    },
+    {
+      "id": "stage_03_field_confirmation_missing_evidence",
+      "status": "implemented_local",
+      "evidence": [
+        "system_review_graph/customer_readiness_report.json",
+        "system_review_graph/evidence_ledger.json",
+        "system_review_graph/blockers.jsonl"
+      ],
+      "external_gate": "real user correction smoke still required"
+    },
+    {
+      "id": "stage_04_customer_grade_reports",
+      "status": "implemented_local",
+      "evidence": [
+        "system_review_graph/public_report_types.json",
+        "system_review_graph/report_exports.json",
+        "system_review_graph/generated_reports/broker_packet_packet-frozen-tuna-canada-001.json"
+      ],
+      "external_gate": "report-language review still required"
+    },
+    {
+      "id": "stage_05_public_upload_hardening",
+      "status": "implemented_local_with_security_review_gate",
+      "evidence": [
+        "system_review_graph/public_upload_policy.json",
+        "system_review_graph/audit_events.json",
+        "tests/test_operator_app.py"
+      ],
+      "external_gate": "production malware scanning, rate limits, and sandbox signoff remain external"
+    },
+    {
+      "id": "stage_06_ai_no_ai_controls",
+      "status": "implemented_local_fail_closed",
+      "evidence": [
+        "system_review_graph/ai_data_policy.json",
+        "system_review_graph/ai_model_router.json",
+        "system_review_graph/redaction_pipeline.json",
+        "system_review_graph/manual_no_ai_workflow.json"
+      ],
+      "external_gate": "live AI provider use requires approval"
+    },
+    {
+      "id": "stage_07_saved_workspace_account",
+      "status": "implemented_local_private_beta",
+      "evidence": [
+        "system_review_graph/customer_workflow.sqlite",
+        "system_review_graph/product_runtime_state.json",
+        "system_review_graph/auth_rbac_matrix.json"
+      ],
+      "external_gate": "hosted identity and privacy review remain external"
+    },
+    {
+      "id": "stage_08_external_expert_review",
+      "status": "expert_network_ready_local_with_human_review_gates",
+      "evidence": [
+        "system_review_graph/expert_network_report.json",
+        "system_review_graph/review_requests.json",
+        "system_review_graph/human_review_findings.json",
+        "board/expert_review_packet.md"
+      ],
+      "external_gate": "real qualified findings still required"
+    },
+    {
+      "id": "stage_09_policy_source_monitoring",
+      "status": "implemented_local_with_refresh_gates",
+      "evidence": [
+        "system_review_graph/intelligence_hub_policy_monitor.json",
+        "system_review_graph/policy_source_snapshots.json",
+        "system_review_graph/policy_change_impact_report.json"
+      ],
+      "external_gate": "live source-refresh policy and terms review remain external"
+    },
+    {
+      "id": "stage_10_country_coverage",
+      "status": "country_coverage_ready_with_claim_gates",
+      "evidence": [
+        "system_review_graph/country_coverage_report.json",
+        "tests/test_completion_platform.py"
+      ],
+      "external_gate": "Tier 5 expert-reviewed template support remains external"
+    },
+    {
+      "id": "stage_11_opportunity_scanner",
+      "status": "opportunity_scanner_ready_with_research_gates",
+      "evidence": [
+        "system_review_graph/opportunity_scanner_report.json",
+        "system_review_graph/research_execution_plan.json"
+      ],
+      "external_gate": "demand, margin, supplier, and buyer validation remain external"
+    },
+    {
+      "id": "stage_12_transport_readiness",
+      "status": "transport_readiness_ready_with_forwarder_gates",
+      "evidence": [
+        "system_review_graph/transport_readiness_report.json",
+        "tests/test_completion_platform.py"
+      ],
+      "external_gate": "route, cost, delivery, insurance, and shipment claims remain external"
+    },
+    {
+      "id": "stage_13_billing_credits",
+      "status": "billing_credit_controls_ready_local_no_live_checkout",
+      "evidence": [
+        "system_review_graph/billing_credit_controls.json",
+        "system_review_graph/billing_usage_ledger.json"
+      ],
+      "external_gate": "live checkout, payment capture, invoices, and tax review remain external"
+    },
+    {
+      "id": "stage_14_agent_api",
+      "status": "agent_api_gateway_ready_local_executor_no_external_effects",
+      "evidence": [
+        "system_review_graph/agent_api_manifest.json",
+        "system_review_graph/agent_api_gateway_contract.json"
+      ],
+      "external_gate": "public API keys, quotas, and third-party effects remain external"
+    },
+    {
+      "id": "stage_15_ux_usability",
+      "status": "ui_ux_audited_ready_for_external_review",
+      "evidence": [
+        "system_review_graph/ui_ux_audit_report.json",
+        "system_review_graph/operator_dashboard.html",
+        "tests/test_operator_app.py"
+      ],
+      "external_gate": "five-user usability test remains external"
+    },
+    {
+      "id": "stage_16_deployment_readiness",
+      "status": "deployable_local_stack_ready_with_external_hosting_gates",
+      "evidence": [
+        "docs/DEPLOYMENT.md",
+        "docs/SECURITY_PRIVACY.md",
+        "system_review_graph/deployment_readiness_report.json",
+        "system_review_graph/private_beta_readiness_checklist.json",
+        "Dockerfile",
+        "compose.yaml",
+        ".github/workflows/ci.yml"
+      ],
+      "external_gate": "real staging/production hosting, TLS, secrets, backups, monitoring, support, rollback, and incident response require owner signoff"
+    },
+    {
+      "id": "stage_17_private_beta",
+      "status": "private_beta_ready_for_human_approval_gates",
+      "evidence": [
+        "system_review_graph/private_beta_readiness_checklist.json",
+        "system_review_graph/launch_operations_report.json",
+        "system_review_graph/team_workspace_report.json",
+        "board/launch_control_checklist.md"
+      ],
+      "external_gate": "real beta users and smoke-test outcomes remain external"
+    },
+    {
+      "id": "stage_18_public_go_live",
+      "status": "public_go_live_subset_defined_blocked_until_approval",
+      "evidence": [
+        "system_review_graph/public_trade_readiness_manifest.json",
+        "system_review_graph/launch_operations_report.json",
+        "system_review_graph/continuation_plan.json",
+        "system_review_graph/board_go_live_readiness_report.json"
+      ],
+      "external_gate": "public launch owner approval, production deployment, legal/privacy/security signoff, monitoring, support, and real-user smoke success remain external"
     }
   ],
   "external_gates_that_must_remain_closed": [

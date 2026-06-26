@@ -43,7 +43,20 @@ class CompletionPlatformTests(unittest.TestCase):
         self.assertEqual(payload["agent_api_gateway"]["status"], "agent_api_gateway_ready_local_executor_no_external_effects")
         self.assertEqual(payload["launch_operations"]["status"], "launch_operations_ready_for_private_beta_review")
         self.assertEqual(payload["all_stage_readiness"]["status"], "all_local_stages_implemented_with_external_gates")
-        self.assertGreaterEqual(payload["all_stage_readiness"]["stage_count"], 16)
+        self.assertEqual(payload["all_stage_readiness"]["stage_count"], 19)
+        self.assertEqual(payload["all_stage_readiness"]["implemented_stage_count"], 19)
+        self.assertEqual(payload["all_stage_readiness"]["go_live_state_count"], 18)
+        self.assertEqual(payload["all_stage_readiness"]["runbook_stage_range"], "0-18")
+        stage_ids = {stage["stage_id"] for stage in payload["all_stage_readiness"]["stages"]}
+        self.assertEqual(stage_ids, {f"stage-{index:02d}" for index in range(19)})
+        stage_zero = next(stage for stage in payload["all_stage_readiness"]["stages"] if stage["stage_id"] == "stage-00")
+        stage_eighteen = next(stage for stage in payload["all_stage_readiness"]["stages"] if stage["stage_id"] == "stage-18")
+        self.assertIsNone(stage_zero["state_number"])
+        self.assertEqual(stage_zero["name"], "Freeze product promise")
+        self.assertEqual(stage_eighteen["state_number"], 18)
+        self.assertEqual(stage_eighteen["name"], "Public go-live")
+        self.assertEqual(stage_eighteen["status"], "public_go_live_subset_defined_blocked_until_approval")
+        self.assertFalse(any(stage["external_claims_opened"] for stage in payload["all_stage_readiness"]["stages"]))
 
         self.assertGreaterEqual(payload["opportunity_scanner"]["signal_count"], 1)
         for signal in payload["opportunity_scanner"]["signals"]:

@@ -15,11 +15,13 @@
     "billing_usage_ledger": "system_review_graph/billing_usage_ledger.json",
     "country_coverage": "system_review_graph/country_coverage_report.json",
     "expert_network": "system_review_graph/expert_network_report.json",
+    "go_live_state_count": 18,
     "launch_operations": "system_review_graph/launch_operations_report.json",
     "manifest": "system_review_graph/completion_platform_manifest.json",
     "opportunity_scanner": "system_review_graph/opportunity_scanner_report.json",
     "proof_boundary": "Completion contracts are local/private-beta product surfaces; external market, legal, customs, payment, and expert-review gates remain closed.",
     "research_execution_plan": "system_review_graph/research_execution_plan.json",
+    "runbook_stage_range": "0-18",
     "team_workspace": "system_review_graph/team_workspace_report.json",
     "traffic_pages_manifest": "system_review_graph/traffic_pages_manifest.json",
     "transport_readiness": "system_review_graph/transport_readiness_report.json"
@@ -32,7 +34,7 @@
   },
   "internal_engine": "Importer Source Readiness Copilot",
   "modes": {
-    "all_stage_runtime": "Every locally implementable stage exposes a route, API, artifact, and proof check.",
+    "all_stage_runtime": "Stage 0 plus go-live States 1-18 expose local routes, APIs, artifacts, blocker rows, and proof checks.",
     "beginner_no_documents": "Creates a missing-evidence starter packet and checklist without requiring uploads.",
     "billing_controls": "Estimates plan/credit gates locally; live checkout remains disabled.",
     "document_mode": "Quarantines uploaded PDFs, triages native text/OCR need, and requires user confirmation.",

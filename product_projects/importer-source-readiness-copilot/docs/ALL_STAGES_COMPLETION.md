@@ -1,28 +1,32 @@
 # All Stages Completion
 
-This product is no longer only a first-stage starter/checklist flow. Every
-locally implementable stage now has a user-visible route, API route, generated
-artifact, proof check, and local operation proof where the stage requires work
-instead of display.
+This product is no longer only a first-stage starter/checklist flow. The local
+go-live contract now covers Stage 0 plus go-live States 1-18. Every locally
+implementable stage has a user-visible route, API route, generated artifact,
+proof check, and local operation proof where the stage requires work instead of
+display.
 
 ## Local Stages
 
-- beginner starter: `/start`
-- PDF quick check: `/trade-check`, `/tools/document-check`
-- confirmation and missing evidence: `/public/packets/:id/confirm`
-- saved workspace: `/workspace`, `/packets`
-- AI/no-AI routing: `/settings/ai-data-policy`, `/ai-data-policy`
-- policy source monitoring: `/packets/:id/source-monitoring`
-- opportunity scanner: `/opportunities`
-- country coverage: `/country-coverage`
-- transport readiness: `/transport-readiness`
-- billing and usage: `/pricing`, `/billing`, `/billing/usage`
-- agent/API layer: `/agent-api`, `/api/agent-tools/:tool`
-- traffic and sample reports: `/reports/sample`, `/tools/:slug`
-- research execution: `/research-plan`
-- expert network: `/expert-network`
-- team workspace: `/team-workspace`
-- launch operations: `/launch-operations`
+- Stage 0 promise freeze: `/`, `/security`, `/ai-data-policy`
+- Stage 1 beginner starter: `/start`
+- Stage 2 PDF quick check: `/trade-check`, `/tools/document-check`
+- Stage 3 confirmation and missing evidence: `/public/packets/:id/confirm`
+- Stage 4 customer-grade reports: `/reports/sample`, `/packets/:id/reports`
+- Stage 5 public upload hardening: `/trade-check`, `/api/public/packets/:id/delete-files`
+- Stage 6 AI/no-AI routing: `/settings/ai-data-policy`, `/ai-data-policy`
+- Stage 7 saved workspace: `/workspace`, `/packets`
+- Stage 8 expert review: `/expert-network`, `/review/:token`
+- Stage 9 policy source monitoring: `/packets/:id/source-monitoring`
+- Stage 10 country coverage: `/country-coverage`
+- Stage 11 opportunity scanner: `/opportunities`, `/research-plan`
+- Stage 12 transport readiness: `/transport-readiness`
+- Stage 13 billing and usage: `/pricing`, `/billing`, `/billing/usage`
+- Stage 14 agent/API layer: `/agent-api`, `/api/agent-tools/:tool`
+- Stage 15 UX/usability: `/`, `/start`, `/trade-check`, `/stages`
+- Stage 16 deployment readiness: `/admin/system-health`, `/launch-operations`
+- Stage 17 private beta: `/launch-operations`, `/team-workspace`
+- Stage 18 public go-live subset: `/start`, `/trade-check`, `/pricing`, `/security`
 
 ## Generated Artifacts
 
@@ -70,7 +74,9 @@ The local product stages are implemented. These remain external gates:
 - payment provider activation
 - real expert signoff
 - production observability and security signoff
+- private-beta users completing real smoke tests
+- explicit public go-live owner approval
 
-Proof boundary: all locally implementable product stages are usable and
+Proof boundary: all locally implementable Stage 0-18 surfaces are usable and
 machine-checked, but real-world approvals and external claims remain blocked
 until dated evidence and qualified owners close them.

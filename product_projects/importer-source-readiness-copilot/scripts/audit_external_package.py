@@ -47,6 +47,7 @@ REQUIRED_FILES = [
     "REVIEW_USE_TERMS.md",
     "OFFLINE_REPRODUCTION.md",
     "PACKAGE_AUDIT.md",
+    "docs/GO_LIVE_READINESS.md",
     "system_review_graph/readiness_report.json",
     "system_review_graph/customer_readiness_report.json",
     "system_review_graph/evidence_ledger.json",

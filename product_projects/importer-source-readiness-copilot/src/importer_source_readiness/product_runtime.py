@@ -670,11 +670,11 @@ REQUIREMENTS_TRACEABILITY = [
     },
     {
         "id": "REQ-STAGE-01",
-        "name": "All local product stages",
+        "name": "Stage 0 plus go-live States 1-18",
         "status": "implemented_stage_runtime",
         "artifacts": ["all_stage_readiness_report.json", "completion_platform_manifest.json"],
         "proof": ["tests/test_completion_platform.py", "scripts/run_completion_platform.py"],
-        "boundary": "All locally implementable stages have routes, APIs, and artifacts; real-world approvals remain external gates.",
+        "boundary": "Stage 0 and go-live States 1-18 have local routes, APIs, artifacts, and blocker rows; real reviewers, beta users, hosting, monitoring, payment activation, and public go-live approval remain external gates.",
     },
     {
         "id": "REQ-RESEARCH-01",
@@ -1548,11 +1548,13 @@ def write_runtime_artifacts(repo_root: Path, workflow: dict[str, Any], *, extra_
                 "opportunity_scanner": "Shows possible opportunity signals and research prompts only.",
                 "transport_readiness": "Creates freight-forwarder questions and blocks route/cost/shipment claims.",
                 "billing_controls": "Estimates plan/credit gates locally; live checkout remains disabled.",
-                "all_stage_runtime": "Every locally implementable stage exposes a route, API, artifact, and proof check.",
+                "all_stage_runtime": "Stage 0 plus go-live States 1-18 expose local routes, APIs, artifacts, blocker rows, and proof checks.",
             },
             "completion_stage_contracts": {
                 "manifest": "system_review_graph/completion_platform_manifest.json",
                 "all_stage_readiness": "system_review_graph/all_stage_readiness_report.json",
+                "runbook_stage_range": "0-18",
+                "go_live_state_count": 18,
                 "country_coverage": "system_review_graph/country_coverage_report.json",
                 "opportunity_scanner": "system_review_graph/opportunity_scanner_report.json",
                 "transport_readiness": "system_review_graph/transport_readiness_report.json",

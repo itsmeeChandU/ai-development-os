@@ -250,17 +250,21 @@ hosting, approval, tariff confirmation, CFIA clearance, customs/legal advice,
 buyer validation, payment readiness, shipment readiness, or commercial
 readiness.
 
-## All Local Stages Implemented
+## All Local Go-Live Stages Implemented
 
 - stage report: `system_review_graph/all_stage_readiness_report.json`
 - status: `all_local_stages_implemented_with_external_gates`
-- local stage count: 16
+- local runbook stage count: 19
+- go-live state count: 18
+- runbook range: Stage 0 through Stage 18
 - route: `/stages`
 - proof: `python3 scripts/check_product.py`
 
-This means the local product has stage surfaces and proof checks for the
-entire product lifecycle that can be built without real-world approvals. It
-does not mean launch approval or external claim proof.
+This means the local product has explicit Stage 0 promise-freeze coverage plus
+Stage 1-18 go-live state surfaces and proof checks for everything that can be
+built without real-world approvals. It does not mean production hosting, live
+payments, qualified legal/customs/tariff/CFIA review, real beta-user success,
+or public launch approval.
 
 ## Next Valid Move
 

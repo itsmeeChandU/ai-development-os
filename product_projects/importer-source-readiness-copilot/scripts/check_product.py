@@ -265,6 +265,7 @@ def main() -> int:
         ".env.example",
         "docs/PUBLIC_TRADE_READINESS.md",
         "docs/ALL_STAGES_COMPLETION.md",
+        "docs/GO_LIVE_READINESS.md",
         "docs/AI_DATA_POLICY.md",
         "docs/DOCUMENT_PROCESSING.md",
         "docs/OPPORTUNITY_SCANNER.md",
@@ -651,8 +652,27 @@ def main() -> int:
         failures.append("launch operations should include local operation proof")
     if all_stages.get("status") != "all_local_stages_implemented_with_external_gates":
         failures.append("all stage readiness report should mark local stages implemented")
-    if all_stages.get("stage_count", 0) < 16:
-        failures.append("all stage readiness report should include every local product stage")
+    if all_stages.get("stage_count") != 19:
+        failures.append("all stage readiness report should include Stage 0 plus Stages 1-18")
+    if all_stages.get("implemented_stage_count") != 19:
+        failures.append("all stage readiness report should mark all 19 runbook stages implemented locally")
+    if all_stages.get("go_live_state_count") != 18:
+        failures.append("all stage readiness report should expose 18 go-live states")
+    if all_stages.get("runbook_stage_range") != "0-18":
+        failures.append("all stage readiness report should expose runbook stage range 0-18")
+    stage_ids = {row.get("stage_id") for row in all_stages.get("stages", [])}
+    expected_stage_ids = {f"stage-{index:02d}" for index in range(19)}
+    missing_stage_ids = sorted(expected_stage_ids - stage_ids)
+    if missing_stage_ids:
+        failures.append(f"all stage readiness report missing stages: {', '.join(missing_stage_ids)}")
+    public_go_live = next(
+        (row for row in all_stages.get("stages", []) if row.get("stage_id") == "stage-18"),
+        {},
+    )
+    if public_go_live.get("status") != "public_go_live_subset_defined_blocked_until_approval":
+        failures.append("stage-18 should define the safe public go-live subset while keeping approval blocked")
+    if any(row.get("external_claims_opened") is not False for row in all_stages.get("stages", [])):
+        failures.append("all stage readiness rows must keep external claims closed")
     if all_stages.get("operation_status") != "local_product_operations_executed":
         failures.append("all stage readiness should include product operation proof")
     if all_stages.get("local_execution_proof_count", 0) < 8:
@@ -771,6 +791,8 @@ def main() -> int:
     print(f"agent_api={agent_api['status']}")
     print(f"traffic_pages={len(traffic_pages['pages'])}")
     print(f"all_stages={all_stages['status']}")
+    print(f"stage_count={all_stages['stage_count']}")
+    print(f"go_live_state_count={all_stages['go_live_state_count']}")
     print(f"research_execution={research_execution['status']}")
     print(f"team_workspace={team_workspace['status']}")
     print(f"expert_network={expert_network['status']}")

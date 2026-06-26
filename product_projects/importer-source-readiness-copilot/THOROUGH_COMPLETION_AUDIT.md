@@ -17,6 +17,34 @@ business is public-launch ready, legally ready, customs/tariff ready, CFIA
 ready, buyer validated, supplier verified, commercially proven, payment live,
 or shipment ready.
 
+## Runbook Stage Proof
+
+The current machine-readable go-live surface is
+`system_review_graph/all_stage_readiness_report.json`. It covers Stage 0 plus
+go-live States 1-18:
+
+| Stage | Status | Evidence Boundary |
+| --- | --- | --- |
+| 0. Freeze product promise | implemented locally | no approval/advice wording without qualified review |
+| 1. Beginner Start UX | implemented locally | real beginner usability remains private-beta proof |
+| 2. PDF quick check | implemented locally | hosted upload sandbox/security remains external |
+| 3. Field confirmation | implemented locally | real user correction smoke remains external |
+| 4. Customer-grade reports | implemented locally | report-language review remains external |
+| 5. Public uploads | implemented locally with security gate | production malware/rate-limit controls remain external |
+| 6. AI/no-AI controls | implemented locally fail-closed | live provider use remains external |
+| 7. Saved workspace/account | implemented locally | hosted identity/privacy remains external |
+| 8. Expert review stage | local packets and queues implemented | real reviewer findings remain external |
+| 9. Policy monitoring | implemented locally with refresh gates | live source-refresh approval remains external |
+| 10. Country coverage | implemented locally with claim gates | Tier 5 expert-reviewed support remains external |
+| 11. Opportunity scanner | implemented as signals only | demand/profit/buyer proof remains external |
+| 12. Transport readiness | implemented as questions/packets | route/cost/shipment approval remains external |
+| 13. Billing and credits | implemented locally with no checkout | payment activation remains external |
+| 14. Agent/API layer | implemented locally and scoped | public API keys/effects remain external |
+| 15. UX/usability | locally audited | five-user usability test remains external |
+| 16. Deployment readiness | local stack/docs ready | real hosting and ops owners remain external |
+| 17. Private beta | local controls/checklist ready | real beta users and outcomes remain external |
+| 18. Public go-live | safe subset defined | explicit go/no-go approval remains external |
+
 ## No-Corners Checklist
 
 | Area | Local implementation | Proof |
@@ -74,6 +102,8 @@ product check: PASS
 package audit: PASS
 status: ready_with_external_gates
 startup_status: startup_in_progress
+stage_count: 19
+go_live_state_count: 18
 unsafe_gates: closed
 ```
 

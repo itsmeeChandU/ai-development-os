@@ -21,6 +21,7 @@ Repo files, generated reports, tests, and git history are the source of truth.
 - `system_review_graph/transport_readiness_report.json`
 - `system_review_graph/billing_credit_controls.json`
 - `system_review_graph/agent_api_manifest.json`
+- `system_review_graph/all_stage_readiness_report.json`
 - `system_review_graph/product_operations_report.json`
 - `system_review_graph/public_upload_policy.json`
 - `PRODUCT_REVIEW_REPORT.md`
@@ -31,6 +32,7 @@ Repo files, generated reports, tests, and git history are the source of truth.
 
 - `PRODUCT_DOCTRINE.md`
 - `CUSTOMER_SOURCE_PACKET_SPEC.md`
+- `docs/GO_LIVE_READINESS.md`
 - `REVIEW_USE_TERMS.md`
 
 ## Proof Commands

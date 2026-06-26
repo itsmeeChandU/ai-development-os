@@ -1198,7 +1198,7 @@ def _render_stage_overview(repo_root: Path) -> str:
     body = f"""
 <section class="surface">
   <h1>All Product Stages</h1>
-  <p class="lede">Every locally implementable stage is represented by usable routes, APIs, generated artifacts, and proof checks.</p>
+  <p class="lede">Stage 0 and go-live States 1-18 are represented by local routes, APIs, generated artifacts, blocker rows, and proof checks.</p>
   <p class="note">{escape(str(stages.get('proof_boundary') or PRODUCT_BOUNDARY))}</p>
   <div class="grid grid-3">
     {_metric_card("Stage Status", stages.get("status"), "Local stages implemented.")}

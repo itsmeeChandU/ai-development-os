@@ -17,6 +17,8 @@ product implementation. The machine-readable source of truth is
 - public Trade Readiness Copilot landing, tool selection, no-login PDF quick
   check, import/export selector, public result page, draft PDF downloads, and
   delete-files control
+- Stage 0 promise freeze plus go-live States 1-18 in the all-stage readiness
+  report
 - Export-to-Canada packet mode with Canadian buyer/importer, importer of
   record, Incoterms, exporter-side readiness, importer-side readiness,
   buyer-ready packet, and Canadian broker-review packet
@@ -54,6 +56,7 @@ product implementation. The machine-readable source of truth is
 | REQ-EXPORT-07 | Buyer-ready packet | implemented draft PDF | `report_exports.json` |
 | REQ-EXPORT-08 | Canadian broker-review packet | implemented draft PDF | `report_exports.json`, `review_requests.json` |
 | REQ-EXPORT-09 | Block compliance/tariff/CFIA/buyer/shipment claims | implemented fail closed | `claims_gate_matrix.json` |
+| REQ-STAGE-01 | Stage 0 plus go-live States 1-18 | implemented stage runtime | `all_stage_readiness_report.json`, `completion_platform_manifest.json` |
 
 ## Boundaries
 

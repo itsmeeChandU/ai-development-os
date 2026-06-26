@@ -26,276 +26,517 @@
     "research_execution": true,
     "team_workspace_activity": true
   },
-  "external_gate_count": 8,
-  "generated_at": "2026-06-26T12:15:26+00:00",
-  "implemented_stage_count": 16,
+  "external_gate_count": 10,
+  "generated_at": "2026-06-26T13:16:04+00:00",
+  "go_live_state_count": 18,
+  "implemented_stage_count": 19,
   "local_execution_proof_count": 11,
   "operation_status": "local_product_operations_executed",
-  "proof_boundary": "All locally implementable product stages are represented by usable routes, APIs, artifacts, and tests. Real-world approvals remain explicit gates.",
-  "stage_count": 16,
+  "proof_boundary": "Stage 0 and Stages 1-18 are represented by local routes, APIs, generated artifacts, tests, and blocker rows. Real reviewers, private-beta users, production hosting, monitoring, legal/privacy/security approval, payment activation, qualified trade review, and public go-live owner approval remain external gates.",
+  "runbook_stage_range": "0-18",
+  "stage_count": 19,
   "stages": [
     {
+      "acceptance": "No customer-facing route or report may imply approval, tariff confirmation, CFIA clearance, supplier verification, buyer validation, or legal/customs advice.",
       "artifacts": [
-        "Starter Checklist.pdf"
+        "PRODUCT_DOCTRINE.md",
+        "README.md",
+        "docs/PUBLIC_TRADE_READINESS.md",
+        "system_review_graph/public_trade_readiness_manifest.json",
+        "system_review_graph/claims_gate_matrix.json"
       ],
       "can_use_locally_now": true,
       "external_claims_opened": false,
+      "external_gate": "Qualified legal/customs/privacy review is still required before public claims or advice language changes.",
       "has_local_execution_proof": true,
       "local_execution_report": "system_review_graph/product_operations_report.json",
-      "name": "Beginner starter",
-      "next_valid_move": "Use locally, collect real evidence, and keep external claims closed until owner or qualified-human approval.",
+      "local_proof": "Claim-boundary copy, blocked-claims manifests, product check, and package audit all preserve the promise: Before you import or export, know what is missing.",
+      "name": "Freeze product promise",
+      "next_valid_move": "Keep the promise frozen and route any stronger claim to qualified review plus dated evidence.",
+      "requires_external_evidence": false,
       "routes": [
-        "/start"
-      ],
-      "stage_id": "stage-00",
-      "status": "implemented_local"
-    },
-    {
-      "artifacts": [
-        "public_upload_manifest.json"
-      ],
-      "can_use_locally_now": true,
-      "external_claims_opened": false,
-      "has_local_execution_proof": true,
-      "local_execution_report": "system_review_graph/product_operations_report.json",
-      "name": "PDF quick check",
-      "next_valid_move": "Use locally, collect real evidence, and keep external claims closed until owner or qualified-human approval.",
-      "routes": [
-        "/trade-check",
-        "/tools/document-check"
-      ],
-      "stage_id": "stage-01",
-      "status": "implemented_local"
-    },
-    {
-      "artifacts": [
-        "Missing Evidence Checklist.pdf"
-      ],
-      "can_use_locally_now": true,
-      "external_claims_opened": false,
-      "has_local_execution_proof": true,
-      "local_execution_report": "system_review_graph/product_operations_report.json",
-      "name": "Confirmation and missing evidence",
-      "next_valid_move": "Use locally, collect real evidence, and keep external claims closed until owner or qualified-human approval.",
-      "routes": [
-        "/public/packets/:id/confirm"
-      ],
-      "stage_id": "stage-02",
-      "status": "implemented_local"
-    },
-    {
-      "artifacts": [
-        "customer_workflow.sqlite"
-      ],
-      "can_use_locally_now": true,
-      "external_claims_opened": false,
-      "has_local_execution_proof": true,
-      "local_execution_report": "system_review_graph/product_operations_report.json",
-      "name": "Saved workspace",
-      "next_valid_move": "Use locally, collect real evidence, and keep external claims closed until owner or qualified-human approval.",
-      "routes": [
-        "/workspace",
-        "/packets"
-      ],
-      "stage_id": "stage-03",
-      "status": "implemented_local"
-    },
-    {
-      "artifacts": [
-        "ai_model_router.json"
-      ],
-      "can_use_locally_now": true,
-      "external_claims_opened": false,
-      "has_local_execution_proof": true,
-      "local_execution_report": "system_review_graph/product_operations_report.json",
-      "name": "AI/no-AI routing",
-      "next_valid_move": "Use locally, collect real evidence, and keep external claims closed until owner or qualified-human approval.",
-      "routes": [
-        "/settings/ai-data-policy",
+        "/",
+        "/security",
         "/ai-data-policy"
       ],
-      "stage_id": "stage-04",
-      "status": "implemented_local_with_policy_gates"
+      "runbook_stage": 0,
+      "stage_id": "stage-00",
+      "state_number": null,
+      "status": "implemented_local_claim_language_frozen"
     },
     {
+      "acceptance": "A beginner can start with unknowns and leave with a starter checklist and blockers.",
       "artifacts": [
-        "intelligence_hub_policy_monitor.json"
+        "system_review_graph/generated_reports/starter_checklist_packet-frozen-tuna-canada-001.json",
+        "system_review_graph/customer_readiness_report.json"
       ],
       "can_use_locally_now": true,
       "external_claims_opened": false,
+      "external_gate": "Real beginner usability still needs private-beta users.",
       "has_local_execution_proof": true,
       "local_execution_report": "system_review_graph/product_operations_report.json",
-      "name": "Policy source monitoring",
-      "next_valid_move": "Use locally, collect real evidence, and keep external claims closed until owner or qualified-human approval.",
+      "local_proof": "Starter packet generation preserves unknown answers as missing-evidence blockers.",
+      "name": "Beginner Start UX",
+      "next_valid_move": "Run timed beginner smoke tests with real users and record misunderstandings.",
+      "requires_external_evidence": false,
       "routes": [
-        "/packets/:id/source-monitoring"
+        "/start",
+        "/tools/import-readiness",
+        "/tools/export-readiness",
+        "/tools/document-check"
       ],
-      "stage_id": "stage-05",
-      "status": "implemented_local_with_refresh_gates"
+      "runbook_stage": 1,
+      "stage_id": "stage-01",
+      "state_number": 1,
+      "status": "implemented_local"
     },
     {
+      "acceptance": "Digital-text PDFs produce extracted fields with confidence; scanned PDFs create OCR_REQUIRED blockers.",
       "artifacts": [
-        "opportunity_scanner_report.json"
+        "system_review_graph/public_upload_policy.json",
+        "system_review_graph/public_upload_manifest.json",
+        "system_review_graph/generated_reports/missing_evidence_packet-frozen-tuna-canada-001.json"
       ],
       "can_use_locally_now": true,
       "external_claims_opened": false,
+      "external_gate": "Hosted upload security and OCR cost controls need qualified security/privacy review before public use.",
       "has_local_execution_proof": true,
       "local_execution_report": "system_review_graph/product_operations_report.json",
-      "name": "Opportunity scanner",
-      "next_valid_move": "Use locally, collect real evidence, and keep external claims closed until owner or qualified-human approval.",
+      "local_proof": "Document triage, file limits, native extraction, OCR_REQUIRED routing, and confirmation gates are tested locally.",
+      "name": "Real PDF quick check",
+      "next_valid_move": "Run public-upload security review and hosted sandbox proof before opening production uploads.",
+      "requires_external_evidence": false,
       "routes": [
-        "/opportunities"
+        "/trade-check",
+        "/tools/document-check",
+        "/public/packets/:id/result"
       ],
-      "stage_id": "stage-06",
-      "status": "opportunity_scanner_ready_with_research_gates"
+      "runbook_stage": 2,
+      "stage_id": "stage-02",
+      "state_number": 2,
+      "status": "implemented_local"
     },
     {
+      "acceptance": "Critical product, country, buyer, supplier, and HS-code fields remain blocked until confirmed or corrected.",
       "artifacts": [
-        "country_coverage_report.json"
+        "system_review_graph/customer_readiness_report.json",
+        "system_review_graph/evidence_ledger.json",
+        "system_review_graph/blockers.jsonl"
       ],
       "can_use_locally_now": true,
       "external_claims_opened": false,
+      "external_gate": "Customer acceptance needs real user smoke testing.",
       "has_local_execution_proof": true,
       "local_execution_report": "system_review_graph/product_operations_report.json",
-      "name": "Country coverage",
-      "next_valid_move": "Use locally, collect real evidence, and keep external claims closed until owner or qualified-human approval.",
+      "local_proof": "Confirmation routes, grouped blockers, evidence ledger, and draft-unconfirmed behavior are exercised in local tests.",
+      "name": "Field confirmation and missing evidence",
+      "next_valid_move": "Observe users correcting extracted fields and record any failed comprehension as blocker rows.",
+      "requires_external_evidence": false,
       "routes": [
-        "/country-coverage"
+        "/public/packets/:id/confirm",
+        "/packets/:id/evidence",
+        "/packets/:id/blockers",
+        "/packets/:id/readiness"
       ],
-      "stage_id": "stage-07",
-      "status": "country_coverage_ready_with_claim_gates"
+      "runbook_stage": 3,
+      "stage_id": "stage-03",
+      "state_number": 3,
+      "status": "implemented_local"
     },
     {
+      "acceptance": "Reports include summary, trade direction, documents, missing evidence, blocked claims, next valid moves, questions, coverage, AI/no-AI disclosure, and not-advice boundaries.",
       "artifacts": [
-        "transport_readiness_report.json"
+        "system_review_graph/public_report_types.json",
+        "system_review_graph/report_exports.json",
+        "system_review_graph/generated_reports/broker_packet_packet-frozen-tuna-canada-001.json",
+        "system_review_graph/generated_reports/chatgpt_safe_summary_packet-frozen-tuna-canada-001.json"
       ],
       "can_use_locally_now": true,
       "external_claims_opened": false,
+      "external_gate": "Report-language reviewer must approve customer-facing language before public launch.",
       "has_local_execution_proof": true,
       "local_execution_report": "system_review_graph/product_operations_report.json",
-      "name": "Transport readiness",
-      "next_valid_move": "Use locally, collect real evidence, and keep external claims closed until owner or qualified-human approval.",
-      "routes": [
-        "/transport-readiness"
-      ],
-      "stage_id": "stage-08",
-      "status": "transport_readiness_ready_with_forwarder_gates"
-    },
-    {
-      "artifacts": [
-        "billing_credit_controls.json",
-        "billing_usage_ledger.json"
-      ],
-      "can_use_locally_now": true,
-      "external_claims_opened": false,
-      "has_local_execution_proof": true,
-      "local_execution_report": "system_review_graph/product_operations_report.json",
-      "name": "Billing and credits",
-      "next_valid_move": "Use locally, collect real evidence, and keep external claims closed until owner or qualified-human approval.",
-      "routes": [
-        "/pricing",
-        "/billing"
-      ],
-      "stage_id": "stage-09",
-      "status": "billing_credit_controls_ready_local_no_live_checkout"
-    },
-    {
-      "artifacts": [
-        "agent_api_manifest.json",
-        "agent_api_gateway_contract.json"
-      ],
-      "can_use_locally_now": true,
-      "external_claims_opened": false,
-      "has_local_execution_proof": true,
-      "local_execution_report": "system_review_graph/product_operations_report.json",
-      "name": "Agent/API layer",
-      "next_valid_move": "Use locally, collect real evidence, and keep external claims closed until owner or qualified-human approval.",
-      "routes": [
-        "/agent-api"
-      ],
-      "stage_id": "stage-10",
-      "status": "agent_api_gateway_ready_local_executor_no_external_effects"
-    },
-    {
-      "artifacts": [
-        "traffic_pages_manifest.json"
-      ],
-      "can_use_locally_now": true,
-      "external_claims_opened": false,
-      "has_local_execution_proof": true,
-      "local_execution_report": "system_review_graph/product_operations_report.json",
-      "name": "Traffic and sample reports",
-      "next_valid_move": "Use locally, collect real evidence, and keep external claims closed until owner or qualified-human approval.",
+      "local_proof": "Starter, missing-evidence, buyer, broker, expert, and ChatGPT-safe report artifacts are generated with closed claims.",
+      "name": "Customer-grade reports",
+      "next_valid_move": "Send generated report samples to product, trade-boundary, and report-language reviewers.",
+      "requires_external_evidence": false,
       "routes": [
         "/reports/sample",
-        "/tools/:slug"
+        "/packets/:id/reports",
+        "/api/public/packets/:id/reports/starter.pdf"
       ],
-      "stage_id": "stage-11",
-      "status": "traffic_pages_manifest_ready"
+      "runbook_stage": 4,
+      "stage_id": "stage-04",
+      "state_number": 4,
+      "status": "implemented_local"
     },
     {
+      "acceptance": "Uploaded files are quarantined, generated-named, signature checked, size/page limited, not directly served, audited, deletable, and retention-gated.",
       "artifacts": [
-        "research_execution_plan.json"
+        "system_review_graph/public_upload_policy.json",
+        "system_review_graph/audit_events.json",
+        "system_review_graph/deletion_requests.json"
       ],
       "can_use_locally_now": true,
       "external_claims_opened": false,
+      "external_gate": "Production malware scanning, rate-limit enforcement, and public upload sandbox need security signoff.",
       "has_local_execution_proof": true,
       "local_execution_report": "system_review_graph/product_operations_report.json",
-      "name": "Research execution",
-      "next_valid_move": "Use locally, collect real evidence, and keep external claims closed until owner or qualified-human approval.",
+      "local_proof": "Local upload routes enforce PDF limits, no direct serving, delete-files behavior, audit rows, parser limits, rate-limit policy, and malware-scan compensating control.",
+      "name": "Public upload hardening",
+      "next_valid_move": "Run hosted upload threat review and decide malware scanning provider or compensating control owner.",
+      "requires_external_evidence": false,
       "routes": [
-        "/research-plan"
+        "/trade-check",
+        "/api/public/packets/:id/delete-files"
       ],
-      "stage_id": "stage-12",
-      "status": "research_execution_ready_with_evidence_gates"
+      "runbook_stage": 5,
+      "stage_id": "stage-05",
+      "state_number": 5,
+      "status": "implemented_local_with_security_review_gate"
     },
     {
+      "acceptance": "No customer document reaches AI unless organization policy and document permission allow it; AI can create blockers only.",
       "artifacts": [
-        "expert_network_report.json"
+        "system_review_graph/ai_data_policy.json",
+        "system_review_graph/ai_model_router.json",
+        "system_review_graph/redaction_pipeline.json",
+        "system_review_graph/manual_no_ai_workflow.json",
+        "system_review_graph/customer_ai_review_runs.json"
       ],
       "can_use_locally_now": true,
       "external_claims_opened": false,
+      "external_gate": "Live AI providers remain disabled until privacy/security/legal review and explicit configuration.",
       "has_local_execution_proof": true,
       "local_execution_report": "system_review_graph/product_operations_report.json",
-      "name": "Expert network",
-      "next_valid_move": "Use locally, collect real evidence, and keep external claims closed until owner or qualified-human approval.",
+      "local_proof": "AI validation rejects gate-opening output, unsafe claim language, missing evidence IDs, and cross-organization evidence references.",
+      "name": "AI/no-AI production controls",
+      "next_valid_move": "Run prompt-injection/security review against hosted parser and model-route configuration.",
+      "requires_external_evidence": false,
       "routes": [
-        "/expert-network"
+        "/settings/ai-data-policy",
+        "/ai-data-policy",
+        "/packets/:id/ai-reviews"
       ],
-      "stage_id": "stage-13",
+      "runbook_stage": 6,
+      "stage_id": "stage-06",
+      "state_number": 6,
+      "status": "implemented_local_fail_closed"
+    },
+    {
+      "acceptance": "A user can create/save a packet locally, return through the workspace, inspect history, request deletion, manage AI policy, and use role-gated views.",
+      "artifacts": [
+        "system_review_graph/customer_workflow.sqlite",
+        "system_review_graph/product_runtime_state.json",
+        "system_review_graph/auth_rbac_matrix.json"
+      ],
+      "can_use_locally_now": true,
+      "external_claims_opened": false,
+      "external_gate": "Hosted identity, account lifecycle, privacy, and deletion process require review before real users.",
+      "has_local_execution_proof": true,
+      "local_execution_report": "system_review_graph/product_operations_report.json",
+      "local_proof": "Local session auth, seeded users/orgs, RBAC, packet history, audit view, report history, and deletion requests are generated and tested.",
+      "name": "Saved workspace and account path",
+      "next_valid_move": "Assign identity/privacy owner and run hosted account/session smoke before private beta.",
+      "requires_external_evidence": false,
+      "routes": [
+        "/workspace",
+        "/dashboard",
+        "/packets",
+        "/packets/new",
+        "/settings/ai-data-policy"
+      ],
+      "runbook_stage": 7,
+      "stage_id": "stage-07",
+      "state_number": 7,
+      "status": "implemented_local_private_beta"
+    },
+    {
+      "acceptance": "Role-specific review packets, scoped review requests, finding ingestion, and blocker conversion exist locally.",
+      "artifacts": [
+        "system_review_graph/expert_network_report.json",
+        "system_review_graph/review_requests.json",
+        "system_review_graph/human_review_findings.json",
+        "system_review_graph/expert_review_packet_packet-frozen-tuna-canada-001.md",
+        "board/expert_review_packet.md"
+      ],
+      "can_use_locally_now": true,
+      "external_claims_opened": false,
+      "external_gate": "Real qualified reviewer findings must exist before any public launch or advice claim.",
+      "has_local_execution_proof": true,
+      "local_execution_report": "system_review_graph/product_operations_report.json",
+      "local_proof": "The product generates expert queues and scoped review packets while preserving human approval gates.",
+      "name": "External expert review stage",
+      "next_valid_move": "Freeze the package and collect scoped findings from security, privacy/legal, AI safety, UX, trade-boundary, logistics, report-language, billing, and ops reviewers.",
+      "requires_external_evidence": true,
+      "routes": [
+        "/expert-network",
+        "/review/:token",
+        "/packets/:id/reviews"
+      ],
+      "runbook_stage": 8,
+      "stage_id": "stage-08",
+      "state_number": 8,
       "status": "expert_network_ready_local_with_human_review_gates"
     },
     {
+      "acceptance": "Monitored source changes can mark packets stale and create review-required alerts.",
       "artifacts": [
-        "team_workspace_report.json"
+        "system_review_graph/intelligence_hub_policy_monitor.json",
+        "system_review_graph/policy_source_snapshots.json",
+        "system_review_graph/policy_change_impact_report.json",
+        "system_review_graph/policy_intelligence.sqlite"
       ],
       "can_use_locally_now": true,
       "external_claims_opened": false,
+      "external_gate": "Live official-source fetching needs terms/robots/API permission and current-source owner review.",
       "has_local_execution_proof": true,
       "local_execution_report": "system_review_graph/product_operations_report.json",
-      "name": "Team workspace",
-      "next_valid_move": "Use locally, collect real evidence, and keep external claims closed until owner or qualified-human approval.",
+      "local_proof": "Source registry, snapshots, hashes, diff classifications, packet impacts, stale blockers, and SQLite store are generated locally.",
+      "name": "Policy/source monitoring",
+      "next_valid_move": "Approve a source-refresh policy and run dated official-source refresh proof.",
+      "requires_external_evidence": false,
       "routes": [
-        "/team-workspace"
+        "/packets/:id/source-monitoring"
       ],
-      "stage_id": "stage-14",
-      "status": "team_workspace_ready_local_with_approval_gates"
+      "runbook_stage": 9,
+      "stage_id": "stage-09",
+      "state_number": 9,
+      "status": "implemented_local_with_refresh_gates"
     },
     {
+      "acceptance": "Every country-pair result shows coverage level and blocks unsupported country-specific claims.",
       "artifacts": [
-        "launch_operations_report.json"
+        "system_review_graph/country_coverage_report.json"
       ],
       "can_use_locally_now": true,
       "external_claims_opened": false,
+      "external_gate": "Country-specific copy above generic readiness needs current sources and qualified review.",
       "has_local_execution_proof": true,
       "local_execution_report": "system_review_graph/product_operations_report.json",
-      "name": "Launch operations",
-      "next_valid_move": "Use locally, collect real evidence, and keep external claims closed until owner or qualified-human approval.",
+      "local_proof": "Tier 0-5 coverage policy, country pair rows, and Tier 5 claim gate are generated and tested.",
+      "name": "Country coverage logic",
+      "next_valid_move": "Promote a country/category only after monitored official sources and expert-reviewed templates exist.",
+      "requires_external_evidence": false,
       "routes": [
+        "/country-coverage",
+        "/api/country-coverage"
+      ],
+      "runbook_stage": 10,
+      "stage_id": "stage-10",
+      "state_number": 10,
+      "status": "country_coverage_ready_with_claim_gates"
+    },
+    {
+      "acceptance": "Opportunity rows show signals, provenance, confidence, buyer-validation-missing state, and create-packet hints without recommendations.",
+      "artifacts": [
+        "system_review_graph/opportunity_scanner_report.json",
+        "system_review_graph/research_execution_plan.json",
+        "system_review_graph/research_execution_runs.json"
+      ],
+      "can_use_locally_now": true,
+      "external_claims_opened": false,
+      "external_gate": "Demand, margin, supplier, and buyer validation remain external evidence lanes.",
+      "has_local_execution_proof": true,
+      "local_execution_report": "system_review_graph/product_operations_report.json",
+      "local_proof": "Signal rows, source provenance, confidence fields, and packet-creation hints are generated with demand/profit/buyer claims blocked.",
+      "name": "Opportunity scanner",
+      "next_valid_move": "Attach dated market/source/user evidence before treating a signal as an opportunity decision.",
+      "requires_external_evidence": false,
+      "routes": [
+        "/opportunities",
+        "/research-plan"
+      ],
+      "runbook_stage": 11,
+      "stage_id": "stage-11",
+      "state_number": 11,
+      "status": "opportunity_scanner_ready_with_research_gates"
+    },
+    {
+      "acceptance": "The product generates freight-forwarder questions and missing transport evidence without guaranteeing route, cost, or delivery.",
+      "artifacts": [
+        "system_review_graph/transport_readiness_report.json"
+      ],
+      "can_use_locally_now": true,
+      "external_claims_opened": false,
+      "external_gate": "Freight-forwarder selection, route, cost, insurance, and delivery claims require qualified/logistics evidence.",
+      "has_local_execution_proof": true,
+      "local_execution_report": "system_review_graph/product_operations_report.json",
+      "local_proof": "Incoterms, mode, weight/dimensions, packing list, commercial invoice, cold-chain, dangerous goods, insurance, and forwarder checks are generated.",
+      "name": "Transport readiness lane",
+      "next_valid_move": "Send the transport packet to a freight forwarder and record scoped dated feedback.",
+      "requires_external_evidence": false,
+      "routes": [
+        "/transport-readiness",
+        "/api/transport-readiness"
+      ],
+      "runbook_stage": 12,
+      "stage_id": "stage-12",
+      "state_number": 12,
+      "status": "transport_readiness_ready_with_forwarder_gates"
+    },
+    {
+      "acceptance": "Heavy actions are blocked behind local credits/subscription/confirmation; live checkout stays disabled until pricing is validated.",
+      "artifacts": [
+        "system_review_graph/billing_credit_controls.json",
+        "system_review_graph/billing_usage_ledger.json"
+      ],
+      "can_use_locally_now": true,
+      "external_claims_opened": false,
+      "external_gate": "Live checkout, invoices, refunds, tax, pricing, and payment capture require finance/legal/payment-provider approval.",
+      "has_local_execution_proof": true,
+      "local_execution_report": "system_review_graph/product_operations_report.json",
+      "local_proof": "OCR, AI, large packets, premium reports, monitoring, agent/API, and expert-review metering rows exist with no live charges.",
+      "name": "Billing and credits",
+      "next_valid_move": "Validate pricing and payment-provider terms before enabling checkout.",
+      "requires_external_evidence": false,
+      "routes": [
+        "/pricing",
+        "/billing",
+        "/billing/usage"
+      ],
+      "runbook_stage": 13,
+      "stage_id": "stage-13",
+      "state_number": 13,
+      "status": "billing_credit_controls_ready_local_no_live_checkout"
+    },
+    {
+      "acceptance": "Agent calls are scoped, audited, metered, and cannot create external effects without user confirmation.",
+      "artifacts": [
+        "system_review_graph/agent_api_manifest.json",
+        "system_review_graph/agent_api_gateway_contract.json"
+      ],
+      "can_use_locally_now": true,
+      "external_claims_opened": false,
+      "external_gate": "Public API gateway, keys, quotas, third-party integrations, and payment routes remain disabled.",
+      "has_local_execution_proof": true,
+      "local_execution_report": "system_review_graph/product_operations_report.json",
+      "local_proof": "Allowed and forbidden tools, audit rules, scope rules, confirmation rules, and local executor proof are generated.",
+      "name": "Agent/API layer",
+      "next_valid_move": "Run API security review and issue scoped keys only after product-owner approval.",
+      "requires_external_evidence": false,
+      "routes": [
+        "/agent-api",
+        "/api/agent-tools/:tool"
+      ],
+      "runbook_stage": 14,
+      "stage_id": "stage-14",
+      "state_number": 14,
+      "status": "agent_api_gateway_ready_local_executor_no_external_effects"
+    },
+    {
+      "acceptance": "Normal users can understand the flow, see plain-English blockers and next actions, and do not misread output as approval.",
+      "artifacts": [
+        "system_review_graph/ui_ux_audit_report.json",
+        "system_review_graph/operator_dashboard.html",
+        "docs/UI_UX_COMPONENT_SYSTEM.md"
+      ],
+      "can_use_locally_now": true,
+      "external_claims_opened": false,
+      "external_gate": "Five-user usability test remains required before public launch.",
+      "has_local_execution_proof": true,
+      "local_execution_report": "system_review_graph/product_operations_report.json",
+      "local_proof": "Local UI audit covers desktop/mobile H1s, labels, overflow, blank controls, stale copy, tracebacks, and local-path leaks.",
+      "name": "UX and usability",
+      "next_valid_move": "Run private-beta usability sessions for beginner, document, report, save, and deletion flows.",
+      "requires_external_evidence": true,
+      "routes": [
+        "/",
+        "/start",
+        "/trade-check",
+        "/stages",
+        "/operator/queue",
+        "/reports/sample"
+      ],
+      "runbook_stage": 15,
+      "stage_id": "stage-15",
+      "state_number": 15,
+      "status": "ui_ux_audited_ready_for_external_review"
+    },
+    {
+      "acceptance": "Private beta can run only after named owners exist for operations, security, support, rollback, incident response, backups, monitoring, and privacy/terms.",
+      "artifacts": [
+        "docs/DEPLOYMENT.md",
+        "docs/SECURITY_PRIVACY.md",
+        "system_review_graph/deployment_readiness_report.json",
+        "system_review_graph/private_beta_readiness_checklist.json",
+        "Dockerfile",
+        "compose.yaml",
+        ".github/workflows/ci.yml"
+      ],
+      "can_use_locally_now": true,
+      "external_claims_opened": false,
+      "external_gate": "Real staging/production hosting, TLS, secrets, backups, monitoring, support, and incident response require operator/security signoff.",
+      "has_local_execution_proof": true,
+      "local_execution_report": "system_review_graph/product_operations_report.json",
+      "local_proof": "Docker/Compose, env example, health endpoints, deployment report, private-beta checklist, and CI proof exist locally.",
+      "name": "Production deployment readiness",
+      "next_valid_move": "Provision staging and assign named owners for hosting, security, support, rollback, backups, and incident response.",
+      "requires_external_evidence": true,
+      "routes": [
+        "/admin/system-health",
         "/launch-operations"
       ],
-      "stage_id": "stage-15",
-      "status": "launch_operations_ready_for_private_beta_review"
+      "runbook_stage": 16,
+      "stage_id": "stage-16",
+      "state_number": 16,
+      "status": "deployable_local_stack_ready_with_external_hosting_gates"
+    },
+    {
+      "acceptance": "The product has controlled-beta smoke scenarios and owner gates, but real users must complete the flows before beta approval.",
+      "artifacts": [
+        "system_review_graph/private_beta_readiness_checklist.json",
+        "system_review_graph/launch_operations_report.json",
+        "system_review_graph/team_workspace_report.json",
+        "board/launch_control_checklist.md"
+      ],
+      "can_use_locally_now": true,
+      "external_claims_opened": false,
+      "external_gate": "Minimum beta users and reviewer/broker/freight-forwarder feedback are not simulated as proof.",
+      "has_local_execution_proof": true,
+      "local_execution_report": "system_review_graph/product_operations_report.json",
+      "local_proof": "Private-beta checklist, launch controls, team workspace, support/feedback path, and closed public-launch state are generated.",
+      "name": "Private beta",
+      "next_valid_move": "Recruit beta users, run the listed smoke tests, record outcomes, and fix critical findings.",
+      "requires_external_evidence": true,
+      "routes": [
+        "/launch-operations",
+        "/expert-network",
+        "/team-workspace"
+      ],
+      "runbook_stage": 17,
+      "stage_id": "stage-17",
+      "state_number": 17,
+      "status": "private_beta_ready_for_human_approval_gates"
+    },
+    {
+      "acceptance": "The safe public subset is defined and measured locally; public launch stays blocked until costs, support, hosting, reviews, beta outcomes, and owner approval pass.",
+      "artifacts": [
+        "system_review_graph/public_trade_readiness_manifest.json",
+        "system_review_graph/launch_operations_report.json",
+        "system_review_graph/continuation_plan.json",
+        "system_review_graph/board_go_live_readiness_report.json"
+      ],
+      "can_use_locally_now": true,
+      "external_claims_opened": false,
+      "external_gate": "Public launch approval, production deployment, legal/privacy/security signoff, monitoring, support, and real-user smoke success are required.",
+      "has_local_execution_proof": true,
+      "local_execution_report": "system_review_graph/product_operations_report.json",
+      "local_proof": "Beginner starter, PDF quick check, starter/missing-evidence reports, account save, AI/privacy settings, no live approvals, no unrestricted OCR/AI, and no autonomous effects are all represented locally.",
+      "name": "Public go-live",
+      "next_valid_move": "After private-beta fixes, run go/no-go and explicitly approve the safe public subset.",
+      "requires_external_evidence": true,
+      "routes": [
+        "/start",
+        "/trade-check",
+        "/pricing",
+        "/billing",
+        "/security"
+      ],
+      "runbook_stage": 18,
+      "stage_id": "stage-18",
+      "state_number": 18,
+      "status": "public_go_live_subset_defined_blocked_until_approval"
     }
   ],
   "status": "all_local_stages_implemented_with_external_gates",
@@ -307,6 +548,8 @@
     "supplier/manufacturer validation",
     "payment provider activation",
     "real expert signoff",
-    "production observability and security signoff"
+    "production observability and security signoff",
+    "real private-beta user smoke testing",
+    "public go-live owner approval"
   ]
 }

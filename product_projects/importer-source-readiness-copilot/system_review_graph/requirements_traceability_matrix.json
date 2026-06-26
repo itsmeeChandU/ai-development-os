@@ -507,9 +507,9 @@
         "all_stage_readiness_report.json",
         "completion_platform_manifest.json"
       ],
-      "boundary": "All locally implementable stages have routes, APIs, and artifacts; real-world approvals remain external gates.",
+      "boundary": "Stage 0 and go-live States 1-18 have local routes, APIs, artifacts, and blocker rows; real reviewers, beta users, hosting, monitoring, payment activation, and public go-live approval remain external gates.",
       "id": "REQ-STAGE-01",
-      "name": "All local product stages",
+      "name": "Stage 0 plus go-live States 1-18",
       "proof": [
         "tests/test_completion_platform.py",
         "scripts/run_completion_platform.py"
