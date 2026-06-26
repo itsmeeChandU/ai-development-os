@@ -95,6 +95,12 @@ def main() -> int:
     workflow = _load_json(ROOT / "system_review_graph" / "operator_workflow_report.json")
     customer = _load_json(ROOT / "system_review_graph" / "customer_readiness_report.json")
     evidence_ledger = _load_json(ROOT / "system_review_graph" / "evidence_ledger.json")
+    runtime = _load_json(ROOT / "system_review_graph" / "product_runtime_state.json")
+    auth_rbac = _load_json(ROOT / "system_review_graph" / "auth_rbac_matrix.json")
+    claims_gate = _load_json(ROOT / "system_review_graph" / "claims_gate_matrix.json")
+    review_requests = _load_json(ROOT / "system_review_graph" / "review_requests.json")
+    audit_events = _load_json(ROOT / "system_review_graph" / "audit_events.json")
+    deployment = _load_json(ROOT / "system_review_graph" / "deployment_readiness_report.json")
     screenshot_manifest_path = ROOT / "system_review_graph" / "operator_screenshot_manifest.json"
     screenshot_manifest = _load_json(screenshot_manifest_path) if screenshot_manifest_path.exists() else {}
     expected = {
@@ -124,7 +130,7 @@ def main() -> int:
             failures.append("operator dashboard should link Canadian tool references")
         if "Customer Source Packet Workflow" not in dashboard_html:
             failures.append("operator dashboard should include the customer source-packet workflow")
-        if "/source-packets/packet-frozen-tuna-canada-001" not in dashboard_html:
+        if "/packets/packet-frozen-tuna-canada-001" not in dashboard_html:
             failures.append("operator dashboard should link the customer source-packet route")
         if "Path To Private Beta" not in dashboard_html:
             failures.append("operator dashboard should include the private beta path")
@@ -135,9 +141,12 @@ def main() -> int:
         "src/importer_source_readiness/operator_app.py",
         "src/importer_source_readiness/source_packet_workflow.py",
         "src/importer_source_readiness/customer_store.py",
+        "src/importer_source_readiness/product_runtime.py",
+        "src/importer_source_readiness/ai_review_validation.py",
         "tests/test_operator_app.py",
         "tests/test_source_packet_workflow.py",
         "tests/test_customer_store.py",
+        "tests/test_product_runtime.py",
         "tests/test_external_package_audit.py",
         "scripts/run_customer_workflow.py",
         "scripts/audit_external_package.py",
@@ -156,7 +165,23 @@ def main() -> int:
         "system_review_graph/evidence_ledger.json",
         "system_review_graph/customer_ai_review_runs.json",
         "system_review_graph/customer_workflow.sqlite",
+        "system_review_graph/product_runtime_state.json",
+        "system_review_graph/auth_rbac_matrix.json",
+        "system_review_graph/claims_gate_matrix.json",
+        "system_review_graph/review_requests.json",
+        "system_review_graph/human_review_findings.json",
+        "system_review_graph/report_exports.json",
+        "system_review_graph/audit_events.json",
+        "system_review_graph/deletion_requests.json",
+        "system_review_graph/deployment_readiness_report.json",
+        "system_review_graph/private_beta_readiness_checklist.json",
         "system_review_graph/expert_review_packet_packet-frozen-tuna-canada-001.md",
+        "migrations/0001_product_runtime.sql",
+        "Dockerfile",
+        "compose.yaml",
+        ".env.example",
+        "docs/SECURITY_PRIVACY.md",
+        "docs/DEPLOYMENT.md",
     ):
         if not (ROOT / path).exists():
             failures.append(f"missing required product file: {path}")
@@ -276,6 +301,26 @@ def main() -> int:
         failures.append("evidence ledger should include customer, CID, and official Canadian reference evidence")
     if "stale" not in evidence_ledger.get("counts_by_quality", {}):
         failures.append("evidence ledger should expose evidence quality counts")
+    if runtime.get("status") != "private_beta_candidate_with_external_human_gates":
+        failures.append(f"runtime state has unexpected status {runtime.get('status')!r}")
+    if len(runtime.get("users", [])) < 4 or len(runtime.get("organizations", [])) < 3:
+        failures.append("runtime state should include users and organizations")
+    if "/api/auth/login" not in runtime.get("api_routes", []):
+        failures.append("runtime state should expose auth API routes")
+    if "/review/:reviewToken" not in runtime.get("ui_routes", {}).get("expert", []):
+        failures.append("runtime state should expose scoped expert review routes")
+    if runtime.get("security_controls", {}).get("organization_isolation") is None:
+        failures.append("runtime state should describe organization isolation controls")
+    if auth_rbac.get("security_controls", {}).get("rbac") is None:
+        failures.append("auth/RBAC matrix should include RBAC controls")
+    if claims_gate.get("blocked_by_default") is not True or len(claims_gate.get("claims", [])) < 6:
+        failures.append("claims gate matrix should keep claims blocked by default")
+    if not review_requests or review_requests[0].get("token") != "review-token-packet-frozen-tuna-canada-001":
+        failures.append("review requests should include scoped frozen tuna review token")
+    if len(audit_events.get("events", [])) < 3:
+        failures.append("audit events should include packet, AI review, and report export events")
+    if deployment.get("status") != "deployable_local_stack_ready_with_external_hosting_gates":
+        failures.append("deployment readiness should describe hostable local stack with external gates")
     store_path = ROOT / "system_review_graph" / "customer_workflow.sqlite"
     if store_path.exists():
         with sqlite3.connect(store_path) as conn:
@@ -287,8 +332,14 @@ def main() -> int:
             "source_packets",
             "evidence_items",
             "official_sources",
+            "claims",
             "blockers",
             "review_runs",
+            "review_requests",
+            "report_exports",
+            "users",
+            "organizations",
+            "memberships",
             "gate_decisions",
             "audit_events",
         ):
@@ -318,6 +369,11 @@ def main() -> int:
     print(f"customer_blocker_count={customer['blocker_count']}")
     print(f"customer_blocker_groups={len(customer['blocker_groups'])}")
     print(f"evidence_ledger_status={evidence_ledger['status']}")
+    print(f"runtime_status={runtime['status']}")
+    print(f"runtime_users={len(runtime['users'])}")
+    print(f"review_requests={len(review_requests)}")
+    print(f"audit_events={len(audit_events['events'])}")
+    print(f"deployment_status={deployment['status']}")
     print("customer_store=ready")
     print("unsafe_gates=closed")
     return 0

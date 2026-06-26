@@ -491,7 +491,10 @@ def build_ai_review_run(
     packet = packets[packet_id]
     blocker_groups = packet.get("blocker_groups", [])
     group_titles = {str(row.get("title")) for row in blocker_groups}
+    evidence_ids = [str(row.get("evidence_id")) for row in packet.get("evidence_items", [])]
+    source_ids = [str(row.get("id")) for row in workflow.get("official_sources", [])]
     results = []
+    findings = []
     for reviewer_id, title, owner_role in AI_REVIEWERS:
         relevant = [
             row
@@ -510,19 +513,52 @@ def build_ai_review_run(
                 "review_type": "AI simulated review",
                 "human_gate_required": True,
                 "human_reviewer": "not_assigned",
+                "can_open_gate": False,
                 "status": "blocked_human_gate_required",
                 "finding": "Simulation can create blockers and next moves; it cannot open external-world approval gates.",
                 "blocker_group_ids": [str(row.get("id")) for row in relevant],
                 "next_valid_move": "Export the expert review packet and collect a scoped human decision.",
             }
         )
+        findings.append(
+            {
+                "title": title,
+                "severity": "P1_blocks_external_claim",
+                "issue": "Simulated review found missing evidence or review proof for external claims.",
+                "evidence_used": evidence_ids,
+                "sources_used": source_ids[:3],
+                "blocked_claims": [
+                    "tariff_classification_claim",
+                    "food_safety_claim",
+                    "launch_readiness_claim",
+                ],
+                "next_valid_move": "Collect evidence and request scoped human review before any external claim.",
+                "human_review_required": True,
+            }
+        )
     return {
         "run_id": f"ai-review-{packet_id}-{(generated_at or _now()).replace(':', '').replace('+', 'Z')}",
         "packet_id": packet_id,
         "generated_at": generated_at or _now(),
-        "review_type": "AI simulated review",
+        "review_type": "canada_compliance_simulation",
+        "scope": "Simulated review for missing evidence, risky wording, and next valid moves.",
+        "model_provider": "local_rule_simulator",
+        "model_name": "deterministic-safety-rules",
+        "input_snapshot_hash": _sha256(json.dumps(packet, sort_keys=True)),
+        "evidence_ids_used": evidence_ids,
+        "source_ids_used": source_ids,
         "status": "simulated_review_complete_human_gates_closed",
+        "can_open_gate": False,
+        "human_review_required": True,
         "human_gate": "required_before_external_claims",
+        "findings": findings,
+        "blocked_claims": [
+            "tariff_classification_claim",
+            "food_safety_claim",
+            "source_rights_claim",
+            "buyer_validation_claim",
+            "launch_readiness_claim",
+        ],
         "results": results,
         "claim_boundary": "AI simulated review creates blockers and next moves only. It does not replace brokers, counsel, buyers, operators, or qualified reviewers.",
     }

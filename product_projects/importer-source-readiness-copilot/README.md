@@ -22,23 +22,26 @@ overclaim. The completed local loop turns source cards into readiness status,
 machine-readable blockers, and a clear next valid move before any external
 action is allowed.
 
-The current implementation is intentionally local-first. It uses fixtures and
-customer-source packet intake to prove product control logic while external
-data, contracts, compliance review, buyer validation, and launch claims stay
-closed.
+The current implementation is a local modular monolith with customer,
+operator, expert-review, admin, RBAC, audit, and deployment-readiness surfaces.
+It uses generated state plus a SQLite runtime store to prove product control
+logic while external data, contracts, compliance review, buyer validation, and
+launch claims stay closed.
 
 ## Product Surface
 
-The application a user can use today is the internal operator app:
+The application a user can use today is the local private-beta product app:
 
 ```bash
 python3 scripts/serve_operator_app.py
 ```
 
 It opens a local browser surface for source-card readiness, customer source
-packet intake, source-packet readiness reports, the operator work queue,
-Canada reference tools, blockers, screenshots, and proof boundaries. This is
-not yet an external customer/importer SaaS app.
+packet intake, evidence upload, source-packet readiness reports, AI simulated
+reviews, scoped expert-review handoff, audit, admin controls, the operator work
+queue, Canada reference tools, blockers, screenshots, and proof boundaries.
+This is hostable for controlled private-beta review after real infrastructure,
+security/privacy review, and human approval gates are completed.
 
 ## Run Proof
 
@@ -72,6 +75,12 @@ system_review_graph/evidence_ledger.json
 system_review_graph/customer_readiness_report.md
 system_review_graph/customer_ai_review_runs.json
 system_review_graph/customer_workflow.sqlite
+system_review_graph/product_runtime_state.json
+system_review_graph/auth_rbac_matrix.json
+system_review_graph/claims_gate_matrix.json
+system_review_graph/review_requests.json
+system_review_graph/audit_events.json
+system_review_graph/deployment_readiness_report.json
 system_review_graph/expert_review_packet_packet-frozen-tuna-canada-001.md
 system_review_graph/blockers.jsonl
 system_review_graph/operator_dashboard.html
@@ -143,6 +152,19 @@ safe readiness report, but tariff confirmation, CFIA compliance, supplier
 recommendations, buyer validation, import readiness, legal/compliance approval,
 and public launch claims remain blocked.
 
+The expected runtime status is:
+
+```text
+private_beta_candidate_with_external_human_gates
+```
+
+That means the repo now includes local session auth, seeded users and
+organizations, organization-scoped packet access, role permissions, scoped
+expert-review links, claim/gate matrices, audit events, report exports, data
+deletion request tracking, health endpoints, Docker/Compose deployment files,
+and security/privacy docs. It does not prove real public production hosting,
+qualified legal/privacy/security signoff, or live customer launch.
+
 The expected customer stage is:
 
 ```text
@@ -151,10 +173,11 @@ Customer packet prototype active - real customer use not enabled
 
 The current customer workflow supports packet creation, evidence upload,
 official-source refresh records, grouped blockers, AI simulated review,
-expert-review packet export, customer-safe readiness report export, admin
-source registry, admin gate view, and a local SQLite workflow store. It still
-requires private-beta security controls and human review before real customer
-use.
+expert-review packet export, scoped expert review links, customer-safe
+readiness report export, admin source registry, admin gate view, audit,
+auth/RBAC, organization isolation, and a local SQLite workflow store. It still
+requires real hosted infrastructure and qualified human review before public
+customer use.
 
 ## External Gates Kept Closed
 
@@ -182,7 +205,7 @@ screenshot gallery. Use
 `system_review_graph/operator_workflow_report.json` as the machine-readable
 operator queue: source-card actions, external evidence gates, continuation
 lanes, human approval gates, Canadian tool references, and closed claims.
-Use `/source-packets/new` in the local operator app or
+Use `/packets/new` in the local product app or
 `system_review_graph/customer_readiness_report.json` as the customer
 source-packet proof surface. Use `system_review_graph/evidence_ledger.json`
 as the evidence ledger; no evidence means no external claim.
@@ -193,6 +216,8 @@ Use `system_review_graph/continuation_plan.json` as the continuation surface.
 Use `investor/vc_pitch_deck.md` and `investor/one_pager.md` for private VC
 conversations. Use `board/board_go_live_brief.md` and
 `system_review_graph/board_go_live_readiness_report.json` for board review.
+Use `system_review_graph/product_runtime_state.json` as the machine-readable
+auth/RBAC, review, audit, route, and deployment contract.
 The product can now show exactly what is stopping external use and which lane
 must move next. To open any external claim gate, attach dated evidence to
 `data/evidence_packets.json`, verify country rows in

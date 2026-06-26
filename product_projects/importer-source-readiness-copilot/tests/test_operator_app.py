@@ -32,23 +32,34 @@ class OperatorAppTests(unittest.TestCase):
         cls.server.server_close()
         cls.thread.join(timeout=2)
 
-    def test_home_serves_operator_dashboard(self) -> None:
+    def test_home_serves_customer_landing(self) -> None:
         with urlopen(f"{self.base_url}/", timeout=5) as response:
             html = response.read().decode("utf-8")
 
         self.assertEqual(response.status, 200)
         self.assertIn("Importer Source Readiness Copilot", html)
+        self.assertIn("Know what is missing", html)
+        self.assertIn("Create source packet", html)
+
+    def test_operator_route_serves_operator_dashboard(self) -> None:
+        with urlopen(f"{self.base_url}/operator", timeout=5) as response:
+            html = response.read().decode("utf-8")
+
+        self.assertEqual(response.status, 200)
         self.assertIn("Operator Work Queue", html)
 
     def test_api_index_declares_operator_surface(self) -> None:
         with urlopen(f"{self.base_url}/api", timeout=5) as response:
             payload = json.loads(response.read().decode("utf-8"))
 
-        self.assertEqual(payload["surface"], "local_operator_application")
+        self.assertEqual(payload["surface"], "local_customer_operator_expert_application")
+        self.assertEqual(payload["runtime_status"], "private_beta_candidate_with_external_human_gates")
         self.assertEqual(payload["operator_status"], "operator_workflow_ready_internal")
         self.assertEqual(payload["operator_display_status"], "Operator workbench usable for internal review")
         self.assertEqual(payload["customer_workflow_status"], "customer_workflow_ready_internal")
         self.assertEqual(payload["customer_stage_status"], "Customer packet prototype active - real customer use not enabled")
+        self.assertIn("local session auth", payload["auth_status"])
+        self.assertIn("/review/:token", payload["routes"])
         self.assertGreaterEqual(payload["customer_packet_count"], 1)
         self.assertFalse("public_launch_claim" in payload["allowed_use"])
 
@@ -79,14 +90,14 @@ class OperatorAppTests(unittest.TestCase):
                 self.assertIn(ctx.exception.code, {403, 404})
 
     def test_customer_source_packet_routes_render_safe_report(self) -> None:
-        with urlopen(f"{self.base_url}/source-packets", timeout=5) as response:
+        with urlopen(f"{self.base_url}/packets", timeout=5) as response:
             listing = response.read().decode("utf-8")
         self.assertEqual(response.status, 200)
         self.assertIn("Customer Source Packet", listing)
         self.assertIn("Internal logic ready - external claims blocked", listing)
         self.assertIn("Blocked - source freshness missing", listing)
 
-        packet_url = f"{self.base_url}/source-packets/packet-frozen-tuna-canada-001/readiness-report"
+        packet_url = f"{self.base_url}/packets/packet-frozen-tuna-canada-001/readiness"
         with urlopen(packet_url, timeout=5) as response:
             report = response.read().decode("utf-8")
         self.assertEqual(response.status, 200)
@@ -97,12 +108,17 @@ class OperatorAppTests(unittest.TestCase):
 
     def test_customer_source_packet_guided_pages_exist(self) -> None:
         routes = {
-            "/source-packets/packet-frozen-tuna-canada-001": "Refresh Official Sources",
-            "/source-packets/packet-frozen-tuna-canada-001/evidence": "Upload Evidence",
-            "/source-packets/packet-frozen-tuna-canada-001/blockers": "Resolve",
-            "/source-packets/packet-frozen-tuna-canada-001/expert-review-packet": "Questions For Reviewer",
+            "/packets/packet-frozen-tuna-canada-001": "Refresh Official Sources",
+            "/packets/packet-frozen-tuna-canada-001/evidence": "Upload Evidence",
+            "/packets/packet-frozen-tuna-canada-001/blockers": "Resolve",
+            "/packets/packet-frozen-tuna-canada-001/ai-reviews": "AI simulated reviews",
+            "/packets/packet-frozen-tuna-canada-001/reviews": "Scoped review link",
+            "/packets/packet-frozen-tuna-canada-001/reports": "Reports",
+            "/review/review-token-packet-frozen-tuna-canada-001": "Out Of Scope",
             "/admin/sources": "Official Source Registry",
             "/admin/gates": "Private Beta Gates",
+            "/admin/audit": "Audit",
+            "/admin/system-health": "System Health",
         }
         for path, expected in routes.items():
             with self.subTest(path=path):
@@ -110,6 +126,25 @@ class OperatorAppTests(unittest.TestCase):
                     body = response.read().decode("utf-8")
                 self.assertEqual(response.status, 200)
                 self.assertIn(expected, body)
+
+    def test_customer_source_packet_export_includes_gate_context(self) -> None:
+        path = "/packets/packet-frozen-tuna-canada-001/export"
+        with urlopen(f"{self.base_url}{path}", timeout=5) as response:
+            payload = json.loads(response.read().decode("utf-8"))
+
+        self.assertEqual(response.status, 200)
+        self.assertEqual(payload["packet_id"], "packet-frozen-tuna-canada-001")
+        self.assertEqual(
+            payload["customer_stage_status"],
+            "Customer packet prototype active - real customer use not enabled",
+        )
+        self.assertEqual(payload["private_beta_status"], "blocked")
+        self.assertGreaterEqual(len(payload["blocker_groups"]), 4)
+        self.assertEqual(payload["private_beta_readiness"]["status"], "blocked")
+        self.assertGreaterEqual(len(payload["private_beta_readiness"]["blocked"]), 4)
+        self.assertIn("Customer packet prototype", payload["private_beta_readiness"]["ready"])
+        self.assertGreaterEqual(len(payload["ai_review_runs"]), 1)
+        self.assertIn("Tariff/HS classification", payload["blocked_claims"])
 
     def test_customer_source_packet_post_creates_local_readiness_report(self) -> None:
         generated_paths = [
@@ -119,6 +154,8 @@ class OperatorAppTests(unittest.TestCase):
             ROOT / "system_review_graph" / "customer_readiness_report.md",
             ROOT / "system_review_graph" / "customer_ai_review_runs.json",
             ROOT / "system_review_graph" / "customer_workflow.sqlite",
+            ROOT / "system_review_graph" / "product_runtime_state.json",
+            ROOT / "system_review_graph" / "audit_events.json",
             ROOT / "system_review_graph" / "expert_review_packet_packet-local-test-product.md",
         ]
         backups = {path: path.read_bytes() if path.exists() else None for path in generated_paths}
@@ -133,10 +170,11 @@ class OperatorAppTests(unittest.TestCase):
                 "supplier_country": "Mexico",
                 "source_url": "https://example.com/source",
                 "intended_use": "Local source readiness review",
+                "csrf_token": "local-dev-csrf-token",
             }
         ).encode("utf-8")
         request = Request(
-            f"{self.base_url}/source-packets",
+            f"{self.base_url}/packets",
             data=body,
             method="POST",
             headers={"Content-Type": "application/x-www-form-urlencoded"},
@@ -152,7 +190,7 @@ class OperatorAppTests(unittest.TestCase):
                 opener.open(request, timeout=5)
             self.assertEqual(ctx.exception.code, 303)
             self.assertIn(
-                "/source-packets/packet-local-test-product/readiness-report",
+                "/packets/packet-local-test-product/readiness",
                 ctx.exception.headers["Location"],
             )
         finally:
@@ -161,6 +199,36 @@ class OperatorAppTests(unittest.TestCase):
                     path.unlink(missing_ok=True)
                 else:
                     path.write_bytes(content)
+
+    def test_rbac_blocks_cross_org_packet_access(self) -> None:
+        request = Request(
+            f"{self.base_url}/api/packets/packet-frozen-tuna-canada-001",
+            headers={"X-ISR-Session": "other-customer-session"},
+        )
+        with self.assertRaises(HTTPError) as ctx:
+            urlopen(request, timeout=5)
+        self.assertEqual(ctx.exception.code, 403)
+
+    def test_api_supports_auth_health_and_scoped_review(self) -> None:
+        with urlopen(f"{self.base_url}/healthz", timeout=5) as response:
+            health = json.loads(response.read().decode("utf-8"))
+        self.assertEqual(health["status"], "ok")
+
+        login_body = urlencode({"email": "operator@example.local"}).encode("utf-8")
+        request = Request(
+            f"{self.base_url}/api/auth/login",
+            data=login_body,
+            method="POST",
+            headers={"Content-Type": "application/x-www-form-urlencoded"},
+        )
+        with urlopen(request, timeout=5) as response:
+            payload = json.loads(response.read().decode("utf-8"))
+        self.assertTrue(payload["authenticated"])
+        self.assertIn("isr_session=operator-session", response.headers["Set-Cookie"])
+
+        with urlopen(f"{self.base_url}/api/external-review/review-token-packet-frozen-tuna-canada-001", timeout=5) as response:
+            review = json.loads(response.read().decode("utf-8"))
+        self.assertEqual(review["review_request"]["packet_id"], "packet-frozen-tuna-canada-001")
 
 
 if __name__ == "__main__":

@@ -50,6 +50,8 @@ def main() -> int:
         PROJECT / "src" / "importer_source_readiness" / "operator_screenshots.py",
         PROJECT / "src" / "importer_source_readiness" / "source_packet_workflow.py",
         PROJECT / "src" / "importer_source_readiness" / "customer_store.py",
+        PROJECT / "src" / "importer_source_readiness" / "product_runtime.py",
+        PROJECT / "src" / "importer_source_readiness" / "ai_review_validation.py",
         PROJECT / "tests" / "test_readiness.py",
         PROJECT / "tests" / "test_external_gates.py",
         PROJECT / "tests" / "test_continuation.py",
@@ -60,6 +62,7 @@ def main() -> int:
         PROJECT / "tests" / "test_operator_screenshots.py",
         PROJECT / "tests" / "test_source_packet_workflow.py",
         PROJECT / "tests" / "test_customer_store.py",
+        PROJECT / "tests" / "test_product_runtime.py",
         PROJECT / "tests" / "test_external_package_audit.py",
         PROJECT / "scripts" / "run_readiness.py",
         PROJECT / "scripts" / "run_external_gates.py",
@@ -90,6 +93,16 @@ def main() -> int:
         PROJECT / "system_review_graph" / "evidence_ledger.json",
         PROJECT / "system_review_graph" / "customer_ai_review_runs.json",
         PROJECT / "system_review_graph" / "customer_workflow.sqlite",
+        PROJECT / "system_review_graph" / "product_runtime_state.json",
+        PROJECT / "system_review_graph" / "auth_rbac_matrix.json",
+        PROJECT / "system_review_graph" / "claims_gate_matrix.json",
+        PROJECT / "system_review_graph" / "review_requests.json",
+        PROJECT / "system_review_graph" / "human_review_findings.json",
+        PROJECT / "system_review_graph" / "report_exports.json",
+        PROJECT / "system_review_graph" / "audit_events.json",
+        PROJECT / "system_review_graph" / "deletion_requests.json",
+        PROJECT / "system_review_graph" / "deployment_readiness_report.json",
+        PROJECT / "system_review_graph" / "private_beta_readiness_checklist.json",
         PROJECT / "system_review_graph" / "expert_review_packet_packet-frozen-tuna-canada-001.md",
         PROJECT / "investor" / "vc_pitch_deck.md",
         PROJECT / "investor" / "one_pager.md",
@@ -99,6 +112,12 @@ def main() -> int:
         PROJECT / "board" / "expert_review_packet.md",
         PROJECT / "board" / "launch_control_checklist.md",
         PROJECT / "board" / "financial_operating_model.md",
+        PROJECT / "migrations" / "0001_product_runtime.sql",
+        PROJECT / "Dockerfile",
+        PROJECT / "compose.yaml",
+        PROJECT / ".env.example",
+        PROJECT / "docs" / "SECURITY_PRIVACY.md",
+        PROJECT / "docs" / "DEPLOYMENT.md",
         PROJECT / "handoffs" / "product_completion_handoff.md",
     ]
     missing = [path.relative_to(ROOT) for path in required if not path.exists()]
@@ -171,6 +190,24 @@ def main() -> int:
     )
     evidence_ledger = json.loads(
         (PROJECT / "system_review_graph" / "evidence_ledger.json").read_text(encoding="utf-8")
+    )
+    runtime = json.loads(
+        (PROJECT / "system_review_graph" / "product_runtime_state.json").read_text(encoding="utf-8")
+    )
+    auth_rbac = json.loads(
+        (PROJECT / "system_review_graph" / "auth_rbac_matrix.json").read_text(encoding="utf-8")
+    )
+    claims_gate = json.loads(
+        (PROJECT / "system_review_graph" / "claims_gate_matrix.json").read_text(encoding="utf-8")
+    )
+    review_requests = json.loads(
+        (PROJECT / "system_review_graph" / "review_requests.json").read_text(encoding="utf-8")
+    )
+    audit_events = json.loads(
+        (PROJECT / "system_review_graph" / "audit_events.json").read_text(encoding="utf-8")
+    )
+    deployment = json.loads(
+        (PROJECT / "system_review_graph" / "deployment_readiness_report.json").read_text(encoding="utf-8")
     )
     screenshot_manifest = json.loads(
         (PROJECT / "system_review_graph" / "operator_screenshot_manifest.json").read_text(encoding="utf-8")
@@ -326,6 +363,42 @@ def main() -> int:
         print("Product project check: FAIL")
         print("evidence ledger missing quality counts")
         return 1
+    if runtime.get("status") != "private_beta_candidate_with_external_human_gates":
+        print("Product project check: FAIL")
+        print("runtime state missing private-beta candidate status")
+        return 1
+    if len(runtime.get("users", [])) < 4 or len(runtime.get("organizations", [])) < 3:
+        print("Product project check: FAIL")
+        print("runtime state missing users or organizations")
+        return 1
+    if "/api/auth/login" not in runtime.get("api_routes", []):
+        print("Product project check: FAIL")
+        print("runtime state missing auth routes")
+        return 1
+    if "/review/:reviewToken" not in runtime.get("ui_routes", {}).get("expert", []):
+        print("Product project check: FAIL")
+        print("runtime state missing expert review routes")
+        return 1
+    if auth_rbac.get("security_controls", {}).get("rbac") is None:
+        print("Product project check: FAIL")
+        print("auth/RBAC matrix missing RBAC control")
+        return 1
+    if claims_gate.get("blocked_by_default") is not True or len(claims_gate.get("claims", [])) < 6:
+        print("Product project check: FAIL")
+        print("claims gate matrix should keep claims blocked by default")
+        return 1
+    if not review_requests or review_requests[0].get("token") != "review-token-packet-frozen-tuna-canada-001":
+        print("Product project check: FAIL")
+        print("review requests missing scoped frozen tuna token")
+        return 1
+    if len(audit_events.get("events", [])) < 3:
+        print("Product project check: FAIL")
+        print("audit events missing packet, AI, or report export events")
+        return 1
+    if deployment.get("status") != "deployable_local_stack_ready_with_external_hosting_gates":
+        print("Product project check: FAIL")
+        print("deployment readiness missing hostable local stack status")
+        return 1
     store_path = PROJECT / "system_review_graph" / "customer_workflow.sqlite"
     with sqlite3.connect(store_path) as conn:
         tables = {
@@ -336,8 +409,14 @@ def main() -> int:
         "source_packets",
         "evidence_items",
         "official_sources",
+        "claims",
         "blockers",
         "review_runs",
+        "review_requests",
+        "report_exports",
+        "users",
+        "organizations",
+        "memberships",
         "gate_decisions",
         "audit_events",
     }
@@ -363,6 +442,11 @@ def main() -> int:
     print(f"customer_blocker_count={customer['blocker_count']}")
     print(f"customer_blocker_groups={len(customer['blocker_groups'])}")
     print(f"evidence_ledger_status={evidence_ledger['status']}")
+    print(f"runtime_status={runtime['status']}")
+    print(f"runtime_users={len(runtime['users'])}")
+    print(f"review_requests={len(review_requests)}")
+    print(f"audit_events={len(audit_events['events'])}")
+    print(f"deployment_status={deployment['status']}")
     print("customer_store=ready")
     return 0
 

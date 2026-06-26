@@ -1,0 +1,76 @@
+{
+  "items": [
+    {
+      "item": "Auth exists",
+      "status": "implemented_local_session"
+    },
+    {
+      "item": "Organizations exist",
+      "status": "implemented"
+    },
+    {
+      "item": "RBAC tests pass",
+      "status": "implemented"
+    },
+    {
+      "item": "Cross-org access blocked",
+      "status": "implemented"
+    },
+    {
+      "item": "Expert links scoped",
+      "status": "implemented"
+    },
+    {
+      "item": "File upload restrictions exist",
+      "status": "implemented_metadata_and_size_limits"
+    },
+    {
+      "item": "Audit logs exist",
+      "status": "implemented"
+    },
+    {
+      "item": "Privacy notice exists",
+      "status": "implemented"
+    },
+    {
+      "item": "Terms exist",
+      "status": "implemented"
+    },
+    {
+      "item": "Data deletion workflow exists",
+      "status": "implemented_request_tracking"
+    },
+    {
+      "item": "Route traversal fixed",
+      "status": "implemented"
+    },
+    {
+      "item": "AI simulated review cannot open gates",
+      "status": "implemented"
+    },
+    {
+      "item": "Reports avoid unsafe approval language",
+      "status": "implemented"
+    },
+    {
+      "item": "Source refresh works",
+      "status": "implemented"
+    },
+    {
+      "item": "Stale source creates blocker",
+      "status": "implemented"
+    },
+    {
+      "item": "Backup process exists",
+      "status": "documented"
+    },
+    {
+      "item": "Incident response draft exists",
+      "status": "documented"
+    },
+    {
+      "item": "Support contact/process exists",
+      "status": "implemented_local_support"
+    }
+  ]
+}

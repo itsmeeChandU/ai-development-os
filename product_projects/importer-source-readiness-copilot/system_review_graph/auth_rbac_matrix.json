@@ -1,0 +1,208 @@
+{
+  "memberships": [
+    {
+      "organization_id": "org-importer-demo",
+      "permissions": [
+        "packet:create",
+        "packet:read:own_org",
+        "packet:update:own_org",
+        "evidence:create:own_org",
+        "report:export:own_org",
+        "review:request:own_org",
+        "deletion:request:own_org",
+        "member:manage:own_org"
+      ],
+      "role": "customer_admin",
+      "user_id": "user-customer-001"
+    },
+    {
+      "organization_id": "org-internal-ops",
+      "permissions": [
+        "packet:read:any_org",
+        "blocker:triage",
+        "evidence:inspect",
+        "ai_review:run",
+        "review:request",
+        "report:export",
+        "audit:read"
+      ],
+      "role": "operator",
+      "user_id": "user-operator-001"
+    },
+    {
+      "organization_id": "org-internal-ops",
+      "permissions": [
+        "user:manage",
+        "organization:manage",
+        "source:manage",
+        "claim_rule:manage",
+        "audit:read",
+        "system:configure"
+      ],
+      "role": "admin",
+      "user_id": "user-admin-001"
+    },
+    {
+      "organization_id": "org-other-demo",
+      "permissions": [
+        "packet:create",
+        "packet:read:own_org",
+        "packet:update:own_org",
+        "evidence:create:own_org",
+        "report:export:own_org",
+        "review:request:own_org",
+        "deletion:request:own_org"
+      ],
+      "role": "customer",
+      "user_id": "user-other-customer-001"
+    }
+  ],
+  "organizations": [
+    {
+      "default": true,
+      "id": "org-importer-demo",
+      "name": "Importer Demo Co.",
+      "type": "customer"
+    },
+    {
+      "default": false,
+      "id": "org-other-demo",
+      "name": "Other Customer Org",
+      "type": "customer"
+    },
+    {
+      "default": false,
+      "id": "org-internal-ops",
+      "name": "Importer Source Readiness Ops",
+      "type": "internal"
+    }
+  ],
+  "roles": [
+    {
+      "permissions": [
+        "packet:create",
+        "packet:read:own_org",
+        "packet:update:own_org",
+        "evidence:create:own_org",
+        "report:export:own_org",
+        "review:request:own_org",
+        "deletion:request:own_org"
+      ],
+      "role": "customer"
+    },
+    {
+      "permissions": [
+        "packet:create",
+        "packet:read:own_org",
+        "packet:update:own_org",
+        "evidence:create:own_org",
+        "report:export:own_org",
+        "review:request:own_org",
+        "deletion:request:own_org",
+        "member:manage:own_org"
+      ],
+      "role": "customer_admin"
+    },
+    {
+      "permissions": [
+        "packet:read:any_org",
+        "blocker:triage",
+        "evidence:inspect",
+        "ai_review:run",
+        "review:request",
+        "report:export",
+        "audit:read"
+      ],
+      "role": "operator"
+    },
+    {
+      "permissions": [
+        "review:read:scoped",
+        "review:finding:create:scoped"
+      ],
+      "role": "expert"
+    },
+    {
+      "permissions": [
+        "user:manage",
+        "organization:manage",
+        "source:manage",
+        "claim_rule:manage",
+        "audit:read",
+        "system:configure"
+      ],
+      "role": "admin"
+    },
+    {
+      "permissions": [
+        "extract:fields",
+        "summarize:evidence",
+        "review:simulate",
+        "blocker:suggest",
+        "report:draft"
+      ],
+      "role": "ai_system"
+    }
+  ],
+  "security_controls": {
+    "audit": "packet, AI, review, export, deletion, and permission events are recorded",
+    "authentication": "local session auth implemented for private beta dry-run",
+    "csrf": "local form token available for browser unsafe actions",
+    "organization_isolation": "packet queries filter by organization unless operator/admin",
+    "rbac": "role permission matrix enforced by route handlers",
+    "route_traversal": "route-specific artifact base directories with resolved-path checks",
+    "scoped_expert_links": "review tokens grant packet-scoped access only",
+    "upload_validation": {
+      "allowed_evidence_types": [
+        "buyer_feedback",
+        "commercial_contract",
+        "customer_uploaded_document",
+        "customer_uploaded_reference",
+        "expert_review_finding",
+        "official_source_reference",
+        "operator_note",
+        "restricted_party_screening_record",
+        "source_refresh_record",
+        "source_url",
+        "supplier_document",
+        "third_party_reference"
+      ],
+      "malicious_html_policy": "reject script-bearing metadata and always HTML-escape display",
+      "max_bytes": 5242880
+    }
+  },
+  "users": [
+    {
+      "email": "customer@example.local",
+      "id": "user-customer-001",
+      "name": "Local Customer",
+      "organization_id": "org-importer-demo",
+      "role": "customer_admin",
+      "session_token": "customer-session"
+    },
+    {
+      "email": "operator@example.local",
+      "id": "user-operator-001",
+      "name": "Internal Operator",
+      "organization_id": "org-internal-ops",
+      "role": "operator",
+      "session_token": "operator-session"
+    },
+    {
+      "email": "admin@example.local",
+      "id": "user-admin-001",
+      "name": "Product Admin",
+      "organization_id": "org-internal-ops",
+      "role": "admin",
+      "session_token": "admin-session"
+    },
+    {
+      "email": "other@example.local",
+      "id": "user-other-customer-001",
+      "name": "Other Customer",
+      "organization_id": "org-other-demo",
+      "role": "customer",
+      "session_token": "other-customer-session"
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+[
+  {
+    "completed_at": "",
+    "created_at": "2026-06-25T00:00:00+00:00",
+    "created_by": "user-operator-001",
+    "due_at": "2026-07-10T02:53:10+00:00",
+    "id": "review-request-packet-frozen-tuna-canada-001",
+    "out_of_scope": [
+      "General legal advice",
+      "Customs brokerage services",
+      "Supplier recommendation",
+      "Buyer validation",
+      "Commercial launch approval"
+    ],
+    "packet_id": "packet-frozen-tuna-canada-001",
+    "packet_ids": [
+      "packet-frozen-tuna-canada-001"
+    ],
+    "questions": [
+      "Does the current evidence support any scoped statement about Canada import/food requirements?",
+      "Which claims remain blocked and why?",
+      "What evidence or source refresh is required next?"
+    ],
+    "review_type": "canada-food-import-review",
+    "reviewer_email": "reviewer@example.local",
+    "reviewer_name": "Scoped Expert Reviewer",
+    "reviewer_role": "Qualified Canada trade/food reviewer",
+    "scope": "Review evidence and claim language for Canada import, food, and tariff readiness.",
+    "status": "draft",
+    "token": "review-token-packet-frozen-tuna-canada-001"
+  }
+]

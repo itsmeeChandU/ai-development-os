@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 import mimetypes
+import re
 from html import escape
 from http import HTTPStatus
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
@@ -24,6 +25,22 @@ from .source_packet_workflow import (
     write_json,
 )
 from .customer_store import write_customer_store
+from .product_runtime import (
+    ALLOWED_EVIDENCE_TYPES,
+    CSRF_TOKEN,
+    FORBIDDEN_REPORT_PHRASES,
+    MAX_EVIDENCE_UPLOAD_BYTES,
+    PRODUCT_BOUNDARY,
+    REVIEW_TEMPLATES,
+    USERS,
+    actor_by_session,
+    build_runtime_state,
+    can_access_packet,
+    default_actor,
+    deployment_readiness,
+    packet_org_id,
+    write_runtime_artifacts,
+)
 
 
 API_ROUTES = {
@@ -37,8 +54,7 @@ API_ROUTES = {
 }
 
 STATIC_ROUTES = {
-    "/": "system_review_graph/operator_dashboard.html",
-    "/dashboard": "system_review_graph/operator_dashboard.html",
+    "/operator": "system_review_graph/operator_dashboard.html",
     "/operator_dashboard.html": "system_review_graph/operator_dashboard.html",
 }
 
@@ -99,6 +115,7 @@ def _write_customer_workflow(repo_root: Path, packets: list[dict[str, Any]], evi
     write_json(workflow["packets"], repo_root / "system_review_graph" / "customer_source_packets.json")
     write_json(workflow["evidence_ledger"], repo_root / "system_review_graph" / "evidence_ledger.json")
     write_json(workflow["ai_review_runs"], repo_root / "system_review_graph" / "customer_ai_review_runs.json")
+    write_runtime_artifacts(repo_root, workflow)
     write_customer_store(workflow, repo_root / "system_review_graph" / "customer_workflow.sqlite")
     if workflow["packets"]:
         packet_id = workflow["packets"][-1]["packet_id"]
@@ -139,6 +156,83 @@ def _packet_lookup(workflow: dict[str, Any]) -> dict[str, dict[str, Any]]:
     return {str(packet.get("packet_id")): packet for packet in workflow.get("packets", [])}
 
 
+def _runtime_state(repo_root: Path) -> dict[str, Any]:
+    workflow = _customer_workflow(repo_root)
+    state_path = repo_root / "system_review_graph" / "product_runtime_state.json"
+    if state_path.exists():
+        payload = _load_json(state_path)
+        if payload.get("status") and payload.get("users"):
+            return payload
+    return build_runtime_state(workflow)
+
+
+def _parse_cookie(header: str) -> dict[str, str]:
+    cookies: dict[str, str] = {}
+    for part in header.split(";"):
+        if "=" in part:
+            key, value = part.strip().split("=", 1)
+            cookies[key] = value
+    return cookies
+
+
+def _contains_script(value: str) -> bool:
+    return bool(re.search(r"<\s*/?\s*script", value, flags=re.IGNORECASE))
+
+
+def _actor_from_headers(headers: Any) -> dict[str, Any]:
+    token = headers.get("X-ISR-Session") or _parse_cookie(headers.get("Cookie", "")).get("isr_session")
+    actor = actor_by_session(token)
+    return actor or default_actor()
+
+
+def _expert_actor_for_token(token: str, runtime: dict[str, Any]) -> dict[str, Any] | None:
+    for grant in runtime.get("reviewer_access_grants", []):
+        if grant.get("token") == token and grant.get("status") == "active":
+            return {
+                "id": f"expert:{token}",
+                "email": "reviewer@example.local",
+                "name": "Scoped Expert Reviewer",
+                "role": "expert",
+                "organization_id": "external-reviewer",
+                "packet_ids": grant.get("packet_ids", []),
+                "permissions": ["review:read:scoped", "review:finding:create:scoped"],
+            }
+    return None
+
+
+def _visible_packets(workflow: dict[str, Any], actor: dict[str, Any]) -> list[dict[str, Any]]:
+    return [packet for packet in workflow.get("packets", []) if can_access_packet(actor, packet)]
+
+
+def _report_pdf_bytes(title: str, body: str) -> bytes:
+    safe_title = title.replace("(", "[").replace(")", "]")
+    safe_body = body.replace("(", "[").replace(")", "]").replace("\\", "/")
+    stream = f"BT /F1 12 Tf 72 720 Td ({safe_title}) Tj 0 -24 Td ({safe_body[:700]}) Tj ET"
+    stream_bytes = stream.encode("latin-1", errors="replace")
+    objects = [
+        b"1 0 obj << /Type /Catalog /Pages 2 0 R >> endobj\n",
+        b"2 0 obj << /Type /Pages /Kids [3 0 R] /Count 1 >> endobj\n",
+        b"3 0 obj << /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 4 0 R >> >> /Contents 5 0 R >> endobj\n",
+        b"4 0 obj << /Type /Font /Subtype /Type1 /BaseFont /Helvetica >> endobj\n",
+        f"5 0 obj << /Length {len(stream_bytes)} >> stream\n".encode("latin-1")
+        + stream_bytes
+        + b"\nendstream endobj\n",
+    ]
+    data = bytearray(b"%PDF-1.4\n")
+    offsets = [0]
+    for obj in objects:
+        offsets.append(len(data))
+        data.extend(obj)
+    xref = len(data)
+    data.extend(f"xref\n0 {len(objects) + 1}\n0000000000 65535 f \n".encode("latin-1"))
+    for offset in offsets[1:]:
+        data.extend(f"{offset:010d} 00000 n \n".encode("latin-1"))
+    data.extend(
+        f"trailer << /Size {len(objects) + 1} /Root 1 0 R >>\nstartxref\n{xref}\n%%EOF\n".encode("latin-1")
+    )
+    return bytes(data)
+
+
 def _render_page(title: str, body: str) -> str:
     return f"""<!doctype html>
 <html lang="en">
@@ -147,6 +241,8 @@ def _render_page(title: str, body: str) -> str:
   <title>{escape(title)}</title>
   <style>
     body {{ font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; margin: 0; background: #fbfcfd; color: #172026; }}
+    nav {{ background: #102826; color: #fff; padding: 12px 28px; display: flex; gap: 16px; flex-wrap: wrap; }}
+    nav a {{ color: #d9fffa; text-decoration: none; font-weight: 700; }}
     main {{ max-width: 1040px; margin: 0 auto; padding: 28px; }}
     h1 {{ margin: 0 0 8px; font-size: 30px; }}
     h2 {{ margin-top: 26px; }}
@@ -173,6 +269,14 @@ def _render_page(title: str, body: str) -> str:
   </style>
 </head>
 <body>
+<nav>
+  <a href="/">Home</a>
+  <a href="/dashboard">Dashboard</a>
+  <a href="/packets">Packets</a>
+  <a href="/operator/queue">Operator</a>
+  <a href="/admin/system-health">System Health</a>
+  <a href="/support">Support</a>
+</nav>
 <main>
 {body}
 </main>
@@ -187,7 +291,7 @@ def _render_packet_list(workflow: dict[str, Any]) -> str:
         packet_id = escape(str(packet.get("packet_id")))
         rows.append(
             "<tr>"
-            f"<td><a href='/source-packets/{packet_id}'>{escape(str(packet.get('packet_name')))}</a></td>"
+            f"<td><a href='/packets/{packet_id}'>{escape(str(packet.get('packet_name')))}</a></td>"
             f"<td>{escape(str(packet.get('product_name')))}</td>"
             f"<td><span class='status'>{escape(str(packet.get('customer_visible_status_label')))}</span></td>"
             f"<td>{escape(str((packet.get('evidence_summary') or {}).get('summary')))}</td>"
@@ -199,7 +303,7 @@ def _render_packet_list(workflow: dict[str, Any]) -> str:
 <h1>Customer Source Packets</h1>
 <p><span class="status">{escape(str(workflow.get("display_status")))}</span></p>
 <p class="note">{escape(str(workflow.get("proof_boundary")))}</p>
-<p><a href="/source-packets/new">Create a source packet</a> | <a href="/">Operator dashboard</a></p>
+<p><a href="/packets/new">Create a source packet</a> | <a href="/operator">Operator dashboard</a></p>
 <table>
   <thead><tr><th>Packet</th><th>Product</th><th>Status</th><th>Evidence</th><th>Blockers</th><th>Next Valid Move</th></tr></thead>
   <tbody>{''.join(rows) or '<tr><td colspan="6">No packets.</td></tr>'}</tbody>
@@ -212,7 +316,8 @@ def _render_packet_form() -> str:
     body = """
 <h1>Create Source Packet</h1>
 <p class="note">Local intake creates an internal readiness packet. It does not provide customs, tariff, legal, CFIA, supplier, buyer, or launch approval.</p>
-<form method="post" action="/source-packets">
+<form method="post" action="/packets">
+  <input type="hidden" name="csrf_token" value="local-dev-csrf-token">
   <div class="grid">
     <div><label>Packet name</label><input name="packet_name" value="Frozen tuna Canada source packet"></div>
     <div><label>Product name</label><input name="product_name" value="Frozen tuna fillet"></div>
@@ -234,8 +339,9 @@ def _render_packet_form() -> str:
 
 def _action_form(packet_id: str, action: str, label: str, extra: str = "") -> str:
     return (
-        f"<form method='post' action='/source-packets/{escape(packet_id)}/actions'>"
+        f"<form method='post' action='/packets/{escape(packet_id)}/actions'>"
         f"<input type='hidden' name='action' value='{escape(action)}'>"
+        f"<input type='hidden' name='csrf_token' value='{CSRF_TOKEN}'>"
         f"{extra}"
         f"<button type='submit'>{escape(label)}</button>"
         "</form>"
@@ -250,13 +356,322 @@ def _render_action_bar(packet: dict[str, Any]) -> str:
         + _action_form(packet_id, "request_operator_review", "Request Operator Review")
         + _action_form(packet_id, "run_ai_review", "Run AI Review")
         + _action_form(packet_id, "generate_expert_packet", "Generate Expert Review Packet")
-        + f"<a class='button-link' href='/source-packets/{escape(packet_id)}/export'>Export Readiness Report</a>"
+        + f"<a class='button-link' href='/packets/{escape(packet_id)}/export'>Export Readiness Report</a>"
         + "</div>"
     )
 
 
 def _list_items(rows: list[Any]) -> str:
     return "".join(f"<li>{escape(str(row))}</li>" for row in rows)
+
+
+def _render_landing() -> str:
+    body = f"""
+<h1>Know what is missing before you move forward with an import/source idea.</h1>
+<p>Create a source packet, attach evidence, see blocked claims, and prepare a review-ready report for operators or qualified reviewers.</p>
+<p class="note">{escape(PRODUCT_BOUNDARY)}</p>
+<p><a class="button-link" href="/packets/new">Create source packet</a> <a class="button-link" href="/packets/packet-frozen-tuna-canada-001/readiness">View sample report</a></p>
+<section class="grid">
+  <div class="metric"><div class="label">How it works</div><div class="value">Packet -> evidence -> blockers -> reviews -> safe report</div></div>
+  <div class="metric"><div class="label">Who it is for</div><div class="value">Importers, sourcing operators, founders, consultants, and reviewers</div></div>
+  <div class="metric"><div class="label">Sample packet</div><div class="value">Frozen tuna fillet to Canada</div></div>
+  <div class="metric"><div class="label">Security/privacy</div><div class="value">Org-scoped access, audit events, deletion workflow, and safe exports</div></div>
+</section>
+<h2>What it does not do</h2>
+<ul>
+  <li>Does not claim import approval, tariff confirmation, CFIA clearance, legal advice, customs advice, supplier recommendation, buyer validation, or launch readiness.</li>
+  <li>Does not replace a licensed customs broker, qualified compliance expert, lawyer, accountant, or buyer validation process.</li>
+</ul>
+"""
+    return _render_page("Importer Source Readiness Copilot", body)
+
+
+def _render_login_signup(mode: str) -> str:
+    action = "/api/auth/signup" if mode == "signup" else "/api/auth/login"
+    title = "Create Account" if mode == "signup" else "Log In"
+    body = f"""
+<h1>{title}</h1>
+<p class="note">Local private-beta auth uses seeded demo sessions. Real external hosting must wire a production identity provider and secrets manager.</p>
+<form method="post" action="{action}">
+  <input type="hidden" name="csrf_token" value="{CSRF_TOKEN}">
+  <label>Email</label><input name="email" value="customer@example.local">
+  <label>Name</label><input name="name" value="Local Customer">
+  <label>Organization</label><input name="organization_name" value="Importer Demo Co.">
+  <button type="submit">{title}</button>
+</form>
+<p>Demo sessions: customer@example.local, operator@example.local, admin@example.local, other@example.local.</p>
+"""
+    return _render_page(title, body)
+
+
+def _render_onboarding() -> str:
+    body = """
+<h1>Onboarding</h1>
+<p class="note">The first win is a source packet. Keep the first packet narrow and evidence-backed.</p>
+<form method="get" action="/packets/new">
+  <label>User type</label>
+  <select name="user_type"><option>Importer / founder</option><option>Sourcing operator</option><option>Consultant</option><option>Broker/compliance reviewer</option><option>Internal operator</option></select>
+  <label>What are you trying to decide?</label>
+  <select name="goal"><option>What evidence is missing?</option><option>Can I continue researching this source?</option><option>What should I ask a broker/reviewer?</option><option>Can I prepare a readiness report?</option></select>
+  <button type="submit">Create first packet</button>
+</form>
+"""
+    return _render_page("Onboarding", body)
+
+
+def _render_customer_dashboard(workflow: dict[str, Any], actor: dict[str, Any]) -> str:
+    packets = _visible_packets(workflow, actor)
+    blocked_count = sum(1 for packet in packets if packet.get("blocker_count", 0) > 0)
+    missing = sum(int((packet.get("evidence_summary") or {}).get("missing", 0)) for packet in packets)
+    rows = []
+    for packet in packets:
+        packet_id = escape(str(packet.get("packet_id")))
+        blockers = packet.get("top_blockers", [])
+        main = blockers[0].get("title") if blockers else "Internal review"
+        rows.append(
+            "<tr>"
+            f"<td><a href='/packets/{packet_id}'>{escape(str(packet.get('packet_name')))}</a></td>"
+            f"<td>{escape(str(packet.get('product_name')))}</td>"
+            f"<td>{escape(str(packet.get('destination_country')))}</td>"
+            f"<td>{escape(str(packet.get('customer_visible_status_label')))}</td>"
+            f"<td>{escape(str(main))}</td>"
+            f"<td>{escape(str((packet.get('evidence_summary') or {}).get('summary')))}</td>"
+            f"<td>{escape(str(packet.get('next_valid_move')))}</td>"
+            "</tr>"
+        )
+    body = f"""
+<h1>Your Source Packets</h1>
+<p class="note">Signed in as {escape(str(actor.get('email')))}. Customer pages show plain-English packet, evidence, blockers, next steps, reports, and review requests.</p>
+<section class="grid">
+  <div class="metric"><div class="label">Packets total</div><div class="value">{len(packets)}</div></div>
+  <div class="metric"><div class="label">Blocked packets</div><div class="value">{blocked_count}</div></div>
+  <div class="metric"><div class="label">Reports ready</div><div class="value">{len(packets)}</div></div>
+  <div class="metric"><div class="label">Evidence missing</div><div class="value">{missing}</div></div>
+</section>
+<p><a class="button-link" href="/packets/new">Create packet</a></p>
+<table>
+  <thead><tr><th>Packet</th><th>Product</th><th>Destination</th><th>Status</th><th>Main blocker</th><th>Evidence</th><th>Next action</th></tr></thead>
+  <tbody>{''.join(rows) or '<tr><td colspan="7">Create your first source packet to see what evidence is missing before moving forward.</td></tr>'}</tbody>
+</table>
+"""
+    return _render_page("Dashboard", body)
+
+
+def _render_packet_reviews(workflow: dict[str, Any], packet: dict[str, Any]) -> str:
+    runtime = build_runtime_state(workflow)
+    requests = [row for row in runtime["review_requests"] if row["packet_id"] == packet.get("packet_id")]
+    rows = "".join(
+        "<tr>"
+        f"<td>{escape(str(row.get('review_type')))}</td>"
+        f"<td>{escape(str(row.get('reviewer_role')))}</td>"
+        f"<td>{escape(str(row.get('status')))}</td>"
+        f"<td><a href='/review/{escape(str(row.get('token')))}'>Scoped review link</a></td>"
+        "</tr>"
+        for row in requests
+    )
+    body = f"""
+<h1>Reviews - {escape(str(packet.get('packet_name')))}</h1>
+<p class="note">Review requests are scoped. Expert findings can only affect claims within the review scope.</p>
+<table>
+  <thead><tr><th>Type</th><th>Reviewer role</th><th>Status</th><th>Scoped link</th></tr></thead>
+  <tbody>{rows}</tbody>
+</table>
+"""
+    return _render_page("Packet Reviews", body)
+
+
+def _render_packet_ai_reviews(workflow: dict[str, Any], packet: dict[str, Any]) -> str:
+    runs = [run for run in workflow.get("ai_review_runs", []) if run.get("packet_id") == packet.get("packet_id")]
+    cards = []
+    for run in runs:
+        cards.append(
+            "<div class='metric'>"
+            f"<div class='label'>{escape(str(run.get('review_type')))}</div>"
+            f"<div class='value'>{escape(str(run.get('status')))}</div>"
+            f"<p>Findings: {len(run.get('findings', []))}; human review required: {escape(str(run.get('human_review_required')))}; can open gate: {escape(str(run.get('can_open_gate')))}</p>"
+            "</div>"
+        )
+    body = f"""
+<h1>AI Reviews</h1>
+<p class="note">AI simulated reviews help identify missing evidence and risky claims. They do not replace qualified human review and cannot open external approval gates.</p>
+<section class="grid">{''.join(cards)}</section>
+"""
+    return _render_page("AI Reviews", body)
+
+
+def _render_packet_reports(workflow: dict[str, Any], packet: dict[str, Any]) -> str:
+    runtime = build_runtime_state(workflow)
+    exports = [row for row in runtime["report_exports"] if row["packet_id"] == packet.get("packet_id")]
+    rows = "".join(
+        "<tr>"
+        f"<td>{escape(str(row.get('report_type')))}</td>"
+        f"<td>{escape(str(row.get('format')))}</td>"
+        f"<td>{escape(str(row.get('status')))}</td>"
+        f"<td><a href='/api/reports/{escape(str(row.get('id')))}/download'>Download</a></td>"
+        "</tr>"
+        for row in exports
+    )
+    body = f"""
+<h1>Reports</h1>
+<p class="note">Reports are draft readiness artifacts. The app never exports approval, compliance, or import-ready certificates.</p>
+<table>
+  <thead><tr><th>Report</th><th>Format</th><th>Status</th><th>Action</th></tr></thead>
+  <tbody>{rows}</tbody>
+</table>
+"""
+    return _render_page("Reports", body)
+
+
+def _render_packet_settings(packet: dict[str, Any]) -> str:
+    body = f"""
+<h1>Packet Settings</h1>
+<p>{escape(str(packet.get('packet_name')))}</p>
+<p class="note">Deleting customer data is tracked as a deletion request and audit event. Retention rules must be reviewed before hosted use.</p>
+<form method="post" action="/api/packets/{escape(str(packet.get('packet_id')))}/delete-request">
+  <input type="hidden" name="csrf_token" value="{CSRF_TOKEN}">
+  <button type="submit">Request data deletion</button>
+</form>
+"""
+    return _render_page("Packet Settings", body)
+
+
+def _render_account(actor: dict[str, Any]) -> str:
+    body = f"""
+<h1>Account</h1>
+<table>
+  <tbody>
+    <tr><th>User</th><td>{escape(str(actor.get('name')))}</td></tr>
+    <tr><th>Email</th><td>{escape(str(actor.get('email')))}</td></tr>
+    <tr><th>Role</th><td>{escape(str(actor.get('role')))}</td></tr>
+    <tr><th>Organization</th><td>{escape(str(actor.get('organization_id')))}</td></tr>
+  </tbody>
+</table>
+"""
+    return _render_page("Account", body)
+
+
+def _render_support() -> str:
+    body = f"""
+<h1>Support</h1>
+<p class="note">{escape(PRODUCT_BOUNDARY)}</p>
+<h2>Before private beta use</h2>
+<ul>
+  <li>Review privacy notice and terms.</li>
+  <li>Use packet exports as draft internal readiness artifacts only.</li>
+  <li>Escalate customs, tariff, CFIA, legal, supplier, buyer, and launch questions to qualified people.</li>
+</ul>
+<p>Support contact process: create an operator review request from the packet, then export the expert-review packet.</p>
+"""
+    return _render_page("Support", body)
+
+
+def _render_admin_index(runtime: dict[str, Any]) -> str:
+    body = f"""
+<h1>Admin</h1>
+<p class="note">Admin surfaces manage users, organizations, official sources, claim rules, review templates, audit, and system health.</p>
+<section class="grid">
+  <div class="metric"><div class="label">Users</div><div class="value">{len(runtime.get('users', []))}</div></div>
+  <div class="metric"><div class="label">Organizations</div><div class="value">{len(runtime.get('organizations', []))}</div></div>
+  <div class="metric"><div class="label">Claim rules</div><div class="value">{len(runtime.get('claim_rules', []))}</div></div>
+  <div class="metric"><div class="label">Audit events</div><div class="value">{len(runtime.get('audit_events', []))}</div></div>
+</section>
+<p><a href="/admin/users">Users</a> | <a href="/admin/organizations">Organizations</a> | <a href="/admin/claim-rules">Claim rules</a> | <a href="/admin/review-templates">Review templates</a> | <a href="/admin/audit">Audit</a> | <a href="/admin/system-health">System health</a></p>
+"""
+    return _render_page("Admin", body)
+
+
+def _render_simple_table(title: str, rows: list[dict[str, Any]], columns: list[str]) -> str:
+    body_rows = "".join(
+        "<tr>" + "".join(f"<td>{escape(str(row.get(column, '')))}</td>" for column in columns) + "</tr>"
+        for row in rows
+    )
+    headers = "".join(f"<th>{escape(column.replace('_', ' ').title())}</th>" for column in columns)
+    body = f"""
+<h1>{escape(title)}</h1>
+<table><thead><tr>{headers}</tr></thead><tbody>{body_rows or f'<tr><td colspan="{len(columns)}">No rows.</td></tr>'}</tbody></table>
+"""
+    return _render_page(title, body)
+
+
+def _render_audit(runtime: dict[str, Any]) -> str:
+    events = runtime.get("audit_events", [])
+    rows = "".join(
+        "<tr>"
+        f"<td>{escape(str(row.get('created_at')))}</td>"
+        f"<td>{escape(str(row.get('actor_type')))}</td>"
+        f"<td>{escape(str(row.get('event_type')))}</td>"
+        f"<td>{escape(str(row.get('entity_type')))}</td>"
+        f"<td>{escape(str(row.get('entity_id')))}</td>"
+        "</tr>"
+        for row in events
+    )
+    body = f"""
+<h1>Audit</h1>
+<p class="note">Audit events include packet creation, evidence uploads/deletions, source refreshes, AI review runs, review findings, report exports, permission changes, and deletion requests.</p>
+<table>
+  <thead><tr><th>Timestamp</th><th>Actor</th><th>Event</th><th>Entity</th><th>ID</th></tr></thead>
+  <tbody>{rows}</tbody>
+</table>
+"""
+    return _render_page("Audit", body)
+
+
+def _render_system_health(runtime: dict[str, Any]) -> str:
+    deploy = runtime.get("deployment", deployment_readiness())
+    checklist = runtime.get("private_beta_checklist", [])
+    rows = "".join(
+        f"<tr><td>{escape(str(row.get('item')))}</td><td>{escape(str(row.get('status')))}</td></tr>"
+        for row in checklist
+    )
+    body = f"""
+<h1>System Health</h1>
+<p><span class="status">{escape(str(deploy.get('status')))}</span></p>
+<p class="note">{escape(str(deploy.get('proof_boundary')))}</p>
+<h2>Private Beta Checklist</h2>
+<table><thead><tr><th>Control</th><th>Status</th></tr></thead><tbody>{rows}</tbody></table>
+"""
+    return _render_page("System Health", body)
+
+
+def _render_review_page(workflow: dict[str, Any], token: str, view: str) -> str:
+    runtime = build_runtime_state(workflow)
+    request = next((row for row in runtime["review_requests"] if row.get("token") == token), None)
+    if request is None:
+        return _render_page("Review Not Found", "<h1>Review Not Found</h1><p>This scoped review token is not active.</p>")
+    packet = _packet_lookup(workflow).get(str(request["packet_id"]))
+    if packet is None:
+        return _render_page("Review Not Found", "<h1>Review Not Found</h1><p>Packet was not found.</p>")
+    if view == "evidence":
+        return _render_packet_evidence(packet)
+    if view in {"questions", "submit"}:
+        questions = _list_items(request.get("questions", []))
+        body = f"""
+<h1>Submit Scoped Finding</h1>
+<p class="note">Scope: {escape(str(request.get('scope')))}</p>
+<h2>Questions For Reviewer</h2>
+<ul>{questions}</ul>
+<form method="post" action="/review/{escape(token)}/submit">
+  <input type="hidden" name="csrf_token" value="{CSRF_TOKEN}">
+  <label>Decision</label><select name="decision"><option>blocked</option><option>needs_more_evidence</option><option>scoped_review_complete</option><option>not_within_scope</option></select>
+  <label>Evidence reviewed IDs</label><input name="evidence_reviewed_ids" value="{escape(','.join(str(row.get('evidence_id')) for row in packet.get('evidence_items', [])))}">
+  <label>Conditions</label><textarea name="conditions" rows="3">Scoped finding only; no general approval.</textarea>
+  <label>Notes</label><textarea name="notes" rows="4"></textarea>
+  <button type="submit">Submit scoped finding</button>
+</form>
+"""
+        return _render_page("Submit Scoped Finding", body)
+    claims = _list_items(packet.get("blocked_claims_display", []))
+    body = f"""
+<h1>Review request: {escape(str(request.get('review_type')))}</h1>
+<p><strong>Packet:</strong> {escape(str(packet.get('packet_name')))}</p>
+<p class="note">Scope: {escape(str(request.get('scope')))}</p>
+<h2>Blocked Claims</h2>
+<ul>{claims}</ul>
+<h2>Out Of Scope</h2>
+<ul>{_list_items(request.get('out_of_scope', []))}</ul>
+<p><a class="button-link" href="/review/{escape(token)}/evidence">Evidence</a> <a class="button-link" href="/review/{escape(token)}/questions">Questions</a></p>
+"""
+    return _render_page("Expert Review", body)
 
 
 def _blocker_group_rows(groups: list[dict[str, Any]]) -> str:
@@ -284,7 +699,7 @@ def _render_packet_detail(packet: dict[str, Any]) -> str:
 <p><span class="status">{escape(str(packet.get('customer_visible_status_label')))}</span></p>
 <p class="note">{escape(str(packet.get('safe_summary')))}</p>
 {_render_action_bar(packet)}
-<p><a href="/source-packets/{escape(str(packet.get('packet_id')))}/evidence">Evidence</a> | <a href="/source-packets/{escape(str(packet.get('packet_id')))}/blockers">Blockers</a> | <a href="/source-packets/{escape(str(packet.get('packet_id')))}/readiness-report">Readiness report</a> | <a href="/source-packets/{escape(str(packet.get('packet_id')))}/expert-review-packet">Expert review packet</a> | <a href="/operator/queue">Operator queue</a></p>
+<p><a href="/packets/{escape(str(packet.get('packet_id')))}/evidence">Evidence</a> | <a href="/packets/{escape(str(packet.get('packet_id')))}/blockers">Blockers</a> | <a href="/packets/{escape(str(packet.get('packet_id')))}/readiness">Readiness report</a> | <a href="/packets/{escape(str(packet.get('packet_id')))}/ai-reviews">AI reviews</a> | <a href="/packets/{escape(str(packet.get('packet_id')))}/reviews">Human reviews</a> | <a href="/packets/{escape(str(packet.get('packet_id')))}/reports">Reports</a> | <a href="/operator/queue">Operator queue</a></p>
 <section class="grid">
   <div class="metric"><div class="label">Readiness</div><div class="value">{escape(str(packet.get('readiness_status_label')))}</div></div>
   <div class="metric"><div class="label">Evidence</div><div class="value">{escape(str(evidence_summary.get('summary')))}</div></div>
@@ -342,8 +757,9 @@ def _render_packet_evidence(packet: dict[str, Any]) -> str:
   <div class="metric"><div class="label">Missing</div><div class="value">{escape(str(summary.get('missing')))}</div></div>
 </section>
 <h2>Upload Evidence</h2>
-<form method="post" action="/source-packets/{escape(str(packet.get('packet_id')))}/actions">
+<form method="post" action="/packets/{escape(str(packet.get('packet_id')))}/actions">
   <input type="hidden" name="action" value="upload_evidence">
+  <input type="hidden" name="csrf_token" value="{CSRF_TOKEN}">
   <label>Evidence type</label><input name="evidence_type" value="customer_uploaded_reference">
   <label>Source URL</label><input name="source_url" value="">
   <label>Claim supported</label><input name="claim_supported" value="Customer-uploaded evidence for internal review">
@@ -463,9 +879,11 @@ def _index_payload(repo_root: Path) -> dict[str, Any]:
     continuation = _load_json(repo_root / "system_review_graph" / "continuation_plan.json")
     board = _load_json(repo_root / "system_review_graph" / "board_go_live_readiness_report.json")
     customer = _customer_workflow(repo_root)
+    runtime = _runtime_state(repo_root)
     return {
         "product": "Importer Source Readiness Copilot",
-        "surface": "local_operator_application",
+        "surface": "local_customer_operator_expert_application",
+        "runtime_status": runtime.get("status"),
         "operator_status": workflow.get("status"),
         "operator_display_status": workflow.get("display_status") or OPERATOR_WORKBENCH_STATUS,
         "operator_can_use_now": workflow.get("operator_can_use_now"),
@@ -476,12 +894,30 @@ def _index_payload(repo_root: Path) -> dict[str, Any]:
         "customer_packet_count": customer.get("packet_count"),
         "startup_status": continuation.get("status"),
         "board_status": board.get("status"),
+        "auth_status": runtime.get("security_controls", {}).get("authentication"),
+        "rbac_status": runtime.get("security_controls", {}).get("rbac"),
+        "deployment_status": runtime.get("deployment", {}).get("status"),
         "allowed_use": workflow.get("allowed_use"),
         "not_allowed_use": workflow.get("not_allowed_use", []),
         "routes": sorted(
             [
                 *API_ROUTES,
                 *STATIC_ROUTES,
+                "/",
+                "/login",
+                "/signup",
+                "/onboarding",
+                "/dashboard",
+                "/packets",
+                "/packets/new",
+                "/packets/:id",
+                "/packets/:id/evidence",
+                "/packets/:id/blockers",
+                "/packets/:id/readiness",
+                "/packets/:id/ai-reviews",
+                "/packets/:id/reviews",
+                "/packets/:id/reports",
+                "/packets/:id/settings",
                 "/source-packets",
                 "/source-packets/new",
                 "/source-packets/:id",
@@ -492,8 +928,21 @@ def _index_payload(repo_root: Path) -> dict[str, Any]:
                 "/source-packets/:id/export",
                 "/operator/queue",
                 "/operator/packets/:id",
+                "/review/:token",
+                "/review/:token/evidence",
+                "/review/:token/questions",
+                "/review/:token/submit",
+                "/admin",
                 "/admin/sources",
                 "/admin/gates",
+                "/admin/users",
+                "/admin/organizations",
+                "/admin/claim-rules",
+                "/admin/review-templates",
+                "/admin/audit",
+                "/admin/system-health",
+                "/account",
+                "/support",
             ]
         ),
         "proof_boundary": (
@@ -516,44 +965,106 @@ def build_operator_app_handler(repo_root: Path) -> type[BaseHTTPRequestHandler]:
         def do_GET(self) -> None:  # noqa: N802
             parsed = urlparse(self.path)
             path = unquote(parsed.path)
+            actor = _actor_from_headers(self.headers)
+            workflow = _customer_workflow(repo_root)
+            runtime = _runtime_state(repo_root)
 
             if path == "/api":
                 self._send_json(_index_payload(repo_root))
                 return
+            if path in {"/healthz", "/readyz", "/api/system-health"}:
+                self._send_json(self._system_health_payload())
+                return
+            if path.startswith("/api/"):
+                self._handle_api_get(path, actor)
+                return
             if path == "/api/customer-workflow":
-                self._send_json(_customer_workflow(repo_root))
+                self._send_json(workflow)
                 return
             if path in API_ROUTES:
                 self._send_file(API_ROUTES[path], "application/json; charset=utf-8")
                 return
+            if path == "/":
+                self._send_html(_render_landing())
+                return
+            if path == "/login":
+                self._send_html(_render_login_signup("login"))
+                return
+            if path == "/signup":
+                self._send_html(_render_login_signup("signup"))
+                return
+            if path == "/onboarding":
+                self._send_html(_render_onboarding())
+                return
+            if path == "/dashboard":
+                self._send_html(_render_customer_dashboard(workflow, actor))
+                return
+            if path == "/account":
+                self._send_html(_render_account(actor))
+                return
+            if path == "/support":
+                self._send_html(_render_support())
+                return
             if path in STATIC_ROUTES:
                 self._send_file(STATIC_ROUTES[path], "text/html; charset=utf-8")
                 return
-            if path == "/source-packets":
-                self._send_html(_render_packet_list(_customer_workflow(repo_root)))
+            if path in {"/source-packets", "/packets"}:
+                self._send_html(_render_packet_list(workflow))
                 return
-            if path == "/source-packets/new":
+            if path in {"/source-packets/new", "/packets/new"}:
                 self._send_html(_render_packet_form())
                 return
+            if path == "/admin":
+                self._send_html(_render_admin_index(runtime))
+                return
+            if path == "/admin/users":
+                self._send_html(_render_simple_table("Users", runtime.get("users", []), ["id", "email", "name", "role", "organization_id"]))
+                return
+            if path == "/admin/organizations":
+                self._send_html(_render_simple_table("Organizations", runtime.get("organizations", []), ["id", "name", "type"]))
+                return
+            if path == "/admin/claim-rules":
+                self._send_html(_render_simple_table("Claim Rules", runtime.get("claim_rules", []), ["claim_type", "display_name", "default_status", "requires_human_review"]))
+                return
+            if path == "/admin/review-templates":
+                self._send_html(_render_simple_table("Review Templates", runtime.get("review_templates", []), ["id", "name", "reviewer_role", "scope"]))
+                return
+            if path == "/admin/audit":
+                self._send_html(_render_audit(runtime))
+                return
+            if path == "/admin/system-health":
+                self._send_html(_render_system_health(runtime))
+                return
             if path == "/admin/sources":
-                self._send_html(_render_admin_sources(_customer_workflow(repo_root)))
+                self._send_html(_render_admin_sources(workflow))
                 return
             if path == "/admin/gates":
-                self._send_html(_render_admin_gates(_customer_workflow(repo_root)))
+                self._send_html(_render_admin_gates(workflow))
                 return
             if path == "/operator/queue":
                 self._send_file("system_review_graph/operator_dashboard.html", "text/html; charset=utf-8")
                 return
+            if path in {"/operator/packets", "/operator/blockers", "/operator/reviews", "/operator/reports", "/operator/sources", "/operator/gates"}:
+                self._send_file("system_review_graph/operator_dashboard.html", "text/html; charset=utf-8")
+                return
             if path.startswith("/operator/packets/"):
                 packet_id = path.removeprefix("/operator/packets/").strip("/")
-                self._send_packet_route(packet_id, "")
+                self._send_packet_route(packet_id, "", actor)
                 return
-            if path.startswith("/source-packets/"):
-                suffix = path.removeprefix("/source-packets/").strip("/")
+            if path.startswith("/review/"):
+                suffix = path.removeprefix("/review/").strip("/")
+                parts = suffix.split("/")
+                token = parts[0]
+                view = parts[1] if len(parts) > 1 else ""
+                self._send_html(_render_review_page(workflow, token, view))
+                return
+            if path.startswith("/source-packets/") or path.startswith("/packets/"):
+                suffix = path.removeprefix("/source-packets/") if path.startswith("/source-packets/") else path.removeprefix("/packets/")
+                suffix = suffix.strip("/")
                 parts = suffix.split("/")
                 packet_id = parts[0]
                 view = parts[1] if len(parts) > 1 else ""
-                self._send_packet_route(packet_id, view)
+                self._send_packet_route(packet_id, view, actor)
                 return
             if path.startswith("/operator_screenshots/"):
                 self._send_scoped_file(
@@ -575,9 +1086,20 @@ def build_operator_app_handler(repo_root: Path) -> type[BaseHTTPRequestHandler]:
         def do_POST(self) -> None:  # noqa: N802
             parsed = urlparse(self.path)
             path = unquote(parsed.path)
-            if path != "/source-packets":
-                if path.startswith("/source-packets/") and path.endswith("/actions"):
-                    packet_id = path.removeprefix("/source-packets/").removesuffix("/actions").strip("/")
+            actor = _actor_from_headers(self.headers)
+            if path.startswith("/api/"):
+                self._handle_api_post(path, actor)
+                return
+            if path.startswith("/review/") and path.endswith("/submit"):
+                token = path.removeprefix("/review/").removesuffix("/submit").strip("/")
+                self._handle_review_submit(token)
+                return
+            if path not in {"/source-packets", "/packets"}:
+                if (path.startswith("/source-packets/") or path.startswith("/packets/")) and path.endswith("/actions"):
+                    if path.startswith("/source-packets/"):
+                        packet_id = path.removeprefix("/source-packets/").removesuffix("/actions").strip("/")
+                    else:
+                        packet_id = path.removeprefix("/packets/").removesuffix("/actions").strip("/")
                     self._handle_packet_action(packet_id)
                     return
                 self.send_error(HTTPStatus.NOT_FOUND, "Unknown operator app route")
@@ -593,7 +1115,13 @@ def build_operator_app_handler(repo_root: Path) -> type[BaseHTTPRequestHandler]:
             else:
                 parsed_fields = parse_qs(raw, keep_blank_values=True)
                 fields = {key: values[-1] for key, values in parsed_fields.items()}
-            packet = packet_from_submission(fields)
+            if fields.get("csrf_token") not in {"", None, CSRF_TOKEN}:
+                self.send_error(HTTPStatus.FORBIDDEN, "Invalid CSRF token")
+                return
+            packet = packet_from_submission({**fields, "organization_id": actor.get("organization_id")})
+            if not can_access_packet(actor, packet):
+                self.send_error(HTTPStatus.FORBIDDEN, "Packet is outside this organization")
+                return
             evidence = evidence_from_submission(packet)
             packets = _load_list_or_rows(
                 repo_root / "system_review_graph" / "customer_source_packets.json",
@@ -613,19 +1141,320 @@ def build_operator_app_handler(repo_root: Path) -> type[BaseHTTPRequestHandler]:
             evidence_rows.append(evidence)
             _write_customer_workflow(repo_root, packets, evidence_rows)
             self.send_response(HTTPStatus.SEE_OTHER)
-            self.send_header("Location", f"/source-packets/{packet['packet_id']}/readiness-report")
+            self.send_header("Location", f"/packets/{packet['packet_id']}/readiness")
             self.end_headers()
 
+        def _read_fields(self) -> dict[str, Any]:
+            length = int(self.headers.get("Content-Length") or 0)
+            if length > MAX_EVIDENCE_UPLOAD_BYTES:
+                self.send_error(HTTPStatus.REQUEST_ENTITY_TOO_LARGE, "Request too large")
+                return {}
+            raw = self.rfile.read(length).decode("utf-8")
+            content_type = self.headers.get("Content-Type", "")
+            if "application/json" in content_type:
+                return json.loads(raw or "{}")
+            parsed_fields = parse_qs(raw, keep_blank_values=True)
+            return {key: values[-1] for key, values in parsed_fields.items()}
+
+        def _append_audit(self, event: dict[str, Any]) -> None:
+            path = repo_root / "system_review_graph" / "customer_action_log.json"
+            _append_json_list(path, event)
+
+        def _system_health_payload(self) -> dict[str, Any]:
+            runtime = _runtime_state(repo_root)
+            store = repo_root / "system_review_graph" / "customer_workflow.sqlite"
+            return {
+                "status": "ok",
+                "product": "Importer Source Readiness Copilot",
+                "runtime_status": runtime.get("status"),
+                "deployment_status": runtime.get("deployment", {}).get("status"),
+                "store_exists": store.exists(),
+                "routes_ready": True,
+                "unsafe_gates_closed": True,
+                "proof_boundary": runtime.get("deployment", {}).get("proof_boundary"),
+            }
+
+        def _handle_api_get(self, path: str, actor: dict[str, Any]) -> None:
+            workflow = _customer_workflow(repo_root)
+            runtime = _runtime_state(repo_root)
+            packets = _visible_packets(workflow, actor)
+            packet_lookup = {str(packet.get("packet_id")): packet for packet in workflow.get("packets", [])}
+
+            if path in API_ROUTES:
+                self._send_file(API_ROUTES[path], "application/json; charset=utf-8")
+                return
+            if path == "/api/customer-workflow":
+                self._send_json(workflow)
+                return
+            if path == "/api/auth/me":
+                self._send_json({"authenticated": True, "user": actor})
+                return
+            if path == "/api/orgs/current":
+                org = next((row for row in runtime["organizations"] if row["id"] == actor.get("organization_id")), {})
+                self._send_json({"organization": org})
+                return
+            if path == "/api/orgs/current/members":
+                members = [
+                    row
+                    for row in runtime["memberships"]
+                    if row.get("organization_id") == actor.get("organization_id") or actor.get("role") == "admin"
+                ]
+                self._send_json({"members": members})
+                return
+            if path == "/api/packets":
+                self._send_json({"packets": packets})
+                return
+            if path == "/api/sources":
+                self._send_json({"sources": workflow.get("official_sources", [])})
+                return
+            if path == "/api/audit":
+                visible_ids = {str(packet.get("packet_id")) for packet in packets}
+                events = [
+                    row
+                    for row in runtime.get("audit_events", [])
+                    if actor.get("role") in {"admin", "operator"} or row.get("entity_id") in visible_ids
+                ]
+                self._send_json({"events": events})
+                return
+            if path == "/api/system-health":
+                self._send_json(self._system_health_payload())
+                return
+            if path.startswith("/api/external-review/"):
+                token = path.removeprefix("/api/external-review/").strip("/")
+                request = next((row for row in runtime["review_requests"] if row.get("token") == token), None)
+                if request is None:
+                    self.send_error(HTTPStatus.NOT_FOUND, "Review token not found")
+                    return
+                packet = packet_lookup.get(str(request["packet_id"]))
+                self._send_json({"review_request": request, "packet": packet})
+                return
+            if path.startswith("/api/reports/") and path.endswith("/download"):
+                report_id = path.removeprefix("/api/reports/").removesuffix("/download").strip("/")
+                report = next((row for row in runtime["report_exports"] if row.get("id") == report_id), None)
+                if report is None:
+                    self.send_error(HTTPStatus.NOT_FOUND, "Report not found")
+                    return
+                packet = packet_lookup.get(str(report.get("packet_id")))
+                if packet is None or not can_access_packet(actor, packet):
+                    self.send_error(HTTPStatus.FORBIDDEN, "Report outside this organization")
+                    return
+                if report.get("format") == "pdf":
+                    body = f"{packet.get('packet_name')} - {packet.get('customer_visible_status_label')}. {packet.get('safe_summary')}"
+                    self._send_bytes(_report_pdf_bytes("Customer Readiness Report", body), "application/pdf")
+                else:
+                    self._send_json({"report": report, "packet": packet, "boundary": PRODUCT_BOUNDARY})
+                return
+            if path.startswith("/api/packets/"):
+                parts = path.removeprefix("/api/packets/").strip("/").split("/")
+                packet_id = parts[0]
+                packet = packet_lookup.get(packet_id)
+                if packet is None:
+                    self.send_error(HTTPStatus.NOT_FOUND, "Packet not found")
+                    return
+                if not can_access_packet(actor, packet):
+                    self.send_error(HTTPStatus.FORBIDDEN, "Packet is outside this organization")
+                    return
+                view = parts[1] if len(parts) > 1 else ""
+                if view == "":
+                    self._send_json({"packet": packet})
+                elif view == "evidence":
+                    self._send_json({"evidence": packet.get("evidence_items", [])})
+                elif view == "blockers":
+                    self._send_json({"blockers": packet.get("blockers", []), "groups": packet.get("blocker_groups", [])})
+                elif view == "claims":
+                    self._send_json({"claims": [row for row in runtime["claims"] if row.get("packet_id") == packet_id]})
+                elif view == "gates":
+                    self._send_json({"gates": [row for row in runtime["claims"] if row.get("packet_id") == packet_id]})
+                elif view == "ai-reviews":
+                    self._send_json({"ai_reviews": [row for row in workflow.get("ai_review_runs", []) if row.get("packet_id") == packet_id]})
+                elif view == "review-requests":
+                    self._send_json({"review_requests": [row for row in runtime["review_requests"] if row.get("packet_id") == packet_id]})
+                elif view == "reports":
+                    self._send_json({"reports": [row for row in runtime["report_exports"] if row.get("packet_id") == packet_id]})
+                elif view == "audit":
+                    self._send_json({"events": [row for row in runtime["audit_events"] if row.get("entity_id") == packet_id]})
+                else:
+                    self.send_error(HTTPStatus.NOT_FOUND, "Packet API route not found")
+                return
+            self.send_error(HTTPStatus.NOT_FOUND, "API route not found")
+
+        def _handle_api_post(self, path: str, actor: dict[str, Any]) -> None:
+            fields = self._read_fields()
+            now = __import__("datetime").datetime.now(__import__("datetime").timezone.utc).replace(microsecond=0).isoformat()
+            if path in {"/api/auth/login", "/api/auth/signup"}:
+                email = str(fields.get("email") or "customer@example.local")
+                user = next((row for row in USERS if row["email"] == email), USERS[0])
+                payload = {"authenticated": True, "user": user, "csrf_token": CSRF_TOKEN}
+                data = json.dumps(payload, indent=2, sort_keys=True).encode("utf-8")
+                self.send_response(HTTPStatus.OK)
+                self.send_header("Content-Type", "application/json; charset=utf-8")
+                self.send_header("Set-Cookie", f"isr_session={user['session_token']}; HttpOnly; SameSite=Lax")
+                self.send_header("Content-Length", str(len(data)))
+                self.send_header("Cache-Control", "no-store")
+                self.end_headers()
+                self.wfile.write(data)
+                return
+            if path == "/api/auth/logout":
+                self.send_response(HTTPStatus.NO_CONTENT)
+                self.send_header("Set-Cookie", "isr_session=; Max-Age=0; HttpOnly; SameSite=Lax")
+                self.end_headers()
+                return
+            if path == "/api/packets":
+                packet = packet_from_submission({**fields, "organization_id": actor.get("organization_id")})
+                evidence = evidence_from_submission(packet)
+                packets, evidence_rows = _load_mutable_customer_rows(repo_root)
+                packets.append(packet)
+                evidence_rows.append(evidence)
+                _write_customer_workflow(repo_root, packets, evidence_rows)
+                self._send_json({"packet": packet, "next": f"/packets/{packet['packet_id']}"})
+                return
+            if path.startswith("/api/external-review/") and path.endswith("/findings"):
+                token = path.removeprefix("/api/external-review/").removesuffix("/findings").strip("/")
+                self._record_review_finding(token, fields, now)
+                return
+            if path.startswith("/api/packets/"):
+                parts = path.removeprefix("/api/packets/").strip("/").split("/")
+                packet_id = parts[0]
+                action = parts[1] if len(parts) > 1 else ""
+                workflow = _customer_workflow(repo_root)
+                packet = _packet_lookup(workflow).get(packet_id)
+                if packet is None:
+                    self.send_error(HTTPStatus.NOT_FOUND, "Packet not found")
+                    return
+                if not can_access_packet(actor, packet):
+                    self.send_error(HTTPStatus.FORBIDDEN, "Packet is outside this organization")
+                    return
+                if action == "evidence":
+                    if fields.get("evidence_type") not in ALLOWED_EVIDENCE_TYPES:
+                        self.send_error(HTTPStatus.BAD_REQUEST, "Unsupported evidence type")
+                        return
+                    if any(_contains_script(str(value)) for value in fields.values()):
+                        self.send_error(HTTPStatus.BAD_REQUEST, "Evidence metadata contains unsafe HTML")
+                        return
+                    packets, evidence_rows = _load_mutable_customer_rows(repo_root)
+                    evidence_rows.append(
+                        {
+                            "evidence_id": f"evidence-{packet_id}-api-{len(evidence_rows) + 1}",
+                            "packet_id": packet_id,
+                            "evidence_type": fields.get("evidence_type"),
+                            "source_url": fields.get("source_url") or "",
+                            "source_owner": actor.get("email"),
+                            "uploaded_by": actor.get("id"),
+                            "created_at": now,
+                            "rights_status": "unknown",
+                            "freshness_status": "needs_current_refresh_before_claims",
+                            "claim_supported": fields.get("claim_supported") or "Customer-uploaded evidence.",
+                            "claim_boundary": "Customer-uploaded evidence is internal review material until refreshed and reviewed.",
+                            "review_required": True,
+                            "human_review_status": "not_reviewed",
+                        }
+                    )
+                    _write_customer_workflow(repo_root, packets, evidence_rows)
+                    self._send_json({"status": "evidence_uploaded", "packet_id": packet_id})
+                    return
+                if action == "refresh-sources":
+                    packets, evidence_rows = _load_mutable_customer_rows(repo_root)
+                    evidence_rows, refresh_report = refresh_packet_sources(packet_id=packet_id, evidence_items=evidence_rows, actor=str(actor.get("id")))
+                    write_json(refresh_report, repo_root / "system_review_graph" / f"source_refresh_report_{packet_id}.json")
+                    _write_customer_workflow(repo_root, packets, evidence_rows)
+                    self._send_json(refresh_report)
+                    return
+                if action == "ai-reviews" or action == "analyze":
+                    run = build_ai_review_run(workflow, packet_id)
+                    _append_json_list(repo_root / "system_review_graph" / "customer_ai_review_runs.json", run)
+                    self._send_json(run)
+                    return
+                if action == "delete-request":
+                    self._append_audit(
+                        {
+                            "event_id": f"{packet_id}:data-deletion-requested:{now}",
+                            "packet_id": packet_id,
+                            "organization_id": packet_org_id(packet),
+                            "event_type": "data_deletion_requested",
+                            "actor_user_id": actor.get("id"),
+                            "created_at": now,
+                        }
+                    )
+                    self._send_json({"status": "deletion_request_recorded", "packet_id": packet_id})
+                    return
+                self.send_error(HTTPStatus.NOT_FOUND, "Packet API action not found")
+                return
+            self.send_error(HTTPStatus.NOT_FOUND, "API route not found")
+
+        def _record_review_finding(self, token: str, fields: dict[str, Any], now: str) -> None:
+            workflow = _customer_workflow(repo_root)
+            runtime = build_runtime_state(workflow)
+            request = next((row for row in runtime["review_requests"] if row.get("token") == token), None)
+            if request is None:
+                self.send_error(HTTPStatus.NOT_FOUND, "Review token not found")
+                return
+            packet_id = str(request["packet_id"])
+            finding = {
+                "id": f"finding-{packet_id}-{now.replace(':', '').replace('+', 'Z')}",
+                "review_request_id": request["id"],
+                "packet_id": packet_id,
+                "reviewer_name": request.get("reviewer_name"),
+                "reviewer_role": request.get("reviewer_role"),
+                "reviewer_organization": "External scoped reviewer",
+                "finding_type": request.get("review_type"),
+                "decision": fields.get("decision") or "needs_more_evidence",
+                "scope": request.get("scope"),
+                "conditions": fields.get("conditions") or "",
+                "blocked_claims": ["tariff_classification_claim", "food_safety_claim"],
+                "approved_claims_scoped": [] if fields.get("decision") != "scoped_review_complete" else ["allowed_scoped_human_review"],
+                "evidence_reviewed_ids": [item.strip() for item in str(fields.get("evidence_reviewed_ids") or "").split(",") if item.strip()],
+                "notes": fields.get("notes") or "",
+                "created_at": now,
+                "expires_at": request.get("due_at"),
+            }
+            _append_json_list(repo_root / "system_review_graph" / "human_review_findings.json", finding)
+            self._append_audit(
+                {
+                    "event_id": f"{packet_id}:review-finding-submitted:{now}",
+                    "packet_id": packet_id,
+                    "event_type": "review_finding_submitted",
+                    "entity_type": "HumanReviewFinding",
+                    "entity_id": finding["id"],
+                    "after_json": finding,
+                    "created_at": now,
+                }
+            )
+            self._send_json({"status": "finding_recorded_scoped", "finding": finding})
+
+        def _handle_review_submit(self, token: str) -> None:
+            fields = self._read_fields()
+            if fields.get("csrf_token") != CSRF_TOKEN:
+                self.send_error(HTTPStatus.FORBIDDEN, "Invalid CSRF token")
+                return
+            now = __import__("datetime").datetime.now(__import__("datetime").timezone.utc).replace(microsecond=0).isoformat()
+            self._record_review_finding(token, fields, now)
+
         def _handle_packet_action(self, packet_id: str) -> None:
+            actor = _actor_from_headers(self.headers)
             length = int(self.headers.get("Content-Length") or 0)
             if length > 65536:
                 self.send_error(HTTPStatus.REQUEST_ENTITY_TOO_LARGE, "Packet action too large")
                 return
             raw = self.rfile.read(length).decode("utf-8")
             fields = {key: values[-1] for key, values in parse_qs(raw, keep_blank_values=True).items()}
+            if fields.get("csrf_token") != CSRF_TOKEN:
+                self.send_error(HTTPStatus.FORBIDDEN, "Invalid CSRF token")
+                return
             action = str(fields.get("action") or "")
             packets, evidence_rows = _load_mutable_customer_rows(repo_root)
-            redirect = f"/source-packets/{packet_id}"
+            workflow_for_access = build_customer_workflow(
+                source_packets=packets,
+                evidence_items=evidence_rows,
+                official_sources=_load_json(repo_root / "data" / "official_source_registry.json"),
+            )
+            packet_for_access = _packet_lookup(workflow_for_access).get(packet_id)
+            if packet_for_access is None:
+                self.send_error(HTTPStatus.NOT_FOUND, "Packet not found")
+                return
+            if not can_access_packet(actor, packet_for_access):
+                self.send_error(HTTPStatus.FORBIDDEN, "Packet is outside this organization")
+                return
+            redirect = f"/packets/{packet_id}"
             action_log = repo_root / "system_review_graph" / "customer_action_log.json"
             now = __import__("datetime").datetime.now(__import__("datetime").timezone.utc).replace(microsecond=0).isoformat()
 
@@ -637,13 +1466,20 @@ def build_operator_app_handler(repo_root: Path) -> type[BaseHTTPRequestHandler]:
                 )
                 write_json(refresh_report, repo_root / "system_review_graph" / f"source_refresh_report_{packet_id}.json")
                 _append_json_list(repo_root / "system_review_graph" / "source_refresh_runs.json", refresh_report)
-                redirect = f"/source-packets/{packet_id}/evidence"
+                redirect = f"/packets/{packet_id}/evidence"
             elif action == "upload_evidence":
+                evidence_type = fields.get("evidence_type") or "customer_uploaded_reference"
+                if evidence_type not in ALLOWED_EVIDENCE_TYPES:
+                    self.send_error(HTTPStatus.BAD_REQUEST, "Unsupported evidence type")
+                    return
+                if any(_contains_script(str(value)) for value in fields.values()):
+                    self.send_error(HTTPStatus.BAD_REQUEST, "Evidence metadata contains unsafe HTML")
+                    return
                 evidence_rows.append(
                     {
                         "evidence_id": f"evidence-{packet_id}-customer-{len(evidence_rows) + 1}",
                         "packet_id": packet_id,
-                        "evidence_type": fields.get("evidence_type") or "customer_uploaded_reference",
+                        "evidence_type": evidence_type,
                         "source_url": fields.get("source_url") or "",
                         "file_path": "",
                         "source_owner": "customer",
@@ -666,7 +1502,7 @@ def build_operator_app_handler(repo_root: Path) -> type[BaseHTTPRequestHandler]:
                     action_log,
                     {"event_id": f"{packet_id}:upload-evidence:{now}", "packet_id": packet_id, "event_type": "upload_evidence", "created_at": now},
                 )
-                redirect = f"/source-packets/{packet_id}/evidence"
+                redirect = f"/packets/{packet_id}/evidence"
             elif action == "run_ai_review":
                 workflow = build_customer_workflow(
                     source_packets=packets,
@@ -675,7 +1511,7 @@ def build_operator_app_handler(repo_root: Path) -> type[BaseHTTPRequestHandler]:
                 )
                 run = build_ai_review_run(workflow, packet_id)
                 _append_json_list(repo_root / "system_review_graph" / "customer_ai_review_runs.json", run)
-                redirect = f"/source-packets/{packet_id}/readiness-report"
+                redirect = f"/packets/{packet_id}/ai-reviews"
             elif action == "generate_expert_packet":
                 workflow = build_customer_workflow(
                     source_packets=packets,
@@ -686,7 +1522,7 @@ def build_operator_app_handler(repo_root: Path) -> type[BaseHTTPRequestHandler]:
                     expert_review_packet_markdown(workflow, packet_id),
                     encoding="utf-8",
                 )
-                redirect = f"/source-packets/{packet_id}/expert-review-packet"
+                redirect = f"/packets/{packet_id}/expert-review-packet"
             elif action in {"request_operator_review", "request_review"}:
                 _append_json_list(
                     action_log,
@@ -699,7 +1535,7 @@ def build_operator_app_handler(repo_root: Path) -> type[BaseHTTPRequestHandler]:
                         "claim_boundary": "Review request does not open external claims.",
                     },
                 )
-                redirect = f"/source-packets/{packet_id}/blockers"
+                redirect = f"/packets/{packet_id}/blockers"
             elif action == "resolve_blocker":
                 _append_json_list(
                     action_log,
@@ -712,7 +1548,7 @@ def build_operator_app_handler(repo_root: Path) -> type[BaseHTTPRequestHandler]:
                         "claim_boundary": "Blocker resolution requires attached evidence before closure.",
                     },
                 )
-                redirect = f"/source-packets/{packet_id}/blockers"
+                redirect = f"/packets/{packet_id}/blockers"
             _write_customer_workflow(repo_root, packets, evidence_rows)
             self.send_response(HTTPStatus.SEE_OTHER)
             self.send_header("Location", redirect)
@@ -731,6 +1567,14 @@ def build_operator_app_handler(repo_root: Path) -> type[BaseHTTPRequestHandler]:
             data = json.dumps(payload, indent=2, sort_keys=True).encode("utf-8")
             self.send_response(HTTPStatus.OK)
             self.send_header("Content-Type", "application/json; charset=utf-8")
+            self.send_header("Content-Length", str(len(data)))
+            self.send_header("Cache-Control", "no-store")
+            self.end_headers()
+            self.wfile.write(data)
+
+        def _send_bytes(self, data: bytes, content_type: str) -> None:
+            self.send_response(HTTPStatus.OK)
+            self.send_header("Content-Type", content_type)
             self.send_header("Content-Length", str(len(data)))
             self.send_header("Cache-Control", "no-store")
             self.end_headers()
@@ -764,11 +1608,14 @@ def build_operator_app_handler(repo_root: Path) -> type[BaseHTTPRequestHandler]:
             self.end_headers()
             self.wfile.write(data)
 
-        def _send_packet_route(self, packet_id: str, view: str) -> None:
+        def _send_packet_route(self, packet_id: str, view: str, actor: dict[str, Any]) -> None:
             workflow = _customer_workflow(repo_root)
             packet = _packet_lookup(workflow).get(packet_id)
             if packet is None:
                 self.send_error(HTTPStatus.NOT_FOUND, "Source packet not found")
+                return
+            if not can_access_packet(actor, packet):
+                self.send_error(HTTPStatus.FORBIDDEN, "Packet is outside this organization")
                 return
             if view in {"", "detail"}:
                 self._send_html(_render_packet_detail(packet))
@@ -782,18 +1629,37 @@ def build_operator_app_handler(repo_root: Path) -> type[BaseHTTPRequestHandler]:
             if view in {"readiness", "readiness-report"}:
                 self._send_html(_render_packet_readiness(workflow, packet))
                 return
+            if view == "ai-reviews":
+                self._send_html(_render_packet_ai_reviews(workflow, packet))
+                return
+            if view == "reviews":
+                self._send_html(_render_packet_reviews(workflow, packet))
+                return
+            if view == "reports":
+                self._send_html(_render_packet_reports(workflow, packet))
+                return
+            if view == "settings":
+                self._send_html(_render_packet_settings(packet))
+                return
             if view == "expert-review-packet":
                 self._send_html(_render_expert_packet(workflow, packet))
                 return
             if view == "export":
                 self._send_json(
                     {
+                        "packet_id": packet.get("packet_id"),
                         "summary": packet.get("safe_summary"),
                         "status": packet.get("customer_visible_status_label"),
+                        "customer_stage_status": workflow.get("customer_stage_status"),
+                        "private_beta_status": workflow.get("private_beta_readiness", {}).get("status"),
                         "evidence_summary": packet.get("evidence_summary"),
                         "missing_evidence": packet.get("evidence_summary", {}).get("missing_items", []),
+                        "blocker_groups": packet.get("blocker_groups", []),
+                        "top_blockers": packet.get("top_blockers", []),
                         "blocked_claims": packet.get("blocked_claims_display"),
                         "next_valid_moves": [row.get("next_valid_move") for row in packet.get("blocker_groups", [])],
+                        "ai_review_runs": workflow.get("ai_review_runs", []),
+                        "private_beta_readiness": workflow.get("private_beta_readiness"),
                         "official_references": workflow.get("official_sources", []),
                         "review_required": True,
                         "proof_boundary": workflow.get("proof_boundary"),

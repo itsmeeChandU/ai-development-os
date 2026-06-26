@@ -1,0 +1,251 @@
+{
+  "blocked_by_default": true,
+  "claim_rules": [
+    {
+      "claim_type": "source_freshness_claim",
+      "customer_copy": "Official/reference sources need a dated refresh record before they support even internal reference use.",
+      "default_status": "blocked_stale_source",
+      "display_name": "Source freshness",
+      "required_evidence_types": [
+        "source_refresh_record"
+      ],
+      "requires_human_review": false
+    },
+    {
+      "claim_type": "tariff_classification_claim",
+      "customer_copy": "Tariff/HS classification requires qualified review before external use.",
+      "default_status": "blocked_requires_human_review",
+      "display_name": "Tariff / HS classification",
+      "required_evidence_types": [
+        "official_source_reference",
+        "expert_review_finding"
+      ],
+      "requires_human_review": true
+    },
+    {
+      "claim_type": "food_safety_claim",
+      "customer_copy": "CFIA/food-import claims stay blocked until a scoped qualified finding exists.",
+      "default_status": "blocked_requires_human_review",
+      "display_name": "Food safety / CFIA",
+      "required_evidence_types": [
+        "official_source_reference",
+        "expert_review_finding"
+      ],
+      "requires_human_review": true
+    },
+    {
+      "claim_type": "source_rights_claim",
+      "customer_copy": "Source or commercial rights need a contract, terms, or review record.",
+      "default_status": "blocked_source_rights_unknown",
+      "display_name": "Source rights / commercial contract",
+      "required_evidence_types": [
+        "commercial_contract"
+      ],
+      "requires_human_review": true
+    },
+    {
+      "claim_type": "buyer_validation_claim",
+      "customer_copy": "Buyer validation needs dated buyer/operator evidence.",
+      "default_status": "blocked_missing_evidence",
+      "display_name": "Buyer validation",
+      "required_evidence_types": [
+        "buyer_feedback"
+      ],
+      "requires_human_review": false
+    },
+    {
+      "claim_type": "launch_readiness_claim",
+      "customer_copy": "Launch readiness remains closed until all product, security, privacy, and human gates are complete.",
+      "default_status": "blocked_missing_evidence",
+      "display_name": "Launch readiness",
+      "required_evidence_types": [
+        "private_beta_gate_report"
+      ],
+      "requires_human_review": true
+    }
+  ],
+  "claims": [
+    {
+      "allowed_display_text": "",
+      "blocked_display_text": "Official/reference sources need a dated refresh record before they support even internal reference use.",
+      "blocker_ids": [
+        "packet-frozen-tuna-canada-001:evidence-frozen-tuna-cid-reference:stale",
+        "packet-frozen-tuna-canada-001:evidence-frozen-tuna-cbsa-import-workflow:stale",
+        "packet-frozen-tuna-canada-001:evidence-frozen-tuna-cfia-airs-reference:stale",
+        "packet-frozen-tuna-canada-001:restricted_party_screening-missing",
+        "packet-frozen-tuna-canada-001:qualified_review-missing",
+        "packet-frozen-tuna-canada-001:buyer_validation-missing",
+        "packet-frozen-tuna-canada-001:contract-missing"
+      ],
+      "claim_text": "Source freshness",
+      "claim_type": "source_freshness_claim",
+      "evidence_attached": [
+        "evidence-frozen-tuna-cid-reference",
+        "evidence-frozen-tuna-cbsa-import-workflow",
+        "evidence-frozen-tuna-cfia-airs-reference"
+      ],
+      "evidence_required": [
+        "source_refresh_record"
+      ],
+      "human_review_finding_id": "",
+      "human_review_required": false,
+      "id": "packet-frozen-tuna-canada-001:source_freshness_claim",
+      "last_evaluated_at": "2026-06-26T02:53:10+00:00",
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "source_ids": [],
+      "status": "blocked_stale_source"
+    },
+    {
+      "allowed_display_text": "",
+      "blocked_display_text": "Tariff/HS classification requires qualified review before external use.",
+      "blocker_ids": [
+        "packet-frozen-tuna-canada-001:evidence-frozen-tuna-cid-reference:stale",
+        "packet-frozen-tuna-canada-001:evidence-frozen-tuna-cbsa-import-workflow:stale",
+        "packet-frozen-tuna-canada-001:evidence-frozen-tuna-cfia-airs-reference:stale",
+        "packet-frozen-tuna-canada-001:restricted_party_screening-missing",
+        "packet-frozen-tuna-canada-001:qualified_review-missing",
+        "packet-frozen-tuna-canada-001:buyer_validation-missing",
+        "packet-frozen-tuna-canada-001:contract-missing"
+      ],
+      "claim_text": "Tariff / HS classification",
+      "claim_type": "tariff_classification_claim",
+      "evidence_attached": [
+        "evidence-frozen-tuna-cid-reference",
+        "evidence-frozen-tuna-cbsa-import-workflow",
+        "evidence-frozen-tuna-cfia-airs-reference"
+      ],
+      "evidence_required": [
+        "official_source_reference",
+        "expert_review_finding"
+      ],
+      "human_review_finding_id": "",
+      "human_review_required": true,
+      "id": "packet-frozen-tuna-canada-001:tariff_classification_claim",
+      "last_evaluated_at": "2026-06-26T02:53:10+00:00",
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "source_ids": [],
+      "status": "blocked_requires_human_review"
+    },
+    {
+      "allowed_display_text": "",
+      "blocked_display_text": "CFIA/food-import claims stay blocked until a scoped qualified finding exists.",
+      "blocker_ids": [
+        "packet-frozen-tuna-canada-001:evidence-frozen-tuna-cid-reference:stale",
+        "packet-frozen-tuna-canada-001:evidence-frozen-tuna-cbsa-import-workflow:stale",
+        "packet-frozen-tuna-canada-001:evidence-frozen-tuna-cfia-airs-reference:stale",
+        "packet-frozen-tuna-canada-001:restricted_party_screening-missing",
+        "packet-frozen-tuna-canada-001:qualified_review-missing",
+        "packet-frozen-tuna-canada-001:buyer_validation-missing",
+        "packet-frozen-tuna-canada-001:contract-missing"
+      ],
+      "claim_text": "Food safety / CFIA",
+      "claim_type": "food_safety_claim",
+      "evidence_attached": [
+        "evidence-frozen-tuna-cid-reference",
+        "evidence-frozen-tuna-cbsa-import-workflow",
+        "evidence-frozen-tuna-cfia-airs-reference"
+      ],
+      "evidence_required": [
+        "official_source_reference",
+        "expert_review_finding"
+      ],
+      "human_review_finding_id": "",
+      "human_review_required": true,
+      "id": "packet-frozen-tuna-canada-001:food_safety_claim",
+      "last_evaluated_at": "2026-06-26T02:53:10+00:00",
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "source_ids": [],
+      "status": "blocked_requires_human_review"
+    },
+    {
+      "allowed_display_text": "",
+      "blocked_display_text": "Source or commercial rights need a contract, terms, or review record.",
+      "blocker_ids": [
+        "packet-frozen-tuna-canada-001:evidence-frozen-tuna-cid-reference:stale",
+        "packet-frozen-tuna-canada-001:evidence-frozen-tuna-cbsa-import-workflow:stale",
+        "packet-frozen-tuna-canada-001:evidence-frozen-tuna-cfia-airs-reference:stale",
+        "packet-frozen-tuna-canada-001:restricted_party_screening-missing",
+        "packet-frozen-tuna-canada-001:qualified_review-missing",
+        "packet-frozen-tuna-canada-001:buyer_validation-missing",
+        "packet-frozen-tuna-canada-001:contract-missing"
+      ],
+      "claim_text": "Source rights / commercial contract",
+      "claim_type": "source_rights_claim",
+      "evidence_attached": [
+        "evidence-frozen-tuna-cid-reference",
+        "evidence-frozen-tuna-cbsa-import-workflow",
+        "evidence-frozen-tuna-cfia-airs-reference"
+      ],
+      "evidence_required": [
+        "commercial_contract"
+      ],
+      "human_review_finding_id": "",
+      "human_review_required": true,
+      "id": "packet-frozen-tuna-canada-001:source_rights_claim",
+      "last_evaluated_at": "2026-06-26T02:53:10+00:00",
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "source_ids": [],
+      "status": "blocked_source_rights_unknown"
+    },
+    {
+      "allowed_display_text": "",
+      "blocked_display_text": "Buyer validation needs dated buyer/operator evidence.",
+      "blocker_ids": [
+        "packet-frozen-tuna-canada-001:evidence-frozen-tuna-cid-reference:stale",
+        "packet-frozen-tuna-canada-001:evidence-frozen-tuna-cbsa-import-workflow:stale",
+        "packet-frozen-tuna-canada-001:evidence-frozen-tuna-cfia-airs-reference:stale",
+        "packet-frozen-tuna-canada-001:restricted_party_screening-missing",
+        "packet-frozen-tuna-canada-001:qualified_review-missing",
+        "packet-frozen-tuna-canada-001:buyer_validation-missing",
+        "packet-frozen-tuna-canada-001:contract-missing"
+      ],
+      "claim_text": "Buyer validation",
+      "claim_type": "buyer_validation_claim",
+      "evidence_attached": [
+        "evidence-frozen-tuna-cid-reference",
+        "evidence-frozen-tuna-cbsa-import-workflow",
+        "evidence-frozen-tuna-cfia-airs-reference"
+      ],
+      "evidence_required": [
+        "buyer_feedback"
+      ],
+      "human_review_finding_id": "",
+      "human_review_required": false,
+      "id": "packet-frozen-tuna-canada-001:buyer_validation_claim",
+      "last_evaluated_at": "2026-06-26T02:53:10+00:00",
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "source_ids": [],
+      "status": "blocked_missing_evidence"
+    },
+    {
+      "allowed_display_text": "",
+      "blocked_display_text": "Launch readiness remains closed until all product, security, privacy, and human gates are complete.",
+      "blocker_ids": [
+        "packet-frozen-tuna-canada-001:evidence-frozen-tuna-cid-reference:stale",
+        "packet-frozen-tuna-canada-001:evidence-frozen-tuna-cbsa-import-workflow:stale",
+        "packet-frozen-tuna-canada-001:evidence-frozen-tuna-cfia-airs-reference:stale",
+        "packet-frozen-tuna-canada-001:restricted_party_screening-missing",
+        "packet-frozen-tuna-canada-001:qualified_review-missing",
+        "packet-frozen-tuna-canada-001:buyer_validation-missing",
+        "packet-frozen-tuna-canada-001:contract-missing"
+      ],
+      "claim_text": "Launch readiness",
+      "claim_type": "launch_readiness_claim",
+      "evidence_attached": [
+        "evidence-frozen-tuna-cid-reference",
+        "evidence-frozen-tuna-cbsa-import-workflow",
+        "evidence-frozen-tuna-cfia-airs-reference"
+      ],
+      "evidence_required": [
+        "private_beta_gate_report"
+      ],
+      "human_review_finding_id": "",
+      "human_review_required": true,
+      "id": "packet-frozen-tuna-canada-001:launch_readiness_claim",
+      "last_evaluated_at": "2026-06-26T02:53:10+00:00",
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "source_ids": [],
+      "status": "blocked_missing_evidence"
+    }
+  ]
+}

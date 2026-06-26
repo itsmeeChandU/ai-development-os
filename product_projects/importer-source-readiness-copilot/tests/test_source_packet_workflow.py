@@ -42,7 +42,9 @@ class SourcePacketWorkflowTests(unittest.TestCase):
         self.assertGreaterEqual(workflow["evidence_count"], 3)
         self.assertGreater(workflow["blocker_count"], 0)
         self.assertGreaterEqual(len(workflow["blocker_groups"]), 4)
-        self.assertEqual(workflow["ai_review_runs"][0]["review_type"], "AI simulated review")
+        self.assertEqual(workflow["ai_review_runs"][0]["review_type"], "canada_compliance_simulation")
+        self.assertIs(workflow["ai_review_runs"][0]["can_open_gate"], False)
+        self.assertTrue(workflow["ai_review_runs"][0]["findings"][0]["evidence_used"])
         packet = workflow["packets"][0]
         self.assertIn(packet["customer_visible_status"], {"blocked_stale_source", "needs_expert_review", "needs_operator_review"})
         self.assertIn("Blocked - source freshness missing", packet["customer_visible_status_label"])

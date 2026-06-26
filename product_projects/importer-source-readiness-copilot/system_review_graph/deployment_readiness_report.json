@@ -1,0 +1,28 @@
+{
+  "backups": "SQLite and system_review_graph artifacts can be backed up from the mounted /app/system_review_graph volume",
+  "containers": [
+    "Dockerfile",
+    "compose.yaml"
+  ],
+  "environment_files": [
+    ".env.example"
+  ],
+  "external_gates": [
+    "Provision real managed database/object storage before production",
+    "Configure real secret manager and TLS termination before public hosting",
+    "Run qualified security/privacy review before external customers",
+    "Test backup restore in staging before production"
+  ],
+  "health_endpoints": [
+    "/healthz",
+    "/readyz",
+    "/api/system-health"
+  ],
+  "local_runtime": [
+    "python3 scripts/serve_operator_app.py --host 127.0.0.1 --port 8765"
+  ],
+  "logs": "structured application/audit events are written to generated JSON and SQLite artifacts",
+  "monitoring": "health endpoints expose app, store, route, and generated-artifact readiness",
+  "proof_boundary": "Deployment artifacts make the product hostable; they do not prove a live production environment exists.",
+  "status": "deployable_local_stack_ready_with_external_hosting_gates"
+}

@@ -1,0 +1,200 @@
+[
+  {
+    "file_id": "",
+    "format": "markdown",
+    "generated_at": "2026-06-25T00:00:00+00:00",
+    "generated_by": "system",
+    "id": "customer_readiness_report:packet-frozen-tuna-canada-001:markdown",
+    "included_blocker_ids": [
+      "packet-frozen-tuna-canada-001:evidence-frozen-tuna-cid-reference:stale",
+      "packet-frozen-tuna-canada-001:evidence-frozen-tuna-cbsa-import-workflow:stale",
+      "packet-frozen-tuna-canada-001:evidence-frozen-tuna-cfia-airs-reference:stale",
+      "packet-frozen-tuna-canada-001:restricted_party_screening-missing",
+      "packet-frozen-tuna-canada-001:qualified_review-missing",
+      "packet-frozen-tuna-canada-001:buyer_validation-missing",
+      "packet-frozen-tuna-canada-001:contract-missing"
+    ],
+    "included_claim_ids": [
+      "packet-frozen-tuna-canada-001:source_freshness_claim",
+      "packet-frozen-tuna-canada-001:tariff_classification_claim",
+      "packet-frozen-tuna-canada-001:food_safety_claim",
+      "packet-frozen-tuna-canada-001:source_rights_claim",
+      "packet-frozen-tuna-canada-001:buyer_validation_claim",
+      "packet-frozen-tuna-canada-001:launch_readiness_claim"
+    ],
+    "included_evidence_ids": [
+      "evidence-frozen-tuna-cid-reference",
+      "evidence-frozen-tuna-cbsa-import-workflow",
+      "evidence-frozen-tuna-cfia-airs-reference"
+    ],
+    "packet_id": "packet-frozen-tuna-canada-001",
+    "report_type": "customer_readiness_report",
+    "source_snapshot_hash": "f6d669f5e79239366700092239808dbd3f91983b98b65bf197d469bb799b93ef",
+    "status": "draft_internal_export_ready"
+  },
+  {
+    "file_id": "",
+    "format": "json",
+    "generated_at": "2026-06-25T00:00:00+00:00",
+    "generated_by": "system",
+    "id": "customer_readiness_report:packet-frozen-tuna-canada-001:json",
+    "included_blocker_ids": [
+      "packet-frozen-tuna-canada-001:evidence-frozen-tuna-cid-reference:stale",
+      "packet-frozen-tuna-canada-001:evidence-frozen-tuna-cbsa-import-workflow:stale",
+      "packet-frozen-tuna-canada-001:evidence-frozen-tuna-cfia-airs-reference:stale",
+      "packet-frozen-tuna-canada-001:restricted_party_screening-missing",
+      "packet-frozen-tuna-canada-001:qualified_review-missing",
+      "packet-frozen-tuna-canada-001:buyer_validation-missing",
+      "packet-frozen-tuna-canada-001:contract-missing"
+    ],
+    "included_claim_ids": [
+      "packet-frozen-tuna-canada-001:source_freshness_claim",
+      "packet-frozen-tuna-canada-001:tariff_classification_claim",
+      "packet-frozen-tuna-canada-001:food_safety_claim",
+      "packet-frozen-tuna-canada-001:source_rights_claim",
+      "packet-frozen-tuna-canada-001:buyer_validation_claim",
+      "packet-frozen-tuna-canada-001:launch_readiness_claim"
+    ],
+    "included_evidence_ids": [
+      "evidence-frozen-tuna-cid-reference",
+      "evidence-frozen-tuna-cbsa-import-workflow",
+      "evidence-frozen-tuna-cfia-airs-reference"
+    ],
+    "packet_id": "packet-frozen-tuna-canada-001",
+    "report_type": "customer_readiness_report",
+    "source_snapshot_hash": "f6d669f5e79239366700092239808dbd3f91983b98b65bf197d469bb799b93ef",
+    "status": "draft_internal_export_ready"
+  },
+  {
+    "file_id": "",
+    "format": "markdown",
+    "generated_at": "2026-06-25T00:00:00+00:00",
+    "generated_by": "system",
+    "id": "expert_review_packet:packet-frozen-tuna-canada-001:markdown",
+    "included_blocker_ids": [
+      "packet-frozen-tuna-canada-001:evidence-frozen-tuna-cid-reference:stale",
+      "packet-frozen-tuna-canada-001:evidence-frozen-tuna-cbsa-import-workflow:stale",
+      "packet-frozen-tuna-canada-001:evidence-frozen-tuna-cfia-airs-reference:stale",
+      "packet-frozen-tuna-canada-001:restricted_party_screening-missing",
+      "packet-frozen-tuna-canada-001:qualified_review-missing",
+      "packet-frozen-tuna-canada-001:buyer_validation-missing",
+      "packet-frozen-tuna-canada-001:contract-missing"
+    ],
+    "included_claim_ids": [
+      "packet-frozen-tuna-canada-001:source_freshness_claim",
+      "packet-frozen-tuna-canada-001:tariff_classification_claim",
+      "packet-frozen-tuna-canada-001:food_safety_claim",
+      "packet-frozen-tuna-canada-001:source_rights_claim",
+      "packet-frozen-tuna-canada-001:buyer_validation_claim",
+      "packet-frozen-tuna-canada-001:launch_readiness_claim"
+    ],
+    "included_evidence_ids": [
+      "evidence-frozen-tuna-cid-reference",
+      "evidence-frozen-tuna-cbsa-import-workflow",
+      "evidence-frozen-tuna-cfia-airs-reference"
+    ],
+    "packet_id": "packet-frozen-tuna-canada-001",
+    "report_type": "expert_review_packet",
+    "source_snapshot_hash": "f6d669f5e79239366700092239808dbd3f91983b98b65bf197d469bb799b93ef",
+    "status": "draft_internal_export_ready"
+  },
+  {
+    "file_id": "",
+    "format": "html",
+    "generated_at": "2026-06-25T00:00:00+00:00",
+    "generated_by": "system",
+    "id": "operator_blocker_report:packet-frozen-tuna-canada-001:html",
+    "included_blocker_ids": [
+      "packet-frozen-tuna-canada-001:evidence-frozen-tuna-cid-reference:stale",
+      "packet-frozen-tuna-canada-001:evidence-frozen-tuna-cbsa-import-workflow:stale",
+      "packet-frozen-tuna-canada-001:evidence-frozen-tuna-cfia-airs-reference:stale",
+      "packet-frozen-tuna-canada-001:restricted_party_screening-missing",
+      "packet-frozen-tuna-canada-001:qualified_review-missing",
+      "packet-frozen-tuna-canada-001:buyer_validation-missing",
+      "packet-frozen-tuna-canada-001:contract-missing"
+    ],
+    "included_claim_ids": [
+      "packet-frozen-tuna-canada-001:source_freshness_claim",
+      "packet-frozen-tuna-canada-001:tariff_classification_claim",
+      "packet-frozen-tuna-canada-001:food_safety_claim",
+      "packet-frozen-tuna-canada-001:source_rights_claim",
+      "packet-frozen-tuna-canada-001:buyer_validation_claim",
+      "packet-frozen-tuna-canada-001:launch_readiness_claim"
+    ],
+    "included_evidence_ids": [
+      "evidence-frozen-tuna-cid-reference",
+      "evidence-frozen-tuna-cbsa-import-workflow",
+      "evidence-frozen-tuna-cfia-airs-reference"
+    ],
+    "packet_id": "packet-frozen-tuna-canada-001",
+    "report_type": "operator_blocker_report",
+    "source_snapshot_hash": "f6d669f5e79239366700092239808dbd3f91983b98b65bf197d469bb799b93ef",
+    "status": "draft_internal_export_ready"
+  },
+  {
+    "file_id": "",
+    "format": "json",
+    "generated_at": "2026-06-25T00:00:00+00:00",
+    "generated_by": "system",
+    "id": "private_beta_gate_report:packet-frozen-tuna-canada-001:json",
+    "included_blocker_ids": [
+      "packet-frozen-tuna-canada-001:evidence-frozen-tuna-cid-reference:stale",
+      "packet-frozen-tuna-canada-001:evidence-frozen-tuna-cbsa-import-workflow:stale",
+      "packet-frozen-tuna-canada-001:evidence-frozen-tuna-cfia-airs-reference:stale",
+      "packet-frozen-tuna-canada-001:restricted_party_screening-missing",
+      "packet-frozen-tuna-canada-001:qualified_review-missing",
+      "packet-frozen-tuna-canada-001:buyer_validation-missing",
+      "packet-frozen-tuna-canada-001:contract-missing"
+    ],
+    "included_claim_ids": [
+      "packet-frozen-tuna-canada-001:source_freshness_claim",
+      "packet-frozen-tuna-canada-001:tariff_classification_claim",
+      "packet-frozen-tuna-canada-001:food_safety_claim",
+      "packet-frozen-tuna-canada-001:source_rights_claim",
+      "packet-frozen-tuna-canada-001:buyer_validation_claim",
+      "packet-frozen-tuna-canada-001:launch_readiness_claim"
+    ],
+    "included_evidence_ids": [
+      "evidence-frozen-tuna-cid-reference",
+      "evidence-frozen-tuna-cbsa-import-workflow",
+      "evidence-frozen-tuna-cfia-airs-reference"
+    ],
+    "packet_id": "packet-frozen-tuna-canada-001",
+    "report_type": "private_beta_gate_report",
+    "source_snapshot_hash": "f6d669f5e79239366700092239808dbd3f91983b98b65bf197d469bb799b93ef",
+    "status": "draft_internal_export_ready"
+  },
+  {
+    "file_id": "",
+    "format": "pdf",
+    "generated_at": "2026-06-25T00:00:00+00:00",
+    "generated_by": "system",
+    "id": "customer_readiness_report:packet-frozen-tuna-canada-001:pdf",
+    "included_blocker_ids": [
+      "packet-frozen-tuna-canada-001:evidence-frozen-tuna-cid-reference:stale",
+      "packet-frozen-tuna-canada-001:evidence-frozen-tuna-cbsa-import-workflow:stale",
+      "packet-frozen-tuna-canada-001:evidence-frozen-tuna-cfia-airs-reference:stale",
+      "packet-frozen-tuna-canada-001:restricted_party_screening-missing",
+      "packet-frozen-tuna-canada-001:qualified_review-missing",
+      "packet-frozen-tuna-canada-001:buyer_validation-missing",
+      "packet-frozen-tuna-canada-001:contract-missing"
+    ],
+    "included_claim_ids": [
+      "packet-frozen-tuna-canada-001:source_freshness_claim",
+      "packet-frozen-tuna-canada-001:tariff_classification_claim",
+      "packet-frozen-tuna-canada-001:food_safety_claim",
+      "packet-frozen-tuna-canada-001:source_rights_claim",
+      "packet-frozen-tuna-canada-001:buyer_validation_claim",
+      "packet-frozen-tuna-canada-001:launch_readiness_claim"
+    ],
+    "included_evidence_ids": [
+      "evidence-frozen-tuna-cid-reference",
+      "evidence-frozen-tuna-cbsa-import-workflow",
+      "evidence-frozen-tuna-cfia-airs-reference"
+    ],
+    "packet_id": "packet-frozen-tuna-canada-001",
+    "report_type": "customer_readiness_report",
+    "source_snapshot_hash": "f6d669f5e79239366700092239808dbd3f91983b98b65bf197d469bb799b93ef",
+    "status": "pdf_renderer_ready_basic"
+  }
+]

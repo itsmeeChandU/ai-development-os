@@ -21,6 +21,7 @@ from importer_source_readiness.source_packet_workflow import (
     write_json,
 )
 from importer_source_readiness.customer_store import inspect_customer_store, write_customer_store
+from importer_source_readiness.product_runtime import write_runtime_artifacts
 
 
 def main() -> int:
@@ -34,6 +35,7 @@ def main() -> int:
     write_json(workflow["packets"], ROOT / "system_review_graph" / "customer_source_packets.json")
     write_json(workflow["evidence_ledger"], ROOT / "system_review_graph" / "evidence_ledger.json")
     write_json(workflow["ai_review_runs"], ROOT / "system_review_graph" / "customer_ai_review_runs.json")
+    runtime = write_runtime_artifacts(ROOT, workflow)
     first_packet = workflow["packets"][0]["packet_id"] if workflow["packets"] else ""
     if first_packet:
         (ROOT / "system_review_graph" / "customer_readiness_report.md").write_text(
@@ -61,6 +63,8 @@ def main() -> int:
                 "blocker_count": workflow["blocker_count"],
                 "blocker_group_count": len(workflow["blocker_groups"]),
                 "ai_review_run_count": len(workflow["ai_review_runs"]),
+                "runtime_status": runtime["status"],
+                "audit_event_count": len(runtime["audit_events"]),
                 "store_tables": len(store["tables"]),
                 "out": "system_review_graph/customer_readiness_report.json",
             }

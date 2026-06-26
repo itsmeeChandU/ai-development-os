@@ -25,6 +25,7 @@ from importer_source_readiness import (
     write_customer_store,
     write_operator_workflow,
     write_report,
+    write_runtime_artifacts,
     write_screenshot_manifest,
 )
 from importer_source_readiness.source_packet_workflow import (
@@ -118,6 +119,7 @@ def main() -> int:
         customer_workflow,
         ROOT / "system_review_graph" / "customer_workflow.sqlite",
     )
+    runtime = write_runtime_artifacts(ROOT, customer_workflow)
     manifest_path = write_screenshot_manifest(
         screenshots,
         ROOT / "system_review_graph" / "operator_screenshot_manifest.json",
@@ -137,6 +139,7 @@ def main() -> int:
                 "screenshot_manifest": str(manifest_path),
                 "screenshot_count": screenshots["screenshot_count"],
                 "customer_packet_count": customer_workflow["packet_count"],
+                "runtime_status": runtime["status"],
                 "total_blockers": readiness["blocker_count"] + external["blocker_count"],
             }
         )

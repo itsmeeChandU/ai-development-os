@@ -177,7 +177,7 @@ def _customer_packet_rows(customer_workflow: dict[str, Any] | None) -> str:
     for packet in packets:
         rows.append(
             "<tr>"
-            f"<td><a href='/source-packets/{escape(str(packet.get('packet_id')))}'>{escape(str(packet.get('packet_name')))}</a></td>"
+            f"<td><a href='/packets/{escape(str(packet.get('packet_id')))}'>{escape(str(packet.get('packet_name')))}</a></td>"
             f"<td>{escape(str(packet.get('product_name')))}</td>"
             f"<td>{escape(str(packet.get('customer_visible_status_label')))}</td>"
             f"<td>{escape(str((packet.get('evidence_summary') or {}).get('summary')))}</td>"
@@ -206,7 +206,7 @@ def _render_customer_workflow(customer_workflow: dict[str, Any] | None) -> str:
       <div class="workflow-summary">
         <span>{escape(status)}</span>
         <strong>{count}</strong>
-        <em><a href="/source-packets/new">new packet</a></em>
+        <em><a href="/packets/new">new packet</a></em>
       </div>
     </div>
     <table>

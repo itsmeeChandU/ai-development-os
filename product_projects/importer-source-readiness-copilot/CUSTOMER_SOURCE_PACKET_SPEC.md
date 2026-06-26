@@ -1,9 +1,11 @@
 # Customer Source Packet Spec
 
 The first customer workflow is Canada-first importer/source readiness for one
-packet. The local app proves the workflow with fixture-backed data and generated
-reports. Hosted auth, organization isolation, file upload storage, real expert
-review, and live official-source refresh remain later gates.
+packet. The local app proves the workflow with generated state, a SQLite
+runtime store, local session auth, organization isolation, evidence metadata
+validation, scoped expert-review links, audit events, and safe report exports.
+Real external hosting, qualified human review, malware scanning, and live
+infrastructure remain human/external gates.
 
 ## Intake Fields
 
@@ -26,20 +28,37 @@ review, and live official-source refresh remain later gates.
 ## Customer Routes
 
 ```text
-/source-packets
-/source-packets/new
-/source-packets/:id
-/source-packets/:id/evidence
-/source-packets/:id/blockers
-/source-packets/:id/readiness
-/source-packets/:id/readiness-report
-/source-packets/:id/expert-review-packet
-/source-packets/:id/export
+/
+/login
+/signup
+/onboarding
+/dashboard
+/packets
+/packets/new
+/packets/:id
+/packets/:id/evidence
+/packets/:id/blockers
+/packets/:id/readiness
+/packets/:id/ai-reviews
+/packets/:id/reviews
+/packets/:id/reports
+/packets/:id/settings
+/packets/:id/expert-review-packet
+/packets/:id/export
 /operator/queue
 /operator/packets/:id
+/review/:token
+/review/:token/evidence
+/review/:token/questions
+/review/:token/submit
 /admin/sources
 /admin/gates
+/admin/audit
+/admin/system-health
 ```
+
+`/source-packets/*` remains as a compatibility alias for generated artifacts
+and older operator links.
 
 ## Customer-Visible Statuses
 
@@ -76,7 +95,8 @@ legal_or_compliance_approved
 ## Done Condition For This Slice
 
 A local user can create or view one source packet, inspect evidence, see blocked
-claims, and export a safe readiness report without the product giving customs,
+claims, request review, open a scoped expert packet, export a safe readiness
+report, and produce audit/runtime artifacts without the product giving customs,
 tariff, CFIA, legal, supplier, buyer, or launch approval.
 
 ## Required Actions

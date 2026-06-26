@@ -20,18 +20,20 @@ evaluates readiness gates, writes
 artifacts, writes Canada-focused board artifacts, and passes the local proof
 gate.
 
-The current usable application is the local internal operator app served by:
+The current usable application is the local private-beta product app served by:
 
 ```bash
 python3 scripts/serve_operator_app.py
 ```
 
-This is the surface an operator or founder can use today. It includes
-`/source-packets/new`, `/source-packets/:id/evidence`,
-`/source-packets/:id/blockers`, `/source-packets/:id/readiness-report`,
-`/source-packets/:id/expert-review-packet`, `/source-packets/:id/export`,
-`/operator/queue`, `/operator/packets/:id`, `/admin/sources`, and
-`/admin/gates`. It is not yet an external customer/importer SaaS app.
+This is the surface a customer, operator, expert reviewer, or admin can use in
+local private-beta review. It includes `/dashboard`, `/packets/new`,
+`/packets/:id/evidence`, `/packets/:id/blockers`, `/packets/:id/readiness`,
+`/packets/:id/ai-reviews`, `/packets/:id/reviews`, `/packets/:id/reports`,
+scoped `/review/:token` pages, `/operator/queue`, `/operator/packets/:id`,
+`/admin/sources`, `/admin/gates`, `/admin/audit`, and
+`/admin/system-health`. It is hostable after real infrastructure and qualified
+security/privacy/human review gates are completed.
 
 ## Ready Now
 
@@ -60,7 +62,13 @@ This is the surface an operator or founder can use today. It includes
 - official-source refresh records
 - AI simulated review runs
 - expert-review packet export
+- scoped expert-review links and finding ingestion
 - local SQLite workflow store
+- auth/RBAC runtime contract
+- organization-scoped packet access
+- audit events and deletion-request tracking
+- report export registry
+- health endpoints and Docker/Compose deployment shell
 - admin source registry and private-beta gates
 - local operator app server
 - static operator dashboard
@@ -111,22 +119,29 @@ keeps real human approvals explicit.
 - customer workflow status: `customer_workflow_ready_internal`
 - display status: `Internal logic ready - external claims blocked`
 - customer stage: `Customer packet prototype active - real customer use not enabled`
-- source packet route: `/source-packets/new`
-- safe report route: `/source-packets/:id/readiness-report`
-- evidence route: `/source-packets/:id/evidence`
-- blocker route: `/source-packets/:id/blockers`
-- expert-review packet route: `/source-packets/:id/expert-review-packet`
+- source packet route: `/packets/new`
+- safe report route: `/packets/:id/readiness`
+- evidence route: `/packets/:id/evidence`
+- blocker route: `/packets/:id/blockers`
+- expert-review packet route: `/packets/:id/expert-review-packet`
+- scoped expert-review route: `/review/:token`
 - machine report: `system_review_graph/customer_readiness_report.json`
 - evidence ledger: `system_review_graph/evidence_ledger.json`
 - AI review runs: `system_review_graph/customer_ai_review_runs.json`
+- runtime contract: `system_review_graph/product_runtime_state.json`
+- RBAC matrix: `system_review_graph/auth_rbac_matrix.json`
+- audit events: `system_review_graph/audit_events.json`
+- deployment readiness: `system_review_graph/deployment_readiness_report.json`
 - local store: `system_review_graph/customer_workflow.sqlite`
 
 This lets a customer/operator packet enter the product and get a safe readiness
 report, upload evidence, refresh official-source records, view grouped blockers,
 run AI simulated review, generate expert-review packets, and export a
-customer-safe report. It still blocks tariff confirmation, CFIA compliance,
-supplier recommendation, buyer validation, import readiness,
-legal/compliance approval, and public launch claims.
+customer-safe report. It also exposes local auth/RBAC, organization isolation,
+scoped expert review, admin audit, and deployment health surfaces. It still
+blocks tariff confirmation, CFIA compliance, supplier recommendation, buyer
+validation, import readiness, legal/compliance approval, and public launch
+claims.
 
 ## Next Valid Move
 
