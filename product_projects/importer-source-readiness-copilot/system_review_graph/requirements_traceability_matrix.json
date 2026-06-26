@@ -231,6 +231,135 @@
         "python3 scripts/check_product.py"
       ],
       "status": "implemented"
+    },
+    {
+      "artifacts": [
+        "public_trade_readiness_manifest.json",
+        "public_upload_manifest.json",
+        "report_exports.json"
+      ],
+      "boundary": "Public quick check is no-login draft PDF generation with delete controls; it is not approval, advice, shipment readiness, or persistent account history.",
+      "id": "REQ-PUBLIC-01",
+      "name": "Public trade readiness quick check",
+      "proof": [
+        "tests/test_operator_app.py",
+        "scripts/check_product.py"
+      ],
+      "status": "implemented_local_public_surface"
+    },
+    {
+      "artifacts": [
+        "customer_readiness_report.json",
+        "public_trade_readiness_manifest.json"
+      ],
+      "boundary": "Exporter packet creates evidence gaps and review packets only.",
+      "id": "REQ-EXPORT-01",
+      "name": "Create Export-to-Canada packet",
+      "proof": [
+        "tests/test_source_packet_workflow.py",
+        "tests/test_operator_app.py"
+      ],
+      "status": "implemented"
+    },
+    {
+      "artifacts": [
+        "customer_readiness_report.json"
+      ],
+      "boundary": "Missing buyer/importer creates a blocker; presence is not buyer validation.",
+      "id": "REQ-EXPORT-02",
+      "name": "Identify Canadian buyer/importer",
+      "proof": [
+        "tests/test_source_packet_workflow.py"
+      ],
+      "status": "implemented_fail_closed"
+    },
+    {
+      "artifacts": [
+        "customer_readiness_report.json"
+      ],
+      "boundary": "Incoterms classify responsibility path only; they do not prove legal or customs readiness.",
+      "id": "REQ-EXPORT-03",
+      "name": "Capture Incoterms or delivery responsibility",
+      "proof": [
+        "tests/test_source_packet_workflow.py"
+      ],
+      "status": "implemented_fail_closed"
+    },
+    {
+      "artifacts": [
+        "customer_readiness_report.json"
+      ],
+      "boundary": "Exporter/DDP/non-resident importer responsibility triggers broker review gates.",
+      "id": "REQ-EXPORT-04",
+      "name": "Mark Canadian import responsibility",
+      "proof": [
+        "tests/test_source_packet_workflow.py"
+      ],
+      "status": "implemented_fail_closed"
+    },
+    {
+      "artifacts": [
+        "claims_gate_matrix.json",
+        "customer_readiness_report.json"
+      ],
+      "boundary": "Canadian official/reference checks remain evidence only until qualified review.",
+      "id": "REQ-EXPORT-05",
+      "name": "Check Canadian-side readiness blockers",
+      "proof": [
+        "scripts/check_product.py"
+      ],
+      "status": "implemented_fail_closed"
+    },
+    {
+      "artifacts": [
+        "customer_readiness_report.json"
+      ],
+      "boundary": "Exporter-side readiness is a document-gap lane, not country legal advice.",
+      "id": "REQ-EXPORT-06",
+      "name": "Check exporter-side document readiness",
+      "proof": [
+        "tests/test_source_packet_workflow.py"
+      ],
+      "status": "implemented_fail_closed"
+    },
+    {
+      "artifacts": [
+        "report_exports.json"
+      ],
+      "boundary": "Buyer packet is a draft question/evidence packet and cannot claim buyer validation.",
+      "id": "REQ-EXPORT-07",
+      "name": "Generate buyer-ready packet",
+      "proof": [
+        "tests/test_operator_app.py"
+      ],
+      "status": "implemented_pdf_draft"
+    },
+    {
+      "artifacts": [
+        "report_exports.json",
+        "review_requests.json"
+      ],
+      "boundary": "Broker packet asks for scoped review; it is not broker advice or clearance.",
+      "id": "REQ-EXPORT-08",
+      "name": "Generate Canadian broker-review packet",
+      "proof": [
+        "tests/test_operator_app.py"
+      ],
+      "status": "implemented_pdf_draft"
+    },
+    {
+      "artifacts": [
+        "claims_gate_matrix.json",
+        "customer_readiness_report.json"
+      ],
+      "boundary": "All external-world claims remain blocked without qualified evidence and human gates.",
+      "id": "REQ-EXPORT-09",
+      "name": "Block compliance, tariff, CFIA, buyer, and shipment claims",
+      "proof": [
+        "tests/test_source_packet_workflow.py",
+        "scripts/check_product.py"
+      ],
+      "status": "implemented_fail_closed"
     }
   ],
   "status": "requirements_traceability_ready"

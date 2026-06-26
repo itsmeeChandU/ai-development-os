@@ -2,7 +2,10 @@
 
 Packet: Frozen tuna Canada source packet
 Product: Frozen tuna fillet
+Trade direction: import
+Origin: Vietnam
 Destination: Canada
+Responsibility path: Responsibility path unknown
 
 ## Review Scope
 
@@ -34,10 +37,13 @@ This packet requests scoped human/expert review. AI simulation and source refres
 
 ## Questions For Reviewer
 
-- What exact import, tariff, CFIA, food, or customs claims can be supported by the evidence?
-- Which claims must remain closed?
-- Which additional documents, source records, or screenings are required?
-- Is the review limited to reference orientation, or does it support a scoped operational decision?
+- Who is the Canadian importer of record for this shipment?
+- Which Incoterms or delivery responsibility applies?
+- What HS/tariff classification should a qualified reviewer use for the product?
+- Does the product need CFIA/AIRS, import permit, controlled goods, sanctions, or restricted-party review?
+- Which product specs, invoice/proforma, packing list, certificate, proof-of-origin, and contract documents are still missing?
+- Can the Canadian buyer or broker confirm the next valid evidence to collect?
+- Responsibility path: Responsibility path unknown.
 
 ## Reviewer Response Template
 

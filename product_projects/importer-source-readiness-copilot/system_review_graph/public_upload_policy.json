@@ -1,0 +1,18 @@
+{
+  "accepted_file_types": [
+    "application/pdf"
+  ],
+  "ai_modes": [
+    "no_ai",
+    "metadata_only",
+    "redacted",
+    "private_hosted_llm",
+    "customer_managed_llm"
+  ],
+  "delete_route": "/api/public/packets/:id/delete-files",
+  "max_bytes": 5242880,
+  "notice_required": true,
+  "retention": "delete or expire after public quick check",
+  "review_boundary": "Controls are implemented locally; qualified privacy/security/legal review remains required before hosted public use.",
+  "status": "public_upload_policy_ready"
+}

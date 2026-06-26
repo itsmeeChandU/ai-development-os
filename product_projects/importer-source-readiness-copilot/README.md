@@ -1,15 +1,18 @@
-# Importer Source Readiness Copilot
+# Trade Readiness Copilot
 
-Importer Source Readiness Copilot is a standalone product repo generated from
-an Intelligence Hub importer/exporter source-proof lane. Its completed local
-loop is a blocked-safe operator product for source cards, customer source
-packets, evidence ledgers, and readiness reports.
+Trade Readiness Copilot is a standalone product repo generated from an
+Intelligence Hub importer/exporter source-proof lane. The public product is a
+PDF-first import/export readiness checker. The internal engine remains Importer
+Source Readiness Copilot for source cards, customer source packets, evidence
+ledgers, blockers, and operator review.
 
 ## Product Goal
 
-Help product operators decide whether an importer/exporter source packet is
-ready for internal product work, still blocked on external evidence, or unsafe
-because an external-effect gate opened.
+Before a user imports or exports, show what is missing. The local product lets
+users choose an import/export tool, upload trade PDFs, run a draft quick check,
+download a readiness PDF, generate buyer/broker review packets, and delete
+uploaded files. Operator and expert-review surfaces remain available for
+private-beta review.
 
 This product is intentionally blocked-safe. It does not make customs, tariff,
 supplier, buyer, legal, payment, market, launch, or import/export advice
@@ -30,17 +33,19 @@ launch claims stay closed.
 
 ## Product Surface
 
-The application a user can use today is the local private-beta product app:
+The application a user can use today is the local product app:
 
 ```bash
 python3 scripts/serve_operator_app.py
 ```
 
-It opens a local browser surface for source-card readiness, customer source
-packet intake, evidence upload, source-packet readiness reports, AI simulated
-reviews, AI data policy controls, per-evidence AI permissions, redaction
-previews, no-AI/manual fallback, scoped expert-review handoff, audit, admin
-controls, the operator work queue, Canada reference tools, blockers,
+It opens a local browser surface for the public Trade Readiness Copilot
+landing page, `/tools`, `/trade-check`, `/tools/import-readiness`,
+`/tools/export-readiness`, public result pages, draft PDF downloads,
+source-card readiness, customer source packet intake, evidence upload,
+AI simulated reviews, AI data policy controls, per-evidence AI permissions,
+redaction previews, no-AI/manual fallback, scoped expert-review handoff, audit,
+admin controls, the operator work queue, Canada reference tools, blockers,
 screenshots, and proof boundaries.
 This is hostable for controlled private-beta review after real infrastructure,
 security/privacy review, and human approval gates are completed.
@@ -89,6 +94,10 @@ system_review_graph/ai_model_router.json
 system_review_graph/redaction_pipeline.json
 system_review_graph/manual_no_ai_workflow.json
 system_review_graph/requirements_traceability_matrix.json
+system_review_graph/public_trade_readiness_manifest.json
+system_review_graph/exporter_mode_requirements.json
+system_review_graph/public_report_types.json
+system_review_graph/public_upload_policy.json
 system_review_graph/expert_review_packet_packet-frozen-tuna-canada-001.md
 system_review_graph/blockers.jsonl
 system_review_graph/operator_dashboard.html
@@ -175,6 +184,19 @@ no-AI fallback, requirement traceability, and security/privacy docs. It does
 not prove real public production hosting, qualified legal/privacy/security
 signoff, or live customer launch.
 
+The expected public quick-check status is:
+
+```text
+public_quick_check_ready_local_with_external_gates
+```
+
+That means a no-login user can choose import/export, upload at least one PDF,
+accept the AI/data notice, run a draft readiness check, view missing evidence,
+download draft/buyer/broker PDFs, see blocked claims, and delete uploaded local
+files. It does not mean the product is publicly hosted, legally approved,
+customs/tariff/CFIA cleared, shipment-ready, buyer validated, or commercially
+ready.
+
 The expected customer stage is:
 
 ```text
@@ -207,10 +229,17 @@ customer use.
 - Canadian legal/privacy/finance/compliance signoff
 - tariff confirmation and CFIA compliance claims
 - source-packet supplier, buyer, and import-readiness claims
+- export-to-Canada readiness claims
+- importer-of-record/DDP/non-resident importer responsibility claims
+- trade agreement, MoU, or preference claims
+- shipment decision claims
 
 ## Next Valid Move
 
-Use `system_review_graph/operator_dashboard.html` as the operator surface,
+Use `/trade-check` for the public PDF-first quick check and
+`system_review_graph/public_trade_readiness_manifest.json` as the
+machine-readable public product contract. Use
+`system_review_graph/operator_dashboard.html` as the operator surface,
 including its generated work queue, customer source-packet workflow, and
 screenshot gallery. Use
 `system_review_graph/operator_workflow_report.json` as the machine-readable

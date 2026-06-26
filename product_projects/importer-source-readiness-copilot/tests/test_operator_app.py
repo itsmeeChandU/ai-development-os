@@ -1,7 +1,9 @@
 from __future__ import annotations
 
 import json
+import shutil
 import sys
+import tempfile
 import threading
 import unittest
 from pathlib import Path
@@ -40,6 +42,11 @@ MUTABLE_GENERATED_PATHS = [
     ROOT / "system_review_graph" / "manual_no_ai_workflow.json",
     ROOT / "system_review_graph" / "requirements_traceability_matrix.json",
     ROOT / "system_review_graph" / "customer_action_log.json",
+    ROOT / "system_review_graph" / "public_trade_readiness_manifest.json",
+    ROOT / "system_review_graph" / "exporter_mode_requirements.json",
+    ROOT / "system_review_graph" / "public_report_types.json",
+    ROOT / "system_review_graph" / "public_upload_policy.json",
+    ROOT / "system_review_graph" / "public_upload_manifest.json",
 ]
 
 
@@ -63,9 +70,113 @@ class OperatorAppTests(unittest.TestCase):
             html = response.read().decode("utf-8")
 
         self.assertEqual(response.status, 200)
-        self.assertIn("Importer Source Readiness Copilot", html)
-        self.assertIn("Know what is missing", html)
-        self.assertIn("Create source packet", html)
+        self.assertIn("Trade Readiness Copilot", html)
+        self.assertIn("know what is missing", html)
+        self.assertIn("Start quick check", html)
+
+    def test_public_tool_selection_and_quick_check_upload_pdf_flow(self) -> None:
+        generated_paths = [
+            *MUTABLE_GENERATED_PATHS,
+            ROOT / "system_review_graph" / "expert_review_packet_packet-india-turmeric-export.md",
+            ROOT / "system_review_graph" / "source_refresh_report_packet-india-turmeric-export.json",
+        ]
+        backups = {path: path.read_bytes() if path.exists() else None for path in generated_paths}
+        upload_root = ROOT / "system_review_graph" / "public_uploads"
+        with tempfile.TemporaryDirectory() as tmp:
+            upload_backup = Path(tmp) / "public_uploads"
+            if upload_root.exists():
+                shutil.copytree(upload_root, upload_backup)
+            try:
+                with urlopen(f"{self.base_url}/tools", timeout=5) as response:
+                    tools = response.read().decode("utf-8")
+                self.assertIn("Export Readiness Checker", tools)
+
+                with urlopen(f"{self.base_url}/tools/export-readiness", timeout=5) as response:
+                    form = response.read().decode("utf-8")
+                self.assertIn("Quick Trade Readiness Check", form)
+                self.assertIn("Importer of record", form)
+
+                boundary = "----ISRBoundary"
+                fields = {
+                    "accept_notice": "accepted",
+                    "trade_direction": "export",
+                    "product_name": "India turmeric export",
+                    "product_category": "food_import",
+                    "origin_country": "India",
+                    "destination_country": "Canada",
+                    "exporter_name": "Example Exporter Pvt Ltd",
+                    "buyer_name": "",
+                    "importer_of_record": "unknown",
+                    "incoterms_if_known": "unknown",
+                    "product_documents": "product spec PDF",
+                }
+                parts: list[bytes] = []
+                for key, value in fields.items():
+                    parts.append(
+                        (
+                            f"--{boundary}\r\n"
+                            f'Content-Disposition: form-data; name="{key}"\r\n\r\n'
+                            f"{value}\r\n"
+                        ).encode("utf-8")
+                    )
+                parts.append(
+                    (
+                        f"--{boundary}\r\n"
+                        'Content-Disposition: form-data; name="documents"; filename="turmeric-product-spec.pdf"\r\n'
+                        "Content-Type: application/pdf\r\n\r\n"
+                    ).encode("utf-8")
+                    + b"%PDF-1.4\n1 0 obj <<>> endobj\n%%EOF\n"
+                    + b"\r\n"
+                )
+                parts.append(f"--{boundary}--\r\n".encode("utf-8"))
+                request = Request(
+                    f"{self.base_url}/api/public/quick-check",
+                    data=b"".join(parts),
+                    method="POST",
+                    headers={"Content-Type": f"multipart/form-data; boundary={boundary}"},
+                )
+
+                class NoRedirect(HTTPRedirectHandler):
+                    def redirect_request(self, req, fp, code, msg, headers, newurl):  # type: ignore[no-untyped-def]
+                        return None
+
+                opener = build_opener(NoRedirect)
+                with self.assertRaises(HTTPError) as ctx:
+                    opener.open(request, timeout=5)
+                self.assertEqual(ctx.exception.code, 303)
+                location = ctx.exception.headers["Location"]
+                self.assertEqual(location, "/public/packets/packet-india-turmeric-export/result")
+
+                with urlopen(f"{self.base_url}{location}", timeout=5) as response:
+                    result_html = response.read().decode("utf-8")
+                self.assertIn("Export-to-Canada Packet", result_html)
+                self.assertIn("Blocked - not ready for shipment decision", result_html)
+                self.assertIn("Generate Buyer Packet", result_html)
+                self.assertIn("Delete Uploaded Files", result_html)
+                self.assertNotIn("system_review_graph", result_html)
+
+                with urlopen(f"{self.base_url}/api/public/packets/packet-india-turmeric-export/reports/broker.pdf", timeout=5) as response:
+                    pdf = response.read()
+                self.assertEqual(response.status, 200)
+                self.assertTrue(pdf.startswith(b"%PDF"))
+
+                delete_request = Request(
+                    f"{self.base_url}/api/public/packets/packet-india-turmeric-export/delete-files",
+                    data=b"",
+                    method="POST",
+                )
+                with urlopen(delete_request, timeout=5) as response:
+                    deletion = json.loads(response.read().decode("utf-8"))
+                self.assertEqual(deletion["status"], "public_upload_files_deleted")
+            finally:
+                shutil.rmtree(upload_root, ignore_errors=True)
+                if upload_backup.exists():
+                    shutil.copytree(upload_backup, upload_root)
+                for path, content in backups.items():
+                    if content is None:
+                        path.unlink(missing_ok=True)
+                    else:
+                        path.write_bytes(content)
 
     def test_operator_route_serves_operator_dashboard(self) -> None:
         with urlopen(f"{self.base_url}/operator", timeout=5) as response:

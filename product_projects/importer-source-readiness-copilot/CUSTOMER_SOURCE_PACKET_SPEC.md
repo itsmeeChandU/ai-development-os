@@ -1,11 +1,13 @@
-# Customer Source Packet Spec
+# Trade Readiness Packet Spec
 
-The first customer workflow is Canada-first importer/source readiness for one
-packet. The local app proves the workflow with generated state, a SQLite
-runtime store, local session auth, organization isolation, evidence metadata
-validation, scoped expert-review links, audit events, and safe report exports.
-Real external hosting, qualified human review, malware scanning, and live
-infrastructure remain human/external gates.
+The customer workflow is Canada-first import/export readiness for a trade
+packet. Public users see Trade Readiness Copilot: choose a tool, upload PDFs,
+run a quick check, preview missing evidence, download a draft PDF, and delete
+uploaded files. The internal engine keeps source-packet workflow state,
+generated artifacts, SQLite runtime store, local session auth, organization
+isolation, evidence metadata validation, scoped expert-review links, audit
+events, and safe report exports. Real external hosting, qualified human review,
+malware scanning, and live infrastructure remain human/external gates.
 
 ## Intake Fields
 
@@ -14,11 +16,20 @@ infrastructure remain human/external gates.
 - organization id
 - product name
 - product category
+- trade direction (`import`, `export`, `both`, `unknown`)
 - HS code if known
 - origin country
 - destination country
+- exporter country
+- importer country
+- exporter business name
+- Canadian buyer/importer name
+- importer of record (`buyer`, `importer`, `exporter`, `broker`, `unknown`)
+- exporter of record
+- Incoterms or delivery responsibility
 - supplier name
 - supplier country
+- manufacturer name
 - source URL
 - source type
 - intended use
@@ -27,11 +38,26 @@ infrastructure remain human/external gates.
 - evidence sensitivity level
 - evidence AI processing mode
 - redaction-required flag
+- product documents
+- commercial documents
+- certificates
+- proof of origin
+- shipping method
+- food/health/quality documents
+- source/supplier documents
+- contract or purchase order
 
 ## Customer Routes
 
 ```text
 /
+/tools
+/trade-check
+/tools/import-readiness
+/tools/export-readiness
+/tools/buyer-broker-packet
+/tools/canadian-references
+/public/packets/:id/result
 /login
 /signup
 /onboarding
@@ -66,6 +92,12 @@ infrastructure remain human/external gates.
 /api/orgs/current/ai-policy
 /api/orgs/current/ai-policy/test-model-endpoint
 /api/evidence/:evidenceId/ai-permission
+/api/public/quick-check
+/api/public/packets/:id/refresh-official-sources
+/api/public/packets/:id/reports/draft.pdf
+/api/public/packets/:id/reports/buyer.pdf
+/api/public/packets/:id/reports/broker.pdf
+/api/public/packets/:id/delete-files
 ```
 
 `/source-packets/*` remains as a compatibility alias for generated artifacts
@@ -98,10 +130,31 @@ cfia_compliant
 supplier_recommended
 buyer_validated
 ready_to_import
+ready_to_export_to_canada
+canadian_importer_confirmed
+export_documentation_complete
+trade_agreement_preference_confirmed
 public_launch_ready
 customs_or_tariff_advice_ready
 legal_or_compliance_approved
 ```
+
+## Readiness Lanes
+
+Every packet can expose two customer-readable lanes:
+
+```text
+exporter_side_readiness
+importer_side_readiness
+```
+
+For an India-to-Canada exporter, the exporter-side lane tracks India/source
+documents such as product specs, certificates, proof of origin, and
+country-specific evidence that may need expert review. The importer-side lane
+tracks Canadian buyer/importer, importer of record, Incoterms, CBSA/CARM,
+CFIA/AIRS when relevant, import controls, restricted-party screening, and
+broker/expert review. Both lanes remain blocked until evidence and qualified
+review support any external claim.
 
 ## Done Condition For This Slice
 
@@ -119,6 +172,9 @@ Request Operator Review
 Run AI Review
 Generate Expert Review Packet
 Export Readiness Report
+Generate Buyer Packet
+Generate Broker Review Packet
+Delete Uploaded Files
 ```
 
 Source refresh records `accessed_at`, `last_verified_at`, `content_hash`,

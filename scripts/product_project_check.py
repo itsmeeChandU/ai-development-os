@@ -78,6 +78,7 @@ def main() -> int:
         PROJECT / "docs" / "PRODUCT_AUTOMATION_RUNBOOK.md",
         PROJECT / "docs" / "PRODUCT_STATUS.md",
         PROJECT / "docs" / "REQUIREMENTS_ANALYSIS.md",
+        PROJECT / "docs" / "PUBLIC_TRADE_READINESS.md",
         PROJECT / "docs" / "STARTUP_LIFECYCLE.md",
         PROJECT / "docs" / "OPERATOR_GUIDE.md",
         PROJECT / "system_review_graph" / "external_gate_report.json",
@@ -110,6 +111,10 @@ def main() -> int:
         PROJECT / "system_review_graph" / "redaction_pipeline.json",
         PROJECT / "system_review_graph" / "manual_no_ai_workflow.json",
         PROJECT / "system_review_graph" / "requirements_traceability_matrix.json",
+        PROJECT / "system_review_graph" / "public_trade_readiness_manifest.json",
+        PROJECT / "system_review_graph" / "exporter_mode_requirements.json",
+        PROJECT / "system_review_graph" / "public_report_types.json",
+        PROJECT / "system_review_graph" / "public_upload_policy.json",
         PROJECT / "system_review_graph" / "source_refresh_runs.json",
         PROJECT / "system_review_graph" / "source_refresh_report_packet-frozen-tuna-canada-001.json",
         PROJECT / "system_review_graph" / "expert_review_packet_packet-frozen-tuna-canada-001.md",
@@ -232,6 +237,18 @@ def main() -> int:
     )
     requirements_traceability = json.loads(
         (PROJECT / "system_review_graph" / "requirements_traceability_matrix.json").read_text(encoding="utf-8")
+    )
+    public_trade = json.loads(
+        (PROJECT / "system_review_graph" / "public_trade_readiness_manifest.json").read_text(encoding="utf-8")
+    )
+    exporter_mode = json.loads(
+        (PROJECT / "system_review_graph" / "exporter_mode_requirements.json").read_text(encoding="utf-8")
+    )
+    public_reports = json.loads(
+        (PROJECT / "system_review_graph" / "public_report_types.json").read_text(encoding="utf-8")
+    )
+    public_upload_policy = json.loads(
+        (PROJECT / "system_review_graph" / "public_upload_policy.json").read_text(encoding="utf-8")
     )
     screenshot_manifest = json.loads(
         (PROJECT / "system_review_graph" / "operator_screenshot_manifest.json").read_text(encoding="utf-8")
@@ -399,6 +416,18 @@ def main() -> int:
         print("Product project check: FAIL")
         print("runtime state missing private-beta candidate status")
         return 1
+    if runtime.get("product") != "Trade Readiness Copilot":
+        print("Product project check: FAIL")
+        print("runtime state missing public Trade Readiness Copilot product name")
+        return 1
+    if runtime.get("internal_engine") != "Importer Source Readiness Copilot":
+        print("Product project check: FAIL")
+        print("runtime state missing internal engine boundary")
+        return 1
+    if runtime.get("public_product_surface", {}).get("status") != "public_quick_check_ready_local_with_external_gates":
+        print("Product project check: FAIL")
+        print("runtime state missing public quick-check surface status")
+        return 1
     if len(runtime.get("users", [])) < 4 or len(runtime.get("organizations", [])) < 3:
         print("Product project check: FAIL")
         print("runtime state missing users or organizations")
@@ -407,6 +436,24 @@ def main() -> int:
         print("Product project check: FAIL")
         print("runtime state missing auth routes")
         return 1
+    for route in (
+        "/tools/export-readiness",
+        "/public/packets/:packetId/result",
+    ):
+        if route not in runtime.get("ui_routes", {}).get("customer", []):
+            print("Product project check: FAIL")
+            print(f"runtime state missing public UI route {route}")
+            return 1
+    for route in (
+        "/api/public/quick-check",
+        "/api/public/packets/:id/reports/buyer.pdf",
+        "/api/public/packets/:id/reports/broker.pdf",
+        "/api/public/packets/:id/delete-files",
+    ):
+        if route not in runtime.get("api_routes", []):
+            print("Product project check: FAIL")
+            print(f"runtime state missing public API route {route}")
+            return 1
     if "/api/orgs/current/ai-policy" not in runtime.get("api_routes", []):
         print("Product project check: FAIL")
         print("runtime state missing AI policy routes")
@@ -459,9 +506,39 @@ def main() -> int:
         print("Product project check: FAIL")
         print("manual no-AI workflow is not ready")
         return 1
-    if len(requirements_traceability.get("requirements", [])) < 17:
+    requirement_ids = {row.get("id") for row in requirements_traceability.get("requirements", [])}
+    if len(requirements_traceability.get("requirements", [])) < 27:
         print("Product project check: FAIL")
         print("requirements traceability matrix is incomplete")
+        return 1
+    for requirement_id in ("REQ-PUBLIC-01", "REQ-EXPORT-01", "REQ-EXPORT-09"):
+        if requirement_id not in requirement_ids:
+            print("Product project check: FAIL")
+            print(f"requirements traceability matrix missing {requirement_id}")
+            return 1
+    if public_trade.get("status") != "public_trade_readiness_ready_local":
+        print("Product project check: FAIL")
+        print("public trade readiness manifest is missing or stale")
+        return 1
+    if public_trade.get("public_product") != "Trade Readiness Copilot":
+        print("Product project check: FAIL")
+        print("public trade readiness manifest has wrong product name")
+        return 1
+    if exporter_mode.get("status") != "exporter_mode_requirements_ready":
+        print("Product project check: FAIL")
+        print("exporter mode requirements manifest is missing or stale")
+        return 1
+    if "exporter_side_readiness" not in exporter_mode.get("readiness_lanes", []):
+        print("Product project check: FAIL")
+        print("exporter mode manifest missing exporter-side readiness lane")
+        return 1
+    if "Broker Review Packet.pdf" not in public_reports.get("reports", []):
+        print("Product project check: FAIL")
+        print("public report types missing broker review PDF")
+        return 1
+    if public_upload_policy.get("notice_required") is not True:
+        print("Product project check: FAIL")
+        print("public upload policy should require notice acceptance")
         return 1
     store_path = PROJECT / "system_review_graph" / "customer_workflow.sqlite"
     with sqlite3.connect(store_path) as conn:
@@ -507,10 +584,13 @@ def main() -> int:
     print(f"customer_blocker_groups={len(customer['blocker_groups'])}")
     print(f"evidence_ledger_status={evidence_ledger['status']}")
     print(f"runtime_status={runtime['status']}")
+    print(f"public_surface_status={runtime['public_product_surface']['status']}")
     print(f"runtime_users={len(runtime['users'])}")
     print(f"ai_policy_status={ai_data_policy['status']}")
     print(f"ai_router_status={ai_model_router['status']}")
     print(f"requirements_traceability={len(requirements_traceability['requirements'])}")
+    print(f"public_trade_manifest={public_trade['status']}")
+    print(f"exporter_mode_manifest={exporter_mode['status']}")
     print(f"review_requests={len(review_requests)}")
     print(f"audit_events={len(audit_events['events'])}")
     print(f"deployment_status={deployment['status']}")

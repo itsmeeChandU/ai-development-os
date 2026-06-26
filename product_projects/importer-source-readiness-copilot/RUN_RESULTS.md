@@ -29,10 +29,11 @@ customer_workflow_status=customer_workflow_ready_internal
 customer_blocker_groups=4
 customer_store=ready
 runtime_status=private_beta_candidate_with_external_human_gates
+public_surface_status=public_quick_check_ready_local_with_external_gates
 runtime_users=4
 ai_policy_status=ai_data_policy_ready
 ai_router_status=ai_model_router_ready
-requirements_traceability=17
+requirements_traceability>=27
 review_requests=1
 audit_events=3
 deployment_status=deployable_local_stack_ready_with_external_hosting_gates
@@ -46,6 +47,9 @@ blockers, evidence quality, AI simulated review runs, scoped expert-review
 requests, AI data policy, model routing, redaction previews, no-AI/manual
 fallback, requirements traceability, auth/RBAC and organization isolation,
 audit events, report exports, deployment health surfaces, and the expanded
-SQLite workflow store.
+SQLite workflow store. The current proof also verifies the public Trade
+Readiness Copilot route contract, no-login PDF upload quick check, draft
+readiness/buyer/broker PDF generation, delete-files control, exporter mode
+requirements, public upload policy, and fail-closed export-to-Canada claims.
 
 Any failure should become a blocker row or a targeted repair before review.

@@ -17,9 +17,10 @@ from importer_source_readiness.source_packet_workflow import (
     build_customer_workflow,
     build_evidence_ledger,
     expert_review_packet_markdown,
-    refresh_packet_sources,
     load_json_list,
     markdown_report,
+    packet_from_submission,
+    refresh_packet_sources,
     write_json,
 )
 from importer_source_readiness import load_json
@@ -84,6 +85,44 @@ class SourcePacketWorkflowTests(unittest.TestCase):
         self.assertIn("Tariff/HS classification", report)
         self.assertIn("Missing Evidence", report)
         self.assertNotIn("safe_to_import", report)
+
+    def test_export_to_canada_packet_splits_lanes_and_blocks_shipment_claims(self) -> None:
+        packet = packet_from_submission(
+            {
+                "packet_name": "India turmeric export packet",
+                "product_name": "Organic turmeric powder",
+                "product_category": "food_import",
+                "trade_direction": "export",
+                "origin_country": "India",
+                "destination_country": "Canada",
+                "exporter_name": "Example Exporter Pvt Ltd",
+                "buyer_name": "",
+                "importer_of_record": "unknown",
+                "incoterms_if_known": "unknown",
+                "offline_evidence_only": True,
+            }
+        )
+        workflow = build_customer_workflow(
+            source_packets=[packet],
+            evidence_items=[],
+            official_sources=load_json(ROOT / "data" / "official_source_registry.json"),
+            generated_at="2026-06-25T00:00:00+00:00",
+        )
+        export_packet = workflow["packets"][0]
+
+        self.assertEqual(export_packet["public_product_name"], "Trade Readiness Copilot")
+        self.assertEqual(export_packet["trade_direction"], "export")
+        self.assertEqual(export_packet["public_summary"]["title"], "Export-to-Canada Packet")
+        self.assertEqual(export_packet["public_summary"]["status"], "Blocked - not ready for shipment decision")
+        self.assertEqual({lane["id"] for lane in export_packet["readiness_lanes"]}, {"exporter_side_readiness", "importer_side_readiness"})
+        modules = {row["module"] for row in export_packet["blockers"]}
+        self.assertIn("importer_of_record", modules)
+        self.assertIn("import_controls", modules)
+        self.assertIn("product_documentation", modules)
+        self.assertIn("proof_of_origin", modules)
+        self.assertIn("exporter_side_readiness", modules)
+        self.assertIn("ready_to_export_to_canada", export_packet["blocked_claims"])
+        self.assertTrue(any("importer of record" in question.lower() for question in export_packet["buyer_broker_questions"]))
 
     def test_source_refresh_records_hash_and_keeps_external_claims_blocked(self) -> None:
         evidence = load_json_list(ROOT / "data" / "evidence_ledger.json")

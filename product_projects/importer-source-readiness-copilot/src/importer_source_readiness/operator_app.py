@@ -5,6 +5,8 @@ from __future__ import annotations
 import json
 import mimetypes
 import re
+import shutil
+from datetime import datetime, timedelta, timezone
 from html import escape
 from http import HTTPStatus
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
@@ -14,6 +16,8 @@ from urllib.parse import parse_qs, unquote, urlparse
 
 from .source_packet_workflow import (
     OPERATOR_WORKBENCH_STATUS,
+    PUBLIC_PRODUCT_NAME,
+    PUBLIC_PRODUCT_PROMISE,
     build_customer_workflow,
     build_ai_review_run,
     evidence_from_submission,
@@ -185,6 +189,57 @@ def _contains_script(value: str) -> bool:
     return bool(re.search(r"<\s*/?\s*script", value, flags=re.IGNORECASE))
 
 
+def _truthy_form_value(value: Any) -> bool:
+    return str(value or "").strip().lower() in {"1", "true", "yes", "on", "accepted"}
+
+
+def _safe_filename(filename: str) -> str:
+    cleaned = re.sub(r"[^A-Za-z0-9._-]+", "-", filename.strip()).strip(".-")
+    return cleaned[:120] or "uploaded-document.pdf"
+
+
+def _parse_multipart(content_type: str, raw: bytes) -> tuple[dict[str, Any], list[dict[str, Any]]]:
+    match = re.search(r"boundary=(?P<boundary>[^;]+)", content_type)
+    if not match:
+        return {}, []
+    boundary = match.group("boundary").strip().strip('"').encode("utf-8")
+    fields: dict[str, Any] = {}
+    files: list[dict[str, Any]] = []
+    for part in raw.split(b"--" + boundary):
+        part = part.strip(b"\r\n")
+        if not part or part == b"--":
+            continue
+        header_bytes, separator, data = part.partition(b"\r\n\r\n")
+        if not separator:
+            continue
+        header_text = header_bytes.decode("utf-8", errors="replace")
+        name_match = re.search(r'name="([^"]+)"', header_text)
+        if not name_match:
+            continue
+        name = name_match.group(1)
+        filename_match = re.search(r'filename="([^"]*)"', header_text)
+        content_type_match = re.search(r"Content-Type:\s*([^\r\n]+)", header_text, flags=re.IGNORECASE)
+        payload = data.rstrip(b"\r\n")
+        if filename_match:
+            filename = _safe_filename(filename_match.group(1))
+            if filename:
+                files.append(
+                    {
+                        "field_name": name,
+                        "filename": filename,
+                        "content_type": content_type_match.group(1).strip() if content_type_match else "application/octet-stream",
+                        "content": payload,
+                    }
+                )
+        else:
+            fields[name] = payload.decode("utf-8", errors="replace")
+    return fields, files
+
+
+def _public_upload_manifest_path(repo_root: Path) -> Path:
+    return repo_root / "system_review_graph" / "public_upload_manifest.json"
+
+
 def _select_options(values: list[str], selected: str) -> str:
     return "".join(
         f"<option value='{escape(value)}'{' selected' if value == selected else ''}>{escape(value)}</option>"
@@ -282,6 +337,40 @@ def _report_pdf_bytes(title: str, body: str) -> bytes:
     return bytes(data)
 
 
+def _public_report_body(packet: dict[str, Any], report_type: str) -> str:
+    summary = packet.get("public_summary") or {}
+    lanes = "; ".join(
+        f"{lane.get('name')}: {lane.get('status')} ({lane.get('next_valid_move')})"
+        for lane in packet.get("readiness_lanes", [])
+    )
+    missing = ", ".join(packet.get("evidence_summary", {}).get("missing_items", [])[:8])
+    questions = "; ".join(packet.get("buyer_broker_questions", [])[:6])
+    report_labels = {
+        "draft": "Draft Trade Readiness Report",
+        "buyer": "Buyer-Ready Packet",
+        "broker": "Broker Review Packet",
+        "missing": "Missing Evidence Checklist",
+        "operator": "Operator Review Report",
+        "expert": "Expert Review Packet",
+    }
+    label = report_labels.get(report_type, "Draft Trade Readiness Report")
+    return (
+        f"{label}. Product: {packet.get('product_name')}. "
+        f"Trade direction: {packet.get('trade_direction')}. "
+        f"Countries: {packet.get('origin_country')} to {packet.get('destination_country')}. "
+        f"Status: {summary.get('status') or packet.get('readiness_status_label')}. "
+        f"Main reason: {summary.get('main_reason')}. "
+        f"Importer of record: {packet.get('importer_of_record')}; Incoterms: {packet.get('incoterms_if_known')}. "
+        f"Evidence quality: {packet.get('evidence_summary', {}).get('summary')}. "
+        f"Readiness lanes: {lanes}. Missing evidence: {missing}. "
+        f"Buyer/broker questions: {questions}. "
+        "Blocked claims remain blocked: no approval, tariff confirmation, CFIA clearance, legal advice, buyer validation, "
+        "shipment decision, supplier recommendation, public launch, or commercial readiness claim. "
+        "AI involvement: AI may structure evidence when allowed; it cannot open human gates. "
+        "Boundary: draft review packet only; qualified people must review before external use."
+    )
+
+
 def _render_page(title: str, body: str) -> str:
     return f"""<!doctype html>
 <html lang="en">
@@ -321,6 +410,8 @@ def _render_page(title: str, body: str) -> str:
 <body>
 <nav>
   <a href="/">Home</a>
+  <a href="/tools">Tools</a>
+  <a href="/trade-check">Quick Check</a>
   <a href="/dashboard">Dashboard</a>
   <a href="/packets">Packets</a>
   <a href="/settings/ai-data-policy">AI Policy</a>
@@ -418,23 +509,157 @@ def _list_items(rows: list[Any]) -> str:
 
 def _render_landing() -> str:
     body = f"""
-<h1>Know what is missing before you move forward with an import/source idea.</h1>
-<p>Create a source packet, attach evidence, see blocked claims, and prepare a review-ready report for operators or qualified reviewers.</p>
+<h1>{escape(PUBLIC_PRODUCT_NAME)}</h1>
+<p>{escape(PUBLIC_PRODUCT_PROMISE)}</p>
+<p>Upload trade documents, run a quick readiness check, see missing evidence, and download a draft report or buyer/broker packet.</p>
 <p class="note">{escape(PRODUCT_BOUNDARY)}</p>
-<p><a class="button-link" href="/packets/new">Create source packet</a> <a class="button-link" href="/packets/packet-frozen-tuna-canada-001/readiness">View sample report</a></p>
+<p><a class="button-link" href="/trade-check">Start quick check</a> <a class="button-link" href="/tools">Choose a tool</a> <a class="button-link" href="/packets/packet-frozen-tuna-canada-001/readiness">View sample report</a></p>
 <section class="grid">
-  <div class="metric"><div class="label">How it works</div><div class="value">Packet -> evidence -> blockers -> reviews -> safe report</div></div>
-  <div class="metric"><div class="label">Who it is for</div><div class="value">Importers, sourcing operators, founders, consultants, and reviewers</div></div>
-  <div class="metric"><div class="label">Sample packet</div><div class="value">Frozen tuna fillet to Canada</div></div>
-  <div class="metric"><div class="label">Security/privacy</div><div class="value">Org-scoped access, audit events, deletion workflow, and safe exports</div></div>
+  <div class="metric"><div class="label">Import Readiness Checker</div><div class="value">Canada-side importer evidence, source references, and blocked claims.</div></div>
+  <div class="metric"><div class="label">Export Readiness Checker</div><div class="value">Foreign exporter to Canada packet, Incoterms, importer of record, and document gaps.</div></div>
+  <div class="metric"><div class="label">Buyer/Broker Packet Builder</div><div class="value">Draft questions, evidence, blockers, and next moves for a Canadian buyer or broker.</div></div>
+  <div class="metric"><div class="label">Readiness PDF Generator</div><div class="value">Draft PDF outputs with AI disclosure, missing evidence, and proof boundaries.</div></div>
 </section>
 <h2>What it does not do</h2>
 <ul>
-  <li>Does not claim import approval, tariff confirmation, CFIA clearance, legal advice, customs advice, supplier recommendation, buyer validation, or launch readiness.</li>
+  <li>Does not claim import/export approval, tariff confirmation, CFIA clearance, legal advice, customs advice, supplier recommendation, buyer validation, or launch readiness.</li>
   <li>Does not replace a licensed customs broker, qualified compliance expert, lawyer, accountant, or buyer validation process.</li>
 </ul>
 """
-    return _render_page("Importer Source Readiness Copilot", body)
+    return _render_page(PUBLIC_PRODUCT_NAME, body)
+
+
+def _render_tool_selection() -> str:
+    tools = [
+        ("Import Readiness Checker", "/tools/import-readiness", "Check Canada-side importer/source readiness gaps."),
+        ("Export Readiness Checker", "/tools/export-readiness", "Build an Export-to-Canada packet for a foreign exporter."),
+        ("Buyer/Broker Packet Builder", "/tools/buyer-broker-packet", "Prepare buyer and broker questions with blocked claims."),
+        ("Trade Document Analyzer", "/trade-check", "Upload PDFs and draft extracted evidence metadata."),
+        ("Missing Evidence Checker", "/trade-check", "See missing documents, reviews, and next valid moves."),
+        ("Readiness PDF Generator", "/trade-check", "Download draft readiness, buyer, and broker PDFs."),
+        ("Expert Review Packet Generator", "/trade-check", "Package evidence for scoped qualified review."),
+    ]
+    cards = "".join(
+        "<div class='metric'>"
+        f"<div class='label'>{escape(title)}</div>"
+        f"<div class='value'>{escape(summary)}</div>"
+        f"<p><a class='button-link' href='{escape(path)}'>Open</a></p>"
+        "</div>"
+        for title, path, summary in tools
+    )
+    body = f"""
+<h1>Choose Tool</h1>
+<p class="note">{escape(PUBLIC_PRODUCT_PROMISE)} Draft checks are bounded by evidence and human review gates.</p>
+<section class="grid">{cards}</section>
+"""
+    return _render_page("Tools", body)
+
+
+def _render_public_trade_check(default_direction: str = "export") -> str:
+    direction_options = _select_options(["export", "import", "both", "unknown"], default_direction)
+    incoterms_options = _select_options(["unknown", "EXW", "FOB", "CIF", "DAP", "DDP"], "unknown")
+    importer_options = _select_options(["unknown", "buyer", "importer", "exporter", "broker"], "unknown")
+    body = f"""
+<h1>Quick Trade Readiness Check</h1>
+<p class="note">Upload at least one PDF. The draft report shows missing evidence and blocked claims; it is not approval, advice, or a shipment decision.</p>
+<form method="post" action="/api/public/quick-check" enctype="multipart/form-data">
+  <div class="grid">
+    <div><label>Trade direction</label><select name="trade_direction">{direction_options}</select></div>
+    <div><label>Product or category</label><input name="product_name" value="Organic turmeric powder"></div>
+    <div><label>Product category</label><input name="product_category" value="food_import"></div>
+    <div><label>HS code if known</label><input name="hs_code_if_known" value=""></div>
+    <div><label>Origin country</label><input name="origin_country" value="India"></div>
+    <div><label>Destination country</label><input name="destination_country" value="Canada"></div>
+    <div><label>Exporter business name</label><input name="exporter_name" value="Example Exporter Pvt Ltd"></div>
+    <div><label>Canadian buyer/importer</label><input name="buyer_name" value=""></div>
+    <div><label>Importer of record</label><select name="importer_of_record">{importer_options}</select></div>
+    <div><label>Incoterms if known</label><select name="incoterms_if_known">{incoterms_options}</select></div>
+  </div>
+  <label>Documents (PDF)</label><input type="file" name="documents" accept="application/pdf,.pdf" multiple>
+  <label>Product documents already available</label><input name="product_documents" value="product spec PDF">
+  <label>Commercial documents already available</label><input name="commercial_documents" value="">
+  <label>Certificates / proof of origin</label><input name="certificates" value="">
+  <label><input type="checkbox" name="accept_notice" value="accepted" checked> I understand this is a draft AI-assisted evidence check, files are local test artifacts, and missing evidence/approval claims stay blocked.</label>
+  <button type="submit">Run Quick Check</button>
+</form>
+"""
+    return _render_page("Quick Trade Check", body)
+
+
+def _render_canadian_references(workflow: dict[str, Any]) -> str:
+    rows = "".join(
+        "<tr>"
+        f"<td>{escape(str(row.get('name')))}</td>"
+        f"<td>{escape(str(row.get('jurisdiction')))}</td>"
+        f"<td>{escape(str(row.get('evidence_role')))}</td>"
+        f"<td>{escape(str(row.get('claim_boundary')))}</td>"
+        "</tr>"
+        for row in workflow.get("official_sources", [])
+    )
+    body = f"""
+<h1>Canadian References</h1>
+<p class="note">These are reference sources for review. They do not prove tariff, CFIA, permit, importer, broker, or shipment readiness by themselves.</p>
+<table>
+  <thead><tr><th>Source</th><th>Jurisdiction</th><th>Used For</th><th>Boundary</th></tr></thead>
+  <tbody>{rows}</tbody>
+</table>
+"""
+    return _render_page("Canadian References", body)
+
+
+def _render_public_result(workflow: dict[str, Any], packet: dict[str, Any]) -> str:
+    packet_id = escape(str(packet.get("packet_id")))
+    summary = packet.get("public_summary") or {}
+    lanes = "".join(
+        "<tr>"
+        f"<td>{escape(str(lane.get('name')))}</td>"
+        f"<td>{escape(str(lane.get('country_scope')))}</td>"
+        f"<td>{escape(str(lane.get('status')))}</td>"
+        f"<td>{escape(str(lane.get('next_valid_move')))}</td>"
+        "</tr>"
+        for lane in packet.get("readiness_lanes", [])
+    )
+    missing = _list_items(packet.get("evidence_summary", {}).get("missing_items", []))
+    questions = _list_items(packet.get("buyer_broker_questions", []))
+    actions = f"""
+<div class="actions">
+  <a class="button-link" href="/trade-check">Upload Documents</a>
+  <a class="button-link" href="/tools/canadian-references">Check Canadian References</a>
+  <form method="post" action="/api/public/packets/{packet_id}/refresh-official-sources"><button type="submit">Refresh Official Sources</button></form>
+  <a class="button-link" href="/api/public/packets/{packet_id}/reports/buyer.pdf">Generate Buyer Packet</a>
+  <a class="button-link" href="/api/public/packets/{packet_id}/reports/broker.pdf">Generate Broker Review Packet</a>
+  <a class="button-link" href="/api/public/packets/{packet_id}/reports/draft.pdf">Export Readiness Report</a>
+  <form method="post" action="/api/public/packets/{packet_id}/delete-files"><button type="submit">Delete Uploaded Files</button></form>
+</div>
+"""
+    body = f"""
+<h1>{escape(str(summary.get('title') or 'Trade Readiness Packet'))}</h1>
+<p><span class="status">{escape(str(summary.get('status') or packet.get('readiness_status_label')))}</span></p>
+<p class="note">{escape(str(packet.get('safe_summary')))}</p>
+{actions}
+<section class="grid">
+  <div class="metric"><div class="label">Product</div><div class="value">{escape(str(packet.get('product_name')))}</div></div>
+  <div class="metric"><div class="label">Trade direction</div><div class="value">{escape(str(packet.get('trade_direction')))}</div></div>
+  <div class="metric"><div class="label">Countries</div><div class="value">{escape(str(packet.get('origin_country')))} -> {escape(str(packet.get('destination_country')))}</div></div>
+  <div class="metric"><div class="label">Main reason</div><div class="value">{escape(str(summary.get('main_reason')))}</div></div>
+  <div class="metric"><div class="label">Evidence</div><div class="value">{escape(str(packet.get('evidence_summary', {}).get('summary')))}</div></div>
+  <div class="metric"><div class="label">Next valid move</div><div class="value">{escape(str(summary.get('next_valid_move')))}</div></div>
+</section>
+<h2>Readiness Lanes</h2>
+<table>
+  <thead><tr><th>Lane</th><th>Scope</th><th>Status</th><th>Next</th></tr></thead>
+  <tbody>{lanes}</tbody>
+</table>
+<h2>Missing Evidence</h2>
+<ul>{missing}</ul>
+<h2>Buyer / Broker Questions</h2>
+<ul>{questions}</ul>
+<h2>Blocked Claims</h2>
+<ul>{_list_items(packet.get('blocked_claims_display', []))}</ul>
+<p class="note">Create a free account to save history, add reviewers, and keep an operator workspace. Public quick checks are draft-only and should delete or expire uploaded files.</p>
+<p><a class="button-link" href="/signup">Create Account</a> <a class="button-link" href="/support">Request Review</a></p>
+"""
+    return _render_page("Trade Readiness Result", body)
 
 
 def _render_login_signup(mode: str) -> str:
@@ -1020,8 +1245,10 @@ def _index_payload(repo_root: Path) -> dict[str, Any]:
     customer = _customer_workflow(repo_root)
     runtime = _runtime_state(repo_root)
     return {
-        "product": "Importer Source Readiness Copilot",
+        "product": PUBLIC_PRODUCT_NAME,
+        "internal_engine": "Importer Source Readiness Copilot",
         "surface": "local_customer_operator_expert_application",
+        "public_surface": "public_quick_check_ready_local_with_external_gates",
         "runtime_status": runtime.get("status"),
         "operator_status": workflow.get("status"),
         "operator_display_status": workflow.get("display_status") or OPERATOR_WORKBENCH_STATUS,
@@ -1043,6 +1270,19 @@ def _index_payload(repo_root: Path) -> dict[str, Any]:
                 *API_ROUTES,
                 *STATIC_ROUTES,
                 "/",
+                "/tools",
+                "/trade-check",
+                "/tools/import-readiness",
+                "/tools/export-readiness",
+                "/tools/buyer-broker-packet",
+                "/tools/canadian-references",
+                "/public/packets/:id/result",
+                "/api/public/quick-check",
+                "/api/public/packets/:id/refresh-official-sources",
+                "/api/public/packets/:id/reports/draft.pdf",
+                "/api/public/packets/:id/reports/buyer.pdf",
+                "/api/public/packets/:id/reports/broker.pdf",
+                "/api/public/packets/:id/delete-files",
                 "/login",
                 "/signup",
                 "/onboarding",
@@ -1093,9 +1333,9 @@ def _index_payload(repo_root: Path) -> dict[str, Any]:
             ]
         ),
         "proof_boundary": (
-            "This local app is the internal operator surface. It is not a public "
-            "customer app, customs/tariff advice, supplier recommendation, legal "
-            "or financial advice, or launch approval."
+            "This local app includes a draft public quick-check surface and internal "
+            "operator workspace. It is not customs/tariff advice, supplier recommendation, "
+            "legal or financial advice, shipment approval, or launch approval."
         ),
     }
 
@@ -1133,6 +1373,24 @@ def build_operator_app_handler(repo_root: Path) -> type[BaseHTTPRequestHandler]:
                 return
             if path == "/":
                 self._send_html(_render_landing())
+                return
+            if path == "/tools":
+                self._send_html(_render_tool_selection())
+                return
+            if path in {"/trade-check", "/tools/import-readiness", "/tools/export-readiness", "/tools/buyer-broker-packet"}:
+                default_direction = "import" if path == "/tools/import-readiness" else "export"
+                self._send_html(_render_public_trade_check(default_direction))
+                return
+            if path == "/tools/canadian-references":
+                self._send_html(_render_canadian_references(workflow))
+                return
+            if path.startswith("/public/packets/") and path.endswith("/result"):
+                packet_id = path.removeprefix("/public/packets/").removesuffix("/result").strip("/")
+                packet = _packet_lookup(workflow).get(packet_id)
+                if packet is None:
+                    self.send_error(HTTPStatus.NOT_FOUND, "Packet not found")
+                    return
+                self._send_html(_render_public_result(workflow, packet))
                 return
             if path == "/login":
                 self._send_html(_render_login_signup("login"))
@@ -1378,7 +1636,8 @@ def build_operator_app_handler(repo_root: Path) -> type[BaseHTTPRequestHandler]:
             store = repo_root / "system_review_graph" / "customer_workflow.sqlite"
             return {
                 "status": "ok",
-                "product": "Importer Source Readiness Copilot",
+                "product": PUBLIC_PRODUCT_NAME,
+                "internal_engine": "Importer Source Readiness Copilot",
                 "runtime_status": runtime.get("status"),
                 "deployment_status": runtime.get("deployment", {}).get("status"),
                 "store_exists": store.exists(),
@@ -1386,6 +1645,186 @@ def build_operator_app_handler(repo_root: Path) -> type[BaseHTTPRequestHandler]:
                 "unsafe_gates_closed": True,
                 "proof_boundary": runtime.get("deployment", {}).get("proof_boundary"),
             }
+
+        def _public_packet(self, packet_id: str) -> dict[str, Any] | None:
+            workflow = _customer_workflow(repo_root)
+            return _packet_lookup(workflow).get(packet_id)
+
+        def _handle_public_quick_check(self, actor: dict[str, Any]) -> None:
+            length = int(self.headers.get("Content-Length") or 0)
+            if length > MAX_EVIDENCE_UPLOAD_BYTES:
+                self.send_error(HTTPStatus.REQUEST_ENTITY_TOO_LARGE, "Upload too large")
+                return
+            raw = self.rfile.read(length)
+            content_type = self.headers.get("Content-Type", "")
+            if "multipart/form-data" in content_type:
+                fields, files = _parse_multipart(content_type, raw)
+            else:
+                parsed_fields = parse_qs(raw.decode("utf-8", errors="replace"), keep_blank_values=True)
+                fields = {key: values[-1] for key, values in parsed_fields.items()}
+                files = []
+            if not _truthy_form_value(fields.get("accept_notice")):
+                self.send_error(HTTPStatus.BAD_REQUEST, "AI/data notice must be accepted for quick check")
+                return
+            if any(_contains_script(str(value)) for value in fields.values()):
+                self.send_error(HTTPStatus.BAD_REQUEST, "Metadata contains unsafe HTML")
+                return
+            pdf_files = [
+                file
+                for file in files
+                if str(file.get("filename", "")).lower().endswith(".pdf")
+                and (
+                    bytes(file.get("content") or b"").startswith(b"%PDF")
+                    or str(file.get("content_type") or "").lower() == "application/pdf"
+                )
+            ]
+            if not pdf_files:
+                self.send_error(HTTPStatus.BAD_REQUEST, "Upload at least one PDF document")
+                return
+            now = datetime.now(timezone.utc).replace(microsecond=0)
+            expires_at = (now + timedelta(hours=24)).isoformat()
+            document_names = ", ".join(str(file["filename"]) for file in pdf_files)
+            packet = packet_from_submission(
+                {
+                    **fields,
+                    "packet_name": fields.get("packet_name") or f"{fields.get('product_name') or 'Trade'} readiness quick check",
+                    "organization_id": actor.get("organization_id") or "org-importer-demo",
+                    "user_type": fields.get("user_type") or "foreign_exporter",
+                    "offline_evidence_only": True,
+                    "product_documents": fields.get("product_documents") or document_names,
+                    "commercial_documents": fields.get("commercial_documents") or document_names,
+                    "source_type": "public_quick_check",
+                    "intended_use": "Draft public quick check for missing trade-readiness evidence.",
+                }
+            )
+            packet_id = str(packet["packet_id"])
+            upload_dir = repo_root / "system_review_graph" / "public_uploads" / packet_id
+            upload_dir.mkdir(parents=True, exist_ok=True)
+            saved_files: list[dict[str, Any]] = []
+            evidence_rows: list[dict[str, Any]] = []
+            for index, file in enumerate(pdf_files, start=1):
+                filename = _safe_filename(str(file["filename"]))
+                saved_path = upload_dir / filename
+                saved_path.write_bytes(bytes(file.get("content") or b""))
+                document_type = fields.get("document_type") or filename.rsplit(".", 1)[0].replace("-", " ").replace("_", " ")
+                relative_path = saved_path.relative_to(repo_root).as_posix()
+                saved_files.append(
+                    {
+                        "filename": filename,
+                        "relative_path": relative_path,
+                        "content_type": file.get("content_type") or "application/pdf",
+                        "size_bytes": saved_path.stat().st_size,
+                        "expires_at": expires_at,
+                    }
+                )
+                evidence_rows.append(
+                    {
+                        "evidence_id": f"evidence-{packet_id}-public-upload-{index}",
+                        "packet_id": packet_id,
+                        "organization_id": packet_org_id(packet),
+                        "title": f"Uploaded PDF - {filename}",
+                        "description": "Public quick-check PDF uploaded for draft evidence extraction.",
+                        "evidence_type": "customer_uploaded_document",
+                        "document_type": document_type,
+                        "source_url": "",
+                        "file_path": relative_path,
+                        "source_owner": fields.get("exporter_name") or "public quick-check user",
+                        "uploaded_by": "public_quick_check",
+                        "created_at": now.isoformat(),
+                        "accessed_at": now.isoformat(),
+                        "last_verified_at": "",
+                        "expires_at": expires_at,
+                        "rights_status": "unknown",
+                        "freshness_status": "needs_current_refresh_before_claims",
+                        "claim_supported": "Document was provided for draft readiness review.",
+                        "claim_boundary": "Uploaded document metadata supports only draft review until qualified review and source freshness exist.",
+                        "sensitivity_level": "confidential",
+                        "ai_processing_mode": "redacted",
+                        "ai_processing_permission": "redacted",
+                        "ai_processing_allowed": True,
+                        "redaction_required": True,
+                        "review_required": True,
+                        "human_review_status": "not_reviewed",
+                        "extracted_fields": {
+                            "document_type": document_type,
+                            "filename": filename,
+                            "product": packet.get("product_name"),
+                            "supplier_or_exporter": packet.get("exporter_name") or packet.get("supplier_name"),
+                            "buyer_or_importer": packet.get("buyer_name") or packet.get("importer_name"),
+                            "origin_country": packet.get("origin_country"),
+                            "destination_country": packet.get("destination_country"),
+                            "hs_code": packet.get("hs_code_value"),
+                            "expiry_date": "not_extracted",
+                            "signatures_or_stamps": "not_extracted_in_local_quick_check",
+                        },
+                    }
+                )
+            packets, current_evidence = _load_mutable_customer_rows(repo_root)
+            packets = [row for row in packets if str(row.get("packet_id")) != packet_id]
+            current_evidence = [row for row in current_evidence if str(row.get("packet_id")) != packet_id]
+            packets.append(packet)
+            current_evidence.extend(evidence_rows)
+            rebuilt = _write_customer_workflow(repo_root, packets, current_evidence)
+            manifest_path = _public_upload_manifest_path(repo_root)
+            manifest = {"status": "public_upload_manifest_ready", "packets": []}
+            if manifest_path.exists():
+                manifest = _load_json(manifest_path)
+            manifest.setdefault("packets", [])
+            manifest["packets"] = [row for row in manifest["packets"] if str(row.get("packet_id")) != packet_id]
+            manifest["packets"].append(
+                {
+                    "packet_id": packet_id,
+                    "created_at": now.isoformat(),
+                    "expires_at": expires_at,
+                    "file_count": len(saved_files),
+                    "files": saved_files,
+                    "delete_route": f"/api/public/packets/{packet_id}/delete-files",
+                    "retention_notice": "Public quick-check uploads are local draft artifacts and should be deleted or expired after processing.",
+                }
+            )
+            write_json(manifest, manifest_path)
+            write_runtime_artifacts(repo_root, rebuilt)
+            self.send_response(HTTPStatus.SEE_OTHER)
+            self.send_header("Location", f"/public/packets/{packet_id}/result")
+            self.end_headers()
+
+        def _handle_public_packet_post(self, path: str) -> None:
+            suffix = path.removeprefix("/api/public/packets/").strip("/")
+            parts = suffix.split("/")
+            packet_id = parts[0]
+            action = "/".join(parts[1:])
+            packet = self._public_packet(packet_id)
+            if packet is None:
+                self.send_error(HTTPStatus.NOT_FOUND, "Packet not found")
+                return
+            if action == "delete-files":
+                upload_dir = repo_root / "system_review_graph" / "public_uploads" / packet_id
+                if upload_dir.exists():
+                    shutil.rmtree(upload_dir)
+                manifest_path = _public_upload_manifest_path(repo_root)
+                if manifest_path.exists():
+                    manifest = _load_json(manifest_path)
+                    manifest["packets"] = [
+                        {**row, "deleted_at": datetime.now(timezone.utc).replace(microsecond=0).isoformat(), "files": []}
+                        if str(row.get("packet_id")) == packet_id
+                        else row
+                        for row in manifest.get("packets", [])
+                    ]
+                    write_json(manifest, manifest_path)
+                self._send_json({"status": "public_upload_files_deleted", "packet_id": packet_id})
+                return
+            if action == "refresh-official-sources":
+                packets, evidence_rows = _load_mutable_customer_rows(repo_root)
+                evidence_rows, refresh_report = refresh_packet_sources(
+                    packet_id=packet_id,
+                    evidence_items=evidence_rows,
+                    actor="public_quick_check",
+                )
+                write_json(refresh_report, repo_root / "system_review_graph" / f"source_refresh_report_{packet_id}.json")
+                _write_customer_workflow(repo_root, packets, evidence_rows)
+                self._send_json(refresh_report)
+                return
+            self.send_error(HTTPStatus.NOT_FOUND, "Public packet action not found")
 
         def _handle_api_get(self, path: str, actor: dict[str, Any]) -> None:
             workflow = _customer_workflow(repo_root)
@@ -1444,6 +1883,24 @@ def build_operator_app_handler(repo_root: Path) -> type[BaseHTTPRequestHandler]:
                 return
             if path == "/api/system-health":
                 self._send_json(self._system_health_payload())
+                return
+            if path.startswith("/api/public/packets/") and "/reports/" in path:
+                suffix = path.removeprefix("/api/public/packets/").strip("/")
+                packet_id, _, report_file = suffix.partition("/reports/")
+                report_type = report_file.removesuffix(".pdf")
+                packet = packet_lookup.get(packet_id)
+                if packet is None:
+                    self.send_error(HTTPStatus.NOT_FOUND, "Packet not found")
+                    return
+                title = {
+                    "draft": "Draft Trade Readiness Report",
+                    "buyer": "Buyer-Ready Packet",
+                    "broker": "Broker Review Packet",
+                    "missing": "Missing Evidence Checklist",
+                    "operator": "Operator Review Report",
+                    "expert": "Expert Review Packet",
+                }.get(report_type, "Draft Trade Readiness Report")
+                self._send_bytes(_report_pdf_bytes(title, _public_report_body(packet, report_type)), "application/pdf")
                 return
             if path.startswith("/api/external-review/"):
                 token = path.removeprefix("/api/external-review/").strip("/")
@@ -1505,6 +1962,12 @@ def build_operator_app_handler(repo_root: Path) -> type[BaseHTTPRequestHandler]:
             self.send_error(HTTPStatus.NOT_FOUND, "API route not found")
 
         def _handle_api_post(self, path: str, actor: dict[str, Any]) -> None:
+            if path == "/api/public/quick-check":
+                self._handle_public_quick_check(actor)
+                return
+            if path.startswith("/api/public/packets/"):
+                self._handle_public_packet_post(path)
+                return
             fields = self._read_fields()
             now = __import__("datetime").datetime.now(__import__("datetime").timezone.utc).replace(microsecond=0).isoformat()
             if path in {"/api/auth/login", "/api/auth/signup"}:

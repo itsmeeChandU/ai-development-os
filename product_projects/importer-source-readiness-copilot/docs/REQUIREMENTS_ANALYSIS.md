@@ -14,6 +14,12 @@ product implementation. The machine-readable source of truth is
   open customs, tariff, CFIA, supplier, buyer, legal, financial, or launch gates
 - customer, operator, expert-review, admin, support, privacy, terms, AI-use,
   and data-retention routes
+- public Trade Readiness Copilot landing, tool selection, no-login PDF quick
+  check, import/export selector, public result page, draft PDF downloads, and
+  delete-files control
+- Export-to-Canada packet mode with Canadian buyer/importer, importer of
+  record, Incoterms, exporter-side readiness, importer-side readiness,
+  buyer-ready packet, and Canadian broker-review packet
 - audit events, deletion requests, health endpoints, Docker/Compose shell, and
   generated SQLite/runtime artifacts
 
@@ -38,11 +44,22 @@ product implementation. The machine-readable source of truth is
 | REQ-15 | Audit and observability | implemented | `audit_events.json` |
 | REQ-16 | Deployment environments | implemented hostable local stack | `Dockerfile`, `compose.yaml` |
 | REQ-17 | Testing and acceptance gates | implemented | `scripts/check_product.py` |
+| REQ-PUBLIC-01 | Public quick check | implemented local public surface | `public_trade_readiness_manifest.json`, `/api/public/quick-check` |
+| REQ-EXPORT-01 | Export-to-Canada packet | implemented | `customer_readiness_report.json` |
+| REQ-EXPORT-02 | Canadian buyer/importer | implemented fail closed | `customer_readiness_report.json` |
+| REQ-EXPORT-03 | Incoterms / delivery responsibility | implemented fail closed | `customer_readiness_report.json` |
+| REQ-EXPORT-04 | Import responsibility / IOR | implemented fail closed | `customer_readiness_report.json` |
+| REQ-EXPORT-05 | Canadian-side readiness blockers | implemented fail closed | `claims_gate_matrix.json` |
+| REQ-EXPORT-06 | Exporter-side document readiness | implemented fail closed | `exporter_mode_requirements.json` |
+| REQ-EXPORT-07 | Buyer-ready packet | implemented draft PDF | `report_exports.json` |
+| REQ-EXPORT-08 | Canadian broker-review packet | implemented draft PDF | `report_exports.json`, `review_requests.json` |
+| REQ-EXPORT-09 | Block compliance/tariff/CFIA/buyer/shipment claims | implemented fail closed | `claims_gate_matrix.json` |
 
 ## Boundaries
 
-The product is a controlled private-beta candidate. It is not launch-ready,
-legally approved, customs/tariff/CFIA approved, supplier approved, buyer
-validated, production-hosted, or commercially ready. Human subject experts,
-security/privacy review, infrastructure signoff, and current official evidence
-remain explicit gates.
+The product is a controlled private-beta candidate with a local public
+quick-check dry run. It is not launch-ready, legally approved,
+customs/tariff/CFIA approved, supplier approved, buyer validated,
+shipment-ready, production-hosted, or commercially ready. Human subject
+experts, security/privacy review, infrastructure signoff, and current official
+evidence remain explicit gates.

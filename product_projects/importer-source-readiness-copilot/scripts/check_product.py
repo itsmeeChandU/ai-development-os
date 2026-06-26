@@ -106,6 +106,10 @@ def main() -> int:
     redaction_pipeline = _load_json(ROOT / "system_review_graph" / "redaction_pipeline.json")
     manual_no_ai_workflow = _load_json(ROOT / "system_review_graph" / "manual_no_ai_workflow.json")
     requirements_traceability = _load_json(ROOT / "system_review_graph" / "requirements_traceability_matrix.json")
+    public_trade = _load_json(ROOT / "system_review_graph" / "public_trade_readiness_manifest.json")
+    exporter_mode = _load_json(ROOT / "system_review_graph" / "exporter_mode_requirements.json")
+    public_reports = _load_json(ROOT / "system_review_graph" / "public_report_types.json")
+    public_upload_policy = _load_json(ROOT / "system_review_graph" / "public_upload_policy.json")
     screenshot_manifest_path = ROOT / "system_review_graph" / "operator_screenshot_manifest.json"
     screenshot_manifest = _load_json(screenshot_manifest_path) if screenshot_manifest_path.exists() else {}
     expected = {
@@ -186,6 +190,10 @@ def main() -> int:
         "system_review_graph/redaction_pipeline.json",
         "system_review_graph/manual_no_ai_workflow.json",
         "system_review_graph/requirements_traceability_matrix.json",
+        "system_review_graph/public_trade_readiness_manifest.json",
+        "system_review_graph/exporter_mode_requirements.json",
+        "system_review_graph/public_report_types.json",
+        "system_review_graph/public_upload_policy.json",
         "system_review_graph/source_refresh_runs.json",
         "system_review_graph/source_refresh_report_packet-frozen-tuna-canada-001.json",
         "system_review_graph/expert_review_packet_packet-frozen-tuna-canada-001.md",
@@ -193,6 +201,7 @@ def main() -> int:
         "Dockerfile",
         "compose.yaml",
         ".env.example",
+        "docs/PUBLIC_TRADE_READINESS.md",
         "docs/SECURITY_PRIVACY.md",
         "docs/DEPLOYMENT.md",
     ):
@@ -324,6 +333,26 @@ def main() -> int:
         failures.append("runtime state should include users and organizations")
     if "/api/auth/login" not in runtime.get("api_routes", []):
         failures.append("runtime state should expose auth API routes")
+    if runtime.get("product") != "Trade Readiness Copilot":
+        failures.append("runtime state should expose Trade Readiness Copilot as the public product")
+    if runtime.get("internal_engine") != "Importer Source Readiness Copilot":
+        failures.append("runtime state should preserve the internal engine name")
+    if runtime.get("public_product_surface", {}).get("status") != "public_quick_check_ready_local_with_external_gates":
+        failures.append("runtime state should expose the local public quick-check surface")
+    for route in (
+        "/tools/export-readiness",
+        "/public/packets/:packetId/result",
+    ):
+        if route not in runtime.get("ui_routes", {}).get("customer", []):
+            failures.append(f"runtime state should expose public UI route {route}")
+    for route in (
+        "/api/public/quick-check",
+        "/api/public/packets/:id/reports/buyer.pdf",
+        "/api/public/packets/:id/reports/broker.pdf",
+        "/api/public/packets/:id/delete-files",
+    ):
+        if route not in runtime.get("api_routes", []):
+            failures.append(f"runtime state should expose public API route {route}")
     if "/api/orgs/current/ai-policy" not in runtime.get("api_routes", []):
         failures.append("runtime state should expose AI policy API routes")
     if "/api/evidence/:evidenceId/ai-permission" not in runtime.get("api_routes", []):
@@ -352,8 +381,26 @@ def main() -> int:
         failures.append("redaction pipeline artifact should expose redaction categories")
     if manual_no_ai_workflow.get("status") != "manual_no_ai_workflow_ready":
         failures.append("manual/no-AI workflow artifact should be ready")
-    if len(requirements_traceability.get("requirements", [])) < 17:
-        failures.append("requirements traceability matrix should cover the full requirements analysis")
+    requirement_ids = {row.get("id") for row in requirements_traceability.get("requirements", [])}
+    if len(requirements_traceability.get("requirements", [])) < 27:
+        failures.append("requirements traceability matrix should cover public and exporter requirements")
+    for requirement_id in ("REQ-PUBLIC-01", "REQ-EXPORT-01", "REQ-EXPORT-09"):
+        if requirement_id not in requirement_ids:
+            failures.append(f"requirements traceability matrix missing {requirement_id}")
+    if public_trade.get("status") != "public_trade_readiness_ready_local":
+        failures.append("public trade readiness manifest should be generated")
+    if public_trade.get("public_product") != "Trade Readiness Copilot":
+        failures.append("public trade readiness manifest should use the public product name")
+    if "/api/public/quick-check" not in public_trade.get("routes", {}).get("api", []):
+        failures.append("public trade readiness manifest should expose quick-check API")
+    if exporter_mode.get("status") != "exporter_mode_requirements_ready":
+        failures.append("exporter mode requirements manifest should be generated")
+    if "exporter_side_readiness" not in exporter_mode.get("readiness_lanes", []):
+        failures.append("exporter mode manifest should include exporter-side readiness lane")
+    if "Broker Review Packet.pdf" not in public_reports.get("reports", []):
+        failures.append("public report types should include Broker Review Packet.pdf")
+    if public_upload_policy.get("notice_required") is not True:
+        failures.append("public upload policy should require upload/AI notice")
     store_path = ROOT / "system_review_graph" / "customer_workflow.sqlite"
     if store_path.exists():
         with sqlite3.connect(store_path) as conn:
@@ -403,7 +450,10 @@ def main() -> int:
     print(f"customer_blocker_groups={len(customer['blocker_groups'])}")
     print(f"evidence_ledger_status={evidence_ledger['status']}")
     print(f"runtime_status={runtime['status']}")
+    print(f"public_surface_status={runtime['public_product_surface']['status']}")
     print(f"runtime_users={len(runtime['users'])}")
+    print(f"public_trade_manifest={public_trade['status']}")
+    print(f"exporter_mode_manifest={exporter_mode['status']}")
     print(f"review_requests={len(review_requests)}")
     print(f"audit_events={len(audit_events['events'])}")
     print(f"deployment_status={deployment['status']}")

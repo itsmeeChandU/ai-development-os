@@ -1,16 +1,27 @@
-# Importer Source Readiness Report
+# Trade Readiness Report
 
 Packet: Frozen tuna Canada source packet
+Public product: Trade Readiness Copilot
 Status: Internal logic ready - external claims blocked
 Customer-visible status: Blocked - source freshness missing
+Trade direction: import
+Origin: Vietnam
+Destination: Canada
+Importer of record: unknown
+Incoterms: unknown
 
 ## Summary
 
 This packet is not ready for external action. It needs more evidence, operator review, or qualified expert review before any customs, tariff, supplier, buyer, CFIA, legal, or launch claim can be made.
 
+## Readiness Lanes
+
+- Exporter-side readiness (Vietnam): blocked - Attach source-rights or commercial terms before external use.
+- Importer-side readiness (Canada): blocked - Refresh official sources and keep claims reference-only until qualified review.
+
 ## Evidence Summary
 
-3 attached / 5 missing; 3 stale; 3 reference-only
+3 attached / 10 missing; 3 stale; 3 reference-only
 
 ## Missing Evidence
 
@@ -19,6 +30,11 @@ This packet is not ready for external action. It needs more evidence, operator r
 - Commercial/source contract
 - Buyer/operator validation
 - Restricted-party screening record
+- Canadian buyer/importer and importer-of-record confirmation
+- Incoterms or delivery responsibility record
+- Product and commercial documents
+- Proof of origin
+- Broker/expert review packet
 
 ## Blockers
 
@@ -34,6 +50,10 @@ This packet is not ready for external action. It needs more evidence, operator r
 - Supplier/source confidence
 - Buyer validation
 - Import readiness
+- Export-to-Canada readiness
+- Canadian buyer/importer confirmation
+- Export document completeness
+- Trade agreement or MoU preference claim
 - Commercial launch readiness
 - Customs or tariff advice
 - Legal/compliance approval
@@ -41,6 +61,16 @@ This packet is not ready for external action. It needs more evidence, operator r
 ## Next Valid Move
 
 Refresh official sources and keep claims reference-only until qualified review.
+
+## Buyer / Broker Questions
+
+- Who is the Canadian importer of record for this shipment?
+- Which Incoterms or delivery responsibility applies?
+- What HS/tariff classification should a qualified reviewer use for the product?
+- Does the product need CFIA/AIRS, import permit, controlled goods, sanctions, or restricted-party review?
+- Which product specs, invoice/proforma, packing list, certificate, proof-of-origin, and contract documents are still missing?
+- Can the Canadian buyer or broker confirm the next valid evidence to collect?
+- Responsibility path: Responsibility path unknown.
 
 ## Official References
 

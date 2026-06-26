@@ -36,9 +36,34 @@ BLOCKED_CLAIMS = [
     "supplier_recommended",
     "buyer_validated",
     "ready_to_import",
+    "ready_to_export_to_canada",
+    "canadian_importer_confirmed",
+    "export_documentation_complete",
+    "trade_agreement_preference_confirmed",
     "public_launch_ready",
     "customs_or_tariff_advice_ready",
     "legal_or_compliance_approved",
+]
+
+PUBLIC_PRODUCT_NAME = "Trade Readiness Copilot"
+PUBLIC_PRODUCT_PROMISE = "Before you import or export, know what is missing."
+TRADE_DIRECTIONS = {"import", "export", "both", "unknown"}
+INCOTERMS = {"EXW", "FCA", "FOB", "CFR", "CIF", "DAP", "DPU", "DDP", "unknown"}
+IMPORTER_OF_RECORD_VALUES = {"buyer", "importer", "exporter", "seller", "broker", "unknown"}
+EXPORTER_USER_TYPES = {"foreign_exporter", "seller_to_canada", "foreign exporter / seller to canada"}
+
+TRADE_DOCUMENT_FIELDS = [
+    "product_documents",
+    "commercial_documents",
+    "certificates",
+    "proof_of_origin",
+    "product_specs",
+    "commercial_invoice",
+    "packing_list",
+    "shipping_method",
+    "food_health_docs",
+    "source_supplier_docs",
+    "contract_po",
 ]
 
 SAFE_DISPLAY_STATUS = "Internal logic ready - external claims blocked"
@@ -63,6 +88,10 @@ BLOCKED_CLAIM_COPY = {
     "supplier_recommended": "Supplier/source confidence",
     "buyer_validated": "Buyer validation",
     "ready_to_import": "Import readiness",
+    "ready_to_export_to_canada": "Export-to-Canada readiness",
+    "canadian_importer_confirmed": "Canadian buyer/importer confirmation",
+    "export_documentation_complete": "Export document completeness",
+    "trade_agreement_preference_confirmed": "Trade agreement or MoU preference claim",
     "public_launch_ready": "Commercial launch readiness",
     "customs_or_tariff_advice_ready": "Customs or tariff advice",
     "legal_or_compliance_approved": "Legal/compliance approval",
@@ -100,6 +129,54 @@ BLOCKER_GROUP_RULES = {
         "owner_role": "Operations",
         "evidence_required": "Dated restricted-party screening record with source and reviewer boundary.",
         "next_valid_move": "Run restricted-party screening and attach the dated search record.",
+    },
+    "importer_of_record": {
+        "id": "canada_import_responsibility",
+        "title": "Canada Import Responsibility",
+        "stage": "P0 - Must fix before shipment or buyer packet",
+        "owner_role": "Trade Ops",
+        "evidence_required": "Canadian buyer/importer of record, Incoterms, responsibility split, and broker/reviewer boundary.",
+        "next_valid_move": "Confirm who is importer of record, whether terms are buyer-import or delivered/DDP, and route to broker review.",
+    },
+    "import_controls": {
+        "id": "canada_import_controls",
+        "title": "Canada Import Controls",
+        "stage": "P0 - Must fix before shipment decision",
+        "owner_role": "Compliance",
+        "evidence_required": "Current Canadian import-control, CBSA/CARM, CFIA/AIRS when relevant, permit, and broker-review evidence.",
+        "next_valid_move": "Check official Canadian references and generate a broker review packet before any shipment decision.",
+    },
+    "product_documentation": {
+        "id": "document_readiness",
+        "title": "Document Readiness",
+        "stage": "P0 - Must fix before buyer/broker packet",
+        "owner_role": "Customer",
+        "evidence_required": "Product specs, invoice/proforma, packing list, certificates, shipping docs, and buyer/broker correspondence where available.",
+        "next_valid_move": "Upload missing product, commercial, certificate, and shipping documents.",
+    },
+    "proof_of_origin": {
+        "id": "document_readiness",
+        "title": "Document Readiness",
+        "stage": "P0 - Must fix before buyer/broker packet",
+        "owner_role": "Customer",
+        "evidence_required": "Country-of-origin proof and any preference/MoU claim evidence with official review boundary.",
+        "next_valid_move": "Attach proof of origin and keep preference or MoU claims blocked until official evidence and qualified review exist.",
+    },
+    "exporter_side_readiness": {
+        "id": "exporter_side_readiness",
+        "title": "Exporter-Side Readiness",
+        "stage": "P1 - Must fix before export packet",
+        "owner_role": "Exporter",
+        "evidence_required": "Exporter-side registration, permits, certificates, banking/shipping, and country-specific export documents.",
+        "next_valid_move": "Collect origin-country export readiness evidence or assign an expert lane for country-specific review.",
+    },
+    "trade_agreement_claim": {
+        "id": "trade_agreement_review",
+        "title": "Trade Agreement / Preference Review",
+        "stage": "P0 - Must fix before commercial claim",
+        "owner_role": "Compliance",
+        "evidence_required": "Official agreement, MoU, rules-of-origin, certificate, and qualified-review evidence for any preference claim.",
+        "next_valid_move": "Keep agreement/preference claims blocked and generate an expert review packet.",
     },
     "commercial_contract": {
         "id": "source_rights_contract",
@@ -157,6 +234,11 @@ REQUIRED_EVIDENCE = [
     "Commercial/source contract",
     "Buyer/operator validation",
     "Restricted-party screening record",
+    "Canadian buyer/importer and importer-of-record confirmation",
+    "Incoterms or delivery responsibility record",
+    "Product and commercial documents",
+    "Proof of origin",
+    "Broker/expert review packet",
 ]
 
 AI_REVIEWERS = [
@@ -234,6 +316,197 @@ def _evidence_labels(row: dict[str, Any]) -> list[str]:
     return sorted(set(labels))
 
 
+def _as_list(value: Any) -> list[str]:
+    if value is None:
+        return []
+    if isinstance(value, list):
+        return [str(item).strip() for item in value if str(item).strip()]
+    if isinstance(value, tuple):
+        return [str(item).strip() for item in value if str(item).strip()]
+    text = str(value).strip()
+    if not text:
+        return []
+    return [part.strip() for part in re.split(r"[,;\n]+", text) if part.strip()]
+
+
+def _truthy_text(value: Any) -> bool:
+    text = str(value or "").strip().lower()
+    return bool(text and text not in {"unknown", "missing", "not sure", "n/a", "none", "no"})
+
+
+def _country_is_canada(value: Any) -> bool:
+    return str(value or "").strip().lower() in {"canada", "ca", "can"}
+
+
+def _valid_trade_direction(value: Any, *, default: str = "unknown") -> str:
+    candidate = str(value or default).strip().lower().replace("-", "_").replace(" ", "_")
+    aliases = {
+        "imports": "import",
+        "import_to_canada": "import",
+        "exports": "export",
+        "export_to_canada": "export",
+        "import_export": "both",
+        "import_and_export": "both",
+    }
+    direction = aliases.get(candidate, candidate)
+    return direction if direction in TRADE_DIRECTIONS else default
+
+
+def _trade_direction(packet: dict[str, Any]) -> str:
+    explicit = _valid_trade_direction(packet.get("trade_direction"))
+    if explicit != "unknown":
+        return explicit
+    user_type = str(packet.get("user_type") or "").strip().lower()
+    if user_type in EXPORTER_USER_TYPES or ("exporter" in user_type and _country_is_canada(packet.get("destination_country"))):
+        return "export"
+    if _country_is_canada(packet.get("destination_country")) and not _country_is_canada(packet.get("origin_country")):
+        return "import"
+    return "unknown"
+
+
+def _normal_importer_of_record(packet: dict[str, Any]) -> str:
+    raw = (
+        packet.get("importer_of_record")
+        or packet.get("import_responsibility")
+        or packet.get("canadian_import_responsibility")
+        or "unknown"
+    )
+    candidate = str(raw).strip().lower().replace(" ", "_")
+    aliases = {
+        "canadian_buyer": "buyer",
+        "buyer_importer": "buyer",
+        "foreign_exporter": "exporter",
+        "seller_to_canada": "exporter",
+        "nri": "exporter",
+        "non_resident_importer": "exporter",
+        "customs_broker": "broker",
+    }
+    value = aliases.get(candidate, candidate)
+    return value if value in IMPORTER_OF_RECORD_VALUES else "unknown"
+
+
+def _normal_incoterms(packet: dict[str, Any]) -> str:
+    raw = packet.get("incoterms_if_known") or packet.get("incoterms") or packet.get("delivery_responsibility") or "unknown"
+    candidate = str(raw).strip().upper().replace(" ", "_")
+    return candidate if candidate in INCOTERMS else "unknown"
+
+
+def _evidence_text(evidence_rows: list[dict[str, Any]]) -> str:
+    fields = ["title", "description", "evidence_type", "document_type", "claim_supported", "file_path", "source_url"]
+    return " ".join(str(row.get(field) or "") for row in evidence_rows for field in fields).lower()
+
+
+def _document_flags(packet: dict[str, Any], evidence_rows: list[dict[str, Any]]) -> dict[str, bool]:
+    packet_text = " ".join(
+        " ".join(_as_list(packet.get(field))) if field in packet else ""
+        for field in TRADE_DOCUMENT_FIELDS
+    ).lower()
+    text = f"{packet_text} {_evidence_text(evidence_rows)}"
+    return {
+        "product_documents": _truthy_text(packet.get("product_documents"))
+        or _truthy_text(packet.get("product_specs"))
+        or any(keyword in text for keyword in ("product spec", "specification", "lab report", "certificate")),
+        "commercial_documents": _truthy_text(packet.get("commercial_documents"))
+        or _truthy_text(packet.get("commercial_invoice"))
+        or _truthy_text(packet.get("contract_po"))
+        or any(keyword in text for keyword in ("invoice", "proforma", "packing list", "purchase order", "contract")),
+        "certificates": _truthy_text(packet.get("certificates"))
+        or _truthy_text(packet.get("food_health_docs"))
+        or any(keyword in text for keyword in ("certificate", "coo", "origin", "health", "food safety")),
+        "proof_of_origin": _truthy_text(packet.get("proof_of_origin"))
+        or any(keyword in text for keyword in ("certificate of origin", "proof of origin", "country of origin")),
+        "buyer_or_broker_correspondence": any(keyword in text for keyword in ("buyer email", "broker", "correspondence")),
+    }
+
+
+def _responsibility_path(packet: dict[str, Any]) -> dict[str, str]:
+    importer_of_record = _normal_importer_of_record(packet)
+    incoterms = _normal_incoterms(packet)
+    if importer_of_record in {"buyer", "importer"} and incoterms != "DDP":
+        return {
+            "path": "Path A - Canadian buyer/importer handles import",
+            "responsibility_level": "buyer_importer_led",
+            "guidance": "Prepare a buyer-ready export packet and questions for the Canadian importer or broker.",
+        }
+    if importer_of_record == "exporter" or incoterms == "DDP":
+        return {
+            "path": "Path B - exporter may carry Canadian import responsibility",
+            "responsibility_level": "high_exporter_responsibility",
+            "guidance": "Generate a broker review packet before any delivered-into-Canada or importer-of-record decision.",
+        }
+    return {
+        "path": "Responsibility path unknown",
+        "responsibility_level": "unknown",
+        "guidance": "Confirm importer of record and Incoterms before shipment or buyer claims.",
+    }
+
+
+def _lane_status(blockers: list[dict[str, Any]], modules: set[str], default_next: str) -> dict[str, Any]:
+    rows = [row for row in blockers if str(row.get("module")) in modules]
+    groups = group_blockers(rows)
+    return {
+        "status": "blocked" if rows else "draft_ready_for_internal_review",
+        "blocker_count": len(rows),
+        "blocker_ids": [str(row.get("id")) for row in rows],
+        "blocker_groups": groups,
+        "next_valid_move": groups[0]["next_valid_move"] if groups else default_next,
+    }
+
+
+def _readiness_lanes(packet: dict[str, Any], evidence_rows: list[dict[str, Any]], blockers: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    direction = _trade_direction(packet)
+    lanes = [
+        {
+            "id": "exporter_side_readiness",
+            "name": "Exporter-side readiness",
+            "trade_direction": direction,
+            "country_scope": str(packet.get("exporter_country") or packet.get("origin_country") or "origin country"),
+            "fields": {
+                "exporter_name": packet.get("exporter_name") or "",
+                "exporter_country": packet.get("exporter_country") or packet.get("origin_country") or "",
+                "documents": _as_list(packet.get("product_documents")) + _as_list(packet.get("commercial_documents")) + _as_list(packet.get("certificates")),
+            },
+            **_lane_status(
+                blockers,
+                {"exporter_side_readiness", "product_documentation", "proof_of_origin", "commercial_contract"},
+                "Prepare exporter-side documents for internal review; external claims stay blocked.",
+            ),
+        },
+        {
+            "id": "importer_side_readiness",
+            "name": "Importer-side readiness",
+            "trade_direction": direction,
+            "country_scope": str(packet.get("importer_country") or packet.get("destination_country") or "destination country"),
+            "fields": {
+                "importer_name": packet.get("importer_name") or packet.get("buyer_name") or "",
+                "importer_of_record": _normal_importer_of_record(packet),
+                "incoterms": _normal_incoterms(packet),
+            },
+            **_lane_status(
+                blockers,
+                {"importer_of_record", "import_controls", "expert_review", "restricted_party_screening", "official_source_refresh"},
+                "Confirm Canadian importer, controls, and broker review before shipment decisions.",
+            ),
+        },
+    ]
+    if direction in {"import", "both", "unknown"}:
+        lanes[0]["note"] = "Source/exporter-side facts still matter even when the customer is the Canadian importer."
+    return lanes
+
+
+def _buyer_broker_questions(packet: dict[str, Any]) -> list[str]:
+    responsibility = _responsibility_path(packet)
+    return [
+        "Who is the Canadian importer of record for this shipment?",
+        "Which Incoterms or delivery responsibility applies?",
+        "What HS/tariff classification should a qualified reviewer use for the product?",
+        "Does the product need CFIA/AIRS, import permit, controlled goods, sanctions, or restricted-party review?",
+        "Which product specs, invoice/proforma, packing list, certificate, proof-of-origin, and contract documents are still missing?",
+        "Can the Canadian buyer or broker confirm the next valid evidence to collect?",
+        f"Responsibility path: {responsibility['path']}.",
+    ]
+
+
 def _status_for_evidence(row: dict[str, Any]) -> str:
     if str(row.get("rights_status") or "") in {"blocked", "unknown", "fixture_only"}:
         return "blocked_reference_only"
@@ -282,6 +555,19 @@ def _missing_evidence(blockers: list[dict[str, Any]]) -> list[str]:
         missing.append("Buyer/operator validation")
     if "restricted_party_screening" in modules:
         missing.append("Restricted-party screening record")
+    if "importer_of_record" in modules:
+        missing.append("Canadian buyer/importer and importer-of-record confirmation")
+        missing.append("Incoterms or delivery responsibility record")
+    if "import_controls" in modules:
+        missing.append("Canadian import-control, CBSA/CARM, CFIA/AIRS, permit, or broker review")
+    if "product_documentation" in modules:
+        missing.append("Product and commercial documents")
+    if "proof_of_origin" in modules:
+        missing.append("Proof of origin")
+    if "exporter_side_readiness" in modules:
+        missing.append("Origin-country exporter-side readiness evidence")
+    if "trade_agreement_claim" in modules:
+        missing.append("Official trade-agreement, MoU, or preference review evidence")
     for item in REQUIRED_EVIDENCE:
         if item not in missing:
             missing.append(item)
@@ -307,11 +593,16 @@ def group_blockers(blockers: list[dict[str, Any]]) -> list[dict[str, Any]]:
     priority = {
         "source_freshness": 0,
         "compliance_review": 1,
-        "source_rights_contract": 2,
-        "buyer_validation": 3,
-        "legal_privacy": 4,
-        "security_private_beta_controls": 5,
-        "launch_claims": 6,
+        "canada_import_responsibility": 2,
+        "canada_import_controls": 3,
+        "document_readiness": 4,
+        "exporter_side_readiness": 5,
+        "source_rights_contract": 6,
+        "buyer_validation": 7,
+        "trade_agreement_review": 8,
+        "legal_privacy": 9,
+        "security_private_beta_controls": 10,
+        "launch_claims": 11,
     }
     grouped: dict[str, dict[str, Any]] = {}
     for row in blockers:
@@ -424,7 +715,7 @@ def _packet_blockers(packet: dict[str, Any], evidence_rows: list[dict[str, Any]]
             }
         )
 
-    if not str(packet.get("source_url") or "").strip():
+    if not str(packet.get("source_url") or "").strip() and not packet.get("offline_evidence_only"):
         add(
             "missing-source-url",
             "source_packet_intake",
@@ -485,6 +776,130 @@ def _packet_blockers(packet: dict[str, Any], evidence_rows: list[dict[str, Any]]
                 owner,
                 message,
                 "P1_blocks_external_claim",
+            )
+    trade_direction = _trade_direction(packet)
+    if trade_direction in {"export", "both"} and _country_is_canada(packet.get("destination_country")):
+        importer_of_record = _normal_importer_of_record(packet)
+        incoterms = _normal_incoterms(packet)
+        document_flags = _document_flags(packet, evidence_rows)
+        importer_name = packet.get("importer_name") or packet.get("buyer_name") or packet.get("canadian_buyer_importer_name")
+        if importer_of_record == "unknown":
+            add(
+                "importer-of-record-unknown",
+                "importer_of_record",
+                "Canadian importer of record is unknown",
+                "trade_ops",
+                "Confirm whether the Canadian buyer/importer, exporter, broker, or another party is importer of record.",
+                "P0_blocks_shipment_decision",
+            )
+        if not _truthy_text(importer_name):
+            add(
+                "canadian-buyer-importer-missing",
+                "importer_of_record",
+                "Canadian buyer/importer is not confirmed",
+                "sales_ops",
+                "Add the Canadian buyer/importer name or mark the packet as broker-ready with the importer still unknown.",
+                "P0_blocks_buyer_packet",
+            )
+        if incoterms == "unknown":
+            add(
+                "incoterms-missing",
+                "importer_of_record",
+                "Incoterms or delivery responsibility are missing",
+                "trade_ops",
+                "Record Incoterms or delivery responsibility before generating a shipment decision.",
+                "P0_blocks_shipment_decision",
+            )
+        if importer_of_record == "exporter" or incoterms == "DDP":
+            add(
+                "exporter-import-responsibility-review",
+                "importer_of_record",
+                "Exporter may carry Canadian import/DDP/non-resident importer responsibility",
+                "compliance",
+                "Generate a Canadian broker review packet before the exporter accepts delivered-into-Canada responsibility.",
+                "P0_blocks_shipment_decision",
+            )
+        if not _truthy_text(packet.get("hs_code_value")):
+            add(
+                "hs-classification-missing",
+                "expert_review",
+                "HS/tariff classification is not ready for external use",
+                "compliance",
+                "Collect product details and route HS/tariff classification to a qualified reviewer.",
+                "P0_blocks_shipment_decision",
+            )
+        if str(packet.get("import_control_review_status") or "missing") not in {"complete", "reviewed", "not_applicable"}:
+            add(
+                "import-control-review-missing",
+                "import_controls",
+                "Canadian import permit/control review is missing",
+                "compliance",
+                "Check official Canadian references and collect broker/expert review before shipment decisions.",
+                "P0_blocks_shipment_decision",
+            )
+        category = str(packet.get("product_category") or "").lower()
+        if any(keyword in category for keyword in ("food", "health", "plant", "animal", "seafood", "agri")) and str(packet.get("cfia_airs_review_status") or "missing") not in {"complete", "reviewed", "not_applicable"}:
+            add(
+                "cfia-airs-review-missing",
+                "import_controls",
+                "CFIA/AIRS or food/health review is missing for this product category",
+                "compliance",
+                "Check CFIA/AIRS applicability and generate a broker review packet before food/health claims.",
+                "P0_blocks_shipment_decision",
+            )
+        if not document_flags["product_documents"]:
+            add(
+                "product-documents-missing",
+                "product_documentation",
+                "Product specs, lab report, certificate, or technical documents are incomplete",
+                "customer",
+                "Upload product specs, lab reports, certificates, or source/supplier documents.",
+                "P1_blocks_buyer_packet",
+            )
+        if not document_flags["commercial_documents"]:
+            add(
+                "commercial-documents-missing",
+                "product_documentation",
+                "Commercial invoice/proforma, packing list, or contract terms are incomplete",
+                "customer",
+                "Upload invoice/proforma, packing list, contract or PO, and shipping terms.",
+                "P1_blocks_buyer_packet",
+            )
+        if not document_flags["proof_of_origin"]:
+            add(
+                "proof-of-origin-missing",
+                "proof_of_origin",
+                "Proof of origin is missing",
+                "customer",
+                "Attach proof of origin before country-of-origin or preference claims.",
+                "P1_blocks_buyer_packet",
+            )
+        if str(packet.get("origin_country") or "").strip().lower() == "india" and str(packet.get("india_export_readiness_status") or "missing") not in {"complete", "reviewed", "not_applicable"}:
+            add(
+                "india-export-readiness-review-missing",
+                "exporter_side_readiness",
+                "India-side export readiness evidence is missing",
+                "exporter",
+                "Collect or mark not-applicable PAN/GST/IEC/RCMC/ICEGATE/AD-code style evidence through an India export review lane.",
+                "P1_blocks_export_packet",
+            )
+        if str(packet.get("broker_review_status") or "missing") not in {"complete", "reviewed"}:
+            add(
+                "canadian-broker-review-missing",
+                "expert_review",
+                "Canadian broker/expert review is missing",
+                "compliance",
+                "Generate the broker review packet and collect a scoped reviewer decision.",
+                "P0_blocks_shipment_decision",
+            )
+        if _truthy_text(packet.get("trade_agreement_claim")) or _truthy_text(packet.get("mou_claim")):
+            add(
+                "trade-agreement-claim-review-missing",
+                "trade_agreement_claim",
+                "Trade agreement, preference, or MoU claim lacks official evidence and review",
+                "compliance",
+                "Keep preference/MoU claims blocked until official evidence and qualified review exist.",
+                "P0_blocks_commercial_claim",
             )
     return blockers
 
@@ -687,21 +1102,46 @@ def build_customer_workflow(
             customer_status = "needs_operator_review"
         evidence_summary = _evidence_summary(linked_evidence, blockers)
         blocker_groups = group_blockers(blockers)
+        trade_direction = _trade_direction(packet)
+        responsibility_path = _responsibility_path(packet)
+        readiness_lanes = _readiness_lanes(packet, linked_evidence, blockers)
+        document_flags = _document_flags(packet, linked_evidence)
         packets.append(
             {
                 "packet_id": packet_id,
                 "organization_id": _organization_id(packet),
+                "public_product_name": PUBLIC_PRODUCT_NAME,
+                "public_product_promise": PUBLIC_PRODUCT_PROMISE,
                 "packet_name": packet.get("packet_name") or packet.get("product_name"),
                 "product_name": packet.get("product_name"),
                 "product_category": packet.get("product_category"),
+                "trade_direction": trade_direction,
                 "origin_country": packet.get("origin_country"),
                 "destination_country": packet.get("destination_country"),
+                "exporter_country": packet.get("exporter_country") or packet.get("origin_country"),
+                "importer_country": packet.get("importer_country") or packet.get("destination_country"),
+                "exporter_name": packet.get("exporter_name") or packet.get("supplier_name") or "",
+                "importer_name": packet.get("importer_name") or packet.get("buyer_name") or "",
+                "buyer_name": packet.get("buyer_name") or packet.get("importer_name") or "",
+                "manufacturer_name": packet.get("manufacturer_name") or "",
+                "importer_of_record": _normal_importer_of_record(packet),
+                "exporter_of_record": packet.get("exporter_of_record") or packet.get("exporter_name") or packet.get("supplier_name") or "",
+                "incoterms_if_known": _normal_incoterms(packet),
+                "delivery_responsibility": packet.get("delivery_responsibility") or "",
+                "responsibility_path": responsibility_path,
                 "supplier_name": packet.get("supplier_name"),
                 "supplier_country": packet.get("supplier_country"),
                 "hs_code_known": bool(packet.get("hs_code_known")),
                 "hs_code_value": packet.get("hs_code_value"),
+                "hs_code_if_known": packet.get("hs_code_value"),
                 "source_url": packet.get("source_url"),
                 "intended_use": packet.get("intended_use"),
+                "document_flags": document_flags,
+                "product_documents": _as_list(packet.get("product_documents")),
+                "commercial_documents": _as_list(packet.get("commercial_documents")),
+                "certificates": _as_list(packet.get("certificates")),
+                "proof_of_origin": _as_list(packet.get("proof_of_origin")),
+                "shipping_method": packet.get("shipping_method") or "",
                 "customer_visible_status": customer_status,
                 "customer_visible_status_label": _status_reason(customer_status),
                 "readiness_status": "not_ready_for_external_action" if blockers else "internal_review_ready",
@@ -719,9 +1159,22 @@ def build_customer_workflow(
                 "blockers": blockers,
                 "blocker_groups": blocker_groups,
                 "top_blockers": blocker_groups[:6],
+                "readiness_lanes": readiness_lanes,
+                "buyer_broker_questions": _buyer_broker_questions(packet),
+                "public_summary": {
+                    "title": "Export-to-Canada Packet" if trade_direction == "export" else "Trade Readiness Packet",
+                    "status": "Blocked - not ready for shipment decision" if blockers else "Draft ready for internal review",
+                    "main_reason": blocker_groups[0]["title"] if blocker_groups else "Internal review ready",
+                    "evidence_counts": evidence_summary,
+                    "next_valid_move": blocker_groups[0]["next_valid_move"] if blocker_groups else "Proceed to internal review; external claims stay blocked.",
+                    "privacy_notice": "Draft public checks do not need a login; uploaded files should be deleted or expire after processing.",
+                    "ai_disclosure": "AI can summarize or structure evidence when allowed, but it cannot approve customs, tariff, legal, or compliance claims.",
+                },
                 "allowed_actions": [
                     "Internal review",
                     "Draft readiness report",
+                    "Buyer-ready packet",
+                    "Broker review packet",
                     "Expert review packet",
                     "AI simulated review",
                     "Official-source refresh record",
@@ -732,6 +1185,9 @@ def build_customer_workflow(
                     "CFIA clearance",
                     "Supplier recommendation",
                     "Buyer validation claim",
+                    "Shipment decision",
+                    "Export-to-Canada ready claim",
+                    "Trade agreement preference claim",
                     "Public launch claim",
                 ],
                 "evidence_items": linked_evidence,
@@ -774,6 +1230,18 @@ def build_customer_workflow(
                         "method": "GET",
                         "route": f"/source-packets/{packet_id}/export",
                     },
+                    {
+                        "id": "generate_buyer_packet",
+                        "label": "Generate Buyer Packet",
+                        "method": "GET",
+                        "route": f"/api/public/packets/{packet_id}/reports/buyer.pdf",
+                    },
+                    {
+                        "id": "generate_broker_review_packet",
+                        "label": "Generate Broker Review Packet",
+                        "method": "GET",
+                        "route": f"/api/public/packets/{packet_id}/reports/broker.pdf",
+                    },
                 ],
                 "next_valid_move": (
                     blocker_groups[0]["next_valid_move"]
@@ -786,6 +1254,10 @@ def build_customer_workflow(
     workflow: dict[str, Any] = {
         "generated_at": generated,
         "kind": "customer_source_packet_workflow",
+        "public_product_name": PUBLIC_PRODUCT_NAME,
+        "public_product_promise": PUBLIC_PRODUCT_PROMISE,
+        "public_surface": "public_quick_check_plus_logged_operator_workspace",
+        "trade_directions": sorted(TRADE_DIRECTIONS),
         "status": "customer_workflow_ready_internal",
         "display_status": SAFE_DISPLAY_STATUS,
         "operator_display_status": OPERATOR_WORKBENCH_STATUS,
@@ -822,28 +1294,64 @@ def build_customer_workflow(
 def packet_from_submission(fields: dict[str, Any]) -> dict[str, Any]:
     product_name = str(fields.get("product_name") or fields.get("packet_name") or "Untitled source packet")
     packet_id = str(fields.get("packet_id") or f"packet-{_slug(product_name)}")
+    hs_code = fields.get("hs_code_value") or fields.get("hs_code_if_known") or ""
+    destination_country = fields.get("destination_country") or fields.get("destination_canada") or "Canada"
+    origin_country = fields.get("origin_country") or fields.get("exporter_country") or ""
+    trade_direction = _valid_trade_direction(fields.get("trade_direction"), default="unknown")
+    if trade_direction == "unknown" and str(fields.get("user_type") or "").strip().lower() in EXPORTER_USER_TYPES:
+        trade_direction = "export"
     return {
         "packet_id": packet_id,
         "packet_name": fields.get("packet_name") or product_name,
         "customer_id": fields.get("customer_id") or "local-customer",
         "organization_id": _organization_id(fields),
+        "user_type": fields.get("user_type") or "",
         "product_name": product_name,
         "product_category": fields.get("product_category") or "",
-        "hs_code_known": bool(fields.get("hs_code_value") or fields.get("hs_code_known")),
-        "hs_code_value": fields.get("hs_code_value") or "",
-        "origin_country": fields.get("origin_country") or "",
-        "destination_country": fields.get("destination_country") or "Canada",
+        "trade_direction": trade_direction,
+        "hs_code_known": bool(hs_code or fields.get("hs_code_known")),
+        "hs_code_value": hs_code,
+        "origin_country": origin_country,
+        "destination_country": destination_country,
+        "exporter_country": fields.get("exporter_country") or origin_country,
+        "importer_country": fields.get("importer_country") or destination_country,
+        "exporter_name": fields.get("exporter_name") or fields.get("supplier_name") or "",
+        "importer_name": fields.get("importer_name") or fields.get("canadian_buyer_importer_name") or fields.get("buyer_name") or "",
+        "buyer_name": fields.get("buyer_name") or fields.get("canadian_buyer_importer_name") or fields.get("importer_name") or "",
+        "manufacturer_name": fields.get("manufacturer_name") or "",
+        "importer_of_record": _normal_importer_of_record(fields),
+        "exporter_of_record": fields.get("exporter_of_record") or fields.get("exporter_name") or "",
+        "incoterms_if_known": _normal_incoterms(fields),
+        "delivery_responsibility": fields.get("delivery_responsibility") or "",
+        "shipping_method": fields.get("shipping_method") or "",
         "supplier_name": fields.get("supplier_name") or "",
         "supplier_country": fields.get("supplier_country") or "",
         "source_url": fields.get("source_url") or "",
         "source_type": fields.get("source_type") or "customer_submitted",
         "intended_use": fields.get("intended_use") or "",
         "documents": fields.get("documents") or [],
+        "product_documents": _as_list(fields.get("product_documents")),
+        "commercial_documents": _as_list(fields.get("commercial_documents")),
+        "certificates": _as_list(fields.get("certificates")),
+        "proof_of_origin": _as_list(fields.get("proof_of_origin")),
+        "product_specs": fields.get("product_specs") or "",
+        "commercial_invoice": fields.get("commercial_invoice") or "",
+        "packing_list": fields.get("packing_list") or "",
+        "food_health_docs": fields.get("food_health_docs") or "",
+        "source_supplier_docs": fields.get("source_supplier_docs") or "",
+        "contract_po": fields.get("contract_po") or "",
+        "trade_agreement_claim": fields.get("trade_agreement_claim") or "",
+        "mou_claim": fields.get("mou_claim") or "",
+        "offline_evidence_only": bool(fields.get("offline_evidence_only")),
         "notes": fields.get("notes") or "",
-        "restricted_party_screening_status": "missing",
-        "qualified_review_status": "missing",
-        "buyer_validation_status": "missing",
-        "contract_status": "missing",
+        "restricted_party_screening_status": fields.get("restricted_party_screening_status") or "missing",
+        "qualified_review_status": fields.get("qualified_review_status") or "missing",
+        "buyer_validation_status": fields.get("buyer_validation_status") or "missing",
+        "contract_status": fields.get("contract_status") or "missing",
+        "import_control_review_status": fields.get("import_control_review_status") or "missing",
+        "cfia_airs_review_status": fields.get("cfia_airs_review_status") or "missing",
+        "broker_review_status": fields.get("broker_review_status") or "missing",
+        "india_export_readiness_status": fields.get("india_export_readiness_status") or "missing",
         "created_at": _now(),
     }
 
@@ -991,12 +1499,7 @@ def expert_review_packet_markdown(workflow: dict[str, Any], packet_id: str) -> s
         for row in packet.get("evidence_items", [])
     )
     questions = "\n".join(
-        [
-            "- What exact import, tariff, CFIA, food, or customs claims can be supported by the evidence?",
-            "- Which claims must remain closed?",
-            "- Which additional documents, source records, or screenings are required?",
-            "- Is the review limited to reference orientation, or does it support a scoped operational decision?",
-        ]
+        f"- {question}" for question in _buyer_broker_questions(packet)
     )
     blockers = "\n".join(
         f"- {row.get('title')}: {row.get('next_valid_move')}" for row in packet.get("blocker_groups", [])
@@ -1007,7 +1510,10 @@ def expert_review_packet_markdown(workflow: dict[str, Any], packet_id: str) -> s
             "",
             f"Packet: {packet['packet_name']}",
             f"Product: {packet.get('product_name')}",
+            f"Trade direction: {packet.get('trade_direction')}",
+            f"Origin: {packet.get('origin_country')}",
             f"Destination: {packet.get('destination_country')}",
+            f"Responsibility path: {packet.get('responsibility_path', {}).get('path')}",
             "",
             "## Review Scope",
             "",
@@ -1051,21 +1557,36 @@ def markdown_report(workflow: dict[str, Any], packet_id: str) -> str:
     ) or "- No blockers for internal review; external claims remain closed."
     claims = "\n".join(f"- {claim}" for claim in packet.get("blocked_claims_display", []))
     missing = "\n".join(f"- {item}" for item in packet.get("evidence_summary", {}).get("missing_items", []))
+    lanes = "\n".join(
+        f"- {lane.get('name')} ({lane.get('country_scope')}): {lane.get('status')} - {lane.get('next_valid_move')}"
+        for lane in packet.get("readiness_lanes", [])
+    )
+    questions = "\n".join(f"- {question}" for question in packet.get("buyer_broker_questions", []))
     refs = "\n".join(
         f"- {row.get('name')}: {row.get('claim_boundary')}"
         for row in workflow.get("official_sources", [])[:6]
     )
     return "\n".join(
         [
-            "# Importer Source Readiness Report",
+            "# Trade Readiness Report",
             "",
             f"Packet: {packet['packet_name']}",
+            f"Public product: {packet.get('public_product_name', PUBLIC_PRODUCT_NAME)}",
             f"Status: {packet['display_status']}",
             f"Customer-visible status: {packet['customer_visible_status_label']}",
+            f"Trade direction: {packet.get('trade_direction')}",
+            f"Origin: {packet.get('origin_country')}",
+            f"Destination: {packet.get('destination_country')}",
+            f"Importer of record: {packet.get('importer_of_record')}",
+            f"Incoterms: {packet.get('incoterms_if_known')}",
             "",
             "## Summary",
             "",
             packet["safe_summary"],
+            "",
+            "## Readiness Lanes",
+            "",
+            lanes or "- No readiness lanes generated.",
             "",
             "## Evidence Summary",
             "",
@@ -1086,6 +1607,10 @@ def markdown_report(workflow: dict[str, Any], packet_id: str) -> str:
             "## Next Valid Move",
             "",
             str(packet["next_valid_move"]),
+            "",
+            "## Buyer / Broker Questions",
+            "",
+            questions or "- No questions generated.",
             "",
             "## Official References",
             "",
