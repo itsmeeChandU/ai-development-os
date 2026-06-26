@@ -41,7 +41,7 @@
       "submit_government_form",
       "send_report_externally_without_confirmation"
     ],
-    "generated_at": "2026-06-26T11:49:42+00:00",
+    "generated_at": "2026-06-26T11:51:53+00:00",
     "proof_boundary": "The gateway executes local product operations with external effects disabled; it does not expose a live public API, credentials, payment integration, or claim-opening authority.",
     "status": "agent_api_gateway_ready_local_executor_no_external_effects",
     "tools": [
@@ -353,7 +353,7 @@
       "submit_government_form",
       "send_report_externally_without_confirmation"
     ],
-    "generated_at": "2026-06-26T11:49:42+00:00",
+    "generated_at": "2026-06-26T11:51:53+00:00",
     "proof_boundary": "This is a local API/MCP contract. It does not expose a live public API gateway or payment integration.",
     "safety_rules": [
       "Agents can create packets and reports only through backend claim/blocker rules.",
@@ -371,7 +371,7 @@
   },
   "all_stage_readiness": {
     "external_gate_count": 8,
-    "generated_at": "2026-06-26T11:49:42+00:00",
+    "generated_at": "2026-06-26T11:51:53+00:00",
     "implemented_stage_count": 16,
     "proof_boundary": "All locally implementable product stages are represented by usable routes, APIs, artifacts, and tests. Real-world approvals remain explicit gates.",
     "stage_count": 16,
@@ -808,7 +808,7 @@
         "requires_pre_authorization": true
       }
     ],
-    "generated_at": "2026-06-26T11:49:42+00:00",
+    "generated_at": "2026-06-26T11:51:53+00:00",
     "heavy_job_policy": {
       "external_charge_created": false,
       "free_plan_behavior": "block_before_worker_execution",
@@ -874,7 +874,7 @@
     "status": "billing_credit_controls_ready_local_no_live_checkout"
   },
   "billing_usage_ledger": {
-    "generated_at": "2026-06-26T11:49:42+00:00",
+    "generated_at": "2026-06-26T11:51:53+00:00",
     "proof_boundary": "The usage ledger estimates and blocks cost exposure locally; no payment, invoice, or live checkout is performed.",
     "status": "billing_usage_ledger_ready_local_no_charges",
     "usage_rows": [
@@ -1287,7 +1287,7 @@
       "4": "category template support",
       "5": "expert-reviewed templates"
     },
-    "generated_at": "2026-06-26T11:49:42+00:00",
+    "generated_at": "2026-06-26T11:51:53+00:00",
     "packet_coverage": [
       {
         "blocked_country_specific_claims": [
@@ -1383,7 +1383,7 @@
         "scope": "credits, pricing, manual approval, and cost exposure"
       }
     ],
-    "generated_at": "2026-06-26T11:49:42+00:00",
+    "generated_at": "2026-06-26T11:51:53+00:00",
     "proof_boundary": "The product can prepare and route expert packets locally; real qualified review remains an external evidence gate.",
     "review_queue": [
       {
@@ -1434,7 +1434,7 @@
     ],
     "status": "expert_network_ready_local_with_human_review_gates"
   },
-  "generated_at": "2026-06-26T11:49:42+00:00",
+  "generated_at": "2026-06-26T11:51:53+00:00",
   "launch_operations": {
     "controls": [
       {
@@ -1468,7 +1468,7 @@
         "status": "local_contract_ready"
       }
     ],
-    "generated_at": "2026-06-26T11:49:42+00:00",
+    "generated_at": "2026-06-26T11:51:53+00:00",
     "packet_count": 1,
     "private_beta_entry": {
       "human_approval_required": true,
@@ -1502,7 +1502,7 @@
       "tool": "create_trade_packet"
     },
     "create_packet_route": "/packets/new",
-    "generated_at": "2026-06-26T11:49:42+00:00",
+    "generated_at": "2026-06-26T11:51:53+00:00",
     "proof_boundary": "Opportunity rows are signals and research prompts only, not recommendations, demand proof, margin proof, or buyer validation.",
     "signal_count": 1,
     "signals": [
@@ -1650,7 +1650,7 @@
   },
   "proof_boundary": "Every locally implementable stage has a route/API/artifact surface; production hosting, payment activation, live expert signoff, source freshness, buyer validation, legal/customs/compliance proof, and public launch remain external gates.",
   "research_execution_plan": {
-    "generated_at": "2026-06-26T11:49:42+00:00",
+    "generated_at": "2026-06-26T11:51:53+00:00",
     "proof_boundary": "Research execution routes the work to model-prior, web, official-source, dataset, and expert/user evidence lanes; it does not itself prove the external facts.",
     "rows": [
       {
@@ -1692,7 +1692,7 @@
   },
   "status": "all_local_stages_implemented_with_external_gates",
   "team_workspace": {
-    "generated_at": "2026-06-26T11:49:42+00:00",
+    "generated_at": "2026-06-26T11:51:53+00:00",
     "proof_boundary": "Team workspace roles and approvals are local coordination surfaces; they do not prove real owner approval or external launch permission.",
     "status": "team_workspace_ready_local_with_approval_gates",
     "workspace_count": 1,
@@ -1760,7 +1760,7 @@
     ]
   },
   "traffic_pages_manifest": {
-    "generated_at": "2026-06-26T11:49:42+00:00",
+    "generated_at": "2026-06-26T11:51:53+00:00",
     "pages": [
       {
         "claim_boundary": "Traffic page educates and routes to the tool; it is not legal, customs, tariff, supplier, buyer, or shipment advice.",
@@ -1902,7 +1902,7 @@
       "freight_forwarder_selected",
       "shipment_ready"
     ],
-    "generated_at": "2026-06-26T11:49:42+00:00",
+    "generated_at": "2026-06-26T11:51:53+00:00",
     "packet_count": 1,
     "proof_boundary": "Transport readiness prepares questions only; it does not optimize routes, guarantee costs, or approve shipment.",
     "rows": [
