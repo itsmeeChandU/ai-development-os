@@ -77,6 +77,7 @@ AILM means AI Lifecycle Management:
 - `docs/STARTUP_LIFECYCLE_DEVELOPMENT.md`: startup lifecycle, R&D loops, validation, pitch, board/private beta, and launch gates.
 - `docs/PRODUCT_AUTOMATION_GUIDE.md`: how product teams can automate idea-to-lane workflows inside a product.
 - `docs/AGENTIC_WORKFLOW_INTEGRATION.md`: durable GitHub/Ruflo/worktree/SRG/code-review graph workflow.
+- `docs/EXTERNAL_AGENT_HARNESS_INTEGRATION.md`: how to evaluate optional external harnesses such as Everything Claude Code without bypassing local proof gates.
 - `docs/STARTUP_CONTINUATION_RULE.md`: prevents externally gated products from being marked fully done too early.
 - `docs/VC_PITCH_READINESS.md`: investor packet, evidence, diligence, and claim-boundary standard.
 - `docs/BOARD_GO_LIVE_READINESS.md`: board/private-beta readiness, expert-agent review, launch controls, and human approval gates.
@@ -196,6 +197,12 @@ python3 scripts/agentic_workflow_orchestrator.py prompt-to-product \
   --out-dir system_review_graph
 python3 scripts/agentic_workflow_orchestrator.py emit-slash-commands \
   --out-dir system_review_graph
+python3 scripts/agentic_workflow_orchestrator.py harness-intake \
+  --harness ecc \
+  --install-mode observe \
+  --target-repo future-product-repo \
+  --goal "Evaluate same-day product-build harness patterns" \
+  --out-dir system_review_graph
 python3 scripts/agentic_workflow_orchestrator.py routine-report \
   --out-dir system_review_graph
 python3 scripts/agentic_workflow_orchestrator.py scheduler-plan \
@@ -204,13 +211,14 @@ python3 scripts/agentic_workflow_orchestrator.py scheduler-plan \
 
 Those commands create the local automation layer: normalized product packet,
 internal repo intake packet, research/data plan, development strategy plan,
-slash command specs, lane packets, background routine report, scheduler plan,
-and CI-fix handoff packets. AI model subject synthesis is allowed as the first
-hypothesis, but current facts, datasets, official rules, external contracts,
-country import/export requirements, and serious product claims must be routed
-through the research/data and strategy plans. Effectful network, push, paid,
-live, legal, or external actions still require explicit operator intent and
-passing proof gates.
+slash command specs, optional external harness integration packet, lane packets,
+background routine report, scheduler plan, and CI-fix handoff packets. AI model
+subject synthesis is allowed as the first hypothesis, but current facts,
+datasets, official rules, external contracts, country import/export
+requirements, and serious product claims must be routed through the
+research/data and strategy plans. Effectful network, push, paid, live, legal,
+or external actions still require explicit operator intent and passing proof
+gates.
 
 For product teams integrating this into an app, operator UI, or product
 factory, start with `docs/PRODUCT_AUTOMATION_GUIDE.md` and fill in

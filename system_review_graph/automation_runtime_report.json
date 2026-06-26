@@ -21,10 +21,10 @@
       "unsafe_to_bypass": true
     }
   ],
-  "generated_at": "2026-06-25T16:46:22+00:00",
+  "generated_at": "2026-06-26T01:24:57+00:00",
   "kind": "background_routine_report",
   "proof_boundary": "Routine reports describe safe commands and blockers. Effectful execution still requires explicit operator intent.",
-  "routine_count": 8,
+  "routine_count": 9,
   "routines": [
     {
       "allowed_effects": [
@@ -143,6 +143,34 @@
       "proof_output": "system_review_graph/board_go_live_readiness_report.json",
       "status": "ready",
       "trigger": "product needs board go-live readiness"
+    },
+    {
+      "allowed_effects": [
+        "read harness docs",
+        "write harness integration packet",
+        "run local validators",
+        "run local config/security scan when installed"
+      ],
+      "cadence": "before installing, copying, or relying on an optional external agent harness",
+      "commands": [
+        "python3 scripts/agentic_workflow_orchestrator.py harness-intake --harness ecc --install-mode observe --target-repo ai-development-os --out-dir system_review_graph",
+        "python3 scripts/workflow_manifest_check.py",
+        "python3 scripts/agentic_workflow_orchestrator.py validate"
+      ],
+      "dry_run_default": true,
+      "id": "external_harness_safety_check",
+      "missing_inputs": [],
+      "prohibited_effects": [
+        "global install without explicit operator approval",
+        "duplicate hook/plugin install",
+        "network write",
+        "paid API use",
+        "credential mutation",
+        "weakened proof gates"
+      ],
+      "proof_output": "system_review_graph/external_harness_integration_packet.json",
+      "status": "ready",
+      "trigger": "external harness requested or harness packet generated"
     },
     {
       "allowed_effects": [

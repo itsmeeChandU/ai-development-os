@@ -1,6 +1,6 @@
 {
-  "count": 10,
-  "generated_at": "2026-06-25T16:46:22+00:00",
+  "count": 11,
+  "generated_at": "2026-06-26T01:24:54+00:00",
   "kind": "slash_command_specs",
   "proof_boundary": "Slash command specs materialize bounded packets. They do not execute external or unsafe actions without a separate proof gate.",
   "specs": [
@@ -121,6 +121,33 @@
       "runner": {
         "dry_run_default": true,
         "materialize_command": "python3 scripts/agentic_workflow_orchestrator.py command-spec --command strategy-plan",
+        "script": "scripts/agentic_workflow_orchestrator.py"
+      }
+    },
+    {
+      "command": "/ados:harness-intake",
+      "id": "harness-intake",
+      "mode": "architect",
+      "outputs": [
+        "external_harness_integration_packet",
+        "adoption_blockers",
+        "command_mapping"
+      ],
+      "proof_gates": [
+        "official_source_recorded",
+        "license_recorded",
+        "blocked_effects_written",
+        "security_gate_written"
+      ],
+      "purpose": "Map an optional external agent harness into AI Development OS without letting it replace proof gates.",
+      "required_inputs": [
+        "harness",
+        "install_mode",
+        "target_repo"
+      ],
+      "runner": {
+        "dry_run_default": true,
+        "materialize_command": "python3 scripts/agentic_workflow_orchestrator.py command-spec --command harness-intake",
         "script": "scripts/agentic_workflow_orchestrator.py"
       }
     },

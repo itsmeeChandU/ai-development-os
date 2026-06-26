@@ -26,14 +26,16 @@ should convert a user idea into artifacts that agents can execute safely:
 4. prompt-to-product packet: normalized goal, constraints, proof, lanes, and
    next valid move
 5. context bundle: SRG and code-review graph context for bounded source review
-6. lane packet: allowed files, forbidden files, proof commands, and handoff
-7. proof report: tests, generated artifacts, blockers, and launch state
-8. operator screenshot surface: generated screenshots and visual proof manifest
-9. continuation plan: required next lanes when the product is only internally
+6. optional external harness packet: selected skills, commands, hooks, audits,
+   and security gates when using a harness such as Everything Claude Code
+7. lane packet: allowed files, forbidden files, proof commands, and handoff
+8. proof report: tests, generated artifacts, blockers, and launch state
+9. operator screenshot surface: generated screenshots and visual proof manifest
+10. continuation plan: required next lanes when the product is only internally
    ready with external gates
-10. VC pitch packet: investor-safe claims, demo script, diligence lanes, and
+11. VC pitch packet: investor-safe claims, demo script, diligence lanes, and
    pitch readiness report
-11. board go-live packet: jurisdiction tools, expert-agent review lanes,
+12. board go-live packet: jurisdiction tools, expert-agent review lanes,
     launch controls, human approval gates, and board readiness report
 
 ## Minimum Product Integration
@@ -122,6 +124,13 @@ python3 scripts/agentic_workflow_orchestrator.py strategy-plan \
   --country US \
   --out-dir system_review_graph
 
+python3 scripts/agentic_workflow_orchestrator.py harness-intake \
+  --harness ecc \
+  --install-mode observe \
+  --target-repo future-product-repo \
+  --goal "Evaluate optional same-day product harness patterns" \
+  --out-dir system_review_graph
+
 python3 scripts/agentic_workflow_orchestrator.py prompt-to-product \
   --name supplier-risk-copilot \
   --idea "Build a supplier risk product for import/export operators." \
@@ -150,6 +159,7 @@ In a product, wire the flow as a state machine:
 | repo_selected | run repo intake | repo packet or blocker |
 | research_routed | run research/data plan | research gates and data blockers |
 | strategy_selected | run strategy plan | development mode and external gates |
+| harness_evaluated | optionally run harness intake | external harness packet and safety gates |
 | packet_created | run prompt-to-product | product packet and lane plan |
 | context_loaded | load SRG/code-review graph | bounded context bundle |
 | lane_assigned | create worktree/branch/lane packet | worker handoff |
@@ -164,6 +174,12 @@ In a product, wire the flow as a state machine:
 Do not skip from `idea_received` to `lane_assigned` for complex products. The
 router is what prevents the product from treating manufacturing, regulated,
 data, and contract work as simple app work.
+
+Optional external harnesses are added only after `harness_evaluated`. They can
+provide useful same-day-product mechanics such as thin vertical slices, managed
+loops, verification loops, model routing, security scans, and command catalogs.
+They do not open install, push, deploy, paid, credential, legal, launch, or
+third-party mutation gates by themselves.
 
 ## Agent Assignment
 
@@ -299,4 +315,5 @@ The product automation is working when:
 - externally gated products generate continuation lanes before completion claims
 - investor-pitch products generate VC readiness artifacts before pitch claims
 - go-live products generate board readiness artifacts before launch claims
+- external agent harnesses have an integration packet before any install or reliance
 - no external effect opens without explicit approval and proof

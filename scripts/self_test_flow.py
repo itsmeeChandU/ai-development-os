@@ -24,6 +24,7 @@ REQUIRED_FOR_FLOW = [
     "docs/STARTUP_CONTINUATION_RULE.md",
     "docs/VC_PITCH_READINESS.md",
     "docs/BOARD_GO_LIVE_READINESS.md",
+    "docs/EXTERNAL_AGENT_HARNESS_INTEGRATION.md",
     "manifests/agentic_execution_manifest.json",
     "manifests/internal_repo_registry.json",
     "manifests/research_data_router.json",
@@ -39,6 +40,7 @@ REQUIRED_FOR_FLOW = [
     "templates/HARDWARE_RESEARCH_RECORD.md",
     "templates/PROCUREMENT_AND_LAB_PLAN.md",
     "templates/PRODUCT_AUTOMATION_RUNBOOK.md",
+    "templates/EXTERNAL_HARNESS_ADOPTION.md",
     "templates/ESTIMATE_VS_ACTUAL.md",
     "examples/calculator_app_prompt.txt",
     "examples/calculator_app_expected/COMPLEXITY_CLASSIFICATION.md",
@@ -112,6 +114,7 @@ REQUIRED_FOR_FLOW = [
     "system_review_graph/internal_repo_intake_packet.json",
     "system_review_graph/research_data_plan.json",
     "system_review_graph/development_strategy_plan.json",
+    "system_review_graph/external_harness_integration_packet.json",
 ]
 
 REQUIRED_TOOL_TERMS = [
@@ -127,6 +130,8 @@ REQUIRED_TOOL_TERMS = [
     "Yosys",
     "Verilator",
     "cocotb",
+    "Everything Claude Code",
+    "ECC AgentShield",
 ]
 
 

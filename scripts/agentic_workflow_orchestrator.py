@@ -35,6 +35,7 @@ REQUIRED_EXECUTION_FIELDS = {
     "handoff_schema",
     "proof_boundaries",
     "automation_runtime",
+    "external_harnesses",
 }
 REQUIRED_COMMANDS = {
     "/ados:normalize",
@@ -42,6 +43,7 @@ REQUIRED_COMMANDS = {
     "/ados:repo-intake",
     "/ados:research-plan",
     "/ados:strategy-plan",
+    "/ados:harness-intake",
     "/ados:lane",
     "/ados:proof",
     "/ados:review",
@@ -55,6 +57,7 @@ REQUIRED_ROUTINES = {
     "startup_continuation_sweep",
     "vc_pitch_readiness_sweep",
     "board_go_live_readiness_sweep",
+    "external_harness_safety_check",
     "nightly_eval_loop",
     "ci_failure_triage",
 }
@@ -66,6 +69,7 @@ REQUIRED_EVALS = {
     "ready_with_external_gates_continuation",
     "vc_pitch_readiness",
     "board_go_live_readiness",
+    "external_harness_boundary",
     "main_push_readiness",
 }
 REQUIRED_LANE_FIELDS = {
@@ -200,10 +204,25 @@ def validate_execution_manifest(
         "repo-intake",
         "research-plan",
         "strategy-plan",
+        "harness-intake",
     }
     missing_runtime = sorted(required_runtime - set(runtime_commands))
     if missing_runtime:
         errors.append(f"automation runtime missing commands: {', '.join(missing_runtime)}")
+
+    harnesses = _ids(execution.get("external_harnesses", []))
+    if "ecc" not in harnesses:
+        errors.append("execution manifest must include ecc in external_harnesses")
+    for harness in execution.get("external_harnesses", []):
+        harness_id = str(harness.get("id") or "<missing>")
+        if not harness.get("source_url"):
+            errors.append(f"external harness {harness_id} must define source_url")
+        if not harness.get("license"):
+            errors.append(f"external harness {harness_id} must define license")
+        if "observe" not in harness.get("integration_modes", []):
+            errors.append(f"external harness {harness_id} must support observe mode")
+        if not harness.get("blocked_effects"):
+            errors.append(f"external harness {harness_id} must define blocked_effects")
 
     return errors
 
@@ -430,6 +449,13 @@ def _routine_commands(routine_id: str) -> list[str]:
         "stale_blocker_sweep": [
             "python3 scripts/blocker_ledger.py validate "
             "--input system_review_graph/blockers.jsonl --allow-missing"
+        ],
+        "external_harness_safety_check": [
+            "python3 scripts/agentic_workflow_orchestrator.py harness-intake "
+            "--harness ecc --install-mode observe --target-repo ai-development-os "
+            "--out-dir system_review_graph",
+            "python3 scripts/workflow_manifest_check.py",
+            "python3 scripts/agentic_workflow_orchestrator.py validate",
         ],
         "nightly_eval_loop": [
             "python3 scripts/eval_suite.py --manifest manifests/agentic_execution_manifest.json "
@@ -800,6 +826,109 @@ def build_strategy_plan(
     }
 
 
+def build_harness_intake_packet(
+    *,
+    workflow: dict[str, Any],
+    execution: dict[str, Any],
+    harness_id: str,
+    install_mode: str = "observe",
+    target_repo: str = "",
+    goal: str = "",
+) -> dict[str, Any]:
+    harnesses = _rows_by_id(execution.get("external_harnesses", []))
+    workflow_rule = workflow.get("external_harness_integration") or {}
+    workflow_harnesses = _rows_by_id(workflow_rule.get("known_harnesses", []))
+    workflow_harness = workflow_harnesses.get(harness_id, {})
+    harness = harnesses.get(harness_id) or workflow_harness
+    blockers = []
+    if harness is None:
+        blockers.append(
+            {
+                "id": f"harness:{harness_id}:unknown",
+                "module": "external_harness_integration",
+                "issue": "external harness is not registered in the execution manifest",
+                "owner": "workflow-coordinator",
+                "evidence": str(EXECUTION_MANIFEST.relative_to(ROOT)),
+                "gate": "closed",
+                "next_valid_move": "Add the harness to external_harnesses or select a registered harness.",
+                "unsafe_to_bypass": True,
+            }
+        )
+        harness = {"id": harness_id, "status": "unknown"}
+    integration_modes = set(harness.get("integration_modes", workflow_rule.get("integration_modes", [])))
+    if install_mode not in integration_modes:
+        blockers.append(
+            {
+                "id": f"harness:{harness_id}:unsupported-mode",
+                "module": "external_harness_integration",
+                "issue": "requested install mode is not registered for this harness",
+                "owner": "workflow-coordinator",
+                "evidence": str(EXECUTION_MANIFEST.relative_to(ROOT)),
+                "gate": "closed",
+                "next_valid_move": f"Use one of: {', '.join(sorted(integration_modes))}.",
+                "unsafe_to_bypass": True,
+            }
+        )
+    if install_mode != "observe":
+        blockers.append(
+            {
+                "id": f"harness:{harness_id}:operator-install-approval",
+                "module": "external_harness_integration",
+                "issue": "installing or copying an external harness surface requires explicit operator approval and security scan proof",
+                "owner": "operator",
+                "evidence": "docs/EXTERNAL_AGENT_HARNESS_INTEGRATION.md",
+                "gate": "closed",
+                "next_valid_move": "Get explicit scoped approval, record exact version, check duplicate hooks/plugins, and run config/security scan.",
+                "unsafe_to_bypass": True,
+            }
+        )
+    blocked_effects = list(harness.get("blocked_effects", [])) or [
+        "push",
+        "publish",
+        "deploy",
+        "paid_api",
+        "credential_change",
+        "third_party_mutation",
+        "legal_or_commercial_claim",
+    ]
+    blocked_claims = list(workflow_rule.get("blocked_claims", [])) or [
+        "fully_operational",
+        "launch_ready",
+        "commercially_ready",
+    ]
+    return {
+        "generated_at": _now(),
+        "kind": "external_harness_integration_packet",
+        "harness": harness,
+        "target_repo": target_repo,
+        "goal": goal,
+        "install_mode": install_mode,
+        "status": "ready_for_observation" if not blockers else "ready_with_operator_or_config_gates",
+        "adopted_patterns": harness.get("usable_patterns", []),
+        "command_mapping": harness.get("command_mapping", []),
+        "adoption_gates": harness.get("adoption_gates", workflow_harness.get("adoption_gates", [])),
+        "blocked_effects": blocked_effects,
+        "blocked_claims": blocked_claims,
+        "blockers": blockers,
+        "proof_commands": [
+            "python3 scripts/workflow_manifest_check.py",
+            "python3 scripts/agentic_workflow_orchestrator.py validate",
+            "python3 scripts/agentic_workflow_orchestrator.py automation-check",
+            "python3 scripts/ai_dev_os_check.py",
+            "python3 scripts/self_test_flow.py",
+        ],
+        "next_valid_move": (
+            "Use the mapped harness patterns as optional accelerators while running ADOS proof commands."
+            if install_mode == "observe"
+            else "Resolve operator install approval and security scan blockers before relying on the harness."
+        ),
+        "proof_boundary": (
+            "External harness packets are coordination surfaces. Source files, tests, generated artifacts, "
+            "GitHub history, blocker ledgers, and required human approvals prove completion."
+        ),
+    }
+
+
 def _estimate_complexity(idea: str) -> dict[str, str]:
     text = idea.lower()
     if any(term in text for term in ["hardware", "firmware", "robot", "device", "chip", "os"]):
@@ -885,6 +1014,7 @@ def build_prompt_to_product_packet(
             "/ados:repo-intake",
             "/ados:research-plan",
             "/ados:strategy-plan",
+            "/ados:harness-intake",
         ],
         "next_valid_move": (
             "Create or select the target repo, load bounded context, claim the "
@@ -1078,6 +1208,26 @@ def _cmd_strategy_plan(args: argparse.Namespace) -> int:
     return 0
 
 
+def _cmd_harness_intake(args: argparse.Namespace) -> int:
+    workflow, execution = _load_pair()
+    packet = build_harness_intake_packet(
+        workflow=workflow,
+        execution=execution,
+        harness_id=args.harness,
+        install_mode=args.install_mode,
+        target_repo=args.target_repo,
+        goal=args.goal,
+    )
+    out_dir = Path(args.out_dir)
+    json_path = out_dir / "external_harness_integration_packet.json"
+    md_path = out_dir / "external_harness_integration_packet.md"
+    _write_json(json_path, packet)
+    _write_text(md_path, _format_key_value_markdown("External Harness Integration Packet", packet))
+    print(json_path)
+    print(md_path)
+    return 0
+
+
 def _cmd_command_spec(args: argparse.Namespace) -> int:
     _workflow, execution = _load_pair()
     inputs = {}
@@ -1212,6 +1362,14 @@ def _cmd_automation_check(_args: argparse.Namespace) -> int:
         field="manufacturing",
         country="US",
     )
+    harness_packet = build_harness_intake_packet(
+        workflow=workflow,
+        execution=execution,
+        harness_id="ecc",
+        install_mode="observe",
+        target_repo="ai-development-os",
+        goal="Evaluate optional same-day product harness patterns.",
+    )
     if not packet["execution_plan"]["lane_packets"]:
         print("Automation check: FAIL")
         print("error: prompt-to-product packet has no lanes")
@@ -1243,6 +1401,14 @@ def _cmd_automation_check(_args: argparse.Namespace) -> int:
     if "M4_HARDWARE_MANUFACTURING" not in [row["id"] for row in strategy_plan["modes"]]:
         print("Automation check: FAIL")
         print("error: manufacturing strategy mode missing")
+        return 1
+    if harness_packet["status"] != "ready_for_observation":
+        print("Automation check: FAIL")
+        print("error: harness intake packet should be ready for observation")
+        return 1
+    if "push" not in harness_packet["blocked_effects"]:
+        print("Automation check: FAIL")
+        print("error: harness packet must keep push blocked")
         return 1
     print("Automation check: PASS")
     print(f"slash_commands={specs['count']}")
@@ -1318,6 +1484,14 @@ def main(argv: list[str] | None = None) -> int:
     strategy_plan.add_argument("--country", default="")
     strategy_plan.add_argument("--out-dir", default="system_review_graph")
     strategy_plan.set_defaults(func=_cmd_strategy_plan)
+
+    harness_intake = sub.add_parser("harness-intake", help="Write external harness integration packet")
+    harness_intake.add_argument("--harness", default="ecc")
+    harness_intake.add_argument("--install-mode", default="observe")
+    harness_intake.add_argument("--target-repo", default="")
+    harness_intake.add_argument("--goal", default="")
+    harness_intake.add_argument("--out-dir", default="system_review_graph")
+    harness_intake.set_defaults(func=_cmd_harness_intake)
 
     command_spec = sub.add_parser("command-spec", help="Print one slash command packet")
     command_spec.add_argument("--command", required=True)

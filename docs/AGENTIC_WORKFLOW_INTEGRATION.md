@@ -21,8 +21,11 @@ context surfaces for agents and LLMs, not proof by themselves.
    imports, edges, tests, generated artifacts, and risk/ownership hints.
 6. Split work only after owned files, forbidden files, proof commands, and
    handoff requirements are clear.
-7. Use one branch/worktree per bounded lane when parallel work is useful.
-8. Run small proof loops, refresh generated truth artifacts, and push verified
+7. If an optional external harness such as Everything Claude Code is useful,
+   generate an external harness integration packet before installing or relying
+   on it.
+8. Use one branch/worktree per bounded lane when parallel work is useful.
+9. Run small proof loops, refresh generated truth artifacts, and push verified
    branches.
 
 ## Agent Modes
@@ -79,6 +82,32 @@ startup idea -> AI Development OS contract -> SRG context bundle
 
 The machine-readable source of this workflow is
 `manifests/agentic_workflow_manifest.json`.
+
+## External Agent Harnesses
+
+External harnesses can speed up AI-native delivery when they are treated as
+optional accelerators. Everything Claude Code (ECC) is currently recorded as an
+optional MIT-licensed harness pattern source for thin vertical-slice MVP work,
+managed loops, verification loops, model routing, harness audits, AgentShield
+security scans, skills, commands, and hooks.
+
+Before using an external harness, generate:
+
+```bash
+python3 scripts/agentic_workflow_orchestrator.py harness-intake \
+  --harness ecc \
+  --install-mode observe \
+  --target-repo ai-development-os \
+  --goal "Evaluate optional same-day product harness patterns" \
+  --out-dir system_review_graph
+```
+
+Use `observe` as the default mode. Installing project-local or global harness
+surfaces needs explicit operator approval, source/license recording, duplicate
+hook/plugin checks, and a config/security scan where relevant. The harness can
+help agents move faster, but it cannot replace source inspection, tests,
+generated artifacts, GitHub branch state, blocker rows, continuation plans, or
+qualified human approval gates.
 
 ## Execution Surface
 
@@ -183,6 +212,12 @@ python3 scripts/agentic_workflow_orchestrator.py strategy-plan \
   --idea "Manufacturing product requiring supplier discovery, country import/export checks, contracts, and logistics" \
   --field manufacturing \
   --country US \
+  --out-dir system_review_graph
+python3 scripts/agentic_workflow_orchestrator.py harness-intake \
+  --harness ecc \
+  --install-mode observe \
+  --target-repo future-product-repo \
+  --goal "Evaluate optional same-day product harness patterns" \
   --out-dir system_review_graph
 python3 scripts/agentic_workflow_orchestrator.py prompt-to-product \
   --name "my-startup" \

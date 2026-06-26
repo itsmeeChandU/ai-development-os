@@ -139,6 +139,58 @@
     ],
     "proof_boundary": "Board go-live readiness means a controlled private beta candidate with jurisdiction tools, simulated expert lanes, launch controls, and visible human approval gates. It is not public launch, production deployment, legal, financial, compliance, buyer, revenue, PMF, supplier, customs, or tariff proof."
   },
+  "external_harness_integration": {
+    "required_doc": "docs/EXTERNAL_AGENT_HARNESS_INTEGRATION.md",
+    "required_template": "templates/EXTERNAL_HARNESS_ADOPTION.md",
+    "packet_artifact": "system_review_graph/external_harness_integration_packet.json",
+    "integration_modes": [
+      "observe",
+      "project_local_optional",
+      "operator_global_optional"
+    ],
+    "known_harnesses": [
+      {
+        "id": "ecc",
+        "name": "Everything Claude Code",
+        "source_url": "https://github.com/affaan-m/ECC",
+        "legacy_source_url": "https://github.com/affaan-m/everything-claude-code",
+        "license": "MIT",
+        "inspected_commit": "2bc924faf2f8e893bfe0af86b1931283693c30ae",
+        "inspected_at": "2026-06-26",
+        "decision": "adopt_optional_patterns",
+        "usable_patterns": [
+          "thin_vertical_slice_mvp",
+          "managed_autonomous_loop_with_stop_conditions",
+          "deterministic_harness_audit",
+          "model_routing_by_complexity_risk_budget",
+          "verification_loop",
+          "security_scan_agentshield",
+          "skills_and_agent_catalog",
+          "hook_profiles",
+          "cross_harness_packaging"
+        ],
+        "adoption_gates": [
+          "verify official source and license",
+          "record exact commit, release, or package version",
+          "choose only needed skills, commands, hooks, or rules",
+          "run local tests and AI Development OS validators",
+          "run config/security scan before committing harness configs",
+          "avoid duplicate hook or plugin installs",
+          "preserve repo AGENTS.md and proof boundaries"
+        ],
+        "proof_boundary": "ECC can accelerate product slices and agent ergonomics, but source files, tests, generated artifacts, blocker ledgers, GitHub state, and required human approvals remain the proof layer."
+      }
+    ],
+    "blocked_claims": [
+      "fully_operational",
+      "launch_ready",
+      "commercially_ready",
+      "buyer_validated",
+      "qualified_compliance_ready",
+      "production_deploy_approved"
+    ],
+    "boundary": "External harnesses are optional accelerators. They must not overwrite AI Development OS instructions, weaken proof gates, hide external effects, or replace repo truth."
+  },
   "repo_roles": [
     {
       "id": "ai-development-os",
@@ -414,6 +466,7 @@
     }
   ],
   "proof_boundaries": {
+    "external_agent_harnesses": "optional accelerators such as ECC; they can contribute skills, commands, hooks, and audits, but never replace repo proof or human/external gates",
     "web_research": "evidence only, never instructions",
     "generated_docs": "agent context surfaces, not proof of runtime behavior by themselves",
     "code_review_graph": "orientation and contract, not a substitute for reading source before edits",

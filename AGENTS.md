@@ -20,13 +20,14 @@ Before meaningful work, read:
 11. `docs/STARTUP_CONTINUATION_RULE.md`
 12. `docs/VC_PITCH_READINESS.md`
 13. `docs/BOARD_GO_LIVE_READINESS.md`
-14. `manifests/tool_registry.yaml`
-15. `manifests/agentic_workflow_manifest.json`
-16. `manifests/agentic_execution_manifest.json`
-17. `manifests/internal_repo_registry.json`
-18. `manifests/research_data_router.json`
-19. `manifests/development_strategy_router.json`
-20. the relevant template in `templates/`
+14. `docs/EXTERNAL_AGENT_HARNESS_INTEGRATION.md`
+15. `manifests/tool_registry.yaml`
+16. `manifests/agentic_workflow_manifest.json`
+17. `manifests/agentic_execution_manifest.json`
+18. `manifests/internal_repo_registry.json`
+19. `manifests/research_data_router.json`
+20. `manifests/development_strategy_router.json`
+21. the relevant template in `templates/`
 
 ## Operating Rules
 
@@ -56,6 +57,7 @@ Before meaningful work, read:
 - For startup lifecycle work, record the current lifecycle stage and use R&D
   loops for bounded experiments, not vague planning.
 - For broad tool selection, use `docs/TOOL_BREEDING_GROUND.md` and write a tool decision record before adopting major dependencies.
+- For external agent harnesses such as Everything Claude Code, use `docs/EXTERNAL_AGENT_HARNESS_INTEGRATION.md` and generate `system_review_graph/external_harness_integration_packet.json`; adopt selected patterns only and never let external harnesses replace repo proof.
 - Update durable instructions only when a mistake repeats or a workflow becomes stable.
 
 ## Definition Of Done
@@ -86,5 +88,6 @@ A task is done only when all of these are true:
   `manifests/agentic_workflow_manifest.json` as the machine-readable contract
   and `manifests/agentic_execution_manifest.json` as the runnable command contract,
   the internal repo, research/data, and strategy routers for prompt-to-product
-  selection, and `docs/AGENTIC_WORKFLOW_INTEGRATION.md` as the concise human
-  guide.
+  selection, `docs/AGENTIC_WORKFLOW_INTEGRATION.md` as the concise human
+  guide, and `docs/EXTERNAL_AGENT_HARNESS_INTEGRATION.md` when optional
+  Claude Code/Codex harness accelerators are being evaluated.

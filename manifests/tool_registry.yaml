@@ -120,6 +120,19 @@ tools:
     use_for: local swarm records, hooks, memory, coordination evidence
     license: local
     decision: adopt_when_available
+  - name: Everything Claude Code
+    url: https://github.com/affaan-m/ECC
+    category: external-agent-harness
+    use_for: optional skills, commands, hook patterns, worktree lifecycle, verification loops, and same-day product-slice acceleration
+    license: MIT
+    decision: adopt_optional_patterns
+    boundary: "External harness acceleration only; AI Development OS repo proof, generated artifacts, tests, and human/external gates remain canonical."
+  - name: ECC AgentShield
+    url: https://www.npmjs.com/package/ecc-agentshield
+    category: agent-config-security
+    use_for: scan Claude Code or external harness configs, hooks, MCP definitions, agents, and skills before committing optional harness configuration
+    license: MIT
+    decision: adopt_when_external_harness_configs_change
   - name: Zephyr RTOS
     url: https://github.com/zephyrproject-rtos/zephyr
     category: embedded-rtos

@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-06-25T06:17:47+00:00",
-  "goal": "Own the first prompt-to-product proof loop",
+  "generated_at": "2026-06-26T01:25:25+00:00",
+  "goal": "Own the first proof loop",
   "handoff_required_fields": [
     "lane",
     "branch_or_worktree",
@@ -24,7 +24,7 @@
       "templates/**",
       ".github/**"
     ],
-    "branch": "codex/workflow-coordinator-20260625",
+    "branch": "codex/workflow-coordinator-20260626",
     "forbidden_files": [
       "LICENSE",
       "NOTICE.md",
@@ -61,7 +61,7 @@
     "worktree": "/Users/chandu/.codex/worktrees/ai-dev-os-workflow/ai-development-os-workflow-coordinator",
     "worktree_commands": [
       "git fetch origin",
-      "git worktree add /Users/chandu/.codex/worktrees/ai-dev-os-workflow/ai-development-os-workflow-coordinator -b codex/workflow-coordinator-20260625 origin/main"
+      "git worktree add /Users/chandu/.codex/worktrees/ai-dev-os-workflow/ai-development-os-workflow-coordinator -b codex/workflow-coordinator-20260626 origin/main"
     ]
   },
   "unsafe_or_external_gates": "closed unless explicit user intent and repo proof open them",

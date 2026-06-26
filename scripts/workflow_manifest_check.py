@@ -20,6 +20,7 @@ REQUIRED_TOP_LEVEL = {
     "startup_continuation_rule",
     "vc_pitch_readiness_rule",
     "board_go_live_readiness_rule",
+    "external_harness_integration",
     "repo_roles",
     "agent_modes",
     "version_control_rules",
@@ -124,6 +125,20 @@ def validate_manifest(manifest: dict[str, Any]) -> list[str]:
         errors.append("board_go_live_readiness_rule.ready_status must be board_go_live_candidate_with_human_approval_gates")
     if "public_launch_ready" not in board_rule.get("closed_claims_without_approval", []):
         errors.append("board_go_live_readiness_rule must close public_launch_ready claims without approval")
+
+    harness_rule = manifest.get("external_harness_integration") or {}
+    if harness_rule.get("required_doc") != "docs/EXTERNAL_AGENT_HARNESS_INTEGRATION.md":
+        errors.append("external_harness_integration.required_doc must be docs/EXTERNAL_AGENT_HARNESS_INTEGRATION.md")
+    if harness_rule.get("packet_artifact") != "system_review_graph/external_harness_integration_packet.json":
+        errors.append("external_harness_integration.packet_artifact must be system_review_graph/external_harness_integration_packet.json")
+    modes = set(harness_rule.get("integration_modes", []))
+    if "observe" not in modes or "project_local_optional" not in modes:
+        errors.append("external_harness_integration must include observe and project_local_optional modes")
+    harness_ids = {str(row.get("id")) for row in harness_rule.get("known_harnesses", [])}
+    if "ecc" not in harness_ids:
+        errors.append("external_harness_integration must include the ecc harness record")
+    if "fully_operational" not in harness_rule.get("blocked_claims", []):
+        errors.append("external_harness_integration must block fully_operational claims")
 
     return errors
 
