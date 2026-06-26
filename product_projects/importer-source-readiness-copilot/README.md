@@ -61,6 +61,7 @@ python3 scripts/build_vc_pitch_packet.py
 python3 scripts/build_board_go_live_packet.py
 python3 scripts/run_operator_workflow.py
 python3 scripts/run_customer_workflow.py
+python3 scripts/run_policy_intelligence.py
 python3 scripts/export_operator_dashboard.py
 python3 scripts/audit_external_package.py --root .
 python3 scripts/check_product.py
@@ -98,6 +99,10 @@ system_review_graph/public_trade_readiness_manifest.json
 system_review_graph/exporter_mode_requirements.json
 system_review_graph/public_report_types.json
 system_review_graph/public_upload_policy.json
+system_review_graph/intelligence_hub_policy_monitor.json
+system_review_graph/policy_source_snapshots.json
+system_review_graph/policy_change_impact_report.json
+system_review_graph/policy_intelligence.sqlite
 system_review_graph/expert_review_packet_packet-frozen-tuna-canada-001.md
 system_review_graph/blockers.jsonl
 system_review_graph/operator_dashboard.html

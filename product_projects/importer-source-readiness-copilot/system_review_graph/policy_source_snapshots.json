@@ -1,0 +1,282 @@
+{
+  "monitored_sources": [
+    {
+      "accessed_at": "2026-06-25",
+      "claim_boundary": "Reference source only; does not prove CARM registration, accounting setup, duty payment readiness, or customs advice.",
+      "evidence_role": "commercial importer duty and tax account workflow",
+      "jurisdiction": "CA",
+      "loader": "intelligence_hub.official_source_registry",
+      "name": "CBSA Assessment and Revenue Management (CARM)",
+      "refresh_mode": "external_refresh_required_before_claims",
+      "source_id": "cbsa-carm",
+      "tags": [
+        "buyer_importer_discovery",
+        "official_reference"
+      ],
+      "url": "https://www.cbsa-asfc.gc.ca/services/carm-gcra/menu-eng.html"
+    },
+    {
+      "accessed_at": "2026-06-25",
+      "claim_boundary": "Reference source only; does not replace CBSA, broker, customs, or legal review.",
+      "evidence_role": "commercial import process orientation",
+      "jurisdiction": "CA",
+      "loader": "intelligence_hub.official_source_registry",
+      "name": "CBSA Import Commercial Goods Into Canada",
+      "refresh_mode": "external_refresh_required_before_claims",
+      "source_id": "cbsa-import-commercial-goods",
+      "tags": [
+        "expert_review",
+        "official_reference"
+      ],
+      "url": "https://www.cbsa-asfc.gc.ca/import/menu-eng.html"
+    },
+    {
+      "accessed_at": "2026-06-25",
+      "claim_boundary": "Reference source only; classification and tariff treatment require qualified review.",
+      "evidence_role": "Canadian tariff classification starting point",
+      "jurisdiction": "CA",
+      "loader": "intelligence_hub.official_source_registry",
+      "name": "CBSA Customs Tariff 2026",
+      "refresh_mode": "external_refresh_required_before_claims",
+      "source_id": "cbsa-customs-tariff-2026",
+      "tags": [
+        "official_reference",
+        "tariff"
+      ],
+      "url": "https://www.cbsa-asfc.gc.ca/trade-commerce/tariff-tarif/2026/menu-eng.html"
+    },
+    {
+      "accessed_at": "2026-06-25",
+      "claim_boundary": "Reference source only; product-specific food import compliance requires qualified review and source verification.",
+      "evidence_role": "CFIA-regulated commodity import requirement lookup",
+      "jurisdiction": "CA",
+      "loader": "intelligence_hub.official_source_registry",
+      "name": "CFIA Automated Import Reference System (AIRS)",
+      "refresh_mode": "external_refresh_required_before_claims",
+      "source_id": "cfia-airs",
+      "tags": [
+        "food_import",
+        "official_reference"
+      ],
+      "url": "https://inspection.canada.ca/en/importing-food-plants-animals/airs"
+    },
+    {
+      "accessed_at": "2026-06-25",
+      "claim_boundary": "Reference source only; does not prove whether a specific product requires an import permit.",
+      "evidence_role": "import control and permit orientation",
+      "jurisdiction": "CA",
+      "loader": "intelligence_hub.official_source_registry",
+      "name": "Global Affairs Canada Import Controls and Import Permits",
+      "refresh_mode": "external_refresh_required_before_claims",
+      "source_id": "gac-import-controls",
+      "tags": [
+        "food_import",
+        "import_controls",
+        "official_reference"
+      ],
+      "url": "https://www.international.gc.ca/controls-controles/about-a_propos/impor/permits-licences.aspx?lang=eng"
+    },
+    {
+      "accessed_at": "2026-06-25",
+      "claim_boundary": "Reference source only; legal interpretation and product applicability require qualified review.",
+      "evidence_role": "legal reference for controlled imports",
+      "jurisdiction": "CA",
+      "loader": "intelligence_hub.official_source_registry",
+      "name": "Justice Laws Import Control List",
+      "refresh_mode": "external_refresh_required_before_claims",
+      "source_id": "justice-import-control-list",
+      "tags": [
+        "import_controls",
+        "official_reference"
+      ],
+      "url": "https://laws-lois.justice.gc.ca/eng/regulations/c.r.c.%2C_c._604/index.html"
+    },
+    {
+      "accessed_at": "2026-06-25",
+      "claim_boundary": "Reference source only; screening results require dated search records and reviewer signoff.",
+      "evidence_role": "restricted-party and sanctions screening source",
+      "jurisdiction": "CA",
+      "loader": "intelligence_hub.official_source_registry",
+      "name": "Global Affairs Canada Consolidated Canadian Autonomous Sanctions List",
+      "refresh_mode": "external_refresh_required_before_claims",
+      "source_id": "canada-sanctions",
+      "tags": [
+        "food_import",
+        "official_reference",
+        "restricted_party_screening"
+      ],
+      "url": "https://www.international.gc.ca/world-monde/international_relations-relations_internationales/sanctions/consolidated-consolide.aspx?lang=eng"
+    },
+    {
+      "accessed_at": "2026-06-25",
+      "claim_boundary": "Reference source only; does not prove market size, buyer demand, or revenue.",
+      "evidence_role": "Canadian trade data research source",
+      "jurisdiction": "CA",
+      "loader": "intelligence_hub.official_source_registry",
+      "name": "ISED Trade Data Online",
+      "refresh_mode": "external_refresh_required_before_claims",
+      "source_id": "ised-trade-data-online",
+      "tags": [
+        "buyer_importer_discovery",
+        "official_reference",
+        "trade_data"
+      ],
+      "url": "https://ised-isde.canada.ca/site/trade-data-online/en/overview"
+    },
+    {
+      "accessed_at": "2026-06-25",
+      "claim_boundary": "Reference source only; does not prove buyer validation, supplier fit, customs advice, or freshness of a specific product row.",
+      "evidence_role": "importer discovery orientation",
+      "jurisdiction": "CA",
+      "loader": "intelligence_hub.official_source_registry",
+      "name": "Canadian Importers Database",
+      "refresh_mode": "external_refresh_required_before_claims",
+      "source_id": "canada-cid",
+      "tags": [
+        "buyer_importer_discovery",
+        "official_reference",
+        "trade_data"
+      ],
+      "url": "https://ised-isde.canada.ca/site/ised/en/research-and-business-intelligence/canadian-importers-database"
+    },
+    {
+      "accessed_at": "2026-06-25",
+      "claim_boundary": "Reference source only; does not prove a broker relationship, review, or signoff.",
+      "evidence_role": "qualified broker discovery source",
+      "jurisdiction": "CA",
+      "loader": "intelligence_hub.official_source_registry",
+      "name": "CBSA Licensed Customs Brokers",
+      "refresh_mode": "external_refresh_required_before_claims",
+      "source_id": "cbsa-licensed-customs-brokers",
+      "tags": [
+        "expert_review",
+        "official_reference"
+      ],
+      "url": "https://www.cbsa-asfc.gc.ca/services/cb-cd/cb-cd-eng.html"
+    }
+  ],
+  "proof_boundary": "This artifact defines how Intelligence Hub should monitor official sources and stale packets. It does not prove current tariff, CFIA, import permit, sanctions, buyer, supplier, legal, or commercial readiness.",
+  "source_snapshots": [
+    {
+      "content_mode": "registry_metadata_only",
+      "freshness_status": "monitoring_contract_ready_requires_live_refresh",
+      "live_fetch_performed": false,
+      "observed_at": "2026-06-25T00:00:00+00:00",
+      "proof_boundary": "Registry metadata proves which source to monitor, not current legal or compliance truth.",
+      "rights_status": "official_reference_url_only",
+      "snapshot_hash": "f50f8b1e956d460aa04ff190ed3545073a76bf4f3d179b1379b572085258da3e",
+      "snapshot_id": "snapshot:cbsa-carm:f50f8b1e956d",
+      "source_id": "cbsa-carm",
+      "url": "https://www.cbsa-asfc.gc.ca/services/carm-gcra/menu-eng.html"
+    },
+    {
+      "content_mode": "registry_metadata_only",
+      "freshness_status": "monitoring_contract_ready_requires_live_refresh",
+      "live_fetch_performed": false,
+      "observed_at": "2026-06-25T00:00:00+00:00",
+      "proof_boundary": "Registry metadata proves which source to monitor, not current legal or compliance truth.",
+      "rights_status": "official_reference_url_only",
+      "snapshot_hash": "fc6ae365b19cd095ea273364ed3cb01a9bff6f9ec5c0e1be18316cf6327f078b",
+      "snapshot_id": "snapshot:cbsa-import-commercial-goods:fc6ae365b19c",
+      "source_id": "cbsa-import-commercial-goods",
+      "url": "https://www.cbsa-asfc.gc.ca/import/menu-eng.html"
+    },
+    {
+      "content_mode": "registry_metadata_only",
+      "freshness_status": "monitoring_contract_ready_requires_live_refresh",
+      "live_fetch_performed": false,
+      "observed_at": "2026-06-25T00:00:00+00:00",
+      "proof_boundary": "Registry metadata proves which source to monitor, not current legal or compliance truth.",
+      "rights_status": "official_reference_url_only",
+      "snapshot_hash": "c8555bf68f2b6c1e1105160557f0b7f972bc32dd1858aa8700e169885967ee15",
+      "snapshot_id": "snapshot:cbsa-customs-tariff-2026:c8555bf68f2b",
+      "source_id": "cbsa-customs-tariff-2026",
+      "url": "https://www.cbsa-asfc.gc.ca/trade-commerce/tariff-tarif/2026/menu-eng.html"
+    },
+    {
+      "content_mode": "registry_metadata_only",
+      "freshness_status": "monitoring_contract_ready_requires_live_refresh",
+      "live_fetch_performed": false,
+      "observed_at": "2026-06-25T00:00:00+00:00",
+      "proof_boundary": "Registry metadata proves which source to monitor, not current legal or compliance truth.",
+      "rights_status": "official_reference_url_only",
+      "snapshot_hash": "922aab95bfb09c406befa5f61670f97373c99df608aaeff7bee5c11e759009eb",
+      "snapshot_id": "snapshot:cfia-airs:922aab95bfb0",
+      "source_id": "cfia-airs",
+      "url": "https://inspection.canada.ca/en/importing-food-plants-animals/airs"
+    },
+    {
+      "content_mode": "registry_metadata_only",
+      "freshness_status": "monitoring_contract_ready_requires_live_refresh",
+      "live_fetch_performed": false,
+      "observed_at": "2026-06-25T00:00:00+00:00",
+      "proof_boundary": "Registry metadata proves which source to monitor, not current legal or compliance truth.",
+      "rights_status": "official_reference_url_only",
+      "snapshot_hash": "52f681ce523d49a0cc47150ffa07b872cd8d7774d5e91457ef2ca14445717c78",
+      "snapshot_id": "snapshot:gac-import-controls:52f681ce523d",
+      "source_id": "gac-import-controls",
+      "url": "https://www.international.gc.ca/controls-controles/about-a_propos/impor/permits-licences.aspx?lang=eng"
+    },
+    {
+      "content_mode": "registry_metadata_only",
+      "freshness_status": "monitoring_contract_ready_requires_live_refresh",
+      "live_fetch_performed": false,
+      "observed_at": "2026-06-25T00:00:00+00:00",
+      "proof_boundary": "Registry metadata proves which source to monitor, not current legal or compliance truth.",
+      "rights_status": "official_reference_url_only",
+      "snapshot_hash": "bfb42aa2c0bf7c80bd8d21af9e0b9e60611cda6f7bdc98dafbb64b8db69604c8",
+      "snapshot_id": "snapshot:justice-import-control-list:bfb42aa2c0bf",
+      "source_id": "justice-import-control-list",
+      "url": "https://laws-lois.justice.gc.ca/eng/regulations/c.r.c.%2C_c._604/index.html"
+    },
+    {
+      "content_mode": "registry_metadata_only",
+      "freshness_status": "monitoring_contract_ready_requires_live_refresh",
+      "live_fetch_performed": false,
+      "observed_at": "2026-06-25T00:00:00+00:00",
+      "proof_boundary": "Registry metadata proves which source to monitor, not current legal or compliance truth.",
+      "rights_status": "official_reference_url_only",
+      "snapshot_hash": "d38bc1bb6a8ddd6cb04c485d561641b5da092b7c239c53e41ab575eb6d1c4510",
+      "snapshot_id": "snapshot:canada-sanctions:d38bc1bb6a8d",
+      "source_id": "canada-sanctions",
+      "url": "https://www.international.gc.ca/world-monde/international_relations-relations_internationales/sanctions/consolidated-consolide.aspx?lang=eng"
+    },
+    {
+      "content_mode": "registry_metadata_only",
+      "freshness_status": "monitoring_contract_ready_requires_live_refresh",
+      "live_fetch_performed": false,
+      "observed_at": "2026-06-25T00:00:00+00:00",
+      "proof_boundary": "Registry metadata proves which source to monitor, not current legal or compliance truth.",
+      "rights_status": "official_reference_url_only",
+      "snapshot_hash": "4391511466c4d1a4b1c4120fe8f0d146bb96f6529e7ae64db525ccaa0f84033e",
+      "snapshot_id": "snapshot:ised-trade-data-online:4391511466c4",
+      "source_id": "ised-trade-data-online",
+      "url": "https://ised-isde.canada.ca/site/trade-data-online/en/overview"
+    },
+    {
+      "content_mode": "registry_metadata_only",
+      "freshness_status": "monitoring_contract_ready_requires_live_refresh",
+      "live_fetch_performed": false,
+      "observed_at": "2026-06-25T00:00:00+00:00",
+      "proof_boundary": "Registry metadata proves which source to monitor, not current legal or compliance truth.",
+      "rights_status": "official_reference_url_only",
+      "snapshot_hash": "e0cdb6464d90d4453626a8588e8bdf7fad469b2776c4ce127cc82c1f41977afb",
+      "snapshot_id": "snapshot:canada-cid:e0cdb6464d90",
+      "source_id": "canada-cid",
+      "url": "https://ised-isde.canada.ca/site/ised/en/research-and-business-intelligence/canadian-importers-database"
+    },
+    {
+      "content_mode": "registry_metadata_only",
+      "freshness_status": "monitoring_contract_ready_requires_live_refresh",
+      "live_fetch_performed": false,
+      "observed_at": "2026-06-25T00:00:00+00:00",
+      "proof_boundary": "Registry metadata proves which source to monitor, not current legal or compliance truth.",
+      "rights_status": "official_reference_url_only",
+      "snapshot_hash": "f2ddb97717b54ab274c10f84e53f85088ee62155e757f7097702e769e45bd4b2",
+      "snapshot_id": "snapshot:cbsa-licensed-customs-brokers:f2ddb97717b5",
+      "source_id": "cbsa-licensed-customs-brokers",
+      "url": "https://www.cbsa-asfc.gc.ca/services/cb-cd/cb-cd-eng.html"
+    }
+  ],
+  "status": "policy_source_snapshots_ready"
+}

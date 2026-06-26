@@ -360,6 +360,62 @@
         "scripts/check_product.py"
       ],
       "status": "implemented_fail_closed"
+    },
+    {
+      "artifacts": [
+        "customer_readiness_report.json",
+        "public_trade_readiness_manifest.json"
+      ],
+      "boundary": "Starter mode creates a missing-evidence packet and checklist; it is not advice or approval.",
+      "id": "REQ-STARTER-01",
+      "name": "Beginner no-documents starter flow",
+      "proof": [
+        "tests/test_operator_app.py",
+        "tests/test_source_packet_workflow.py"
+      ],
+      "status": "implemented_local_public_surface"
+    },
+    {
+      "artifacts": [
+        "public_upload_manifest.json",
+        "public_upload_policy.json"
+      ],
+      "boundary": "PDF triage detects local text/OCR needs and asks for confirmation; it does not verify document authenticity.",
+      "id": "REQ-PDF-01",
+      "name": "PDF triage and native text extraction decision",
+      "proof": [
+        "tests/test_operator_app.py"
+      ],
+      "status": "implemented_local_parser_with_ocr_gate"
+    },
+    {
+      "artifacts": [
+        "customer_readiness_report.json",
+        "audit_events.json"
+      ],
+      "boundary": "User confirmation records draft context only; human experts still own external claims.",
+      "id": "REQ-CONFIRM-01",
+      "name": "User confirmation before extracted fields become packet context",
+      "proof": [
+        "tests/test_operator_app.py"
+      ],
+      "status": "implemented"
+    },
+    {
+      "artifacts": [
+        "intelligence_hub_policy_monitor.json",
+        "policy_source_snapshots.json",
+        "policy_change_impact_report.json",
+        "policy_intelligence.sqlite"
+      ],
+      "boundary": "The contract maps sources, snapshots, diffs, and packet impacts; live source truth and qualified review remain external gates.",
+      "id": "REQ-IH-01",
+      "name": "Intelligence Hub policy/source monitoring contract",
+      "proof": [
+        "tests/test_policy_intelligence.py",
+        "scripts/run_policy_intelligence.py"
+      ],
+      "status": "implemented_database_style_contract"
     }
   ],
   "status": "requirements_traceability_ready"

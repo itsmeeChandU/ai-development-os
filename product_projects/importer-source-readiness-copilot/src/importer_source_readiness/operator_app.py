@@ -14,6 +14,7 @@ from pathlib import Path
 from typing import Any
 from urllib.parse import parse_qs, unquote, urlparse
 
+from .document_processing import MAX_PUBLIC_PDF_PAGES, triage_pdf_upload
 from .source_packet_workflow import (
     OPERATOR_WORKBENCH_STATUS,
     PUBLIC_PRODUCT_NAME,
@@ -346,6 +347,7 @@ def _public_report_body(packet: dict[str, Any], report_type: str) -> str:
     missing = ", ".join(packet.get("evidence_summary", {}).get("missing_items", [])[:8])
     questions = "; ".join(packet.get("buyer_broker_questions", [])[:6])
     report_labels = {
+        "starter": "Starter Checklist",
         "draft": "Draft Trade Readiness Report",
         "buyer": "Buyer-Ready Packet",
         "broker": "Broker Review Packet",
@@ -371,57 +373,180 @@ def _public_report_body(packet: dict[str, Any], report_type: str) -> str:
     )
 
 
+LUCIDE_PATHS = {
+    "arrow-right": "<path d='M5 12h14'/><path d='m12 5 7 7-7 7'/>",
+    "check": "<path d='M20 6 9 17l-5-5'/>",
+    "database": "<ellipse cx='12' cy='5' rx='9' ry='3'/><path d='M3 5v14c0 1.7 4 3 9 3s9-1.3 9-3V5'/><path d='M3 12c0 1.7 4 3 9 3s9-1.3 9-3'/>",
+    "download": "<path d='M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4'/><path d='M7 10l5 5 5-5'/><path d='M12 15V3'/>",
+    "file-text": "<path d='M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7z'/><path d='M14 2v4a2 2 0 0 0 2 2h4'/><path d='M10 9H8'/><path d='M16 13H8'/><path d='M16 17H8'/>",
+    "search": "<circle cx='11' cy='11' r='8'/><path d='m21 21-4.3-4.3'/>",
+    "shield": "<path d='M20 13c0 5-3.5 7.5-7.7 8.9a1 1 0 0 1-.6 0C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.2-2.5a1.3 1.3 0 0 1 1.6 0C14.5 3.8 17 5 19 5a1 1 0 0 1 1 1z'/>",
+    "sparkles": "<path d='M9.9 2.8 8.8 7l-4.1 1.1 4.1 1.1 1.1 4.2 1.1-4.2 4.2-1.1L11 7z'/><path d='M19 14l-.7 2.2L16 17l2.3.8L19 20l.8-2.2L22 17l-2.2-.8z'/>",
+    "trash": "<path d='M3 6h18'/><path d='M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2'/><path d='M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6'/><path d='M10 11v6'/><path d='M14 11v6'/>",
+    "upload": "<path d='M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4'/><path d='M17 8l-5-5-5 5'/><path d='M12 3v12'/>",
+}
+
+
+def _icon(name: str) -> str:
+    paths = LUCIDE_PATHS.get(name, "")
+    return (
+        "<svg class='icon' viewBox='0 0 24 24' fill='none' stroke='currentColor' "
+        "stroke-width='2' stroke-linecap='round' stroke-linejoin='round' aria-hidden='true'>"
+        f"{paths}</svg>"
+    )
+
+
+def _button_link(path: str, label: str, icon: str = "arrow-right", *, tone: str = "primary") -> str:
+    return f"<a class='button-link button-{escape(tone)}' href='{escape(path)}'>{_icon(icon)}<span>{escape(label)}</span></a>"
+
+
+def _status_badge(label: Any, tone: str = "neutral") -> str:
+    return f"<span class='badge badge-{escape(tone)}'>{escape(str(label))}</span>"
+
+
+def _metric_card(label: str, value: Any, detail: str = "") -> str:
+    detail_html = f"<p>{escape(detail)}</p>" if detail else ""
+    return f"<article class='metric'><div class='label'>{escape(label)}</div><div class='value'>{escape(str(value))}</div>{detail_html}</article>"
+
+
+def _workflow_steps(active: str) -> str:
+    steps = [
+        ("start", "Start"),
+        ("documents", "Documents"),
+        ("confirm", "Confirm"),
+        ("report", "Report"),
+        ("review", "Review"),
+    ]
+    seen_active = False
+    items = []
+    for step_id, label in steps:
+        state = "active" if step_id == active else "done" if not seen_active else "todo"
+        if step_id == active:
+            seen_active = True
+        items.append(f"<li class='{state}'><span>{escape(label)}</span></li>")
+    return f"<ol class='stepper'>{''.join(items)}</ol>"
+
+
 def _render_page(title: str, body: str) -> str:
     return f"""<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{escape(title)}</title>
   <style>
-    body {{ font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; margin: 0; background: #fbfcfd; color: #172026; }}
-    nav {{ background: #102826; color: #fff; padding: 12px 28px; display: flex; gap: 16px; flex-wrap: wrap; }}
-    nav a {{ color: #d9fffa; text-decoration: none; font-weight: 700; }}
-    main {{ max-width: 1040px; margin: 0 auto; padding: 28px; }}
-    h1 {{ margin: 0 0 8px; font-size: 30px; }}
-    h2 {{ margin-top: 26px; }}
-    p {{ line-height: 1.5; }}
-    a {{ color: #155f59; }}
-    .note {{ border: 1px solid #ead28a; background: #fff7df; border-radius: 6px; padding: 12px; }}
+    :root {{
+      color-scheme: light;
+      --bg: #f6f8f7;
+      --panel: #ffffff;
+      --ink: #17211f;
+      --muted: #5f6b68;
+      --line: #d8e0dd;
+      --brand: #17665e;
+      --brand-strong: #0f4944;
+      --accent: #bf5b2c;
+      --warn-bg: #fff6dd;
+      --warn-line: #e3c46e;
+      --ok-bg: #e7f7ef;
+      --radius: 8px;
+      --shadow: 0 18px 45px rgba(25, 45, 41, .08);
+    }}
+    * {{ box-sizing: border-box; }}
+    body {{ font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; margin: 0; background: var(--bg); color: var(--ink); }}
+    a {{ color: var(--brand); }}
+    .app-shell {{ display: grid; grid-template-columns: 248px minmax(0, 1fr); min-height: 100vh; }}
+    .side-nav {{ background: #102826; color: #f4fffd; padding: 22px 16px; display: flex; flex-direction: column; gap: 18px; position: sticky; top: 0; height: 100vh; }}
+    .brand {{ display: flex; gap: 10px; align-items: center; font-weight: 800; letter-spacing: 0; }}
+    .brand-mark {{ display: grid; place-items: center; width: 34px; height: 34px; border-radius: 8px; background: #d6fff6; color: #0f4944; }}
+    .nav-group {{ display: grid; gap: 5px; }}
+    .nav-label {{ color: #9cc9c2; font-size: 11px; font-weight: 800; text-transform: uppercase; margin: 8px 8px 2px; }}
+    .side-nav a {{ display: flex; gap: 9px; align-items: center; color: #d9fffa; text-decoration: none; font-weight: 700; padding: 9px 10px; border-radius: 6px; }}
+    .side-nav a:hover {{ background: rgba(255,255,255,.08); }}
+    .topbar {{ display: none; background: #102826; color: white; padding: 12px 16px; gap: 10px; overflow-x: auto; }}
+    .topbar a {{ color: #d9fffa; text-decoration: none; white-space: nowrap; font-weight: 700; }}
+    main {{ width: min(1180px, 100%); padding: 26px; }}
+    .page {{ display: grid; gap: 18px; }}
+    .surface {{ background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); padding: 18px; }}
+    h1 {{ margin: 0 0 8px; font-size: 30px; line-height: 1.12; letter-spacing: 0; }}
+    h2 {{ margin: 24px 0 10px; font-size: 20px; letter-spacing: 0; }}
+    p {{ line-height: 1.55; }}
+    .lede {{ color: var(--muted); max-width: 72ch; }}
+    .note {{ border: 1px solid var(--warn-line); background: var(--warn-bg); border-radius: var(--radius); padding: 12px; }}
     .grid {{ display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }}
-    label {{ display: block; font-weight: 700; margin: 10px 0 4px; }}
-    input, textarea, select {{ box-sizing: border-box; width: 100%; border: 1px solid #ccd5df; border-radius: 5px; padding: 9px; font: inherit; }}
+    .grid-3 {{ grid-template-columns: repeat(3, minmax(0, 1fr)); }}
+    label {{ display: block; font-weight: 800; margin: 10px 0 4px; }}
+    input, textarea, select {{ width: 100%; border: 1px solid #c8d2cf; border-radius: 6px; padding: 10px; font: inherit; background: #fff; color: var(--ink); }}
+    input:focus, textarea:focus, select:focus {{ outline: 3px solid rgba(23, 102, 94, .18); border-color: var(--brand); }}
     input[type="checkbox"] {{ width: auto; }}
-    button, .button-link {{ display: inline-block; margin-top: 10px; border: 0; border-radius: 5px; background: #1d6b65; color: white; padding: 10px 14px; font-weight: 700; cursor: pointer; text-decoration: none; }}
-    table {{ width: 100%; border-collapse: collapse; margin-top: 16px; }}
-    th, td {{ text-align: left; border-bottom: 1px solid #dce3ea; padding: 9px; vertical-align: top; }}
-    th {{ background: #eef3f7; }}
-    .status {{ display: inline-block; border: 1px solid #ccd5df; border-radius: 999px; padding: 4px 9px; background: #eef8f6; font-size: 13px; }}
+    button, .button-link {{ display: inline-flex; align-items: center; gap: 8px; min-height: 40px; margin-top: 10px; border: 0; border-radius: 6px; background: var(--brand); color: white; padding: 10px 14px; font-weight: 800; cursor: pointer; text-decoration: none; }}
+    .button-secondary {{ background: #eaf1ef; color: #173d39; }}
+    .button-danger {{ background: #93312b; color: #fff; }}
+    button:hover, .button-link:hover {{ filter: brightness(.96); }}
+    .icon {{ width: 17px; height: 17px; flex: 0 0 auto; }}
+    table {{ width: 100%; border-collapse: collapse; margin-top: 16px; background: #fff; }}
+    th, td {{ text-align: left; border-bottom: 1px solid var(--line); padding: 10px; vertical-align: top; }}
+    th {{ background: #edf3f1; color: #334440; font-size: 13px; }}
+    .status, .badge {{ display: inline-flex; align-items: center; border: 1px solid var(--line); border-radius: 999px; padding: 5px 10px; background: #eef8f6; color: #17413d; font-size: 13px; font-weight: 800; }}
+    .badge-warn {{ background: var(--warn-bg); color: #6b4b00; border-color: var(--warn-line); }}
+    .badge-danger {{ background: #ffe8e2; color: #8a281e; border-color: #f1b8aa; }}
+    .badge-ok {{ background: var(--ok-bg); color: #155538; border-color: #a9dbc0; }}
     .claim-list li {{ margin: 4px 0; }}
-    .metric {{ border: 1px solid #ccd5df; border-radius: 6px; padding: 12px; background: #fff; }}
-    .label {{ color: #52616f; font-size: 12px; }}
-    .value {{ font-weight: 700; margin-top: 4px; overflow-wrap: anywhere; }}
-    .actions {{ display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0; align-items: end; }}
+    .metric {{ border: 1px solid var(--line); border-radius: var(--radius); padding: 14px; background: #fff; min-height: 92px; }}
+    .metric p {{ margin: 8px 0 0; color: var(--muted); }}
+    .label {{ color: var(--muted); font-size: 12px; font-weight: 800; text-transform: uppercase; }}
+    .value {{ font-weight: 850; margin-top: 5px; overflow-wrap: anywhere; }}
+    .actions {{ display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0; align-items: end; }}
     .actions form {{ margin: 0; }}
-    pre {{ white-space: pre-wrap; border: 1px solid #ccd5df; border-radius: 6px; padding: 14px; background: #fff; overflow: auto; }}
-    .closed {{ color: #9f2f2f; font-weight: 700; }}
-    @media (max-width: 760px) {{ main {{ padding: 20px; }} .grid {{ grid-template-columns: 1fr; }} }}
+    .stepper {{ display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; padding: 0; margin: 0; list-style: none; }}
+    .stepper li {{ border: 1px solid var(--line); border-radius: 999px; padding: 8px 10px; text-align: center; font-size: 13px; font-weight: 800; background: #fff; }}
+    .stepper .done {{ background: var(--ok-bg); border-color: #a9dbc0; }}
+    .stepper .active {{ background: #102826; color: #fff; border-color: #102826; }}
+    .split {{ display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(280px, .8fr); gap: 16px; align-items: start; }}
+    pre {{ white-space: pre-wrap; border: 1px solid var(--line); border-radius: var(--radius); padding: 14px; background: #fff; overflow: auto; }}
+    .closed {{ color: #9f2f2f; font-weight: 800; }}
+    @media (max-width: 900px) {{
+      .app-shell {{ display: block; }}
+      .side-nav {{ display: none; }}
+      .topbar {{ display: flex; }}
+      main {{ padding: 16px; }}
+      .grid, .grid-3, .split {{ grid-template-columns: 1fr; }}
+      .stepper {{ grid-template-columns: 1fr; }}
+    }}
   </style>
 </head>
 <body>
-<nav>
-  <a href="/">Home</a>
-  <a href="/tools">Tools</a>
-  <a href="/trade-check">Quick Check</a>
-  <a href="/dashboard">Dashboard</a>
-  <a href="/packets">Packets</a>
-  <a href="/settings/ai-data-policy">AI Policy</a>
-  <a href="/operator/queue">Operator</a>
-  <a href="/admin/system-health">System Health</a>
-  <a href="/support">Support</a>
+<div class="topbar">
+  <a href="/start">Start</a><a href="/trade-check">Documents</a><a href="/workspace">Workspace</a><a href="/operator/queue">Operator</a><a href="/admin/system-health">Health</a>
+</div>
+<div class="app-shell">
+<nav class="side-nav" aria-label="Primary">
+  <div class="brand"><span class="brand-mark">{_icon("shield")}</span><span>Trade Readiness</span></div>
+  <div class="nav-group">
+    <div class="nav-label">Customer Flow</div>
+    <a href="/start">{_icon("sparkles")}Start</a>
+    <a href="/tools">{_icon("search")}Tools</a>
+    <a href="/trade-check">{_icon("upload")}Documents</a>
+    <a href="/workspace">{_icon("database")}Workspace</a>
+  </div>
+  <div class="nav-group">
+    <div class="nav-label">Review</div>
+    <a href="/packets">{_icon("file-text")}Packets</a>
+    <a href="/settings/ai-data-policy">{_icon("shield")}AI Policy</a>
+    <a href="/operator/queue">{_icon("check")}Operator</a>
+  </div>
+  <div class="nav-group">
+    <div class="nav-label">Admin</div>
+    <a href="/admin/sources">{_icon("database")}Sources</a>
+    <a href="/admin/system-health">{_icon("shield")}System Health</a>
+    <a href="/support">{_icon("file-text")}Support</a>
+  </div>
 </nav>
 <main>
+<div class="page">
 {body}
+</div>
 </main>
+</div>
 </body>
 </html>
 """
@@ -509,24 +634,63 @@ def _list_items(rows: list[Any]) -> str:
 
 def _render_landing() -> str:
     body = f"""
-<h1>{escape(PUBLIC_PRODUCT_NAME)}</h1>
-<p>{escape(PUBLIC_PRODUCT_PROMISE)}</p>
-<p>Upload trade documents, run a quick readiness check, see missing evidence, and download a draft report or buyer/broker packet.</p>
-<p class="note">{escape(PRODUCT_BOUNDARY)}</p>
-<p><a class="button-link" href="/trade-check">Start quick check</a> <a class="button-link" href="/tools">Choose a tool</a> <a class="button-link" href="/packets/packet-frozen-tuna-canada-001/readiness">View sample report</a></p>
-<section class="grid">
-  <div class="metric"><div class="label">Import Readiness Checker</div><div class="value">Canada-side importer evidence, source references, and blocked claims.</div></div>
-  <div class="metric"><div class="label">Export Readiness Checker</div><div class="value">Foreign exporter to Canada packet, Incoterms, importer of record, and document gaps.</div></div>
-  <div class="metric"><div class="label">Buyer/Broker Packet Builder</div><div class="value">Draft questions, evidence, blockers, and next moves for a Canadian buyer or broker.</div></div>
-  <div class="metric"><div class="label">Readiness PDF Generator</div><div class="value">Draft PDF outputs with AI disclosure, missing evidence, and proof boundaries.</div></div>
+<section class="surface split">
+  <div>
+    {_status_badge("Local private-beta product", "ok")}
+    <h1>{escape(PUBLIC_PRODUCT_NAME)}</h1>
+    <p class="lede">{escape(PUBLIC_PRODUCT_PROMISE)} Start with no documents or upload PDFs, then get a missing-evidence packet, safe summary, and next valid moves.</p>
+    <div class="actions">
+      {_button_link("/start", "Start without documents", "sparkles")}
+      {_button_link("/trade-check", "Upload PDFs", "upload", tone="secondary")}
+      {_button_link("/workspace", "Open workspace", "database", tone="secondary")}
+    </div>
+  </div>
+  <aside class="note">{escape(PRODUCT_BOUNDARY)}</aside>
 </section>
-<h2>What it does not do</h2>
-<ul>
-  <li>Does not claim import/export approval, tariff confirmation, CFIA clearance, legal advice, customs advice, supplier recommendation, buyer validation, or launch readiness.</li>
-  <li>Does not replace a licensed customs broker, qualified compliance expert, lawyer, accountant, or buyer validation process.</li>
-</ul>
+<section class="surface">
+  {_workflow_steps("start")}
+  <div class="grid grid-3">
+    {_metric_card("Beginner Start", "No-documents mode", "Capture unknowns and get a starter checklist.")}
+    {_metric_card("PDF Triage", f"PDF limit {MAX_PUBLIC_PDF_PAGES} pages", "Native text extraction or OCR-needed routing.")}
+    {_metric_card("Policy Monitor", "Intelligence Hub contract", "Source snapshots, hashes, stale-packet blockers.")}
+  </div>
+</section>
+<section class="surface">
+  <h2>Boundaries</h2>
+  <ul>
+    <li>Does not claim import/export approval, tariff confirmation, CFIA clearance, legal advice, customs advice, supplier recommendation, buyer validation, or launch readiness.</li>
+    <li>Does not replace a licensed customs broker, qualified compliance expert, lawyer, accountant, or buyer validation process.</li>
+  </ul>
+</section>
 """
     return _render_page(PUBLIC_PRODUCT_NAME, body)
+
+
+def _render_start_page() -> str:
+    body = f"""
+<section class="surface">
+  {_workflow_steps("start")}
+  <h1>Start Trade Readiness</h1>
+  <p class="lede">Use this when you know the product idea but do not yet know which documents, reviewers, buyers, or official sources are required.</p>
+  <p class="note">Starter mode creates a missing-evidence packet. It does not provide advice, approval, or a shipment decision.</p>
+  <form method="post" action="/api/public/starter">
+    <div class="grid">
+      <div><label>What are you trying to move?</label><input name="product_name" value="Organic turmeric powder"></div>
+      <div><label>Product category</label><input name="product_category" value="food_import"></div>
+      <div><label>Origin country</label><input name="origin_country" value="India"></div>
+      <div><label>Destination country</label><input name="destination_country" value="Canada"></div>
+      <div><label>Trade direction</label><select name="trade_direction">{_select_options(["export", "import", "both", "unknown"], "export")}</select></div>
+      <div><label>Current stage</label><select name="current_stage">{_select_options(["idea", "supplier identified", "buyer conversation", "documents collecting", "broker review needed"], "idea")}</select></div>
+    </div>
+    <label>What do you already know?</label><textarea name="notes" rows="4">I want to understand what is missing before talking to buyers, brokers, or compliance experts.</textarea>
+    <label>Known unknowns</label><input name="unknown_fields" value="HS code, importer of record, Incoterms, certificates, proof of origin, Canada controls">
+    <label>Research depth</label><select name="research_depth_requested">{_select_options(["starter checklist", "detailed research plan", "expert-review packet"], "starter checklist")}</select>
+    <label><input type="checkbox" name="accept_notice" value="accepted" checked> I understand this is a draft starter checklist and external claims remain blocked.</label>
+    <button type="submit">{_icon("arrow-right")}Create Starter Packet</button>
+  </form>
+</section>
+"""
+    return _render_page("Start Trade Readiness", body)
 
 
 def _render_tool_selection() -> str:
@@ -624,10 +788,14 @@ def _render_public_result(workflow: dict[str, Any], packet: dict[str, Any]) -> s
     actions = f"""
 <div class="actions">
   <a class="button-link" href="/trade-check">Upload Documents</a>
+  <a class="button-link" href="/public/packets/{packet_id}/confirm">Confirm Extracted Fields</a>
   <a class="button-link" href="/tools/canadian-references">Check Canadian References</a>
+  <a class="button-link" href="/api/public/packets/{packet_id}/reports/starter.pdf">Starter Checklist</a>
   <form method="post" action="/api/public/packets/{packet_id}/refresh-official-sources"><button type="submit">Refresh Official Sources</button></form>
+  <a class="button-link" href="/api/public/packets/{packet_id}/chatgpt-safe-summary">ChatGPT-Safe Summary</a>
   <a class="button-link" href="/api/public/packets/{packet_id}/reports/buyer.pdf">Generate Buyer Packet</a>
   <a class="button-link" href="/api/public/packets/{packet_id}/reports/broker.pdf">Generate Broker Review Packet</a>
+  <a class="button-link" href="/api/public/packets/{packet_id}/reports/missing.pdf">Missing Evidence PDF</a>
   <a class="button-link" href="/api/public/packets/{packet_id}/reports/draft.pdf">Export Readiness Report</a>
   <form method="post" action="/api/public/packets/{packet_id}/delete-files"><button type="submit">Delete Uploaded Files</button></form>
 </div>
@@ -636,6 +804,7 @@ def _render_public_result(workflow: dict[str, Any], packet: dict[str, Any]) -> s
 <h1>{escape(str(summary.get('title') or 'Trade Readiness Packet'))}</h1>
 <p><span class="status">{escape(str(summary.get('status') or packet.get('readiness_status_label')))}</span></p>
 <p class="note">{escape(str(packet.get('safe_summary')))}</p>
+{_workflow_steps("report")}
 {actions}
 <section class="grid">
   <div class="metric"><div class="label">Product</div><div class="value">{escape(str(packet.get('product_name')))}</div></div>
@@ -644,6 +813,8 @@ def _render_public_result(workflow: dict[str, Any], packet: dict[str, Any]) -> s
   <div class="metric"><div class="label">Main reason</div><div class="value">{escape(str(summary.get('main_reason')))}</div></div>
   <div class="metric"><div class="label">Evidence</div><div class="value">{escape(str(packet.get('evidence_summary', {}).get('summary')))}</div></div>
   <div class="metric"><div class="label">Next valid move</div><div class="value">{escape(str(summary.get('next_valid_move')))}</div></div>
+  <div class="metric"><div class="label">Confirmation</div><div class="value">{escape(str(packet.get('confirmation_status') or 'not_confirmed'))}</div></div>
+  <div class="metric"><div class="label">Beginner mode</div><div class="value">{escape(str(packet.get('beginner_mode') or False))}</div></div>
 </section>
 <h2>Readiness Lanes</h2>
 <table>
@@ -660,6 +831,118 @@ def _render_public_result(workflow: dict[str, Any], packet: dict[str, Any]) -> s
 <p><a class="button-link" href="/signup">Create Account</a> <a class="button-link" href="/support">Request Review</a></p>
 """
     return _render_page("Trade Readiness Result", body)
+
+
+def _chatgpt_safe_summary(packet: dict[str, Any]) -> dict[str, Any]:
+    evidence = packet.get("evidence_summary", {})
+    return {
+        "status": "chatgpt_safe_summary_ready",
+        "packet_id": packet.get("packet_id"),
+        "copy_paste_summary": (
+            f"I am preparing a draft trade-readiness packet for {packet.get('product_name')} from "
+            f"{packet.get('origin_country')} to {packet.get('destination_country')}. "
+            f"Known status: {packet.get('customer_visible_status_label')}. "
+            f"Evidence attached: {evidence.get('attached', 0)}; missing items: {evidence.get('missing', 0)}. "
+            "Please help organize questions and missing evidence only. Do not provide legal, customs, tariff, CFIA, "
+            "supplier, buyer, shipment, or launch approval claims."
+        ),
+        "do_not_include": [
+            "uploaded file contents",
+            "prices, bank details, private buyer/supplier data",
+            "personal information",
+            "claims that tariff, CFIA, legal, customs, buyer, or shipment readiness is approved",
+        ],
+        "safe_questions": packet.get("buyer_broker_questions", [])[:8],
+        "blocked_claims": packet.get("blocked_claims_display", []),
+        "next_valid_move": packet.get("next_valid_move"),
+        "proof_boundary": "This summary is safe for drafting questions. It is not a substitute for expert review or current official source proof.",
+    }
+
+
+def _render_public_confirm(workflow: dict[str, Any], packet: dict[str, Any]) -> str:
+    packet_id = escape(str(packet.get("packet_id")))
+    evidence_rows = packet.get("evidence_items", [])
+    field_rows = []
+    for evidence in evidence_rows:
+        extracted = evidence.get("extracted_fields") or {}
+        if not extracted:
+            continue
+        field_rows.append(
+            "<tr>"
+            f"<td>{escape(str(evidence.get('title')))}</td>"
+            f"<td>{escape(str(evidence.get('extraction_status') or evidence.get('ledger_status')))}</td>"
+            f"<td>{escape(str(evidence.get('extraction_confidence') or 'low'))}</td>"
+            f"<td>{escape(json.dumps(extracted, sort_keys=True))}</td>"
+            "</tr>"
+        )
+    body = f"""
+<section class="surface">
+  {_workflow_steps("confirm")}
+  <h1>Confirm Extracted Fields</h1>
+  <p class="lede">Review the draft metadata before it becomes packet context. Unknown or wrong fields should remain blockers.</p>
+  <p class="note">Confirmation does not verify document authenticity or open customs, tariff, legal, CFIA, buyer, supplier, shipment, or launch claims.</p>
+  <form method="post" action="/api/public/packets/{packet_id}/confirm">
+    <div class="grid">
+      <div><label>Product</label><input name="product_name" value="{escape(str(packet.get('product_name') or ''))}"></div>
+      <div><label>HS code if known</label><input name="hs_code_value" value="{escape(str(packet.get('hs_code_value') or ''))}"></div>
+      <div><label>Origin</label><input name="origin_country" value="{escape(str(packet.get('origin_country') or ''))}"></div>
+      <div><label>Destination</label><input name="destination_country" value="{escape(str(packet.get('destination_country') or ''))}"></div>
+      <div><label>Importer of record</label><select name="importer_of_record">{_select_options(["unknown", "buyer", "importer", "exporter", "broker"], str(packet.get('importer_of_record') or 'unknown'))}</select></div>
+      <div><label>Incoterms</label><select name="incoterms_if_known">{_select_options(["unknown", "EXW", "FOB", "CIF", "DAP", "DDP"], str(packet.get('incoterms_if_known') or 'unknown'))}</select></div>
+    </div>
+    <label>Confirmation notes</label><textarea name="confirmation_notes" rows="3">User confirmed visible metadata only. Missing evidence and expert review remain required.</textarea>
+    <label><input type="checkbox" name="fields_confirmed" value="accepted" checked> I confirm these draft fields are suitable for internal packet context.</label>
+    <button type="submit">{_icon("check")}Save Confirmation</button>
+  </form>
+</section>
+<section class="surface">
+  <h2>Extracted Metadata</h2>
+  <table>
+    <thead><tr><th>Document</th><th>Status</th><th>Confidence</th><th>Fields</th></tr></thead>
+    <tbody>{''.join(field_rows) or '<tr><td colspan="4">No extracted fields yet. Upload PDFs or use starter mode.</td></tr>'}</tbody>
+  </table>
+</section>
+"""
+    return _render_page("Confirm Extracted Fields", body)
+
+
+def _render_workspace(workflow: dict[str, Any], runtime: dict[str, Any]) -> str:
+    packets = workflow.get("packets", [])
+    blocked = sum(1 for packet in packets if packet.get("blocker_count", 0) > 0)
+    rows = "".join(
+        "<tr>"
+        f"<td><a href='/public/packets/{escape(str(packet.get('packet_id')))}/result'>{escape(str(packet.get('packet_name')))}</a></td>"
+        f"<td>{escape(str(packet.get('product_name')))}</td>"
+        f"<td>{escape(str(packet.get('customer_visible_status_label')))}</td>"
+        f"<td>{escape(str(packet.get('confirmation_status') or 'not_confirmed'))}</td>"
+        f"<td>{escape(str(packet.get('next_valid_move')))}</td>"
+        "</tr>"
+        for packet in packets
+    )
+    body = f"""
+<section class="surface">
+  <h1>Saved Packet Workspace</h1>
+  <p class="lede">Local workspace for packets, reports, source monitoring, and review lanes. Production accounts, hosting, and privacy/security review remain external gates.</p>
+  <div class="grid grid-3">
+    {_metric_card("Packets", len(packets), "Saved in local JSON and SQLite artifacts.")}
+    {_metric_card("Blocked", blocked, "External claims stay closed.")}
+    {_metric_card("Runtime", runtime.get("status"), "Private-beta candidate with human gates.")}
+  </div>
+  <div class="actions">
+    {_button_link("/start", "Create starter packet", "sparkles")}
+    {_button_link("/trade-check", "Upload PDFs", "upload", tone="secondary")}
+    {_button_link("/admin/sources", "Source monitor", "database", tone="secondary")}
+  </div>
+</section>
+<section class="surface">
+  <h2>Packets</h2>
+  <table>
+    <thead><tr><th>Packet</th><th>Product</th><th>Status</th><th>Confirmation</th><th>Next</th></tr></thead>
+    <tbody>{rows or '<tr><td colspan="5">No saved packets yet.</td></tr>'}</tbody>
+  </table>
+</section>
+"""
+    return _render_page("Saved Workspace", body)
 
 
 def _render_login_signup(mode: str) -> str:
@@ -1270,6 +1553,7 @@ def _index_payload(repo_root: Path) -> dict[str, Any]:
                 *API_ROUTES,
                 *STATIC_ROUTES,
                 "/",
+                "/start",
                 "/tools",
                 "/trade-check",
                 "/tools/import-readiness",
@@ -1277,9 +1561,16 @@ def _index_payload(repo_root: Path) -> dict[str, Any]:
                 "/tools/buyer-broker-packet",
                 "/tools/canadian-references",
                 "/public/packets/:id/result",
+                "/public/packets/:id/confirm",
+                "/workspace",
+                "/api/public/starter",
                 "/api/public/quick-check",
                 "/api/public/packets/:id/refresh-official-sources",
+                "/api/public/packets/:id/confirm",
+                "/api/public/packets/:id/chatgpt-safe-summary",
+                "/api/public/packets/:id/reports/starter.pdf",
                 "/api/public/packets/:id/reports/draft.pdf",
+                "/api/public/packets/:id/reports/missing.pdf",
                 "/api/public/packets/:id/reports/buyer.pdf",
                 "/api/public/packets/:id/reports/broker.pdf",
                 "/api/public/packets/:id/delete-files",
@@ -1374,6 +1665,9 @@ def build_operator_app_handler(repo_root: Path) -> type[BaseHTTPRequestHandler]:
             if path == "/":
                 self._send_html(_render_landing())
                 return
+            if path == "/start":
+                self._send_html(_render_start_page())
+                return
             if path == "/tools":
                 self._send_html(_render_tool_selection())
                 return
@@ -1392,6 +1686,14 @@ def build_operator_app_handler(repo_root: Path) -> type[BaseHTTPRequestHandler]:
                     return
                 self._send_html(_render_public_result(workflow, packet))
                 return
+            if path.startswith("/public/packets/") and path.endswith("/confirm"):
+                packet_id = path.removeprefix("/public/packets/").removesuffix("/confirm").strip("/")
+                packet = _packet_lookup(workflow).get(packet_id)
+                if packet is None:
+                    self.send_error(HTTPStatus.NOT_FOUND, "Packet not found")
+                    return
+                self._send_html(_render_public_confirm(workflow, packet))
+                return
             if path == "/login":
                 self._send_html(_render_login_signup("login"))
                 return
@@ -1403,6 +1705,9 @@ def build_operator_app_handler(repo_root: Path) -> type[BaseHTTPRequestHandler]:
                 return
             if path == "/dashboard":
                 self._send_html(_render_customer_dashboard(workflow, actor))
+                return
+            if path == "/workspace":
+                self._send_html(_render_workspace(workflow, runtime))
                 return
             if path == "/account":
                 self._send_html(_render_account(actor))
@@ -1650,6 +1955,53 @@ def build_operator_app_handler(repo_root: Path) -> type[BaseHTTPRequestHandler]:
             workflow = _customer_workflow(repo_root)
             return _packet_lookup(workflow).get(packet_id)
 
+        def _handle_public_starter(self, actor: dict[str, Any]) -> None:
+            fields = self._read_fields()
+            if not _truthy_form_value(fields.get("accept_notice")):
+                self.send_error(HTTPStatus.BAD_REQUEST, "Starter notice must be accepted")
+                return
+            if any(_contains_script(str(value)) for value in fields.values()):
+                self.send_error(HTTPStatus.BAD_REQUEST, "Metadata contains unsafe HTML")
+                return
+            product_name = fields.get("product_name") or "Starter trade packet"
+            packet = packet_from_submission(
+                {
+                    **fields,
+                    "packet_name": fields.get("packet_name") or f"{product_name} starter checklist",
+                    "organization_id": actor.get("organization_id") or "org-importer-demo",
+                    "user_type": fields.get("user_type") or "beginner",
+                    "beginner_mode": True,
+                    "offline_evidence_only": True,
+                    "source_type": "beginner_starter",
+                    "product_documents": "",
+                    "commercial_documents": "",
+                    "certificates": "",
+                    "proof_of_origin": "",
+                    "intended_use": "Beginner no-documents starter checklist for missing trade-readiness evidence.",
+                }
+            )
+            evidence = {
+                **evidence_from_submission(packet),
+                "evidence_id": f"evidence-{packet['packet_id']}-starter-intake",
+                "title": "Beginner starter intake",
+                "description": fields.get("notes") or "No documents provided yet.",
+                "evidence_type": "customer_uploaded_reference",
+                "source_url": "",
+                "rights_status": "blocked",
+                "freshness_status": "needs_current_refresh_before_claims",
+                "claim_supported": "User provided starter context only.",
+                "claim_boundary": "Starter context identifies missing evidence and questions only.",
+            }
+            packets, evidence_rows = _load_mutable_customer_rows(repo_root)
+            packets = [row for row in packets if str(row.get("packet_id")) != str(packet["packet_id"])]
+            evidence_rows = [row for row in evidence_rows if str(row.get("packet_id")) != str(packet["packet_id"])]
+            packets.append(packet)
+            evidence_rows.append(evidence)
+            _write_customer_workflow(repo_root, packets, evidence_rows)
+            self.send_response(HTTPStatus.SEE_OTHER)
+            self.send_header("Location", f"/public/packets/{packet['packet_id']}/result")
+            self.end_headers()
+
         def _handle_public_quick_check(self, actor: dict[str, Any]) -> None:
             length = int(self.headers.get("Content-Length") or 0)
             if length > MAX_EVIDENCE_UPLOAD_BYTES:
@@ -1698,22 +2050,35 @@ def build_operator_app_handler(repo_root: Path) -> type[BaseHTTPRequestHandler]:
                 }
             )
             packet_id = str(packet["packet_id"])
-            upload_dir = repo_root / "system_review_graph" / "public_uploads" / packet_id
+            upload_dir = repo_root / "system_review_graph" / "public_uploads" / packet_id / "quarantine"
             upload_dir.mkdir(parents=True, exist_ok=True)
             saved_files: list[dict[str, Any]] = []
             evidence_rows: list[dict[str, Any]] = []
             for index, file in enumerate(pdf_files, start=1):
-                filename = _safe_filename(str(file["filename"]))
+                original_filename = _safe_filename(str(file["filename"]))
+                filename = f"document-{index:03d}.pdf"
+                content = bytes(file.get("content") or b"")
+                triage = triage_pdf_upload(original_filename, content, content_type=str(file.get("content_type") or "application/pdf"))
+                if triage["extraction_status"] == "blocked_page_limit":
+                    self.send_error(HTTPStatus.BAD_REQUEST, f"{original_filename} exceeds the {MAX_PUBLIC_PDF_PAGES}-page local quick-check limit")
+                    return
                 saved_path = upload_dir / filename
-                saved_path.write_bytes(bytes(file.get("content") or b""))
-                document_type = fields.get("document_type") or filename.rsplit(".", 1)[0].replace("-", " ").replace("_", " ")
+                saved_path.write_bytes(content)
+                document_type = fields.get("document_type") or original_filename.rsplit(".", 1)[0].replace("-", " ").replace("_", " ")
                 relative_path = saved_path.relative_to(repo_root).as_posix()
                 saved_files.append(
                     {
                         "filename": filename,
+                        "original_filename": original_filename,
                         "relative_path": relative_path,
                         "content_type": file.get("content_type") or "application/pdf",
                         "size_bytes": saved_path.stat().st_size,
+                        "sha256": triage["sha256"],
+                        "extraction_status": triage["extraction_status"],
+                        "extraction_confidence": triage["extraction_confidence"],
+                        "has_native_text": triage["has_native_text"],
+                        "ocr_recommended": triage["ocr_recommended"],
+                        "user_confirmation_required": True,
                         "expires_at": expires_at,
                     }
                 )
@@ -1734,6 +2099,18 @@ def build_operator_app_handler(repo_root: Path) -> type[BaseHTTPRequestHandler]:
                         "accessed_at": now.isoformat(),
                         "last_verified_at": "",
                         "expires_at": expires_at,
+                        "content_hash": triage["sha256"],
+                        "original_filename": original_filename,
+                        "storage_status": "quarantined_local_generated_name",
+                        "direct_file_serving": False,
+                        "page_count_estimate": triage["page_count_estimate"],
+                        "extraction_status": triage["extraction_status"],
+                        "extraction_confidence": triage["extraction_confidence"],
+                        "has_native_text": triage["has_native_text"],
+                        "ocr_recommended": triage["ocr_recommended"],
+                        "native_text_excerpt": triage["native_text_excerpt"],
+                        "user_confirmation_required": True,
+                        "user_confirmed_at": "",
                         "rights_status": "unknown",
                         "freshness_status": "needs_current_refresh_before_claims",
                         "claim_supported": "Document was provided for draft readiness review.",
@@ -1748,6 +2125,7 @@ def build_operator_app_handler(repo_root: Path) -> type[BaseHTTPRequestHandler]:
                         "extracted_fields": {
                             "document_type": document_type,
                             "filename": filename,
+                            "original_filename": original_filename,
                             "product": packet.get("product_name"),
                             "supplier_or_exporter": packet.get("exporter_name") or packet.get("supplier_name"),
                             "buyer_or_importer": packet.get("buyer_name") or packet.get("importer_name"),
@@ -1823,6 +2201,48 @@ def build_operator_app_handler(repo_root: Path) -> type[BaseHTTPRequestHandler]:
                 write_json(refresh_report, repo_root / "system_review_graph" / f"source_refresh_report_{packet_id}.json")
                 _write_customer_workflow(repo_root, packets, evidence_rows)
                 self._send_json(refresh_report)
+                return
+            if action == "confirm":
+                fields = self._read_fields()
+                if not _truthy_form_value(fields.get("fields_confirmed")):
+                    self.send_error(HTTPStatus.BAD_REQUEST, "Field confirmation is required")
+                    return
+                if any(_contains_script(str(value)) for value in fields.values()):
+                    self.send_error(HTTPStatus.BAD_REQUEST, "Confirmation contains unsafe HTML")
+                    return
+                now = datetime.now(timezone.utc).replace(microsecond=0).isoformat()
+                packets, evidence_rows = _load_mutable_customer_rows(repo_root)
+                updated_packets = []
+                for row in packets:
+                    if str(row.get("packet_id")) == packet_id:
+                        updated_packets.append(
+                            {
+                                **row,
+                                "product_name": fields.get("product_name") or row.get("product_name"),
+                                "hs_code_value": fields.get("hs_code_value") or row.get("hs_code_value"),
+                                "origin_country": fields.get("origin_country") or row.get("origin_country"),
+                                "destination_country": fields.get("destination_country") or row.get("destination_country"),
+                                "importer_of_record": fields.get("importer_of_record") or row.get("importer_of_record"),
+                                "incoterms_if_known": fields.get("incoterms_if_known") or row.get("incoterms_if_known"),
+                                "confirmation_status": "user_confirmed_draft_fields",
+                                "confirmation_notes": fields.get("confirmation_notes") or "",
+                                "confirmed_at": now,
+                            }
+                        )
+                    else:
+                        updated_packets.append(row)
+                updated_evidence = [
+                    {
+                        **row,
+                        "user_confirmed_at": now,
+                        "confirmation_status": "user_confirmed_draft_fields",
+                    }
+                    if str(row.get("packet_id")) == packet_id
+                    else row
+                    for row in evidence_rows
+                ]
+                rebuilt = _write_customer_workflow(repo_root, updated_packets, updated_evidence)
+                self._send_json({"status": "public_packet_fields_confirmed", "packet": _packet_lookup(rebuilt).get(packet_id)})
                 return
             self.send_error(HTTPStatus.NOT_FOUND, "Public packet action not found")
 
@@ -1902,6 +2322,14 @@ def build_operator_app_handler(repo_root: Path) -> type[BaseHTTPRequestHandler]:
                 }.get(report_type, "Draft Trade Readiness Report")
                 self._send_bytes(_report_pdf_bytes(title, _public_report_body(packet, report_type)), "application/pdf")
                 return
+            if path.startswith("/api/public/packets/") and path.endswith("/chatgpt-safe-summary"):
+                packet_id = path.removeprefix("/api/public/packets/").removesuffix("/chatgpt-safe-summary").strip("/")
+                packet = packet_lookup.get(packet_id)
+                if packet is None:
+                    self.send_error(HTTPStatus.NOT_FOUND, "Packet not found")
+                    return
+                self._send_json(_chatgpt_safe_summary(packet))
+                return
             if path.startswith("/api/external-review/"):
                 token = path.removeprefix("/api/external-review/").strip("/")
                 request = next((row for row in runtime["review_requests"] if row.get("token") == token), None)
@@ -1962,6 +2390,9 @@ def build_operator_app_handler(repo_root: Path) -> type[BaseHTTPRequestHandler]:
             self.send_error(HTTPStatus.NOT_FOUND, "API route not found")
 
         def _handle_api_post(self, path: str, actor: dict[str, Any]) -> None:
+            if path == "/api/public/starter":
+                self._handle_public_starter(actor)
+                return
             if path == "/api/public/quick-check":
                 self._handle_public_quick_check(actor)
                 return
@@ -2296,6 +2727,9 @@ def build_operator_app_handler(repo_root: Path) -> type[BaseHTTPRequestHandler]:
             self.wfile.write(data)
 
         def _send_scoped_file(self, base: Path, relative_path: str, content_type: str | None) -> None:
+            if relative_path.startswith("public_uploads/") or "/public_uploads/" in relative_path:
+                self.send_error(HTTPStatus.FORBIDDEN, "Public upload files are quarantined and not directly served")
+                return
             path = _safe_join_under(base, relative_path)
             if path is None or not path.is_file():
                 self.send_error(HTTPStatus.NOT_FOUND, "Artifact not found")

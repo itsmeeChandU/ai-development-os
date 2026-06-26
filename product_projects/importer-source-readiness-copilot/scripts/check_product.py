@@ -74,6 +74,7 @@ def main() -> int:
         [sys.executable, "scripts/build_board_go_live_packet.py"],
         [sys.executable, "scripts/run_operator_workflow.py"],
         [sys.executable, "scripts/run_customer_workflow.py"],
+        [sys.executable, "scripts/run_policy_intelligence.py"],
         [sys.executable, "scripts/export_operator_dashboard.py"],
         [sys.executable, "scripts/audit_external_package.py", "--root", "."],
     ]
@@ -110,6 +111,9 @@ def main() -> int:
     exporter_mode = _load_json(ROOT / "system_review_graph" / "exporter_mode_requirements.json")
     public_reports = _load_json(ROOT / "system_review_graph" / "public_report_types.json")
     public_upload_policy = _load_json(ROOT / "system_review_graph" / "public_upload_policy.json")
+    policy_monitor = _load_json(ROOT / "system_review_graph" / "intelligence_hub_policy_monitor.json")
+    policy_snapshots = _load_json(ROOT / "system_review_graph" / "policy_source_snapshots.json")
+    policy_impact = _load_json(ROOT / "system_review_graph" / "policy_change_impact_report.json")
     screenshot_manifest_path = ROOT / "system_review_graph" / "operator_screenshot_manifest.json"
     screenshot_manifest = _load_json(screenshot_manifest_path) if screenshot_manifest_path.exists() else {}
     expected = {
@@ -151,6 +155,8 @@ def main() -> int:
         "src/importer_source_readiness/source_packet_workflow.py",
         "src/importer_source_readiness/customer_store.py",
         "src/importer_source_readiness/product_runtime.py",
+        "src/importer_source_readiness/document_processing.py",
+        "src/importer_source_readiness/policy_intelligence.py",
         "src/importer_source_readiness/ai_review_validation.py",
         "tests/test_operator_app.py",
         "tests/test_source_packet_workflow.py",
@@ -158,6 +164,7 @@ def main() -> int:
         "tests/test_product_runtime.py",
         "tests/test_external_package_audit.py",
         "scripts/run_customer_workflow.py",
+        "scripts/run_policy_intelligence.py",
         "scripts/audit_external_package.py",
         "data/customer_source_packets.json",
         "data/evidence_ledger.json",
@@ -194,6 +201,10 @@ def main() -> int:
         "system_review_graph/exporter_mode_requirements.json",
         "system_review_graph/public_report_types.json",
         "system_review_graph/public_upload_policy.json",
+        "system_review_graph/intelligence_hub_policy_monitor.json",
+        "system_review_graph/policy_source_snapshots.json",
+        "system_review_graph/policy_change_impact_report.json",
+        "system_review_graph/policy_intelligence.sqlite",
         "system_review_graph/source_refresh_runs.json",
         "system_review_graph/source_refresh_report_packet-frozen-tuna-canada-001.json",
         "system_review_graph/expert_review_packet_packet-frozen-tuna-canada-001.md",
@@ -340,15 +351,23 @@ def main() -> int:
     if runtime.get("public_product_surface", {}).get("status") != "public_quick_check_ready_local_with_external_gates":
         failures.append("runtime state should expose the local public quick-check surface")
     for route in (
+        "/start",
         "/tools/export-readiness",
         "/public/packets/:packetId/result",
+        "/public/packets/:packetId/confirm",
+        "/workspace",
     ):
         if route not in runtime.get("ui_routes", {}).get("customer", []):
             failures.append(f"runtime state should expose public UI route {route}")
     for route in (
+        "/api/public/starter",
         "/api/public/quick-check",
+        "/api/public/packets/:id/confirm",
+        "/api/public/packets/:id/chatgpt-safe-summary",
+        "/api/public/packets/:id/reports/starter.pdf",
         "/api/public/packets/:id/reports/buyer.pdf",
         "/api/public/packets/:id/reports/broker.pdf",
+        "/api/public/packets/:id/reports/missing.pdf",
         "/api/public/packets/:id/delete-files",
     ):
         if route not in runtime.get("api_routes", []):
@@ -382,9 +401,9 @@ def main() -> int:
     if manual_no_ai_workflow.get("status") != "manual_no_ai_workflow_ready":
         failures.append("manual/no-AI workflow artifact should be ready")
     requirement_ids = {row.get("id") for row in requirements_traceability.get("requirements", [])}
-    if len(requirements_traceability.get("requirements", [])) < 27:
+    if len(requirements_traceability.get("requirements", [])) < 31:
         failures.append("requirements traceability matrix should cover public and exporter requirements")
-    for requirement_id in ("REQ-PUBLIC-01", "REQ-EXPORT-01", "REQ-EXPORT-09"):
+    for requirement_id in ("REQ-PUBLIC-01", "REQ-EXPORT-01", "REQ-EXPORT-09", "REQ-STARTER-01", "REQ-PDF-01", "REQ-CONFIRM-01", "REQ-IH-01"):
         if requirement_id not in requirement_ids:
             failures.append(f"requirements traceability matrix missing {requirement_id}")
     if public_trade.get("status") != "public_trade_readiness_ready_local":
@@ -393,14 +412,40 @@ def main() -> int:
         failures.append("public trade readiness manifest should use the public product name")
     if "/api/public/quick-check" not in public_trade.get("routes", {}).get("api", []):
         failures.append("public trade readiness manifest should expose quick-check API")
+    if "/api/public/starter" not in public_trade.get("routes", {}).get("api", []):
+        failures.append("public trade readiness manifest should expose starter API")
+    if "beginner_no_documents" not in public_trade.get("modes", {}):
+        failures.append("public trade readiness manifest should expose beginner no-documents mode")
+    if public_trade.get("intelligence_hub_policy_monitor", {}).get("status") != "database_style_contract_ready":
+        failures.append("public manifest should expose the Intelligence Hub policy monitor contract")
     if exporter_mode.get("status") != "exporter_mode_requirements_ready":
         failures.append("exporter mode requirements manifest should be generated")
     if "exporter_side_readiness" not in exporter_mode.get("readiness_lanes", []):
         failures.append("exporter mode manifest should include exporter-side readiness lane")
     if "Broker Review Packet.pdf" not in public_reports.get("reports", []):
         failures.append("public report types should include Broker Review Packet.pdf")
+    if "Starter Checklist.pdf" not in public_reports.get("reports", []):
+        failures.append("public report types should include Starter Checklist.pdf")
     if public_upload_policy.get("notice_required") is not True:
         failures.append("public upload policy should require upload/AI notice")
+    if public_upload_policy.get("quarantine") != "enabled":
+        failures.append("public upload policy should quarantine public uploads")
+    if public_upload_policy.get("direct_file_serving") is not False:
+        failures.append("public upload policy should disable direct file serving")
+    if public_upload_policy.get("user_confirmation_required") is not True:
+        failures.append("public upload policy should require user confirmation")
+    if policy_monitor.get("status") != "intelligence_hub_policy_monitor_ready_with_external_refresh_gates":
+        failures.append("policy monitor should be generated with external refresh gates")
+    if policy_monitor.get("integration_mode") != "database_style_local_contract":
+        failures.append("policy monitor should use database-style local contract mode")
+    if policy_monitor.get("monitored_source_count", 0) < 8:
+        failures.append("policy monitor should include official Canadian source registry rows")
+    if policy_monitor.get("stale_source_blocker_count", 0) < 1:
+        failures.append("policy monitor should create stale-source blocker rows")
+    if policy_snapshots.get("status") != "policy_source_snapshots_ready":
+        failures.append("policy source snapshots artifact should be ready")
+    if policy_impact.get("status") != "policy_change_impact_report_ready":
+        failures.append("policy change impact report should be ready")
     store_path = ROOT / "system_review_graph" / "customer_workflow.sqlite"
     if store_path.exists():
         with sqlite3.connect(store_path) as conn:
@@ -425,6 +470,22 @@ def main() -> int:
         ):
             if table not in tables:
                 failures.append(f"customer workflow store missing table {table}")
+    policy_store_path = ROOT / "system_review_graph" / "policy_intelligence.sqlite"
+    if policy_store_path.exists():
+        with sqlite3.connect(policy_store_path) as conn:
+            policy_tables = {
+                row[0]
+                for row in conn.execute("select name from sqlite_master where type='table'").fetchall()
+            }
+        for table in (
+            "monitored_sources",
+            "source_snapshots",
+            "source_change_classifications",
+            "packet_source_impacts",
+            "stale_source_blockers",
+        ):
+            if table not in policy_tables:
+                failures.append(f"policy intelligence store missing table {table}")
     failures.extend(_validate_blockers(ROOT / "system_review_graph" / "blockers.jsonl"))
     failures.extend(_validate_blocker_rows(external.get("blockers", []), "external_gate_report.blockers"))
 
@@ -454,6 +515,7 @@ def main() -> int:
     print(f"runtime_users={len(runtime['users'])}")
     print(f"public_trade_manifest={public_trade['status']}")
     print(f"exporter_mode_manifest={exporter_mode['status']}")
+    print(f"policy_monitor={policy_monitor['status']}")
     print(f"review_requests={len(review_requests)}")
     print(f"audit_events={len(audit_events['events'])}")
     print(f"deployment_status={deployment['status']}")

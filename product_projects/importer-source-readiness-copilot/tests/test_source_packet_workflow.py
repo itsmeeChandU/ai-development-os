@@ -124,6 +124,36 @@ class SourcePacketWorkflowTests(unittest.TestCase):
         self.assertIn("ready_to_export_to_canada", export_packet["blocked_claims"])
         self.assertTrue(any("importer of record" in question.lower() for question in export_packet["buyer_broker_questions"]))
 
+    def test_beginner_packet_preserves_unknowns_and_generates_missing_evidence(self) -> None:
+        packet = packet_from_submission(
+            {
+                "packet_name": "Beginner spice starter",
+                "product_name": "Beginner spice starter",
+                "product_category": "food_import",
+                "trade_direction": "export",
+                "origin_country": "India",
+                "destination_country": "Canada",
+                "beginner_mode": True,
+                "offline_evidence_only": True,
+                "unknown_fields": "HS code, importer of record, certificates",
+                "research_depth_requested": "starter checklist",
+            }
+        )
+        workflow = build_customer_workflow(
+            source_packets=[packet],
+            evidence_items=[],
+            official_sources=load_json(ROOT / "data" / "official_source_registry.json"),
+            generated_at="2026-06-25T00:00:00+00:00",
+        )
+        starter_packet = workflow["packets"][0]
+
+        self.assertTrue(starter_packet["beginner_mode"])
+        self.assertIn("HS code", starter_packet["unknown_fields"])
+        self.assertEqual(starter_packet["research_depth_requested"], "starter checklist")
+        self.assertEqual(starter_packet["customer_visible_status"], "blocked_missing_evidence")
+        self.assertIn("Product and commercial documents", starter_packet["evidence_summary"]["missing_items"])
+        self.assertIn("ready_to_export_to_canada", starter_packet["blocked_claims"])
+
     def test_source_refresh_records_hash_and_keeps_external_claims_blocked(self) -> None:
         evidence = load_json_list(ROOT / "data" / "evidence_ledger.json")
 

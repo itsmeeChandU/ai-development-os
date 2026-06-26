@@ -7,7 +7,18 @@
     "shipment_ready",
     "legal_or_customs_advice"
   ],
+  "intelligence_hub_policy_monitor": {
+    "artifact": "system_review_graph/intelligence_hub_policy_monitor.json",
+    "proof_boundary": "Source monitoring detects stale packet risk; it does not prove current compliance truth.",
+    "status": "database_style_contract_ready",
+    "store": "system_review_graph/policy_intelligence.sqlite"
+  },
   "internal_engine": "Importer Source Readiness Copilot",
+  "modes": {
+    "beginner_no_documents": "Creates a missing-evidence starter packet and checklist without requiring uploads.",
+    "document_mode": "Quarantines uploaded PDFs, triages native text/OCR need, and requires user confirmation.",
+    "saved_workspace": "Local SQLite/artifact workspace with account CTA and external hosting gates."
+  },
   "promise": "Before you import or export, know what is missing. Turn a messy trade idea into an evidence-backed readiness packet that shows what is known, what is missing, which claims are blocked, and what review is required before moving forward.",
   "proof_boundary": "Trade Readiness Copilot organizes import/export evidence and blockers. It does not provide legal, customs, tariff, tax, CFIA, supplier, buyer, compliance, shipment, or launch advice.",
   "public_privacy_controls": {
@@ -23,11 +34,13 @@
   "public_product": "Trade Readiness Copilot",
   "public_product_surface": {
     "customer_flow": [
-      "choose tool",
-      "upload PDF",
-      "process",
+      "choose beginner start or document mode",
+      "enter what is known",
+      "upload PDF if available",
+      "triage native text or OCR need",
+      "confirm extracted fields",
       "preview gaps",
-      "download draft PDF",
+      "download starter/missing-evidence/draft PDF",
       "delete files or create account"
     ],
     "hidden_internal_terms": [
@@ -38,6 +51,7 @@
       "board gates"
     ],
     "levels": [
+      "Level 0 beginner starter - no documents, missing-evidence checklist, source/research routing",
       "Level 1 public free tool - no login, limited PDF upload, draft PDF, auto-delete/delete controls",
       "Level 2 free account - saved history and workspace",
       "Level 3 Pro - more packets and review workflows",
@@ -46,31 +60,44 @@
     ],
     "status": "public_quick_check_ready_local_with_external_gates",
     "visible_modules": [
+      "Beginner Start",
       "Import Readiness",
       "Export Readiness",
       "Source Packet Builder",
       "Evidence Ledger",
+      "PDF Triage",
+      "User Confirmation",
       "PDF Report Generator",
+      "ChatGPT-Safe Summary",
       "Expert Review Packet",
-      "Operator Workbench"
+      "Operator Workbench",
+      "Policy Source Monitor"
     ]
   },
   "routes": {
     "api": [
+      "/api/public/starter",
       "/api/public/quick-check",
+      "/api/public/packets/:id/confirm",
+      "/api/public/packets/:id/chatgpt-safe-summary",
+      "/api/public/packets/:id/reports/starter.pdf",
       "/api/public/packets/:id/reports/draft.pdf",
+      "/api/public/packets/:id/reports/missing.pdf",
       "/api/public/packets/:id/reports/buyer.pdf",
       "/api/public/packets/:id/reports/broker.pdf",
       "/api/public/packets/:id/delete-files"
     ],
     "ui": [
       "/",
+      "/start",
       "/tools",
       "/trade-check",
       "/tools/import-readiness",
       "/tools/export-readiness",
       "/tools/buyer-broker-packet",
-      "/public/packets/:packetId/result"
+      "/public/packets/:packetId/result",
+      "/public/packets/:packetId/confirm",
+      "/workspace"
     ]
   },
   "status": "public_trade_readiness_ready_local",

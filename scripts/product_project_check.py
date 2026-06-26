@@ -51,6 +51,8 @@ def main() -> int:
         PROJECT / "src" / "importer_source_readiness" / "source_packet_workflow.py",
         PROJECT / "src" / "importer_source_readiness" / "customer_store.py",
         PROJECT / "src" / "importer_source_readiness" / "product_runtime.py",
+        PROJECT / "src" / "importer_source_readiness" / "document_processing.py",
+        PROJECT / "src" / "importer_source_readiness" / "policy_intelligence.py",
         PROJECT / "src" / "importer_source_readiness" / "ai_review_validation.py",
         PROJECT / "tests" / "test_readiness.py",
         PROJECT / "tests" / "test_external_gates.py",
@@ -63,6 +65,7 @@ def main() -> int:
         PROJECT / "tests" / "test_source_packet_workflow.py",
         PROJECT / "tests" / "test_customer_store.py",
         PROJECT / "tests" / "test_product_runtime.py",
+        PROJECT / "tests" / "test_policy_intelligence.py",
         PROJECT / "tests" / "test_external_package_audit.py",
         PROJECT / "scripts" / "run_readiness.py",
         PROJECT / "scripts" / "run_external_gates.py",
@@ -73,6 +76,7 @@ def main() -> int:
         PROJECT / "scripts" / "serve_operator_app.py",
         PROJECT / "scripts" / "run_operator_workflow.py",
         PROJECT / "scripts" / "run_customer_workflow.py",
+        PROJECT / "scripts" / "run_policy_intelligence.py",
         PROJECT / "scripts" / "audit_external_package.py",
         PROJECT / "scripts" / "check_product.py",
         PROJECT / "docs" / "PRODUCT_AUTOMATION_RUNBOOK.md",
@@ -81,6 +85,7 @@ def main() -> int:
         PROJECT / "docs" / "PUBLIC_TRADE_READINESS.md",
         PROJECT / "docs" / "STARTUP_LIFECYCLE.md",
         PROJECT / "docs" / "OPERATOR_GUIDE.md",
+        PROJECT / "docs" / "UI_UX_COMPONENT_SYSTEM.md",
         PROJECT / "system_review_graph" / "external_gate_report.json",
         PROJECT / "system_review_graph" / "continuation_plan.json",
         PROJECT / "system_review_graph" / "vc_pitch_readiness_report.json",
@@ -115,6 +120,10 @@ def main() -> int:
         PROJECT / "system_review_graph" / "exporter_mode_requirements.json",
         PROJECT / "system_review_graph" / "public_report_types.json",
         PROJECT / "system_review_graph" / "public_upload_policy.json",
+        PROJECT / "system_review_graph" / "intelligence_hub_policy_monitor.json",
+        PROJECT / "system_review_graph" / "policy_source_snapshots.json",
+        PROJECT / "system_review_graph" / "policy_change_impact_report.json",
+        PROJECT / "system_review_graph" / "policy_intelligence.sqlite",
         PROJECT / "system_review_graph" / "source_refresh_runs.json",
         PROJECT / "system_review_graph" / "source_refresh_report_packet-frozen-tuna-canada-001.json",
         PROJECT / "system_review_graph" / "expert_review_packet_packet-frozen-tuna-canada-001.md",
@@ -150,6 +159,7 @@ def main() -> int:
         ["python3", "scripts/build_board_go_live_packet.py"],
         ["python3", "scripts/run_operator_workflow.py"],
         ["python3", "scripts/run_customer_workflow.py"],
+        ["python3", "scripts/run_policy_intelligence.py"],
         ["python3", "scripts/export_operator_dashboard.py"],
         ["python3", "scripts/audit_external_package.py", "--root", "."],
         ["python3", "scripts/check_product.py"],
@@ -249,6 +259,15 @@ def main() -> int:
     )
     public_upload_policy = json.loads(
         (PROJECT / "system_review_graph" / "public_upload_policy.json").read_text(encoding="utf-8")
+    )
+    policy_monitor = json.loads(
+        (PROJECT / "system_review_graph" / "intelligence_hub_policy_monitor.json").read_text(encoding="utf-8")
+    )
+    policy_snapshots = json.loads(
+        (PROJECT / "system_review_graph" / "policy_source_snapshots.json").read_text(encoding="utf-8")
+    )
+    policy_impact = json.loads(
+        (PROJECT / "system_review_graph" / "policy_change_impact_report.json").read_text(encoding="utf-8")
     )
     screenshot_manifest = json.loads(
         (PROJECT / "system_review_graph" / "operator_screenshot_manifest.json").read_text(encoding="utf-8")
@@ -437,17 +456,25 @@ def main() -> int:
         print("runtime state missing auth routes")
         return 1
     for route in (
+        "/start",
         "/tools/export-readiness",
         "/public/packets/:packetId/result",
+        "/public/packets/:packetId/confirm",
+        "/workspace",
     ):
         if route not in runtime.get("ui_routes", {}).get("customer", []):
             print("Product project check: FAIL")
             print(f"runtime state missing public UI route {route}")
             return 1
     for route in (
+        "/api/public/starter",
         "/api/public/quick-check",
+        "/api/public/packets/:id/confirm",
+        "/api/public/packets/:id/chatgpt-safe-summary",
+        "/api/public/packets/:id/reports/starter.pdf",
         "/api/public/packets/:id/reports/buyer.pdf",
         "/api/public/packets/:id/reports/broker.pdf",
+        "/api/public/packets/:id/reports/missing.pdf",
         "/api/public/packets/:id/delete-files",
     ):
         if route not in runtime.get("api_routes", []):
@@ -507,11 +534,11 @@ def main() -> int:
         print("manual no-AI workflow is not ready")
         return 1
     requirement_ids = {row.get("id") for row in requirements_traceability.get("requirements", [])}
-    if len(requirements_traceability.get("requirements", [])) < 27:
+    if len(requirements_traceability.get("requirements", [])) < 31:
         print("Product project check: FAIL")
         print("requirements traceability matrix is incomplete")
         return 1
-    for requirement_id in ("REQ-PUBLIC-01", "REQ-EXPORT-01", "REQ-EXPORT-09"):
+    for requirement_id in ("REQ-PUBLIC-01", "REQ-EXPORT-01", "REQ-EXPORT-09", "REQ-STARTER-01", "REQ-PDF-01", "REQ-CONFIRM-01", "REQ-IH-01"):
         if requirement_id not in requirement_ids:
             print("Product project check: FAIL")
             print(f"requirements traceability matrix missing {requirement_id}")
@@ -523,6 +550,18 @@ def main() -> int:
     if public_trade.get("public_product") != "Trade Readiness Copilot":
         print("Product project check: FAIL")
         print("public trade readiness manifest has wrong product name")
+        return 1
+    if "/api/public/starter" not in public_trade.get("routes", {}).get("api", []):
+        print("Product project check: FAIL")
+        print("public trade readiness manifest missing starter API")
+        return 1
+    if "beginner_no_documents" not in public_trade.get("modes", {}):
+        print("Product project check: FAIL")
+        print("public trade readiness manifest missing beginner mode")
+        return 1
+    if public_trade.get("intelligence_hub_policy_monitor", {}).get("status") != "database_style_contract_ready":
+        print("Product project check: FAIL")
+        print("public trade readiness manifest missing policy monitor contract")
         return 1
     if exporter_mode.get("status") != "exporter_mode_requirements_ready":
         print("Product project check: FAIL")
@@ -536,9 +575,33 @@ def main() -> int:
         print("Product project check: FAIL")
         print("public report types missing broker review PDF")
         return 1
+    if "Starter Checklist.pdf" not in public_reports.get("reports", []):
+        print("Product project check: FAIL")
+        print("public report types missing starter checklist PDF")
+        return 1
     if public_upload_policy.get("notice_required") is not True:
         print("Product project check: FAIL")
         print("public upload policy should require notice acceptance")
+        return 1
+    if public_upload_policy.get("quarantine") != "enabled" or public_upload_policy.get("direct_file_serving") is not False:
+        print("Product project check: FAIL")
+        print("public upload policy should quarantine uploads and disable direct file serving")
+        return 1
+    if public_upload_policy.get("user_confirmation_required") is not True:
+        print("Product project check: FAIL")
+        print("public upload policy should require user confirmation")
+        return 1
+    if policy_monitor.get("status") != "intelligence_hub_policy_monitor_ready_with_external_refresh_gates":
+        print("Product project check: FAIL")
+        print("policy monitor is missing or stale")
+        return 1
+    if policy_monitor.get("monitored_source_count", 0) < 8 or policy_monitor.get("stale_source_blocker_count", 0) < 1:
+        print("Product project check: FAIL")
+        print("policy monitor missing sources or stale-source blockers")
+        return 1
+    if policy_snapshots.get("status") != "policy_source_snapshots_ready" or policy_impact.get("status") != "policy_change_impact_report_ready":
+        print("Product project check: FAIL")
+        print("policy snapshot or impact artifact is missing")
         return 1
     store_path = PROJECT / "system_review_graph" / "customer_workflow.sqlite"
     with sqlite3.connect(store_path) as conn:
@@ -564,6 +627,23 @@ def main() -> int:
     if not required_tables.issubset(tables):
         print("Product project check: FAIL")
         print("customer workflow sqlite store missing required tables")
+        return 1
+    policy_store_path = PROJECT / "system_review_graph" / "policy_intelligence.sqlite"
+    with sqlite3.connect(policy_store_path) as conn:
+        policy_tables = {
+            row[0]
+            for row in conn.execute("select name from sqlite_master where type='table'").fetchall()
+        }
+    required_policy_tables = {
+        "monitored_sources",
+        "source_snapshots",
+        "source_change_classifications",
+        "packet_source_impacts",
+        "stale_source_blockers",
+    }
+    if not required_policy_tables.issubset(policy_tables):
+        print("Product project check: FAIL")
+        print("policy intelligence sqlite store missing required tables")
         return 1
 
     print("Product project check: PASS")
@@ -591,6 +671,7 @@ def main() -> int:
     print(f"requirements_traceability={len(requirements_traceability['requirements'])}")
     print(f"public_trade_manifest={public_trade['status']}")
     print(f"exporter_mode_manifest={exporter_mode['status']}")
+    print(f"policy_monitor={policy_monitor['status']}")
     print(f"review_requests={len(review_requests)}")
     print(f"audit_events={len(audit_events['events'])}")
     print(f"deployment_status={deployment['status']}")

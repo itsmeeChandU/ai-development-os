@@ -13,6 +13,7 @@ python3 scripts/plan_continuation.py
 python3 scripts/build_vc_pitch_packet.py
 python3 scripts/build_board_go_live_packet.py
 python3 scripts/run_customer_workflow.py
+python3 scripts/run_policy_intelligence.py
 python3 scripts/run_operator_workflow.py
 python3 scripts/export_operator_dashboard.py
 python3 scripts/audit_external_package.py --root .
@@ -33,7 +34,8 @@ public_surface_status=public_quick_check_ready_local_with_external_gates
 runtime_users=4
 ai_policy_status=ai_data_policy_ready
 ai_router_status=ai_model_router_ready
-requirements_traceability>=27
+requirements_traceability>=31
+policy_monitor=intelligence_hub_policy_monitor_ready_with_external_refresh_gates
 review_requests=1
 audit_events=3
 deployment_status=deployable_local_stack_ready_with_external_hosting_gates
@@ -50,6 +52,9 @@ audit events, report exports, deployment health surfaces, and the expanded
 SQLite workflow store. The current proof also verifies the public Trade
 Readiness Copilot route contract, no-login PDF upload quick check, draft
 readiness/buyer/broker PDF generation, delete-files control, exporter mode
-requirements, public upload policy, and fail-closed export-to-Canada claims.
+requirements, public upload policy, beginner no-documents starter mode, PDF
+triage and confirmation, ChatGPT-safe summary, the Intelligence Hub
+policy/source monitor contract, the policy intelligence SQLite store, and
+fail-closed export-to-Canada claims.
 
 Any failure should become a blocker row or a targeted repair before review.

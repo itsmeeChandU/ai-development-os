@@ -69,6 +69,19 @@ Open the continuation plan when deciding what work continues next:
 system_review_graph/continuation_plan.json
 ```
 
+Open the policy/source monitor before claiming any current source truth:
+
+```text
+system_review_graph/intelligence_hub_policy_monitor.json
+system_review_graph/policy_source_snapshots.json
+system_review_graph/policy_change_impact_report.json
+system_review_graph/policy_intelligence.sqlite
+```
+
+These artifacts map official sources to packets and stale-source blockers.
+They do not prove current tariff, CFIA, permit, sanctions, legal, buyer,
+supplier, or commercial readiness.
+
 If the readiness or external-gate status is `ready_with_external_gates`, the
 continuation status must stay `startup_in_progress`. That is the repo-enforced
 signal that the software loop can be useful internally while the startup is not

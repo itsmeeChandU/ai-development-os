@@ -72,7 +72,57 @@ class OperatorAppTests(unittest.TestCase):
         self.assertEqual(response.status, 200)
         self.assertIn("Trade Readiness Copilot", html)
         self.assertIn("know what is missing", html)
-        self.assertIn("Start quick check", html)
+        self.assertIn("Start without documents", html)
+        self.assertIn("PDF Triage", html)
+
+    def test_beginner_start_creates_starter_packet(self) -> None:
+        generated_paths = [
+            *MUTABLE_GENERATED_PATHS,
+            ROOT / "system_review_graph" / "expert_review_packet_packet-beginner-cumin-starter.md",
+        ]
+        backups = {path: path.read_bytes() if path.exists() else None for path in generated_paths}
+        body = urlencode(
+            {
+                "accept_notice": "accepted",
+                "product_name": "Beginner cumin starter",
+                "product_category": "food_import",
+                "origin_country": "India",
+                "destination_country": "Canada",
+                "trade_direction": "export",
+                "current_stage": "idea",
+                "unknown_fields": "HS code, importer of record, certificates",
+                "research_depth_requested": "starter checklist",
+            }
+        ).encode("utf-8")
+        request = Request(
+            f"{self.base_url}/api/public/starter",
+            data=body,
+            method="POST",
+            headers={"Content-Type": "application/x-www-form-urlencoded"},
+        )
+
+        class NoRedirect(HTTPRedirectHandler):
+            def redirect_request(self, req, fp, code, msg, headers, newurl):  # type: ignore[no-untyped-def]
+                return None
+
+        try:
+            opener = build_opener(NoRedirect)
+            with self.assertRaises(HTTPError) as ctx:
+                opener.open(request, timeout=5)
+            self.assertEqual(ctx.exception.code, 303)
+            self.assertEqual(ctx.exception.headers["Location"], "/public/packets/packet-beginner-cumin-starter/result")
+
+            with urlopen(f"{self.base_url}/public/packets/packet-beginner-cumin-starter/result", timeout=5) as response:
+                html = response.read().decode("utf-8")
+            self.assertIn("Beginner cumin starter", html)
+            self.assertIn("Starter Checklist", html)
+            self.assertIn("Beginner mode", html)
+        finally:
+            for path, content in backups.items():
+                if content is None:
+                    path.unlink(missing_ok=True)
+                else:
+                    path.write_bytes(content)
 
     def test_public_tool_selection_and_quick_check_upload_pdf_flow(self) -> None:
         generated_paths = [
@@ -152,13 +202,61 @@ class OperatorAppTests(unittest.TestCase):
                 self.assertIn("Export-to-Canada Packet", result_html)
                 self.assertIn("Blocked - not ready for shipment decision", result_html)
                 self.assertIn("Generate Buyer Packet", result_html)
+                self.assertIn("Confirm Extracted Fields", result_html)
+                self.assertIn("Missing Evidence PDF", result_html)
                 self.assertIn("Delete Uploaded Files", result_html)
                 self.assertNotIn("system_review_graph", result_html)
+
+                with urlopen(f"{self.base_url}/public/packets/packet-india-turmeric-export/confirm", timeout=5) as response:
+                    confirm_html = response.read().decode("utf-8")
+                self.assertIn("Confirm Extracted Fields", confirm_html)
+                self.assertIn("turmeric-product-spec.pdf", confirm_html)
+
+                manifest = json.loads((ROOT / "system_review_graph" / "public_upload_manifest.json").read_text(encoding="utf-8"))
+                packet_manifest = next(row for row in manifest["packets"] if row["packet_id"] == "packet-india-turmeric-export")
+                self.assertEqual(packet_manifest["files"][0]["filename"], "document-001.pdf")
+                self.assertEqual(packet_manifest["files"][0]["original_filename"], "turmeric-product-spec.pdf")
+                self.assertTrue(packet_manifest["files"][0]["user_confirmation_required"])
+                self.assertIn("extraction_status", packet_manifest["files"][0])
+
+                with self.assertRaises(HTTPError) as blocked_ctx:
+                    urlopen(f"{self.base_url}/system_review_graph/{packet_manifest['files'][0]['relative_path'].removeprefix('system_review_graph/')}", timeout=5)
+                self.assertEqual(blocked_ctx.exception.code, 403)
+
+                confirm_body = urlencode(
+                    {
+                        "fields_confirmed": "accepted",
+                        "product_name": "India turmeric export",
+                        "origin_country": "India",
+                        "destination_country": "Canada",
+                        "importer_of_record": "unknown",
+                        "incoterms_if_known": "unknown",
+                    }
+                ).encode("utf-8")
+                confirm_request = Request(
+                    f"{self.base_url}/api/public/packets/packet-india-turmeric-export/confirm",
+                    data=confirm_body,
+                    method="POST",
+                    headers={"Content-Type": "application/x-www-form-urlencoded"},
+                )
+                with urlopen(confirm_request, timeout=5) as response:
+                    confirmed = json.loads(response.read().decode("utf-8"))
+                self.assertEqual(confirmed["status"], "public_packet_fields_confirmed")
+                self.assertEqual(confirmed["packet"]["confirmation_status"], "user_confirmed_draft_fields")
+
+                with urlopen(f"{self.base_url}/api/public/packets/packet-india-turmeric-export/chatgpt-safe-summary", timeout=5) as response:
+                    safe_summary = json.loads(response.read().decode("utf-8"))
+                self.assertEqual(safe_summary["status"], "chatgpt_safe_summary_ready")
+                self.assertIn("Do not provide legal", safe_summary["copy_paste_summary"])
 
                 with urlopen(f"{self.base_url}/api/public/packets/packet-india-turmeric-export/reports/broker.pdf", timeout=5) as response:
                     pdf = response.read()
                 self.assertEqual(response.status, 200)
                 self.assertTrue(pdf.startswith(b"%PDF"))
+
+                with urlopen(f"{self.base_url}/api/public/packets/packet-india-turmeric-export/reports/starter.pdf", timeout=5) as response:
+                    starter_pdf = response.read()
+                self.assertTrue(starter_pdf.startswith(b"%PDF"))
 
                 delete_request = Request(
                     f"{self.base_url}/api/public/packets/packet-india-turmeric-export/delete-files",

@@ -20,6 +20,8 @@ src/importer_source_readiness/board_readiness.py
 src/importer_source_readiness/operator_workflow.py
 src/importer_source_readiness/operator_report.py
 src/importer_source_readiness/operator_screenshots.py
+src/importer_source_readiness/document_processing.py
+src/importer_source_readiness/policy_intelligence.py
         |
         v
 system_review_graph/readiness_report.json
@@ -31,6 +33,10 @@ system_review_graph/operator_workflow_report.json
 system_review_graph/operator_screenshot_manifest.json
 system_review_graph/operator_dashboard.html
 system_review_graph/operator_screenshots/*.png
+system_review_graph/intelligence_hub_policy_monitor.json
+system_review_graph/policy_source_snapshots.json
+system_review_graph/policy_change_impact_report.json
+system_review_graph/policy_intelligence.sqlite
 investor/*.md
 board/*.md
 ```
@@ -54,6 +60,8 @@ board/*.md
 | `src/importer_source_readiness/operator_workflow.py` | compose source rows, evidence gates, continuation lanes, human approvals, and Canadian tool references into an operator queue |
 | `src/importer_source_readiness/operator_report.py` | render static operator dashboard |
 | `src/importer_source_readiness/operator_screenshots.py` | index operator-generated screenshot artifacts for dashboard review |
+| `src/importer_source_readiness/document_processing.py` | triage public PDF uploads, native text extraction, OCR decision, hashes, and confirmation requirement |
+| `src/importer_source_readiness/policy_intelligence.py` | database-style Intelligence Hub source monitoring contract, source snapshots, packet impacts, and stale-source blockers |
 | `scripts/run_readiness.py` | CLI entrypoint and report writer |
 | `scripts/run_external_gates.py` | external-gate report writer |
 | `scripts/export_operator_dashboard.py` | dashboard exporter |
@@ -61,6 +69,7 @@ board/*.md
 | `scripts/build_vc_pitch_packet.py` | investor packet and pitch readiness writer |
 | `scripts/build_board_go_live_packet.py` | board packet and go-live candidate writer |
 | `scripts/run_operator_workflow.py` | operator work queue writer |
+| `scripts/run_policy_intelligence.py` | Intelligence Hub policy/source monitor artifact writer |
 | `tests/test_readiness.py` | proof for blocked-safe behavior |
 | `tests/test_external_gates.py` | proof for external-gate and dashboard behavior |
 | `tests/test_continuation.py` | proof that externally gated status keeps work in progress |
@@ -94,6 +103,9 @@ board/*.md
     `system_review_graph/operator_screenshot_manifest.json`.
 16. Render `system_review_graph/operator_dashboard.html` with the operator
     work queue, screenshot gallery, and generated proof boundary.
+17. Generate Intelligence Hub-style source monitor artifacts with source
+    hashes, diff-classifier placeholders, packet impact rows, stale-source
+    blockers, and a SQLite policy intelligence store.
 
 ## Status Rules
 

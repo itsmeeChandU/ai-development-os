@@ -157,9 +157,14 @@
     "/api/auth/login",
     "/api/auth/logout",
     "/api/auth/me",
+    "/api/public/starter",
     "/api/public/quick-check",
     "/api/public/packets/:id/refresh-official-sources",
+    "/api/public/packets/:id/confirm",
+    "/api/public/packets/:id/chatgpt-safe-summary",
+    "/api/public/packets/:id/reports/starter.pdf",
     "/api/public/packets/:id/reports/draft.pdf",
+    "/api/public/packets/:id/reports/missing.pdf",
     "/api/public/packets/:id/reports/buyer.pdf",
     "/api/public/packets/:id/reports/broker.pdf",
     "/api/public/packets/:id/delete-files",
@@ -378,7 +383,7 @@
       "human_review_finding_id": "",
       "human_review_required": false,
       "id": "packet-frozen-tuna-canada-001:source_freshness_claim",
-      "last_evaluated_at": "2026-06-26T03:53:50+00:00",
+      "last_evaluated_at": "2026-06-26T09:11:11+00:00",
       "packet_id": "packet-frozen-tuna-canada-001",
       "source_ids": [],
       "status": "blocked_stale_source"
@@ -409,7 +414,7 @@
       "human_review_finding_id": "",
       "human_review_required": true,
       "id": "packet-frozen-tuna-canada-001:tariff_classification_claim",
-      "last_evaluated_at": "2026-06-26T03:53:50+00:00",
+      "last_evaluated_at": "2026-06-26T09:11:11+00:00",
       "packet_id": "packet-frozen-tuna-canada-001",
       "source_ids": [],
       "status": "blocked_requires_human_review"
@@ -440,7 +445,7 @@
       "human_review_finding_id": "",
       "human_review_required": true,
       "id": "packet-frozen-tuna-canada-001:food_safety_claim",
-      "last_evaluated_at": "2026-06-26T03:53:50+00:00",
+      "last_evaluated_at": "2026-06-26T09:11:11+00:00",
       "packet_id": "packet-frozen-tuna-canada-001",
       "source_ids": [],
       "status": "blocked_requires_human_review"
@@ -472,7 +477,7 @@
       "human_review_finding_id": "",
       "human_review_required": true,
       "id": "packet-frozen-tuna-canada-001:export_to_canada_readiness_claim",
-      "last_evaluated_at": "2026-06-26T03:53:50+00:00",
+      "last_evaluated_at": "2026-06-26T09:11:11+00:00",
       "packet_id": "packet-frozen-tuna-canada-001",
       "source_ids": [],
       "status": "blocked_missing_evidence"
@@ -503,7 +508,7 @@
       "human_review_finding_id": "",
       "human_review_required": true,
       "id": "packet-frozen-tuna-canada-001:importer_of_record_claim",
-      "last_evaluated_at": "2026-06-26T03:53:50+00:00",
+      "last_evaluated_at": "2026-06-26T09:11:11+00:00",
       "packet_id": "packet-frozen-tuna-canada-001",
       "source_ids": [],
       "status": "blocked_missing_evidence"
@@ -534,7 +539,7 @@
       "human_review_finding_id": "",
       "human_review_required": true,
       "id": "packet-frozen-tuna-canada-001:trade_document_completeness_claim",
-      "last_evaluated_at": "2026-06-26T03:53:50+00:00",
+      "last_evaluated_at": "2026-06-26T09:11:11+00:00",
       "packet_id": "packet-frozen-tuna-canada-001",
       "source_ids": [],
       "status": "blocked_missing_evidence"
@@ -565,7 +570,7 @@
       "human_review_finding_id": "",
       "human_review_required": true,
       "id": "packet-frozen-tuna-canada-001:trade_agreement_preference_claim",
-      "last_evaluated_at": "2026-06-26T03:53:50+00:00",
+      "last_evaluated_at": "2026-06-26T09:11:11+00:00",
       "packet_id": "packet-frozen-tuna-canada-001",
       "source_ids": [],
       "status": "blocked_requires_human_review"
@@ -595,7 +600,7 @@
       "human_review_finding_id": "",
       "human_review_required": true,
       "id": "packet-frozen-tuna-canada-001:source_rights_claim",
-      "last_evaluated_at": "2026-06-26T03:53:50+00:00",
+      "last_evaluated_at": "2026-06-26T09:11:11+00:00",
       "packet_id": "packet-frozen-tuna-canada-001",
       "source_ids": [],
       "status": "blocked_source_rights_unknown"
@@ -625,7 +630,7 @@
       "human_review_finding_id": "",
       "human_review_required": false,
       "id": "packet-frozen-tuna-canada-001:buyer_validation_claim",
-      "last_evaluated_at": "2026-06-26T03:53:50+00:00",
+      "last_evaluated_at": "2026-06-26T09:11:11+00:00",
       "packet_id": "packet-frozen-tuna-canada-001",
       "source_ids": [],
       "status": "blocked_missing_evidence"
@@ -655,7 +660,7 @@
       "human_review_finding_id": "",
       "human_review_required": true,
       "id": "packet-frozen-tuna-canada-001:launch_readiness_claim",
-      "last_evaluated_at": "2026-06-26T03:53:50+00:00",
+      "last_evaluated_at": "2026-06-26T09:11:11+00:00",
       "packet_id": "packet-frozen-tuna-canada-001",
       "source_ids": [],
       "status": "blocked_missing_evidence"
@@ -938,11 +943,13 @@
   "public_product": "Trade Readiness Copilot",
   "public_product_surface": {
     "customer_flow": [
-      "choose tool",
-      "upload PDF",
-      "process",
+      "choose beginner start or document mode",
+      "enter what is known",
+      "upload PDF if available",
+      "triage native text or OCR need",
+      "confirm extracted fields",
       "preview gaps",
-      "download draft PDF",
+      "download starter/missing-evidence/draft PDF",
       "delete files or create account"
     ],
     "hidden_internal_terms": [
@@ -953,6 +960,7 @@
       "board gates"
     ],
     "levels": [
+      "Level 0 beginner starter - no documents, missing-evidence checklist, source/research routing",
       "Level 1 public free tool - no login, limited PDF upload, draft PDF, auto-delete/delete controls",
       "Level 2 free account - saved history and workspace",
       "Level 3 Pro - more packets and review workflows",
@@ -961,13 +969,18 @@
     ],
     "status": "public_quick_check_ready_local_with_external_gates",
     "visible_modules": [
+      "Beginner Start",
       "Import Readiness",
       "Export Readiness",
       "Source Packet Builder",
       "Evidence Ledger",
+      "PDF Triage",
+      "User Confirmation",
       "PDF Report Generator",
+      "ChatGPT-Safe Summary",
       "Expert Review Packet",
-      "Operator Workbench"
+      "Operator Workbench",
+      "Policy Source Monitor"
     ]
   },
   "redaction_pipeline": {
@@ -1057,7 +1070,7 @@
       "packet_id": "packet-frozen-tuna-canada-001",
       "proof_boundary": "Trade Readiness Copilot organizes import/export evidence and blockers. It does not provide legal, customs, tariff, tax, CFIA, supplier, buyer, compliance, shipment, or launch advice.",
       "report_type": "customer_readiness_report",
-      "source_snapshot_hash": "3345ffeefe10efd3533ff0e8856e7eecc5cae4281b7113e7a609953a1c8a1aeb",
+      "source_snapshot_hash": "78330393e612afd41b68d6e50191c6563436326973c9703800c1c8014972b8e9",
       "status": "draft_internal_export_ready"
     },
     {
@@ -1096,7 +1109,7 @@
       "packet_id": "packet-frozen-tuna-canada-001",
       "proof_boundary": "Trade Readiness Copilot organizes import/export evidence and blockers. It does not provide legal, customs, tariff, tax, CFIA, supplier, buyer, compliance, shipment, or launch advice.",
       "report_type": "customer_readiness_report",
-      "source_snapshot_hash": "3345ffeefe10efd3533ff0e8856e7eecc5cae4281b7113e7a609953a1c8a1aeb",
+      "source_snapshot_hash": "78330393e612afd41b68d6e50191c6563436326973c9703800c1c8014972b8e9",
       "status": "draft_internal_export_ready"
     },
     {
@@ -1135,7 +1148,7 @@
       "packet_id": "packet-frozen-tuna-canada-001",
       "proof_boundary": "Trade Readiness Copilot organizes import/export evidence and blockers. It does not provide legal, customs, tariff, tax, CFIA, supplier, buyer, compliance, shipment, or launch advice.",
       "report_type": "expert_review_packet",
-      "source_snapshot_hash": "3345ffeefe10efd3533ff0e8856e7eecc5cae4281b7113e7a609953a1c8a1aeb",
+      "source_snapshot_hash": "78330393e612afd41b68d6e50191c6563436326973c9703800c1c8014972b8e9",
       "status": "draft_internal_export_ready"
     },
     {
@@ -1174,7 +1187,7 @@
       "packet_id": "packet-frozen-tuna-canada-001",
       "proof_boundary": "Trade Readiness Copilot organizes import/export evidence and blockers. It does not provide legal, customs, tariff, tax, CFIA, supplier, buyer, compliance, shipment, or launch advice.",
       "report_type": "operator_blocker_report",
-      "source_snapshot_hash": "3345ffeefe10efd3533ff0e8856e7eecc5cae4281b7113e7a609953a1c8a1aeb",
+      "source_snapshot_hash": "78330393e612afd41b68d6e50191c6563436326973c9703800c1c8014972b8e9",
       "status": "draft_internal_export_ready"
     },
     {
@@ -1213,7 +1226,7 @@
       "packet_id": "packet-frozen-tuna-canada-001",
       "proof_boundary": "Trade Readiness Copilot organizes import/export evidence and blockers. It does not provide legal, customs, tariff, tax, CFIA, supplier, buyer, compliance, shipment, or launch advice.",
       "report_type": "private_beta_gate_report",
-      "source_snapshot_hash": "3345ffeefe10efd3533ff0e8856e7eecc5cae4281b7113e7a609953a1c8a1aeb",
+      "source_snapshot_hash": "78330393e612afd41b68d6e50191c6563436326973c9703800c1c8014972b8e9",
       "status": "draft_internal_export_ready"
     },
     {
@@ -1252,7 +1265,7 @@
       "packet_id": "packet-frozen-tuna-canada-001",
       "proof_boundary": "Trade Readiness Copilot organizes import/export evidence and blockers. It does not provide legal, customs, tariff, tax, CFIA, supplier, buyer, compliance, shipment, or launch advice.",
       "report_type": "customer_readiness_report",
-      "source_snapshot_hash": "3345ffeefe10efd3533ff0e8856e7eecc5cae4281b7113e7a609953a1c8a1aeb",
+      "source_snapshot_hash": "78330393e612afd41b68d6e50191c6563436326973c9703800c1c8014972b8e9",
       "status": "pdf_renderer_ready_basic"
     },
     {
@@ -1291,7 +1304,7 @@
       "packet_id": "packet-frozen-tuna-canada-001",
       "proof_boundary": "Trade Readiness Copilot organizes import/export evidence and blockers. It does not provide legal, customs, tariff, tax, CFIA, supplier, buyer, compliance, shipment, or launch advice.",
       "report_type": "draft_trade_readiness_report",
-      "source_snapshot_hash": "3345ffeefe10efd3533ff0e8856e7eecc5cae4281b7113e7a609953a1c8a1aeb",
+      "source_snapshot_hash": "78330393e612afd41b68d6e50191c6563436326973c9703800c1c8014972b8e9",
       "status": "pdf_renderer_ready_basic"
     },
     {
@@ -1330,7 +1343,7 @@
       "packet_id": "packet-frozen-tuna-canada-001",
       "proof_boundary": "Trade Readiness Copilot organizes import/export evidence and blockers. It does not provide legal, customs, tariff, tax, CFIA, supplier, buyer, compliance, shipment, or launch advice.",
       "report_type": "buyer_ready_packet",
-      "source_snapshot_hash": "3345ffeefe10efd3533ff0e8856e7eecc5cae4281b7113e7a609953a1c8a1aeb",
+      "source_snapshot_hash": "78330393e612afd41b68d6e50191c6563436326973c9703800c1c8014972b8e9",
       "status": "pdf_renderer_ready_basic"
     },
     {
@@ -1369,7 +1382,7 @@
       "packet_id": "packet-frozen-tuna-canada-001",
       "proof_boundary": "Trade Readiness Copilot organizes import/export evidence and blockers. It does not provide legal, customs, tariff, tax, CFIA, supplier, buyer, compliance, shipment, or launch advice.",
       "report_type": "broker_review_packet",
-      "source_snapshot_hash": "3345ffeefe10efd3533ff0e8856e7eecc5cae4281b7113e7a609953a1c8a1aeb",
+      "source_snapshot_hash": "78330393e612afd41b68d6e50191c6563436326973c9703800c1c8014972b8e9",
       "status": "pdf_renderer_ready_basic"
     },
     {
@@ -1408,7 +1421,7 @@
       "packet_id": "packet-frozen-tuna-canada-001",
       "proof_boundary": "Trade Readiness Copilot organizes import/export evidence and blockers. It does not provide legal, customs, tariff, tax, CFIA, supplier, buyer, compliance, shipment, or launch advice.",
       "report_type": "missing_evidence_checklist",
-      "source_snapshot_hash": "3345ffeefe10efd3533ff0e8856e7eecc5cae4281b7113e7a609953a1c8a1aeb",
+      "source_snapshot_hash": "78330393e612afd41b68d6e50191c6563436326973c9703800c1c8014972b8e9",
       "status": "pdf_renderer_ready_basic"
     },
     {
@@ -1447,7 +1460,7 @@
       "packet_id": "packet-frozen-tuna-canada-001",
       "proof_boundary": "Trade Readiness Copilot organizes import/export evidence and blockers. It does not provide legal, customs, tariff, tax, CFIA, supplier, buyer, compliance, shipment, or launch advice.",
       "report_type": "operator_review_report",
-      "source_snapshot_hash": "3345ffeefe10efd3533ff0e8856e7eecc5cae4281b7113e7a609953a1c8a1aeb",
+      "source_snapshot_hash": "78330393e612afd41b68d6e50191c6563436326973c9703800c1c8014972b8e9",
       "status": "pdf_renderer_ready_basic"
     },
     {
@@ -1486,7 +1499,7 @@
       "packet_id": "packet-frozen-tuna-canada-001",
       "proof_boundary": "Trade Readiness Copilot organizes import/export evidence and blockers. It does not provide legal, customs, tariff, tax, CFIA, supplier, buyer, compliance, shipment, or launch advice.",
       "report_type": "expert_review_packet",
-      "source_snapshot_hash": "3345ffeefe10efd3533ff0e8856e7eecc5cae4281b7113e7a609953a1c8a1aeb",
+      "source_snapshot_hash": "78330393e612afd41b68d6e50191c6563436326973c9703800c1c8014972b8e9",
       "status": "pdf_renderer_ready_basic"
     }
   ],
@@ -1851,6 +1864,62 @@
         "scripts/check_product.py"
       ],
       "status": "implemented_fail_closed"
+    },
+    {
+      "artifacts": [
+        "customer_readiness_report.json",
+        "public_trade_readiness_manifest.json"
+      ],
+      "boundary": "Starter mode creates a missing-evidence packet and checklist; it is not advice or approval.",
+      "id": "REQ-STARTER-01",
+      "name": "Beginner no-documents starter flow",
+      "proof": [
+        "tests/test_operator_app.py",
+        "tests/test_source_packet_workflow.py"
+      ],
+      "status": "implemented_local_public_surface"
+    },
+    {
+      "artifacts": [
+        "public_upload_manifest.json",
+        "public_upload_policy.json"
+      ],
+      "boundary": "PDF triage detects local text/OCR needs and asks for confirmation; it does not verify document authenticity.",
+      "id": "REQ-PDF-01",
+      "name": "PDF triage and native text extraction decision",
+      "proof": [
+        "tests/test_operator_app.py"
+      ],
+      "status": "implemented_local_parser_with_ocr_gate"
+    },
+    {
+      "artifacts": [
+        "customer_readiness_report.json",
+        "audit_events.json"
+      ],
+      "boundary": "User confirmation records draft context only; human experts still own external claims.",
+      "id": "REQ-CONFIRM-01",
+      "name": "User confirmation before extracted fields become packet context",
+      "proof": [
+        "tests/test_operator_app.py"
+      ],
+      "status": "implemented"
+    },
+    {
+      "artifacts": [
+        "intelligence_hub_policy_monitor.json",
+        "policy_source_snapshots.json",
+        "policy_change_impact_report.json",
+        "policy_intelligence.sqlite"
+      ],
+      "boundary": "The contract maps sources, snapshots, diffs, and packet impacts; live source truth and qualified review remain external gates.",
+      "id": "REQ-IH-01",
+      "name": "Intelligence Hub policy/source monitoring contract",
+      "proof": [
+        "tests/test_policy_intelligence.py",
+        "scripts/run_policy_intelligence.py"
+      ],
+      "status": "implemented_database_style_contract"
     }
   ],
   "review_requests": [
@@ -1858,7 +1927,7 @@
       "completed_at": "",
       "created_at": "2026-06-25T00:00:00+00:00",
       "created_by": "user-operator-001",
-      "due_at": "2026-07-10T03:53:50+00:00",
+      "due_at": "2026-07-10T09:11:11+00:00",
       "id": "review-request-packet-frozen-tuna-canada-001",
       "out_of_scope": [
         "General legal advice",
@@ -1923,7 +1992,7 @@
   ],
   "reviewer_access_grants": [
     {
-      "expires_at": "2026-07-10T03:53:50+00:00",
+      "expires_at": "2026-07-10T09:11:11+00:00",
       "packet_ids": [
         "packet-frozen-tuna-canada-001"
       ],
@@ -2026,8 +2095,11 @@
         "supplier_document",
         "third_party_reference"
       ],
+      "direct_file_serving": "disabled",
       "malicious_html_policy": "reject script-bearing metadata and always HTML-escape display",
-      "max_bytes": 5242880
+      "max_bytes": 5242880,
+      "pdf_triage": "native text extraction attempted, OCR need flagged, user confirmation required",
+      "quarantine_storage": "public_uploads/:packetId/quarantine with generated filenames"
     }
   },
   "status": "private_beta_candidate_with_external_human_gates",
@@ -2050,6 +2122,7 @@
     ],
     "customer": [
       "/",
+      "/start",
       "/tools",
       "/trade-check",
       "/tools/import-readiness",
@@ -2057,6 +2130,8 @@
       "/tools/buyer-broker-packet",
       "/tools/canadian-references",
       "/public/packets/:packetId/result",
+      "/public/packets/:packetId/confirm",
+      "/workspace",
       "/login",
       "/signup",
       "/onboarding",

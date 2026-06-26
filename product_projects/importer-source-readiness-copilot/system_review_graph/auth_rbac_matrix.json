@@ -171,8 +171,11 @@
         "supplier_document",
         "third_party_reference"
       ],
+      "direct_file_serving": "disabled",
       "malicious_html_policy": "reject script-bearing metadata and always HTML-escape display",
-      "max_bytes": 5242880
+      "max_bytes": 5242880,
+      "pdf_triage": "native text extraction attempted, OCR need flagged, user confirmation required",
+      "quarantine_storage": "public_uploads/:packetId/quarantine with generated filenames"
     }
   },
   "users": [

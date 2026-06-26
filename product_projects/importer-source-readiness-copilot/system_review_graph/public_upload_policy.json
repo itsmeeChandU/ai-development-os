@@ -10,9 +10,15 @@
     "customer_managed_llm"
   ],
   "delete_route": "/api/public/packets/:id/delete-files",
+  "direct_file_serving": false,
+  "generated_storage_names": true,
   "max_bytes": 5242880,
+  "max_pages_per_pdf": 25,
   "notice_required": true,
+  "ocr_decision": "flag OCR requirement when native text is not available",
+  "quarantine": "enabled",
   "retention": "delete or expire after public quick check",
   "review_boundary": "Controls are implemented locally; qualified privacy/security/legal review remains required before hosted public use.",
-  "status": "public_upload_policy_ready"
+  "status": "public_upload_policy_ready",
+  "user_confirmation_required": true
 }

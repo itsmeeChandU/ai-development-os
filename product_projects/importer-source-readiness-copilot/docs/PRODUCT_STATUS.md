@@ -20,7 +20,7 @@ evaluates readiness gates, writes
 artifacts, writes Canada-focused board artifacts, and passes the local proof
 gate. It also writes AI/data policy, model-router, redaction, no-AI/manual
 workflow, public trade readiness, exporter-mode, report-type, upload-policy,
-and requirements traceability artifacts.
+policy/source monitor, and requirements traceability artifacts.
 
 The current usable application is the local private-beta product app served by:
 
@@ -29,9 +29,10 @@ python3 scripts/serve_operator_app.py
 ```
 
 This is the surface a customer, operator, expert reviewer, or admin can use in
-local private-beta review. It includes `/`, `/tools`, `/trade-check`,
+local private-beta review. It includes `/`, `/start`, `/tools`, `/trade-check`,
 `/tools/import-readiness`, `/tools/export-readiness`,
-`/public/packets/:id/result`, public PDF report downloads, `/dashboard`,
+`/public/packets/:id/result`, `/public/packets/:id/confirm`, public PDF report
+downloads, `/workspace`, `/dashboard`,
 `/packets/new`,
 `/packets/:id/evidence`, `/packets/:id/blockers`, `/packets/:id/readiness`,
 `/packets/:id/ai-reviews`, `/packets/:id/reviews`, `/packets/:id/reports`,
@@ -62,10 +63,17 @@ security/privacy/human review gates are completed.
 - generated operator work queue
 - customer source-packet intake
 - public Trade Readiness Copilot landing and tool selection
+- beginner no-documents starter checklist mode
 - no-login import/export quick check with PDF upload
+- PDF triage with native text/OCR decision, hash capture, and confirmation gate
+- ChatGPT-safe summary for drafting questions without private file contents
 - Export-to-Canada packet mode for foreign exporters
-- buyer-ready and Canadian broker-review packet PDFs
-- public upload notice, expiry manifest, and delete-files route
+- starter, missing-evidence, buyer-ready, and Canadian broker-review packet PDFs
+- public upload notice, quarantine metadata, expiry manifest, and delete-files route
+- local direct-file serving block for public upload quarantine paths
+- saved packet workspace backed by generated JSON and SQLite artifacts
+- Intelligence Hub database-style policy/source monitor contract
+- policy source snapshot, change impact, stale-source blocker, and SQLite store artifacts
 - evidence ledger with proof boundaries
 - blocked-safe customer readiness report
 - source-packet export routes
@@ -171,20 +179,27 @@ and public launch claims.
 - internal engine: `Importer Source Readiness Copilot`
 - public surface status: `public_quick_check_ready_local_with_external_gates`
 - tool routes: `/tools`, `/trade-check`, `/tools/import-readiness`,
-  `/tools/export-readiness`, `/tools/buyer-broker-packet`
+  `/tools/export-readiness`, `/tools/buyer-broker-packet`, `/start`
 - result route: `/public/packets/:id/result`
-- API route: `/api/public/quick-check`
-- report downloads: draft trade readiness, buyer-ready, broker review,
-  missing evidence, operator review, expert review
+- confirmation route: `/public/packets/:id/confirm`
+- workspace route: `/workspace`
+- API routes: `/api/public/starter`, `/api/public/quick-check`,
+  `/api/public/packets/:id/confirm`,
+  `/api/public/packets/:id/chatgpt-safe-summary`
+- report downloads: starter checklist, draft trade readiness, buyer-ready,
+  broker review, missing evidence, operator review, expert review
 - machine contract: `system_review_graph/public_trade_readiness_manifest.json`
 - exporter contract: `system_review_graph/exporter_mode_requirements.json`
 - upload policy: `system_review_graph/public_upload_policy.json`
+- policy monitor: `system_review_graph/intelligence_hub_policy_monitor.json`
 
-This is a local dry run of the public product flow. It supports PDF upload,
-AI/data notice acceptance, readiness preview, blocked claims, draft PDF
-download, and delete-files. It is not public hosting, approval, tariff
-confirmation, CFIA clearance, customs/legal advice, buyer validation, shipment
-readiness, or commercial readiness.
+This is a local dry run of the public product flow. It supports beginner
+starter intake, PDF upload, quarantine metadata, native text/OCR triage,
+AI/data notice acceptance, user confirmation, readiness preview, blocked
+claims, draft PDF download, safe summaries, saved workspace review, and
+delete-files. It is not public hosting, approval, tariff confirmation, CFIA
+clearance, customs/legal advice, buyer validation, shipment readiness, or
+commercial readiness.
 
 ## Next Valid Move
 
