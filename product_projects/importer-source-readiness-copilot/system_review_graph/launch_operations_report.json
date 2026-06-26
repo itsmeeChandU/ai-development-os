@@ -31,7 +31,9 @@
       "status": "local_contract_ready"
     }
   ],
-  "generated_at": "2026-06-26T09:54:41+00:00",
+  "execution_report": "system_review_graph/product_operations_report.json",
+  "generated_at": "2026-06-26T10:21:14+00:00",
+  "operation_status": "launch_operations_operational_local_with_human_approval_gates",
   "packet_count": 1,
   "private_beta_entry": {
     "human_approval_required": true,

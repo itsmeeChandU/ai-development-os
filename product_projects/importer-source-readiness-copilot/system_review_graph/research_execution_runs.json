@@ -1,0 +1,32 @@
+[
+  {
+    "actor": "local_operator",
+    "claims_opened": false,
+    "external_effects_created": false,
+    "missing_items": [
+      "Qualified Canada compliance review",
+      "Commercial/source contract",
+      "Buyer/operator validation",
+      "Restricted-party screening record",
+      "Fresh official-source refresh",
+      "Canadian buyer/importer and importer-of-record confirmation",
+      "Incoterms or delivery responsibility record",
+      "Product and commercial documents",
+      "Proof of origin",
+      "Broker/expert review packet"
+    ],
+    "next_valid_move": "Generate a compliance review packet and request qualified review.",
+    "official_source_refresh_rows": 3,
+    "packet_id": "packet-frozen-tuna-canada-001",
+    "research_tasks_completed": [
+      "model-prior hypothesis captured",
+      "official-source refresh attempted or recorded",
+      "missing evidence synthesized",
+      "broker/expert questions generated",
+      "external proof boundaries kept closed"
+    ],
+    "run_id": "research-run-packet-frozen-tuna-canada-001-2026-06-26T102114Z0000",
+    "source_refresh_report": "system_review_graph/source_refresh_report_packet-frozen-tuna-canada-001.json",
+    "status": "research_execution_completed_local"
+  }
+]

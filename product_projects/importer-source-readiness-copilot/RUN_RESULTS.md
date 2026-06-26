@@ -15,6 +15,7 @@ python3 scripts/build_board_go_live_packet.py
 python3 scripts/run_customer_workflow.py
 python3 scripts/run_policy_intelligence.py
 python3 scripts/run_completion_platform.py
+python3 scripts/run_product_operations.py
 python3 scripts/run_operator_workflow.py
 python3 scripts/export_operator_dashboard.py
 python3 scripts/audit_external_package.py --root .
@@ -35,7 +36,7 @@ public_surface_status=public_quick_check_ready_local_with_external_gates
 runtime_users=4
 ai_policy_status=ai_data_policy_ready
 ai_router_status=ai_model_router_ready
-requirements_traceability>=37
+requirements_traceability>=44
 policy_monitor=intelligence_hub_policy_monitor_ready_with_external_refresh_gates
 completion_platform=all_local_stages_implemented_with_external_gates
 all_stages=all_local_stages_implemented_with_external_gates
@@ -49,8 +50,10 @@ research_execution=research_execution_ready_with_evidence_gates
 expert_network=expert_network_ready_local_with_human_review_gates
 team_workspace=team_workspace_ready_local_with_approval_gates
 billing_usage=billing_usage_ledger_ready_local_no_charges
-agent_gateway=agent_api_gateway_ready_local_dry_run
+agent_gateway=agent_api_gateway_ready_local_executor_no_external_effects
 launch_operations=launch_operations_ready_for_private_beta_review
+product_operations=local_product_operations_executed
+product_operation_count>=8
 review_requests=1
 audit_events=3
 deployment_status=deployable_local_stack_ready_with_external_hosting_gates
@@ -74,8 +77,12 @@ fail-closed export-to-Canada claims. It also verifies opportunity-signal
 research gates, country coverage tiers, transport question packets,
 no-live-checkout billing controls, scoped agent/API rules, traffic-first page
 contracts, and the public pages/API routes that expose those artifacts.
-The latest proof also verifies all locally implementable stages, research
-execution, expert network, team workspace, dry-run agent gateway, billing
-usage ledger, and launch-operations surfaces.
+The latest proof also verifies all locally implementable stages plus real local
+operation execution: data intake snapshot, official-source refresh/research
+run, missing-evidence report generation, starter checklist generation,
+ChatGPT-safe summary generation, broker/expert packet generation, expert work
+orders, local billing reservation with zero external charge, team workspace
+activity, launch-control event recording, agent-tool execution, SQLite
+persistence refresh, and the operation report consumed by the checker.
 
 Any failure should become a blocker row or a targeted repair before review.

@@ -1,7 +1,36 @@
 {
+  "execution_artifacts": [
+    "system_review_graph/billing_usage_ledger.json",
+    "system_review_graph/customer_readiness_report.json",
+    "system_review_graph/customer_workflow.sqlite",
+    "system_review_graph/expert_review_packet_packet-frozen-tuna-canada-001.md",
+    "system_review_graph/expert_review_work_orders.json",
+    "system_review_graph/generated_reports/broker_packet_packet-frozen-tuna-canada-001.json",
+    "system_review_graph/generated_reports/chatgpt_safe_summary_packet-frozen-tuna-canada-001.json",
+    "system_review_graph/generated_reports/data_intake_packet-frozen-tuna-canada-001.json",
+    "system_review_graph/generated_reports/missing_evidence_packet-frozen-tuna-canada-001.json",
+    "system_review_graph/generated_reports/starter_checklist_packet-frozen-tuna-canada-001.json",
+    "system_review_graph/launch_operations_events.json",
+    "system_review_graph/research_execution_runs.json",
+    "system_review_graph/source_refresh_report_packet-frozen-tuna-canada-001.json",
+    "system_review_graph/team_workspace_activity.json"
+  ],
+  "execution_coverage": {
+    "agent_tool_execution": true,
+    "billing_metering": true,
+    "data_intake": true,
+    "evidence_reporting": true,
+    "expert_review_routing": true,
+    "launch_control_event": true,
+    "persistence_refresh": true,
+    "research_execution": true,
+    "team_workspace_activity": true
+  },
   "external_gate_count": 8,
-  "generated_at": "2026-06-26T09:54:41+00:00",
+  "generated_at": "2026-06-26T10:21:14+00:00",
   "implemented_stage_count": 16,
+  "local_execution_proof_count": 11,
+  "operation_status": "local_product_operations_executed",
   "proof_boundary": "All locally implementable product stages are represented by usable routes, APIs, artifacts, and tests. Real-world approvals remain explicit gates.",
   "stage_count": 16,
   "stages": [
@@ -11,6 +40,8 @@
       ],
       "can_use_locally_now": true,
       "external_claims_opened": false,
+      "has_local_execution_proof": true,
+      "local_execution_report": "system_review_graph/product_operations_report.json",
       "name": "Beginner starter",
       "next_valid_move": "Use locally, collect real evidence, and keep external claims closed until owner or qualified-human approval.",
       "routes": [
@@ -25,6 +56,8 @@
       ],
       "can_use_locally_now": true,
       "external_claims_opened": false,
+      "has_local_execution_proof": true,
+      "local_execution_report": "system_review_graph/product_operations_report.json",
       "name": "PDF quick check",
       "next_valid_move": "Use locally, collect real evidence, and keep external claims closed until owner or qualified-human approval.",
       "routes": [
@@ -40,6 +73,8 @@
       ],
       "can_use_locally_now": true,
       "external_claims_opened": false,
+      "has_local_execution_proof": true,
+      "local_execution_report": "system_review_graph/product_operations_report.json",
       "name": "Confirmation and missing evidence",
       "next_valid_move": "Use locally, collect real evidence, and keep external claims closed until owner or qualified-human approval.",
       "routes": [
@@ -54,6 +89,8 @@
       ],
       "can_use_locally_now": true,
       "external_claims_opened": false,
+      "has_local_execution_proof": true,
+      "local_execution_report": "system_review_graph/product_operations_report.json",
       "name": "Saved workspace",
       "next_valid_move": "Use locally, collect real evidence, and keep external claims closed until owner or qualified-human approval.",
       "routes": [
@@ -69,6 +106,8 @@
       ],
       "can_use_locally_now": true,
       "external_claims_opened": false,
+      "has_local_execution_proof": true,
+      "local_execution_report": "system_review_graph/product_operations_report.json",
       "name": "AI/no-AI routing",
       "next_valid_move": "Use locally, collect real evidence, and keep external claims closed until owner or qualified-human approval.",
       "routes": [
@@ -84,6 +123,8 @@
       ],
       "can_use_locally_now": true,
       "external_claims_opened": false,
+      "has_local_execution_proof": true,
+      "local_execution_report": "system_review_graph/product_operations_report.json",
       "name": "Policy source monitoring",
       "next_valid_move": "Use locally, collect real evidence, and keep external claims closed until owner or qualified-human approval.",
       "routes": [
@@ -98,6 +139,8 @@
       ],
       "can_use_locally_now": true,
       "external_claims_opened": false,
+      "has_local_execution_proof": true,
+      "local_execution_report": "system_review_graph/product_operations_report.json",
       "name": "Opportunity scanner",
       "next_valid_move": "Use locally, collect real evidence, and keep external claims closed until owner or qualified-human approval.",
       "routes": [
@@ -112,6 +155,8 @@
       ],
       "can_use_locally_now": true,
       "external_claims_opened": false,
+      "has_local_execution_proof": true,
+      "local_execution_report": "system_review_graph/product_operations_report.json",
       "name": "Country coverage",
       "next_valid_move": "Use locally, collect real evidence, and keep external claims closed until owner or qualified-human approval.",
       "routes": [
@@ -126,6 +171,8 @@
       ],
       "can_use_locally_now": true,
       "external_claims_opened": false,
+      "has_local_execution_proof": true,
+      "local_execution_report": "system_review_graph/product_operations_report.json",
       "name": "Transport readiness",
       "next_valid_move": "Use locally, collect real evidence, and keep external claims closed until owner or qualified-human approval.",
       "routes": [
@@ -141,6 +188,8 @@
       ],
       "can_use_locally_now": true,
       "external_claims_opened": false,
+      "has_local_execution_proof": true,
+      "local_execution_report": "system_review_graph/product_operations_report.json",
       "name": "Billing and credits",
       "next_valid_move": "Use locally, collect real evidence, and keep external claims closed until owner or qualified-human approval.",
       "routes": [
@@ -157,13 +206,15 @@
       ],
       "can_use_locally_now": true,
       "external_claims_opened": false,
+      "has_local_execution_proof": true,
+      "local_execution_report": "system_review_graph/product_operations_report.json",
       "name": "Agent/API layer",
       "next_valid_move": "Use locally, collect real evidence, and keep external claims closed until owner or qualified-human approval.",
       "routes": [
         "/agent-api"
       ],
       "stage_id": "stage-10",
-      "status": "agent_api_gateway_ready_local_dry_run"
+      "status": "agent_api_gateway_ready_local_executor_no_external_effects"
     },
     {
       "artifacts": [
@@ -171,6 +222,8 @@
       ],
       "can_use_locally_now": true,
       "external_claims_opened": false,
+      "has_local_execution_proof": true,
+      "local_execution_report": "system_review_graph/product_operations_report.json",
       "name": "Traffic and sample reports",
       "next_valid_move": "Use locally, collect real evidence, and keep external claims closed until owner or qualified-human approval.",
       "routes": [
@@ -186,6 +239,8 @@
       ],
       "can_use_locally_now": true,
       "external_claims_opened": false,
+      "has_local_execution_proof": true,
+      "local_execution_report": "system_review_graph/product_operations_report.json",
       "name": "Research execution",
       "next_valid_move": "Use locally, collect real evidence, and keep external claims closed until owner or qualified-human approval.",
       "routes": [
@@ -200,6 +255,8 @@
       ],
       "can_use_locally_now": true,
       "external_claims_opened": false,
+      "has_local_execution_proof": true,
+      "local_execution_report": "system_review_graph/product_operations_report.json",
       "name": "Expert network",
       "next_valid_move": "Use locally, collect real evidence, and keep external claims closed until owner or qualified-human approval.",
       "routes": [
@@ -214,6 +271,8 @@
       ],
       "can_use_locally_now": true,
       "external_claims_opened": false,
+      "has_local_execution_proof": true,
+      "local_execution_report": "system_review_graph/product_operations_report.json",
       "name": "Team workspace",
       "next_valid_move": "Use locally, collect real evidence, and keep external claims closed until owner or qualified-human approval.",
       "routes": [
@@ -228,6 +287,8 @@
       ],
       "can_use_locally_now": true,
       "external_claims_opened": false,
+      "has_local_execution_proof": true,
+      "local_execution_report": "system_review_graph/product_operations_report.json",
       "name": "Launch operations",
       "next_valid_move": "Use locally, collect real evidence, and keep external claims closed until owner or qualified-human approval.",
       "routes": [

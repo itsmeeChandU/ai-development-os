@@ -1,0 +1,90 @@
+{
+  "blocker_groups": [
+    {
+      "blocker_count": 5,
+      "blocker_ids": [
+        "packet-frozen-tuna-canada-001:evidence-frozen-tuna-cid-reference:expert-review",
+        "packet-frozen-tuna-canada-001:evidence-frozen-tuna-cbsa-import-workflow:expert-review",
+        "packet-frozen-tuna-canada-001:evidence-frozen-tuna-cfia-airs-reference:expert-review",
+        "packet-frozen-tuna-canada-001:restricted_party_screening-missing",
+        "packet-frozen-tuna-canada-001:qualified_review-missing"
+      ],
+      "evidence_required": "Scoped Canadian import/export, food, customs, or broker review finding.",
+      "id": "compliance_review",
+      "issues": [
+        "evidence requires qualified human review",
+        "evidence requires qualified human review",
+        "evidence requires qualified human review",
+        "restricted_party_screening_status is missing or incomplete",
+        "qualified_review_status is missing or incomplete"
+      ],
+      "next_valid_move": "Generate a compliance review packet and request qualified review.",
+      "owner_role": "Compliance",
+      "priority": 1,
+      "stage": "P0 - Must fix before customer/private beta",
+      "status": "blocked",
+      "title": "Compliance Review"
+    },
+    {
+      "blocker_count": 1,
+      "blocker_ids": [
+        "packet-frozen-tuna-canada-001:contract-missing"
+      ],
+      "evidence_required": "Signed source-rights, data-rights, or commercial terms record.",
+      "id": "source_rights_contract",
+      "issues": [
+        "contract_status is missing or incomplete"
+      ],
+      "next_valid_move": "Attach source-rights or commercial terms before external use.",
+      "owner_role": "Operations",
+      "priority": 6,
+      "stage": "P0 - Must fix before customer/private beta",
+      "status": "blocked",
+      "title": "Source Rights / Contract"
+    },
+    {
+      "blocker_count": 1,
+      "blocker_ids": [
+        "packet-frozen-tuna-canada-001:buyer_validation-missing"
+      ],
+      "evidence_required": "Dated buyer/operator feedback tied to the packet and intended use.",
+      "id": "buyer_validation",
+      "issues": [
+        "buyer_validation_status is missing or incomplete"
+      ],
+      "next_valid_move": "Collect buyer/operator validation before demand or PMF claims.",
+      "owner_role": "Product",
+      "priority": 7,
+      "stage": "P0 - Must fix before customer/private beta",
+      "status": "blocked",
+      "title": "Buyer Validation"
+    }
+  ],
+  "buyer_broker_questions": [
+    "Who is the Canadian importer of record for this shipment?",
+    "Which Incoterms or delivery responsibility applies?",
+    "What HS/tariff classification should a qualified reviewer use for the product?",
+    "Does the product need CFIA/AIRS, import permit, controlled goods, sanctions, or restricted-party review?",
+    "Which product specs, invoice/proforma, packing list, certificate, proof-of-origin, and contract documents are still missing?",
+    "Can the Canadian buyer or broker confirm the next valid evidence to collect?",
+    "Responsibility path: Responsibility path unknown."
+  ],
+  "external_claims_opened": false,
+  "missing_items": [
+    "Qualified Canada compliance review",
+    "Commercial/source contract",
+    "Buyer/operator validation",
+    "Restricted-party screening record",
+    "Fresh official-source refresh",
+    "Canadian buyer/importer and importer-of-record confirmation",
+    "Incoterms or delivery responsibility record",
+    "Product and commercial documents",
+    "Proof of origin",
+    "Broker/expert review packet"
+  ],
+  "next_valid_move": "Generate a compliance review packet and request qualified review.",
+  "packet_id": "packet-frozen-tuna-canada-001",
+  "product_name": "Frozen tuna fillet",
+  "proof_boundary": "This report lists missing inputs and review questions only; it does not approve trade action.",
+  "status": "missing_evidence_report_generated"
+}

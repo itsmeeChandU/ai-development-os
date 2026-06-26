@@ -40,7 +40,7 @@ class CompletionPlatformTests(unittest.TestCase):
         self.assertEqual(payload["team_workspace"]["status"], "team_workspace_ready_local_with_approval_gates")
         self.assertEqual(payload["expert_network"]["status"], "expert_network_ready_local_with_human_review_gates")
         self.assertEqual(payload["billing_usage_ledger"]["status"], "billing_usage_ledger_ready_local_no_charges")
-        self.assertEqual(payload["agent_api_gateway"]["status"], "agent_api_gateway_ready_local_dry_run")
+        self.assertEqual(payload["agent_api_gateway"]["status"], "agent_api_gateway_ready_local_executor_no_external_effects")
         self.assertEqual(payload["launch_operations"]["status"], "launch_operations_ready_for_private_beta_review")
         self.assertEqual(payload["all_stage_readiness"]["status"], "all_local_stages_implemented_with_external_gates")
         self.assertGreaterEqual(payload["all_stage_readiness"]["stage_count"], 16)

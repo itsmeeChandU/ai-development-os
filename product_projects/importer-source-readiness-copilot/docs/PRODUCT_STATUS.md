@@ -24,7 +24,15 @@ policy/source monitor, and requirements traceability artifacts.
 It now also writes completion-stage contracts for opportunity scanning,
 country coverage tiers, transport readiness, billing/credit controls, agent
 API rules, traffic-first checklist pages, research execution, expert network,
-team workspace, dry-run agent gateway, billing usage, and launch operations.
+team workspace, local agent gateway, billing usage, and launch operations.
+Those stages are backed by an executable local operations engine in
+`src/importer_source_readiness/product_operations.py` and
+`scripts/run_product_operations.py`. The engine creates/updates packet intake
+snapshots, research/source-refresh runs, missing-evidence reports, starter
+checklists, ChatGPT-safe summaries, broker/expert packets, expert work orders,
+team workspace activity, billing usage reservations, launch-control events,
+agent-tool execution records, SQLite persistence, and
+`system_review_graph/product_operations_report.json`.
 
 The current usable application is the local private-beta product app served by:
 
@@ -90,12 +98,15 @@ security/privacy/human review gates are completed.
 - scoped agent/API manifest with forbidden claim-opening tools
 - traffic-first checklist and generator page manifest
 - all-stage readiness runtime with stage-by-stage routes and APIs
-- research execution plan for model, web, official-source, dataset, and expert/user lanes
-- expert network and local review queue
-- business/team workspace approval board
-- billing usage ledger with no live charges
-- dry-run agent API gateway
-- launch operations controls for private-beta review
+- executable local operations engine for intake, research, evidence reporting,
+  expert routing, team activity, billing, agent tools, launch controls, and
+  persistence refresh
+- research execution plan and local research/source-refresh run records
+- expert network, local review queue, and expert work orders
+- business/team workspace approval board plus local activity events
+- billing usage ledger with local reservations and no live charges
+- agent API gateway with local executor and no external effects
+- launch operations controls and local launch-control event records
 - evidence ledger with proof boundaries
 - blocked-safe customer readiness report
 - source-packet export routes

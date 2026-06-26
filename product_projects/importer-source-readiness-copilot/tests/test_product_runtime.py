@@ -66,6 +66,9 @@ class ProductRuntimeTests(unittest.TestCase):
         self.assertIn("/api/expert-network", runtime["api_routes"])
         self.assertIn("/api/team-workspace", runtime["api_routes"])
         self.assertIn("/api/launch-operations", runtime["api_routes"])
+        self.assertIn("/api/product-operations/report", runtime["api_routes"])
+        self.assertIn("/api/product-operations/run", runtime["api_routes"])
+        self.assertIn("/api/agent-tools/:tool", runtime["api_routes"])
         self.assertIn("/api/orgs/current/ai-policy", runtime["api_routes"])
         self.assertIn("/api/evidence/:evidenceId/ai-permission", runtime["api_routes"])
         self.assertIn("/start", runtime["ui_routes"]["customer"])
@@ -96,7 +99,7 @@ class ProductRuntimeTests(unittest.TestCase):
         self.assertEqual(runtime["ai_model_router"]["status"], "ai_model_router_ready")
         self.assertEqual(runtime["redaction_pipeline"]["status"], "redaction_pipeline_ready")
         self.assertEqual(runtime["manual_no_ai_workflow"]["status"], "manual_no_ai_workflow_ready")
-        self.assertGreaterEqual(len(runtime["requirements_traceability"]), 43)
+        self.assertGreaterEqual(len(runtime["requirements_traceability"]), 44)
         self.assertEqual(runtime["deployment"]["status"], "deployable_local_stack_ready_with_external_hosting_gates")
 
     def test_customer_a_cannot_access_customer_b_packet(self) -> None:

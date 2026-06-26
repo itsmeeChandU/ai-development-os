@@ -25,6 +25,8 @@
       "packet_limit": "contract"
     }
   ],
+  "executed_tool_count": 6,
+  "execution_report": "system_review_graph/product_operations_report.json",
   "forbidden_tools": [
     "approve_import",
     "confirm_tariff",
@@ -33,9 +35,10 @@
     "ship_goods",
     "send_report_externally_without_confirmation"
   ],
-  "generated_at": "2026-06-26T09:54:41+00:00",
-  "proof_boundary": "The gateway contract is executable as local dry-run routes; it does not expose a live public API, credentials, payment integration, or claim-opening authority.",
-  "status": "agent_api_gateway_ready_local_dry_run",
+  "generated_at": "2026-06-26T10:21:14+00:00",
+  "operation_status": "agent_api_gateway_executed_local_no_external_effects",
+  "proof_boundary": "The gateway executes local product operations with external effects disabled; it does not expose a live public API, credentials, payment integration, or claim-opening authority.",
+  "status": "agent_api_gateway_ready_local_executor_no_external_effects",
   "tools": [
     {
       "billing_gate": "included_with_limits",
@@ -47,7 +50,7 @@
       "example_response": {
         "can_open_claim_gate": false,
         "external_effects_created": false,
-        "status": "accepted_for_local_dry_run"
+        "status": "accepted_for_local_execution"
       },
       "method": "GET",
       "route": "/api/agent-tools/get_supported_countries",
@@ -64,7 +67,7 @@
       "example_response": {
         "can_open_claim_gate": false,
         "external_effects_created": false,
-        "status": "accepted_for_local_dry_run"
+        "status": "accepted_for_local_execution"
       },
       "method": "GET",
       "route": "/api/agent-tools/get_country_coverage",
@@ -81,7 +84,7 @@
       "example_response": {
         "can_open_claim_gate": false,
         "external_effects_created": false,
-        "status": "accepted_for_local_dry_run"
+        "status": "accepted_for_local_execution"
       },
       "method": "POST",
       "route": "/api/agent-tools/create_trade_packet",
@@ -98,7 +101,7 @@
       "example_response": {
         "can_open_claim_gate": false,
         "external_effects_created": false,
-        "status": "accepted_for_local_dry_run"
+        "status": "accepted_for_local_execution"
       },
       "method": "POST",
       "route": "/api/agent-tools/generate_starter_checklist",
@@ -115,7 +118,7 @@
       "example_response": {
         "can_open_claim_gate": false,
         "external_effects_created": false,
-        "status": "accepted_for_local_dry_run"
+        "status": "accepted_for_local_execution"
       },
       "method": "POST",
       "route": "/api/agent-tools/generate_missing_evidence_report",
@@ -132,7 +135,7 @@
       "example_response": {
         "can_open_claim_gate": false,
         "external_effects_created": false,
-        "status": "accepted_for_local_dry_run"
+        "status": "accepted_for_local_execution"
       },
       "method": "POST",
       "route": "/api/agent-tools/generate_chatgpt_safe_summary",
@@ -149,7 +152,7 @@
       "example_response": {
         "can_open_claim_gate": false,
         "external_effects_created": false,
-        "status": "accepted_for_local_dry_run"
+        "status": "accepted_for_local_execution"
       },
       "method": "POST",
       "route": "/api/agent-tools/generate_broker_packet",
@@ -166,7 +169,7 @@
       "example_response": {
         "can_open_claim_gate": false,
         "external_effects_created": false,
-        "status": "accepted_for_local_dry_run"
+        "status": "accepted_for_local_execution"
       },
       "method": "GET",
       "route": "/api/agent-tools/get_packet_status",
@@ -183,7 +186,7 @@
       "example_response": {
         "can_open_claim_gate": false,
         "external_effects_created": false,
-        "status": "accepted_for_local_dry_run"
+        "status": "accepted_for_local_execution"
       },
       "method": "POST",
       "route": "/api/agent-tools/request_billing_quote",

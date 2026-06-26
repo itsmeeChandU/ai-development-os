@@ -702,11 +702,11 @@ REQUIREMENTS_TRACEABILITY = [
     },
     {
         "id": "REQ-API-GATEWAY-01",
-        "name": "Agent API gateway dry-run",
-        "status": "implemented_local_dry_run_gateway",
-        "artifacts": ["agent_api_gateway_contract.json", "agent_api_manifest.json"],
-        "proof": ["tests/test_completion_platform.py", "tests/test_operator_app.py"],
-        "boundary": "Gateway tools execute as local dry-run contracts only; no public API, credentials, payments, or claim-opening authority are exposed.",
+        "name": "Agent API gateway executor",
+        "status": "implemented_local_executor_no_external_effects",
+        "artifacts": ["agent_api_gateway_contract.json", "agent_api_manifest.json", "product_operations_report.json"],
+        "proof": ["tests/test_completion_platform.py", "tests/test_operator_app.py", "scripts/run_product_operations.py"],
+        "boundary": "Gateway tools execute local product operations only; no public API, credentials, payments, or claim-opening authority are exposed.",
     },
     {
         "id": "REQ-LAUNCH-OPS-01",
@@ -715,6 +715,21 @@ REQUIREMENTS_TRACEABILITY = [
         "artifacts": ["launch_operations_report.json", "board_go_live_readiness_report.json"],
         "proof": ["tests/test_completion_platform.py", "scripts/check_product.py"],
         "boundary": "Launch operations are ready for private-beta review; production deployment and public launch require owner approval.",
+    },
+    {
+        "id": "REQ-OPERATIONS-01",
+        "name": "Executable local product operations",
+        "status": "implemented_local_operations_engine",
+        "artifacts": [
+            "product_operations_report.json",
+            "research_execution_runs.json",
+            "expert_review_work_orders.json",
+            "team_workspace_activity.json",
+            "billing_usage_ledger.json",
+            "launch_operations_events.json",
+        ],
+        "proof": ["tests/test_operator_app.py", "scripts/run_product_operations.py", "scripts/check_product.py"],
+        "boundary": "Local operations mutate product state, reports, and ledgers; they still do not create external legal, customs, tariff, buyer, supplier, payment, or launch approvals.",
     },
 ]
 
@@ -1383,6 +1398,9 @@ def build_runtime_state(workflow: dict[str, Any], *, extra_audit_events: list[di
             "/api/expert-network",
             "/api/team-workspace",
             "/api/launch-operations",
+            "/api/product-operations/report",
+            "/api/product-operations/run",
+            "/api/agent-tools/:tool",
             "/api/orgs/current",
             "/api/orgs/current/members",
             "/api/orgs/current/ai-policy",

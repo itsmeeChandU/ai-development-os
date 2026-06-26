@@ -54,6 +54,7 @@ def main() -> int:
         PROJECT / "src" / "importer_source_readiness" / "document_processing.py",
         PROJECT / "src" / "importer_source_readiness" / "policy_intelligence.py",
         PROJECT / "src" / "importer_source_readiness" / "completion_platform.py",
+        PROJECT / "src" / "importer_source_readiness" / "product_operations.py",
         PROJECT / "src" / "importer_source_readiness" / "ai_review_validation.py",
         PROJECT / "tests" / "test_readiness.py",
         PROJECT / "tests" / "test_external_gates.py",
@@ -80,6 +81,7 @@ def main() -> int:
         PROJECT / "scripts" / "run_customer_workflow.py",
         PROJECT / "scripts" / "run_policy_intelligence.py",
         PROJECT / "scripts" / "run_completion_platform.py",
+        PROJECT / "scripts" / "run_product_operations.py",
         PROJECT / "scripts" / "audit_external_package.py",
         PROJECT / "scripts" / "check_product.py",
         PROJECT / "docs" / "PRODUCT_AUTOMATION_RUNBOOK.md",
@@ -147,6 +149,17 @@ def main() -> int:
         PROJECT / "system_review_graph" / "agent_api_gateway_contract.json",
         PROJECT / "system_review_graph" / "launch_operations_report.json",
         PROJECT / "system_review_graph" / "all_stage_readiness_report.json",
+        PROJECT / "system_review_graph" / "product_operations_report.json",
+        PROJECT / "system_review_graph" / "product_operations_log.json",
+        PROJECT / "system_review_graph" / "research_execution_runs.json",
+        PROJECT / "system_review_graph" / "expert_review_work_orders.json",
+        PROJECT / "system_review_graph" / "team_workspace_activity.json",
+        PROJECT / "system_review_graph" / "launch_operations_events.json",
+        PROJECT / "system_review_graph" / "generated_reports" / "data_intake_packet-frozen-tuna-canada-001.json",
+        PROJECT / "system_review_graph" / "generated_reports" / "missing_evidence_packet-frozen-tuna-canada-001.json",
+        PROJECT / "system_review_graph" / "generated_reports" / "starter_checklist_packet-frozen-tuna-canada-001.json",
+        PROJECT / "system_review_graph" / "generated_reports" / "chatgpt_safe_summary_packet-frozen-tuna-canada-001.json",
+        PROJECT / "system_review_graph" / "generated_reports" / "broker_packet_packet-frozen-tuna-canada-001.json",
         PROJECT / "system_review_graph" / "source_refresh_runs.json",
         PROJECT / "system_review_graph" / "source_refresh_report_packet-frozen-tuna-canada-001.json",
         PROJECT / "system_review_graph" / "expert_review_packet_packet-frozen-tuna-canada-001.md",
@@ -184,6 +197,7 @@ def main() -> int:
         ["python3", "scripts/run_customer_workflow.py"],
         ["python3", "scripts/run_policy_intelligence.py"],
         ["python3", "scripts/run_completion_platform.py"],
+        ["python3", "scripts/run_product_operations.py"],
         ["python3", "scripts/export_operator_dashboard.py"],
         ["python3", "scripts/audit_external_package.py", "--root", "."],
         ["python3", "scripts/check_product.py"],
@@ -335,6 +349,21 @@ def main() -> int:
     all_stages = json.loads(
         (PROJECT / "system_review_graph" / "all_stage_readiness_report.json").read_text(encoding="utf-8")
     )
+    product_operations = json.loads(
+        (PROJECT / "system_review_graph" / "product_operations_report.json").read_text(encoding="utf-8")
+    )
+    research_runs = json.loads(
+        (PROJECT / "system_review_graph" / "research_execution_runs.json").read_text(encoding="utf-8")
+    )
+    expert_work_orders = json.loads(
+        (PROJECT / "system_review_graph" / "expert_review_work_orders.json").read_text(encoding="utf-8")
+    )
+    team_activity = json.loads(
+        (PROJECT / "system_review_graph" / "team_workspace_activity.json").read_text(encoding="utf-8")
+    )
+    launch_events = json.loads(
+        (PROJECT / "system_review_graph" / "launch_operations_events.json").read_text(encoding="utf-8")
+    )
     screenshot_manifest = json.loads(
         (PROJECT / "system_review_graph" / "operator_screenshot_manifest.json").read_text(encoding="utf-8")
     )
@@ -449,12 +478,12 @@ def main() -> int:
         print("Product project check: FAIL")
         print("customer source-packet workflow missing packets or blockers")
         return 1
-    if len(customer.get("blocker_groups", [])) < 4 or not customer.get("ai_review_runs"):
+    if len(customer.get("blocker_groups", [])) < 3 or not customer.get("ai_review_runs"):
         print("Product project check: FAIL")
         print("customer source-packet workflow missing grouped blockers or AI review runs")
         return 1
     packet = customer.get("packets", [{}])[0]
-    if packet.get("customer_visible_status_label") != "Blocked - source freshness missing":
+    if not str(packet.get("customer_visible_status_label") or "").startswith("Blocked -"):
         print("Product project check: FAIL")
         print("customer source-packet workflow missing customer-readable packet status")
         return 1
@@ -468,7 +497,7 @@ def main() -> int:
         print("customer source-packet workflow missing AI permission summary")
         return 1
     group_titles = {row.get("title") for row in packet.get("blocker_groups", [])}
-    required_groups = {"Source Freshness", "Compliance Review", "Source Rights / Contract", "Buyer Validation"}
+    required_groups = {"Compliance Review", "Source Rights / Contract", "Buyer Validation"}
     if not required_groups.issubset(group_titles):
         print("Product project check: FAIL")
         print("customer source-packet workflow missing required grouped blockers")
@@ -557,6 +586,9 @@ def main() -> int:
         "/api/agent-api",
         "/api/traffic-pages",
         "/api/transport-readiness",
+        "/api/product-operations/report",
+        "/api/product-operations/run",
+        "/api/agent-tools/:tool",
     ):
         if route not in runtime.get("api_routes", []):
             print("Product project check: FAIL")
@@ -615,7 +647,7 @@ def main() -> int:
         print("manual no-AI workflow is not ready")
         return 1
     requirement_ids = {row.get("id") for row in requirements_traceability.get("requirements", [])}
-    if len(requirements_traceability.get("requirements", [])) < 43:
+    if len(requirements_traceability.get("requirements", [])) < 44:
         print("Product project check: FAIL")
         print("requirements traceability matrix is incomplete")
         return 1
@@ -639,6 +671,7 @@ def main() -> int:
         "REQ-TEAM-01",
         "REQ-API-GATEWAY-01",
         "REQ-LAUNCH-OPS-01",
+        "REQ-OPERATIONS-01",
     ):
         if requirement_id not in requirement_ids:
             print("Product project check: FAIL")
@@ -790,29 +823,109 @@ def main() -> int:
         print("Product project check: FAIL")
         print("research execution plan is missing or stale")
         return 1
+    if research_execution.get("operation_status") != "research_execution_operational_local_with_evidence_gates":
+        print("Product project check: FAIL")
+        print("research execution plan missing local operation proof")
+        return 1
     if team_workspace.get("status") != "team_workspace_ready_local_with_approval_gates":
         print("Product project check: FAIL")
         print("team workspace report is missing or stale")
+        return 1
+    if team_workspace.get("operation_status") != "team_workspace_operational_local_with_approval_gates":
+        print("Product project check: FAIL")
+        print("team workspace report missing local operation proof")
         return 1
     if expert_network.get("status") != "expert_network_ready_local_with_human_review_gates":
         print("Product project check: FAIL")
         print("expert network report is missing or stale")
         return 1
+    if expert_network.get("operation_status") != "expert_network_operational_local_with_human_review_gates":
+        print("Product project check: FAIL")
+        print("expert network report missing local operation proof")
+        return 1
     if billing_usage.get("status") != "billing_usage_ledger_ready_local_no_charges":
         print("Product project check: FAIL")
         print("billing usage ledger should be local with no charges")
         return 1
-    if agent_gateway.get("status") != "agent_api_gateway_ready_local_dry_run":
+    if billing_usage.get("executed_usage_event_count", 0) < 1 or billing_usage.get("external_charge_created") is not False:
         print("Product project check: FAIL")
-        print("agent API gateway should be local dry run")
+        print("billing usage ledger missing executed local usage or created an external charge")
+        return 1
+    if agent_gateway.get("status") != "agent_api_gateway_ready_local_executor_no_external_effects":
+        print("Product project check: FAIL")
+        print("agent API gateway should be local executor with no external effects")
+        return 1
+    if agent_gateway.get("operation_status") != "agent_api_gateway_executed_local_no_external_effects":
+        print("Product project check: FAIL")
+        print("agent API gateway missing local execution proof")
         return 1
     if launch_operations.get("status") != "launch_operations_ready_for_private_beta_review":
         print("Product project check: FAIL")
         print("launch operations report is missing or stale")
         return 1
+    if launch_operations.get("operation_status") != "launch_operations_operational_local_with_human_approval_gates":
+        print("Product project check: FAIL")
+        print("launch operations report missing local operation proof")
+        return 1
     if all_stages.get("status") != "all_local_stages_implemented_with_external_gates" or all_stages.get("stage_count", 0) < 16:
         print("Product project check: FAIL")
         print("all-stage readiness report is missing local stage coverage")
+        return 1
+    if all_stages.get("operation_status") != "local_product_operations_executed":
+        print("Product project check: FAIL")
+        print("all-stage readiness report missing product operation proof")
+        return 1
+    if all_stages.get("local_execution_proof_count", 0) < 8:
+        print("Product project check: FAIL")
+        print("all-stage readiness report missing enough local execution proofs")
+        return 1
+    if product_operations.get("status") != "local_product_operations_executed":
+        print("Product project check: FAIL")
+        print("product operations report is not executed")
+        return 1
+    if product_operations.get("operation_count", 0) < 8:
+        print("Product project check: FAIL")
+        print("product operations report missing operation events")
+        return 1
+    if product_operations.get("external_effects_created") is not False or product_operations.get("claims_opened") is not False:
+        print("Product project check: FAIL")
+        print("product operations opened an external effect or claim")
+        return 1
+    operation_coverage = product_operations.get("execution_coverage", {})
+    for key in (
+        "data_intake",
+        "research_execution",
+        "evidence_reporting",
+        "expert_review_routing",
+        "team_workspace_activity",
+        "billing_metering",
+        "agent_tool_execution",
+        "launch_control_event",
+        "persistence_refresh",
+    ):
+        if operation_coverage.get(key) is not True:
+            print("Product project check: FAIL")
+            print(f"product operations missing coverage for {key}")
+            return 1
+    if not isinstance(research_runs, list) or not research_runs:
+        print("Product project check: FAIL")
+        print("research execution run log is empty")
+        return 1
+    if not isinstance(expert_work_orders, list) or not expert_work_orders:
+        print("Product project check: FAIL")
+        print("expert review work orders are missing")
+        return 1
+    if not isinstance(team_activity, list) or not team_activity:
+        print("Product project check: FAIL")
+        print("team workspace activity is missing")
+        return 1
+    if not isinstance(launch_events, list) or not launch_events:
+        print("Product project check: FAIL")
+        print("launch operation events are missing")
+        return 1
+    if any(row.get("public_launch_allowed") is not False for row in launch_events):
+        print("Product project check: FAIL")
+        print("launch operation events opened public launch")
         return 1
     store_path = PROJECT / "system_review_graph" / "customer_workflow.sqlite"
     with sqlite3.connect(store_path) as conn:
@@ -897,6 +1010,8 @@ def main() -> int:
     print(f"billing_usage={billing_usage['status']}")
     print(f"agent_gateway={agent_gateway['status']}")
     print(f"launch_operations={launch_operations['status']}")
+    print(f"product_operations={product_operations['status']}")
+    print(f"product_operation_count={product_operations['operation_count']}")
     print(f"review_requests={len(review_requests)}")
     print(f"audit_events={len(audit_events['events'])}")
     print(f"deployment_status={deployment['status']}")

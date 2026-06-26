@@ -463,7 +463,7 @@ def build_agent_api_gateway(agent_api: dict[str, Any], billing: dict[str, Any]) 
                     "external_effects_allowed": False,
                 },
                 "example_response": {
-                    "status": "accepted_for_local_dry_run",
+                    "status": "accepted_for_local_execution",
                     "can_open_claim_gate": False,
                     "external_effects_created": False,
                 },
@@ -471,11 +471,11 @@ def build_agent_api_gateway(agent_api: dict[str, Any], billing: dict[str, Any]) 
         )
     return {
         "generated_at": _now(),
-        "status": "agent_api_gateway_ready_local_dry_run",
+        "status": "agent_api_gateway_ready_local_executor_no_external_effects",
         "tools": tool_rows,
         "forbidden_tools": agent_api.get("forbidden_tools", []),
         "billing_plans": billing.get("plans", []),
-        "proof_boundary": "The gateway contract is executable as local dry-run routes; it does not expose a live public API, credentials, payment integration, or claim-opening authority.",
+        "proof_boundary": "The gateway executes local product operations with external effects disabled; it does not expose a live public API, credentials, payment integration, or claim-opening authority.",
     }
 
 

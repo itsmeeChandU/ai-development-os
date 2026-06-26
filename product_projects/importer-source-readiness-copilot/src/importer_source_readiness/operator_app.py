@@ -52,6 +52,12 @@ from .product_runtime import (
     route_ai_task,
     write_runtime_artifacts,
 )
+from .product_operations import (
+    SAFE_TOOL_STATUS,
+    build_product_operations_report,
+    execute_agent_tool,
+    execute_all_local_product_operations,
+)
 
 
 API_ROUTES = {
@@ -75,6 +81,7 @@ API_ROUTES = {
     "/api/expert-network": "system_review_graph/expert_network_report.json",
     "/api/team-workspace": "system_review_graph/team_workspace_report.json",
     "/api/launch-operations": "system_review_graph/launch_operations_report.json",
+    "/api/product-operations/report": "system_review_graph/product_operations_report.json",
 }
 
 STATIC_ROUTES = {
@@ -1015,7 +1022,7 @@ def _render_agent_api(repo_root: Path) -> str:
     body = f"""
 <section class="surface">
   <h1>Agent API</h1>
-  <p class="lede">Agents can dry-run packet creation, reports, summaries, and billing quotes through scoped local tool contracts.</p>
+  <p class="lede">Agents can execute local packet creation, reports, summaries, and billing quotes through scoped tool contracts with external effects disabled.</p>
   <p class="note">{escape(str(gateway.get('proof_boundary') or manifest.get('proof_boundary') or PRODUCT_BOUNDARY))}</p>
 </section>
 <section class="surface">
@@ -2175,6 +2182,8 @@ def _index_payload(repo_root: Path) -> dict[str, Any]:
                 "/api/expert-network",
                 "/api/team-workspace",
                 "/api/launch-operations",
+                "/api/product-operations/report",
+                "/api/product-operations/run",
                 "/api/agent-tools/:tool",
                 "/login",
                 "/signup",
@@ -2903,6 +2912,9 @@ def build_operator_app_handler(repo_root: Path) -> type[BaseHTTPRequestHandler]:
             packets = _visible_packets(workflow, actor)
             packet_lookup = {str(packet.get("packet_id")): packet for packet in workflow.get("packets", [])}
 
+            if path == "/api/product-operations/report":
+                self._send_json(build_product_operations_report(repo_root))
+                return
             if path in API_ROUTES:
                 self._send_file(API_ROUTES[path], "application/json; charset=utf-8")
                 return
@@ -2915,9 +2927,10 @@ def build_operator_app_handler(repo_root: Path) -> type[BaseHTTPRequestHandler]:
                     return
                 self._send_json(
                     {
-                        "status": "agent_tool_dry_run_ready",
+                        "status": "agent_tool_ready_with_local_executor",
                         "tool": tool,
                         "actor": actor.get("role"),
+                        "post_status": SAFE_TOOL_STATUS,
                         "external_effects_created": False,
                         "can_open_claim_gate": False,
                         "proof_boundary": gateway.get("proof_boundary"),
@@ -3059,6 +3072,18 @@ def build_operator_app_handler(repo_root: Path) -> type[BaseHTTPRequestHandler]:
             self.send_error(HTTPStatus.NOT_FOUND, "API route not found")
 
         def _handle_api_post(self, path: str, actor: dict[str, Any]) -> None:
+            if path == "/api/product-operations/run":
+                fields = self._read_fields()
+                try:
+                    self._send_json(
+                        execute_all_local_product_operations(
+                            repo_root,
+                            str(fields.get("packet_id") or "").strip() or None,
+                        )
+                    )
+                except (KeyError, ValueError) as exc:
+                    self.send_error(HTTPStatus.BAD_REQUEST, str(exc))
+                return
             if path.startswith("/api/agent-tools/"):
                 tool_name = path.removeprefix("/api/agent-tools/").strip("/")
                 fields = self._read_fields()
@@ -3067,18 +3092,12 @@ def build_operator_app_handler(repo_root: Path) -> type[BaseHTTPRequestHandler]:
                 if tool is None:
                     self.send_error(HTTPStatus.NOT_FOUND, "Agent tool not found")
                     return
-                self._send_json(
-                    {
-                        "status": "agent_tool_dry_run_executed",
-                        "tool": tool_name,
-                        "packet_id": fields.get("packet_id") or "packet-frozen-tuna-canada-001",
-                        "dry_run": True,
-                        "external_effects_created": False,
-                        "credits_charged": 0,
-                        "can_open_claim_gate": False,
-                        "next_valid_move": "Use generated packet/report locally and collect human evidence before external claims.",
-                    }
-                )
+                try:
+                    self._send_json(execute_agent_tool(repo_root, tool_name, fields, actor))
+                except PermissionError as exc:
+                    self.send_error(HTTPStatus.FORBIDDEN, str(exc))
+                except (KeyError, ValueError) as exc:
+                    self.send_error(HTTPStatus.BAD_REQUEST, str(exc))
                 return
             if path == "/api/public/starter":
                 self._handle_public_starter(actor)

@@ -1,7 +1,22 @@
 {
-  "generated_at": "2026-06-26T09:54:41+00:00",
+  "executed_usage_event_count": 1,
+  "external_charge_created": false,
+  "generated_at": "2026-06-26T10:21:14+00:00",
   "proof_boundary": "The usage ledger estimates and blocks cost exposure locally; no payment, invoice, or live checkout is performed.",
   "status": "billing_usage_ledger_ready_local_no_charges",
+  "total_reserved_credits": 0,
+  "usage_events": [
+    {
+      "action": "ai_extraction",
+      "authorization_status": "blocked_requires_upgrade_or_manual_approval",
+      "credits_charged": 0,
+      "credits_reserved": 0,
+      "estimated_credits": 4,
+      "external_charge_created": false,
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "usage_event_id": "usage-event-packet-frozen-tuna-canada-001-ai_extraction-2026-06-26T102114Z0000"
+    }
+  ],
   "usage_rows": [
     {
       "action": "ocr_page",

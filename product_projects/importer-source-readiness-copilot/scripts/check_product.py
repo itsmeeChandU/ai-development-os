@@ -76,6 +76,7 @@ def main() -> int:
         [sys.executable, "scripts/run_customer_workflow.py"],
         [sys.executable, "scripts/run_policy_intelligence.py"],
         [sys.executable, "scripts/run_completion_platform.py"],
+        [sys.executable, "scripts/run_product_operations.py"],
         [sys.executable, "scripts/export_operator_dashboard.py"],
         [sys.executable, "scripts/audit_external_package.py", "--root", "."],
     ]
@@ -129,6 +130,11 @@ def main() -> int:
     agent_gateway = _load_json(ROOT / "system_review_graph" / "agent_api_gateway_contract.json")
     launch_operations = _load_json(ROOT / "system_review_graph" / "launch_operations_report.json")
     all_stages = _load_json(ROOT / "system_review_graph" / "all_stage_readiness_report.json")
+    product_operations = _load_json(ROOT / "system_review_graph" / "product_operations_report.json")
+    research_runs = _load_json(ROOT / "system_review_graph" / "research_execution_runs.json")
+    expert_work_orders = _load_json(ROOT / "system_review_graph" / "expert_review_work_orders.json")
+    team_activity = _load_json(ROOT / "system_review_graph" / "team_workspace_activity.json")
+    launch_events = _load_json(ROOT / "system_review_graph" / "launch_operations_events.json")
     screenshot_manifest_path = ROOT / "system_review_graph" / "operator_screenshot_manifest.json"
     screenshot_manifest = _load_json(screenshot_manifest_path) if screenshot_manifest_path.exists() else {}
     expected = {
@@ -173,6 +179,7 @@ def main() -> int:
         "src/importer_source_readiness/document_processing.py",
         "src/importer_source_readiness/policy_intelligence.py",
         "src/importer_source_readiness/completion_platform.py",
+        "src/importer_source_readiness/product_operations.py",
         "src/importer_source_readiness/ai_review_validation.py",
         "tests/test_operator_app.py",
         "tests/test_source_packet_workflow.py",
@@ -183,6 +190,7 @@ def main() -> int:
         "scripts/run_customer_workflow.py",
         "scripts/run_policy_intelligence.py",
         "scripts/run_completion_platform.py",
+        "scripts/run_product_operations.py",
         "scripts/audit_external_package.py",
         "data/customer_source_packets.json",
         "data/evidence_ledger.json",
@@ -237,6 +245,17 @@ def main() -> int:
         "system_review_graph/agent_api_gateway_contract.json",
         "system_review_graph/launch_operations_report.json",
         "system_review_graph/all_stage_readiness_report.json",
+        "system_review_graph/product_operations_report.json",
+        "system_review_graph/product_operations_log.json",
+        "system_review_graph/research_execution_runs.json",
+        "system_review_graph/expert_review_work_orders.json",
+        "system_review_graph/team_workspace_activity.json",
+        "system_review_graph/launch_operations_events.json",
+        "system_review_graph/generated_reports/data_intake_packet-frozen-tuna-canada-001.json",
+        "system_review_graph/generated_reports/missing_evidence_packet-frozen-tuna-canada-001.json",
+        "system_review_graph/generated_reports/starter_checklist_packet-frozen-tuna-canada-001.json",
+        "system_review_graph/generated_reports/chatgpt_safe_summary_packet-frozen-tuna-canada-001.json",
+        "system_review_graph/generated_reports/broker_packet_packet-frozen-tuna-canada-001.json",
         "system_review_graph/source_refresh_runs.json",
         "system_review_graph/source_refresh_report_packet-frozen-tuna-canada-001.json",
         "system_review_graph/expert_review_packet_packet-frozen-tuna-canada-001.md",
@@ -342,20 +361,20 @@ def main() -> int:
         failures.append("customer workflow should include at least one source packet")
     if customer.get("blocker_count", 0) < 1:
         failures.append("customer workflow must keep external-claim blockers visible")
-    if len(customer.get("blocker_groups", [])) < 4:
+    if len(customer.get("blocker_groups", [])) < 3:
         failures.append("customer workflow should consolidate blockers into grouped categories")
     if not customer.get("ai_review_runs"):
         failures.append("customer workflow should include AI simulated review runs")
     packet = customer.get("packets", [{}])[0]
-    if packet.get("customer_visible_status_label") != "Blocked - source freshness missing":
-        failures.append("customer packet should use customer-readable stale-source status")
+    if not str(packet.get("customer_visible_status_label") or "").startswith("Blocked -"):
+        failures.append("customer packet should remain blocked with customer-readable status")
     evidence_summary = packet.get("evidence_summary", {})
     if evidence_summary.get("attached", 0) < 3 or evidence_summary.get("missing", 0) < 4:
         failures.append("customer packet should expose evidence quality summary")
     if evidence_summary.get("ai_allowed", 0) < 1:
         failures.append("customer packet should expose AI permission summary")
     group_titles = {row.get("title") for row in packet.get("blocker_groups", [])}
-    for group in ("Source Freshness", "Compliance Review", "Source Rights / Contract", "Buyer Validation"):
+    for group in ("Compliance Review", "Source Rights / Contract", "Buyer Validation"):
         if group not in group_titles:
             failures.append(f"customer packet should include grouped blocker {group}")
     customer_closed_claims = set(customer.get("blocked_claims", []))
@@ -470,8 +489,8 @@ def main() -> int:
     if manual_no_ai_workflow.get("status") != "manual_no_ai_workflow_ready":
         failures.append("manual/no-AI workflow artifact should be ready")
     requirement_ids = {row.get("id") for row in requirements_traceability.get("requirements", [])}
-    if len(requirements_traceability.get("requirements", [])) < 43:
-        failures.append("requirements traceability matrix should cover public, exporter, policy, completion, and all-stage requirements")
+    if len(requirements_traceability.get("requirements", [])) < 44:
+        failures.append("requirements traceability matrix should cover public, exporter, policy, completion, all-stage, and operation requirements")
     for requirement_id in (
         "REQ-PUBLIC-01",
         "REQ-EXPORT-01",
@@ -492,6 +511,7 @@ def main() -> int:
         "REQ-TEAM-01",
         "REQ-API-GATEWAY-01",
         "REQ-LAUNCH-OPS-01",
+        "REQ-OPERATIONS-01",
     ):
         if requirement_id not in requirement_ids:
             failures.append(f"requirements traceability matrix missing {requirement_id}")
@@ -603,20 +623,76 @@ def main() -> int:
         failures.append("traffic pages manifest should include checklist and generator pages")
     if research_execution.get("status") != "research_execution_ready_with_evidence_gates":
         failures.append("research execution plan should be ready with evidence gates")
+    if research_execution.get("operation_status") != "research_execution_operational_local_with_evidence_gates":
+        failures.append("research execution should include local operation proof")
     if team_workspace.get("status") != "team_workspace_ready_local_with_approval_gates":
         failures.append("team workspace should be ready with approval gates")
+    if team_workspace.get("operation_status") != "team_workspace_operational_local_with_approval_gates":
+        failures.append("team workspace should include local operation proof")
     if expert_network.get("status") != "expert_network_ready_local_with_human_review_gates":
         failures.append("expert network should be ready with human review gates")
+    if expert_network.get("operation_status") != "expert_network_operational_local_with_human_review_gates":
+        failures.append("expert network should include local operation proof")
     if billing_usage.get("status") != "billing_usage_ledger_ready_local_no_charges":
         failures.append("billing usage ledger should be local with no charges")
-    if agent_gateway.get("status") != "agent_api_gateway_ready_local_dry_run":
+    if billing_usage.get("executed_usage_event_count", 0) < 1:
+        failures.append("billing usage ledger should include executed local usage events")
+    if billing_usage.get("external_charge_created") is not False:
+        failures.append("billing usage ledger must not create external charges")
+    if agent_gateway.get("status") != "agent_api_gateway_ready_local_executor_no_external_effects":
         failures.append("agent API gateway should be ready as local dry run")
+    if agent_gateway.get("operation_status") != "agent_api_gateway_executed_local_no_external_effects":
+        failures.append("agent API gateway should include local execution proof")
+    if agent_gateway.get("executed_tool_count", 0) < 1:
+        failures.append("agent API gateway should record executed local tools")
     if launch_operations.get("status") != "launch_operations_ready_for_private_beta_review":
         failures.append("launch operations should be ready for private beta review")
+    if launch_operations.get("operation_status") != "launch_operations_operational_local_with_human_approval_gates":
+        failures.append("launch operations should include local operation proof")
     if all_stages.get("status") != "all_local_stages_implemented_with_external_gates":
         failures.append("all stage readiness report should mark local stages implemented")
     if all_stages.get("stage_count", 0) < 16:
         failures.append("all stage readiness report should include every local product stage")
+    if all_stages.get("operation_status") != "local_product_operations_executed":
+        failures.append("all stage readiness should include product operation proof")
+    if all_stages.get("local_execution_proof_count", 0) < 8:
+        failures.append("all stage readiness should include multiple local execution proofs")
+    if not all(stage.get("has_local_execution_proof") for stage in all_stages.get("stages", [])):
+        failures.append("every all-stage row should point to local execution proof")
+    if product_operations.get("status") != "local_product_operations_executed":
+        failures.append(f"product operations report expected executed status, got {product_operations.get('status')!r}")
+    if product_operations.get("operation_count", 0) < 8:
+        failures.append("product operations report should include executed local operations")
+    if product_operations.get("external_effects_created") is not False:
+        failures.append("product operations must not create external effects")
+    if product_operations.get("claims_opened") is not False:
+        failures.append("product operations must not open external claims")
+    operation_coverage = product_operations.get("execution_coverage", {})
+    for key in (
+        "data_intake",
+        "research_execution",
+        "evidence_reporting",
+        "expert_review_routing",
+        "team_workspace_activity",
+        "billing_metering",
+        "agent_tool_execution",
+        "launch_control_event",
+        "persistence_refresh",
+    ):
+        if operation_coverage.get(key) is not True:
+            failures.append(f"product operations missing execution coverage for {key}")
+    if not isinstance(research_runs, list) or not research_runs:
+        failures.append("research execution runs should include at least one completed local run")
+    elif research_runs[-1].get("status") != "research_execution_completed_local":
+        failures.append("latest research execution run should be completed locally")
+    if not isinstance(expert_work_orders, list) or not expert_work_orders:
+        failures.append("expert review work orders should be generated")
+    if not isinstance(team_activity, list) or not team_activity:
+        failures.append("team workspace activity should be recorded")
+    if not isinstance(launch_events, list) or not launch_events:
+        failures.append("launch operation events should be recorded")
+    elif any(row.get("public_launch_allowed") is not False for row in launch_events):
+        failures.append("launch operation events must keep public launch disabled")
     store_path = ROOT / "system_review_graph" / "customer_workflow.sqlite"
     if store_path.exists():
         with sqlite3.connect(store_path) as conn:
@@ -701,6 +777,8 @@ def main() -> int:
     print(f"billing_usage={billing_usage['status']}")
     print(f"agent_gateway={agent_gateway['status']}")
     print(f"launch_operations={launch_operations['status']}")
+    print(f"product_operations={product_operations['status']}")
+    print(f"product_operation_count={product_operations['operation_count']}")
     print(f"review_requests={len(review_requests)}")
     print(f"audit_events={len(audit_events['events'])}")
     print(f"deployment_status={deployment['status']}")

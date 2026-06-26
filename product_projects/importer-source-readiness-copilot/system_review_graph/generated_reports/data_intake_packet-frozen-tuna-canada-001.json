@@ -1,0 +1,13 @@
+{
+  "blocker_count": 7,
+  "destination_country": "Canada",
+  "evidence_count": 3,
+  "external_claims_opened": false,
+  "local_workflow_ready": true,
+  "origin_country": "Vietnam",
+  "packet_id": "packet-frozen-tuna-canada-001",
+  "packet_name": "Frozen tuna Canada source packet",
+  "product_name": "Frozen tuna fillet",
+  "status": "data_intake_snapshot_recorded",
+  "trade_direction": "import"
+}

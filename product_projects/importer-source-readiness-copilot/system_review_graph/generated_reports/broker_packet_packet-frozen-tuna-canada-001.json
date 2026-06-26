@@ -1,0 +1,7 @@
+{
+  "external_claims_opened": false,
+  "markdown_artifact": "system_review_graph/expert_review_packet_packet-frozen-tuna-canada-001.md",
+  "packet_id": "packet-frozen-tuna-canada-001",
+  "review_scope": "Broker/customs/trade reviewer questions generated from local packet state.",
+  "status": "broker_packet_generated"
+}

@@ -1,4 +1,5 @@
 {
+  "execution_report": "system_review_graph/product_operations_report.json",
   "expert_roles": [
     {
       "label": "Customs Broker / Trade Compliance",
@@ -26,7 +27,8 @@
       "scope": "credits, pricing, manual approval, and cost exposure"
     }
   ],
-  "generated_at": "2026-06-26T09:54:41+00:00",
+  "generated_at": "2026-06-26T10:21:14+00:00",
+  "operation_status": "expert_network_operational_local_with_human_review_gates",
   "proof_boundary": "The product can prepare and route expert packets locally; real qualified review remains an external evidence gate.",
   "review_queue": [
     {

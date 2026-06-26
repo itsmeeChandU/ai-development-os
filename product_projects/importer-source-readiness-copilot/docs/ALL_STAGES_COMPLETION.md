@@ -2,7 +2,8 @@
 
 This product is no longer only a first-stage starter/checklist flow. Every
 locally implementable stage now has a user-visible route, API route, generated
-artifact, and proof check.
+artifact, proof check, and local operation proof where the stage requires work
+instead of display.
 
 ## Local Stages
 
@@ -26,12 +27,36 @@ artifact, and proof check.
 ## Generated Artifacts
 
 - `system_review_graph/all_stage_readiness_report.json`
+- `system_review_graph/product_operations_report.json`
+- `system_review_graph/product_operations_log.json`
+- `system_review_graph/research_execution_runs.json`
+- `system_review_graph/expert_review_work_orders.json`
+- `system_review_graph/team_workspace_activity.json`
+- `system_review_graph/launch_operations_events.json`
 - `system_review_graph/research_execution_plan.json`
 - `system_review_graph/expert_network_report.json`
 - `system_review_graph/team_workspace_report.json`
 - `system_review_graph/billing_usage_ledger.json`
 - `system_review_graph/agent_api_gateway_contract.json`
 - `system_review_graph/launch_operations_report.json`
+
+## Executed Local Operations
+
+`python3 scripts/run_product_operations.py` executes the local product loop and
+writes the operation report. The current operation loop covers:
+
+- source packet intake snapshot
+- official-source refresh and research run record
+- missing-evidence report generation
+- starter checklist generation
+- ChatGPT-safe summary generation
+- broker/expert packet generation
+- expert review work orders
+- billing usage reservation with no external charge
+- team workspace activity
+- launch-control event recording
+- agent-tool execution through `/api/agent-tools/:tool`
+- SQLite and generated-artifact persistence refresh
 
 ## External Gates
 

@@ -558,16 +558,18 @@
     {
       "artifacts": [
         "agent_api_gateway_contract.json",
-        "agent_api_manifest.json"
+        "agent_api_manifest.json",
+        "product_operations_report.json"
       ],
-      "boundary": "Gateway tools execute as local dry-run contracts only; no public API, credentials, payments, or claim-opening authority are exposed.",
+      "boundary": "Gateway tools execute local product operations only; no public API, credentials, payments, or claim-opening authority are exposed.",
       "id": "REQ-API-GATEWAY-01",
-      "name": "Agent API gateway dry-run",
+      "name": "Agent API gateway executor",
       "proof": [
         "tests/test_completion_platform.py",
-        "tests/test_operator_app.py"
+        "tests/test_operator_app.py",
+        "scripts/run_product_operations.py"
       ],
-      "status": "implemented_local_dry_run_gateway"
+      "status": "implemented_local_executor_no_external_effects"
     },
     {
       "artifacts": [
@@ -582,6 +584,25 @@
         "scripts/check_product.py"
       ],
       "status": "implemented_private_beta_ops_contract"
+    },
+    {
+      "artifacts": [
+        "product_operations_report.json",
+        "research_execution_runs.json",
+        "expert_review_work_orders.json",
+        "team_workspace_activity.json",
+        "billing_usage_ledger.json",
+        "launch_operations_events.json"
+      ],
+      "boundary": "Local operations mutate product state, reports, and ledgers; they still do not create external legal, customs, tariff, buyer, supplier, payment, or launch approvals.",
+      "id": "REQ-OPERATIONS-01",
+      "name": "Executable local product operations",
+      "proof": [
+        "tests/test_operator_app.py",
+        "scripts/run_product_operations.py",
+        "scripts/check_product.py"
+      ],
+      "status": "implemented_local_operations_engine"
     }
   ],
   "status": "requirements_traceability_ready"
