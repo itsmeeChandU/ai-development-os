@@ -100,6 +100,32 @@ class OperatorAppTests(unittest.TestCase):
         self.assertIn("Start without documents", html)
         self.assertIn("PDF Triage", html)
 
+    def test_ui_layout_and_accessibility_guardrails_are_present(self) -> None:
+        dense_routes = [
+            "/packets/packet-frozen-tuna-canada-001/evidence",
+            "/settings/ai-data-policy",
+            "/admin/system-health",
+        ]
+        for path in dense_routes:
+            with self.subTest(path=path):
+                with urlopen(f"{self.base_url}{path}", timeout=5) as response:
+                    html = response.read().decode("utf-8")
+                self.assertEqual(response.status, 200)
+                self.assertIn(".page > * { min-width: 0; max-width: 100%; }", html)
+                self.assertIn("table { display: block; width: 100%; max-width: 100%; overflow-x: auto;", html)
+                self.assertIn(".status, .badge { display: inline-flex; align-items: center; flex-wrap: wrap; max-width: 100%;", html)
+                self.assertIn("label.htmlFor = control.id;", html)
+
+        with urlopen(f"{self.base_url}/agent-api", timeout=5) as response:
+            agent_html = response.read().decode("utf-8")
+        self.assertIn("Local Agent Tools", agent_html)
+        self.assertNotIn("Dry-Run Tools", agent_html)
+
+        dashboard_html = (ROOT / "system_review_graph" / "operator_dashboard.html").read_text(encoding="utf-8")
+        self.assertIn("* { box-sizing: border-box; }", dashboard_html)
+        self.assertIn("table { display: block; width: 100%; max-width: 100%; overflow-x: auto;", dashboard_html)
+        self.assertIn("th, td { min-width: 136px; }", dashboard_html)
+
     def test_completion_stage_public_pages_and_api_exist(self) -> None:
         routes = {
             "/opportunities": "Opportunity Signals",

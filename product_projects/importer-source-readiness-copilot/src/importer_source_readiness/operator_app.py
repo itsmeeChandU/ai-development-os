@@ -493,15 +493,17 @@ def _render_page(title: str, body: str) -> str:
     .side-nav a:hover {{ background: rgba(255,255,255,.08); }}
     .topbar {{ display: none; background: #102826; color: white; padding: 12px 16px; gap: 10px; overflow-x: auto; }}
     .topbar a {{ color: #d9fffa; text-decoration: none; white-space: nowrap; font-weight: 700; }}
-    main {{ width: min(1180px, 100%); padding: 26px; }}
-    .page {{ display: grid; gap: 18px; }}
-    .surface {{ background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); padding: 18px; }}
+    main {{ width: 100%; max-width: 1180px; min-width: 0; padding: 26px; }}
+    .page {{ display: grid; gap: 18px; min-width: 0; }}
+    .page > * {{ min-width: 0; max-width: 100%; }}
+    .surface {{ background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); padding: 18px; min-width: 0; overflow-x: auto; }}
     h1 {{ margin: 0 0 8px; font-size: 30px; line-height: 1.12; letter-spacing: 0; }}
     h2 {{ margin: 24px 0 10px; font-size: 20px; letter-spacing: 0; }}
     p {{ line-height: 1.55; }}
     .lede {{ color: var(--muted); max-width: 72ch; }}
     .note {{ border: 1px solid var(--warn-line); background: var(--warn-bg); border-radius: var(--radius); padding: 12px; }}
-    .grid {{ display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }}
+    .grid {{ display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; min-width: 0; }}
+    .grid > *, .split > * {{ min-width: 0; }}
     .grid-3 {{ grid-template-columns: repeat(3, minmax(0, 1fr)); }}
     label {{ display: block; font-weight: 800; margin: 10px 0 4px; }}
     input, textarea, select {{ width: 100%; border: 1px solid #c8d2cf; border-radius: 6px; padding: 10px; font: inherit; background: #fff; color: var(--ink); }}
@@ -512,10 +514,10 @@ def _render_page(title: str, body: str) -> str:
     .button-danger {{ background: #93312b; color: #fff; }}
     button:hover, .button-link:hover {{ filter: brightness(.96); }}
     .icon {{ width: 17px; height: 17px; flex: 0 0 auto; }}
-    table {{ width: 100%; border-collapse: collapse; margin-top: 16px; background: #fff; }}
-    th, td {{ text-align: left; border-bottom: 1px solid var(--line); padding: 10px; vertical-align: top; }}
+    table {{ display: block; width: 100%; max-width: 100%; overflow-x: auto; border-collapse: collapse; margin-top: 16px; background: #fff; }}
+    th, td {{ text-align: left; border-bottom: 1px solid var(--line); padding: 10px; vertical-align: top; overflow-wrap: anywhere; }}
     th {{ background: #edf3f1; color: #334440; font-size: 13px; }}
-    .status, .badge {{ display: inline-flex; align-items: center; border: 1px solid var(--line); border-radius: 999px; padding: 5px 10px; background: #eef8f6; color: #17413d; font-size: 13px; font-weight: 800; }}
+    .status, .badge {{ display: inline-flex; align-items: center; flex-wrap: wrap; max-width: 100%; border: 1px solid var(--line); border-radius: 999px; padding: 5px 10px; background: #eef8f6; color: #17413d; font-size: 13px; font-weight: 800; overflow-wrap: anywhere; white-space: normal; text-align: left; }}
     .badge-warn {{ background: var(--warn-bg); color: #6b4b00; border-color: var(--warn-line); }}
     .badge-danger {{ background: #ffe8e2; color: #8a281e; border-color: #f1b8aa; }}
     .badge-ok {{ background: var(--ok-bg); color: #155538; border-color: #a9dbc0; }}
@@ -540,6 +542,7 @@ def _render_page(title: str, body: str) -> str:
       main {{ padding: 16px; }}
       .grid, .grid-3, .split {{ grid-template-columns: 1fr; }}
       .stepper {{ grid-template-columns: 1fr; }}
+      th, td {{ min-width: 136px; }}
     }}
   </style>
 </head>
@@ -576,6 +579,35 @@ def _render_page(title: str, body: str) -> str:
 </div>
 </main>
 </div>
+<script>
+(function () {{
+  var controls = 'input:not([type="hidden"]), select, textarea';
+  document.querySelectorAll('form').forEach(function (form, formIndex) {{
+    Array.from(form.querySelectorAll('label')).forEach(function (label, labelIndex) {{
+      if (label.htmlFor || label.querySelector(controls)) return;
+      var node = label.nextElementSibling;
+      var control = null;
+      while (node && !control) {{
+        if (node.matches && node.matches(controls)) control = node;
+        if (!control && node.querySelector) control = node.querySelector(controls);
+        node = node.nextElementSibling;
+      }}
+      if (!control) return;
+      if (!control.id) {{
+        var base = control.getAttribute('name') || control.tagName.toLowerCase();
+        control.id = 'field-' + formIndex + '-' + labelIndex + '-' + base.replace(/[^A-Za-z0-9_-]+/g, '-');
+      }}
+      label.htmlFor = control.id;
+    }});
+  }});
+  document.querySelectorAll('textarea:not([aria-label]):not([aria-labelledby])').forEach(function (textarea, index) {{
+    if (!textarea.id) textarea.id = 'textarea-' + index;
+    if (!document.querySelector('label[for="' + textarea.id + '"]')) {{
+      textarea.setAttribute('aria-label', textarea.getAttribute('name') || 'Generated text');
+    }}
+  }});
+}}());
+</script>
 </body>
 </html>
 """
@@ -1026,7 +1058,7 @@ def _render_agent_api(repo_root: Path) -> str:
   <p class="note">{escape(str(gateway.get('proof_boundary') or manifest.get('proof_boundary') or PRODUCT_BOUNDARY))}</p>
 </section>
 <section class="surface">
-  <h2>Dry-Run Tools</h2>
+  <h2>Local Agent Tools</h2>
   <table><thead><tr><th>Tool</th><th>Method</th><th>Route</th><th>Scope</th><th>Billing</th></tr></thead><tbody>{tools}</tbody></table>
 </section>
 <section class="surface">

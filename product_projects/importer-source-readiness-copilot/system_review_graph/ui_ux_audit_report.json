@@ -1,0 +1,85 @@
+{
+  "status": "ui_ux_audited_ready_for_external_review",
+  "generated_at": "2026-06-26T10:43:38.831Z",
+  "audit_owner": "codex_personal_browser_audit",
+  "proof_boundary": "This audit verifies local UI/UX rendering, navigation, copy, form-label wiring, route accessibility, and responsive behavior. It does not prove legal, customs, tariff, CFIA, supplier, buyer, payment, hosting, privacy, security, or commercial launch readiness.",
+  "initial_route_inventory": {
+    "route_count": 70,
+    "viewports": [
+      "desktop-1280",
+      "mobile-390"
+    ],
+    "signals_checked": [
+      "page h1 presence",
+      "visible form control labeling",
+      "page-level horizontal overflow",
+      "blank visible links or buttons",
+      "stale Dry-Run wording",
+      "traceback or error response text",
+      "local filesystem path leaks"
+    ],
+    "findings": [
+      "Dense packet evidence and policy pages could force page-level horizontal overflow.",
+      "Generated operator dashboard tables overflowed mobile viewports.",
+      "A long system-health status badge overflowed on mobile.",
+      "Several forms needed stable label-control association after render.",
+      "Agent API copy still said Dry-Run Tools even though local scoped execution is implemented."
+    ]
+  },
+  "implemented_fixes": [
+    {
+      "area": "shared operator app layout",
+      "change": "Added shrink-safe page/grid children, table-contained horizontal scrolling, mobile table cell sizing, and wrapping status badges."
+    },
+    {
+      "area": "form accessibility",
+      "change": "Added a progressive enhancement that associates adjacent labels with visible inputs/selects/textareas and supplies fallback textarea labels."
+    },
+    {
+      "area": "agent API copy",
+      "change": "Renamed Dry-Run Tools to Local Agent Tools to match the no-external-effects local executor contract."
+    },
+    {
+      "area": "generated operator dashboard",
+      "change": "Updated the dashboard renderer so regenerated operator dashboards are mobile-safe and dense tables scroll inside their own containers."
+    }
+  ],
+  "final_browser_regression": {
+    "target_count": 15,
+    "viewports": [
+      "desktop-1280",
+      "mobile-390"
+    ],
+    "routes": [
+      "/",
+      "/start",
+      "/trade-check",
+      "/tools/import-readiness",
+      "/tools/export-readiness",
+      "/packets",
+      "/packets/new",
+      "/packets/packet-frozen-tuna-canada-001/evidence",
+      "/packets/packet-frozen-tuna-canada-001/blockers",
+      "/settings/ai-data-policy",
+      "/admin/system-health",
+      "/agent-api",
+      "/stages",
+      "/operator",
+      "/operator/queue"
+    ],
+    "flagged_count": 0,
+    "checks_passed": {
+      "missing_h1": 0,
+      "visible_unlabeled_controls": 0,
+      "blank_clickables": 0,
+      "page_level_horizontal_overflow": 0,
+      "stale_dry_run_text": 0,
+      "local_path_leaks": 0,
+      "traceback_or_error_text": 0
+    }
+  },
+  "review_notes": [
+    "Dense evidence, blocker, and operator ledgers remain wide by nature, but now scroll inside their own table containers instead of expanding the whole page.",
+    "The UI is review-ready as a local private-beta product surface; external claims and real-world operations remain explicitly gated in the product reports."
+  ]
+}

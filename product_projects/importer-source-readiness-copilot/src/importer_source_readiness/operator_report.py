@@ -283,19 +283,21 @@ def render_dashboard(
   <title>Importer Source Readiness Copilot</title>
   <style>
     :root {{ color-scheme: light dark; --ink: #172026; --muted: #52616f; --line: #ccd5df; --panel: #f7f9fb; --panel-strong: #eef3f7; --warn: #fff7df; --warn-line: #ead28a; --danger: #9f2f2f; --accent: #1d6b65; --accent-soft: #dff3ef; }}
+    * {{ box-sizing: border-box; }}
     body {{ font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; margin: 0; color: var(--ink); background: #fbfcfd; }}
-    main {{ max-width: 1180px; margin: 0 auto; padding: 32px; }}
+    main {{ width: min(1180px, 100%); min-width: 0; margin: 0 auto; padding: 32px; }}
     h1, h2, h3 {{ margin: 0 0 8px; }}
     h1 {{ font-size: 34px; line-height: 1.1; }}
     h2 {{ font-size: 22px; margin-top: 30px; }}
     h3 {{ font-size: 16px; }}
     p {{ line-height: 1.5; }}
-    .grid {{ display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin: 20px 0; }}
+    .grid {{ display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin: 20px 0; min-width: 0; }}
+    .grid > *, section, article {{ min-width: 0; }}
     .metric {{ border: 1px solid var(--line); border-radius: 6px; padding: 14px; background: var(--panel); }}
     .label {{ color: var(--muted); font-size: 13px; }}
     .value {{ font-size: 20px; line-height: 1.2; font-weight: 700; margin-top: 6px; overflow-wrap: anywhere; }}
-    table {{ width: 100%; border-collapse: collapse; margin: 14px 0 28px; }}
-    th, td {{ text-align: left; border-bottom: 1px solid #dce3ea; padding: 9px; vertical-align: top; }}
+    table {{ display: block; width: 100%; max-width: 100%; overflow-x: auto; border-collapse: collapse; margin: 14px 0 28px; }}
+    th, td {{ text-align: left; border-bottom: 1px solid #dce3ea; padding: 9px; vertical-align: top; overflow-wrap: anywhere; }}
     th {{ background: var(--panel-strong); }}
     .closed {{ color: var(--danger); font-weight: 700; }}
     .note {{ background: var(--warn); border: 1px solid var(--warn-line); padding: 12px; border-radius: 6px; }}
@@ -328,6 +330,7 @@ def render_dashboard(
       .grid {{ grid-template-columns: repeat(2, minmax(0, 1fr)); }}
       .section-heading {{ display: block; }}
       .screenshot-summary {{ text-align: left; margin-top: 12px; }}
+      th, td {{ min-width: 136px; }}
     }}
     @media (max-width: 560px) {{
       .grid {{ grid-template-columns: 1fr; }}
