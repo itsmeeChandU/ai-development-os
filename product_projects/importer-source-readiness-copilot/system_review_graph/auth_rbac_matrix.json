@@ -171,11 +171,21 @@
         "supplier_document",
         "third_party_reference"
       ],
+      "audit_event_types": [
+        "public_upload_received",
+        "public_pdf_triaged",
+        "public_upload_quarantined",
+        "public_fields_confirmed",
+        "public_upload_deleted"
+      ],
       "direct_file_serving": "disabled",
       "malicious_html_policy": "reject script-bearing metadata and always HTML-escape display",
       "max_bytes": 5242880,
+      "ocr_cost_gate": "OCR pages are estimated and require explicit user approval before any external OCR/AI charge",
+      "parser_sandbox": "local bounded parser only; no shell execution, no remote fetch, no direct file serving",
       "pdf_triage": "native text extraction attempted, OCR need flagged, user confirmation required",
-      "quarantine_storage": "public_uploads/:packetId/quarantine with generated filenames"
+      "quarantine_storage": "public_uploads/:packetId/quarantine with generated filenames",
+      "rate_limit": "local policy bucket: public_quick_check allows 6 uploads per 10 minutes per browser/IP before hosted deployment"
     }
   },
   "users": [

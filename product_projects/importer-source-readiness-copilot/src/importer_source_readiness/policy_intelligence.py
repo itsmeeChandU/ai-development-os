@@ -70,6 +70,23 @@ def _packet_tags(packet: dict[str, Any]) -> set[str]:
     return tags
 
 
+def _source_permission(source: dict[str, Any], url: str) -> dict[str, Any]:
+    jurisdiction = str(source.get("jurisdiction") or "").lower()
+    official_canada = jurisdiction in {"ca", "canada"} or ".gc.ca" in url or "canada.ca" in url
+    return {
+        "robots_status": source.get("robots_status") or "not_checked_local_contract",
+        "terms_status": source.get("terms_status") or "not_checked_local_contract",
+        "fetch_cadence": source.get("fetch_cadence") or ("weekly_for_registry_metadata" if official_canada else "manual_review_before_fetch"),
+        "manual_only": bool(source.get("manual_only")) if "manual_only" in source else not official_canada,
+        "live_fetch_allowed": False,
+        "scheduled_fetch_job": f"source-monitor:{source.get('id') or source.get('name')}:metadata-refresh",
+        "permission_boundary": (
+            "Local contract only. Check robots, terms, official API/download rules, and qualified source policy "
+            "before enabling hosted live fetches."
+        ),
+    }
+
+
 def build_policy_monitor(
     *,
     official_sources: list[dict[str, Any]],
@@ -86,6 +103,7 @@ def build_policy_monitor(
         source_id = str(source.get("id") or source.get("name"))
         url = _source_url(source)
         tags = _source_tags(source)
+        permission = _source_permission(source, url)
         normalized = {
             "source_id": source_id,
             "name": source.get("name") or source_id,
@@ -97,6 +115,7 @@ def build_policy_monitor(
             "claim_boundary": source.get("claim_boundary") or "",
             "loader": "intelligence_hub.official_source_registry",
             "refresh_mode": "external_refresh_required_before_claims",
+            **permission,
         }
         snapshot_hash = _hash(normalized)
         monitored_sources.append(normalized)
@@ -110,6 +129,10 @@ def build_policy_monitor(
                 "content_mode": "registry_metadata_only",
                 "live_fetch_performed": False,
                 "rights_status": "official_reference_url_only",
+                "robots_status": permission["robots_status"],
+                "terms_status": permission["terms_status"],
+                "fetch_cadence": permission["fetch_cadence"],
+                "manual_only": permission["manual_only"],
                 "freshness_status": "monitoring_contract_ready_requires_live_refresh",
                 "proof_boundary": "Registry metadata proves which source to monitor, not current legal or compliance truth.",
             }
@@ -123,6 +146,8 @@ def build_policy_monitor(
                 "affected_tags": tags,
                 "requires_packet_recheck": True,
                 "human_review_required": True,
+                "scheduled_fetch_job": permission["scheduled_fetch_job"],
+                "live_fetch_allowed": permission["live_fetch_allowed"],
                 "next_valid_move": "Run the live source loader, compare hashes, classify the diff, and route affected packets for qualified review.",
             }
         )
@@ -188,6 +213,19 @@ def build_policy_monitor(
             "paid_calls_made": False,
             "external_claims_opened": False,
         },
+        "scheduled_jobs": [
+            {
+                "job_id": source["scheduled_fetch_job"],
+                "source_id": source["source_id"],
+                "jurisdiction": source["jurisdiction"],
+                "cadence": source["fetch_cadence"],
+                "manual_only": source["manual_only"],
+                "live_fetch_allowed": source["live_fetch_allowed"],
+                "status": "defined_not_enabled",
+                "next_valid_move": "Review robots/terms/API permissions, then enable the loader in Intelligence Hub with audit logging.",
+            }
+            for source in monitored_sources
+        ],
         "monitored_source_count": len(monitored_sources),
         "packet_impact_count": len(impacts),
         "stale_source_blocker_count": len(stale_blockers),

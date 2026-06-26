@@ -17,6 +17,7 @@ if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
 from importer_source_readiness.operator_app import make_server
+from importer_source_readiness.product_runtime import CSRF_TOKEN
 
 
 MUTABLE_GENERATED_PATHS = [
@@ -67,6 +68,7 @@ MUTABLE_GENERATED_PATHS = [
     ROOT / "system_review_graph" / "expert_review_work_orders.json",
     ROOT / "system_review_graph" / "team_workspace_activity.json",
     ROOT / "system_review_graph" / "launch_operations_events.json",
+    ROOT / "system_review_graph" / "human_review_findings.json",
     ROOT / "system_review_graph" / "generated_reports" / "data_intake_packet-frozen-tuna-canada-001.json",
     ROOT / "system_review_graph" / "generated_reports" / "missing_evidence_packet-frozen-tuna-canada-001.json",
     ROOT / "system_review_graph" / "generated_reports" / "starter_checklist_packet-frozen-tuna-canada-001.json",
@@ -306,6 +308,14 @@ class OperatorAppTests(unittest.TestCase):
             self.assertIn("Beginner cumin starter", html)
             self.assertIn("Starter Checklist", html)
             self.assertIn("Beginner mode", html)
+            workflow = json.loads((ROOT / "system_review_graph" / "customer_readiness_report.json").read_text(encoding="utf-8"))
+            packet = next(row for row in workflow["packets"] if row["packet_id"] == "packet-beginner-cumin-starter")
+            self.assertTrue(packet["beginner_mode"])
+            self.assertTrue(packet["offline_evidence_only"])
+            self.assertEqual(packet["source_type"], "beginner_starter")
+            self.assertEqual(packet["shareable_status"], "blocked_until_user_confirmation")
+            self.assertIn("HS code", packet["unknown_fields"])
+            self.assertGreater(packet["blocker_count"], 0)
         finally:
             for path, content in backups.items():
                 if content is None:
@@ -364,7 +374,13 @@ class OperatorAppTests(unittest.TestCase):
                         'Content-Disposition: form-data; name="documents"; filename="turmeric-product-spec.pdf"\r\n'
                         "Content-Type: application/pdf\r\n\r\n"
                     ).encode("utf-8")
-                    + b"%PDF-1.4\n1 0 obj <<>> endobj\n%%EOF\n"
+                    + (
+                        b"%PDF-1.4\n"
+                        b"1 0 obj << /Type /Page >> endobj\n"
+                        b"2 0 obj << /Length 95 >> stream\n"
+                        b"BT (Commercial Invoice number TUR-1234) Tj (HS code: 0910.30) Tj ET\n"
+                        b"endstream\nendobj\n%%EOF\n"
+                    )
                     + b"\r\n"
                 )
                 parts.append(f"--{boundary}--\r\n".encode("utf-8"))
@@ -400,17 +416,42 @@ class OperatorAppTests(unittest.TestCase):
                     confirm_html = response.read().decode("utf-8")
                 self.assertIn("Confirm Extracted Fields", confirm_html)
                 self.assertIn("turmeric-product-spec.pdf", confirm_html)
+                self.assertIn("Field confidence", confirm_html)
 
                 manifest = json.loads((ROOT / "system_review_graph" / "public_upload_manifest.json").read_text(encoding="utf-8"))
                 packet_manifest = next(row for row in manifest["packets"] if row["packet_id"] == "packet-india-turmeric-export")
+                self.assertEqual(manifest["parser_sandbox"]["mode"], "local_bounded_metadata_parser")
+                self.assertEqual(manifest["rate_limit"]["bucket"], "public_quick_check")
                 self.assertEqual(packet_manifest["files"][0]["filename"], "document-001.pdf")
                 self.assertEqual(packet_manifest["files"][0]["original_filename"], "turmeric-product-spec.pdf")
                 self.assertTrue(packet_manifest["files"][0]["user_confirmation_required"])
-                self.assertIn("extraction_status", packet_manifest["files"][0])
+                self.assertEqual(packet_manifest["files"][0]["document_processing_mode"], "native_text")
+                self.assertEqual(packet_manifest["files"][0]["ocr_blocker"]["status"], "not_required")
+                self.assertIn("public_pdf_triaged", packet_manifest["audit_events"])
 
                 with self.assertRaises(HTTPError) as blocked_ctx:
                     urlopen(f"{self.base_url}/system_review_graph/{packet_manifest['files'][0]['relative_path'].removeprefix('system_review_graph/')}", timeout=5)
                 self.assertEqual(blocked_ctx.exception.code, 403)
+
+                missing_confirm_request = Request(
+                    f"{self.base_url}/api/public/packets/packet-india-turmeric-export/confirm",
+                    data=urlencode({"product_name": "India turmeric export"}).encode("utf-8"),
+                    method="POST",
+                    headers={"Content-Type": "application/x-www-form-urlencoded"},
+                )
+                with self.assertRaises(HTTPError) as missing_confirm:
+                    urlopen(missing_confirm_request, timeout=5)
+                self.assertEqual(missing_confirm.exception.code, 400)
+
+                unsafe_confirm_request = Request(
+                    f"{self.base_url}/api/public/packets/packet-india-turmeric-export/confirm",
+                    data=urlencode({"fields_confirmed": "accepted", "product_name": "<script>alert(1)</script>"}).encode("utf-8"),
+                    method="POST",
+                    headers={"Content-Type": "application/x-www-form-urlencoded"},
+                )
+                with self.assertRaises(HTTPError) as unsafe_confirm:
+                    urlopen(unsafe_confirm_request, timeout=5)
+                self.assertEqual(unsafe_confirm.exception.code, 400)
 
                 confirm_body = urlencode(
                     {
@@ -418,6 +459,8 @@ class OperatorAppTests(unittest.TestCase):
                         "product_name": "India turmeric export",
                         "origin_country": "India",
                         "destination_country": "Canada",
+                        "buyer_name": "Example Canada Buyer",
+                        "supplier_name": "Example India Supplier",
                         "importer_of_record": "unknown",
                         "incoterms_if_known": "unknown",
                     }
@@ -432,6 +475,9 @@ class OperatorAppTests(unittest.TestCase):
                     confirmed = json.loads(response.read().decode("utf-8"))
                 self.assertEqual(confirmed["status"], "public_packet_fields_confirmed")
                 self.assertEqual(confirmed["packet"]["confirmation_status"], "user_confirmed_draft_fields")
+                self.assertEqual(confirmed["packet"]["buyer_name"], "Example Canada Buyer")
+                self.assertEqual(confirmed["packet"]["supplier_name"], "Example India Supplier")
+                self.assertEqual(confirmed["packet"]["shareable_status"], "draft_shareable_after_user_confirmation_with_external_gates")
 
                 with urlopen(f"{self.base_url}/api/public/packets/packet-india-turmeric-export/chatgpt-safe-summary", timeout=5) as response:
                     safe_summary = json.loads(response.read().decode("utf-8"))
@@ -455,6 +501,11 @@ class OperatorAppTests(unittest.TestCase):
                 with urlopen(delete_request, timeout=5) as response:
                     deletion = json.loads(response.read().decode("utf-8"))
                 self.assertEqual(deletion["status"], "public_upload_files_deleted")
+                action_log = json.loads((ROOT / "system_review_graph" / "customer_action_log.json").read_text(encoding="utf-8"))
+                action_types = {row.get("event_type") for row in action_log if row.get("packet_id") == "packet-india-turmeric-export"}
+                self.assertIn("public_upload_received", action_types)
+                self.assertIn("public_fields_confirmed", action_types)
+                self.assertIn("public_upload_deleted", action_types)
             finally:
                 shutil.rmtree(upload_root, ignore_errors=True)
                 if upload_backup.exists():
@@ -464,6 +515,58 @@ class OperatorAppTests(unittest.TestCase):
                         path.unlink(missing_ok=True)
                     else:
                         path.write_bytes(content)
+
+    def test_public_quick_check_rejects_unaccepted_notice_non_pdf_and_page_limit(self) -> None:
+        def post_multipart(fields: dict[str, str], file_name: str, content: bytes) -> None:
+            boundary = "----ISRRejectBoundary"
+            parts: list[bytes] = []
+            for key, value in fields.items():
+                parts.append(
+                    (
+                        f"--{boundary}\r\n"
+                        f'Content-Disposition: form-data; name="{key}"\r\n\r\n'
+                        f"{value}\r\n"
+                    ).encode("utf-8")
+                )
+            parts.append(
+                (
+                    f"--{boundary}\r\n"
+                    f'Content-Disposition: form-data; name="documents"; filename="{file_name}"\r\n'
+                    "Content-Type: application/pdf\r\n\r\n"
+                ).encode("utf-8")
+                + content
+                + b"\r\n"
+            )
+            parts.append(f"--{boundary}--\r\n".encode("utf-8"))
+            request = Request(
+                f"{self.base_url}/api/public/quick-check",
+                data=b"".join(parts),
+                method="POST",
+                headers={"Content-Type": f"multipart/form-data; boundary={boundary}"},
+            )
+            urlopen(request, timeout=5)
+
+        base_fields = {
+            "product_name": "Reject flow",
+            "origin_country": "India",
+            "destination_country": "Canada",
+            "trade_direction": "export",
+        }
+        with self.assertRaises(HTTPError) as no_notice:
+            post_multipart(base_fields, "doc.pdf", b"%PDF-1.4\n%%EOF\n")
+        self.assertEqual(no_notice.exception.code, 400)
+
+        with self.assertRaises(HTTPError) as non_pdf:
+            post_multipart({**base_fields, "accept_notice": "accepted"}, "doc.txt", b"not a pdf")
+        self.assertEqual(non_pdf.exception.code, 400)
+
+        too_many_pages = b"%PDF-1.4\n" + b"\n".join(
+            f"{index} 0 obj << /Type /Page >> endobj".encode("ascii")
+            for index in range(1, 28)
+        ) + b"\n%%EOF\n"
+        with self.assertRaises(HTTPError) as page_limit:
+            post_multipart({**base_fields, "accept_notice": "accepted"}, "many-pages.pdf", too_many_pages)
+        self.assertEqual(page_limit.exception.code, 400)
 
     def test_operator_route_serves_operator_dashboard(self) -> None:
         with urlopen(f"{self.base_url}/operator", timeout=5) as response:
@@ -693,6 +796,50 @@ class OperatorAppTests(unittest.TestCase):
         with urlopen(f"{self.base_url}/api/external-review/review-token-packet-frozen-tuna-canada-001", timeout=5) as response:
             review = json.loads(response.read().decode("utf-8"))
         self.assertEqual(review["review_request"]["packet_id"], "packet-frozen-tuna-canada-001")
+
+    def test_external_review_finding_post_is_scoped_and_does_not_open_claims(self) -> None:
+        mutable_paths = [
+            ROOT / "system_review_graph" / "human_review_findings.json",
+            ROOT / "system_review_graph" / "customer_action_log.json",
+        ]
+        backups = {path: path.read_bytes() if path.exists() else None for path in mutable_paths}
+        try:
+            body = urlencode(
+                {
+                    "csrf_token": CSRF_TOKEN,
+                    "decision": "needs_more_evidence",
+                    "conditions": "Need dated official source refresh and broker review.",
+                    "evidence_reviewed_ids": "evidence-frozen-tuna-source",
+                    "notes": "Scoped review only; no approval.",
+                }
+            ).encode("utf-8")
+            request = Request(
+                f"{self.base_url}/review/review-token-packet-frozen-tuna-canada-001/submit",
+                data=body,
+                method="POST",
+                headers={"Content-Type": "application/x-www-form-urlencoded"},
+            )
+            with urlopen(request, timeout=5) as response:
+                submitted = json.loads(response.read().decode("utf-8"))
+
+            self.assertEqual(submitted["status"], "finding_recorded_scoped")
+            self.assertEqual(submitted["finding"]["packet_id"], "packet-frozen-tuna-canada-001")
+            self.assertEqual(submitted["finding"]["approved_claims_scoped"], [])
+            self.assertIn("tariff_classification_claim", submitted["finding"]["blocked_claims"])
+            action_log = json.loads((ROOT / "system_review_graph" / "customer_action_log.json").read_text(encoding="utf-8"))
+            self.assertTrue(
+                any(
+                    row.get("event_type") == "review_finding_submitted"
+                    and row.get("packet_id") == "packet-frozen-tuna-canada-001"
+                    for row in action_log
+                )
+            )
+        finally:
+            for path, content in backups.items():
+                if content is None:
+                    path.unlink(missing_ok=True)
+                else:
+                    path.write_bytes(content)
 
 
 if __name__ == "__main__":

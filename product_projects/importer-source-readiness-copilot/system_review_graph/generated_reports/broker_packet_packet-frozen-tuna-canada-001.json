@@ -1,7 +1,23 @@
 {
   "external_claims_opened": false,
+  "finding_ingestion_route": "/review/:token/submit",
   "markdown_artifact": "system_review_graph/expert_review_packet_packet-frozen-tuna-canada-001.md",
   "packet_id": "packet-frozen-tuna-canada-001",
+  "packet_sections": [
+    "packet summary",
+    "uploaded document triage",
+    "missing evidence",
+    "blocked claims",
+    "questions for scoped reviewer",
+    "conditions or evidence required before claims can change"
+  ],
   "review_scope": "Broker/customs/trade reviewer questions generated from local packet state.",
+  "reviewer_types": [
+    "customs broker",
+    "Canada import/export trade reviewer",
+    "food/CFIA reviewer when applicable",
+    "privacy/security reviewer for hosted uploads",
+    "buyer/importer operator for commercial validation"
+  ],
   "status": "broker_packet_generated"
 }

@@ -14,6 +14,16 @@ Repo files, generated reports, tests, and git history are the source of truth.
 - `system_review_graph/operator_screenshot_manifest.json`
 - `system_review_graph/vc_pitch_readiness_report.json`
 - `system_review_graph/board_go_live_readiness_report.json`
+- `system_review_graph/intelligence_hub_policy_monitor.json`
+- `system_review_graph/completion_platform_manifest.json`
+- `system_review_graph/opportunity_scanner_report.json`
+- `system_review_graph/country_coverage_report.json`
+- `system_review_graph/transport_readiness_report.json`
+- `system_review_graph/billing_credit_controls.json`
+- `system_review_graph/agent_api_manifest.json`
+- `system_review_graph/product_operations_report.json`
+- `system_review_graph/public_upload_policy.json`
+- `PRODUCT_REVIEW_REPORT.md`
 
 ## Canonical Product Doctrine
 

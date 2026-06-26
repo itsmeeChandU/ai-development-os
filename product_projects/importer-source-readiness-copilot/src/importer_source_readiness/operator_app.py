@@ -369,12 +369,23 @@ def _report_pdf_bytes(title: str, body: str) -> bytes:
 
 def _public_report_body(packet: dict[str, Any], report_type: str) -> str:
     summary = packet.get("public_summary") or {}
-    lanes = "; ".join(
-        f"{lane.get('name')}: {lane.get('status')} ({lane.get('next_valid_move')})"
+    lanes = [
+        f"- {lane.get('name')}: {lane.get('status')} | Next: {lane.get('next_valid_move')}"
         for lane in packet.get("readiness_lanes", [])
-    )
-    missing = ", ".join(packet.get("evidence_summary", {}).get("missing_items", [])[:8])
-    questions = "; ".join(packet.get("buyer_broker_questions", [])[:6])
+    ]
+    missing_items = packet.get("evidence_summary", {}).get("missing_items", [])[:12]
+    missing = [f"- {item}" for item in missing_items]
+    questions = [f"- {question}" for question in packet.get("buyer_broker_questions", [])[:10]]
+    document_rows = []
+    for evidence in packet.get("evidence_items", []):
+        if evidence.get("evidence_type") != "customer_uploaded_document":
+            continue
+        document_rows.append(
+            "- "
+            f"{evidence.get('title')}: {evidence.get('extraction_status') or evidence.get('ledger_status')} "
+            f"(confidence: {evidence.get('extraction_confidence') or 'unknown'}, "
+            f"confirmation: {evidence.get('confirmation_status') or 'not_confirmed'})"
+        )
     report_labels = {
         "starter": "Starter Checklist",
         "draft": "Draft Trade Readiness Report",
@@ -385,20 +396,63 @@ def _public_report_body(packet: dict[str, Any], report_type: str) -> str:
         "expert": "Expert Review Packet",
     }
     label = report_labels.get(report_type, "Draft Trade Readiness Report")
-    return (
-        f"{label}. Product: {packet.get('product_name')}. "
-        f"Trade direction: {packet.get('trade_direction')}. "
-        f"Countries: {packet.get('origin_country')} to {packet.get('destination_country')}. "
-        f"Status: {summary.get('status') or packet.get('readiness_status_label')}. "
-        f"Main reason: {summary.get('main_reason')}. "
-        f"Importer of record: {packet.get('importer_of_record')}; Incoterms: {packet.get('incoterms_if_known')}. "
-        f"Evidence quality: {packet.get('evidence_summary', {}).get('summary')}. "
-        f"Readiness lanes: {lanes}. Missing evidence: {missing}. "
-        f"Buyer/broker questions: {questions}. "
-        "Blocked claims remain blocked: no approval, tariff confirmation, CFIA clearance, legal advice, buyer validation, "
-        "shipment decision, supplier recommendation, public launch, or commercial readiness claim. "
-        "AI involvement: AI may structure evidence when allowed; it cannot open human gates. "
-        "Boundary: draft review packet only; qualified people must review before external use."
+    intro_by_type = {
+        "starter": "Use this as the first checklist when the user only knows the product, country path, or document pile.",
+        "missing": "Use this to close evidence gaps before buyer, broker, expert, or operator review.",
+        "buyer": "Use this to brief a buyer/importer without making buyer-validation or shipment-readiness claims.",
+        "broker": "Use this to request scoped broker, customs, food/import, or trade expert review.",
+        "expert": "Use this to capture scoped external findings without opening product claims automatically.",
+    }
+    next_steps = [
+        "- Confirm product, origin, destination, buyer/importer, supplier/exporter, HS code if known, and Incoterms.",
+        "- Attach product specs, invoice or proforma, packing details, certificates, proof of origin, and shipping details where available.",
+        "- Refresh official/reference sources and keep them dated.",
+        "- Send this packet to the right qualified reviewer before shipment, tariff, CFIA, legal, buyer, supplier, or launch claims.",
+    ]
+    return "\n".join(
+        [
+            label,
+            "",
+            intro_by_type.get(report_type, "Use this as a draft internal review packet."),
+            "",
+            "Packet",
+            f"Product: {packet.get('product_name')}",
+            f"Trade direction: {packet.get('trade_direction')}",
+            f"Countries: {packet.get('origin_country')} to {packet.get('destination_country')}",
+            f"Buyer/importer: {packet.get('buyer_name') or packet.get('importer_name') or 'unknown'}",
+            f"Supplier/exporter: {packet.get('supplier_name') or packet.get('exporter_name') or 'unknown'}",
+            f"Importer of record: {packet.get('importer_of_record')}; Incoterms: {packet.get('incoterms_if_known')}",
+            f"Confirmation: {packet.get('confirmation_status') or 'not_confirmed'}",
+            f"Shareable status: {packet.get('shareable_status') or 'blocked_until_user_confirmation'}",
+            "",
+            "Current Status",
+            f"Status: {summary.get('status') or packet.get('readiness_status_label')}",
+            f"Main reason: {summary.get('main_reason')}",
+            f"Evidence quality: {packet.get('evidence_summary', {}).get('summary')}",
+            f"Next valid move: {summary.get('next_valid_move') or packet.get('next_valid_move')}",
+            "",
+            "Plain-English Next Steps",
+            *next_steps,
+            "",
+            "Readiness Lanes",
+            *(lanes or ["- No readiness lanes generated."]),
+            "",
+            "Missing Evidence",
+            *(missing or ["- No missing evidence listed, but external claims still require review."]),
+            "",
+            "Uploaded Document Triage",
+            *(document_rows or ["- No uploaded documents attached to this packet."]),
+            "",
+            "Buyer/Broker/Expert Questions",
+            *(questions or ["- No questions generated yet."]),
+            "",
+            "Blocked Claims",
+            "- No approval, tariff confirmation, CFIA clearance, legal advice, buyer validation, shipment decision, supplier recommendation, public launch, or commercial readiness claim is opened by this report.",
+            "- AI may structure evidence when allowed, but AI cannot open human or external gates.",
+            "",
+            "Boundary",
+            "Draft review packet only; qualified people must review before external use.",
+        ]
     )
 
 
@@ -728,6 +782,60 @@ def _render_landing() -> str:
 
 
 def _render_start_page() -> str:
+    examples = [
+        {
+            "title": "Product-only start",
+            "summary": "I only know the product and need the evidence checklist.",
+            "product_name": "Kitchen storage containers",
+            "product_category": "consumer_goods",
+            "origin_country": "unknown",
+            "destination_country": "Canada",
+            "trade_direction": "unknown",
+            "current_stage": "idea",
+            "unknown_fields": "origin country, buyer/importer, supplier, HS code, Incoterms, certificates, proof of origin",
+            "notes": "I only know the product idea. Build a starter checklist and keep all claims blocked.",
+        },
+        {
+            "title": "Exporter furniture",
+            "summary": "Foreign exporter wants to sell furniture into Canada.",
+            "product_name": "Wooden dining chairs",
+            "product_category": "furniture",
+            "origin_country": "Vietnam",
+            "destination_country": "Canada",
+            "trade_direction": "export",
+            "current_stage": "buyer conversation",
+            "unknown_fields": "Canadian importer of record, wood documentation, HS code, packing list, Incoterms, broker review",
+            "notes": "Exporter has a product and buyer conversation but needs a Canada readiness packet.",
+        },
+        {
+            "title": "Import food",
+            "summary": "Canada-side importer needs a food/product evidence path.",
+            "product_name": "Frozen mango puree",
+            "product_category": "food_import",
+            "origin_country": "India",
+            "destination_country": "Canada",
+            "trade_direction": "import",
+            "current_stage": "documents collecting",
+            "unknown_fields": "CFIA/AIRS path, supplier documents, proof of origin, importer responsibility, broker review",
+            "notes": "Importer needs missing evidence and expert-review questions before any shipment decision.",
+        },
+    ]
+    example_forms = "".join(
+        "<form class='metric' method='post' action='/api/public/starter'>"
+        f"<div class='label'>{escape(example['title'])}</div>"
+        f"<div class='value'>{escape(example['summary'])}</div>"
+        + "".join(
+            f"<input type='hidden' name='{escape(key)}' value='{escape(str(value))}'>"
+            for key, value in example.items()
+            if key not in {"title", "summary"}
+        )
+        + "<input type='hidden' name='research_depth_requested' value='starter checklist'>"
+        + "<input type='hidden' name='accept_notice' value='accepted'>"
+        + "<button type='submit'>"
+        + _icon("arrow-right")
+        + "Start</button></form>"
+        for example in examples
+    )
     body = f"""
 <section class="surface">
   {_workflow_steps("start")}
@@ -749,6 +857,11 @@ def _render_start_page() -> str:
     <label><input type="checkbox" name="accept_notice" value="accepted" checked> I understand this is a draft starter checklist and external claims remain blocked.</label>
     <button type="submit">{_icon("arrow-right")}Create Starter Packet</button>
   </form>
+</section>
+<section class="surface">
+  <h2>Beginner Examples</h2>
+  <p class="note">Each example creates a real starter packet with unknowns preserved as blockers.</p>
+  <div class="grid">{example_forms}</div>
 </section>
 """
     return _render_page("Start Trade Readiness", body)
@@ -1400,6 +1513,17 @@ def _render_public_result(workflow: dict[str, Any], packet: dict[str, Any]) -> s
         "</tr>"
         for lane in packet.get("readiness_lanes", [])
     )
+    document_rows = "".join(
+        "<tr>"
+        f"<td>{escape(str(evidence.get('title')))}</td>"
+        f"<td>{escape(str(evidence.get('document_processing_mode') or evidence.get('extraction_status') or 'metadata_only'))}</td>"
+        f"<td>{escape(str(evidence.get('extraction_confidence') or 'unknown'))}</td>"
+        f"<td>{escape(str((evidence.get('cost_estimate') or {}).get('estimated_credits', 0)))}</td>"
+        f"<td>{escape(str((evidence.get('ocr_blocker') or {}).get('status') or 'not_required'))}</td>"
+        "</tr>"
+        for evidence in packet.get("evidence_items", [])
+        if evidence.get("evidence_type") == "customer_uploaded_document"
+    )
     missing = _list_items(packet.get("evidence_summary", {}).get("missing_items", []))
     questions = _list_items(packet.get("buyer_broker_questions", []))
     actions = f"""
@@ -1431,12 +1555,18 @@ def _render_public_result(workflow: dict[str, Any], packet: dict[str, Any]) -> s
   <div class="metric"><div class="label">Evidence</div><div class="value">{escape(str(packet.get('evidence_summary', {}).get('summary')))}</div></div>
   <div class="metric"><div class="label">Next valid move</div><div class="value">{escape(str(summary.get('next_valid_move')))}</div></div>
   <div class="metric"><div class="label">Confirmation</div><div class="value">{escape(str(packet.get('confirmation_status') or 'not_confirmed'))}</div></div>
+  <div class="metric"><div class="label">Shareable</div><div class="value">{escape(str(packet.get('shareable_status') or 'blocked_until_user_confirmation'))}</div></div>
   <div class="metric"><div class="label">Beginner mode</div><div class="value">{escape(str(packet.get('beginner_mode') or False))}</div></div>
 </section>
 <h2>Readiness Lanes</h2>
 <table>
   <thead><tr><th>Lane</th><th>Scope</th><th>Status</th><th>Next</th></tr></thead>
   <tbody>{lanes}</tbody>
+</table>
+<h2>Uploaded Document Triage</h2>
+<table>
+  <thead><tr><th>Document</th><th>Mode</th><th>Confidence</th><th>Estimated credits</th><th>OCR gate</th></tr></thead>
+  <tbody>{document_rows or '<tr><td colspan="5">No uploaded documents yet.</td></tr>'}</tbody>
 </table>
 <h2>Missing Evidence</h2>
 <ul>{missing}</ul>
@@ -1484,12 +1614,18 @@ def _render_public_confirm(workflow: dict[str, Any], packet: dict[str, Any]) -> 
         extracted = evidence.get("extracted_fields") or {}
         if not extracted:
             continue
+        confidence = evidence.get("field_confidence") or {}
+        notes = evidence.get("parser_notes") or []
+        ocr_blocker = evidence.get("ocr_blocker") or {}
         field_rows.append(
             "<tr>"
             f"<td>{escape(str(evidence.get('title')))}</td>"
-            f"<td>{escape(str(evidence.get('extraction_status') or evidence.get('ledger_status')))}</td>"
+            f"<td>{escape(str(evidence.get('extraction_status') or evidence.get('ledger_status')))}"
+            f"<br><small>{escape(str(ocr_blocker.get('status') or 'OCR not required'))}</small></td>"
             f"<td>{escape(str(evidence.get('extraction_confidence') or 'low'))}</td>"
-            f"<td>{escape(json.dumps(extracted, sort_keys=True))}</td>"
+            f"<td>{escape(json.dumps(extracted, sort_keys=True))}<br>"
+            f"<small>Field confidence: {escape(json.dumps(confidence, sort_keys=True))}</small><br>"
+            f"<small>Parser notes: {escape(', '.join(str(note) for note in notes) or 'none')}</small></td>"
             "</tr>"
         )
     body = f"""
@@ -1504,6 +1640,8 @@ def _render_public_confirm(workflow: dict[str, Any], packet: dict[str, Any]) -> 
       <div><label>HS code if known</label><input name="hs_code_value" value="{escape(str(packet.get('hs_code_value') or ''))}"></div>
       <div><label>Origin</label><input name="origin_country" value="{escape(str(packet.get('origin_country') or ''))}"></div>
       <div><label>Destination</label><input name="destination_country" value="{escape(str(packet.get('destination_country') or ''))}"></div>
+      <div><label>Buyer / importer name</label><input name="buyer_name" value="{escape(str(packet.get('buyer_name') or packet.get('importer_name') or ''))}"></div>
+      <div><label>Supplier / exporter name</label><input name="supplier_name" value="{escape(str(packet.get('supplier_name') or packet.get('exporter_name') or ''))}"></div>
       <div><label>Importer of record</label><select name="importer_of_record">{_select_options(["unknown", "buyer", "importer", "exporter", "broker"], str(packet.get('importer_of_record') or 'unknown'))}</select></div>
       <div><label>Incoterms</label><select name="incoterms_if_known">{_select_options(["unknown", "EXW", "FOB", "CIF", "DAP", "DDP"], str(packet.get('incoterms_if_known') or 'unknown'))}</select></div>
     </div>
@@ -2746,6 +2884,7 @@ def build_operator_app_handler(repo_root: Path) -> type[BaseHTTPRequestHandler]:
             upload_dir.mkdir(parents=True, exist_ok=True)
             saved_files: list[dict[str, Any]] = []
             evidence_rows: list[dict[str, Any]] = []
+            audit_events: list[dict[str, Any]] = []
             for index, file in enumerate(pdf_files, start=1):
                 original_filename = _safe_filename(str(file["filename"]))
                 filename = f"document-{index:03d}.pdf"
@@ -2758,6 +2897,51 @@ def build_operator_app_handler(repo_root: Path) -> type[BaseHTTPRequestHandler]:
                 saved_path.write_bytes(content)
                 document_type = fields.get("document_type") or original_filename.rsplit(".", 1)[0].replace("-", " ").replace("_", " ")
                 relative_path = saved_path.relative_to(repo_root).as_posix()
+                triage_fields = triage.get("extracted_fields") or {}
+                field_confidence = triage.get("field_confidence") or {}
+                ocr_required = bool(triage.get("ocr_required"))
+                audit_base = {
+                    "packet_id": packet_id,
+                    "organization_id": packet_org_id(packet),
+                    "actor_type": "customer",
+                    "actor_user_id": actor.get("id"),
+                    "entity_type": "PublicUpload",
+                    "entity_id": f"{packet_id}:{filename}",
+                    "ip_address": "local-dev",
+                    "user_agent": self.headers.get("User-Agent") or "local-app",
+                    "created_at": now.isoformat(),
+                }
+                audit_events.extend(
+                    [
+                        {
+                            **audit_base,
+                            "event_id": f"{packet_id}:{filename}:public_upload_received:{now.isoformat()}",
+                            "event_type": "public_upload_received",
+                            "after_json": {
+                                "original_filename": original_filename,
+                                "generated_filename": filename,
+                                "size_bytes": len(content),
+                            },
+                        },
+                        {
+                            **audit_base,
+                            "event_id": f"{packet_id}:{filename}:public_pdf_triaged:{now.isoformat()}",
+                            "event_type": "public_pdf_triaged",
+                            "after_json": {
+                                "extraction_status": triage["extraction_status"],
+                                "document_processing_mode": triage["document_processing_mode"],
+                                "parse_confidence_score": triage["parse_confidence_score"],
+                                "ocr_required": ocr_required,
+                            },
+                        },
+                        {
+                            **audit_base,
+                            "event_id": f"{packet_id}:{filename}:public_upload_quarantined:{now.isoformat()}",
+                            "event_type": "public_upload_quarantined",
+                            "after_json": {"relative_path": relative_path, "direct_file_serving": False},
+                        },
+                    ]
+                )
                 saved_files.append(
                     {
                         "filename": filename,
@@ -2768,8 +2952,17 @@ def build_operator_app_handler(repo_root: Path) -> type[BaseHTTPRequestHandler]:
                         "sha256": triage["sha256"],
                         "extraction_status": triage["extraction_status"],
                         "extraction_confidence": triage["extraction_confidence"],
+                        "parse_confidence_score": triage["parse_confidence_score"],
                         "has_native_text": triage["has_native_text"],
+                        "document_processing_mode": triage["document_processing_mode"],
+                        "page_count_estimate": triage["page_count_estimate"],
+                        "page_count_source": triage["page_count_source"],
+                        "ocr_required": ocr_required,
                         "ocr_recommended": triage["ocr_recommended"],
+                        "ocr_blocker": triage["ocr_blocker"],
+                        "cost_estimate": triage["cost_estimate"],
+                        "parser_notes": triage["parser_notes"],
+                        "field_confidence": field_confidence,
                         "user_confirmation_required": True,
                         "expires_at": expires_at,
                     }
@@ -2796,10 +2989,18 @@ def build_operator_app_handler(repo_root: Path) -> type[BaseHTTPRequestHandler]:
                         "storage_status": "quarantined_local_generated_name",
                         "direct_file_serving": False,
                         "page_count_estimate": triage["page_count_estimate"],
+                        "page_count_source": triage["page_count_source"],
                         "extraction_status": triage["extraction_status"],
                         "extraction_confidence": triage["extraction_confidence"],
+                        "parse_confidence_score": triage["parse_confidence_score"],
                         "has_native_text": triage["has_native_text"],
+                        "document_processing_mode": triage["document_processing_mode"],
+                        "ocr_required": ocr_required,
                         "ocr_recommended": triage["ocr_recommended"],
+                        "ocr_blocker": triage["ocr_blocker"],
+                        "cost_estimate": triage["cost_estimate"],
+                        "parser_notes": triage["parser_notes"],
+                        "field_confidence": field_confidence,
                         "native_text_excerpt": triage["native_text_excerpt"],
                         "user_confirmation_required": True,
                         "user_confirmed_at": "",
@@ -2813,7 +3014,7 @@ def build_operator_app_handler(repo_root: Path) -> type[BaseHTTPRequestHandler]:
                         "ai_processing_allowed": True,
                         "redaction_required": True,
                         "review_required": True,
-                        "human_review_status": "not_reviewed",
+                        "human_review_status": "ocr_required_before_field_extraction" if ocr_required else "not_reviewed",
                         "extracted_fields": {
                             "document_type": document_type,
                             "filename": filename,
@@ -2823,7 +3024,9 @@ def build_operator_app_handler(repo_root: Path) -> type[BaseHTTPRequestHandler]:
                             "buyer_or_importer": packet.get("buyer_name") or packet.get("importer_name"),
                             "origin_country": packet.get("origin_country"),
                             "destination_country": packet.get("destination_country"),
-                            "hs_code": packet.get("hs_code_value"),
+                            "hs_code": packet.get("hs_code_value") or triage_fields.get("hs_code"),
+                            "invoice_or_reference": triage_fields.get("invoice_or_reference") or "not_extracted",
+                            "country_mentions": triage_fields.get("country_mentions") or [],
                             "expiry_date": "not_extracted",
                             "signatures_or_stamps": "not_extracted_in_local_quick_check",
                         },
@@ -2836,9 +3039,34 @@ def build_operator_app_handler(repo_root: Path) -> type[BaseHTTPRequestHandler]:
             current_evidence.extend(evidence_rows)
             rebuilt = _write_customer_workflow(repo_root, packets, current_evidence)
             manifest_path = _public_upload_manifest_path(repo_root)
-            manifest = {"status": "public_upload_manifest_ready", "packets": []}
+            manifest = {
+                "status": "public_upload_manifest_ready",
+                "retention": "delete_route_or_24_hour_expiry",
+                "rate_limit": {
+                    "bucket": "public_quick_check",
+                    "limit": 6,
+                    "window_minutes": 10,
+                    "implementation_status": "local_policy_ready_hosted_enforcement_required",
+                },
+                "parser_sandbox": {
+                    "mode": "local_bounded_metadata_parser",
+                    "no_shell_execution": True,
+                    "no_network_fetch": True,
+                    "direct_file_serving": False,
+                },
+                "audit_event_types": [
+                    "public_upload_received",
+                    "public_pdf_triaged",
+                    "public_upload_quarantined",
+                    "public_fields_confirmed",
+                    "public_upload_deleted",
+                ],
+                "packets": [],
+            }
             if manifest_path.exists():
-                manifest = _load_json(manifest_path)
+                existing_manifest = _load_json(manifest_path)
+                if isinstance(existing_manifest, dict):
+                    manifest = {**manifest, **existing_manifest}
             manifest.setdefault("packets", [])
             manifest["packets"] = [row for row in manifest["packets"] if str(row.get("packet_id")) != packet_id]
             manifest["packets"].append(
@@ -2849,10 +3077,16 @@ def build_operator_app_handler(repo_root: Path) -> type[BaseHTTPRequestHandler]:
                     "file_count": len(saved_files),
                     "files": saved_files,
                     "delete_route": f"/api/public/packets/{packet_id}/delete-files",
+                    "parser_sandbox_status": "local_bounded_parser_complete",
+                    "rate_limit_bucket": "public_quick_check",
+                    "audit_events": [event["event_type"] for event in audit_events],
+                    "shareable_status": "blocked_until_user_confirmation",
                     "retention_notice": "Public quick-check uploads are local draft artifacts and should be deleted or expired after processing.",
                 }
             )
             write_json(manifest, manifest_path)
+            for event in audit_events:
+                self._append_audit(event)
             write_runtime_artifacts(repo_root, rebuilt)
             self.send_response(HTTPStatus.SEE_OTHER)
             self.send_header("Location", f"/public/packets/{packet_id}/result")
@@ -2868,6 +3102,7 @@ def build_operator_app_handler(repo_root: Path) -> type[BaseHTTPRequestHandler]:
                 self.send_error(HTTPStatus.NOT_FOUND, "Packet not found")
                 return
             if action == "delete-files":
+                now = datetime.now(timezone.utc).replace(microsecond=0).isoformat()
                 upload_dir = repo_root / "system_review_graph" / "public_uploads" / packet_id
                 if upload_dir.exists():
                     shutil.rmtree(upload_dir)
@@ -2875,12 +3110,26 @@ def build_operator_app_handler(repo_root: Path) -> type[BaseHTTPRequestHandler]:
                 if manifest_path.exists():
                     manifest = _load_json(manifest_path)
                     manifest["packets"] = [
-                        {**row, "deleted_at": datetime.now(timezone.utc).replace(microsecond=0).isoformat(), "files": []}
+                        {**row, "deleted_at": now, "files": []}
                         if str(row.get("packet_id")) == packet_id
                         else row
                         for row in manifest.get("packets", [])
                     ]
                     write_json(manifest, manifest_path)
+                self._append_audit(
+                    {
+                        "event_id": f"{packet_id}:public-upload-deleted:{now}",
+                        "packet_id": packet_id,
+                        "organization_id": packet_org_id(packet),
+                        "actor_type": "customer",
+                        "actor_user_id": "public_quick_check",
+                        "event_type": "public_upload_deleted",
+                        "entity_type": "PublicUpload",
+                        "entity_id": packet_id,
+                        "after_json": {"files_deleted": True, "external_effects_created": False},
+                        "created_at": now,
+                    }
+                )
                 self._send_json({"status": "public_upload_files_deleted", "packet_id": packet_id})
                 return
             if action == "refresh-official-sources":
@@ -2914,6 +3163,10 @@ def build_operator_app_handler(repo_root: Path) -> type[BaseHTTPRequestHandler]:
                                 "hs_code_value": fields.get("hs_code_value") or row.get("hs_code_value"),
                                 "origin_country": fields.get("origin_country") or row.get("origin_country"),
                                 "destination_country": fields.get("destination_country") or row.get("destination_country"),
+                                "buyer_name": fields.get("buyer_name") or row.get("buyer_name"),
+                                "importer_name": fields.get("buyer_name") or row.get("importer_name"),
+                                "supplier_name": fields.get("supplier_name") or row.get("supplier_name"),
+                                "exporter_name": fields.get("supplier_name") or row.get("exporter_name"),
                                 "importer_of_record": fields.get("importer_of_record") or row.get("importer_of_record"),
                                 "incoterms_if_known": fields.get("incoterms_if_known") or row.get("incoterms_if_known"),
                                 "confirmation_status": "user_confirmed_draft_fields",
@@ -2934,6 +3187,36 @@ def build_operator_app_handler(repo_root: Path) -> type[BaseHTTPRequestHandler]:
                     for row in evidence_rows
                 ]
                 rebuilt = _write_customer_workflow(repo_root, updated_packets, updated_evidence)
+                self._append_audit(
+                    {
+                        "event_id": f"{packet_id}:public-fields-confirmed:{now}",
+                        "packet_id": packet_id,
+                        "organization_id": packet_org_id(packet),
+                        "actor_type": "customer",
+                        "actor_user_id": "public_quick_check",
+                        "event_type": "public_fields_confirmed",
+                        "entity_type": "SourcePacket",
+                        "entity_id": packet_id,
+                        "after_json": {
+                            "confirmation_status": "user_confirmed_draft_fields",
+                            "fields": {
+                                key: fields.get(key)
+                                for key in (
+                                    "product_name",
+                                    "hs_code_value",
+                                    "origin_country",
+                                    "destination_country",
+                                    "buyer_name",
+                                    "supplier_name",
+                                    "importer_of_record",
+                                    "incoterms_if_known",
+                                )
+                            },
+                            "external_claims_opened": False,
+                        },
+                        "created_at": now,
+                    }
+                )
                 self._send_json({"status": "public_packet_fields_confirmed", "packet": _packet_lookup(rebuilt).get(packet_id)})
                 return
             self.send_error(HTTPStatus.NOT_FOUND, "Public packet action not found")

@@ -6,6 +6,7 @@ external reviewers.
 ## Commands
 
 ```bash
+python3 -m py_compile src/importer_source_readiness/*.py scripts/*.py
 python3 -m unittest discover -s tests -p 'test_*.py'
 python3 scripts/run_readiness.py
 python3 scripts/run_external_gates.py
@@ -62,6 +63,19 @@ startup_status=startup_in_progress
 unsafe_gates=closed
 ```
 
+Latest local run:
+
+```text
+python3 -m py_compile src/importer_source_readiness/*.py scripts/*.py
+python3 -m unittest discover -s tests -p 'test_*.py' -> 65 tests OK
+python3 scripts/run_policy_intelligence.py -> intelligence_hub_policy_monitor_ready_with_external_refresh_gates
+python3 scripts/run_completion_platform.py -> all_local_stages_implemented_with_external_gates
+python3 scripts/run_product_operations.py -> local_product_operations_executed, external_effects_created=false
+python3 scripts/audit_external_package.py --root . -> PASS
+python3 scripts/check_product.py -> PASS
+local app smoke on http://127.0.0.1:8767 -> home/start/trade-check/opportunities/country-coverage/transport/pricing/agent-api/workspace/expert/launch/health all 200
+```
+
 Latest local proof also verifies customer packet prototype status, grouped
 blockers, evidence quality, AI simulated review runs, scoped expert-review
 requests, AI data policy, model routing, redaction previews, no-AI/manual
@@ -77,6 +91,13 @@ fail-closed export-to-Canada claims. It also verifies opportunity-signal
 research gates, country coverage tiers, transport question packets,
 no-live-checkout billing controls, scoped agent/API rules, traffic-first page
 contracts, and the public pages/API routes that expose those artifacts.
+The latest hardening pass adds focused tests for dependency-free PDF native
+text extraction, OCR_REQUIRED scanned-PDF routing, encrypted/invalid PDF
+blocking, public upload rejection paths, user confirmation validation, scoped
+expert finding submission, package-audit secret/missing-artifact failures,
+scheduled source-monitor permissions, upload audit events, parser sandbox
+policy, billing metering dimensions, agent/API confirmation rules, and
+beginner example starts that create real packets with unknowns preserved.
 The latest proof also verifies all locally implementable stages plus real local
 operation execution: data intake snapshot, official-source refresh/research
 run, missing-evidence report generation, starter checklist generation,

@@ -5,15 +5,49 @@
     "confirmed_surplus",
     "buyer_validated"
   ],
-  "generated_at": "2026-06-26T10:46:45+00:00",
+  "confidence_fields": [
+    "coverage_tier",
+    "source_provenance_count",
+    "evidence_confidence",
+    "market_confidence",
+    "logistics_confidence",
+    "claim_confidence"
+  ],
+  "create_packet_api_hint": {
+    "external_effects_allowed": false,
+    "method": "POST",
+    "requires_confirmation": true,
+    "route": "/api/agent-tools/create_trade_packet",
+    "tool": "create_trade_packet"
+  },
+  "create_packet_route": "/packets/new",
+  "generated_at": "2026-06-26T11:49:42+00:00",
   "proof_boundary": "Opportunity rows are signals and research prompts only, not recommendations, demand proof, margin proof, or buyer validation.",
   "signal_count": 1,
   "signals": [
     {
       "buyer_validation": "missing",
       "category": "food_import",
+      "confidence": {
+        "claim_confidence": "blocked_until_buyer_source_logistics_and_expert_evidence",
+        "confidence_reason": "Local packet and source references can seed research, but no buyer, demand, margin, route, or qualified-review evidence is attached.",
+        "coverage_tier": 1,
+        "evidence_confidence": "reference_only",
+        "logistics_confidence": "unknown_requires_forwarder_inputs",
+        "market_confidence": "unknown_requires_external_research",
+        "source_provenance_count": 10
+      },
+      "confidence_level": "low",
       "country": "Canada",
       "coverage_confidence": 1,
+      "create_packet_hint": {
+        "agent_tool": "create_trade_packet",
+        "api_route": "/api/agent-tools/create_trade_packet",
+        "claim_gate_can_open": false,
+        "external_effects_allowed": false,
+        "method": "POST",
+        "route": "/packets/new"
+      },
       "demand_signal": "unknown_requires_external_research",
       "direction": "import",
       "next_step": "create or continue readiness packet; collect real buyer, demand, source, and logistics evidence.",
@@ -22,6 +56,109 @@
       "recommendation_claim": "blocked",
       "requirements_complexity": "high",
       "signal_id": "opportunity:packet-frozen-tuna-canada-001",
+      "source_provenance": [
+        {
+          "accessed_at": null,
+          "claim_boundary": "Packet source is orientation only; it does not prove demand, supplier fit, tariff, compliance, or shipment readiness.",
+          "evidence_role": "customer packet source reference",
+          "jurisdiction": "Canada",
+          "name": "official_reference",
+          "provenance_type": "packet_source_reference",
+          "source_id": "official_reference",
+          "url": "https://ised-isde.canada.ca/site/ised/en/research-and-business-intelligence/canadian-importers-database"
+        },
+        {
+          "accessed_at": "2026-06-25",
+          "claim_boundary": "Reference source only; does not prove CARM registration, accounting setup, duty payment readiness, or customs advice.",
+          "evidence_role": "commercial importer duty and tax account workflow",
+          "jurisdiction": "Canada",
+          "name": "CBSA Assessment and Revenue Management (CARM)",
+          "provenance_type": "official_source_registry",
+          "source_id": "cbsa-carm",
+          "url": "https://www.cbsa-asfc.gc.ca/services/carm-gcra/menu-eng.html"
+        },
+        {
+          "accessed_at": "2026-06-25",
+          "claim_boundary": "Reference source only; does not replace CBSA, broker, customs, or legal review.",
+          "evidence_role": "commercial import process orientation",
+          "jurisdiction": "Canada",
+          "name": "CBSA Import Commercial Goods Into Canada",
+          "provenance_type": "official_source_registry",
+          "source_id": "cbsa-import-commercial-goods",
+          "url": "https://www.cbsa-asfc.gc.ca/import/menu-eng.html"
+        },
+        {
+          "accessed_at": "2026-06-25",
+          "claim_boundary": "Reference source only; classification and tariff treatment require qualified review.",
+          "evidence_role": "Canadian tariff classification starting point",
+          "jurisdiction": "Canada",
+          "name": "CBSA Customs Tariff 2026",
+          "provenance_type": "official_source_registry",
+          "source_id": "cbsa-customs-tariff-2026",
+          "url": "https://www.cbsa-asfc.gc.ca/trade-commerce/tariff-tarif/2026/menu-eng.html"
+        },
+        {
+          "accessed_at": "2026-06-25",
+          "claim_boundary": "Reference source only; product-specific food import compliance requires qualified review and source verification.",
+          "evidence_role": "CFIA-regulated commodity import requirement lookup",
+          "jurisdiction": "Canada",
+          "name": "CFIA Automated Import Reference System (AIRS)",
+          "provenance_type": "official_source_registry",
+          "source_id": "cfia-airs",
+          "url": "https://inspection.canada.ca/en/importing-food-plants-animals/airs"
+        },
+        {
+          "accessed_at": "2026-06-25",
+          "claim_boundary": "Reference source only; does not prove whether a specific product requires an import permit.",
+          "evidence_role": "import control and permit orientation",
+          "jurisdiction": "Canada",
+          "name": "Global Affairs Canada Import Controls and Import Permits",
+          "provenance_type": "official_source_registry",
+          "source_id": "gac-import-controls",
+          "url": "https://www.international.gc.ca/controls-controles/about-a_propos/impor/permits-licences.aspx?lang=eng"
+        },
+        {
+          "accessed_at": "2026-06-25",
+          "claim_boundary": "Reference source only; legal interpretation and product applicability require qualified review.",
+          "evidence_role": "legal reference for controlled imports",
+          "jurisdiction": "Canada",
+          "name": "Justice Laws Import Control List",
+          "provenance_type": "official_source_registry",
+          "source_id": "justice-import-control-list",
+          "url": "https://laws-lois.justice.gc.ca/eng/regulations/c.r.c.%2C_c._604/index.html"
+        },
+        {
+          "accessed_at": "2026-06-25",
+          "claim_boundary": "Reference source only; screening results require dated search records and reviewer signoff.",
+          "evidence_role": "restricted-party and sanctions screening source",
+          "jurisdiction": "Canada",
+          "name": "Global Affairs Canada Consolidated Canadian Autonomous Sanctions List",
+          "provenance_type": "official_source_registry",
+          "source_id": "canada-sanctions",
+          "url": "https://www.international.gc.ca/world-monde/international_relations-relations_internationales/sanctions/consolidated-consolide.aspx?lang=eng"
+        },
+        {
+          "accessed_at": "2026-06-25",
+          "claim_boundary": "Reference source only; does not prove market size, buyer demand, or revenue.",
+          "evidence_role": "Canadian trade data research source",
+          "jurisdiction": "Canada",
+          "name": "ISED Trade Data Online",
+          "provenance_type": "official_source_registry",
+          "source_id": "ised-trade-data-online",
+          "url": "https://ised-isde.canada.ca/site/trade-data-online/en/overview"
+        },
+        {
+          "accessed_at": "2026-06-25",
+          "claim_boundary": "Reference source only; does not prove a broker relationship, review, or signoff.",
+          "evidence_role": "qualified broker discovery source",
+          "jurisdiction": "Canada",
+          "name": "CBSA Licensed Customs Brokers",
+          "provenance_type": "official_source_registry",
+          "source_id": "cbsa-licensed-customs-brokers",
+          "url": "https://www.cbsa-asfc.gc.ca/services/cb-cd/cb-cd-eng.html"
+        }
+      ],
+      "source_provenance_count": 10,
       "supply_or_surplus_signal": "unknown_requires_external_research",
       "trade_growth_signal": "unknown_requires_dataset",
       "transport_complexity": "unknown_until_dimensions_mode_and_temperature_requirements_known",

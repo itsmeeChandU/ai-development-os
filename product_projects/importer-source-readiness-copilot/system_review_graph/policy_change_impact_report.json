@@ -39,10 +39,12 @@
         "official_reference"
       ],
       "change_type": "baseline_registered",
-      "classification_id": "classification:cbsa-carm:f50f8b1e956d",
+      "classification_id": "classification:cbsa-carm:051d957a3104",
       "human_review_required": true,
+      "live_fetch_allowed": false,
       "next_valid_move": "Run the live source loader, compare hashes, classify the diff, and route affected packets for qualified review.",
       "requires_packet_recheck": true,
+      "scheduled_fetch_job": "source-monitor:cbsa-carm:metadata-refresh",
       "severity": "watch",
       "source_id": "cbsa-carm"
     },
@@ -52,10 +54,12 @@
         "official_reference"
       ],
       "change_type": "baseline_registered",
-      "classification_id": "classification:cbsa-import-commercial-goods:fc6ae365b19c",
+      "classification_id": "classification:cbsa-import-commercial-goods:7b9a665f1826",
       "human_review_required": true,
+      "live_fetch_allowed": false,
       "next_valid_move": "Run the live source loader, compare hashes, classify the diff, and route affected packets for qualified review.",
       "requires_packet_recheck": true,
+      "scheduled_fetch_job": "source-monitor:cbsa-import-commercial-goods:metadata-refresh",
       "severity": "watch",
       "source_id": "cbsa-import-commercial-goods"
     },
@@ -65,10 +69,12 @@
         "tariff"
       ],
       "change_type": "baseline_registered",
-      "classification_id": "classification:cbsa-customs-tariff-2026:c8555bf68f2b",
+      "classification_id": "classification:cbsa-customs-tariff-2026:ee60c236f481",
       "human_review_required": true,
+      "live_fetch_allowed": false,
       "next_valid_move": "Run the live source loader, compare hashes, classify the diff, and route affected packets for qualified review.",
       "requires_packet_recheck": true,
+      "scheduled_fetch_job": "source-monitor:cbsa-customs-tariff-2026:metadata-refresh",
       "severity": "watch",
       "source_id": "cbsa-customs-tariff-2026"
     },
@@ -78,10 +84,12 @@
         "official_reference"
       ],
       "change_type": "baseline_registered",
-      "classification_id": "classification:cfia-airs:922aab95bfb0",
+      "classification_id": "classification:cfia-airs:774c8ca5e418",
       "human_review_required": true,
+      "live_fetch_allowed": false,
       "next_valid_move": "Run the live source loader, compare hashes, classify the diff, and route affected packets for qualified review.",
       "requires_packet_recheck": true,
+      "scheduled_fetch_job": "source-monitor:cfia-airs:metadata-refresh",
       "severity": "watch",
       "source_id": "cfia-airs"
     },
@@ -92,10 +100,12 @@
         "official_reference"
       ],
       "change_type": "baseline_registered",
-      "classification_id": "classification:gac-import-controls:52f681ce523d",
+      "classification_id": "classification:gac-import-controls:e3769ed4e668",
       "human_review_required": true,
+      "live_fetch_allowed": false,
       "next_valid_move": "Run the live source loader, compare hashes, classify the diff, and route affected packets for qualified review.",
       "requires_packet_recheck": true,
+      "scheduled_fetch_job": "source-monitor:gac-import-controls:metadata-refresh",
       "severity": "watch",
       "source_id": "gac-import-controls"
     },
@@ -105,10 +115,12 @@
         "official_reference"
       ],
       "change_type": "baseline_registered",
-      "classification_id": "classification:justice-import-control-list:bfb42aa2c0bf",
+      "classification_id": "classification:justice-import-control-list:decae43c34aa",
       "human_review_required": true,
+      "live_fetch_allowed": false,
       "next_valid_move": "Run the live source loader, compare hashes, classify the diff, and route affected packets for qualified review.",
       "requires_packet_recheck": true,
+      "scheduled_fetch_job": "source-monitor:justice-import-control-list:metadata-refresh",
       "severity": "watch",
       "source_id": "justice-import-control-list"
     },
@@ -119,10 +131,12 @@
         "restricted_party_screening"
       ],
       "change_type": "baseline_registered",
-      "classification_id": "classification:canada-sanctions:d38bc1bb6a8d",
+      "classification_id": "classification:canada-sanctions:e6de68515aaa",
       "human_review_required": true,
+      "live_fetch_allowed": false,
       "next_valid_move": "Run the live source loader, compare hashes, classify the diff, and route affected packets for qualified review.",
       "requires_packet_recheck": true,
+      "scheduled_fetch_job": "source-monitor:canada-sanctions:metadata-refresh",
       "severity": "watch",
       "source_id": "canada-sanctions"
     },
@@ -133,10 +147,12 @@
         "trade_data"
       ],
       "change_type": "baseline_registered",
-      "classification_id": "classification:ised-trade-data-online:4391511466c4",
+      "classification_id": "classification:ised-trade-data-online:a42858d26d37",
       "human_review_required": true,
+      "live_fetch_allowed": false,
       "next_valid_move": "Run the live source loader, compare hashes, classify the diff, and route affected packets for qualified review.",
       "requires_packet_recheck": true,
+      "scheduled_fetch_job": "source-monitor:ised-trade-data-online:metadata-refresh",
       "severity": "watch",
       "source_id": "ised-trade-data-online"
     },
@@ -147,10 +163,12 @@
         "trade_data"
       ],
       "change_type": "baseline_registered",
-      "classification_id": "classification:canada-cid:e0cdb6464d90",
+      "classification_id": "classification:canada-cid:bc87c47aa027",
       "human_review_required": true,
+      "live_fetch_allowed": false,
       "next_valid_move": "Run the live source loader, compare hashes, classify the diff, and route affected packets for qualified review.",
       "requires_packet_recheck": true,
+      "scheduled_fetch_job": "source-monitor:canada-cid:metadata-refresh",
       "severity": "watch",
       "source_id": "canada-cid"
     },
@@ -160,10 +178,12 @@
         "official_reference"
       ],
       "change_type": "baseline_registered",
-      "classification_id": "classification:cbsa-licensed-customs-brokers:f2ddb97717b5",
+      "classification_id": "classification:cbsa-licensed-customs-brokers:3f1645674a9a",
       "human_review_required": true,
+      "live_fetch_allowed": false,
       "next_valid_move": "Run the live source loader, compare hashes, classify the diff, and route affected packets for qualified review.",
       "requires_packet_recheck": true,
+      "scheduled_fetch_job": "source-monitor:cbsa-licensed-customs-brokers:metadata-refresh",
       "severity": "watch",
       "source_id": "cbsa-licensed-customs-brokers"
     }

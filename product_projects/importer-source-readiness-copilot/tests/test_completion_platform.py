@@ -50,24 +50,78 @@ class CompletionPlatformTests(unittest.TestCase):
             self.assertEqual(signal["opportunity_signal"], "possible opportunity signal")
             self.assertEqual(signal["recommendation_claim"], "blocked")
             self.assertEqual(signal["buyer_validation"], "missing")
+            self.assertGreaterEqual(signal["source_provenance_count"], 1)
+            self.assertEqual(signal["source_provenance_count"], len(signal["source_provenance"]))
+            self.assertIn("claim_boundary", signal["source_provenance"][0])
+            self.assertIn("coverage_tier", signal["confidence"])
+            self.assertEqual(signal["confidence"]["market_confidence"], "unknown_requires_external_research")
+            self.assertEqual(signal["confidence"]["claim_confidence"], "blocked_until_buyer_source_logistics_and_expert_evidence")
+            self.assertEqual(signal["create_packet_hint"]["route"], "/packets/new")
+            self.assertEqual(signal["create_packet_hint"]["api_route"], "/api/agent-tools/create_trade_packet")
+            self.assertFalse(signal["create_packet_hint"]["external_effects_allowed"])
+        self.assertEqual(payload["opportunity_scanner"]["create_packet_route"], "/packets/new")
+        self.assertEqual(payload["opportunity_scanner"]["create_packet_api_hint"]["tool"], "create_trade_packet")
+        self.assertIn("source_provenance_count", payload["opportunity_scanner"]["confidence_fields"])
 
         canada = next(row for row in payload["country_coverage"]["countries"] if row["country"] == "Canada")
+        self.assertEqual([row["tier"] for row in payload["country_coverage"]["tier_definitions"]], [0, 1, 2, 3, 4, 5])
+        self.assertEqual(payload["country_coverage"]["country_specific_claim_policy"]["default"], "blocked")
+        self.assertEqual(payload["country_coverage"]["country_specific_claim_policy"]["allowed_only_at_tier"], 5)
         self.assertFalse(canada["can_make_country_specific_claims"])
         self.assertGreaterEqual(canada["coverage_tier"], 1)
+        self.assertEqual(canada["country_specific_claim_gate"]["status"], "blocked_unsupported_country_specific_claims")
+        self.assertIn("customs_or_tariff_correctness", canada["unsupported_country_specific_claims"])
+        packet_coverage = payload["country_coverage"]["packet_coverage"][0]
+        self.assertFalse(packet_coverage["can_make_country_specific_claims"])
+        self.assertIn("tariff_confirmed", packet_coverage["blocked_country_specific_claims"])
 
         transport_row = payload["transport_readiness"]["rows"][0]
         self.assertIn("forwarder", transport_row["missing_transport_inputs"])
+        self.assertIn("Incoterms or delivery responsibility", transport_row["missing_transport_inputs"])
+        self.assertIn("weight and dimensions", transport_row["missing_transport_inputs"])
+        self.assertIn("commercial invoice", transport_row["missing_transport_inputs"])
+        self.assertIn("cold-chain requirement", transport_row["missing_transport_inputs"])
+        self.assertIn("dangerous goods declaration", transport_row["missing_transport_inputs"])
+        self.assertEqual(transport_row["shipment_profile"]["incoterms"], "unknown")
+        self.assertEqual(transport_row["shipment_profile"]["commercial_invoice_status"], "missing")
+        section_ids = {row["section_id"] for row in transport_row["freight_forwarder_packet_sections"]}
+        self.assertIn("incoterms_and_responsibility", section_ids)
+        self.assertIn("mode_route_ports", section_ids)
+        self.assertIn("weight_dimensions_packaging", section_ids)
+        self.assertIn("commercial_invoice_and_packing_list", section_ids)
+        self.assertIn("cold_chain_and_dangerous_goods", section_ids)
+        self.assertIn("forwarder_quote_packet", section_ids)
         self.assertIn("shipment_ready", payload["transport_readiness"]["blocked_claims"])
 
         billing = payload["billing_credit_controls"]
         self.assertFalse(billing["live_checkout_enabled"])
         self.assertTrue(any(row["free_plan_behavior"] == "blocked_requires_upgrade" for row in billing["billable_actions"]))
+        metering = {row["id"] for row in billing["metering_dimensions"]}
+        self.assertGreaterEqual(
+            metering,
+            {"ocr_pages", "ai_jobs", "report_exports", "source_monitoring", "agent_api_calls"},
+        )
+        action_map = {row["action"]: row for row in billing["billable_actions"]}
+        self.assertEqual(action_map["ocr_page"]["metering_category"], "ocr_pages")
+        self.assertEqual(action_map["ai_extraction"]["metering_category"], "ai_jobs")
+        self.assertEqual(action_map["report_export"]["metering_category"], "report_exports")
+        self.assertEqual(action_map["source_monitoring"]["metering_category"], "source_monitoring")
+        self.assertEqual(action_map["agent_api_call"]["metering_category"], "agent_api_calls")
+        self.assertTrue(action_map["ai_extraction"]["requires_pre_authorization"])
+        self.assertEqual(billing["heavy_job_policy"]["status"], "heavy_jobs_blocked_without_authorization")
 
         agent = payload["agent_api_manifest"]
         forbidden = set(agent["forbidden_tools"])
         self.assertIn("approve_import", forbidden)
         self.assertIn("confirm_tariff", forbidden)
+        self.assertIn("confirm_cfia_clearance", forbidden)
+        self.assertIn("send_email_or_external_message", forbidden)
         self.assertTrue(all(row["can_open_claim_gate"] is False for row in agent["allowed_tools"]))
+        self.assertTrue(all(row["audit_event_required"] is True for row in agent["allowed_tools"]))
+        self.assertTrue(any(row["requires_confirmation"] for row in agent["allowed_tools"]))
+        self.assertTrue(agent["audit_rules"])
+        self.assertTrue(agent["confirmation_rules"])
+        self.assertTrue(agent["scope_rules"])
         self.assertGreaterEqual(len(payload["traffic_pages_manifest"]["pages"]), 10)
         self.assertTrue(payload["launch_operations"]["private_beta_entry"]["local_product_ready"])
         self.assertFalse(payload["launch_operations"]["private_beta_entry"]["public_launch_allowed"])

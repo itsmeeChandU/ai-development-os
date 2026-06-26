@@ -22,49 +22,183 @@ def _category(packet: dict[str, Any]) -> str:
     return str(packet.get("product_category") or "general_trade").strip() or "general_trade"
 
 
+def _country(value: Any) -> str:
+    text = str(value or "Generic").strip() or "Generic"
+    return {
+        "CA": "Canada",
+        "CAN": "Canada",
+        "US": "United States",
+        "USA": "United States",
+        "UK": "United Kingdom",
+        "GB": "United Kingdom",
+    }.get(text, text)
+
+
+def _coverage_level_definitions() -> list[dict[str, Any]]:
+    return [
+        {
+            "tier": 0,
+            "label": "selectable only",
+            "support": "Country can be selected in generic product flows only.",
+            "country_specific_claims_allowed": False,
+            "minimum_evidence": "No country-specific source coverage.",
+        },
+        {
+            "tier": 1,
+            "label": "generic starter checklist",
+            "support": "Generic import/export checklist language may be shown.",
+            "country_specific_claims_allowed": False,
+            "minimum_evidence": "Country appears in a packet but lacks monitored official sources.",
+        },
+        {
+            "tier": 2,
+            "label": "reference sources catalogued",
+            "support": "Reference sources can orient research, with claim gates closed.",
+            "country_specific_claims_allowed": False,
+            "minimum_evidence": "At least one official or official-adjacent source is catalogued.",
+        },
+        {
+            "tier": 3,
+            "label": "monitored sources",
+            "support": "Multiple official sources are tracked for internal review prompts.",
+            "country_specific_claims_allowed": False,
+            "minimum_evidence": "Multiple official sources are recorded with access dates.",
+        },
+        {
+            "tier": 4,
+            "label": "category template support",
+            "support": "Category-specific templates can be prepared for expert review.",
+            "country_specific_claims_allowed": False,
+            "minimum_evidence": "Country, category, and route templates are maintained.",
+        },
+        {
+            "tier": 5,
+            "label": "expert-reviewed templates",
+            "support": "Expert-reviewed templates may support scoped country-specific product copy.",
+            "country_specific_claims_allowed": True,
+            "minimum_evidence": "Current official sources, category templates, and qualified review are attached.",
+        },
+    ]
+
+
+def _coverage_label_map() -> dict[int, str]:
+    return {row["tier"]: row["label"] for row in _coverage_level_definitions()}
+
+
+def _coverage_tier(country: str, source_count: int) -> int:
+    if country in {"", "Generic"}:
+        return 0
+    if source_count >= 5:
+        return 3
+    if source_count > 0:
+        return 2
+    return 1
+
+
+def _source_summary(source: dict[str, Any], *, provenance_type: str = "official_source_registry") -> dict[str, Any]:
+    return {
+        "provenance_type": provenance_type,
+        "source_id": source.get("id"),
+        "name": source.get("name"),
+        "url": source.get("url"),
+        "jurisdiction": _country(source.get("jurisdiction")),
+        "accessed_at": source.get("accessed_at"),
+        "evidence_role": source.get("evidence_role"),
+        "claim_boundary": source.get("claim_boundary"),
+    }
+
+
+def _source_provenance(packet: dict[str, Any], official_sources: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    packet_url = str(packet.get("source_url") or "").strip()
+    countries = {
+        _country(packet.get("origin_country")),
+        _country(packet.get("destination_country")),
+        _country(packet.get("supplier_country")),
+    }
+    provenance: list[dict[str, Any]] = []
+    seen: set[str] = set()
+    if packet_url:
+        provenance.append(
+            {
+                "provenance_type": "packet_source_reference",
+                "source_id": packet.get("source_type") or "packet_source",
+                "name": packet.get("source_type") or "Packet source reference",
+                "url": packet_url,
+                "jurisdiction": _country(packet.get("destination_country")),
+                "accessed_at": packet.get("created_at"),
+                "evidence_role": "customer packet source reference",
+                "claim_boundary": "Packet source is orientation only; it does not prove demand, supplier fit, tariff, compliance, or shipment readiness.",
+            }
+        )
+        seen.add(packet_url)
+    for source in official_sources:
+        url = str(source.get("url") or "")
+        jurisdiction = _country(source.get("jurisdiction"))
+        if url in seen:
+            continue
+        if url == packet_url or jurisdiction in countries or jurisdiction == "Generic":
+            provenance.append(_source_summary(source))
+            seen.add(url)
+    return provenance
+
+
 def build_country_coverage(workflow: dict[str, Any], official_sources: list[dict[str, Any]]) -> dict[str, Any]:
     countries = sorted(
         {
-            str(packet.get(key))
+            _country(packet.get(key))
             for packet in workflow.get("packets", [])
             for key in ("origin_country", "destination_country")
             if packet.get(key)
         }
         | {"Canada", "India", "United States", "United Kingdom", "Generic"}
     )
-    source_count_by_country: dict[str, int] = {}
+    sources_by_country: dict[str, list[dict[str, Any]]] = {}
     for source in official_sources:
-        jurisdiction = str(source.get("jurisdiction") or "Generic")
-        country = "Canada" if jurisdiction in {"CA", "Canada"} else jurisdiction
-        source_count_by_country[country] = source_count_by_country.get(country, 0) + 1
+        country = _country(source.get("jurisdiction"))
+        sources_by_country.setdefault(country, []).append(source)
     rows = []
+    labels = _coverage_label_map()
     for country in countries:
-        count = source_count_by_country.get(country, 0)
-        tier = 3 if country == "Canada" and count >= 5 else 1 if country not in {"", "Generic"} else 0
+        country_sources = sources_by_country.get(country, [])
+        count = len(country_sources)
+        tier = _coverage_tier(country, count)
+        country_specific_allowed = tier >= 5
         rows.append(
             {
                 "country": country,
                 "coverage_tier": tier,
-                "coverage_label": {
-                    0: "selectable only",
-                    1: "generic starter checklist",
-                    2: "reference sources catalogued",
-                    3: "monitored sources",
-                    4: "category template support",
-                    5: "expert-reviewed templates",
-                }[tier],
+                "coverage_label": labels[tier],
                 "source_count": count,
-                "can_make_country_specific_claims": False,
-                "next_valid_move": "Add monitored official sources and expert-reviewed templates before country-specific claims.",
+                "source_provenance": [_source_summary(source) for source in country_sources],
+                "can_make_country_specific_claims": country_specific_allowed,
+                "claim_scope_allowed": "country_specific_template_copy" if country_specific_allowed else "generic_readiness_only",
+                "unsupported_country_specific_claims": [
+                    "customs_or_tariff_correctness",
+                    "country_rules_current",
+                    "permit_or_license_required",
+                    "food_or_regulated_product_clearance",
+                    "shipment_or_import_ready",
+                ],
+                "country_specific_claim_gate": {
+                    "status": "blocked_unsupported_country_specific_claims"
+                    if not country_specific_allowed
+                    else "allowed_only_inside_expert_reviewed_template_scope",
+                    "required_tier": 5,
+                    "qualified_review_required": True,
+                    "current_source_refresh_required": True,
+                    "external_claims_opened": False,
+                },
+                "next_valid_move": "Add current monitored official sources, category templates, and qualified review before country-specific claims.",
             }
         )
     packet_rows = []
     for packet in workflow.get("packets", []):
-        origin = str(packet.get("origin_country") or "Generic")
-        destination = str(packet.get("destination_country") or "Generic")
+        origin = _country(packet.get("origin_country"))
+        destination = _country(packet.get("destination_country"))
         origin_tier = next((row["coverage_tier"] for row in rows if row["country"] == origin), 1)
         destination_tier = next((row["coverage_tier"] for row in rows if row["country"] == destination), 1)
         effective = min(origin_tier, destination_tier)
+        country_specific_allowed = effective >= 5
         packet_rows.append(
             {
                 "packet_id": packet.get("packet_id"),
@@ -72,7 +206,18 @@ def build_country_coverage(workflow: dict[str, Any], official_sources: list[dict
                 "destination_country": destination,
                 "product_category": _category(packet),
                 "effective_coverage_tier": effective,
-                "coverage_status": "country_specific_claims_blocked",
+                "coverage_label": labels.get(effective, "unknown"),
+                "coverage_status": "country_specific_claims_allowed_scoped"
+                if country_specific_allowed
+                else "country_specific_claims_blocked",
+                "can_make_country_specific_claims": country_specific_allowed,
+                "blocked_country_specific_claims": [
+                    "tariff_confirmed",
+                    "customs_process_current",
+                    "country_requirements_complete",
+                    "regulated_product_clearance",
+                    "import_or_export_approved",
+                ],
                 "next_valid_move": "Use generic readiness output unless both countries and category have monitored/expert-reviewed coverage.",
             }
         )
@@ -80,12 +225,15 @@ def build_country_coverage(workflow: dict[str, Any], official_sources: list[dict
         "generated_at": _now(),
         "status": "country_coverage_ready_with_claim_gates",
         "coverage_levels": {
-            "0": "selectable only",
-            "1": "generic starter checklist",
-            "2": "reference sources catalogued",
-            "3": "monitored sources",
-            "4": "category template support",
-            "5": "expert-reviewed templates",
+            str(row["tier"]): row["label"] for row in _coverage_level_definitions()
+        },
+        "tier_definitions": _coverage_level_definitions(),
+        "country_specific_claim_policy": {
+            "default": "blocked",
+            "allowed_only_at_tier": 5,
+            "requires_current_sources": True,
+            "requires_qualified_review": True,
+            "unsupported_claim_behavior": "block_and_emit_next_valid_move",
         },
         "countries": rows,
         "packet_coverage": packet_rows,
@@ -93,7 +241,12 @@ def build_country_coverage(workflow: dict[str, Any], official_sources: list[dict
     }
 
 
-def build_opportunity_scanner(workflow: dict[str, Any], coverage: dict[str, Any]) -> dict[str, Any]:
+def build_opportunity_scanner(
+    workflow: dict[str, Any],
+    coverage: dict[str, Any],
+    official_sources: list[dict[str, Any]] | None = None,
+) -> dict[str, Any]:
+    official_sources = official_sources or []
     rows = []
     for packet in workflow.get("packets", []):
         category = _category(packet)
@@ -102,6 +255,17 @@ def build_opportunity_scanner(workflow: dict[str, Any], coverage: dict[str, Any]
             {},
         )
         complexity = "high" if any(word in category.lower() for word in ("food", "health", "animal", "plant", "seafood")) else "medium"
+        provenance = _source_provenance(packet, official_sources)
+        coverage_tier = int(coverage_row.get("effective_coverage_tier") or 0)
+        confidence_level = "medium" if coverage_tier >= 3 and provenance else "low"
+        create_packet_hint = {
+            "route": "/packets/new",
+            "api_route": "/api/agent-tools/create_trade_packet",
+            "agent_tool": "create_trade_packet",
+            "method": "POST",
+            "external_effects_allowed": False,
+            "claim_gate_can_open": False,
+        }
         rows.append(
             {
                 "signal_id": f"opportunity:{packet.get('packet_id')}",
@@ -116,7 +280,20 @@ def build_opportunity_scanner(workflow: dict[str, Any], coverage: dict[str, Any]
                 "trend_signal": "unknown_requires_dataset",
                 "requirements_complexity": complexity,
                 "transport_complexity": "unknown_until_dimensions_mode_and_temperature_requirements_known",
-                "coverage_confidence": coverage_row.get("effective_coverage_tier", 0),
+                "coverage_confidence": coverage_tier,
+                "confidence_level": confidence_level,
+                "confidence": {
+                    "coverage_tier": coverage_tier,
+                    "source_provenance_count": len(provenance),
+                    "evidence_confidence": "reference_only",
+                    "market_confidence": "unknown_requires_external_research",
+                    "logistics_confidence": "unknown_requires_forwarder_inputs",
+                    "claim_confidence": "blocked_until_buyer_source_logistics_and_expert_evidence",
+                    "confidence_reason": "Local packet and source references can seed research, but no buyer, demand, margin, route, or qualified-review evidence is attached.",
+                },
+                "source_provenance": provenance,
+                "source_provenance_count": len(provenance),
+                "create_packet_hint": create_packet_hint,
                 "buyer_validation": "missing",
                 "recommendation_claim": "blocked",
                 "next_step": "create or continue readiness packet; collect real buyer, demand, source, and logistics evidence.",
@@ -127,6 +304,22 @@ def build_opportunity_scanner(workflow: dict[str, Any], coverage: dict[str, Any]
         "status": "opportunity_scanner_ready_with_research_gates",
         "signal_count": len(rows),
         "signals": rows,
+        "create_packet_route": "/packets/new",
+        "create_packet_api_hint": {
+            "route": "/api/agent-tools/create_trade_packet",
+            "tool": "create_trade_packet",
+            "method": "POST",
+            "requires_confirmation": True,
+            "external_effects_allowed": False,
+        },
+        "confidence_fields": [
+            "coverage_tier",
+            "source_provenance_count",
+            "evidence_confidence",
+            "market_confidence",
+            "logistics_confidence",
+            "claim_confidence",
+        ],
         "blocked_claims": ["guaranteed_demand", "profitable_product", "confirmed_surplus", "buyer_validated"],
         "proof_boundary": "Opportunity rows are signals and research prompts only, not recommendations, demand proof, margin proof, or buyer validation.",
     }
@@ -136,19 +329,100 @@ def build_transport_readiness(workflow: dict[str, Any]) -> dict[str, Any]:
     rows = []
     for packet in workflow.get("packets", []):
         missing = []
-        if str(packet.get("incoterms_if_known") or "unknown") == "unknown":
+        incoterms = str(packet.get("incoterms_if_known") or "").strip()
+        mode = str(packet.get("shipping_method") or packet.get("transport_mode") or "").strip()
+        weight = packet.get("gross_weight_kg") or packet.get("weight_kg") or packet.get("weight")
+        dimensions = packet.get("dimensions_cm") or packet.get("dimensions")
+        packing_list = packet.get("packing_list_received")
+        commercial_invoice = packet.get("commercial_invoice_received")
+        category = _category(packet).lower()
+        cold_chain_required = any(word in category for word in ("food", "seafood", "health", "medical"))
+        dangerous_goods_possible = any(word in category for word in ("chemical", "battery", "dangerous", "medical"))
+        if not incoterms or incoterms == "unknown":
             missing.append("Incoterms or delivery responsibility")
-        if not packet.get("shipping_method"):
+        if not mode:
             missing.append("Transport mode")
-        for item in ("dimensions/weight", "packing list", "insurance decision", "ports", "forwarder"):
+        if not weight or not dimensions:
+            missing.append("weight and dimensions")
+        if packing_list is not True:
+            missing.append("packing list")
+        if commercial_invoice is not True:
+            missing.append("commercial invoice")
+        for item in ("insurance decision", "ports", "forwarder"):
             missing.append(item)
-        if any(word in _category(packet).lower() for word in ("food", "seafood", "health")):
-            missing.append("Temperature/cold-chain requirement")
+        if cold_chain_required and not packet.get("temperature_requirement"):
+            missing.append("cold-chain requirement")
+        if dangerous_goods_possible or not packet.get("dangerous_goods_declaration"):
+            missing.append("dangerous goods declaration")
+        freight_forwarder_sections = [
+            {
+                "section_id": "incoterms_and_responsibility",
+                "title": "Incoterms and delivery responsibility",
+                "status": "missing" if not incoterms or incoterms == "unknown" else "provided_for_review",
+                "questions": ["Which Incoterms version and named place apply?", "Who is importer of record and who pays duty, freight, and insurance?"],
+            },
+            {
+                "section_id": "mode_route_ports",
+                "title": "Mode, route, ports, and transit constraints",
+                "status": "missing" if not mode else "provided_for_review",
+                "questions": ["Which mode is intended: ocean, air, road, rail, courier, or multimodal?", "Which origin/destination ports or terminals are planned?"],
+            },
+            {
+                "section_id": "weight_dimensions_packaging",
+                "title": "Weight, dimensions, packing, and palletization",
+                "status": "missing" if not weight or not dimensions or packing_list is not True else "provided_for_review",
+                "questions": ["What are gross weight, net weight, dimensions, carton count, pallet count, and packaging type?", "Does any wood packaging require ISPM 15 review?"],
+            },
+            {
+                "section_id": "commercial_invoice_and_packing_list",
+                "title": "Commercial invoice and packing list",
+                "status": "missing" if commercial_invoice is not True or packing_list is not True else "provided_for_review",
+                "questions": ["Does the commercial invoice include seller, buyer, description, HS code if known, value, currency, origin, and Incoterms?", "Does the packing list reconcile to invoice quantities and shipment units?"],
+            },
+            {
+                "section_id": "cold_chain_and_dangerous_goods",
+                "title": "Cold-chain, dangerous goods, and special handling",
+                "status": "missing" if ("cold-chain requirement" in missing or "dangerous goods declaration" in missing) else "provided_for_review",
+                "questions": ["Is temperature control required and what range/data logger proof is needed?", "Are dangerous goods, batteries, chemicals, or restricted handling declarations required?"],
+            },
+            {
+                "section_id": "forwarder_quote_packet",
+                "title": "Freight-forwarder quote packet",
+                "status": "blocked_missing_inputs",
+                "questions": ["Which documents and shipment facts should be sent to a forwarder for a quote?", "What remains internal until customer confirmation or qualified review is attached?"],
+            },
+        ]
         rows.append(
             {
                 "packet_id": packet.get("packet_id"),
                 "status": "transport_questions_ready_claims_blocked",
                 "missing_transport_inputs": missing,
+                "shipment_profile": {
+                    "incoterms": incoterms or "unknown",
+                    "mode": mode or "unknown",
+                    "weight_status": "provided" if weight else "missing",
+                    "dimensions_status": "provided" if dimensions else "missing",
+                    "packing_list_status": "provided" if packing_list is True else "missing",
+                    "commercial_invoice_status": "provided" if commercial_invoice is True else "missing",
+                    "cold_chain_status": "needs_review" if cold_chain_required else "not_indicated",
+                    "dangerous_goods_status": "needs_declaration_or_review"
+                    if dangerous_goods_possible or not packet.get("dangerous_goods_declaration")
+                    else "declared_for_review",
+                },
+                "packing_and_invoice_sections": [
+                    "commercial invoice fields",
+                    "packing list quantities",
+                    "gross/net weight and dimensions",
+                    "cartons, pallets, marks, and packaging type",
+                    "country of origin and HS code if known",
+                ],
+                "special_handling_sections": [
+                    "cold-chain temperature range and monitoring" if cold_chain_required else "cold-chain not indicated",
+                    "dangerous goods declaration or negative confirmation",
+                    "wood packaging and fumigation/ISPM 15 review",
+                ],
+                "freight_forwarder_packet_sections": freight_forwarder_sections,
+                "freight_forwarder_packet_status": "blocked_missing_transport_inputs",
                 "freight_forwarder_questions": [
                     "What mode, route, ports, and transit constraints apply?",
                     "Are dimensions, gross weight, packaging, and palletization known?",
@@ -170,31 +444,44 @@ def build_transport_readiness(workflow: dict[str, Any]) -> dict[str, Any]:
 
 def build_billing_controls() -> dict[str, Any]:
     actions = [
-        ("ocr_page", 2, True),
-        ("ai_extraction", 4, True),
-        ("large_document_packet", 10, True),
-        ("saved_workspace", 1, False),
-        ("buyer_ready_packet", 3, False),
-        ("broker_ready_packet", 3, False),
-        ("source_monitoring", 5, True),
-        ("opportunity_report", 4, True),
-        ("expert_review_request", 0, True),
-        ("private_ai", 8, True),
-        ("api_agent_usage", 2, True),
+        {"action": "ocr_page", "metering_category": "ocr_pages", "metered_unit": "page", "estimated_credits": 2, "heavy_job": False},
+        {"action": "ocr_document_batch", "metering_category": "ocr_pages", "metered_unit": "document_batch", "estimated_credits": 12, "heavy_job": True},
+        {"action": "ai_extraction", "metering_category": "ai_jobs", "metered_unit": "job", "estimated_credits": 4, "heavy_job": True},
+        {"action": "ai_job_deep_research", "metering_category": "ai_jobs", "metered_unit": "job", "estimated_credits": 12, "heavy_job": True},
+        {"action": "large_document_packet", "metering_category": "ai_jobs", "metered_unit": "packet", "estimated_credits": 10, "heavy_job": True},
+        {"action": "saved_workspace", "metering_category": "workspace_storage", "metered_unit": "workspace", "estimated_credits": 1, "heavy_job": False},
+        {"action": "report_export", "metering_category": "report_exports", "metered_unit": "export", "estimated_credits": 2, "heavy_job": False},
+        {"action": "buyer_ready_packet", "metering_category": "report_exports", "metered_unit": "export", "estimated_credits": 3, "heavy_job": False},
+        {"action": "broker_ready_packet", "metering_category": "report_exports", "metered_unit": "export", "estimated_credits": 3, "heavy_job": False},
+        {"action": "source_monitoring", "metering_category": "source_monitoring", "metered_unit": "refresh", "estimated_credits": 5, "heavy_job": True},
+        {"action": "source_monitoring_watchlist", "metering_category": "source_monitoring", "metered_unit": "watchlist", "estimated_credits": 8, "heavy_job": True},
+        {"action": "opportunity_report", "metering_category": "report_exports", "metered_unit": "report", "estimated_credits": 4, "heavy_job": True},
+        {"action": "expert_review_request", "metering_category": "human_review_routing", "metered_unit": "request", "estimated_credits": 0, "heavy_job": True},
+        {"action": "private_ai", "metering_category": "ai_jobs", "metered_unit": "job", "estimated_credits": 8, "heavy_job": True},
+        {"action": "agent_api_call", "metering_category": "agent_api_calls", "metered_unit": "call", "estimated_credits": 1, "heavy_job": False},
+        {"action": "api_agent_usage", "metering_category": "agent_api_calls", "metered_unit": "tool_execution", "estimated_credits": 2, "heavy_job": True},
     ]
     rows = [
         {
-            "action": action,
-            "estimated_credits": credits,
-            "heavy_job": heavy,
-            "free_plan_behavior": "blocked_requires_upgrade" if heavy else "allowed_with_limits",
+            **action,
+            "requires_pre_authorization": action["heavy_job"]
+            or action["metering_category"] in {"ai_jobs", "source_monitoring", "agent_api_calls"},
+            "heavy_job_gate": "blocked_requires_upgrade_or_manual_approval" if action["heavy_job"] else "standard_credit_metering",
+            "free_plan_behavior": "blocked_requires_upgrade" if action["heavy_job"] else "allowed_with_limits",
             "external_charge_created": False,
         }
-        for action, credits, heavy in actions
+        for action in actions
     ]
     return {
         "generated_at": _now(),
         "status": "billing_credit_controls_ready_local_no_live_checkout",
+        "metering_dimensions": [
+            {"id": "ocr_pages", "unit": "page", "heavy_job_threshold": "large or batch OCR requires upgrade/manual approval"},
+            {"id": "ai_jobs", "unit": "job", "heavy_job_threshold": "all model extraction, private AI, and deep-research jobs require authorization"},
+            {"id": "report_exports", "unit": "export", "heavy_job_threshold": "large/opportunity report exports require authorization"},
+            {"id": "source_monitoring", "unit": "refresh_or_watchlist", "heavy_job_threshold": "all monitoring refreshes require authorization"},
+            {"id": "agent_api_calls", "unit": "call_or_tool_execution", "heavy_job_threshold": "agent tool execution requires scope and credit checks"},
+        ],
         "plans": [
             {"id": "free", "packet_limit": 3, "monthly_credits": 20, "heavy_jobs": "blocked_requires_upgrade"},
             {"id": "pro", "packet_limit": 50, "monthly_credits": 500, "heavy_jobs": "metered"},
@@ -202,10 +489,18 @@ def build_billing_controls() -> dict[str, Any]:
             {"id": "enterprise", "packet_limit": "contract", "monthly_credits": "contract", "heavy_jobs": "private_contract"},
         ],
         "billable_actions": rows,
+        "heavy_job_policy": {
+            "status": "heavy_jobs_blocked_without_authorization",
+            "free_plan_behavior": "block_before_worker_execution",
+            "requires_credit_reservation": True,
+            "requires_manual_approval_when_cost_or_external_review_risk_is_high": True,
+            "external_charge_created": False,
+        },
         "authorization_algorithm": [
             "estimate cost",
             "check plan and credits",
             "block heavy free-plan jobs",
+            "require confirmation for OCR batches, AI jobs, source monitoring, and agent/API execution",
             "reserve credits before worker execution",
             "record usage",
             "refund or adjust on failed worker job",
@@ -229,29 +524,76 @@ def build_agent_api_manifest() -> dict[str, Any]:
     ]
     forbidden = [
         "approve_import",
+        "approve_export",
         "confirm_tariff",
+        "confirm_cfia_clearance",
+        "provide_legal_advice",
         "verify_supplier",
         "validate_buyer",
+        "collect_payment",
         "ship_goods",
+        "book_freight",
+        "send_email_or_external_message",
+        "submit_government_form",
         "send_report_externally_without_confirmation",
     ]
+    confirmation_required = {
+        "create_trade_packet",
+        "generate_missing_evidence_report",
+        "generate_chatgpt_safe_summary",
+        "generate_broker_packet",
+        "request_billing_quote",
+    }
+    metered_tools = {"generate_broker_packet", "generate_missing_evidence_report", "request_billing_quote"}
     return {
         "generated_at": _now(),
         "status": "agent_api_manifest_ready_scoped_and_metered",
         "allowed_tools": [
             {
                 "name": tool,
+                "route": f"/api/agent-tools/{tool}",
+                "method": "POST" if tool.startswith(("create", "generate", "request")) else "GET",
                 "scope_required": "packet:write" if tool.startswith("create") or tool.startswith("generate") else "packet:read",
-                "billing_gate": "metered" if tool in {"generate_broker_packet", "generate_missing_evidence_report", "request_billing_quote"} else "included_with_limits",
+                "billing_gate": "metered" if tool in metered_tools else "included_with_limits",
+                "requires_confirmation": tool in confirmation_required,
+                "audit_event_required": True,
+                "audit_event_type": f"agent_tool:{tool}",
+                "input_scope_rule": "packet_scoped_fields_only",
+                "external_effects_allowed": False,
                 "can_open_claim_gate": False,
             }
             for tool in allowed_tools
         ],
         "forbidden_tools": forbidden,
+        "forbidden_tool_patterns": [
+            "approve_*",
+            "confirm_tariff_or_compliance_*",
+            "verify_supplier_or_buyer_*",
+            "send_or_submit_external_*",
+            "book_or_ship_goods_*",
+            "collect_payment_*",
+        ],
+        "scope_rules": [
+            "Every tool must execute inside a packet or read-only coverage scope.",
+            "Write tools require packet:write scope and cannot modify external systems.",
+            "Read tools require packet:read scope and must not expose private uploaded file contents outside the local product.",
+            "Billing-sensitive tools require plan and credit authorization before worker execution.",
+        ],
+        "confirmation_rules": [
+            "Customer-visible packet creation, report generation, safe-summary generation, broker packet generation, and billing quotes require explicit user confirmation.",
+            "External sends are always disabled even after confirmation.",
+            "Confirmation can start local work only; it cannot open customs, tariff, legal, buyer, supplier, payment, or shipment claims.",
+        ],
+        "audit_rules": [
+            "Record actor, organization, packet_id, tool, scope, confirmation state, dry_run flag, and external_effects_allowed for every agent tool call.",
+            "Record billing estimate and authorization result before heavy or metered jobs run.",
+            "Record blocked forbidden-tool attempts as audit events with can_open_claim_gate=false.",
+        ],
         "safety_rules": [
             "Agents can create packets and reports only through backend claim/blocker rules.",
             "Agents cannot approve import/export, tariff, supplier, buyer, shipment, or launch claims.",
             "Billable or heavy jobs require plan/credit authorization before execution.",
+            "Agents must preserve audit, confirmation, and scope rules for every tool call.",
         ],
         "proof_boundary": "This is a local API/MCP contract. It does not expose a live public API gateway or payment integration.",
     }
@@ -570,7 +912,7 @@ def build_all_stage_readiness(
 
 def build_completion_platform(workflow: dict[str, Any], official_sources: list[dict[str, Any]]) -> dict[str, Any]:
     coverage = build_country_coverage(workflow, official_sources)
-    opportunity = build_opportunity_scanner(workflow, coverage)
+    opportunity = build_opportunity_scanner(workflow, coverage, official_sources)
     transport = build_transport_readiness(workflow)
     billing = build_billing_controls()
     agent_api = build_agent_api_manifest()

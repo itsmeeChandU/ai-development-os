@@ -221,12 +221,28 @@ def generate_missing_evidence_report(repo_root: Path, packet_id: str | None = No
     packet = _select_packet(workflow, packet_id)
     packet_id = str(packet["packet_id"])
     path = _generated_reports_dir(repo_root) / f"missing_evidence_{packet_id}.json"
+    missing_items = packet.get("evidence_summary", {}).get("missing_items", [])
+    blocker_groups = packet.get("blocker_groups", [])
     payload = {
         "status": "missing_evidence_report_generated",
         "packet_id": packet_id,
         "product_name": packet.get("product_name"),
-        "missing_items": packet.get("evidence_summary", {}).get("missing_items", []),
-        "blocker_groups": packet.get("blocker_groups", []),
+        "missing_items": missing_items,
+        "blocker_groups": blocker_groups,
+        "plain_english_next_steps": [
+            "Confirm the product, origin, destination, buyer/importer, supplier/exporter, HS code if known, and Incoterms.",
+            "Attach product specs, invoice or proforma, packing list, certificates, proof of origin, and shipping details where available.",
+            "Refresh official/reference sources and keep the accessed date and source boundary.",
+            "Route the packet to a broker, customs, food/import, privacy/security, or trade reviewer for scoped findings before external claims.",
+        ],
+        "grouped_by_stage": {
+            str(group.get("stage") or "unstaged"): [
+                item
+                for item in missing_items
+                if str(group.get("title") or "").lower().split(" ")[0] in item.lower()
+            ]
+            for group in blocker_groups
+        },
         "buyer_broker_questions": packet.get("buyer_broker_questions", []),
         "next_valid_move": packet.get("next_valid_move"),
         "external_claims_opened": False,
@@ -289,6 +305,30 @@ def generate_starter_checklist(repo_root: Path, packet_id: str | None = None) ->
         "status": "starter_checklist_generated",
         "packet_id": packet_id,
         "checklist": checklist,
+        "beginner_context": {
+            "current_stage": packet.get("current_stage") or "unknown",
+            "unknown_fields": packet.get("unknown_fields") or [],
+            "product_only_start_supported": True,
+            "examples_supported": ["export furniture to Canada", "import food into Canada", "document-only user"],
+        },
+        "sections": [
+            {
+                "title": "Product identity",
+                "items": ["Product name", "category", "composition/specs", "intended use", "photos/spec sheet if available"],
+            },
+            {
+                "title": "Country and party path",
+                "items": ["Origin country", "destination country", "buyer/importer", "supplier/exporter", "importer of record", "Incoterms"],
+            },
+            {
+                "title": "Document pile",
+                "items": ["invoice/proforma", "packing list", "certificates", "proof of origin", "shipping/transport details"],
+            },
+            {
+                "title": "Review gates",
+                "items": ["official source refresh", "broker/customs review", "food/import review when relevant", "buyer validation evidence"],
+            },
+        ],
         "next_valid_move": checklist[0],
         "external_claims_opened": False,
     }
@@ -342,6 +382,22 @@ def generate_broker_packet(repo_root: Path, packet_id: str | None = None) -> dic
         "packet_id": packet_id,
         "markdown_artifact": _artifact_ref(repo_root, markdown_path),
         "review_scope": "Broker/customs/trade reviewer questions generated from local packet state.",
+        "reviewer_types": [
+            "customs broker",
+            "Canada import/export trade reviewer",
+            "food/CFIA reviewer when applicable",
+            "privacy/security reviewer for hosted uploads",
+            "buyer/importer operator for commercial validation",
+        ],
+        "packet_sections": [
+            "packet summary",
+            "uploaded document triage",
+            "missing evidence",
+            "blocked claims",
+            "questions for scoped reviewer",
+            "conditions or evidence required before claims can change",
+        ],
+        "finding_ingestion_route": "/review/:token/submit",
         "external_claims_opened": False,
     }
     write_json(payload, json_path)

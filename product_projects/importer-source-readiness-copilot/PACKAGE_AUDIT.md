@@ -26,6 +26,8 @@ External package audit: PASS
 - no path traversal entries in zip files
 - no `/Users/` or `file:///Users/` references
 - no obvious secret markers
+- secret-like token detection is regression-tested against generated zips
+- missing required review artifacts are regression-tested
 - `SOURCE_OF_TRUTH.md` exists
 - `RUN_RESULTS.md` exists
 - `REDACTION_REPORT.md` exists

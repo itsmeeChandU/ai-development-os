@@ -32,6 +32,22 @@ class ExternalPackageAuditTests(unittest.TestCase):
         self.assertTrue(any("path traversal" in error for error in errors))
         self.assertTrue(any("local path reference" in error for error in errors))
 
+    def test_zip_audit_blocks_secret_like_tokens(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            zip_path = Path(tmp) / "secret.zip"
+            with zipfile.ZipFile(zip_path, "w") as archive:
+                archive.writestr("config/example.md", "token " + "sk-" + "test_abcdefghijklmnopqrstuvwxyz")
+
+            errors = audit_external_package.audit_zip(zip_path)
+
+        self.assertTrue(any("secret-like token" in error for error in errors))
+
+    def test_root_audit_reports_missing_required_review_artifacts(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            errors = audit_external_package.audit_root(Path(tmp))
+
+        self.assertTrue(any("missing required review artifact" in error for error in errors))
+
 
 if __name__ == "__main__":
     unittest.main()

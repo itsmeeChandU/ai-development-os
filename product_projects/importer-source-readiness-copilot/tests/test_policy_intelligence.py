@@ -40,6 +40,11 @@ class PolicyIntelligenceTests(unittest.TestCase):
         tags = {tag for source in monitor["monitored_sources"] for tag in source["tags"]}
         self.assertIn("tariff", tags)
         self.assertIn("food_import", tags)
+        self.assertEqual(len(monitor["scheduled_jobs"]), monitor["monitored_source_count"])
+        self.assertTrue(all("robots_status" in source for source in monitor["monitored_sources"]))
+        self.assertTrue(all("terms_status" in source for source in monitor["monitored_sources"]))
+        self.assertTrue(all(job["status"] == "defined_not_enabled" for job in monitor["scheduled_jobs"]))
+        self.assertFalse(any(job["live_fetch_allowed"] for job in monitor["scheduled_jobs"]))
         self.assertFalse(monitor["external_effects"]["live_fetch_performed"])
         blocker = monitor["stale_source_blockers"][0]
         self.assertEqual(blocker["gate"], "closed")

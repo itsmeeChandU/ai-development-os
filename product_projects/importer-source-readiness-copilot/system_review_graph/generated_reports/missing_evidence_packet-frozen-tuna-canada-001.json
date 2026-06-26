@@ -70,6 +70,12 @@
     "Responsibility path: Responsibility path unknown."
   ],
   "external_claims_opened": false,
+  "grouped_by_stage": {
+    "P0 - Must fix before customer/private beta": [
+      "Buyer/operator validation",
+      "Canadian buyer/importer and importer-of-record confirmation"
+    ]
+  },
   "missing_items": [
     "Qualified Canada compliance review",
     "Commercial/source contract",
@@ -84,6 +90,12 @@
   ],
   "next_valid_move": "Generate a compliance review packet and request qualified review.",
   "packet_id": "packet-frozen-tuna-canada-001",
+  "plain_english_next_steps": [
+    "Confirm the product, origin, destination, buyer/importer, supplier/exporter, HS code if known, and Incoterms.",
+    "Attach product specs, invoice or proforma, packing list, certificates, proof of origin, and shipping details where available.",
+    "Refresh official/reference sources and keep the accessed date and source boundary.",
+    "Route the packet to a broker, customs, food/import, privacy/security, or trade reviewer for scoped findings before external claims."
+  ],
   "product_name": "Frozen tuna fillet",
   "proof_boundary": "This report lists missing inputs and review questions only; it does not approve trade action.",
   "status": "missing_evidence_report_generated"

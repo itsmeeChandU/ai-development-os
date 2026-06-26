@@ -384,6 +384,7 @@
       "id": "REQ-PDF-01",
       "name": "PDF triage and native text extraction decision",
       "proof": [
+        "tests/test_document_processing.py",
         "tests/test_operator_app.py"
       ],
       "status": "implemented_local_parser_with_ocr_gate"

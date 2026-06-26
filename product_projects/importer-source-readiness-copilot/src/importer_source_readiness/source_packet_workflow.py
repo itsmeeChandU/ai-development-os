@@ -1135,12 +1135,19 @@ def build_customer_workflow(
                 "hs_code_value": packet.get("hs_code_value"),
                 "hs_code_if_known": packet.get("hs_code_value"),
                 "source_url": packet.get("source_url"),
+                "source_type": packet.get("source_type") or "customer_submitted",
                 "intended_use": packet.get("intended_use"),
+                "offline_evidence_only": bool(packet.get("offline_evidence_only")),
                 "beginner_mode": bool(packet.get("beginner_mode")),
                 "current_stage": packet.get("current_stage") or "",
                 "research_depth_requested": packet.get("research_depth_requested") or "",
                 "unknown_fields": packet.get("unknown_fields") or [],
                 "confirmation_status": packet.get("confirmation_status") or "not_confirmed",
+                "shareable_status": (
+                    "draft_shareable_after_user_confirmation_with_external_gates"
+                    if (packet.get("confirmation_status") or "not_confirmed") == "user_confirmed_draft_fields"
+                    else "blocked_until_user_confirmation"
+                ),
                 "document_flags": document_flags,
                 "product_documents": _as_list(packet.get("product_documents")),
                 "commercial_documents": _as_list(packet.get("commercial_documents")),
