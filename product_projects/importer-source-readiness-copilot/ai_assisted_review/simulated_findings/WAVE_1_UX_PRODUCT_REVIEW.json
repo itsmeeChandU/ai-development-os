@@ -1,0 +1,41 @@
+{
+  "affected_stage": "hosted_private_beta",
+  "finding_count": 1,
+  "findings": [
+    {
+      "affected_file_or_artifact": "docs/GO_LIVE_READINESS.md",
+      "affected_stage": "hosted_private_beta",
+      "blocks_private_beta": true,
+      "blocks_public_launch": true,
+      "confidence": "high",
+      "finding_id": "UX_PRODUCT-AI-001",
+      "human_followup_required": true,
+      "issue": "The product clearly labels private beta as externally gated, but the repo still has no dated target-user usability smoke evidence. The stage table explicitly says real beginner usability still needs beta users, so a solo AI pass cannot prove that importers/exporters understand blockers, reports, or next valid moves.",
+      "model_or_agent_used": "Codex GPT-5 simulated reviewer",
+      "owner": "product/UX reviewer",
+      "required_fix": "Run a five-user private-beta usability smoke with beginner, importer, exporter, document-holding, and operator/reviewer tasks; record confusion, unsafe interpretations, task success, and P0/P1 fixes in a dated usability artifact.",
+      "retest_command": "python3 scripts/check_product.py",
+      "review_origin": "ai_assisted_simulated_review",
+      "reviewer_role": "UX/Product Usability Review",
+      "severity": "P0",
+      "web_sources_checked": []
+    }
+  ],
+  "human_followup_required": true,
+  "model_or_agent_used": "Codex GPT-5 simulated reviewer",
+  "proof_boundary": "This is an AI-assisted simulated review. It can create fixes or blockers, but it cannot open qualified approval or launch gates.",
+  "review_origin": "ai_assisted_simulated_review",
+  "reviewed_at": "2026-06-26T14:36:31Z",
+  "reviewer_role": "UX/Product Usability Review",
+  "role_id": "ux-product",
+  "source_artifacts_reviewed": [
+    "README.md",
+    "docs/GO_LIVE_READINESS.md",
+    "system_review_graph/operator_dashboard.html",
+    "system_review_graph/customer_readiness_report.md",
+    "system_review_graph/public_trade_readiness_manifest.json"
+  ],
+  "verdict": "blocked",
+  "wave": 1,
+  "web_sources_checked": []
+}

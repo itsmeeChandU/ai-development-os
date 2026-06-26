@@ -1,0 +1,39 @@
+{
+  "actual_external_review_completed": false,
+  "ai_assisted_review_can_open_approval_gates": false,
+  "ai_assisted_review_status": "ai_assisted_external_review_ready",
+  "ai_assisted_simulated_finding_count": 5,
+  "ai_assisted_simulated_review_count": 5,
+  "ai_assisted_wave_1_status": "ai_assisted_wave_1_reviewed_with_blockers",
+  "completed_review_count": 0,
+  "created_at_utc": "20260626T160554Z",
+  "external_review_status": "external_review_ready_findings_pending",
+  "next_valid_move": "Treat these Wave 1 simulated P0 rows as owner-specific blocker work, fix what can be fixed locally, and collect real qualified review evidence before hosted private beta or public launch gates can open.",
+  "package_name": "importer-source-readiness-technical-source-review-v3-20260626T160554Z",
+  "package_type": "technical_source_review_package",
+  "pending_review_count": 9,
+  "private_beta_blocked_until_wave_1_complete": true,
+  "proof_boundary": "Package includes Wave 1 AI-assisted simulated findings for risk discovery only; actual external decisions remain pending and gates remain closed.",
+  "public_launch_ready": false,
+  "real_external_review_count": 0,
+  "required_review_count": 9,
+  "reviewer_roles": [
+    "UX/Product Usability Review",
+    "Security/Public Upload Review",
+    "Privacy/Legal Review",
+    "AI Safety/Prompt Injection Review",
+    "DevOps/Production Readiness Review",
+    "Trade-Boundary/Customs-Language Review",
+    "Freight/Logistics Review",
+    "Report-Language Review",
+    "Billing/Payment Review"
+  ],
+  "source_head": "5c32ca816e639b72944a0672903ae36017bbf1a1",
+  "source_origin_main": "5c32ca816e639b72944a0672903ae36017bbf1a1",
+  "source_product_repo": "itsmeeChandU/importer-source-readiness-copilot",
+  "source_scope": "Full source, tests, scripts, Docker/Compose, env example, migrations, docs, generated reports, reviewer packets, AI-assisted prompts, and simulated findings.",
+  "source_status_summary": [
+    "## main...origin/main"
+  ],
+  "unsafe_gates_closed": true
+}

@@ -1,0 +1,258 @@
+{
+  "blocked_claims": [
+    "hosted_private_beta_ready",
+    "public_launch_ready",
+    "qualified_security_approval",
+    "qualified_privacy_legal_approval",
+    "qualified_ai_safety_approval",
+    "qualified_devops_approval",
+    "real_user_usability_approval"
+  ],
+  "can_open_private_beta_gate": false,
+  "can_open_public_launch_gate": false,
+  "finding_counts_by_severity": {
+    "P0": 5
+  },
+  "finding_files": [
+    "ai_assisted_review/simulated_findings/WAVE_1_UX_PRODUCT_REVIEW.json",
+    "ai_assisted_review/simulated_findings/WAVE_1_SECURITY_PUBLIC_UPLOAD_REVIEW.json",
+    "ai_assisted_review/simulated_findings/WAVE_1_PRIVACY_LEGAL_REVIEW.json",
+    "ai_assisted_review/simulated_findings/WAVE_1_AI_SAFETY_REVIEW.json",
+    "ai_assisted_review/simulated_findings/WAVE_1_DEVOPS_PRODUCTION_READINESS_REVIEW.json"
+  ],
+  "generated_at": "2026-06-26T14:36:31Z",
+  "human_equivalent_approval": false,
+  "human_followup_required": true,
+  "model_or_agent_used": "Codex GPT-5 simulated reviewer",
+  "next_valid_move": "Treat these Wave 1 simulated P0 rows as owner-specific blocker work, fix what can be fixed locally, and collect real qualified review evidence before hosted private beta or public launch gates can open.",
+  "private_beta_blocking_findings": 5,
+  "proof_boundary": "This report documents solo AI-assisted risk discovery only. It is not real external approval and does not change the external review completed count.",
+  "public_launch_blocking_findings": 5,
+  "real_external_review_count": 0,
+  "review_origin": "ai_assisted_simulated_review",
+  "simulated_finding_count": 5,
+  "simulated_review_count": 5,
+  "simulated_reviews": [
+    {
+      "affected_stage": "hosted_private_beta",
+      "finding_count": 1,
+      "findings": [
+        {
+          "affected_file_or_artifact": "docs/GO_LIVE_READINESS.md",
+          "affected_stage": "hosted_private_beta",
+          "blocks_private_beta": true,
+          "blocks_public_launch": true,
+          "confidence": "high",
+          "finding_id": "UX_PRODUCT-AI-001",
+          "human_followup_required": true,
+          "issue": "The product clearly labels private beta as externally gated, but the repo still has no dated target-user usability smoke evidence. The stage table explicitly says real beginner usability still needs beta users, so a solo AI pass cannot prove that importers/exporters understand blockers, reports, or next valid moves.",
+          "model_or_agent_used": "Codex GPT-5 simulated reviewer",
+          "owner": "product/UX reviewer",
+          "required_fix": "Run a five-user private-beta usability smoke with beginner, importer, exporter, document-holding, and operator/reviewer tasks; record confusion, unsafe interpretations, task success, and P0/P1 fixes in a dated usability artifact.",
+          "retest_command": "python3 scripts/check_product.py",
+          "review_origin": "ai_assisted_simulated_review",
+          "reviewer_role": "UX/Product Usability Review",
+          "severity": "P0",
+          "web_sources_checked": []
+        }
+      ],
+      "human_followup_required": true,
+      "model_or_agent_used": "Codex GPT-5 simulated reviewer",
+      "proof_boundary": "This is an AI-assisted simulated review. It can create fixes or blockers, but it cannot open qualified approval or launch gates.",
+      "review_origin": "ai_assisted_simulated_review",
+      "reviewed_at": "2026-06-26T14:36:31Z",
+      "reviewer_role": "UX/Product Usability Review",
+      "role_id": "ux-product",
+      "source_artifacts_reviewed": [
+        "README.md",
+        "docs/GO_LIVE_READINESS.md",
+        "system_review_graph/operator_dashboard.html",
+        "system_review_graph/customer_readiness_report.md",
+        "system_review_graph/public_trade_readiness_manifest.json"
+      ],
+      "verdict": "blocked",
+      "wave": 1,
+      "web_sources_checked": []
+    },
+    {
+      "affected_stage": "hosted_private_beta",
+      "finding_count": 1,
+      "findings": [
+        {
+          "affected_file_or_artifact": "system_review_graph/public_upload_policy.json",
+          "affected_stage": "hosted_private_beta",
+          "blocks_private_beta": true,
+          "blocks_public_launch": true,
+          "confidence": "high",
+          "finding_id": "SECURITY_PUBLIC_UPLOAD-AI-001",
+          "human_followup_required": true,
+          "issue": "Public PDF uploads are locally quarantined and direct serving is disabled, but hosted enforcement remains unproven. The policy says rate limiting is only local-policy ready and the deployment docs still require malware scanning before public hosting.",
+          "model_or_agent_used": "Codex GPT-5 simulated reviewer",
+          "owner": "security reviewer",
+          "required_fix": "Add staged hosted upload enforcement with malware scanning, content-type and extension validation, storage isolation, rate limits, denial tests for unsafe files, and a qualified security review record before any external user upload.",
+          "retest_command": "python3 -m unittest tests/test_operator_app.py tests/test_document_processing.py",
+          "review_origin": "ai_assisted_simulated_review",
+          "reviewer_role": "Security/Public Upload Review",
+          "severity": "P0",
+          "web_sources_checked": [
+            "https://cheatsheetseries.owasp.org/cheatsheets/File_Upload_Cheat_Sheet.html"
+          ]
+        }
+      ],
+      "human_followup_required": true,
+      "model_or_agent_used": "Codex GPT-5 simulated reviewer",
+      "proof_boundary": "This is an AI-assisted simulated review. It can create fixes or blockers, but it cannot open qualified approval or launch gates.",
+      "review_origin": "ai_assisted_simulated_review",
+      "reviewed_at": "2026-06-26T14:36:31Z",
+      "reviewer_role": "Security/Public Upload Review",
+      "role_id": "security-public-upload",
+      "source_artifacts_reviewed": [
+        "docs/SECURITY_PRIVACY.md",
+        "docs/DEPLOYMENT.md",
+        "system_review_graph/public_upload_policy.json",
+        "system_review_graph/auth_rbac_matrix.json",
+        "src/importer_source_readiness/operator_app.py"
+      ],
+      "verdict": "blocked",
+      "wave": 1,
+      "web_sources_checked": [
+        "https://cheatsheetseries.owasp.org/cheatsheets/File_Upload_Cheat_Sheet.html"
+      ]
+    },
+    {
+      "affected_stage": "hosted_private_beta",
+      "finding_count": 1,
+      "findings": [
+        {
+          "affected_file_or_artifact": "REVIEW_USE_TERMS.md",
+          "affected_stage": "hosted_private_beta",
+          "blocks_private_beta": true,
+          "blocks_public_launch": true,
+          "confidence": "high",
+          "finding_id": "PRIVACY_LEGAL-AI-001",
+          "human_followup_required": true,
+          "issue": "The repo has review-use terms, AI policy controls, and deletion request tracking, but it does not yet contain a hosted-user privacy notice, retention schedule, processor/subprocessor inventory, or qualified privacy/legal signoff for customer trade documents.",
+          "model_or_agent_used": "Codex GPT-5 simulated reviewer",
+          "owner": "privacy/legal reviewer",
+          "required_fix": "Create jurisdiction-scoped privacy terms for hosted beta, map data categories and retention/deletion handling, record processor/subprocessor obligations, and obtain qualified privacy/legal review before collecting real customer data.",
+          "retest_command": "python3 scripts/check_product.py",
+          "review_origin": "ai_assisted_simulated_review",
+          "reviewer_role": "Privacy/Legal Review",
+          "severity": "P0",
+          "web_sources_checked": [
+            "https://www.priv.gc.ca/en/privacy-topics/privacy-laws-in-canada/the-personal-information-protection-and-electronic-documents-act-pipeda/"
+          ]
+        }
+      ],
+      "human_followup_required": true,
+      "model_or_agent_used": "Codex GPT-5 simulated reviewer",
+      "proof_boundary": "This is an AI-assisted simulated review. It can create fixes or blockers, but it cannot open qualified approval or launch gates.",
+      "review_origin": "ai_assisted_simulated_review",
+      "reviewed_at": "2026-06-26T14:36:31Z",
+      "reviewer_role": "Privacy/Legal Review",
+      "role_id": "privacy-legal",
+      "source_artifacts_reviewed": [
+        "REVIEW_USE_TERMS.md",
+        "docs/AI_DATA_POLICY.md",
+        "docs/SECURITY_PRIVACY.md",
+        "system_review_graph/ai_data_policy.json",
+        "system_review_graph/deletion_requests.json"
+      ],
+      "verdict": "blocked",
+      "wave": 1,
+      "web_sources_checked": [
+        "https://www.priv.gc.ca/en/privacy-topics/privacy-laws-in-canada/the-personal-information-protection-and-electronic-documents-act-pipeda/"
+      ]
+    },
+    {
+      "affected_stage": "hosted_private_beta",
+      "finding_count": 1,
+      "findings": [
+        {
+          "affected_file_or_artifact": "tests/test_operator_app.py",
+          "affected_stage": "hosted_private_beta",
+          "blocks_private_beta": true,
+          "blocks_public_launch": true,
+          "confidence": "high",
+          "finding_id": "AI_SAFETY-AI-001",
+          "human_followup_required": true,
+          "issue": "AI controls now include an adversarial uploaded-document prompt-injection regression, and AI output is fail-closed at the claim-gate level. Hosted beta still needs qualified AI safety review of model routing, redaction quality, prompt handling, logging, and incident response before real customer documents or provider calls are used.",
+          "model_or_agent_used": "Codex GPT-5 simulated reviewer",
+          "owner": "AI safety reviewer",
+          "required_fix": "Have a qualified AI safety reviewer evaluate the prompt injection regression, AI/data policy, model route contracts, redaction previews, manual/no-AI fallback, and hosted provider controls; record any P0/P1 findings before private beta.",
+          "retest_command": "python3 -m unittest tests/test_operator_app.py tests/test_product_runtime.py",
+          "review_origin": "ai_assisted_simulated_review",
+          "reviewer_role": "AI Safety/Prompt Injection Review",
+          "severity": "P0",
+          "web_sources_checked": [
+            "https://genai.owasp.org/llmrisk/llm01-prompt-injection/",
+            "https://www.nist.gov/itl/ai-risk-management-framework"
+          ]
+        }
+      ],
+      "human_followup_required": true,
+      "model_or_agent_used": "Codex GPT-5 simulated reviewer",
+      "proof_boundary": "This is an AI-assisted simulated review. It can create fixes or blockers, but it cannot open qualified approval or launch gates.",
+      "review_origin": "ai_assisted_simulated_review",
+      "reviewed_at": "2026-06-26T14:36:31Z",
+      "reviewer_role": "AI Safety/Prompt Injection Review",
+      "role_id": "ai-safety",
+      "source_artifacts_reviewed": [
+        "docs/AI_DATA_POLICY.md",
+        "system_review_graph/ai_model_router.json",
+        "system_review_graph/redaction_pipeline.json",
+        "system_review_graph/manual_no_ai_workflow.json",
+        "tests/test_operator_app.py"
+      ],
+      "verdict": "blocked",
+      "wave": 1,
+      "web_sources_checked": [
+        "https://genai.owasp.org/llmrisk/llm01-prompt-injection/",
+        "https://www.nist.gov/itl/ai-risk-management-framework"
+      ]
+    },
+    {
+      "affected_stage": "hosted_private_beta",
+      "finding_count": 1,
+      "findings": [
+        {
+          "affected_file_or_artifact": "system_review_graph/deployment_readiness_report.json",
+          "affected_stage": "hosted_private_beta",
+          "blocks_private_beta": true,
+          "blocks_public_launch": true,
+          "confidence": "high",
+          "finding_id": "DEVOPS_PRODUCTION_READINESS-AI-001",
+          "human_followup_required": true,
+          "issue": "The Docker/Compose stack and health routes make the product hostable locally, but no staging deployment proof exists for TLS, secure cookies, secret management, managed storage, backup restore, monitoring, rollback, support ownership, or incident response.",
+          "model_or_agent_used": "Codex GPT-5 simulated reviewer",
+          "owner": "DevOps/production reviewer",
+          "required_fix": "Provision a staging private-beta environment, wire production identity/secrets/storage/observability controls, run backup and rollback drills, and attach dated runbook evidence before external users are invited.",
+          "retest_command": "python3 scripts/check_product.py",
+          "review_origin": "ai_assisted_simulated_review",
+          "reviewer_role": "DevOps/Production Readiness Review",
+          "severity": "P0",
+          "web_sources_checked": []
+        }
+      ],
+      "human_followup_required": true,
+      "model_or_agent_used": "Codex GPT-5 simulated reviewer",
+      "proof_boundary": "This is an AI-assisted simulated review. It can create fixes or blockers, but it cannot open qualified approval or launch gates.",
+      "review_origin": "ai_assisted_simulated_review",
+      "reviewed_at": "2026-06-26T14:36:31Z",
+      "reviewer_role": "DevOps/Production Readiness Review",
+      "role_id": "devops-production-readiness",
+      "source_artifacts_reviewed": [
+        "Dockerfile",
+        "compose.yaml",
+        ".env.example",
+        "docs/DEPLOYMENT.md",
+        "system_review_graph/deployment_readiness_report.json"
+      ],
+      "verdict": "blocked",
+      "wave": 1,
+      "web_sources_checked": []
+    }
+  ],
+  "status": "ai_assisted_wave_1_reviewed_with_blockers",
+  "wave": 1
+}

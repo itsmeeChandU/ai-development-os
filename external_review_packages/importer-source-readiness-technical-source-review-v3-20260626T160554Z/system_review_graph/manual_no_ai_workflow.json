@@ -1,0 +1,17 @@
+{
+  "ai_disabled_supported": true,
+  "features": [
+    "manual packet creation",
+    "manual evidence upload",
+    "manual evidence classification",
+    "manual blocker creation",
+    "manual operator review",
+    "manual expert-review packet generation",
+    "manual report generation",
+    "manual source refresh"
+  ],
+  "next_valid_move": "Use operator review and scoped expert-review packet when AI is disabled.",
+  "packet_count": 1,
+  "report_disclosure": "No AI processing is required. Reports disclose whether AI was used.",
+  "status": "manual_no_ai_workflow_ready"
+}

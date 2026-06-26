@@ -1,0 +1,29 @@
+[
+  {
+    "packet_id": "packet-frozen-tuna-canada-001",
+    "packet_name": "Frozen tuna Canada source packet",
+    "customer_id": "demo-customer",
+    "organization_id": "demo-importer-org",
+    "product_name": "Frozen tuna fillet",
+    "product_category": "food_import",
+    "hs_code_known": true,
+    "hs_code_value": "0304870000",
+    "origin_country": "Vietnam",
+    "destination_country": "Canada",
+    "supplier_name": "Example Seafood Supplier",
+    "supplier_country": "Vietnam",
+    "source_url": "https://ised-isde.canada.ca/site/ised/en/research-and-business-intelligence/canadian-importers-database",
+    "source_type": "official_reference",
+    "intended_use": "Assess whether this source packet is ready for internal importer/source-readiness review.",
+    "documents": [
+      "supplier-profile-placeholder.pdf",
+      "product-spec-placeholder.pdf"
+    ],
+    "notes": "Fixture packet for the first customer source-packet workflow. It is not buyer, supplier, tariff, CFIA, customs, or launch proof.",
+    "restricted_party_screening_status": "missing",
+    "qualified_review_status": "missing",
+    "buyer_validation_status": "missing",
+    "contract_status": "missing",
+    "created_at": "2026-06-25T00:00:00+00:00"
+  }
+]

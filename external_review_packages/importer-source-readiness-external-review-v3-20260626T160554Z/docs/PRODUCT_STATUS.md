@@ -1,0 +1,279 @@
+# Product Status
+
+## Current State
+
+The first local software loop is complete and the operator-gate plus customer
+source-packet layer is now implemented. The startup/product is still
+`startup_in_progress` because external evidence lanes remain open. The product
+reads source cards, accepts customer source packets, builds an evidence ledger,
+evaluates readiness gates, writes
+`system_review_graph/readiness_report.json`, writes
+`system_review_graph/external_gate_report.json`, writes
+`system_review_graph/continuation_plan.json`, writes
+`system_review_graph/vc_pitch_readiness_report.json`, writes
+`system_review_graph/board_go_live_readiness_report.json`, writes
+`system_review_graph/customer_readiness_report.json`, writes
+`system_review_graph/evidence_ledger.json`, writes
+`system_review_graph/blockers.jsonl`, exports
+`system_review_graph/operator_dashboard.html`, writes
+`system_review_graph/operator_screenshot_manifest.json`, writes investor pitch
+artifacts, writes Canada-focused board artifacts, and passes the local proof
+gate. It also writes AI/data policy, model-router, redaction, no-AI/manual
+workflow, public trade readiness, exporter-mode, report-type, upload-policy,
+policy/source monitor, and requirements traceability artifacts.
+It now also writes completion-stage contracts for opportunity scanning,
+country coverage tiers, transport readiness, billing/credit controls, agent
+API rules, traffic-first checklist pages, research execution, expert network,
+team workspace, local agent gateway, billing usage, and launch operations.
+Those stages are backed by an executable local operations engine in
+`src/importer_source_readiness/product_operations.py` and
+`scripts/run_product_operations.py`. The engine creates/updates packet intake
+snapshots, research/source-refresh runs, missing-evidence reports, starter
+checklists, ChatGPT-safe summaries, broker/expert packets, expert work orders,
+team workspace activity, billing usage reservations, launch-control events,
+agent-tool execution records, SQLite persistence, and
+`system_review_graph/product_operations_report.json`.
+
+The current usable application is the local private-beta product app served by:
+
+```bash
+python3 scripts/serve_operator_app.py
+```
+
+This is the surface a customer, operator, expert reviewer, or admin can use in
+local private-beta review. It includes `/`, `/start`, `/tools`, `/trade-check`,
+`/tools/import-readiness`, `/tools/export-readiness`,
+`/public/packets/:id/result`, `/public/packets/:id/confirm`, public PDF report
+downloads, `/workspace`, `/dashboard`,
+`/packets/new`,
+`/packets/:id/evidence`, `/packets/:id/blockers`, `/packets/:id/readiness`,
+`/packets/:id/source-monitoring`, `/packets/:id/safe-summary`,
+`/packets/:id/ai-reviews`, `/packets/:id/reviews`, `/packets/:id/reports`,
+`/settings/ai-data-policy`, scoped `/review/:token` pages,
+`/operator/queue`, `/operator/packets/:id`, `/admin/sources`,
+`/admin/gates`, `/admin/audit`, and
+`/admin/system-health`. Public completion routes include `/opportunities`,
+`/reports/sample`, `/pricing`, `/billing`, `/ai-data-policy`, `/security`, and
+`/tools/document-check`. The all-stage routes are `/stages`, `/country-coverage`,
+`/transport-readiness`, `/billing/usage`, `/agent-api`, `/research-plan`,
+`/expert-network`, `/team-workspace`, and `/launch-operations`. It is hostable after real infrastructure and qualified
+security/privacy/human review gates are completed.
+
+## Ready Now
+
+- local source-card readiness evaluation
+- unsafe external counter detection
+- blocker ledger emission
+- deterministic readiness report
+- official-source registry
+- country requirements matrix
+- buyer/expert/contract/source-rights evidence packets
+- external-gate report
+- startup continuation plan
+- VC pitch readiness report
+- investor pitch deck, one-pager, demo script, and diligence-room index
+- Canada official tool registry
+- simulated expert review packet
+- board go-live readiness report
+- launch-control checklist
+- financial operating model boundary
+- generated operator work queue
+- customer source-packet intake
+- public Trade Readiness Copilot landing and tool selection
+- beginner no-documents starter checklist mode
+- no-login import/export quick check with PDF upload
+- PDF triage with native text/OCR decision, hash capture, and confirmation gate
+- ChatGPT-safe summary for drafting questions without private file contents
+- Export-to-Canada packet mode for foreign exporters
+- starter, missing-evidence, buyer-ready, and Canadian broker-review packet PDFs
+- public upload notice, quarantine metadata, expiry manifest, and delete-files route
+- local direct-file serving block for public upload quarantine paths
+- saved packet workspace backed by generated JSON and SQLite artifacts
+- Intelligence Hub database-style policy/source monitor contract
+- policy source snapshot, change impact, stale-source blocker, and SQLite store artifacts
+- opportunity scanner with signal-only research prompts
+- country coverage tiers with country-specific claim gates
+- transport readiness lane and freight-forwarder questions
+- billing/credit controls with live checkout disabled
+- scoped agent/API manifest with forbidden claim-opening tools
+- traffic-first checklist and generator page manifest
+- all-stage readiness runtime with stage-by-stage routes and APIs
+- executable local operations engine for intake, research, evidence reporting,
+  expert routing, team activity, billing, agent tools, launch controls, and
+  persistence refresh
+- research execution plan and local research/source-refresh run records
+- expert network, local review queue, and expert work orders
+- business/team workspace approval board plus local activity events
+- billing usage ledger with local reservations and no live charges
+- agent API gateway with local executor and no external effects
+- launch operations controls and local launch-control event records
+- evidence ledger with proof boundaries
+- blocked-safe customer readiness report
+- source-packet export routes
+- grouped customer blockers
+- official-source refresh records
+- AI simulated review runs
+- AI data policy and model router
+- per-evidence AI/no-AI permissions
+- redaction preview contract
+- manual no-AI workflow
+- requirement traceability matrix
+- expert-review packet export
+- scoped expert-review links and finding ingestion
+- local SQLite workflow store
+- auth/RBAC runtime contract
+- organization-scoped packet access
+- audit events and deletion-request tracking
+- report export registry
+- health endpoints and Docker/Compose deployment shell
+- admin source registry and private-beta gates
+- local operator app server
+- static operator dashboard
+- generated operator screenshot manifest and dashboard gallery
+- standalone product check
+- CI workflow for the proof gate
+
+## Not Ready For External Claims
+
+- customs, tariff, or import/export advice
+- supplier recommendations
+- buyer demand or PMF claims
+- commercial/source contract claims
+- legal/compliance readiness
+- public launch claims
+- tariff confirmation or CFIA compliance claims
+- customer-visible source-packet approval claims
+
+## Ready For Private VC Pitch
+
+- pitch packet status: `vc_pitch_ready_with_diligence_gates`
+- demo proof: `python3 scripts/check_product.py`
+- pitch deck: `investor/vc_pitch_deck.md`
+- one-pager: `investor/one_pager.md`
+- demo script: `investor/demo_script.md`
+- diligence index: `investor/diligence_room_index.md`
+
+This is a private investor conversation state, not a public launch state.
+
+## Ready For Board Go-Live Review
+
+- board status: `board_go_live_candidate_with_human_approval_gates`
+- primary market: Canada
+- board brief: `board/board_go_live_brief.md`
+- expert review packet: `board/expert_review_packet.md`
+- launch checklist: `board/launch_control_checklist.md`
+- financial operating model: `board/financial_operating_model.md`
+- machine report: `system_review_graph/board_go_live_readiness_report.json`
+
+This is the board-review stage for a controlled private beta. It is not public
+launch approval, production deployment approval, legal advice, financial advice,
+customs/tariff advice, CFIA compliance approval, buyer validation, or revenue
+proof. The AI-built system has completed simulated expert review lanes and
+keeps real human approvals explicit.
+
+## Ready For Internal Source-Packet Review
+
+- customer workflow status: `customer_workflow_ready_internal`
+- display status: `Internal logic ready - external claims blocked`
+- customer stage: `Customer packet prototype active - real customer use not enabled`
+- source packet route: `/packets/new`
+- safe report route: `/packets/:id/readiness`
+- evidence route: `/packets/:id/evidence`
+- blocker route: `/packets/:id/blockers`
+- expert-review packet route: `/packets/:id/expert-review-packet`
+- scoped expert-review route: `/review/:token`
+- machine report: `system_review_graph/customer_readiness_report.json`
+- evidence ledger: `system_review_graph/evidence_ledger.json`
+- AI review runs: `system_review_graph/customer_ai_review_runs.json`
+- AI policy: `system_review_graph/ai_data_policy.json`
+- model router: `system_review_graph/ai_model_router.json`
+- redaction pipeline: `system_review_graph/redaction_pipeline.json`
+- no-AI workflow: `system_review_graph/manual_no_ai_workflow.json`
+- requirements matrix: `system_review_graph/requirements_traceability_matrix.json`
+- runtime contract: `system_review_graph/product_runtime_state.json`
+- RBAC matrix: `system_review_graph/auth_rbac_matrix.json`
+- audit events: `system_review_graph/audit_events.json`
+- deployment readiness: `system_review_graph/deployment_readiness_report.json`
+- local store: `system_review_graph/customer_workflow.sqlite`
+
+This lets a customer/operator packet enter the product and get a safe readiness
+report, upload evidence, refresh official-source records, view grouped blockers,
+run AI simulated review, generate expert-review packets, and export a
+customer-safe report. It also exposes local auth/RBAC, organization isolation,
+AI data-policy controls, per-evidence AI permissions, redaction previews,
+manual no-AI fallback, scoped expert review, admin audit, and deployment health
+surfaces. It still blocks tariff confirmation, CFIA compliance, supplier
+recommendation, buyer validation, import readiness, legal/compliance approval,
+and public launch claims.
+
+## Ready For Public Quick-Check Dry Run
+
+- public product: `Trade Readiness Copilot`
+- internal engine: `Importer Source Readiness Copilot`
+- public surface status: `public_quick_check_ready_local_with_external_gates`
+- tool routes: `/tools`, `/trade-check`, `/tools/import-readiness`,
+  `/tools/export-readiness`, `/tools/buyer-broker-packet`, `/start`
+- result route: `/public/packets/:id/result`
+- confirmation route: `/public/packets/:id/confirm`
+- workspace route: `/workspace`
+- API routes: `/api/public/starter`, `/api/public/quick-check`,
+  `/api/public/packets/:id/confirm`,
+  `/api/public/packets/:id/chatgpt-safe-summary`
+- report downloads: starter checklist, draft trade readiness, buyer-ready,
+  broker review, missing evidence, operator review, expert review
+- machine contract: `system_review_graph/public_trade_readiness_manifest.json`
+- exporter contract: `system_review_graph/exporter_mode_requirements.json`
+- upload policy: `system_review_graph/public_upload_policy.json`
+- policy monitor: `system_review_graph/intelligence_hub_policy_monitor.json`
+- opportunity scanner: `system_review_graph/opportunity_scanner_report.json`
+- country coverage: `system_review_graph/country_coverage_report.json`
+- transport readiness: `system_review_graph/transport_readiness_report.json`
+- billing controls: `system_review_graph/billing_credit_controls.json`
+- agent API: `system_review_graph/agent_api_manifest.json`
+- traffic pages: `system_review_graph/traffic_pages_manifest.json`
+- all-stage readiness: `system_review_graph/all_stage_readiness_report.json`
+- research execution: `system_review_graph/research_execution_plan.json`
+- expert network: `system_review_graph/expert_network_report.json`
+- team workspace: `system_review_graph/team_workspace_report.json`
+- billing usage ledger: `system_review_graph/billing_usage_ledger.json`
+- agent gateway: `system_review_graph/agent_api_gateway_contract.json`
+- launch operations: `system_review_graph/launch_operations_report.json`
+
+This is a local dry run of the public product flow. It supports beginner
+starter intake, PDF upload, quarantine metadata, native text/OCR triage,
+AI/data notice acceptance, user confirmation, readiness preview, blocked
+claims, draft PDF download, safe summaries, saved workspace review, and
+delete-files. The completion-stage routes add opportunity signals, country
+coverage visibility, pricing/credit controls, public policy/security pages,
+sample reports, source monitoring, and safe summaries. It is not public
+hosting, approval, tariff confirmation, CFIA clearance, customs/legal advice,
+buyer validation, payment readiness, shipment readiness, or commercial
+readiness.
+
+## All Local Go-Live Stages Implemented
+
+- stage report: `system_review_graph/all_stage_readiness_report.json`
+- status: `all_local_stages_implemented_with_external_gates`
+- local runbook stage count: 19
+- go-live state count: 18
+- runbook range: Stage 0 through Stage 18
+- route: `/stages`
+- proof: `python3 scripts/check_product.py`
+
+This means the local product has explicit Stage 0 promise-freeze coverage plus
+Stage 1-18 go-live state surfaces and proof checks for everything that can be
+built without real-world approvals. It does not mean production hosting, live
+payments, qualified legal/customs/tariff/CFIA review, real beta-user success,
+or public launch approval.
+
+## Next Valid Move
+
+The product now tells operators what is stopping external use. Remaining work
+requires real evidence: dated buyer/operator feedback, written contracts,
+source-rights approval, repeatable Canadian official-source refresh proof,
+qualified Canadian import/export or food compliance review, exporter-side
+country evidence where needed, legal/privacy approval, finance approval, and
+operator/security signoff.
+
+Do not report the product as fully operational or launch ready while
+`system_review_graph/continuation_plan.json` says `must_continue: true`.

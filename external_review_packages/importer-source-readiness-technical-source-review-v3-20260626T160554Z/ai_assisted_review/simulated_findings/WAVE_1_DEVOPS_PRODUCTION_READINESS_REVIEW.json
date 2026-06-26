@@ -1,0 +1,41 @@
+{
+  "affected_stage": "hosted_private_beta",
+  "finding_count": 1,
+  "findings": [
+    {
+      "affected_file_or_artifact": "system_review_graph/deployment_readiness_report.json",
+      "affected_stage": "hosted_private_beta",
+      "blocks_private_beta": true,
+      "blocks_public_launch": true,
+      "confidence": "high",
+      "finding_id": "DEVOPS_PRODUCTION_READINESS-AI-001",
+      "human_followup_required": true,
+      "issue": "The Docker/Compose stack and health routes make the product hostable locally, but no staging deployment proof exists for TLS, secure cookies, secret management, managed storage, backup restore, monitoring, rollback, support ownership, or incident response.",
+      "model_or_agent_used": "Codex GPT-5 simulated reviewer",
+      "owner": "DevOps/production reviewer",
+      "required_fix": "Provision a staging private-beta environment, wire production identity/secrets/storage/observability controls, run backup and rollback drills, and attach dated runbook evidence before external users are invited.",
+      "retest_command": "python3 scripts/check_product.py",
+      "review_origin": "ai_assisted_simulated_review",
+      "reviewer_role": "DevOps/Production Readiness Review",
+      "severity": "P0",
+      "web_sources_checked": []
+    }
+  ],
+  "human_followup_required": true,
+  "model_or_agent_used": "Codex GPT-5 simulated reviewer",
+  "proof_boundary": "This is an AI-assisted simulated review. It can create fixes or blockers, but it cannot open qualified approval or launch gates.",
+  "review_origin": "ai_assisted_simulated_review",
+  "reviewed_at": "2026-06-26T14:36:31Z",
+  "reviewer_role": "DevOps/Production Readiness Review",
+  "role_id": "devops-production-readiness",
+  "source_artifacts_reviewed": [
+    "Dockerfile",
+    "compose.yaml",
+    ".env.example",
+    "docs/DEPLOYMENT.md",
+    "system_review_graph/deployment_readiness_report.json"
+  ],
+  "verdict": "blocked",
+  "wave": 1,
+  "web_sources_checked": []
+}

@@ -1,0 +1,45 @@
+{
+  "affected_stage": "hosted_private_beta",
+  "finding_count": 1,
+  "findings": [
+    {
+      "affected_file_or_artifact": "REVIEW_USE_TERMS.md",
+      "affected_stage": "hosted_private_beta",
+      "blocks_private_beta": true,
+      "blocks_public_launch": true,
+      "confidence": "high",
+      "finding_id": "PRIVACY_LEGAL-AI-001",
+      "human_followup_required": true,
+      "issue": "The repo has review-use terms, AI policy controls, and deletion request tracking, but it does not yet contain a hosted-user privacy notice, retention schedule, processor/subprocessor inventory, or qualified privacy/legal signoff for customer trade documents.",
+      "model_or_agent_used": "Codex GPT-5 simulated reviewer",
+      "owner": "privacy/legal reviewer",
+      "required_fix": "Create jurisdiction-scoped privacy terms for hosted beta, map data categories and retention/deletion handling, record processor/subprocessor obligations, and obtain qualified privacy/legal review before collecting real customer data.",
+      "retest_command": "python3 scripts/check_product.py",
+      "review_origin": "ai_assisted_simulated_review",
+      "reviewer_role": "Privacy/Legal Review",
+      "severity": "P0",
+      "web_sources_checked": [
+        "https://www.priv.gc.ca/en/privacy-topics/privacy-laws-in-canada/the-personal-information-protection-and-electronic-documents-act-pipeda/"
+      ]
+    }
+  ],
+  "human_followup_required": true,
+  "model_or_agent_used": "Codex GPT-5 simulated reviewer",
+  "proof_boundary": "This is an AI-assisted simulated review. It can create fixes or blockers, but it cannot open qualified approval or launch gates.",
+  "review_origin": "ai_assisted_simulated_review",
+  "reviewed_at": "2026-06-26T14:36:31Z",
+  "reviewer_role": "Privacy/Legal Review",
+  "role_id": "privacy-legal",
+  "source_artifacts_reviewed": [
+    "REVIEW_USE_TERMS.md",
+    "docs/AI_DATA_POLICY.md",
+    "docs/SECURITY_PRIVACY.md",
+    "system_review_graph/ai_data_policy.json",
+    "system_review_graph/deletion_requests.json"
+  ],
+  "verdict": "blocked",
+  "wave": 1,
+  "web_sources_checked": [
+    "https://www.priv.gc.ca/en/privacy-topics/privacy-laws-in-canada/the-personal-information-protection-and-electronic-documents-act-pipeda/"
+  ]
+}

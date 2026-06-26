@@ -1,0 +1,47 @@
+{
+  "affected_stage": "hosted_private_beta",
+  "finding_count": 1,
+  "findings": [
+    {
+      "affected_file_or_artifact": "tests/test_operator_app.py",
+      "affected_stage": "hosted_private_beta",
+      "blocks_private_beta": true,
+      "blocks_public_launch": true,
+      "confidence": "high",
+      "finding_id": "AI_SAFETY-AI-001",
+      "human_followup_required": true,
+      "issue": "AI controls now include an adversarial uploaded-document prompt-injection regression, and AI output is fail-closed at the claim-gate level. Hosted beta still needs qualified AI safety review of model routing, redaction quality, prompt handling, logging, and incident response before real customer documents or provider calls are used.",
+      "model_or_agent_used": "Codex GPT-5 simulated reviewer",
+      "owner": "AI safety reviewer",
+      "required_fix": "Have a qualified AI safety reviewer evaluate the prompt injection regression, AI/data policy, model route contracts, redaction previews, manual/no-AI fallback, and hosted provider controls; record any P0/P1 findings before private beta.",
+      "retest_command": "python3 -m unittest tests/test_operator_app.py tests/test_product_runtime.py",
+      "review_origin": "ai_assisted_simulated_review",
+      "reviewer_role": "AI Safety/Prompt Injection Review",
+      "severity": "P0",
+      "web_sources_checked": [
+        "https://genai.owasp.org/llmrisk/llm01-prompt-injection/",
+        "https://www.nist.gov/itl/ai-risk-management-framework"
+      ]
+    }
+  ],
+  "human_followup_required": true,
+  "model_or_agent_used": "Codex GPT-5 simulated reviewer",
+  "proof_boundary": "This is an AI-assisted simulated review. It can create fixes or blockers, but it cannot open qualified approval or launch gates.",
+  "review_origin": "ai_assisted_simulated_review",
+  "reviewed_at": "2026-06-26T14:36:31Z",
+  "reviewer_role": "AI Safety/Prompt Injection Review",
+  "role_id": "ai-safety",
+  "source_artifacts_reviewed": [
+    "docs/AI_DATA_POLICY.md",
+    "system_review_graph/ai_model_router.json",
+    "system_review_graph/redaction_pipeline.json",
+    "system_review_graph/manual_no_ai_workflow.json",
+    "tests/test_operator_app.py"
+  ],
+  "verdict": "blocked",
+  "wave": 1,
+  "web_sources_checked": [
+    "https://genai.owasp.org/llmrisk/llm01-prompt-injection/",
+    "https://www.nist.gov/itl/ai-risk-management-framework"
+  ]
+}

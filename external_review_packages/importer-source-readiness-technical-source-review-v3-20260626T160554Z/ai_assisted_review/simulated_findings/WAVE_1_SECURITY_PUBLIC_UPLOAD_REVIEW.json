@@ -1,0 +1,45 @@
+{
+  "affected_stage": "hosted_private_beta",
+  "finding_count": 1,
+  "findings": [
+    {
+      "affected_file_or_artifact": "system_review_graph/public_upload_policy.json",
+      "affected_stage": "hosted_private_beta",
+      "blocks_private_beta": true,
+      "blocks_public_launch": true,
+      "confidence": "high",
+      "finding_id": "SECURITY_PUBLIC_UPLOAD-AI-001",
+      "human_followup_required": true,
+      "issue": "Public PDF uploads are locally quarantined and direct serving is disabled, but hosted enforcement remains unproven. The policy says rate limiting is only local-policy ready and the deployment docs still require malware scanning before public hosting.",
+      "model_or_agent_used": "Codex GPT-5 simulated reviewer",
+      "owner": "security reviewer",
+      "required_fix": "Add staged hosted upload enforcement with malware scanning, content-type and extension validation, storage isolation, rate limits, denial tests for unsafe files, and a qualified security review record before any external user upload.",
+      "retest_command": "python3 -m unittest tests/test_operator_app.py tests/test_document_processing.py",
+      "review_origin": "ai_assisted_simulated_review",
+      "reviewer_role": "Security/Public Upload Review",
+      "severity": "P0",
+      "web_sources_checked": [
+        "https://cheatsheetseries.owasp.org/cheatsheets/File_Upload_Cheat_Sheet.html"
+      ]
+    }
+  ],
+  "human_followup_required": true,
+  "model_or_agent_used": "Codex GPT-5 simulated reviewer",
+  "proof_boundary": "This is an AI-assisted simulated review. It can create fixes or blockers, but it cannot open qualified approval or launch gates.",
+  "review_origin": "ai_assisted_simulated_review",
+  "reviewed_at": "2026-06-26T14:36:31Z",
+  "reviewer_role": "Security/Public Upload Review",
+  "role_id": "security-public-upload",
+  "source_artifacts_reviewed": [
+    "docs/SECURITY_PRIVACY.md",
+    "docs/DEPLOYMENT.md",
+    "system_review_graph/public_upload_policy.json",
+    "system_review_graph/auth_rbac_matrix.json",
+    "src/importer_source_readiness/operator_app.py"
+  ],
+  "verdict": "blocked",
+  "wave": 1,
+  "web_sources_checked": [
+    "https://cheatsheetseries.owasp.org/cheatsheets/File_Upload_Cheat_Sheet.html"
+  ]
+}

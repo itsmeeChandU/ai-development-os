@@ -11,6 +11,31 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 PROJECT = ROOT / "product_projects" / "importer-source-readiness-copilot"
+EXPECTED_WAVE_1_REVIEW_ROLES = {
+    "UX/Product Usability Review",
+    "Security/Public Upload Review",
+    "Privacy/Legal Review",
+    "AI Safety/Prompt Injection Review",
+    "DevOps/Production Readiness Review",
+}
+REQUIRED_AI_ASSISTED_FINDING_FIELDS = {
+    "finding_id",
+    "reviewer_role",
+    "severity",
+    "affected_stage",
+    "affected_file_or_artifact",
+    "issue",
+    "owner",
+    "required_fix",
+    "retest_command",
+    "blocks_private_beta",
+    "blocks_public_launch",
+    "review_origin",
+    "model_or_agent_used",
+    "web_sources_checked",
+    "confidence",
+    "human_followup_required",
+}
 
 
 def _run(command: list[str], cwd: Path) -> subprocess.CompletedProcess[str]:
@@ -159,6 +184,7 @@ def main() -> int:
         PROJECT / "system_review_graph" / "external_review_findings_report.json",
         PROJECT / "system_review_graph" / "external_review_blocker_ledger.jsonl",
         PROJECT / "system_review_graph" / "ai_assisted_external_review_plan.json",
+        PROJECT / "system_review_graph" / "ai_assisted_external_review_findings_report.json",
         PROJECT / "system_review_graph" / "research_execution_runs.json",
         PROJECT / "system_review_graph" / "expert_review_work_orders.json",
         PROJECT / "system_review_graph" / "team_workspace_activity.json",
@@ -208,8 +234,14 @@ def main() -> int:
         PROJECT / "reviewer_packets" / "WAVE_2_REPORT_LANGUAGE_REVIEW.md",
         PROJECT / "reviewer_packets" / "WAVE_3_BILLING_PAYMENT_REVIEW.md",
         PROJECT / "ai_assisted_review" / "README.md",
+        PROJECT / "ai_assisted_review" / "AI_ASSISTED_REVIEW_SUMMARY.md",
         PROJECT / "ai_assisted_review" / "WEB_RESEARCH_SOURCE_LOG.md",
         PROJECT / "ai_assisted_review" / "simulated_findings" / ".gitkeep",
+        PROJECT / "ai_assisted_review" / "simulated_findings" / "WAVE_1_UX_PRODUCT_REVIEW.json",
+        PROJECT / "ai_assisted_review" / "simulated_findings" / "WAVE_1_SECURITY_PUBLIC_UPLOAD_REVIEW.json",
+        PROJECT / "ai_assisted_review" / "simulated_findings" / "WAVE_1_PRIVACY_LEGAL_REVIEW.json",
+        PROJECT / "ai_assisted_review" / "simulated_findings" / "WAVE_1_AI_SAFETY_REVIEW.json",
+        PROJECT / "ai_assisted_review" / "simulated_findings" / "WAVE_1_DEVOPS_PRODUCTION_READINESS_REVIEW.json",
         PROJECT / "ai_assisted_review" / "role_prompts" / "WAVE_1_UX_PRODUCT_REVIEW.md",
         PROJECT / "ai_assisted_review" / "role_prompts" / "WAVE_1_SECURITY_PUBLIC_UPLOAD_REVIEW.md",
         PROJECT / "ai_assisted_review" / "role_prompts" / "WAVE_1_PRIVACY_LEGAL_REVIEW.md",
@@ -416,6 +448,11 @@ def main() -> int:
     )
     ai_assisted_review = json.loads(
         (PROJECT / "system_review_graph" / "ai_assisted_external_review_plan.json").read_text(encoding="utf-8")
+    )
+    ai_assisted_findings = json.loads(
+        (PROJECT / "system_review_graph" / "ai_assisted_external_review_findings_report.json").read_text(
+            encoding="utf-8"
+        )
     )
     external_review_summary = json.loads(
         (PROJECT / "external_review_findings" / "EXTERNAL_REVIEW_SUMMARY.json").read_text(encoding="utf-8")
@@ -1003,6 +1040,50 @@ def main() -> int:
         print("Product project check: FAIL")
         print("AI-assisted review plan must support solo review without opening approval gates")
         return 1
+    if (
+        ai_assisted_review.get("wave_1_simulated_review_status") != "ai_assisted_wave_1_reviewed_with_blockers"
+        or ai_assisted_review.get("simulated_review_count") != 5
+        or ai_assisted_review.get("simulated_finding_count") != 5
+    ):
+        print("Product project check: FAIL")
+        print("AI-assisted review plan must record five Wave 1 simulated blocker findings")
+        return 1
+    if (
+        ai_assisted_findings.get("status") != "ai_assisted_wave_1_reviewed_with_blockers"
+        or ai_assisted_findings.get("review_origin") != "ai_assisted_simulated_review"
+        or ai_assisted_findings.get("real_external_review_count") != 0
+        or ai_assisted_findings.get("human_equivalent_approval") is not False
+        or ai_assisted_findings.get("can_open_private_beta_gate") is not False
+        or ai_assisted_findings.get("can_open_public_launch_gate") is not False
+        or ai_assisted_findings.get("simulated_review_count") != 5
+        or ai_assisted_findings.get("simulated_finding_count") != 5
+        or ai_assisted_findings.get("private_beta_blocking_findings") != 5
+    ):
+        print("Product project check: FAIL")
+        print("AI-assisted findings must be five simulated Wave 1 blockers with real approval gates closed")
+        return 1
+    simulated_reviews = ai_assisted_findings.get("simulated_reviews", [])
+    if {row.get("reviewer_role") for row in simulated_reviews} != EXPECTED_WAVE_1_REVIEW_ROLES:
+        print("Product project check: FAIL")
+        print("AI-assisted findings missing one or more Wave 1 reviewer roles")
+        return 1
+    for review in simulated_reviews:
+        if review.get("review_origin") != "ai_assisted_simulated_review" or review.get("verdict") != "blocked":
+            print("Product project check: FAIL")
+            print("AI-assisted review rows must stay simulated and blocked")
+            return 1
+        for finding in review.get("findings", []):
+            missing = REQUIRED_AI_ASSISTED_FINDING_FIELDS - set(finding)
+            if (
+                missing
+                or finding.get("review_origin") != "ai_assisted_simulated_review"
+                or finding.get("human_followup_required") is not True
+                or finding.get("blocks_private_beta") is not True
+                or finding.get("blocks_public_launch") is not True
+            ):
+                print("Product project check: FAIL")
+                print("AI-assisted simulated findings must be complete blockers requiring human follow-up")
+                return 1
     operation_coverage = product_operations.get("execution_coverage", {})
     for key in (
         "data_intake",
@@ -1129,6 +1210,9 @@ def main() -> int:
     print(f"external_review_completed={external_review['completed_review_count']}")
     print(f"external_review_blockers={len(external_review_blockers)}")
     print(f"ai_assisted_review_status={ai_assisted_review['status']}")
+    print(f"ai_assisted_wave_1_status={ai_assisted_findings['status']}")
+    print(f"ai_assisted_simulated_reviews={ai_assisted_findings['simulated_review_count']}")
+    print(f"ai_assisted_simulated_findings={ai_assisted_findings['simulated_finding_count']}")
     print(f"review_requests={len(review_requests)}")
     print(f"audit_events={len(audit_events['events'])}")
     print(f"deployment_status={deployment['status']}")
