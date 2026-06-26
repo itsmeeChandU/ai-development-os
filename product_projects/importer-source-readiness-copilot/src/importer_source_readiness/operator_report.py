@@ -6,6 +6,8 @@ from html import escape
 from pathlib import Path
 from typing import Any
 
+from .source_packet_workflow import CUSTOMER_PROTOTYPE_STATUS, SAFE_DISPLAY_STATUS
+
 
 def _rows(blockers: list[dict[str, Any]]) -> str:
     if not blockers:
@@ -24,6 +26,14 @@ def _rows(blockers: list[dict[str, Any]]) -> str:
 
 def _display_value(value: Any) -> str:
     return str(value).replace("_", " ")
+
+
+def _friendly_status(value: Any) -> str:
+    if value == "ready_with_external_gates":
+        return SAFE_DISPLAY_STATUS
+    if value == "operator_workflow_ready_internal":
+        return "Operator workbench usable for internal review"
+    return _display_value(value)
 
 
 def _work_queue_rows(workflow: dict[str, Any] | None) -> str:
@@ -60,7 +70,7 @@ def _render_operator_workflow(workflow: dict[str, Any] | None) -> str:
     can_use = "unknown"
     boundary = "Operator workflow report is required for day-to-day use."
     if workflow:
-        status = _display_value(workflow.get("status") or status)
+        status = str(workflow.get("display_status") or _friendly_status(workflow.get("status") or status))
         count = int(workflow.get("work_queue_count") or 0)
         can_use = "yes" if workflow.get("operator_can_use_now") else "no"
         boundary = str(workflow.get("proof_boundary") or boundary)
@@ -169,8 +179,8 @@ def _customer_packet_rows(customer_workflow: dict[str, Any] | None) -> str:
             "<tr>"
             f"<td><a href='/source-packets/{escape(str(packet.get('packet_id')))}'>{escape(str(packet.get('packet_name')))}</a></td>"
             f"<td>{escape(str(packet.get('product_name')))}</td>"
-            f"<td>{escape(str(packet.get('customer_visible_status')))}</td>"
-            f"<td>{escape(str(packet.get('evidence_count')))}</td>"
+            f"<td>{escape(str(packet.get('customer_visible_status_label')))}</td>"
+            f"<td>{escape(str((packet.get('evidence_summary') or {}).get('summary')))}</td>"
             f"<td>{escape(str(packet.get('blocker_count')))}</td>"
             f"<td>{escape(str(packet.get('next_valid_move')))}</td>"
             "</tr>"
@@ -183,7 +193,7 @@ def _render_customer_workflow(customer_workflow: dict[str, Any] | None) -> str:
     count = 0
     boundary = "Customer source-packet workflow has not been generated."
     if customer_workflow:
-        status = _display_value(customer_workflow.get("display_status") or customer_workflow.get("status") or status)
+        status = str(customer_workflow.get("display_status") or customer_workflow.get("status") or status)
         count = int(customer_workflow.get("packet_count") or 0)
         boundary = str(customer_workflow.get("proof_boundary") or boundary)
     return f"""
@@ -203,6 +213,48 @@ def _render_customer_workflow(customer_workflow: dict[str, Any] | None) -> str:
       <thead><tr><th>Packet</th><th>Product</th><th>Status</th><th>Evidence</th><th>Blockers</th><th>Next Valid Move</th></tr></thead>
       <tbody>{_customer_packet_rows(customer_workflow)}</tbody>
     </table>
+  </section>
+"""
+
+
+def _top_blocker_cards(customer_workflow: dict[str, Any] | None) -> str:
+    if not customer_workflow:
+        return ""
+    groups = customer_workflow.get("top_blockers", [])
+    cards = []
+    for group in groups[:6]:
+        cards.append(
+            "<article class='blocker-card'>"
+            f"<span>{escape(str(group.get('stage')))}</span>"
+            f"<h3>{escape(str(group.get('title')))}</h3>"
+            f"<p>{escape(str(group.get('next_valid_move')))}</p>"
+            "</article>"
+        )
+    return "\n".join(cards)
+
+
+def _render_private_beta_path(customer_workflow: dict[str, Any] | None) -> str:
+    if not customer_workflow:
+        return ""
+    private_beta = customer_workflow.get("private_beta_readiness", {})
+    ready = "".join(f"<li>{escape(str(row))}</li>" for row in private_beta.get("ready", []))
+    blocked = _top_blocker_cards(customer_workflow)
+    return f"""
+  <section class="private-beta" aria-labelledby="private-beta-title">
+    <div class="section-heading">
+      <div>
+        <h2 id="private-beta-title">Path To Private Beta</h2>
+        <p>{escape(str(private_beta.get("next_valid_move") or "Private beta is blocked until evidence and controls are complete."))}</p>
+      </div>
+      <div class="workflow-summary">
+        <span>{escape(str(private_beta.get("display_status") or "Private beta blocked"))}</span>
+        <strong>{escape(str(len(private_beta.get("blocked", []))))}</strong>
+        <em>blocked gates</em>
+      </div>
+    </div>
+    <div class="blocker-grid">{blocked}</div>
+    <h3>Ready</h3>
+    <ul>{ready}</ul>
   </section>
 """
 
@@ -256,6 +308,10 @@ def render_dashboard(
     .workflow-summary span {{ display: block; color: var(--muted); font-size: 12px; overflow-wrap: anywhere; }}
     .workflow-summary strong {{ display: block; font-size: 28px; }}
     .workflow-summary em {{ display: block; color: var(--accent); font-size: 12px; font-style: normal; font-weight: 700; }}
+    .blocker-grid {{ display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin: 16px 0; }}
+    .blocker-card {{ border: 1px solid var(--line); border-left: 4px solid var(--danger); border-radius: 6px; background: #fff; padding: 12px; }}
+    .blocker-card span {{ display: block; color: var(--muted); font-size: 12px; margin-bottom: 4px; }}
+    .blocker-card p {{ color: var(--muted); margin: 0; }}
     .screenshot-grid {{ display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; margin-top: 16px; }}
     .screenshot-card {{ border: 1px solid var(--line); border-radius: 6px; overflow: hidden; background: #fff; }}
     .screenshot-card img {{ display: block; width: 100%; aspect-ratio: 16 / 10; object-fit: contain; background: #111820; border-bottom: 1px solid var(--line); }}
@@ -284,13 +340,14 @@ def render_dashboard(
   <h1>Importer Source Readiness Copilot</h1>
   <p class="note">Local product logic is complete. External claims remain closed until the listed evidence gates are satisfied by dated official sources, contracts, buyers, and qualified review.</p>
   <section class="grid">
-    <div class="metric"><div class="label">Readiness status</div><div class="value">{escape(_display_value(readiness["status"]))}</div></div>
-    <div class="metric"><div class="label">External gate status</div><div class="value">{escape(_display_value(external["status"]))}</div></div>
+    <div class="metric"><div class="label">Status</div><div class="value">{escape(SAFE_DISPLAY_STATUS)}</div></div>
+    <div class="metric"><div class="label">Current Product Stage</div><div class="value">{escape(CUSTOMER_PROTOTYPE_STATUS)}</div></div>
     <div class="metric"><div class="label">Source rows</div><div class="value">{escape(str(readiness["row_count"]))}</div></div>
     <div class="metric"><div class="label">Total blockers</div><div class="value">{total_blockers}</div></div>
   </section>
-{_render_operator_workflow(operator_workflow)}
 {_render_customer_workflow(customer_workflow)}
+{_render_private_beta_path(customer_workflow)}
+{_render_operator_workflow(operator_workflow)}
 {_render_screenshot_gallery(screenshot_manifest)}
   <h2>Readiness Blockers</h2>
   <table>

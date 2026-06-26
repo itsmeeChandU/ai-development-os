@@ -30,9 +30,15 @@ review, and live official-source refresh remain later gates.
 /source-packets/new
 /source-packets/:id
 /source-packets/:id/evidence
+/source-packets/:id/blockers
 /source-packets/:id/readiness
 /source-packets/:id/readiness-report
+/source-packets/:id/expert-review-packet
 /source-packets/:id/export
+/operator/queue
+/operator/packets/:id
+/admin/sources
+/admin/gates
 ```
 
 ## Customer-Visible Statuses
@@ -72,3 +78,19 @@ legal_or_compliance_approved
 A local user can create or view one source packet, inspect evidence, see blocked
 claims, and export a safe readiness report without the product giving customs,
 tariff, CFIA, legal, supplier, buyer, or launch approval.
+
+## Required Actions
+
+```text
+Refresh Official Sources
+Upload Evidence
+Request Operator Review
+Run AI Review
+Generate Expert Review Packet
+Export Readiness Report
+```
+
+Source refresh records `accessed_at`, `last_verified_at`, `content_hash`,
+HTTP status, source change status, refresh actor, and refresh run ID. A refresh
+can close stale-source proof only. It cannot approve import, tariff, CFIA,
+supplier, buyer, legal, or launch claims.

@@ -26,8 +26,15 @@ The product remains internally usable with external claims blocked:
 ```text
 status=ready_with_external_gates
 customer_workflow_status=customer_workflow_ready_internal
+customer_blocker_groups=4
+customer_store=ready
 operator_workflow_status=operator_workflow_ready_internal
 startup_status=startup_in_progress
+unsafe_gates=closed
 ```
+
+Latest local proof also verifies customer packet prototype status, grouped
+blockers, evidence quality, AI simulated review runs, expert-review packet
+export, and the SQLite workflow store.
 
 Any failure should become a blocker row or a targeted repair before review.

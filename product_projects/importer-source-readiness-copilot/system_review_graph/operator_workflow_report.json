@@ -131,6 +131,7 @@
     "revenue_proven",
     "supplier_recommendation_ready"
   ],
+  "display_status": "Operator workbench usable for internal review",
   "generated_at": "2026-06-25T00:00:00+00:00",
   "not_allowed_use": [
     "customs_or_tariff_advice",

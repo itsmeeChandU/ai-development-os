@@ -8,6 +8,7 @@ from .operator_workflow import build_operator_workflow, write_operator_workflow
 from .operator_report import render_dashboard, write_dashboard
 from .operator_screenshots import build_screenshot_manifest, write_screenshot_manifest
 from .readiness import evaluate_cards, load_cards, write_report
+from .customer_store import inspect_customer_store, write_customer_store
 from .source_packet_workflow import build_customer_workflow, build_evidence_ledger
 
 __all__ = [
@@ -20,10 +21,12 @@ __all__ = [
     "build_screenshot_manifest",
     "build_vc_pitch_readiness",
     "evaluate_cards",
+    "inspect_customer_store",
     "load_cards",
     "load_json",
     "render_dashboard",
     "write_dashboard",
+    "write_customer_store",
     "write_json",
     "write_operator_workflow",
     "write_report",

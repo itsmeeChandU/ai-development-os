@@ -28,9 +28,10 @@ python3 scripts/serve_operator_app.py
 
 This is the surface an operator or founder can use today. It includes
 `/source-packets/new`, `/source-packets/:id/evidence`,
-`/source-packets/:id/readiness-report`, `/source-packets/:id/export`,
-`/operator/queue`, and `/operator/packets/:id`. It is not yet an external
-customer/importer SaaS app.
+`/source-packets/:id/blockers`, `/source-packets/:id/readiness-report`,
+`/source-packets/:id/expert-review-packet`, `/source-packets/:id/export`,
+`/operator/queue`, `/operator/packets/:id`, `/admin/sources`, and
+`/admin/gates`. It is not yet an external customer/importer SaaS app.
 
 ## Ready Now
 
@@ -55,6 +56,12 @@ customer/importer SaaS app.
 - evidence ledger with proof boundaries
 - blocked-safe customer readiness report
 - source-packet export routes
+- grouped customer blockers
+- official-source refresh records
+- AI simulated review runs
+- expert-review packet export
+- local SQLite workflow store
+- admin source registry and private-beta gates
 - local operator app server
 - static operator dashboard
 - generated operator screenshot manifest and dashboard gallery
@@ -102,17 +109,24 @@ keeps real human approvals explicit.
 ## Ready For Internal Source-Packet Review
 
 - customer workflow status: `customer_workflow_ready_internal`
-- display status: `Internal operator ready - external claims blocked`
+- display status: `Internal logic ready - external claims blocked`
+- customer stage: `Customer packet prototype active - real customer use not enabled`
 - source packet route: `/source-packets/new`
 - safe report route: `/source-packets/:id/readiness-report`
 - evidence route: `/source-packets/:id/evidence`
+- blocker route: `/source-packets/:id/blockers`
+- expert-review packet route: `/source-packets/:id/expert-review-packet`
 - machine report: `system_review_graph/customer_readiness_report.json`
 - evidence ledger: `system_review_graph/evidence_ledger.json`
+- AI review runs: `system_review_graph/customer_ai_review_runs.json`
+- local store: `system_review_graph/customer_workflow.sqlite`
 
 This lets a customer/operator packet enter the product and get a safe readiness
-report. It still blocks tariff confirmation, CFIA compliance, supplier
-recommendation, buyer validation, import readiness, legal/compliance approval,
-and public launch claims.
+report, upload evidence, refresh official-source records, view grouped blockers,
+run AI simulated review, generate expert-review packets, and export a
+customer-safe report. It still blocks tariff confirmation, CFIA compliance,
+supplier recommendation, buyer validation, import readiness,
+legal/compliance approval, and public launch claims.
 
 ## Next Valid Move
 

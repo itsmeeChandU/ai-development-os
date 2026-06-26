@@ -1,0 +1,93 @@
+[
+  {
+    "claim_boundary": "AI simulated review creates blockers and next moves only. It does not replace brokers, counsel, buyers, operators, or qualified reviewers.",
+    "generated_at": "2026-06-25T00:00:00+00:00",
+    "human_gate": "required_before_external_claims",
+    "packet_id": "packet-frozen-tuna-canada-001",
+    "results": [
+      {
+        "blocker_group_ids": [
+          "compliance_review",
+          "source_rights_contract",
+          "buyer_validation"
+        ],
+        "finding": "Simulation can create blockers and next moves; it cannot open external-world approval gates.",
+        "human_gate_required": true,
+        "human_reviewer": "not_assigned",
+        "next_valid_move": "Export the expert review packet and collect a scoped human decision.",
+        "owner_role": "Compliance",
+        "review_type": "AI simulated review",
+        "reviewer_id": "canada_compliance",
+        "status": "blocked_human_gate_required",
+        "title": "Canada compliance simulation"
+      },
+      {
+        "blocker_group_ids": [
+          "compliance_review",
+          "source_rights_contract",
+          "buyer_validation"
+        ],
+        "finding": "Simulation can create blockers and next moves; it cannot open external-world approval gates.",
+        "human_gate_required": true,
+        "human_reviewer": "not_assigned",
+        "next_valid_move": "Export the expert review packet and collect a scoped human decision.",
+        "owner_role": "Legal / Privacy",
+        "review_type": "AI simulated review",
+        "reviewer_id": "privacy_legal",
+        "status": "blocked_human_gate_required",
+        "title": "Privacy/legal simulation"
+      },
+      {
+        "blocker_group_ids": [
+          "compliance_review",
+          "source_rights_contract",
+          "buyer_validation"
+        ],
+        "finding": "Simulation can create blockers and next moves; it cannot open external-world approval gates.",
+        "human_gate_required": true,
+        "human_reviewer": "not_assigned",
+        "next_valid_move": "Export the expert review packet and collect a scoped human decision.",
+        "owner_role": "Operations",
+        "review_type": "AI simulated review",
+        "reviewer_id": "source_rights",
+        "status": "blocked_human_gate_required",
+        "title": "Source-rights simulation"
+      },
+      {
+        "blocker_group_ids": [
+          "compliance_review",
+          "source_rights_contract",
+          "buyer_validation"
+        ],
+        "finding": "Simulation can create blockers and next moves; it cannot open external-world approval gates.",
+        "human_gate_required": true,
+        "human_reviewer": "not_assigned",
+        "next_valid_move": "Export the expert review packet and collect a scoped human decision.",
+        "owner_role": "Product",
+        "review_type": "AI simulated review",
+        "reviewer_id": "buyer_validation",
+        "status": "blocked_human_gate_required",
+        "title": "Buyer-validation simulation"
+      },
+      {
+        "blocker_group_ids": [
+          "compliance_review",
+          "source_rights_contract",
+          "buyer_validation"
+        ],
+        "finding": "Simulation can create blockers and next moves; it cannot open external-world approval gates.",
+        "human_gate_required": true,
+        "human_reviewer": "not_assigned",
+        "next_valid_move": "Export the expert review packet and collect a scoped human decision.",
+        "owner_role": "Launch",
+        "review_type": "AI simulated review",
+        "reviewer_id": "launch_gate",
+        "status": "blocked_human_gate_required",
+        "title": "Launch-gate simulation"
+      }
+    ],
+    "review_type": "AI simulated review",
+    "run_id": "ai-review-packet-frozen-tuna-canada-001-2026-06-25T000000Z0000",
+    "status": "simulated_review_complete_human_gates_closed"
+  }
+]

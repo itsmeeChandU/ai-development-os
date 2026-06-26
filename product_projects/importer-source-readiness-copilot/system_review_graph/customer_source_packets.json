@@ -1,5 +1,50 @@
 [
   {
+    "actions": [
+      {
+        "id": "refresh_sources",
+        "label": "Refresh Official Sources",
+        "method": "POST",
+        "route": "/source-packets/packet-frozen-tuna-canada-001/actions"
+      },
+      {
+        "id": "upload_evidence",
+        "label": "Upload Evidence",
+        "method": "POST",
+        "route": "/source-packets/packet-frozen-tuna-canada-001/actions"
+      },
+      {
+        "id": "request_operator_review",
+        "label": "Request Operator Review",
+        "method": "POST",
+        "route": "/source-packets/packet-frozen-tuna-canada-001/actions"
+      },
+      {
+        "id": "run_ai_review",
+        "label": "Run AI Review",
+        "method": "POST",
+        "route": "/source-packets/packet-frozen-tuna-canada-001/actions"
+      },
+      {
+        "id": "generate_expert_packet",
+        "label": "Generate Expert Review Packet",
+        "method": "POST",
+        "route": "/source-packets/packet-frozen-tuna-canada-001/actions"
+      },
+      {
+        "id": "export_report",
+        "label": "Export Readiness Report",
+        "method": "GET",
+        "route": "/source-packets/packet-frozen-tuna-canada-001/export"
+      }
+    ],
+    "allowed_actions": [
+      "Internal review",
+      "Draft readiness report",
+      "Expert review packet",
+      "AI simulated review",
+      "Official-source refresh record"
+    ],
     "blocked_claims": [
       "tariff_confirmed",
       "cfia_compliant",
@@ -10,117 +55,316 @@
       "customs_or_tariff_advice_ready",
       "legal_or_compliance_approved"
     ],
+    "blocked_claims_display": [
+      "Tariff/HS classification",
+      "CFIA/food import compliance",
+      "Supplier/source confidence",
+      "Buyer validation",
+      "Import readiness",
+      "Commercial launch readiness",
+      "Customs or tariff advice",
+      "Legal/compliance approval"
+    ],
     "blocker_count": 7,
+    "blocker_groups": [
+      {
+        "blocker_count": 3,
+        "blocker_ids": [
+          "packet-frozen-tuna-canada-001:evidence-frozen-tuna-cid-reference:stale",
+          "packet-frozen-tuna-canada-001:evidence-frozen-tuna-cbsa-import-workflow:stale",
+          "packet-frozen-tuna-canada-001:evidence-frozen-tuna-cfia-airs-reference:stale"
+        ],
+        "evidence_required": "Fresh official-source refresh record with accessed_at, last_verified_at, content_hash, HTTP status, and reviewer boundary.",
+        "id": "source_freshness",
+        "issues": [
+          "evidence freshness is stale or not proven",
+          "evidence freshness is stale or not proven",
+          "evidence freshness is stale or not proven"
+        ],
+        "next_valid_move": "Refresh official sources and keep claims reference-only until qualified review.",
+        "owner_role": "Research",
+        "priority": 0,
+        "stage": "P0 - Must fix before customer/private beta",
+        "status": "blocked",
+        "title": "Source Freshness"
+      },
+      {
+        "blocker_count": 2,
+        "blocker_ids": [
+          "packet-frozen-tuna-canada-001:restricted_party_screening-missing",
+          "packet-frozen-tuna-canada-001:qualified_review-missing"
+        ],
+        "evidence_required": "Dated restricted-party screening record with source and reviewer boundary.",
+        "id": "compliance_review",
+        "issues": [
+          "restricted_party_screening_status is missing or incomplete",
+          "qualified_review_status is missing or incomplete"
+        ],
+        "next_valid_move": "Run restricted-party screening and attach the dated search record.",
+        "owner_role": "Operations",
+        "priority": 1,
+        "stage": "P0 - Must fix before customer/private beta",
+        "status": "blocked",
+        "title": "Compliance Review"
+      },
+      {
+        "blocker_count": 1,
+        "blocker_ids": [
+          "packet-frozen-tuna-canada-001:contract-missing"
+        ],
+        "evidence_required": "Signed source-rights, data-rights, or commercial terms record.",
+        "id": "source_rights_contract",
+        "issues": [
+          "contract_status is missing or incomplete"
+        ],
+        "next_valid_move": "Attach source-rights or commercial terms before external use.",
+        "owner_role": "Operations",
+        "priority": 2,
+        "stage": "P0 - Must fix before customer/private beta",
+        "status": "blocked",
+        "title": "Source Rights / Contract"
+      },
+      {
+        "blocker_count": 1,
+        "blocker_ids": [
+          "packet-frozen-tuna-canada-001:buyer_validation-missing"
+        ],
+        "evidence_required": "Dated buyer/operator feedback tied to the packet and intended use.",
+        "id": "buyer_validation",
+        "issues": [
+          "buyer_validation_status is missing or incomplete"
+        ],
+        "next_valid_move": "Collect buyer/operator validation before demand or PMF claims.",
+        "owner_role": "Product",
+        "priority": 3,
+        "stage": "P0 - Must fix before customer/private beta",
+        "status": "blocked",
+        "title": "Buyer Validation"
+      }
+    ],
     "blockers": [
       {
-        "created_at": "2026-06-26T01:48:49+00:00",
+        "claim_blocked": "Source Freshness",
+        "created_at": "2026-06-26T02:23:08+00:00",
         "evidence": "source packet packet-frozen-tuna-canada-001",
+        "evidence_required": "Fresh official-source refresh record with accessed_at, last_verified_at, content_hash, HTTP status, and reviewer boundary.",
         "gate": "closed",
+        "group": "source_freshness",
+        "group_title": "Source Freshness",
+        "human_gate_required": true,
+        "human_reviewer": "not_assigned",
         "id": "packet-frozen-tuna-canada-001:evidence-frozen-tuna-cid-reference:stale",
         "issue": "evidence freshness is stale or not proven",
         "module": "official_source_refresh",
         "next_valid_move": "Refresh the official source and record accessed_at, last_verified_at, and content hash.",
         "owner": "research",
+        "owner_role": "Research",
         "packet_id": "packet-frozen-tuna-canada-001",
+        "resolution_actions": [
+          "attach_evidence",
+          "request_review",
+          "add_note",
+          "resolve_with_evidence",
+          "mark_not_applicable"
+        ],
         "resolution_evidence_id": "",
         "resolved_at": "",
+        "review_type": "not_started",
         "severity": "P1_blocks_external_claim",
+        "status": "open",
         "unsafe_to_bypass": true
       },
       {
-        "created_at": "2026-06-26T01:48:49+00:00",
+        "claim_blocked": "Source Freshness",
+        "created_at": "2026-06-26T02:23:08+00:00",
         "evidence": "source packet packet-frozen-tuna-canada-001",
+        "evidence_required": "Fresh official-source refresh record with accessed_at, last_verified_at, content_hash, HTTP status, and reviewer boundary.",
         "gate": "closed",
+        "group": "source_freshness",
+        "group_title": "Source Freshness",
+        "human_gate_required": true,
+        "human_reviewer": "not_assigned",
         "id": "packet-frozen-tuna-canada-001:evidence-frozen-tuna-cbsa-import-workflow:stale",
         "issue": "evidence freshness is stale or not proven",
         "module": "official_source_refresh",
         "next_valid_move": "Refresh the official source and record accessed_at, last_verified_at, and content hash.",
         "owner": "research",
+        "owner_role": "Research",
         "packet_id": "packet-frozen-tuna-canada-001",
+        "resolution_actions": [
+          "attach_evidence",
+          "request_review",
+          "add_note",
+          "resolve_with_evidence",
+          "mark_not_applicable"
+        ],
         "resolution_evidence_id": "",
         "resolved_at": "",
+        "review_type": "not_started",
         "severity": "P1_blocks_external_claim",
+        "status": "open",
         "unsafe_to_bypass": true
       },
       {
-        "created_at": "2026-06-26T01:48:49+00:00",
+        "claim_blocked": "Source Freshness",
+        "created_at": "2026-06-26T02:23:08+00:00",
         "evidence": "source packet packet-frozen-tuna-canada-001",
+        "evidence_required": "Fresh official-source refresh record with accessed_at, last_verified_at, content_hash, HTTP status, and reviewer boundary.",
         "gate": "closed",
+        "group": "source_freshness",
+        "group_title": "Source Freshness",
+        "human_gate_required": true,
+        "human_reviewer": "not_assigned",
         "id": "packet-frozen-tuna-canada-001:evidence-frozen-tuna-cfia-airs-reference:stale",
         "issue": "evidence freshness is stale or not proven",
         "module": "official_source_refresh",
         "next_valid_move": "Refresh the official source and record accessed_at, last_verified_at, and content hash.",
         "owner": "research",
+        "owner_role": "Research",
         "packet_id": "packet-frozen-tuna-canada-001",
+        "resolution_actions": [
+          "attach_evidence",
+          "request_review",
+          "add_note",
+          "resolve_with_evidence",
+          "mark_not_applicable"
+        ],
         "resolution_evidence_id": "",
         "resolved_at": "",
+        "review_type": "not_started",
         "severity": "P1_blocks_external_claim",
+        "status": "open",
         "unsafe_to_bypass": true
       },
       {
-        "created_at": "2026-06-26T01:48:49+00:00",
+        "claim_blocked": "Compliance Review",
+        "created_at": "2026-06-26T02:23:08+00:00",
         "evidence": "source packet packet-frozen-tuna-canada-001",
+        "evidence_required": "Dated restricted-party screening record with source and reviewer boundary.",
         "gate": "closed",
+        "group": "compliance_review",
+        "group_title": "Compliance Review",
+        "human_gate_required": true,
+        "human_reviewer": "not_assigned",
         "id": "packet-frozen-tuna-canada-001:restricted_party_screening-missing",
         "issue": "restricted_party_screening_status is missing or incomplete",
         "module": "restricted_party_screening",
         "next_valid_move": "Complete restricted-party screening.",
         "owner": "operations",
+        "owner_role": "Operations",
         "packet_id": "packet-frozen-tuna-canada-001",
+        "resolution_actions": [
+          "attach_evidence",
+          "request_review",
+          "add_note",
+          "resolve_with_evidence",
+          "mark_not_applicable"
+        ],
         "resolution_evidence_id": "",
         "resolved_at": "",
+        "review_type": "not_started",
         "severity": "P1_blocks_external_claim",
+        "status": "open",
         "unsafe_to_bypass": true
       },
       {
-        "created_at": "2026-06-26T01:48:49+00:00",
+        "claim_blocked": "Compliance Review",
+        "created_at": "2026-06-26T02:23:08+00:00",
         "evidence": "source packet packet-frozen-tuna-canada-001",
+        "evidence_required": "Scoped Canadian import/export, food, customs, or broker review finding.",
         "gate": "closed",
+        "group": "compliance_review",
+        "group_title": "Compliance Review",
+        "human_gate_required": true,
+        "human_reviewer": "not_assigned",
         "id": "packet-frozen-tuna-canada-001:qualified_review-missing",
         "issue": "qualified_review_status is missing or incomplete",
         "module": "expert_review",
         "next_valid_move": "Request qualified import/compliance review.",
         "owner": "compliance",
+        "owner_role": "Compliance",
         "packet_id": "packet-frozen-tuna-canada-001",
+        "resolution_actions": [
+          "attach_evidence",
+          "request_review",
+          "add_note",
+          "resolve_with_evidence",
+          "mark_not_applicable"
+        ],
         "resolution_evidence_id": "",
         "resolved_at": "",
+        "review_type": "not_started",
         "severity": "P1_blocks_external_claim",
+        "status": "open",
         "unsafe_to_bypass": true
       },
       {
-        "created_at": "2026-06-26T01:48:49+00:00",
+        "claim_blocked": "Buyer Validation",
+        "created_at": "2026-06-26T02:23:08+00:00",
         "evidence": "source packet packet-frozen-tuna-canada-001",
+        "evidence_required": "Dated buyer/operator feedback tied to the packet and intended use.",
         "gate": "closed",
+        "group": "buyer_validation",
+        "group_title": "Buyer Validation",
+        "human_gate_required": true,
+        "human_reviewer": "not_assigned",
         "id": "packet-frozen-tuna-canada-001:buyer_validation-missing",
         "issue": "buyer_validation_status is missing or incomplete",
         "module": "buyer_validation",
         "next_valid_move": "Collect dated buyer/operator feedback.",
         "owner": "product",
+        "owner_role": "Product",
         "packet_id": "packet-frozen-tuna-canada-001",
+        "resolution_actions": [
+          "attach_evidence",
+          "request_review",
+          "add_note",
+          "resolve_with_evidence",
+          "mark_not_applicable"
+        ],
         "resolution_evidence_id": "",
         "resolved_at": "",
+        "review_type": "not_started",
         "severity": "P1_blocks_external_claim",
+        "status": "open",
         "unsafe_to_bypass": true
       },
       {
-        "created_at": "2026-06-26T01:48:49+00:00",
+        "claim_blocked": "Source Rights / Contract",
+        "created_at": "2026-06-26T02:23:08+00:00",
         "evidence": "source packet packet-frozen-tuna-canada-001",
+        "evidence_required": "Signed source-rights, data-rights, or commercial terms record.",
         "gate": "closed",
+        "group": "source_rights_contract",
+        "group_title": "Source Rights / Contract",
+        "human_gate_required": true,
+        "human_reviewer": "not_assigned",
         "id": "packet-frozen-tuna-canada-001:contract-missing",
         "issue": "contract_status is missing or incomplete",
         "module": "commercial_contract",
         "next_valid_move": "Attach source-rights or commercial terms.",
         "owner": "operations",
+        "owner_role": "Operations",
         "packet_id": "packet-frozen-tuna-canada-001",
+        "resolution_actions": [
+          "attach_evidence",
+          "request_review",
+          "add_note",
+          "resolve_with_evidence",
+          "mark_not_applicable"
+        ],
         "resolution_evidence_id": "",
         "resolved_at": "",
+        "review_type": "not_started",
         "severity": "P1_blocks_external_claim",
+        "status": "open",
         "unsafe_to_bypass": true
       }
     ],
     "customer_visible_status": "blocked_stale_source",
+    "customer_visible_status_label": "Blocked - source freshness missing",
     "destination_country": "Canada",
-    "display_status": "Internal operator ready - external claims blocked",
+    "display_status": "Internal logic ready - external claims blocked",
     "evidence_count": 3,
     "evidence_items": [
       {
@@ -134,9 +378,17 @@
         "file_path": "",
         "freshness_status": "needs_current_refresh_before_claims",
         "human_review_status": "not_reviewed",
+        "labels": [
+          "fixture",
+          "official_reference",
+          "reference_only",
+          "review_required",
+          "stale"
+        ],
         "last_verified_at": "",
         "ledger_status": "blocked_stale_source",
         "packet_id": "packet-frozen-tuna-canada-001",
+        "quality_status": "stale",
         "review_required": true,
         "reviewed_at": "",
         "reviewed_by": "",
@@ -156,9 +408,16 @@
         "file_path": "",
         "freshness_status": "needs_current_refresh_before_claims",
         "human_review_status": "not_reviewed",
+        "labels": [
+          "official_reference",
+          "reference_only",
+          "review_required",
+          "stale"
+        ],
         "last_verified_at": "",
         "ledger_status": "blocked_stale_source",
         "packet_id": "packet-frozen-tuna-canada-001",
+        "quality_status": "stale",
         "review_required": true,
         "reviewed_at": "",
         "reviewed_by": "",
@@ -178,9 +437,16 @@
         "file_path": "",
         "freshness_status": "needs_current_refresh_before_claims",
         "human_review_status": "not_reviewed",
+        "labels": [
+          "official_reference",
+          "reference_only",
+          "review_required",
+          "stale"
+        ],
         "last_verified_at": "",
         "ledger_status": "blocked_stale_source",
         "packet_id": "packet-frozen-tuna-canada-001",
+        "quality_status": "stale",
         "review_required": true,
         "reviewed_at": "",
         "reviewed_by": "",
@@ -190,19 +456,121 @@
         "uploaded_by": "operator"
       }
     ],
+    "evidence_summary": {
+      "accepted": 0,
+      "attached": 3,
+      "human_reviewed": 0,
+      "missing": 5,
+      "missing_items": [
+        "Fresh official-source refresh",
+        "Qualified Canada compliance review",
+        "Commercial/source contract",
+        "Buyer/operator validation",
+        "Restricted-party screening record"
+      ],
+      "reference_only": 3,
+      "stale": 3,
+      "summary": "3 attached / 5 missing; 3 stale; 3 reference-only"
+    },
     "hs_code_known": true,
     "hs_code_value": "0304870000",
     "intended_use": "Assess whether this source packet is ready for internal importer/source-readiness review.",
-    "next_valid_move": "Refresh the official source and record accessed_at, last_verified_at, and content hash.",
+    "next_valid_move": "Refresh official sources and keep claims reference-only until qualified review.",
+    "not_allowed_actions": [
+      "Import readiness claim",
+      "Tariff confirmation",
+      "CFIA clearance",
+      "Supplier recommendation",
+      "Buyer validation claim",
+      "Public launch claim"
+    ],
     "official_reference_count": 10,
     "origin_country": "Vietnam",
     "packet_id": "packet-frozen-tuna-canada-001",
     "packet_name": "Frozen tuna Canada source packet",
     "product_category": "food_import",
     "product_name": "Frozen tuna fillet",
+    "readiness_status": "not_ready_for_external_action",
+    "readiness_status_label": "Blocked - not ready for external action",
     "safe_summary": "This packet is not ready for external action. It needs more evidence, operator review, or qualified expert review before any customs, tariff, supplier, buyer, CFIA, legal, or launch claim can be made.",
     "source_url": "https://ised-isde.canada.ca/site/ised/en/research-and-business-intelligence/canadian-importers-database",
     "supplier_country": "Vietnam",
-    "supplier_name": "Example Seafood Supplier"
+    "supplier_name": "Example Seafood Supplier",
+    "top_blockers": [
+      {
+        "blocker_count": 3,
+        "blocker_ids": [
+          "packet-frozen-tuna-canada-001:evidence-frozen-tuna-cid-reference:stale",
+          "packet-frozen-tuna-canada-001:evidence-frozen-tuna-cbsa-import-workflow:stale",
+          "packet-frozen-tuna-canada-001:evidence-frozen-tuna-cfia-airs-reference:stale"
+        ],
+        "evidence_required": "Fresh official-source refresh record with accessed_at, last_verified_at, content_hash, HTTP status, and reviewer boundary.",
+        "id": "source_freshness",
+        "issues": [
+          "evidence freshness is stale or not proven",
+          "evidence freshness is stale or not proven",
+          "evidence freshness is stale or not proven"
+        ],
+        "next_valid_move": "Refresh official sources and keep claims reference-only until qualified review.",
+        "owner_role": "Research",
+        "priority": 0,
+        "stage": "P0 - Must fix before customer/private beta",
+        "status": "blocked",
+        "title": "Source Freshness"
+      },
+      {
+        "blocker_count": 2,
+        "blocker_ids": [
+          "packet-frozen-tuna-canada-001:restricted_party_screening-missing",
+          "packet-frozen-tuna-canada-001:qualified_review-missing"
+        ],
+        "evidence_required": "Dated restricted-party screening record with source and reviewer boundary.",
+        "id": "compliance_review",
+        "issues": [
+          "restricted_party_screening_status is missing or incomplete",
+          "qualified_review_status is missing or incomplete"
+        ],
+        "next_valid_move": "Run restricted-party screening and attach the dated search record.",
+        "owner_role": "Operations",
+        "priority": 1,
+        "stage": "P0 - Must fix before customer/private beta",
+        "status": "blocked",
+        "title": "Compliance Review"
+      },
+      {
+        "blocker_count": 1,
+        "blocker_ids": [
+          "packet-frozen-tuna-canada-001:contract-missing"
+        ],
+        "evidence_required": "Signed source-rights, data-rights, or commercial terms record.",
+        "id": "source_rights_contract",
+        "issues": [
+          "contract_status is missing or incomplete"
+        ],
+        "next_valid_move": "Attach source-rights or commercial terms before external use.",
+        "owner_role": "Operations",
+        "priority": 2,
+        "stage": "P0 - Must fix before customer/private beta",
+        "status": "blocked",
+        "title": "Source Rights / Contract"
+      },
+      {
+        "blocker_count": 1,
+        "blocker_ids": [
+          "packet-frozen-tuna-canada-001:buyer_validation-missing"
+        ],
+        "evidence_required": "Dated buyer/operator feedback tied to the packet and intended use.",
+        "id": "buyer_validation",
+        "issues": [
+          "buyer_validation_status is missing or incomplete"
+        ],
+        "next_valid_move": "Collect buyer/operator validation before demand or PMF claims.",
+        "owner_role": "Product",
+        "priority": 3,
+        "stage": "P0 - Must fix before customer/private beta",
+        "status": "blocked",
+        "title": "Buyer Validation"
+      }
+    ]
   }
 ]

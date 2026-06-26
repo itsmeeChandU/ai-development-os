@@ -30,6 +30,10 @@
     .workflow-summary span { display: block; color: var(--muted); font-size: 12px; overflow-wrap: anywhere; }
     .workflow-summary strong { display: block; font-size: 28px; }
     .workflow-summary em { display: block; color: var(--accent); font-size: 12px; font-style: normal; font-weight: 700; }
+    .blocker-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin: 16px 0; }
+    .blocker-card { border: 1px solid var(--line); border-left: 4px solid var(--danger); border-radius: 6px; background: #fff; padding: 12px; }
+    .blocker-card span { display: block; color: var(--muted); font-size: 12px; margin-bottom: 4px; }
+    .blocker-card p { color: var(--muted); margin: 0; }
     .screenshot-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; margin-top: 16px; }
     .screenshot-card { border: 1px solid var(--line); border-radius: 6px; overflow: hidden; background: #fff; }
     .screenshot-card img { display: block; width: 100%; aspect-ratio: 16 / 10; object-fit: contain; background: #111820; border-bottom: 1px solid var(--line); }
@@ -58,11 +62,53 @@
   <h1>Importer Source Readiness Copilot</h1>
   <p class="note">Local product logic is complete. External claims remain closed until the listed evidence gates are satisfied by dated official sources, contracts, buyers, and qualified review.</p>
   <section class="grid">
-    <div class="metric"><div class="label">Readiness status</div><div class="value">ready with external gates</div></div>
-    <div class="metric"><div class="label">External gate status</div><div class="value">ready with external gates</div></div>
+    <div class="metric"><div class="label">Status</div><div class="value">Internal logic ready - external claims blocked</div></div>
+    <div class="metric"><div class="label">Current Product Stage</div><div class="value">Customer packet prototype active - real customer use not enabled</div></div>
     <div class="metric"><div class="label">Source rows</div><div class="value">2</div></div>
     <div class="metric"><div class="label">Total blockers</div><div class="value">20</div></div>
   </section>
+
+  <section class="customer-workflow" aria-labelledby="customer-workflow-title">
+    <div class="section-heading">
+      <div>
+        <h2 id="customer-workflow-title">Customer Source Packet Workflow</h2>
+        <p>Customer packet prototype active - real customer use not enabled. It produces safe readiness reports and blockers, not import approval, tariff confirmation, CFIA clearance, supplier recommendations, buyer validation, legal advice, or launch approval.</p>
+      </div>
+      <div class="workflow-summary">
+        <span>Internal logic ready - external claims blocked</span>
+        <strong>1</strong>
+        <em><a href="/source-packets/new">new packet</a></em>
+      </div>
+    </div>
+    <table>
+      <thead><tr><th>Packet</th><th>Product</th><th>Status</th><th>Evidence</th><th>Blockers</th><th>Next Valid Move</th></tr></thead>
+      <tbody><tr><td><a href='/source-packets/packet-frozen-tuna-canada-001'>Frozen tuna Canada source packet</a></td><td>Frozen tuna fillet</td><td>Blocked - source freshness missing</td><td>3 attached / 5 missing; 3 stale; 3 reference-only</td><td>7</td><td>Refresh official sources and keep claims reference-only until qualified review.</td></tr></tbody>
+    </table>
+  </section>
+
+
+  <section class="private-beta" aria-labelledby="private-beta-title">
+    <div class="section-heading">
+      <div>
+        <h2 id="private-beta-title">Path To Private Beta</h2>
+        <p>Complete source refresh proof, privacy/legal terms, qualified review workflow, buyer validation, source contracts, and private-beta security controls.</p>
+      </div>
+      <div class="workflow-summary">
+        <span>Private beta blocked</span>
+        <strong>7</strong>
+        <em>blocked gates</em>
+      </div>
+    </div>
+    <div class="blocker-grid"><article class='blocker-card'><span>P0 - Must fix before customer/private beta</span><h3>Source Freshness</h3><p>Refresh official sources and keep claims reference-only until qualified review.</p></article>
+<article class='blocker-card'><span>P0 - Must fix before customer/private beta</span><h3>Compliance Review</h3><p>Run restricted-party screening and attach the dated search record.</p></article>
+<article class='blocker-card'><span>P0 - Must fix before customer/private beta</span><h3>Source Rights / Contract</h3><p>Attach source-rights or commercial terms before external use.</p></article>
+<article class='blocker-card'><span>P0 - Must fix before customer/private beta</span><h3>Buyer Validation</h3><p>Collect buyer/operator validation before demand or PMF claims.</p></article>
+<article class='blocker-card'><span>P0 - Must fix before customer/private beta</span><h3>Security / Private Beta</h3><p>Add auth, organizations, roles, audit logs, upload controls, backup, and incident-response procedures.</p></article>
+<article class='blocker-card'><span>P0 - Must fix before customer/private beta</span><h3>Legal / Privacy</h3><p>Create privacy notice, terms, data deletion policy, and qualified legal/privacy review packet.</p></article></div>
+    <h3>Ready</h3>
+    <ul><li>Internal operator logic</li><li>Blocker engine</li><li>Official source registry</li><li>Unsafe gate closure</li><li>Customer packet prototype</li><li>Evidence ledger</li></ul>
+  </section>
+
 
   <section class="operator-workflow" aria-labelledby="operator-workflow-title">
     <div class="section-heading">
@@ -71,7 +117,7 @@
         <p>This workflow is an operator workbench for internal review. It coordinates generated reports, Canadian reference tools, continuation lanes, and human approval gates; it does not prove external-world readiness, customs/tariff correctness, buyer demand, legal/financial approval, supplier quality, or production launch approval.</p>
       </div>
       <div class="workflow-summary">
-        <span>operator workflow ready internal</span>
+        <span>Operator workbench usable for internal review</span>
         <strong>31</strong>
         <em>usable now: yes</em>
       </div>
@@ -96,25 +142,6 @@
 <tr><td><strong>82</strong></td><td>external evidence gate</td><td>compliance</td><td>blocked external input</td><td>Have a licensed Canadian customs broker or qualified Canadian trade/food compliance reviewer verify CBSA/CARM importer obligations, tariff classification, CFIA AIRS requirements, import controls, sanctions screening, and claim language.</td><td><a href='https://www.international.gc.ca/controls-controles/about-a_propos/impor/permits-licences.aspx?lang=eng'>gac-import-controls</a></td></tr>
 <tr><td><strong>82</strong></td><td>external evidence gate</td><td>compliance</td><td>blocked external input</td><td>Have a licensed Canadian customs broker or qualified Canadian trade/food compliance reviewer verify CBSA/CARM importer obligations, tariff classification, CFIA AIRS requirements, import controls, sanctions screening, and claim language.</td><td><a href='https://www.cbsa-asfc.gc.ca/import/menu-eng.html'>cbsa-import-commercial-goods</a></td></tr>
 <tr><td><strong>82</strong></td><td>external evidence gate</td><td>compliance</td><td>blocked external input</td><td>Have a licensed Canadian customs broker or qualified Canadian trade/food compliance reviewer verify CBSA/CARM importer obligations, tariff classification, CFIA AIRS requirements, import controls, sanctions screening, and claim language.</td><td><a href='https://www.international.gc.ca/world-monde/international_relations-relations_internationales/sanctions/consolidated-consolide.aspx?lang=eng'>canada-sanctions</a></td></tr></tbody>
-    </table>
-  </section>
-
-
-  <section class="customer-workflow" aria-labelledby="customer-workflow-title">
-    <div class="section-heading">
-      <div>
-        <h2 id="customer-workflow-title">Customer Source Packet Workflow</h2>
-        <p>Customer source-packet workflow is local-first and fixture-backed. It produces safe readiness reports and blockers, not import approval, tariff confirmation, CFIA clearance, supplier recommendations, buyer validation, legal advice, or launch approval.</p>
-      </div>
-      <div class="workflow-summary">
-        <span>Internal operator ready - external claims blocked</span>
-        <strong>1</strong>
-        <em><a href="/source-packets/new">new packet</a></em>
-      </div>
-    </div>
-    <table>
-      <thead><tr><th>Packet</th><th>Product</th><th>Status</th><th>Evidence</th><th>Blockers</th><th>Next Valid Move</th></tr></thead>
-      <tbody><tr><td><a href='/source-packets/packet-frozen-tuna-canada-001'>Frozen tuna Canada source packet</a></td><td>Frozen tuna fillet</td><td>blocked_stale_source</td><td>3</td><td>7</td><td>Refresh the official source and record accessed_at, last_verified_at, and content hash.</td></tr></tbody>
     </table>
   </section>
 

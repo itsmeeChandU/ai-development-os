@@ -70,6 +70,9 @@ system_review_graph/customer_readiness_report.json
 system_review_graph/customer_source_packets.json
 system_review_graph/evidence_ledger.json
 system_review_graph/customer_readiness_report.md
+system_review_graph/customer_ai_review_runs.json
+system_review_graph/customer_workflow.sqlite
+system_review_graph/expert_review_packet_packet-frozen-tuna-canada-001.md
 system_review_graph/blockers.jsonl
 system_review_graph/operator_dashboard.html
 investor/vc_pitch_deck.md
@@ -132,13 +135,26 @@ customer_workflow_ready_internal
 Customer-facing display language must stay:
 
 ```text
-Internal operator ready - external claims blocked
+Internal logic ready - external claims blocked
 ```
 
 That means a customer/operator can create or inspect a source packet and get a
 safe readiness report, but tariff confirmation, CFIA compliance, supplier
 recommendations, buyer validation, import readiness, legal/compliance approval,
 and public launch claims remain blocked.
+
+The expected customer stage is:
+
+```text
+Customer packet prototype active - real customer use not enabled
+```
+
+The current customer workflow supports packet creation, evidence upload,
+official-source refresh records, grouped blockers, AI simulated review,
+expert-review packet export, customer-safe readiness report export, admin
+source registry, admin gate view, and a local SQLite workflow store. It still
+requires private-beta security controls and human review before real customer
+use.
 
 ## External Gates Kept Closed
 

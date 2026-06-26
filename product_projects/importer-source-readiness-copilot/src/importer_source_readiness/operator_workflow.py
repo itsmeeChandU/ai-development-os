@@ -193,6 +193,7 @@ def build_operator_workflow(
     return {
         "generated_at": generated_at or _now(),
         "status": "operator_workflow_ready_internal" if operator_can_use_now else "operator_workflow_blocked",
+        "display_status": "Operator workbench usable for internal review" if operator_can_use_now else "Operator workbench blocked",
         "product": "Importer Source Readiness Copilot",
         "primary_market": "Canada",
         "operator_can_use_now": operator_can_use_now,

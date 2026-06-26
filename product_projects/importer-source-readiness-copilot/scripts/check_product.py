@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import json
+import sqlite3
 import subprocess
 import sys
 from pathlib import Path
@@ -125,12 +126,18 @@ def main() -> int:
             failures.append("operator dashboard should include the customer source-packet workflow")
         if "/source-packets/packet-frozen-tuna-canada-001" not in dashboard_html:
             failures.append("operator dashboard should link the customer source-packet route")
+        if "Path To Private Beta" not in dashboard_html:
+            failures.append("operator dashboard should include the private beta path")
+        if "Internal logic ready - external claims blocked" not in dashboard_html:
+            failures.append("operator dashboard should use safe customer-facing status language")
     for path in (
         "scripts/serve_operator_app.py",
         "src/importer_source_readiness/operator_app.py",
         "src/importer_source_readiness/source_packet_workflow.py",
+        "src/importer_source_readiness/customer_store.py",
         "tests/test_operator_app.py",
         "tests/test_source_packet_workflow.py",
+        "tests/test_customer_store.py",
         "tests/test_external_package_audit.py",
         "scripts/run_customer_workflow.py",
         "scripts/audit_external_package.py",
@@ -147,6 +154,9 @@ def main() -> int:
         "system_review_graph/customer_readiness_report.md",
         "system_review_graph/customer_source_packets.json",
         "system_review_graph/evidence_ledger.json",
+        "system_review_graph/customer_ai_review_runs.json",
+        "system_review_graph/customer_workflow.sqlite",
+        "system_review_graph/expert_review_packet_packet-frozen-tuna-canada-001.md",
     ):
         if not (ROOT / path).exists():
             failures.append(f"missing required product file: {path}")
@@ -224,12 +234,32 @@ def main() -> int:
             failures.append(f"operator workflow must keep {claim} closed")
     if customer.get("status") != "customer_workflow_ready_internal":
         failures.append(f"customer workflow expected internal ready, got {customer.get('status')!r}")
-    if customer.get("display_status") != "Internal operator ready - external claims blocked":
+    if customer.get("display_status") != "Internal logic ready - external claims blocked":
         failures.append(f"customer workflow display status is unsafe or unexpected: {customer.get('display_status')!r}")
+    if customer.get("operator_display_status") != "Operator workbench usable for internal review":
+        failures.append("customer workflow should expose operator workbench display status")
+    if customer.get("customer_stage_status") != "Customer packet prototype active - real customer use not enabled":
+        failures.append("customer workflow should expose customer prototype stage status")
+    if customer.get("private_beta_status") != "blocked":
+        failures.append("customer workflow should keep private beta blocked")
     if customer.get("packet_count", 0) < 1:
         failures.append("customer workflow should include at least one source packet")
     if customer.get("blocker_count", 0) < 1:
         failures.append("customer workflow must keep external-claim blockers visible")
+    if len(customer.get("blocker_groups", [])) < 4:
+        failures.append("customer workflow should consolidate blockers into grouped categories")
+    if not customer.get("ai_review_runs"):
+        failures.append("customer workflow should include AI simulated review runs")
+    packet = customer.get("packets", [{}])[0]
+    if packet.get("customer_visible_status_label") != "Blocked - source freshness missing":
+        failures.append("customer packet should use customer-readable stale-source status")
+    evidence_summary = packet.get("evidence_summary", {})
+    if evidence_summary.get("attached", 0) < 3 or evidence_summary.get("missing", 0) < 4:
+        failures.append("customer packet should expose evidence quality summary")
+    group_titles = {row.get("title") for row in packet.get("blocker_groups", [])}
+    for group in ("Source Freshness", "Compliance Review", "Source Rights / Contract", "Buyer Validation"):
+        if group not in group_titles:
+            failures.append(f"customer packet should include grouped blocker {group}")
     customer_closed_claims = set(customer.get("blocked_claims", []))
     for claim in (
         "tariff_confirmed",
@@ -244,6 +274,26 @@ def main() -> int:
         failures.append(f"evidence ledger expected internal ready, got {evidence_ledger.get('status')!r}")
     if evidence_ledger.get("evidence_count", 0) < 3:
         failures.append("evidence ledger should include customer, CID, and official Canadian reference evidence")
+    if "stale" not in evidence_ledger.get("counts_by_quality", {}):
+        failures.append("evidence ledger should expose evidence quality counts")
+    store_path = ROOT / "system_review_graph" / "customer_workflow.sqlite"
+    if store_path.exists():
+        with sqlite3.connect(store_path) as conn:
+            tables = {
+                row[0]
+                for row in conn.execute("select name from sqlite_master where type='table'").fetchall()
+            }
+        for table in (
+            "source_packets",
+            "evidence_items",
+            "official_sources",
+            "blockers",
+            "review_runs",
+            "gate_decisions",
+            "audit_events",
+        ):
+            if table not in tables:
+                failures.append(f"customer workflow store missing table {table}")
     failures.extend(_validate_blockers(ROOT / "system_review_graph" / "blockers.jsonl"))
     failures.extend(_validate_blocker_rows(external.get("blockers", []), "external_gate_report.blockers"))
 
@@ -266,7 +316,9 @@ def main() -> int:
     print(f"customer_workflow_status={customer['status']}")
     print(f"customer_packet_count={customer['packet_count']}")
     print(f"customer_blocker_count={customer['blocker_count']}")
+    print(f"customer_blocker_groups={len(customer['blocker_groups'])}")
     print(f"evidence_ledger_status={evidence_ledger['status']}")
+    print("customer_store=ready")
     print("unsafe_gates=closed")
     return 0
 

@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import json
+import sqlite3
 import subprocess
 import tempfile
 from pathlib import Path
@@ -48,6 +49,7 @@ def main() -> int:
         PROJECT / "src" / "importer_source_readiness" / "operator_report.py",
         PROJECT / "src" / "importer_source_readiness" / "operator_screenshots.py",
         PROJECT / "src" / "importer_source_readiness" / "source_packet_workflow.py",
+        PROJECT / "src" / "importer_source_readiness" / "customer_store.py",
         PROJECT / "tests" / "test_readiness.py",
         PROJECT / "tests" / "test_external_gates.py",
         PROJECT / "tests" / "test_continuation.py",
@@ -57,6 +59,7 @@ def main() -> int:
         PROJECT / "tests" / "test_operator_workflow.py",
         PROJECT / "tests" / "test_operator_screenshots.py",
         PROJECT / "tests" / "test_source_packet_workflow.py",
+        PROJECT / "tests" / "test_customer_store.py",
         PROJECT / "tests" / "test_external_package_audit.py",
         PROJECT / "scripts" / "run_readiness.py",
         PROJECT / "scripts" / "run_external_gates.py",
@@ -85,6 +88,9 @@ def main() -> int:
         PROJECT / "system_review_graph" / "customer_readiness_report.md",
         PROJECT / "system_review_graph" / "customer_source_packets.json",
         PROJECT / "system_review_graph" / "evidence_ledger.json",
+        PROJECT / "system_review_graph" / "customer_ai_review_runs.json",
+        PROJECT / "system_review_graph" / "customer_workflow.sqlite",
+        PROJECT / "system_review_graph" / "expert_review_packet_packet-frozen-tuna-canada-001.md",
         PROJECT / "investor" / "vc_pitch_deck.md",
         PROJECT / "investor" / "one_pager.md",
         PROJECT / "investor" / "demo_script.md",
@@ -252,17 +258,53 @@ def main() -> int:
         print("Product project check: FAIL")
         print("operator dashboard missing customer source-packet workflow")
         return 1
+    if "Path To Private Beta" not in dashboard_html or "Internal logic ready - external claims blocked" not in dashboard_html:
+        print("Product project check: FAIL")
+        print("operator dashboard missing guided customer workflow status")
+        return 1
     if customer.get("status") != "customer_workflow_ready_internal":
         print("Product project check: FAIL")
         print("customer source-packet workflow is not internal ready")
         return 1
-    if customer.get("display_status") != "Internal operator ready - external claims blocked":
+    if customer.get("display_status") != "Internal logic ready - external claims blocked":
         print("Product project check: FAIL")
         print("customer source-packet workflow missing safe display status")
+        return 1
+    if customer.get("operator_display_status") != "Operator workbench usable for internal review":
+        print("Product project check: FAIL")
+        print("customer source-packet workflow missing operator display status")
+        return 1
+    if customer.get("customer_stage_status") != "Customer packet prototype active - real customer use not enabled":
+        print("Product project check: FAIL")
+        print("customer source-packet workflow missing prototype stage status")
+        return 1
+    if customer.get("private_beta_status") != "blocked":
+        print("Product project check: FAIL")
+        print("customer source-packet workflow should keep private beta blocked")
         return 1
     if customer.get("packet_count", 0) < 1 or customer.get("blocker_count", 0) < 1:
         print("Product project check: FAIL")
         print("customer source-packet workflow missing packets or blockers")
+        return 1
+    if len(customer.get("blocker_groups", [])) < 4 or not customer.get("ai_review_runs"):
+        print("Product project check: FAIL")
+        print("customer source-packet workflow missing grouped blockers or AI review runs")
+        return 1
+    packet = customer.get("packets", [{}])[0]
+    if packet.get("customer_visible_status_label") != "Blocked - source freshness missing":
+        print("Product project check: FAIL")
+        print("customer source-packet workflow missing customer-readable packet status")
+        return 1
+    evidence_summary = packet.get("evidence_summary", {})
+    if evidence_summary.get("attached", 0) < 3 or evidence_summary.get("missing", 0) < 4:
+        print("Product project check: FAIL")
+        print("customer source-packet workflow missing evidence quality summary")
+        return 1
+    group_titles = {row.get("title") for row in packet.get("blocker_groups", [])}
+    required_groups = {"Source Freshness", "Compliance Review", "Source Rights / Contract", "Buyer Validation"}
+    if not required_groups.issubset(group_titles):
+        print("Product project check: FAIL")
+        print("customer source-packet workflow missing required grouped blockers")
         return 1
     blocked_claims = set(customer.get("blocked_claims", []))
     required_customer_blocked_claims = {
@@ -280,6 +322,29 @@ def main() -> int:
         print("Product project check: FAIL")
         print("evidence ledger missing internal-ready evidence rows")
         return 1
+    if "stale" not in evidence_ledger.get("counts_by_quality", {}):
+        print("Product project check: FAIL")
+        print("evidence ledger missing quality counts")
+        return 1
+    store_path = PROJECT / "system_review_graph" / "customer_workflow.sqlite"
+    with sqlite3.connect(store_path) as conn:
+        tables = {
+            row[0]
+            for row in conn.execute("select name from sqlite_master where type='table'").fetchall()
+        }
+    required_tables = {
+        "source_packets",
+        "evidence_items",
+        "official_sources",
+        "blockers",
+        "review_runs",
+        "gate_decisions",
+        "audit_events",
+    }
+    if not required_tables.issubset(tables):
+        print("Product project check: FAIL")
+        print("customer workflow sqlite store missing required tables")
+        return 1
 
     print("Product project check: PASS")
     print(f"project={PROJECT.relative_to(ROOT)}")
@@ -296,7 +361,9 @@ def main() -> int:
     print(f"customer_workflow_status={customer['status']}")
     print(f"customer_packet_count={customer['packet_count']}")
     print(f"customer_blocker_count={customer['blocker_count']}")
+    print(f"customer_blocker_groups={len(customer['blocker_groups'])}")
     print(f"evidence_ledger_status={evidence_ledger['status']}")
+    print("customer_store=ready")
     return 0
 
 

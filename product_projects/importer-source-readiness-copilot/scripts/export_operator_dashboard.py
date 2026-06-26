@@ -22,11 +22,17 @@ from importer_source_readiness import (
     load_json,
     write_dashboard,
     write_json,
+    write_customer_store,
     write_operator_workflow,
     write_report,
     write_screenshot_manifest,
 )
-from importer_source_readiness.source_packet_workflow import load_json_list, write_json as write_source_json
+from importer_source_readiness.source_packet_workflow import (
+    expert_review_packet_markdown,
+    load_json_list,
+    markdown_report,
+    write_json as write_source_json,
+)
 
 
 def _read(path: Path) -> dict:
@@ -93,6 +99,24 @@ def main() -> int:
     write_source_json(
         customer_workflow["evidence_ledger"],
         ROOT / "system_review_graph" / "evidence_ledger.json",
+    )
+    write_source_json(
+        customer_workflow["ai_review_runs"],
+        ROOT / "system_review_graph" / "customer_ai_review_runs.json",
+    )
+    if customer_workflow["packets"]:
+        first_packet = str(customer_workflow["packets"][0]["packet_id"])
+        (ROOT / "system_review_graph" / "customer_readiness_report.md").write_text(
+            markdown_report(customer_workflow, first_packet),
+            encoding="utf-8",
+        )
+        (ROOT / "system_review_graph" / f"expert_review_packet_{first_packet}.md").write_text(
+            expert_review_packet_markdown(customer_workflow, first_packet),
+            encoding="utf-8",
+        )
+    write_customer_store(
+        customer_workflow,
+        ROOT / "system_review_graph" / "customer_workflow.sqlite",
     )
     manifest_path = write_screenshot_manifest(
         screenshots,

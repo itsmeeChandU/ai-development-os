@@ -1,4 +1,7 @@
 {
+  "counts_by_quality": {
+    "stale": 3
+  },
   "counts_by_status": {
     "blocked_stale_source": 3
   },
@@ -18,9 +21,17 @@
       "file_path": "",
       "freshness_status": "needs_current_refresh_before_claims",
       "human_review_status": "not_reviewed",
+      "labels": [
+        "fixture",
+        "official_reference",
+        "reference_only",
+        "review_required",
+        "stale"
+      ],
       "last_verified_at": "",
       "ledger_status": "blocked_stale_source",
       "packet_id": "packet-frozen-tuna-canada-001",
+      "quality_status": "stale",
       "review_required": true,
       "reviewed_at": "",
       "reviewed_by": "",
@@ -40,9 +51,16 @@
       "file_path": "",
       "freshness_status": "needs_current_refresh_before_claims",
       "human_review_status": "not_reviewed",
+      "labels": [
+        "official_reference",
+        "reference_only",
+        "review_required",
+        "stale"
+      ],
       "last_verified_at": "",
       "ledger_status": "blocked_stale_source",
       "packet_id": "packet-frozen-tuna-canada-001",
+      "quality_status": "stale",
       "review_required": true,
       "reviewed_at": "",
       "reviewed_by": "",
@@ -62,9 +80,16 @@
       "file_path": "",
       "freshness_status": "needs_current_refresh_before_claims",
       "human_review_status": "not_reviewed",
+      "labels": [
+        "official_reference",
+        "reference_only",
+        "review_required",
+        "stale"
+      ],
       "last_verified_at": "",
       "ledger_status": "blocked_stale_source",
       "packet_id": "packet-frozen-tuna-canada-001",
+      "quality_status": "stale",
       "review_required": true,
       "reviewed_at": "",
       "reviewed_by": "",

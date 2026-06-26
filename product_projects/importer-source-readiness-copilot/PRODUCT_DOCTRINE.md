@@ -43,7 +43,7 @@ Human or expert review only applies to the exact scope reviewed.
 Use:
 
 ```text
-Internal operator ready - external claims blocked
+Internal logic ready - external claims blocked
 ```
 
 Do not use customer-facing labels such as:
