@@ -1,4 +1,157 @@
 {
+  "ai_data_policies": [
+    {
+      "ai_use_disclosure_accepted": true,
+      "allowed_modes": [
+        "no_ai",
+        "metadata_only",
+        "redacted",
+        "business_api",
+        "private_hosted_llm",
+        "customer_managed_llm",
+        "on_prem_manual"
+      ],
+      "allowed_sensitivity": [
+        "public",
+        "internal",
+        "confidential"
+      ],
+      "audit_level": "full",
+      "customer_managed_endpoint_id": "customer-managed-demo",
+      "default_mode": "redacted",
+      "id": "ai-policy-org-importer-demo",
+      "no_ai_fallback": "manual_operator_review",
+      "organization_id": "org-importer-demo",
+      "output_retention": "store_structured_output",
+      "privacy_notice_accepted": true,
+      "private_model_endpoint_id": "private-endpoint-canada-001",
+      "prompt_retention": "hash_only",
+      "redaction_required_for": [
+        "confidential",
+        "restricted",
+        "regulated"
+      ],
+      "restricted_sensitivity_modes": [
+        "customer_managed_llm",
+        "metadata_only",
+        "no_ai",
+        "on_prem_manual",
+        "private_hosted_llm"
+      ],
+      "terms_accepted": true
+    },
+    {
+      "ai_use_disclosure_accepted": false,
+      "allowed_modes": [
+        "no_ai",
+        "metadata_only",
+        "on_prem_manual"
+      ],
+      "allowed_sensitivity": [
+        "public",
+        "internal"
+      ],
+      "audit_level": "full",
+      "customer_managed_endpoint_id": "",
+      "default_mode": "no_ai",
+      "id": "ai-policy-org-other-demo",
+      "no_ai_fallback": "manual_operator_review",
+      "organization_id": "org-other-demo",
+      "output_retention": "none",
+      "privacy_notice_accepted": true,
+      "private_model_endpoint_id": "",
+      "prompt_retention": "none",
+      "redaction_required_for": [
+        "confidential",
+        "restricted",
+        "regulated"
+      ],
+      "restricted_sensitivity_modes": [
+        "no_ai",
+        "metadata_only",
+        "on_prem_manual"
+      ],
+      "terms_accepted": true
+    }
+  ],
+  "ai_model_router": {
+    "endpoint_count": 3,
+    "manual_fallback": "manual_operator_review",
+    "modes": [
+      "no_ai",
+      "metadata_only",
+      "redacted",
+      "business_api",
+      "private_hosted_llm",
+      "customer_managed_llm",
+      "on_prem_manual"
+    ],
+    "policy_count": 2,
+    "proof_boundary": "Router decisions bound local simulated review and endpoint contracts; they do not prove live model provider availability.",
+    "route_decisions": [
+      {
+        "allowed": true,
+        "audit_level": "full",
+        "document_sensitivity": "public",
+        "evidence_id": "evidence-frozen-tuna-cid-reference",
+        "evidence_permission": "metadata_only",
+        "mode": "metadata_only",
+        "model_endpoint_id": "",
+        "next_valid_move_if_denied": "Use metadata-only/manual review or change organization and document-level AI permission.",
+        "no_ai_fallback": "manual_operator_review",
+        "organization_id": "org-importer-demo",
+        "organization_policy_id": "ai-policy-org-importer-demo",
+        "packet_id": "packet-frozen-tuna-canada-001",
+        "reason_if_denied": "",
+        "redaction_required": false,
+        "requested_mode": "metadata_only",
+        "store_output": true,
+        "store_prompt": true,
+        "task_type": "evidence_readiness_review"
+      },
+      {
+        "allowed": true,
+        "audit_level": "full",
+        "document_sensitivity": "public",
+        "evidence_id": "evidence-frozen-tuna-cbsa-import-workflow",
+        "evidence_permission": "metadata_only",
+        "mode": "metadata_only",
+        "model_endpoint_id": "",
+        "next_valid_move_if_denied": "Use metadata-only/manual review or change organization and document-level AI permission.",
+        "no_ai_fallback": "manual_operator_review",
+        "organization_id": "org-importer-demo",
+        "organization_policy_id": "ai-policy-org-importer-demo",
+        "packet_id": "packet-frozen-tuna-canada-001",
+        "reason_if_denied": "",
+        "redaction_required": false,
+        "requested_mode": "metadata_only",
+        "store_output": true,
+        "store_prompt": true,
+        "task_type": "evidence_readiness_review"
+      },
+      {
+        "allowed": true,
+        "audit_level": "full",
+        "document_sensitivity": "public",
+        "evidence_id": "evidence-frozen-tuna-cfia-airs-reference",
+        "evidence_permission": "metadata_only",
+        "mode": "metadata_only",
+        "model_endpoint_id": "",
+        "next_valid_move_if_denied": "Use metadata-only/manual review or change organization and document-level AI permission.",
+        "no_ai_fallback": "manual_operator_review",
+        "organization_id": "org-importer-demo",
+        "organization_policy_id": "ai-policy-org-importer-demo",
+        "packet_id": "packet-frozen-tuna-canada-001",
+        "reason_if_denied": "",
+        "redaction_required": false,
+        "requested_mode": "metadata_only",
+        "store_output": true,
+        "store_prompt": true,
+        "task_type": "evidence_readiness_review"
+      }
+    ],
+    "status": "ai_model_router_ready"
+  },
   "api_routes": [
     "/api/auth/signup",
     "/api/auth/login",
@@ -6,6 +159,8 @@
     "/api/auth/me",
     "/api/orgs/current",
     "/api/orgs/current/members",
+    "/api/orgs/current/ai-policy",
+    "/api/orgs/current/ai-policy/test-model-endpoint",
     "/api/packets",
     "/api/packets/:id",
     "/api/packets/:id/evidence",
@@ -23,6 +178,7 @@
     "/api/external-review/:token/findings",
     "/api/reports/:id",
     "/api/reports/:id/download",
+    "/api/evidence/:evidenceId/ai-permission",
     "/api/audit",
     "/api/system-health"
   ],
@@ -171,7 +327,7 @@
       "human_review_finding_id": "",
       "human_review_required": false,
       "id": "packet-frozen-tuna-canada-001:source_freshness_claim",
-      "last_evaluated_at": "2026-06-26T02:53:10+00:00",
+      "last_evaluated_at": "2026-06-26T03:13:36+00:00",
       "packet_id": "packet-frozen-tuna-canada-001",
       "source_ids": [],
       "status": "blocked_stale_source"
@@ -202,7 +358,7 @@
       "human_review_finding_id": "",
       "human_review_required": true,
       "id": "packet-frozen-tuna-canada-001:tariff_classification_claim",
-      "last_evaluated_at": "2026-06-26T02:53:10+00:00",
+      "last_evaluated_at": "2026-06-26T03:13:36+00:00",
       "packet_id": "packet-frozen-tuna-canada-001",
       "source_ids": [],
       "status": "blocked_requires_human_review"
@@ -233,7 +389,7 @@
       "human_review_finding_id": "",
       "human_review_required": true,
       "id": "packet-frozen-tuna-canada-001:food_safety_claim",
-      "last_evaluated_at": "2026-06-26T02:53:10+00:00",
+      "last_evaluated_at": "2026-06-26T03:13:36+00:00",
       "packet_id": "packet-frozen-tuna-canada-001",
       "source_ids": [],
       "status": "blocked_requires_human_review"
@@ -263,7 +419,7 @@
       "human_review_finding_id": "",
       "human_review_required": true,
       "id": "packet-frozen-tuna-canada-001:source_rights_claim",
-      "last_evaluated_at": "2026-06-26T02:53:10+00:00",
+      "last_evaluated_at": "2026-06-26T03:13:36+00:00",
       "packet_id": "packet-frozen-tuna-canada-001",
       "source_ids": [],
       "status": "blocked_source_rights_unknown"
@@ -293,7 +449,7 @@
       "human_review_finding_id": "",
       "human_review_required": false,
       "id": "packet-frozen-tuna-canada-001:buyer_validation_claim",
-      "last_evaluated_at": "2026-06-26T02:53:10+00:00",
+      "last_evaluated_at": "2026-06-26T03:13:36+00:00",
       "packet_id": "packet-frozen-tuna-canada-001",
       "source_ids": [],
       "status": "blocked_missing_evidence"
@@ -323,7 +479,7 @@
       "human_review_finding_id": "",
       "human_review_required": true,
       "id": "packet-frozen-tuna-canada-001:launch_readiness_claim",
-      "last_evaluated_at": "2026-06-26T02:53:10+00:00",
+      "last_evaluated_at": "2026-06-26T03:13:36+00:00",
       "packet_id": "packet-frozen-tuna-canada-001",
       "source_ids": [],
       "status": "blocked_missing_evidence"
@@ -355,12 +511,37 @@
       "python3 scripts/serve_operator_app.py --host 127.0.0.1 --port 8765"
     ],
     "logs": "structured application/audit events are written to generated JSON and SQLite artifacts",
+    "model_endpoints": {
+      "default_behavior": "local deterministic simulator; no provider call by default",
+      "endpoint_contracts": [
+        "business-api-default",
+        "private-endpoint-canada-001",
+        "customer-managed-demo"
+      ]
+    },
     "monitoring": "health endpoints expose app, store, route, and generated-artifact readiness",
     "proof_boundary": "Deployment artifacts make the product hostable; they do not prove a live production environment exists.",
     "status": "deployable_local_stack_ready_with_external_hosting_gates"
   },
   "generated_at": "2026-06-25T00:00:00+00:00",
   "human_review_findings": [],
+  "manual_no_ai_workflow": {
+    "ai_disabled_supported": true,
+    "features": [
+      "manual packet creation",
+      "manual evidence upload",
+      "manual evidence classification",
+      "manual blocker creation",
+      "manual operator review",
+      "manual expert-review packet generation",
+      "manual report generation",
+      "manual source refresh"
+    ],
+    "next_valid_move": "Use operator review and scoped expert-review packet when AI is disabled.",
+    "packet_count": 1,
+    "report_disclosure": "No AI processing is required. Reports disclose whether AI was used.",
+    "status": "manual_no_ai_workflow_ready"
+  },
   "memberships": [
     {
       "organization_id": "org-importer-demo",
@@ -417,6 +598,47 @@
       ],
       "role": "customer",
       "user_id": "user-other-customer-001"
+    }
+  ],
+  "model_endpoints": [
+    {
+      "api_key_reference": "IMPORTER_LLM_API_KEY",
+      "auth_method": "server_secret_reference",
+      "endpoint_url": "provider://business-api",
+      "health_check_status": "not_configured_for_public_hosting",
+      "id": "business-api-default",
+      "max_context_tokens": 64000,
+      "mode": "business_api",
+      "model_name": "structured-review-model",
+      "retention_policy": "business_api_default_no_training_by_product_policy",
+      "supports_json_schema": true,
+      "timeout_seconds": 60
+    },
+    {
+      "api_key_reference": "PRIVATE_LLM_API_KEY",
+      "auth_method": "private_network_secret_reference",
+      "endpoint_url": "https://private-llm.example.local",
+      "health_check_status": "design_ready_not_live",
+      "id": "private-endpoint-canada-001",
+      "max_context_tokens": 128000,
+      "mode": "private_hosted_llm",
+      "model_name": "private-structured-review",
+      "retention_policy": "private_tenant_no_provider_training",
+      "supports_json_schema": true,
+      "timeout_seconds": 90
+    },
+    {
+      "api_key_reference": "CUSTOMER_MANAGED_LLM_KEY",
+      "auth_method": "customer_secret_reference",
+      "endpoint_url": "https://customer-model.example.local",
+      "health_check_status": "design_ready_not_live",
+      "id": "customer-managed-demo",
+      "max_context_tokens": 32000,
+      "mode": "customer_managed_llm",
+      "model_name": "customer-managed-review",
+      "retention_policy": "customer_controlled",
+      "supports_json_schema": true,
+      "timeout_seconds": 90
     }
   ],
   "organizations": [
@@ -489,6 +711,18 @@
       "status": "implemented"
     },
     {
+      "item": "AI data policy and model router exist",
+      "status": "implemented"
+    },
+    {
+      "item": "No-AI/manual workflow exists",
+      "status": "implemented"
+    },
+    {
+      "item": "Redaction pipeline contract exists",
+      "status": "implemented"
+    },
+    {
       "item": "Reports avoid unsafe approval language",
       "status": "implemented"
     },
@@ -514,8 +748,59 @@
     }
   ],
   "product": "Importer Source Readiness Copilot",
+  "redaction_pipeline": {
+    "categories": [
+      "person_names",
+      "emails",
+      "phone_numbers",
+      "addresses",
+      "supplier_names",
+      "buyer_names",
+      "prices",
+      "bank_details",
+      "contract_terms",
+      "signatures",
+      "ids",
+      "sensitive_notes"
+    ],
+    "previews": [
+      {
+        "audit_event_type": "redaction_not_required",
+        "evidence_id": "evidence-frozen-tuna-cid-reference",
+        "linked_original_evidence_id": "evidence-frozen-tuna-cid-reference",
+        "packet_id": "packet-frozen-tuna-canada-001",
+        "redacted_artifact_id": "",
+        "redaction_categories": [],
+        "redaction_required": false,
+        "redaction_status": "not_required"
+      },
+      {
+        "audit_event_type": "redaction_not_required",
+        "evidence_id": "evidence-frozen-tuna-cbsa-import-workflow",
+        "linked_original_evidence_id": "evidence-frozen-tuna-cbsa-import-workflow",
+        "packet_id": "packet-frozen-tuna-canada-001",
+        "redacted_artifact_id": "",
+        "redaction_categories": [],
+        "redaction_required": false,
+        "redaction_status": "not_required"
+      },
+      {
+        "audit_event_type": "redaction_not_required",
+        "evidence_id": "evidence-frozen-tuna-cfia-airs-reference",
+        "linked_original_evidence_id": "evidence-frozen-tuna-cfia-airs-reference",
+        "packet_id": "packet-frozen-tuna-canada-001",
+        "redacted_artifact_id": "",
+        "redaction_categories": [],
+        "redaction_required": false,
+        "redaction_status": "not_required"
+      }
+    ],
+    "proof_boundary": "Redaction preview names fields/categories to remove before AI; production redaction requires security/privacy review.",
+    "status": "redaction_pipeline_ready"
+  },
   "report_exports": [
     {
+      "ai_involvement_disclosure": "AI simulated review may be included when present; AI never opens approval gates.",
       "file_id": "",
       "format": "markdown",
       "generated_at": "2026-06-25T00:00:00+00:00",
@@ -544,11 +829,13 @@
         "evidence-frozen-tuna-cfia-airs-reference"
       ],
       "packet_id": "packet-frozen-tuna-canada-001",
+      "proof_boundary": "Importer Source Readiness Copilot organizes evidence and blockers. It does not provide legal, customs, tariff, tax, CFIA, supplier, buyer, compliance, or launch advice.",
       "report_type": "customer_readiness_report",
-      "source_snapshot_hash": "f6d669f5e79239366700092239808dbd3f91983b98b65bf197d469bb799b93ef",
+      "source_snapshot_hash": "70b7ebe12d6cc4e8d6b78aa6be64cf047a17e5ec5bf73fe12928f1a7408eecd6",
       "status": "draft_internal_export_ready"
     },
     {
+      "ai_involvement_disclosure": "AI simulated review may be included when present; AI never opens approval gates.",
       "file_id": "",
       "format": "json",
       "generated_at": "2026-06-25T00:00:00+00:00",
@@ -577,11 +864,13 @@
         "evidence-frozen-tuna-cfia-airs-reference"
       ],
       "packet_id": "packet-frozen-tuna-canada-001",
+      "proof_boundary": "Importer Source Readiness Copilot organizes evidence and blockers. It does not provide legal, customs, tariff, tax, CFIA, supplier, buyer, compliance, or launch advice.",
       "report_type": "customer_readiness_report",
-      "source_snapshot_hash": "f6d669f5e79239366700092239808dbd3f91983b98b65bf197d469bb799b93ef",
+      "source_snapshot_hash": "70b7ebe12d6cc4e8d6b78aa6be64cf047a17e5ec5bf73fe12928f1a7408eecd6",
       "status": "draft_internal_export_ready"
     },
     {
+      "ai_involvement_disclosure": "AI simulated review may be included when present; AI never opens approval gates.",
       "file_id": "",
       "format": "markdown",
       "generated_at": "2026-06-25T00:00:00+00:00",
@@ -610,11 +899,13 @@
         "evidence-frozen-tuna-cfia-airs-reference"
       ],
       "packet_id": "packet-frozen-tuna-canada-001",
+      "proof_boundary": "Importer Source Readiness Copilot organizes evidence and blockers. It does not provide legal, customs, tariff, tax, CFIA, supplier, buyer, compliance, or launch advice.",
       "report_type": "expert_review_packet",
-      "source_snapshot_hash": "f6d669f5e79239366700092239808dbd3f91983b98b65bf197d469bb799b93ef",
+      "source_snapshot_hash": "70b7ebe12d6cc4e8d6b78aa6be64cf047a17e5ec5bf73fe12928f1a7408eecd6",
       "status": "draft_internal_export_ready"
     },
     {
+      "ai_involvement_disclosure": "AI simulated review may be included when present; AI never opens approval gates.",
       "file_id": "",
       "format": "html",
       "generated_at": "2026-06-25T00:00:00+00:00",
@@ -643,11 +934,13 @@
         "evidence-frozen-tuna-cfia-airs-reference"
       ],
       "packet_id": "packet-frozen-tuna-canada-001",
+      "proof_boundary": "Importer Source Readiness Copilot organizes evidence and blockers. It does not provide legal, customs, tariff, tax, CFIA, supplier, buyer, compliance, or launch advice.",
       "report_type": "operator_blocker_report",
-      "source_snapshot_hash": "f6d669f5e79239366700092239808dbd3f91983b98b65bf197d469bb799b93ef",
+      "source_snapshot_hash": "70b7ebe12d6cc4e8d6b78aa6be64cf047a17e5ec5bf73fe12928f1a7408eecd6",
       "status": "draft_internal_export_ready"
     },
     {
+      "ai_involvement_disclosure": "AI simulated review may be included when present; AI never opens approval gates.",
       "file_id": "",
       "format": "json",
       "generated_at": "2026-06-25T00:00:00+00:00",
@@ -676,11 +969,13 @@
         "evidence-frozen-tuna-cfia-airs-reference"
       ],
       "packet_id": "packet-frozen-tuna-canada-001",
+      "proof_boundary": "Importer Source Readiness Copilot organizes evidence and blockers. It does not provide legal, customs, tariff, tax, CFIA, supplier, buyer, compliance, or launch advice.",
       "report_type": "private_beta_gate_report",
-      "source_snapshot_hash": "f6d669f5e79239366700092239808dbd3f91983b98b65bf197d469bb799b93ef",
+      "source_snapshot_hash": "70b7ebe12d6cc4e8d6b78aa6be64cf047a17e5ec5bf73fe12928f1a7408eecd6",
       "status": "draft_internal_export_ready"
     },
     {
+      "ai_involvement_disclosure": "AI simulated review may be included when present; AI never opens approval gates.",
       "file_id": "",
       "format": "pdf",
       "generated_at": "2026-06-25T00:00:00+00:00",
@@ -709,9 +1004,244 @@
         "evidence-frozen-tuna-cfia-airs-reference"
       ],
       "packet_id": "packet-frozen-tuna-canada-001",
+      "proof_boundary": "Importer Source Readiness Copilot organizes evidence and blockers. It does not provide legal, customs, tariff, tax, CFIA, supplier, buyer, compliance, or launch advice.",
       "report_type": "customer_readiness_report",
-      "source_snapshot_hash": "f6d669f5e79239366700092239808dbd3f91983b98b65bf197d469bb799b93ef",
+      "source_snapshot_hash": "70b7ebe12d6cc4e8d6b78aa6be64cf047a17e5ec5bf73fe12928f1a7408eecd6",
       "status": "pdf_renderer_ready_basic"
+    }
+  ],
+  "requirements_traceability": [
+    {
+      "artifacts": [
+        "product_runtime_state.json",
+        "auth_rbac_matrix.json",
+        "customer_workflow.sqlite"
+      ],
+      "boundary": "Local session auth and RBAC are implemented for private beta dry-runs; production identity review remains external.",
+      "id": "REQ-01",
+      "name": "Identity, organization, permissions",
+      "proof": [
+        "tests/test_product_runtime.py",
+        "tests/test_operator_app.py"
+      ],
+      "status": "implemented_local_private_beta"
+    },
+    {
+      "artifacts": [
+        "customer_source_packets.json",
+        "customer_readiness_report.json"
+      ],
+      "boundary": "Packet intake creates review state, not import approval.",
+      "id": "REQ-02",
+      "name": "Packet intake",
+      "proof": [
+        "tests/test_operator_app.py",
+        "tests/test_source_packet_workflow.py"
+      ],
+      "status": "implemented"
+    },
+    {
+      "artifacts": [
+        "evidence_ledger.json"
+      ],
+      "boundary": "No evidence, no claim; stale/reference-only evidence blocks external claims.",
+      "id": "REQ-03",
+      "name": "Evidence ledger",
+      "proof": [
+        "tests/test_source_packet_workflow.py"
+      ],
+      "status": "implemented"
+    },
+    {
+      "artifacts": [
+        "source_refresh_runs.json",
+        "source_refresh_report_packet-frozen-tuna-canada-001.json"
+      ],
+      "boundary": "Refresh records are evidence inputs; they do not replace qualified review.",
+      "id": "REQ-04",
+      "name": "Official source refresh",
+      "proof": [
+        "tests/test_source_packet_workflow.py"
+      ],
+      "status": "implemented_with_live_fetch_boundary"
+    },
+    {
+      "artifacts": [
+        "claims_gate_matrix.json",
+        "customer_readiness_report.json",
+        "blockers.jsonl"
+      ],
+      "boundary": "External-world claims stay blocked until evidence and human gates close.",
+      "id": "REQ-05",
+      "name": "Claim and blocker engine",
+      "proof": [
+        "scripts/check_product.py"
+      ],
+      "status": "implemented_fail_closed"
+    },
+    {
+      "artifacts": [
+        "ai_data_policy.json",
+        "ai_model_router.json",
+        "customer_ai_review_runs.json"
+      ],
+      "boundary": "Router controls local simulated review and endpoint contracts; no live provider call is made by default.",
+      "id": "REQ-06",
+      "name": "AI processing and model routing",
+      "proof": [
+        "tests/test_product_runtime.py",
+        "tests/test_operator_app.py"
+      ],
+      "status": "implemented_policy_router"
+    },
+    {
+      "artifacts": [
+        "customer_ai_review_runs.json"
+      ],
+      "boundary": "AI reviewers create findings and next moves only; they cannot open gates.",
+      "id": "REQ-07",
+      "name": "AI simulated reviewers",
+      "proof": [
+        "tests/test_product_runtime.py",
+        "tests/test_source_packet_workflow.py"
+      ],
+      "status": "implemented_fail_closed"
+    },
+    {
+      "artifacts": [
+        "operator_dashboard.html",
+        "operator_workflow_report.json"
+      ],
+      "boundary": "Operator UX is local/private-beta oriented.",
+      "id": "REQ-08",
+      "name": "Operator UX",
+      "proof": [
+        "tests/test_operator_app.py"
+      ],
+      "status": "implemented_local_app"
+    },
+    {
+      "artifacts": [
+        "review_requests.json",
+        "expert_review_packet_packet-frozen-tuna-canada-001.md"
+      ],
+      "boundary": "Expert review packet is scoped; no advice or approval is implied by the app.",
+      "id": "REQ-09",
+      "name": "Expert review UX",
+      "proof": [
+        "tests/test_operator_app.py"
+      ],
+      "status": "implemented_scoped_tokens"
+    },
+    {
+      "artifacts": [
+        "report_exports.json",
+        "customer_readiness_report.md"
+      ],
+      "boundary": "Reports disclose blockers and AI involvement; they are not certificates.",
+      "id": "REQ-10",
+      "name": "Reports and exports",
+      "proof": [
+        "tests/test_source_packet_workflow.py",
+        "scripts/check_product.py"
+      ],
+      "status": "implemented_safe_exports"
+    },
+    {
+      "artifacts": [
+        "product_runtime_state.json"
+      ],
+      "boundary": "Customer UX is private-beta candidate, not public launch proof.",
+      "id": "REQ-11",
+      "name": "Customer UX",
+      "proof": [
+        "tests/test_operator_app.py"
+      ],
+      "status": "implemented"
+    },
+    {
+      "artifacts": [
+        "product_runtime_state.json"
+      ],
+      "boundary": "Admin controls are local/private-beta implementation surfaces.",
+      "id": "REQ-12",
+      "name": "Admin UX",
+      "proof": [
+        "tests/test_operator_app.py"
+      ],
+      "status": "implemented"
+    },
+    {
+      "artifacts": [
+        "ai_data_policy.json",
+        "redaction_pipeline.json",
+        "deletion_requests.json"
+      ],
+      "boundary": "Policies and deletion workflow exist; qualified privacy/legal review remains required before hosted customer use.",
+      "id": "REQ-13",
+      "name": "Privacy and data controls",
+      "proof": [
+        "tests/test_product_runtime.py",
+        "tests/test_operator_app.py"
+      ],
+      "status": "implemented_with_external_review_gate"
+    },
+    {
+      "artifacts": [
+        "auth_rbac_matrix.json",
+        "deployment_readiness_report.json"
+      ],
+      "boundary": "Production identity, TLS, secret manager, malware scanning, and security review remain external gates.",
+      "id": "REQ-14",
+      "name": "Security",
+      "proof": [
+        "tests/test_operator_app.py",
+        "scripts/check_product.py"
+      ],
+      "status": "implemented_local_controls_with_hosting_gates"
+    },
+    {
+      "artifacts": [
+        "audit_events.json",
+        "customer_action_log.json",
+        "deployment_readiness_report.json"
+      ],
+      "boundary": "Local JSON/SQLite audit exists; production observability stack remains a deployment gate.",
+      "id": "REQ-15",
+      "name": "Audit and observability",
+      "proof": [
+        "tests/test_operator_app.py"
+      ],
+      "status": "implemented"
+    },
+    {
+      "artifacts": [
+        "Dockerfile",
+        "compose.yaml",
+        ".env.example",
+        "deployment_readiness_report.json"
+      ],
+      "boundary": "Hostable artifacts exist; no live production environment is claimed.",
+      "id": "REQ-16",
+      "name": "Deployment environments",
+      "proof": [
+        "scripts/check_product.py"
+      ],
+      "status": "implemented_hostable_local_stack"
+    },
+    {
+      "artifacts": [
+        "RUN_RESULTS.md",
+        "requirements_traceability_matrix.json"
+      ],
+      "boundary": "Acceptance proves local product behavior and generated artifacts, not external legal/compliance approval.",
+      "id": "REQ-17",
+      "name": "Testing and acceptance gates",
+      "proof": [
+        "python3 -m unittest discover -s tests -p test_*.py",
+        "python3 scripts/check_product.py"
+      ],
+      "status": "implemented"
     }
   ],
   "review_requests": [
@@ -719,7 +1249,7 @@
       "completed_at": "",
       "created_at": "2026-06-25T00:00:00+00:00",
       "created_by": "user-operator-001",
-      "due_at": "2026-07-10T02:53:10+00:00",
+      "due_at": "2026-07-10T03:13:36+00:00",
       "id": "review-request-packet-frozen-tuna-canada-001",
       "out_of_scope": [
         "General legal advice",
@@ -784,7 +1314,7 @@
   ],
   "reviewer_access_grants": [
     {
-      "expires_at": "2026-07-10T02:53:10+00:00",
+      "expires_at": "2026-07-10T03:13:36+00:00",
       "packet_ids": [
         "packet-frozen-tuna-canada-001"
       ],
@@ -861,11 +1391,15 @@
     }
   ],
   "security_controls": {
+    "ai_data_policy": "organization policy controls allowed modes, sensitivity, endpoint routing, retention, and no-AI fallback",
     "audit": "packet, AI, review, export, deletion, and permission events are recorded",
     "authentication": "local session auth implemented for private beta dry-run",
     "csrf": "local form token available for browser unsafe actions",
+    "model_router": "per-evidence model routing denies disallowed modes and records endpoint decisions",
+    "no_ai_mode": "manual workflow remains available when AI is disabled at org or evidence level",
     "organization_isolation": "packet queries filter by organization unless operator/admin",
     "rbac": "role permission matrix enforced by route handlers",
+    "redaction_pipeline": "sensitive evidence is marked for redaction before AI processing",
     "route_traversal": "route-specific artifact base directories with resolved-path checks",
     "scoped_expert_links": "review tokens grant packet-scoped access only",
     "upload_validation": {
@@ -914,8 +1448,13 @@
       "/packets/:packetId/reviews",
       "/packets/:packetId/reports",
       "/packets/:packetId/settings",
+      "/settings/ai-data-policy",
       "/account",
-      "/support"
+      "/support",
+      "/privacy",
+      "/terms",
+      "/ai-use",
+      "/data-retention"
     ],
     "expert": [
       "/review/:reviewToken",

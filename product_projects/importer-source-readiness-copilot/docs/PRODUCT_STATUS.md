@@ -18,7 +18,8 @@ evaluates readiness gates, writes
 `system_review_graph/operator_dashboard.html`, writes
 `system_review_graph/operator_screenshot_manifest.json`, writes investor pitch
 artifacts, writes Canada-focused board artifacts, and passes the local proof
-gate.
+gate. It also writes AI/data policy, model-router, redaction, no-AI/manual
+workflow, and requirements traceability artifacts.
 
 The current usable application is the local private-beta product app served by:
 
@@ -30,8 +31,9 @@ This is the surface a customer, operator, expert reviewer, or admin can use in
 local private-beta review. It includes `/dashboard`, `/packets/new`,
 `/packets/:id/evidence`, `/packets/:id/blockers`, `/packets/:id/readiness`,
 `/packets/:id/ai-reviews`, `/packets/:id/reviews`, `/packets/:id/reports`,
-scoped `/review/:token` pages, `/operator/queue`, `/operator/packets/:id`,
-`/admin/sources`, `/admin/gates`, `/admin/audit`, and
+`/settings/ai-data-policy`, scoped `/review/:token` pages,
+`/operator/queue`, `/operator/packets/:id`, `/admin/sources`,
+`/admin/gates`, `/admin/audit`, and
 `/admin/system-health`. It is hostable after real infrastructure and qualified
 security/privacy/human review gates are completed.
 
@@ -61,6 +63,11 @@ security/privacy/human review gates are completed.
 - grouped customer blockers
 - official-source refresh records
 - AI simulated review runs
+- AI data policy and model router
+- per-evidence AI/no-AI permissions
+- redaction preview contract
+- manual no-AI workflow
+- requirement traceability matrix
 - expert-review packet export
 - scoped expert-review links and finding ingestion
 - local SQLite workflow store
@@ -128,6 +135,11 @@ keeps real human approvals explicit.
 - machine report: `system_review_graph/customer_readiness_report.json`
 - evidence ledger: `system_review_graph/evidence_ledger.json`
 - AI review runs: `system_review_graph/customer_ai_review_runs.json`
+- AI policy: `system_review_graph/ai_data_policy.json`
+- model router: `system_review_graph/ai_model_router.json`
+- redaction pipeline: `system_review_graph/redaction_pipeline.json`
+- no-AI workflow: `system_review_graph/manual_no_ai_workflow.json`
+- requirements matrix: `system_review_graph/requirements_traceability_matrix.json`
 - runtime contract: `system_review_graph/product_runtime_state.json`
 - RBAC matrix: `system_review_graph/auth_rbac_matrix.json`
 - audit events: `system_review_graph/audit_events.json`
@@ -138,10 +150,11 @@ This lets a customer/operator packet enter the product and get a safe readiness
 report, upload evidence, refresh official-source records, view grouped blockers,
 run AI simulated review, generate expert-review packets, and export a
 customer-safe report. It also exposes local auth/RBAC, organization isolation,
-scoped expert review, admin audit, and deployment health surfaces. It still
-blocks tariff confirmation, CFIA compliance, supplier recommendation, buyer
-validation, import readiness, legal/compliance approval, and public launch
-claims.
+AI data-policy controls, per-evidence AI permissions, redaction previews,
+manual no-AI fallback, scoped expert review, admin audit, and deployment health
+surfaces. It still blocks tariff confirmation, CFIA compliance, supplier
+recommendation, buyer validation, import readiness, legal/compliance approval,
+and public launch claims.
 
 ## Next Valid Move
 

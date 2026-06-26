@@ -130,10 +130,200 @@
       "generated_at": "2026-06-25T00:00:00+00:00",
       "human_gate": "required_before_external_claims",
       "human_review_required": true,
-      "input_snapshot_hash": "f6d669f5e79239366700092239808dbd3f91983b98b65bf197d469bb799b93ef",
+      "input_snapshot_hash": "70b7ebe12d6cc4e8d6b78aa6be64cf047a17e5ec5bf73fe12928f1a7408eecd6",
+      "model_mode": "metadata_only",
       "model_name": "deterministic-safety-rules",
+      "model_name_or_endpoint": "local_rule_simulator",
       "model_provider": "local_rule_simulator",
+      "model_route_decisions": [
+        {
+          "allowed": true,
+          "audit_level": "full",
+          "document_sensitivity": "public",
+          "evidence_id": "evidence-frozen-tuna-cid-reference",
+          "evidence_permission": "metadata_only",
+          "mode": "metadata_only",
+          "model_endpoint_id": "",
+          "next_valid_move_if_denied": "Use metadata-only/manual review or change organization and document-level AI permission.",
+          "no_ai_fallback": "manual_operator_review",
+          "organization_id": "org-importer-demo",
+          "organization_policy_id": "ai-policy-org-importer-demo",
+          "packet_id": "packet-frozen-tuna-canada-001",
+          "reason_if_denied": "",
+          "redaction_required": false,
+          "requested_mode": "metadata_only",
+          "store_output": true,
+          "store_prompt": true,
+          "task_type": "simulated_readiness_review"
+        },
+        {
+          "allowed": true,
+          "audit_level": "full",
+          "document_sensitivity": "public",
+          "evidence_id": "evidence-frozen-tuna-cbsa-import-workflow",
+          "evidence_permission": "metadata_only",
+          "mode": "metadata_only",
+          "model_endpoint_id": "",
+          "next_valid_move_if_denied": "Use metadata-only/manual review or change organization and document-level AI permission.",
+          "no_ai_fallback": "manual_operator_review",
+          "organization_id": "org-importer-demo",
+          "organization_policy_id": "ai-policy-org-importer-demo",
+          "packet_id": "packet-frozen-tuna-canada-001",
+          "reason_if_denied": "",
+          "redaction_required": false,
+          "requested_mode": "metadata_only",
+          "store_output": true,
+          "store_prompt": true,
+          "task_type": "simulated_readiness_review"
+        },
+        {
+          "allowed": true,
+          "audit_level": "full",
+          "document_sensitivity": "public",
+          "evidence_id": "evidence-frozen-tuna-cfia-airs-reference",
+          "evidence_permission": "metadata_only",
+          "mode": "metadata_only",
+          "model_endpoint_id": "",
+          "next_valid_move_if_denied": "Use metadata-only/manual review or change organization and document-level AI permission.",
+          "no_ai_fallback": "manual_operator_review",
+          "organization_id": "org-importer-demo",
+          "organization_policy_id": "ai-policy-org-importer-demo",
+          "packet_id": "packet-frozen-tuna-canada-001",
+          "reason_if_denied": "",
+          "redaction_required": false,
+          "requested_mode": "metadata_only",
+          "store_output": true,
+          "store_prompt": true,
+          "task_type": "simulated_readiness_review"
+        }
+      ],
+      "organization_id": "org-importer-demo",
+      "output_json": {
+        "blocked_claims": [
+          "tariff_classification_claim",
+          "food_safety_claim",
+          "source_rights_claim",
+          "buyer_validation_claim",
+          "launch_readiness_claim"
+        ],
+        "can_open_gate": false,
+        "findings": [
+          {
+            "blocked_claims": [
+              "tariff_classification_claim",
+              "food_safety_claim",
+              "launch_readiness_claim"
+            ],
+            "evidence_used": [
+              "evidence-frozen-tuna-cid-reference",
+              "evidence-frozen-tuna-cbsa-import-workflow",
+              "evidence-frozen-tuna-cfia-airs-reference"
+            ],
+            "human_review_required": true,
+            "issue": "Simulated review found missing evidence or review proof for external claims.",
+            "next_valid_move": "Collect evidence and request scoped human review before any external claim.",
+            "severity": "P1_blocks_external_claim",
+            "sources_used": [
+              "cbsa-carm",
+              "cbsa-import-commercial-goods",
+              "cbsa-customs-tariff-2026"
+            ],
+            "title": "Canada compliance simulation"
+          },
+          {
+            "blocked_claims": [
+              "tariff_classification_claim",
+              "food_safety_claim",
+              "launch_readiness_claim"
+            ],
+            "evidence_used": [
+              "evidence-frozen-tuna-cid-reference",
+              "evidence-frozen-tuna-cbsa-import-workflow",
+              "evidence-frozen-tuna-cfia-airs-reference"
+            ],
+            "human_review_required": true,
+            "issue": "Simulated review found missing evidence or review proof for external claims.",
+            "next_valid_move": "Collect evidence and request scoped human review before any external claim.",
+            "severity": "P1_blocks_external_claim",
+            "sources_used": [
+              "cbsa-carm",
+              "cbsa-import-commercial-goods",
+              "cbsa-customs-tariff-2026"
+            ],
+            "title": "Privacy/legal simulation"
+          },
+          {
+            "blocked_claims": [
+              "tariff_classification_claim",
+              "food_safety_claim",
+              "launch_readiness_claim"
+            ],
+            "evidence_used": [
+              "evidence-frozen-tuna-cid-reference",
+              "evidence-frozen-tuna-cbsa-import-workflow",
+              "evidence-frozen-tuna-cfia-airs-reference"
+            ],
+            "human_review_required": true,
+            "issue": "Simulated review found missing evidence or review proof for external claims.",
+            "next_valid_move": "Collect evidence and request scoped human review before any external claim.",
+            "severity": "P1_blocks_external_claim",
+            "sources_used": [
+              "cbsa-carm",
+              "cbsa-import-commercial-goods",
+              "cbsa-customs-tariff-2026"
+            ],
+            "title": "Source-rights simulation"
+          },
+          {
+            "blocked_claims": [
+              "tariff_classification_claim",
+              "food_safety_claim",
+              "launch_readiness_claim"
+            ],
+            "evidence_used": [
+              "evidence-frozen-tuna-cid-reference",
+              "evidence-frozen-tuna-cbsa-import-workflow",
+              "evidence-frozen-tuna-cfia-airs-reference"
+            ],
+            "human_review_required": true,
+            "issue": "Simulated review found missing evidence or review proof for external claims.",
+            "next_valid_move": "Collect evidence and request scoped human review before any external claim.",
+            "severity": "P1_blocks_external_claim",
+            "sources_used": [
+              "cbsa-carm",
+              "cbsa-import-commercial-goods",
+              "cbsa-customs-tariff-2026"
+            ],
+            "title": "Buyer-validation simulation"
+          },
+          {
+            "blocked_claims": [
+              "tariff_classification_claim",
+              "food_safety_claim",
+              "launch_readiness_claim"
+            ],
+            "evidence_used": [
+              "evidence-frozen-tuna-cid-reference",
+              "evidence-frozen-tuna-cbsa-import-workflow",
+              "evidence-frozen-tuna-cfia-airs-reference"
+            ],
+            "human_review_required": true,
+            "issue": "Simulated review found missing evidence or review proof for external claims.",
+            "next_valid_move": "Collect evidence and request scoped human review before any external claim.",
+            "severity": "P1_blocks_external_claim",
+            "sources_used": [
+              "cbsa-carm",
+              "cbsa-import-commercial-goods",
+              "cbsa-customs-tariff-2026"
+            ],
+            "title": "Launch-gate simulation"
+          }
+        ]
+      },
+      "output_stored": true,
       "packet_id": "packet-frozen-tuna-canada-001",
+      "prompt_stored": true,
+      "redaction_applied": false,
       "results": [
         {
           "blocker_group_ids": [
@@ -236,7 +426,14 @@
         "canada-cid",
         "cbsa-licensed-customs-brokers"
       ],
-      "status": "simulated_review_complete_human_gates_closed"
+      "status": "simulated_review_complete_human_gates_closed",
+      "validation_result": {
+        "allowed_route_count": 3,
+        "can_open_gate": false,
+        "human_gate_required": true,
+        "route_count": 3,
+        "status": "fail_closed_validated"
+      }
     }
   ],
   "blocked_claims": [
@@ -354,9 +551,13 @@
     "rows": [
       {
         "accessed_at": "2026-06-25",
+        "ai_processing_allowed": true,
+        "ai_processing_mode": "metadata_only",
+        "ai_processing_permission": "metadata_only",
         "claim_boundary": "Reference-only source. It does not prove supplier suitability, tariff classification, CFIA clearance, buyer demand, or import approval.",
         "claim_supported": "Importer-discovery reference attached for orientation only.",
         "created_at": "2026-06-25T00:00:00+00:00",
+        "description": "Reference-only source. It does not prove supplier suitability, tariff classification, CFIA clearance, buyer demand, or import approval.",
         "evidence_id": "evidence-frozen-tuna-cid-reference",
         "evidence_type": "official_reference",
         "expires_at": "",
@@ -364,6 +565,7 @@
         "freshness_status": "needs_current_refresh_before_claims",
         "human_review_status": "not_reviewed",
         "labels": [
+          "ai_allowed",
           "fixture",
           "official_reference",
           "reference_only",
@@ -372,21 +574,29 @@
         ],
         "last_verified_at": "",
         "ledger_status": "blocked_stale_source",
+        "organization_id": "org-importer-demo",
         "packet_id": "packet-frozen-tuna-canada-001",
         "quality_status": "stale",
+        "redaction_required": false,
         "review_required": true,
         "reviewed_at": "",
         "reviewed_by": "",
         "rights_status": "public_reference_only",
+        "sensitivity_level": "public",
         "source_owner": "ISED Canadian Importers Database",
         "source_url": "https://ised-isde.canada.ca/site/ised/en/research-and-business-intelligence/canadian-importers-database",
+        "title": "Importer-discovery reference attached for orientation only.",
         "uploaded_by": "demo-customer"
       },
       {
         "accessed_at": "2026-06-25",
+        "ai_processing_allowed": true,
+        "ai_processing_mode": "metadata_only",
+        "ai_processing_permission": "metadata_only",
         "claim_boundary": "Reference-only source. It does not create customs, tariff, release, accounting, or compliance advice.",
         "claim_supported": "Commercial import workflow reference attached.",
         "created_at": "2026-06-25T00:00:00+00:00",
+        "description": "Reference-only source. It does not create customs, tariff, release, accounting, or compliance advice.",
         "evidence_id": "evidence-frozen-tuna-cbsa-import-workflow",
         "evidence_type": "official_reference",
         "expires_at": "",
@@ -394,6 +604,7 @@
         "freshness_status": "needs_current_refresh_before_claims",
         "human_review_status": "not_reviewed",
         "labels": [
+          "ai_allowed",
           "official_reference",
           "reference_only",
           "review_required",
@@ -401,21 +612,29 @@
         ],
         "last_verified_at": "",
         "ledger_status": "blocked_stale_source",
+        "organization_id": "org-importer-demo",
         "packet_id": "packet-frozen-tuna-canada-001",
         "quality_status": "stale",
+        "redaction_required": false,
         "review_required": true,
         "reviewed_at": "",
         "reviewed_by": "",
         "rights_status": "public_reference_only",
+        "sensitivity_level": "public",
         "source_owner": "Canada Border Services Agency",
         "source_url": "https://www.cbsa-asfc.gc.ca/import/menu-eng.html",
+        "title": "Commercial import workflow reference attached.",
         "uploaded_by": "operator"
       },
       {
         "accessed_at": "2026-06-25",
+        "ai_processing_allowed": true,
+        "ai_processing_mode": "metadata_only",
+        "ai_processing_permission": "metadata_only",
         "claim_boundary": "Reference-only source. It does not prove CFIA clearance or legal compliance.",
         "claim_supported": "AIRS reference attached for food import requirements orientation.",
         "created_at": "2026-06-25T00:00:00+00:00",
+        "description": "Reference-only source. It does not prove CFIA clearance or legal compliance.",
         "evidence_id": "evidence-frozen-tuna-cfia-airs-reference",
         "evidence_type": "official_reference",
         "expires_at": "",
@@ -423,6 +642,7 @@
         "freshness_status": "needs_current_refresh_before_claims",
         "human_review_status": "not_reviewed",
         "labels": [
+          "ai_allowed",
           "official_reference",
           "reference_only",
           "review_required",
@@ -430,14 +650,18 @@
         ],
         "last_verified_at": "",
         "ledger_status": "blocked_stale_source",
+        "organization_id": "org-importer-demo",
         "packet_id": "packet-frozen-tuna-canada-001",
         "quality_status": "stale",
+        "redaction_required": false,
         "review_required": true,
         "reviewed_at": "",
         "reviewed_by": "",
         "rights_status": "public_reference_only",
+        "sensitivity_level": "public",
         "source_owner": "Canadian Food Inspection Agency",
         "source_url": "https://inspection.canada.ca/en/importing-food-plants-animals/airs",
+        "title": "AIRS reference attached for food import requirements orientation.",
         "uploaded_by": "operator"
       }
     ],
@@ -688,7 +912,7 @@
       "blockers": [
         {
           "claim_blocked": "Source Freshness",
-          "created_at": "2026-06-26T02:53:10+00:00",
+          "created_at": "2026-06-26T03:13:36+00:00",
           "evidence": "source packet packet-frozen-tuna-canada-001",
           "evidence_required": "Fresh official-source refresh record with accessed_at, last_verified_at, content_hash, HTTP status, and reviewer boundary.",
           "gate": "closed",
@@ -719,7 +943,7 @@
         },
         {
           "claim_blocked": "Source Freshness",
-          "created_at": "2026-06-26T02:53:10+00:00",
+          "created_at": "2026-06-26T03:13:36+00:00",
           "evidence": "source packet packet-frozen-tuna-canada-001",
           "evidence_required": "Fresh official-source refresh record with accessed_at, last_verified_at, content_hash, HTTP status, and reviewer boundary.",
           "gate": "closed",
@@ -750,7 +974,7 @@
         },
         {
           "claim_blocked": "Source Freshness",
-          "created_at": "2026-06-26T02:53:10+00:00",
+          "created_at": "2026-06-26T03:13:36+00:00",
           "evidence": "source packet packet-frozen-tuna-canada-001",
           "evidence_required": "Fresh official-source refresh record with accessed_at, last_verified_at, content_hash, HTTP status, and reviewer boundary.",
           "gate": "closed",
@@ -781,7 +1005,7 @@
         },
         {
           "claim_blocked": "Compliance Review",
-          "created_at": "2026-06-26T02:53:10+00:00",
+          "created_at": "2026-06-26T03:13:36+00:00",
           "evidence": "source packet packet-frozen-tuna-canada-001",
           "evidence_required": "Dated restricted-party screening record with source and reviewer boundary.",
           "gate": "closed",
@@ -812,7 +1036,7 @@
         },
         {
           "claim_blocked": "Compliance Review",
-          "created_at": "2026-06-26T02:53:10+00:00",
+          "created_at": "2026-06-26T03:13:36+00:00",
           "evidence": "source packet packet-frozen-tuna-canada-001",
           "evidence_required": "Scoped Canadian import/export, food, customs, or broker review finding.",
           "gate": "closed",
@@ -843,7 +1067,7 @@
         },
         {
           "claim_blocked": "Buyer Validation",
-          "created_at": "2026-06-26T02:53:10+00:00",
+          "created_at": "2026-06-26T03:13:36+00:00",
           "evidence": "source packet packet-frozen-tuna-canada-001",
           "evidence_required": "Dated buyer/operator feedback tied to the packet and intended use.",
           "gate": "closed",
@@ -874,7 +1098,7 @@
         },
         {
           "claim_blocked": "Source Rights / Contract",
-          "created_at": "2026-06-26T02:53:10+00:00",
+          "created_at": "2026-06-26T03:13:36+00:00",
           "evidence": "source packet packet-frozen-tuna-canada-001",
           "evidence_required": "Signed source-rights, data-rights, or commercial terms record.",
           "gate": "closed",
@@ -912,9 +1136,13 @@
       "evidence_items": [
         {
           "accessed_at": "2026-06-25",
+          "ai_processing_allowed": true,
+          "ai_processing_mode": "metadata_only",
+          "ai_processing_permission": "metadata_only",
           "claim_boundary": "Reference-only source. It does not prove supplier suitability, tariff classification, CFIA clearance, buyer demand, or import approval.",
           "claim_supported": "Importer-discovery reference attached for orientation only.",
           "created_at": "2026-06-25T00:00:00+00:00",
+          "description": "Reference-only source. It does not prove supplier suitability, tariff classification, CFIA clearance, buyer demand, or import approval.",
           "evidence_id": "evidence-frozen-tuna-cid-reference",
           "evidence_type": "official_reference",
           "expires_at": "",
@@ -922,6 +1150,7 @@
           "freshness_status": "needs_current_refresh_before_claims",
           "human_review_status": "not_reviewed",
           "labels": [
+            "ai_allowed",
             "fixture",
             "official_reference",
             "reference_only",
@@ -930,21 +1159,29 @@
           ],
           "last_verified_at": "",
           "ledger_status": "blocked_stale_source",
+          "organization_id": "org-importer-demo",
           "packet_id": "packet-frozen-tuna-canada-001",
           "quality_status": "stale",
+          "redaction_required": false,
           "review_required": true,
           "reviewed_at": "",
           "reviewed_by": "",
           "rights_status": "public_reference_only",
+          "sensitivity_level": "public",
           "source_owner": "ISED Canadian Importers Database",
           "source_url": "https://ised-isde.canada.ca/site/ised/en/research-and-business-intelligence/canadian-importers-database",
+          "title": "Importer-discovery reference attached for orientation only.",
           "uploaded_by": "demo-customer"
         },
         {
           "accessed_at": "2026-06-25",
+          "ai_processing_allowed": true,
+          "ai_processing_mode": "metadata_only",
+          "ai_processing_permission": "metadata_only",
           "claim_boundary": "Reference-only source. It does not create customs, tariff, release, accounting, or compliance advice.",
           "claim_supported": "Commercial import workflow reference attached.",
           "created_at": "2026-06-25T00:00:00+00:00",
+          "description": "Reference-only source. It does not create customs, tariff, release, accounting, or compliance advice.",
           "evidence_id": "evidence-frozen-tuna-cbsa-import-workflow",
           "evidence_type": "official_reference",
           "expires_at": "",
@@ -952,6 +1189,7 @@
           "freshness_status": "needs_current_refresh_before_claims",
           "human_review_status": "not_reviewed",
           "labels": [
+            "ai_allowed",
             "official_reference",
             "reference_only",
             "review_required",
@@ -959,21 +1197,29 @@
           ],
           "last_verified_at": "",
           "ledger_status": "blocked_stale_source",
+          "organization_id": "org-importer-demo",
           "packet_id": "packet-frozen-tuna-canada-001",
           "quality_status": "stale",
+          "redaction_required": false,
           "review_required": true,
           "reviewed_at": "",
           "reviewed_by": "",
           "rights_status": "public_reference_only",
+          "sensitivity_level": "public",
           "source_owner": "Canada Border Services Agency",
           "source_url": "https://www.cbsa-asfc.gc.ca/import/menu-eng.html",
+          "title": "Commercial import workflow reference attached.",
           "uploaded_by": "operator"
         },
         {
           "accessed_at": "2026-06-25",
+          "ai_processing_allowed": true,
+          "ai_processing_mode": "metadata_only",
+          "ai_processing_permission": "metadata_only",
           "claim_boundary": "Reference-only source. It does not prove CFIA clearance or legal compliance.",
           "claim_supported": "AIRS reference attached for food import requirements orientation.",
           "created_at": "2026-06-25T00:00:00+00:00",
+          "description": "Reference-only source. It does not prove CFIA clearance or legal compliance.",
           "evidence_id": "evidence-frozen-tuna-cfia-airs-reference",
           "evidence_type": "official_reference",
           "expires_at": "",
@@ -981,6 +1227,7 @@
           "freshness_status": "needs_current_refresh_before_claims",
           "human_review_status": "not_reviewed",
           "labels": [
+            "ai_allowed",
             "official_reference",
             "reference_only",
             "review_required",
@@ -988,19 +1235,25 @@
           ],
           "last_verified_at": "",
           "ledger_status": "blocked_stale_source",
+          "organization_id": "org-importer-demo",
           "packet_id": "packet-frozen-tuna-canada-001",
           "quality_status": "stale",
+          "redaction_required": false,
           "review_required": true,
           "reviewed_at": "",
           "reviewed_by": "",
           "rights_status": "public_reference_only",
+          "sensitivity_level": "public",
           "source_owner": "Canadian Food Inspection Agency",
           "source_url": "https://inspection.canada.ca/en/importing-food-plants-animals/airs",
+          "title": "AIRS reference attached for food import requirements orientation.",
           "uploaded_by": "operator"
         }
       ],
       "evidence_summary": {
         "accepted": 0,
+        "ai_allowed": 3,
+        "ai_blocked": 0,
         "attached": 3,
         "human_reviewed": 0,
         "missing": 5,
@@ -1011,7 +1264,9 @@
           "Buyer/operator validation",
           "Restricted-party screening record"
         ],
+        "redaction_required": 0,
         "reference_only": 3,
+        "requires_review": 3,
         "stale": 3,
         "summary": "3 attached / 5 missing; 3 stale; 3 reference-only"
       },
@@ -1028,6 +1283,7 @@
         "Public launch claim"
       ],
       "official_reference_count": 10,
+      "organization_id": "org-importer-demo",
       "origin_country": "Vietnam",
       "packet_id": "packet-frozen-tuna-canada-001",
       "packet_name": "Frozen tuna Canada source packet",

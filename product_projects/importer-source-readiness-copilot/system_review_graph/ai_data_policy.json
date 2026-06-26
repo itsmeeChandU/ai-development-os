@@ -1,0 +1,120 @@
+{
+  "model_endpoints": [
+    {
+      "api_key_reference": "IMPORTER_LLM_API_KEY",
+      "auth_method": "server_secret_reference",
+      "endpoint_url": "provider://business-api",
+      "health_check_status": "not_configured_for_public_hosting",
+      "id": "business-api-default",
+      "max_context_tokens": 64000,
+      "mode": "business_api",
+      "model_name": "structured-review-model",
+      "retention_policy": "business_api_default_no_training_by_product_policy",
+      "supports_json_schema": true,
+      "timeout_seconds": 60
+    },
+    {
+      "api_key_reference": "PRIVATE_LLM_API_KEY",
+      "auth_method": "private_network_secret_reference",
+      "endpoint_url": "https://private-llm.example.local",
+      "health_check_status": "design_ready_not_live",
+      "id": "private-endpoint-canada-001",
+      "max_context_tokens": 128000,
+      "mode": "private_hosted_llm",
+      "model_name": "private-structured-review",
+      "retention_policy": "private_tenant_no_provider_training",
+      "supports_json_schema": true,
+      "timeout_seconds": 90
+    },
+    {
+      "api_key_reference": "CUSTOMER_MANAGED_LLM_KEY",
+      "auth_method": "customer_secret_reference",
+      "endpoint_url": "https://customer-model.example.local",
+      "health_check_status": "design_ready_not_live",
+      "id": "customer-managed-demo",
+      "max_context_tokens": 32000,
+      "mode": "customer_managed_llm",
+      "model_name": "customer-managed-review",
+      "retention_policy": "customer_controlled",
+      "supports_json_schema": true,
+      "timeout_seconds": 90
+    }
+  ],
+  "policies": [
+    {
+      "ai_use_disclosure_accepted": true,
+      "allowed_modes": [
+        "no_ai",
+        "metadata_only",
+        "redacted",
+        "business_api",
+        "private_hosted_llm",
+        "customer_managed_llm",
+        "on_prem_manual"
+      ],
+      "allowed_sensitivity": [
+        "public",
+        "internal",
+        "confidential"
+      ],
+      "audit_level": "full",
+      "customer_managed_endpoint_id": "customer-managed-demo",
+      "default_mode": "redacted",
+      "id": "ai-policy-org-importer-demo",
+      "no_ai_fallback": "manual_operator_review",
+      "organization_id": "org-importer-demo",
+      "output_retention": "store_structured_output",
+      "privacy_notice_accepted": true,
+      "private_model_endpoint_id": "private-endpoint-canada-001",
+      "prompt_retention": "hash_only",
+      "redaction_required_for": [
+        "confidential",
+        "restricted",
+        "regulated"
+      ],
+      "restricted_sensitivity_modes": [
+        "customer_managed_llm",
+        "metadata_only",
+        "no_ai",
+        "on_prem_manual",
+        "private_hosted_llm"
+      ],
+      "terms_accepted": true
+    },
+    {
+      "ai_use_disclosure_accepted": false,
+      "allowed_modes": [
+        "no_ai",
+        "metadata_only",
+        "on_prem_manual"
+      ],
+      "allowed_sensitivity": [
+        "public",
+        "internal"
+      ],
+      "audit_level": "full",
+      "customer_managed_endpoint_id": "",
+      "default_mode": "no_ai",
+      "id": "ai-policy-org-other-demo",
+      "no_ai_fallback": "manual_operator_review",
+      "organization_id": "org-other-demo",
+      "output_retention": "none",
+      "privacy_notice_accepted": true,
+      "private_model_endpoint_id": "",
+      "prompt_retention": "none",
+      "redaction_required_for": [
+        "confidential",
+        "restricted",
+        "regulated"
+      ],
+      "restricted_sensitivity_modes": [
+        "no_ai",
+        "metadata_only",
+        "on_prem_manual"
+      ],
+      "terms_accepted": true
+    }
+  ],
+  "proof_boundary": "Policies are product controls; qualified privacy/legal/security review is still required before hosted customer use.",
+  "status": "ai_data_policy_ready"
+}

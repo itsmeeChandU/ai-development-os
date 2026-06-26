@@ -24,6 +24,9 @@ infrastructure remain human/external gates.
 - intended use
 - documents or evidence references
 - notes
+- evidence sensitivity level
+- evidence AI processing mode
+- redaction-required flag
 
 ## Customer Routes
 
@@ -45,6 +48,11 @@ infrastructure remain human/external gates.
 /packets/:id/settings
 /packets/:id/expert-review-packet
 /packets/:id/export
+/settings/ai-data-policy
+/privacy
+/terms
+/ai-use
+/data-retention
 /operator/queue
 /operator/packets/:id
 /review/:token
@@ -55,6 +63,9 @@ infrastructure remain human/external gates.
 /admin/gates
 /admin/audit
 /admin/system-health
+/api/orgs/current/ai-policy
+/api/orgs/current/ai-policy/test-model-endpoint
+/api/evidence/:evidenceId/ai-permission
 ```
 
 `/source-packets/*` remains as a compatibility alias for generated artifacts
@@ -114,3 +125,9 @@ Source refresh records `accessed_at`, `last_verified_at`, `content_hash`,
 HTTP status, source change status, refresh actor, and refresh run ID. A refresh
 can close stale-source proof only. It cannot approve import, tariff, CFIA,
 supplier, buyer, legal, or launch claims.
+
+AI review records include model mode, route decisions, redaction status,
+retention flags, validation result, and output JSON. AI review can create
+blockers and next valid moves only. Evidence can be switched to `no_ai` through
+`/api/evidence/:evidenceId/ai-permission`, which rebuilds the workflow and
+returns the new route decision.

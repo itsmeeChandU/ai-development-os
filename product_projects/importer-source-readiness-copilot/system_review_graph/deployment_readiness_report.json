@@ -22,6 +22,14 @@
     "python3 scripts/serve_operator_app.py --host 127.0.0.1 --port 8765"
   ],
   "logs": "structured application/audit events are written to generated JSON and SQLite artifacts",
+  "model_endpoints": {
+    "default_behavior": "local deterministic simulator; no provider call by default",
+    "endpoint_contracts": [
+      "business-api-default",
+      "private-endpoint-canada-001",
+      "customer-managed-demo"
+    ]
+  },
   "monitoring": "health endpoints expose app, store, route, and generated-artifact readiness",
   "proof_boundary": "Deployment artifacts make the product hostable; they do not prove a live production environment exists.",
   "status": "deployable_local_stack_ready_with_external_hosting_gates"

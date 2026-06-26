@@ -30,6 +30,9 @@ customer_blocker_groups=4
 customer_store=ready
 runtime_status=private_beta_candidate_with_external_human_gates
 runtime_users=4
+ai_policy_status=ai_data_policy_ready
+ai_router_status=ai_model_router_ready
+requirements_traceability=17
 review_requests=1
 audit_events=3
 deployment_status=deployable_local_stack_ready_with_external_hosting_gates
@@ -40,7 +43,9 @@ unsafe_gates=closed
 
 Latest local proof also verifies customer packet prototype status, grouped
 blockers, evidence quality, AI simulated review runs, scoped expert-review
-requests, auth/RBAC and organization isolation, audit events, report exports,
-deployment health surfaces, and the expanded SQLite workflow store.
+requests, AI data policy, model routing, redaction previews, no-AI/manual
+fallback, requirements traceability, auth/RBAC and organization isolation,
+audit events, report exports, deployment health surfaces, and the expanded
+SQLite workflow store.
 
 Any failure should become a blocker row or a targeted repair before review.

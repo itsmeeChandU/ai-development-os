@@ -45,11 +45,16 @@ class SourcePacketWorkflowTests(unittest.TestCase):
         self.assertEqual(workflow["ai_review_runs"][0]["review_type"], "canada_compliance_simulation")
         self.assertIs(workflow["ai_review_runs"][0]["can_open_gate"], False)
         self.assertTrue(workflow["ai_review_runs"][0]["findings"][0]["evidence_used"])
+        self.assertEqual(workflow["ai_review_runs"][0]["model_mode"], "metadata_only")
+        self.assertTrue(workflow["ai_review_runs"][0]["model_route_decisions"])
+        self.assertEqual(workflow["ai_review_runs"][0]["validation_result"]["status"], "fail_closed_validated")
         packet = workflow["packets"][0]
+        self.assertEqual(packet["organization_id"], "org-importer-demo")
         self.assertIn(packet["customer_visible_status"], {"blocked_stale_source", "needs_expert_review", "needs_operator_review"})
         self.assertIn("Blocked - source freshness missing", packet["customer_visible_status_label"])
         self.assertIn("Source Freshness", {row["title"] for row in packet["blocker_groups"]})
         self.assertGreaterEqual(packet["evidence_summary"]["missing"], 4)
+        self.assertGreaterEqual(packet["evidence_summary"]["ai_allowed"], 1)
         for claim in BLOCKED_CLAIMS:
             self.assertIn(claim, packet["blocked_claims"])
 
@@ -60,6 +65,8 @@ class SourcePacketWorkflowTests(unittest.TestCase):
         statuses = set(ledger["counts_by_status"])
         self.assertTrue({"blocked_reference_only", "blocked_stale_source", "needs_expert_review"} & statuses)
         self.assertIn("stale", ledger["counts_by_quality"])
+        self.assertIs(ledger["rows"][0]["ai_processing_allowed"], True)
+        self.assertIn("ai_allowed", ledger["rows"][0]["labels"])
         self.assertIn("No evidence, no claim", ledger["rule"])
 
     def test_markdown_report_uses_safe_status_language(self) -> None:

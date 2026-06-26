@@ -10,6 +10,32 @@ from typing import Any
 
 CSRF_TOKEN = "local-dev-csrf-token"
 MAX_EVIDENCE_UPLOAD_BYTES = 5 * 1024 * 1024
+AI_PROCESSING_MODES = [
+    "no_ai",
+    "metadata_only",
+    "redacted",
+    "business_api",
+    "private_hosted_llm",
+    "customer_managed_llm",
+    "on_prem_manual",
+]
+
+SENSITIVITY_LEVELS = ["public", "internal", "confidential", "restricted", "regulated"]
+PRIVATE_AI_MODES = {"no_ai", "metadata_only", "private_hosted_llm", "customer_managed_llm", "on_prem_manual"}
+REDACTION_CATEGORIES = [
+    "person_names",
+    "emails",
+    "phone_numbers",
+    "addresses",
+    "supplier_names",
+    "buyer_names",
+    "prices",
+    "bank_details",
+    "contract_terms",
+    "signatures",
+    "ids",
+    "sensitive_notes",
+]
 
 PRODUCT_BOUNDARY = (
     "Importer Source Readiness Copilot organizes evidence and blockers. It does not provide "
@@ -119,6 +145,87 @@ ORGANIZATIONS = [
         "name": "Importer Source Readiness Ops",
         "type": "internal",
         "default": False,
+    },
+]
+
+AI_DATA_POLICIES = [
+    {
+        "id": "ai-policy-org-importer-demo",
+        "organization_id": "org-importer-demo",
+        "default_mode": "redacted",
+        "allowed_modes": AI_PROCESSING_MODES,
+        "allowed_sensitivity": ["public", "internal", "confidential"],
+        "restricted_sensitivity_modes": sorted(PRIVATE_AI_MODES),
+        "redaction_required_for": ["confidential", "restricted", "regulated"],
+        "prompt_retention": "hash_only",
+        "output_retention": "store_structured_output",
+        "audit_level": "full",
+        "private_model_endpoint_id": "private-endpoint-canada-001",
+        "customer_managed_endpoint_id": "customer-managed-demo",
+        "no_ai_fallback": "manual_operator_review",
+        "terms_accepted": True,
+        "privacy_notice_accepted": True,
+        "ai_use_disclosure_accepted": True,
+    },
+    {
+        "id": "ai-policy-org-other-demo",
+        "organization_id": "org-other-demo",
+        "default_mode": "no_ai",
+        "allowed_modes": ["no_ai", "metadata_only", "on_prem_manual"],
+        "allowed_sensitivity": ["public", "internal"],
+        "restricted_sensitivity_modes": ["no_ai", "metadata_only", "on_prem_manual"],
+        "redaction_required_for": ["confidential", "restricted", "regulated"],
+        "prompt_retention": "none",
+        "output_retention": "none",
+        "audit_level": "full",
+        "private_model_endpoint_id": "",
+        "customer_managed_endpoint_id": "",
+        "no_ai_fallback": "manual_operator_review",
+        "terms_accepted": True,
+        "privacy_notice_accepted": True,
+        "ai_use_disclosure_accepted": False,
+    },
+]
+
+MODEL_ENDPOINTS = [
+    {
+        "id": "business-api-default",
+        "mode": "business_api",
+        "endpoint_url": "provider://business-api",
+        "auth_method": "server_secret_reference",
+        "api_key_reference": "IMPORTER_LLM_API_KEY",
+        "model_name": "structured-review-model",
+        "supports_json_schema": True,
+        "max_context_tokens": 64000,
+        "timeout_seconds": 60,
+        "retention_policy": "business_api_default_no_training_by_product_policy",
+        "health_check_status": "not_configured_for_public_hosting",
+    },
+    {
+        "id": "private-endpoint-canada-001",
+        "mode": "private_hosted_llm",
+        "endpoint_url": "https://private-llm.example.local",
+        "auth_method": "private_network_secret_reference",
+        "api_key_reference": "PRIVATE_LLM_API_KEY",
+        "model_name": "private-structured-review",
+        "supports_json_schema": True,
+        "max_context_tokens": 128000,
+        "timeout_seconds": 90,
+        "retention_policy": "private_tenant_no_provider_training",
+        "health_check_status": "design_ready_not_live",
+    },
+    {
+        "id": "customer-managed-demo",
+        "mode": "customer_managed_llm",
+        "endpoint_url": "https://customer-model.example.local",
+        "auth_method": "customer_secret_reference",
+        "api_key_reference": "CUSTOMER_MANAGED_LLM_KEY",
+        "model_name": "customer-managed-review",
+        "supports_json_schema": True,
+        "max_context_tokens": 32000,
+        "timeout_seconds": 90,
+        "retention_policy": "customer_controlled",
+        "health_check_status": "design_ready_not_live",
     },
 ]
 
@@ -232,6 +339,145 @@ FORBIDDEN_REPORT_PHRASES = [
     "buyer validated",
 ]
 
+REQUIREMENTS_TRACEABILITY = [
+    {
+        "id": "REQ-01",
+        "name": "Identity, organization, permissions",
+        "status": "implemented_local_private_beta",
+        "artifacts": ["product_runtime_state.json", "auth_rbac_matrix.json", "customer_workflow.sqlite"],
+        "proof": ["tests/test_product_runtime.py", "tests/test_operator_app.py"],
+        "boundary": "Local session auth and RBAC are implemented for private beta dry-runs; production identity review remains external.",
+    },
+    {
+        "id": "REQ-02",
+        "name": "Packet intake",
+        "status": "implemented",
+        "artifacts": ["customer_source_packets.json", "customer_readiness_report.json"],
+        "proof": ["tests/test_operator_app.py", "tests/test_source_packet_workflow.py"],
+        "boundary": "Packet intake creates review state, not import approval.",
+    },
+    {
+        "id": "REQ-03",
+        "name": "Evidence ledger",
+        "status": "implemented",
+        "artifacts": ["evidence_ledger.json"],
+        "proof": ["tests/test_source_packet_workflow.py"],
+        "boundary": "No evidence, no claim; stale/reference-only evidence blocks external claims.",
+    },
+    {
+        "id": "REQ-04",
+        "name": "Official source refresh",
+        "status": "implemented_with_live_fetch_boundary",
+        "artifacts": ["source_refresh_runs.json", "source_refresh_report_packet-frozen-tuna-canada-001.json"],
+        "proof": ["tests/test_source_packet_workflow.py"],
+        "boundary": "Refresh records are evidence inputs; they do not replace qualified review.",
+    },
+    {
+        "id": "REQ-05",
+        "name": "Claim and blocker engine",
+        "status": "implemented_fail_closed",
+        "artifacts": ["claims_gate_matrix.json", "customer_readiness_report.json", "blockers.jsonl"],
+        "proof": ["scripts/check_product.py"],
+        "boundary": "External-world claims stay blocked until evidence and human gates close.",
+    },
+    {
+        "id": "REQ-06",
+        "name": "AI processing and model routing",
+        "status": "implemented_policy_router",
+        "artifacts": ["ai_data_policy.json", "ai_model_router.json", "customer_ai_review_runs.json"],
+        "proof": ["tests/test_product_runtime.py", "tests/test_operator_app.py"],
+        "boundary": "Router controls local simulated review and endpoint contracts; no live provider call is made by default.",
+    },
+    {
+        "id": "REQ-07",
+        "name": "AI simulated reviewers",
+        "status": "implemented_fail_closed",
+        "artifacts": ["customer_ai_review_runs.json"],
+        "proof": ["tests/test_product_runtime.py", "tests/test_source_packet_workflow.py"],
+        "boundary": "AI reviewers create findings and next moves only; they cannot open gates.",
+    },
+    {
+        "id": "REQ-08",
+        "name": "Operator UX",
+        "status": "implemented_local_app",
+        "artifacts": ["operator_dashboard.html", "operator_workflow_report.json"],
+        "proof": ["tests/test_operator_app.py"],
+        "boundary": "Operator UX is local/private-beta oriented.",
+    },
+    {
+        "id": "REQ-09",
+        "name": "Expert review UX",
+        "status": "implemented_scoped_tokens",
+        "artifacts": ["review_requests.json", "expert_review_packet_packet-frozen-tuna-canada-001.md"],
+        "proof": ["tests/test_operator_app.py"],
+        "boundary": "Expert review packet is scoped; no advice or approval is implied by the app.",
+    },
+    {
+        "id": "REQ-10",
+        "name": "Reports and exports",
+        "status": "implemented_safe_exports",
+        "artifacts": ["report_exports.json", "customer_readiness_report.md"],
+        "proof": ["tests/test_source_packet_workflow.py", "scripts/check_product.py"],
+        "boundary": "Reports disclose blockers and AI involvement; they are not certificates.",
+    },
+    {
+        "id": "REQ-11",
+        "name": "Customer UX",
+        "status": "implemented",
+        "artifacts": ["product_runtime_state.json"],
+        "proof": ["tests/test_operator_app.py"],
+        "boundary": "Customer UX is private-beta candidate, not public launch proof.",
+    },
+    {
+        "id": "REQ-12",
+        "name": "Admin UX",
+        "status": "implemented",
+        "artifacts": ["product_runtime_state.json"],
+        "proof": ["tests/test_operator_app.py"],
+        "boundary": "Admin controls are local/private-beta implementation surfaces.",
+    },
+    {
+        "id": "REQ-13",
+        "name": "Privacy and data controls",
+        "status": "implemented_with_external_review_gate",
+        "artifacts": ["ai_data_policy.json", "redaction_pipeline.json", "deletion_requests.json"],
+        "proof": ["tests/test_product_runtime.py", "tests/test_operator_app.py"],
+        "boundary": "Policies and deletion workflow exist; qualified privacy/legal review remains required before hosted customer use.",
+    },
+    {
+        "id": "REQ-14",
+        "name": "Security",
+        "status": "implemented_local_controls_with_hosting_gates",
+        "artifacts": ["auth_rbac_matrix.json", "deployment_readiness_report.json"],
+        "proof": ["tests/test_operator_app.py", "scripts/check_product.py"],
+        "boundary": "Production identity, TLS, secret manager, malware scanning, and security review remain external gates.",
+    },
+    {
+        "id": "REQ-15",
+        "name": "Audit and observability",
+        "status": "implemented",
+        "artifacts": ["audit_events.json", "customer_action_log.json", "deployment_readiness_report.json"],
+        "proof": ["tests/test_operator_app.py"],
+        "boundary": "Local JSON/SQLite audit exists; production observability stack remains a deployment gate.",
+    },
+    {
+        "id": "REQ-16",
+        "name": "Deployment environments",
+        "status": "implemented_hostable_local_stack",
+        "artifacts": ["Dockerfile", "compose.yaml", ".env.example", "deployment_readiness_report.json"],
+        "proof": ["scripts/check_product.py"],
+        "boundary": "Hostable artifacts exist; no live production environment is claimed.",
+    },
+    {
+        "id": "REQ-17",
+        "name": "Testing and acceptance gates",
+        "status": "implemented",
+        "artifacts": ["RUN_RESULTS.md", "requirements_traceability_matrix.json"],
+        "proof": ["python3 -m unittest discover -s tests -p test_*.py", "python3 scripts/check_product.py"],
+        "boundary": "Acceptance proves local product behavior and generated artifacts, not external legal/compliance approval.",
+    },
+]
+
 
 def now_iso() -> str:
     return datetime.now(timezone.utc).replace(microsecond=0).isoformat()
@@ -243,6 +489,128 @@ def packet_org_id(packet: dict[str, Any]) -> str:
 
 def hash_snapshot(payload: Any) -> str:
     return hashlib.sha256(json.dumps(payload, sort_keys=True).encode("utf-8")).hexdigest()
+
+
+def ai_policy_for_org(organization_id: str) -> dict[str, Any]:
+    for policy in AI_DATA_POLICIES:
+        if policy["organization_id"] == organization_id:
+            return policy
+    return {
+        "id": f"ai-policy-{organization_id}",
+        "organization_id": organization_id,
+        "default_mode": "no_ai",
+        "allowed_modes": ["no_ai", "metadata_only", "on_prem_manual"],
+        "allowed_sensitivity": ["public", "internal"],
+        "restricted_sensitivity_modes": ["no_ai", "metadata_only", "on_prem_manual"],
+        "redaction_required_for": ["confidential", "restricted", "regulated"],
+        "prompt_retention": "none",
+        "output_retention": "none",
+        "audit_level": "full",
+        "private_model_endpoint_id": "",
+        "customer_managed_endpoint_id": "",
+        "no_ai_fallback": "manual_operator_review",
+        "terms_accepted": False,
+        "privacy_notice_accepted": False,
+        "ai_use_disclosure_accepted": False,
+    }
+
+
+def endpoint_for_mode(mode: str, policy: dict[str, Any]) -> dict[str, Any] | None:
+    endpoint_id = ""
+    if mode == "private_hosted_llm":
+        endpoint_id = str(policy.get("private_model_endpoint_id") or "")
+    elif mode == "customer_managed_llm":
+        endpoint_id = str(policy.get("customer_managed_endpoint_id") or "")
+    elif mode == "business_api":
+        endpoint_id = "business-api-default"
+    if not endpoint_id:
+        return None
+    return next((endpoint for endpoint in MODEL_ENDPOINTS if endpoint["id"] == endpoint_id), None)
+
+
+def route_ai_task(
+    *,
+    organization_id: str,
+    packet_id: str,
+    evidence_id: str,
+    task_type: str,
+    document_sensitivity: str,
+    requested_mode: str,
+    evidence_permission: str,
+) -> dict[str, Any]:
+    policy = ai_policy_for_org(organization_id)
+    mode = requested_mode if requested_mode in AI_PROCESSING_MODES else policy["default_mode"]
+    if evidence_permission in {"no_ai", "metadata_only", "on_prem_manual"}:
+        mode = evidence_permission
+    denied_reason = ""
+    if mode not in policy["allowed_modes"]:
+        denied_reason = f"mode {mode} is not allowed by organization policy"
+    if document_sensitivity not in policy["allowed_sensitivity"] and mode not in policy["restricted_sensitivity_modes"]:
+        denied_reason = f"sensitivity {document_sensitivity} requires private/no-AI mode"
+    if evidence_permission == "no_ai" and mode not in {"no_ai", "metadata_only", "on_prem_manual"}:
+        denied_reason = "evidence item blocks AI processing"
+    redaction_required = document_sensitivity in policy["redaction_required_for"] or mode == "redacted"
+    endpoint = endpoint_for_mode(mode, policy)
+    if mode in {"business_api", "private_hosted_llm", "customer_managed_llm"} and endpoint is None:
+        denied_reason = f"no endpoint configured for {mode}"
+    allowed = denied_reason == "" and mode not in {"no_ai", "on_prem_manual"}
+    return {
+        "organization_id": organization_id,
+        "packet_id": packet_id,
+        "evidence_id": evidence_id,
+        "task_type": task_type,
+        "document_sensitivity": document_sensitivity,
+        "requested_mode": requested_mode,
+        "evidence_permission": evidence_permission,
+        "organization_policy_id": policy["id"],
+        "allowed": allowed,
+        "mode": mode,
+        "redaction_required": redaction_required,
+        "store_prompt": policy["prompt_retention"] != "none" and allowed,
+        "store_output": policy["output_retention"] != "none" and allowed,
+        "audit_level": policy["audit_level"],
+        "model_endpoint_id": endpoint["id"] if endpoint else "",
+        "reason_if_denied": denied_reason,
+        "next_valid_move_if_denied": "Use metadata-only/manual review or change organization and document-level AI permission.",
+        "no_ai_fallback": policy["no_ai_fallback"],
+    }
+
+
+def redaction_preview_for_evidence(evidence: dict[str, Any]) -> dict[str, Any]:
+    sensitivity = str(evidence.get("sensitivity_level") or "internal")
+    mode = str(evidence.get("ai_processing_mode") or evidence.get("ai_processing_allowed") or "metadata_only")
+    redaction_required = bool(evidence.get("redaction_required")) or sensitivity in {"confidential", "restricted", "regulated"} or mode == "redacted"
+    redacted_fields = REDACTION_CATEGORIES if redaction_required else []
+    return {
+        "evidence_id": evidence.get("evidence_id"),
+        "packet_id": evidence.get("packet_id"),
+        "redaction_required": redaction_required,
+        "redaction_status": "redaction_required" if redaction_required else "not_required",
+        "redaction_categories": redacted_fields,
+        "redacted_artifact_id": f"redacted-{evidence.get('evidence_id')}" if redaction_required else "",
+        "linked_original_evidence_id": evidence.get("evidence_id"),
+        "audit_event_type": "redaction_preview_generated" if redaction_required else "redaction_not_required",
+    }
+
+
+def manual_workflow_state(workflow: dict[str, Any]) -> dict[str, Any]:
+    return {
+        "status": "manual_no_ai_workflow_ready",
+        "ai_disabled_supported": True,
+        "features": [
+            "manual packet creation",
+            "manual evidence upload",
+            "manual evidence classification",
+            "manual blocker creation",
+            "manual operator review",
+            "manual expert-review packet generation",
+            "manual report generation",
+            "manual source refresh",
+        ],
+        "packet_count": workflow.get("packet_count", 0),
+        "report_disclosure": "No AI processing is required. Reports disclose whether AI was used.",
+        "next_valid_move": "Use operator review and scoped expert-review packet when AI is disabled.",
+    }
 
 
 def actor_by_session(session_token: str | None) -> dict[str, Any] | None:
@@ -355,6 +723,8 @@ def report_exports_for_workflow(workflow: dict[str, Any]) -> list[dict[str, Any]
                     "included_evidence_ids": [str(row.get("evidence_id")) for row in packet.get("evidence_items", [])],
                     "included_claim_ids": [f"{packet_id}:{rule['claim_type']}" for rule in CLAIM_RULES],
                     "included_blocker_ids": [str(row.get("id")) for row in packet.get("blockers", [])],
+                    "ai_involvement_disclosure": "AI simulated review may be included when present; AI never opens approval gates.",
+                    "proof_boundary": PRODUCT_BOUNDARY,
                 }
             )
     return exports
@@ -451,6 +821,9 @@ def private_beta_checklist() -> list[dict[str, Any]]:
         {"item": "Data deletion workflow exists", "status": "implemented_request_tracking"},
         {"item": "Route traversal fixed", "status": "implemented"},
         {"item": "AI simulated review cannot open gates", "status": "implemented"},
+        {"item": "AI data policy and model router exist", "status": "implemented"},
+        {"item": "No-AI/manual workflow exists", "status": "implemented"},
+        {"item": "Redaction pipeline contract exists", "status": "implemented"},
         {"item": "Reports avoid unsafe approval language", "status": "implemented"},
         {"item": "Source refresh works", "status": "implemented"},
         {"item": "Stale source creates blocker", "status": "implemented"},
@@ -467,6 +840,10 @@ def deployment_readiness() -> dict[str, Any]:
         "local_runtime": ["python3 scripts/serve_operator_app.py --host 127.0.0.1 --port 8765"],
         "containers": ["Dockerfile", "compose.yaml"],
         "environment_files": [".env.example"],
+        "model_endpoints": {
+            "default_behavior": "local deterministic simulator; no provider call by default",
+            "endpoint_contracts": [endpoint["id"] for endpoint in MODEL_ENDPOINTS],
+        },
         "logs": "structured application/audit events are written to generated JSON and SQLite artifacts",
         "backups": "SQLite and system_review_graph artifacts can be backed up from the mounted /app/system_review_graph volume",
         "monitoring": "health endpoints expose app, store, route, and generated-artifact readiness",
@@ -485,6 +862,21 @@ def build_runtime_state(workflow: dict[str, Any], *, extra_audit_events: list[di
     review_requests = review_requests_for_workflow(workflow)
     report_exports = report_exports_for_workflow(workflow)
     audit_events = audit_events_for_workflow(workflow, extra_events=extra_audit_events)
+    evidence_rows = [row for packet in workflow.get("packets", []) for row in packet.get("evidence_items", [])]
+    packet_orgs = {str(packet.get("packet_id")): packet_org_id(packet) for packet in workflow.get("packets", [])}
+    ai_route_decisions = [
+        route_ai_task(
+            organization_id=packet_orgs.get(str(row.get("packet_id")), str(row.get("organization_id") or "org-importer-demo")),
+            packet_id=str(row.get("packet_id")),
+            evidence_id=str(row.get("evidence_id")),
+            task_type="evidence_readiness_review",
+            document_sensitivity=str(row.get("sensitivity_level") or "internal"),
+            requested_mode=str(row.get("ai_processing_mode") or "metadata_only"),
+            evidence_permission=str(row.get("ai_processing_permission") or row.get("ai_processing_mode") or "metadata_only"),
+        )
+        for row in evidence_rows
+    ]
+    redaction_previews = [redaction_preview_for_evidence(row) for row in evidence_rows]
     return {
         "generated_at": workflow.get("generated_at") or now_iso(),
         "product": "Importer Source Readiness Copilot",
@@ -497,6 +889,8 @@ def build_runtime_state(workflow: dict[str, Any], *, extra_audit_events: list[di
         "boundary": PRODUCT_BOUNDARY,
         "users": USERS,
         "organizations": ORGANIZATIONS,
+        "ai_data_policies": AI_DATA_POLICIES,
+        "model_endpoints": MODEL_ENDPOINTS,
         "memberships": [
             {
                 "user_id": user["id"],
@@ -523,6 +917,23 @@ def build_runtime_state(workflow: dict[str, Any], *, extra_audit_events: list[di
         ],
         "human_review_findings": [],
         "report_exports": report_exports,
+        "ai_model_router": {
+            "status": "ai_model_router_ready",
+            "modes": AI_PROCESSING_MODES,
+            "policy_count": len(AI_DATA_POLICIES),
+            "endpoint_count": len(MODEL_ENDPOINTS),
+            "route_decisions": ai_route_decisions,
+            "manual_fallback": "manual_operator_review",
+            "proof_boundary": "Router decisions bound local simulated review and endpoint contracts; they do not prove live model provider availability.",
+        },
+        "redaction_pipeline": {
+            "status": "redaction_pipeline_ready",
+            "categories": REDACTION_CATEGORIES,
+            "previews": redaction_previews,
+            "proof_boundary": "Redaction preview names fields/categories to remove before AI; production redaction requires security/privacy review.",
+        },
+        "manual_no_ai_workflow": manual_workflow_state(workflow),
+        "requirements_traceability": REQUIREMENTS_TRACEABILITY,
         "audit_events": audit_events,
         "data_deletion_requests": [],
         "security_controls": {
@@ -538,6 +949,10 @@ def build_runtime_state(workflow: dict[str, Any], *, extra_audit_events: list[di
             },
             "route_traversal": "route-specific artifact base directories with resolved-path checks",
             "audit": "packet, AI, review, export, deletion, and permission events are recorded",
+            "ai_data_policy": "organization policy controls allowed modes, sensitivity, endpoint routing, retention, and no-AI fallback",
+            "model_router": "per-evidence model routing denies disallowed modes and records endpoint decisions",
+            "redaction_pipeline": "sensitive evidence is marked for redaction before AI processing",
+            "no_ai_mode": "manual workflow remains available when AI is disabled at org or evidence level",
         },
         "private_beta_checklist": private_beta_checklist(),
         "deployment": deployment_readiness(),
@@ -557,8 +972,13 @@ def build_runtime_state(workflow: dict[str, Any], *, extra_audit_events: list[di
                 "/packets/:packetId/reviews",
                 "/packets/:packetId/reports",
                 "/packets/:packetId/settings",
+                "/settings/ai-data-policy",
                 "/account",
                 "/support",
+                "/privacy",
+                "/terms",
+                "/ai-use",
+                "/data-retention",
             ],
             "operator": [
                 "/operator",
@@ -595,6 +1015,8 @@ def build_runtime_state(workflow: dict[str, Any], *, extra_audit_events: list[di
             "/api/auth/me",
             "/api/orgs/current",
             "/api/orgs/current/members",
+            "/api/orgs/current/ai-policy",
+            "/api/orgs/current/ai-policy/test-model-endpoint",
             "/api/packets",
             "/api/packets/:id",
             "/api/packets/:id/evidence",
@@ -612,6 +1034,7 @@ def build_runtime_state(workflow: dict[str, Any], *, extra_audit_events: list[di
             "/api/external-review/:token/findings",
             "/api/reports/:id",
             "/api/reports/:id/download",
+            "/api/evidence/:evidenceId/ai-permission",
             "/api/audit",
             "/api/system-health",
         ],
@@ -643,6 +1066,20 @@ def write_runtime_artifacts(repo_root: Path, workflow: dict[str, Any], *, extra_
         "deletion_requests.json": {"requests": state["data_deletion_requests"]},
         "deployment_readiness_report.json": state["deployment"],
         "private_beta_readiness_checklist.json": {"items": state["private_beta_checklist"]},
+        "ai_data_policy.json": {
+            "status": "ai_data_policy_ready",
+            "policies": state["ai_data_policies"],
+            "model_endpoints": state["model_endpoints"],
+            "proof_boundary": "Policies are product controls; qualified privacy/legal/security review is still required before hosted customer use.",
+        },
+        "model_endpoints.json": {"endpoints": state["model_endpoints"]},
+        "ai_model_router.json": state["ai_model_router"],
+        "redaction_pipeline.json": state["redaction_pipeline"],
+        "manual_no_ai_workflow.json": state["manual_no_ai_workflow"],
+        "requirements_traceability_matrix.json": {
+            "status": "requirements_traceability_ready",
+            "requirements": state["requirements_traceability"],
+        },
     }
     for name, payload in artifacts.items():
         (graph / name).write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")

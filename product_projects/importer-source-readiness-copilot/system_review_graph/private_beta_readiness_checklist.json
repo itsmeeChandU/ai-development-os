@@ -49,6 +49,18 @@
       "status": "implemented"
     },
     {
+      "item": "AI data policy and model router exist",
+      "status": "implemented"
+    },
+    {
+      "item": "No-AI/manual workflow exists",
+      "status": "implemented"
+    },
+    {
+      "item": "Redaction pipeline contract exists",
+      "status": "implemented"
+    },
+    {
       "item": "Reports avoid unsafe approval language",
       "status": "implemented"
     },

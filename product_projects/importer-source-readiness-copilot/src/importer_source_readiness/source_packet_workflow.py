@@ -11,6 +11,8 @@ from typing import Any
 from urllib.error import HTTPError, URLError
 from urllib.request import Request, urlopen
 
+from .product_runtime import AI_PROCESSING_MODES, SENSITIVITY_LEVELS, route_ai_task
+
 CUSTOMER_STATUS_LABELS = {
     "draft",
     "submitted",
@@ -165,6 +167,13 @@ AI_REVIEWERS = [
     ("launch_gate", "Launch-gate simulation", "Launch"),
 ]
 
+KNOWN_ORGANIZATION_IDS = {"org-importer-demo", "org-other-demo", "org-internal-ops"}
+LEGACY_ORGANIZATION_ALIASES = {
+    "demo-importer-org": "org-importer-demo",
+    "local-organization": "org-importer-demo",
+    "local-customer": "org-importer-demo",
+}
+
 
 def _now() -> str:
     return datetime.now(timezone.utc).replace(microsecond=0).isoformat()
@@ -182,6 +191,13 @@ def _packet_id(packet: dict[str, Any]) -> str:
         return existing
     name = str(packet.get("packet_name") or packet.get("product_name") or "source-packet")
     return f"packet-{_slug(name)}"
+
+
+def _organization_id(row: dict[str, Any]) -> str:
+    raw = str(row.get("organization_id") or "").strip()
+    if raw in KNOWN_ORGANIZATION_IDS:
+        return raw
+    return LEGACY_ORGANIZATION_ALIASES.get(raw, "org-importer-demo")
 
 
 def _sha256(text: str | bytes) -> str:
@@ -207,6 +223,12 @@ def _evidence_labels(row: dict[str, Any]) -> list[str]:
         labels.append("human_reviewed")
     if row.get("review_required"):
         labels.append("review_required")
+    if str(row.get("ai_processing_mode") or "") in {"no_ai", "on_prem_manual"} or row.get("ai_processing_allowed") is False:
+        labels.append("ai_blocked")
+    else:
+        labels.append("ai_allowed")
+    if row.get("redaction_required"):
+        labels.append("redaction_required")
     if str(row.get("uploaded_by") or "").startswith("demo"):
         labels.append("fixture")
     return sorted(set(labels))
@@ -230,6 +252,10 @@ def _evidence_summary(evidence_rows: list[dict[str, Any]], blockers: list[dict[s
         "stale": labels.count("stale"),
         "reference_only": labels.count("reference_only"),
         "human_reviewed": labels.count("human_reviewed"),
+        "requires_review": labels.count("review_required"),
+        "ai_allowed": labels.count("ai_allowed"),
+        "ai_blocked": labels.count("ai_blocked"),
+        "redaction_required": labels.count("redaction_required"),
     }
     missing = _missing_evidence(blockers)
     counts["missing"] = len(missing)
@@ -322,6 +348,16 @@ def build_evidence_ledger(
     for raw in evidence_items:
         row = dict(raw)
         row.setdefault("evidence_id", row.get("id") or f"evidence-{len(rows) + 1}")
+        row["organization_id"] = _organization_id(row)
+        row.setdefault("title", row.get("claim_supported") or row["evidence_id"])
+        row.setdefault("description", row.get("claim_boundary") or "")
+        sensitivity = str(row.get("sensitivity_level") or ("public" if row.get("evidence_type") in {"official_reference", "source_url"} else "internal"))
+        row["sensitivity_level"] = sensitivity if sensitivity in SENSITIVITY_LEVELS else "internal"
+        mode = str(row.get("ai_processing_mode") or row.get("ai_processing_permission") or "metadata_only")
+        row["ai_processing_mode"] = mode if mode in AI_PROCESSING_MODES else "metadata_only"
+        row["ai_processing_permission"] = row["ai_processing_mode"]
+        row["ai_processing_allowed"] = row["ai_processing_mode"] not in {"no_ai", "on_prem_manual"}
+        row["redaction_required"] = bool(row.get("redaction_required")) or row["sensitivity_level"] in {"confidential", "restricted", "regulated"} or row["ai_processing_mode"] == "redacted"
         row.setdefault("review_required", True)
         row.setdefault("human_review_status", "not_reviewed")
         row["ledger_status"] = _status_for_evidence(row)
@@ -489,10 +525,26 @@ def build_ai_review_run(
 ) -> dict[str, Any]:
     packets = {str(packet.get("packet_id")): packet for packet in workflow.get("packets", [])}
     packet = packets[packet_id]
+    organization_id = _organization_id(packet)
     blocker_groups = packet.get("blocker_groups", [])
     group_titles = {str(row.get("title")) for row in blocker_groups}
     evidence_ids = [str(row.get("evidence_id")) for row in packet.get("evidence_items", [])]
     source_ids = [str(row.get("id")) for row in workflow.get("official_sources", [])]
+    route_decisions = [
+        route_ai_task(
+            organization_id=organization_id,
+            packet_id=packet_id,
+            evidence_id=str(row.get("evidence_id")),
+            task_type="simulated_readiness_review",
+            document_sensitivity=str(row.get("sensitivity_level") or "internal"),
+            requested_mode=str(row.get("ai_processing_mode") or "metadata_only"),
+            evidence_permission=str(row.get("ai_processing_permission") or row.get("ai_processing_mode") or "metadata_only"),
+        )
+        for row in packet.get("evidence_items", [])
+    ]
+    allowed_routes = [row for row in route_decisions if row.get("allowed")]
+    primary_route = allowed_routes[0] if allowed_routes else (route_decisions[0] if route_decisions else {})
+    status = "simulated_review_complete_human_gates_closed" if allowed_routes else "manual_no_ai_required_human_gates_closed"
     results = []
     findings = []
     for reviewer_id, title, owner_role in AI_REVIEWERS:
@@ -539,15 +591,22 @@ def build_ai_review_run(
     return {
         "run_id": f"ai-review-{packet_id}-{(generated_at or _now()).replace(':', '').replace('+', 'Z')}",
         "packet_id": packet_id,
+        "organization_id": organization_id,
         "generated_at": generated_at or _now(),
         "review_type": "canada_compliance_simulation",
         "scope": "Simulated review for missing evidence, risky wording, and next valid moves.",
         "model_provider": "local_rule_simulator",
         "model_name": "deterministic-safety-rules",
+        "model_mode": primary_route.get("mode") or "manual_no_ai",
+        "model_name_or_endpoint": primary_route.get("model_endpoint_id") or "local_rule_simulator",
+        "model_route_decisions": route_decisions,
+        "redaction_applied": any(row.get("redaction_required") for row in route_decisions),
+        "prompt_stored": any(row.get("store_prompt") for row in route_decisions),
+        "output_stored": True,
         "input_snapshot_hash": _sha256(json.dumps(packet, sort_keys=True)),
         "evidence_ids_used": evidence_ids,
         "source_ids_used": source_ids,
-        "status": "simulated_review_complete_human_gates_closed",
+        "status": status,
         "can_open_gate": False,
         "human_review_required": True,
         "human_gate": "required_before_external_claims",
@@ -560,6 +619,24 @@ def build_ai_review_run(
             "launch_readiness_claim",
         ],
         "results": results,
+        "validation_result": {
+            "status": "fail_closed_validated",
+            "can_open_gate": False,
+            "human_gate_required": True,
+            "route_count": len(route_decisions),
+            "allowed_route_count": len(allowed_routes),
+        },
+        "output_json": {
+            "findings": findings,
+            "blocked_claims": [
+                "tariff_classification_claim",
+                "food_safety_claim",
+                "source_rights_claim",
+                "buyer_validation_claim",
+                "launch_readiness_claim",
+            ],
+            "can_open_gate": False,
+        },
         "claim_boundary": "AI simulated review creates blockers and next moves only. It does not replace brokers, counsel, buyers, operators, or qualified reviewers.",
     }
 
@@ -613,6 +690,7 @@ def build_customer_workflow(
         packets.append(
             {
                 "packet_id": packet_id,
+                "organization_id": _organization_id(packet),
                 "packet_name": packet.get("packet_name") or packet.get("product_name"),
                 "product_name": packet.get("product_name"),
                 "product_category": packet.get("product_category"),
@@ -748,7 +826,7 @@ def packet_from_submission(fields: dict[str, Any]) -> dict[str, Any]:
         "packet_id": packet_id,
         "packet_name": fields.get("packet_name") or product_name,
         "customer_id": fields.get("customer_id") or "local-customer",
-        "organization_id": fields.get("organization_id") or "local-organization",
+        "organization_id": _organization_id(fields),
         "product_name": product_name,
         "product_category": fields.get("product_category") or "",
         "hs_code_known": bool(fields.get("hs_code_value") or fields.get("hs_code_known")),
@@ -775,6 +853,9 @@ def evidence_from_submission(packet: dict[str, Any]) -> dict[str, Any]:
     return {
         "evidence_id": f"evidence-{packet['packet_id']}-source",
         "packet_id": packet["packet_id"],
+        "organization_id": _organization_id(packet),
+        "title": "Initial customer source reference",
+        "description": "Source URL submitted during packet intake.",
         "evidence_type": "source_url",
         "source_url": source_url,
         "file_path": "",
@@ -788,6 +869,11 @@ def evidence_from_submission(packet: dict[str, Any]) -> dict[str, Any]:
         "freshness_status": "needs_current_refresh_before_claims",
         "claim_supported": "source reference exists" if source_url else "",
         "claim_boundary": "Customer-submitted reference only until refreshed and reviewed.",
+        "sensitivity_level": "public" if source_url else "internal",
+        "ai_processing_mode": "metadata_only",
+        "ai_processing_permission": "metadata_only",
+        "ai_processing_allowed": True,
+        "redaction_required": False,
         "review_required": True,
         "human_review_status": "not_reviewed",
         "reviewed_by": "",

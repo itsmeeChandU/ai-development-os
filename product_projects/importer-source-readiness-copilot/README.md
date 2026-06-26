@@ -38,8 +38,10 @@ python3 scripts/serve_operator_app.py
 
 It opens a local browser surface for source-card readiness, customer source
 packet intake, evidence upload, source-packet readiness reports, AI simulated
-reviews, scoped expert-review handoff, audit, admin controls, the operator work
-queue, Canada reference tools, blockers, screenshots, and proof boundaries.
+reviews, AI data policy controls, per-evidence AI permissions, redaction
+previews, no-AI/manual fallback, scoped expert-review handoff, audit, admin
+controls, the operator work queue, Canada reference tools, blockers,
+screenshots, and proof boundaries.
 This is hostable for controlled private-beta review after real infrastructure,
 security/privacy review, and human approval gates are completed.
 
@@ -81,6 +83,12 @@ system_review_graph/claims_gate_matrix.json
 system_review_graph/review_requests.json
 system_review_graph/audit_events.json
 system_review_graph/deployment_readiness_report.json
+system_review_graph/ai_data_policy.json
+system_review_graph/model_endpoints.json
+system_review_graph/ai_model_router.json
+system_review_graph/redaction_pipeline.json
+system_review_graph/manual_no_ai_workflow.json
+system_review_graph/requirements_traceability_matrix.json
 system_review_graph/expert_review_packet_packet-frozen-tuna-canada-001.md
 system_review_graph/blockers.jsonl
 system_review_graph/operator_dashboard.html
@@ -162,8 +170,10 @@ That means the repo now includes local session auth, seeded users and
 organizations, organization-scoped packet access, role permissions, scoped
 expert-review links, claim/gate matrices, audit events, report exports, data
 deletion request tracking, health endpoints, Docker/Compose deployment files,
-and security/privacy docs. It does not prove real public production hosting,
-qualified legal/privacy/security signoff, or live customer launch.
+AI data policy controls, model-route contracts, redaction previews, manual
+no-AI fallback, requirement traceability, and security/privacy docs. It does
+not prove real public production hosting, qualified legal/privacy/security
+signoff, or live customer launch.
 
 The expected customer stage is:
 
@@ -173,6 +183,7 @@ Customer packet prototype active - real customer use not enabled
 
 The current customer workflow supports packet creation, evidence upload,
 official-source refresh records, grouped blockers, AI simulated review,
+AI data-policy settings, per-evidence AI/no-AI permissions, redaction preview,
 expert-review packet export, scoped expert review links, customer-safe
 readiness report export, admin source registry, admin gate view, audit,
 auth/RBAC, organization isolation, and a local SQLite workflow store. It still
@@ -218,6 +229,11 @@ conversations. Use `board/board_go_live_brief.md` and
 `system_review_graph/board_go_live_readiness_report.json` for board review.
 Use `system_review_graph/product_runtime_state.json` as the machine-readable
 auth/RBAC, review, audit, route, and deployment contract.
+Use `system_review_graph/ai_data_policy.json`,
+`system_review_graph/ai_model_router.json`,
+`system_review_graph/redaction_pipeline.json`, and
+`system_review_graph/requirements_traceability_matrix.json` for AI/data-policy
+and requirement-coverage review.
 The product can now show exactly what is stopping external use and which lane
 must move next. To open any external claim gate, attach dated evidence to
 `data/evidence_packets.json`, verify country rows in

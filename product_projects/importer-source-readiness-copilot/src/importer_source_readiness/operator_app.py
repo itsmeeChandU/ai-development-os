@@ -26,19 +26,25 @@ from .source_packet_workflow import (
 )
 from .customer_store import write_customer_store
 from .product_runtime import (
+    AI_PROCESSING_MODES,
     ALLOWED_EVIDENCE_TYPES,
     CSRF_TOKEN,
     FORBIDDEN_REPORT_PHRASES,
     MAX_EVIDENCE_UPLOAD_BYTES,
     PRODUCT_BOUNDARY,
     REVIEW_TEMPLATES,
+    SENSITIVITY_LEVELS,
     USERS,
     actor_by_session,
+    ai_policy_for_org,
     build_runtime_state,
     can_access_packet,
     default_actor,
     deployment_readiness,
+    endpoint_for_mode,
     packet_org_id,
+    redaction_preview_for_evidence,
+    route_ai_task,
     write_runtime_artifacts,
 )
 
@@ -179,6 +185,49 @@ def _contains_script(value: str) -> bool:
     return bool(re.search(r"<\s*/?\s*script", value, flags=re.IGNORECASE))
 
 
+def _select_options(values: list[str], selected: str) -> str:
+    return "".join(
+        f"<option value='{escape(value)}'{' selected' if value == selected else ''}>{escape(value)}</option>"
+        for value in values
+    )
+
+
+def _valid_sensitivity(value: Any) -> str:
+    candidate = str(value or "internal")
+    return candidate if candidate in SENSITIVITY_LEVELS else "internal"
+
+
+def _valid_ai_mode(value: Any) -> str:
+    candidate = str(value or "metadata_only")
+    return candidate if candidate in AI_PROCESSING_MODES else "metadata_only"
+
+
+def _evidence_ai_fields(fields: dict[str, Any]) -> dict[str, Any]:
+    sensitivity = _valid_sensitivity(fields.get("sensitivity_level"))
+    mode = _valid_ai_mode(fields.get("ai_processing_mode") or fields.get("ai_processing_permission"))
+    redaction_required = str(fields.get("redaction_required") or "").lower() in {"1", "true", "yes", "on"}
+    redaction_required = redaction_required or sensitivity in {"confidential", "restricted", "regulated"} or mode == "redacted"
+    return {
+        "sensitivity_level": sensitivity,
+        "ai_processing_mode": mode,
+        "ai_processing_permission": mode,
+        "ai_processing_allowed": mode not in {"no_ai", "on_prem_manual"},
+        "redaction_required": redaction_required,
+    }
+
+
+def _route_for_evidence(packet: dict[str, Any], evidence: dict[str, Any], task_type: str = "evidence_readiness_review") -> dict[str, Any]:
+    return route_ai_task(
+        organization_id=packet_org_id(packet),
+        packet_id=str(packet.get("packet_id")),
+        evidence_id=str(evidence.get("evidence_id")),
+        task_type=task_type,
+        document_sensitivity=str(evidence.get("sensitivity_level") or "internal"),
+        requested_mode=str(evidence.get("ai_processing_mode") or "metadata_only"),
+        evidence_permission=str(evidence.get("ai_processing_permission") or evidence.get("ai_processing_mode") or "metadata_only"),
+    )
+
+
 def _actor_from_headers(headers: Any) -> dict[str, Any]:
     token = headers.get("X-ISR-Session") or _parse_cookie(headers.get("Cookie", "")).get("isr_session")
     actor = actor_by_session(token)
@@ -252,6 +301,7 @@ def _render_page(title: str, body: str) -> str:
     .grid {{ display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }}
     label {{ display: block; font-weight: 700; margin: 10px 0 4px; }}
     input, textarea, select {{ box-sizing: border-box; width: 100%; border: 1px solid #ccd5df; border-radius: 5px; padding: 9px; font: inherit; }}
+    input[type="checkbox"] {{ width: auto; }}
     button, .button-link {{ display: inline-block; margin-top: 10px; border: 0; border-radius: 5px; background: #1d6b65; color: white; padding: 10px 14px; font-weight: 700; cursor: pointer; text-decoration: none; }}
     table {{ width: 100%; border-collapse: collapse; margin-top: 16px; }}
     th, td {{ text-align: left; border-bottom: 1px solid #dce3ea; padding: 9px; vertical-align: top; }}
@@ -273,6 +323,7 @@ def _render_page(title: str, body: str) -> str:
   <a href="/">Home</a>
   <a href="/dashboard">Dashboard</a>
   <a href="/packets">Packets</a>
+  <a href="/settings/ai-data-policy">AI Policy</a>
   <a href="/operator/queue">Operator</a>
   <a href="/admin/system-health">System Health</a>
   <a href="/support">Support</a>
@@ -484,11 +535,13 @@ def _render_packet_ai_reviews(workflow: dict[str, Any], packet: dict[str, Any]) 
     runs = [run for run in workflow.get("ai_review_runs", []) if run.get("packet_id") == packet.get("packet_id")]
     cards = []
     for run in runs:
+        routes = run.get("model_route_decisions", [])
         cards.append(
             "<div class='metric'>"
             f"<div class='label'>{escape(str(run.get('review_type')))}</div>"
             f"<div class='value'>{escape(str(run.get('status')))}</div>"
-            f"<p>Findings: {len(run.get('findings', []))}; human review required: {escape(str(run.get('human_review_required')))}; can open gate: {escape(str(run.get('can_open_gate')))}</p>"
+            f"<p>Mode: {escape(str(run.get('model_mode')))}; endpoint: {escape(str(run.get('model_name_or_endpoint')))}; redaction: {escape(str(run.get('redaction_applied')))}</p>"
+            f"<p>Routes: {len(routes)}; findings: {len(run.get('findings', []))}; human review required: {escape(str(run.get('human_review_required')))}; can open gate: {escape(str(run.get('can_open_gate')))}</p>"
             "</div>"
         )
     body = f"""
@@ -507,6 +560,7 @@ def _render_packet_reports(workflow: dict[str, Any], packet: dict[str, Any]) -> 
         f"<td>{escape(str(row.get('report_type')))}</td>"
         f"<td>{escape(str(row.get('format')))}</td>"
         f"<td>{escape(str(row.get('status')))}</td>"
+        f"<td>{escape(str(row.get('ai_involvement_disclosure')))}</td>"
         f"<td><a href='/api/reports/{escape(str(row.get('id')))}/download'>Download</a></td>"
         "</tr>"
         for row in exports
@@ -515,7 +569,7 @@ def _render_packet_reports(workflow: dict[str, Any], packet: dict[str, Any]) -> 
 <h1>Reports</h1>
 <p class="note">Reports are draft readiness artifacts. The app never exports approval, compliance, or import-ready certificates.</p>
 <table>
-  <thead><tr><th>Report</th><th>Format</th><th>Status</th><th>Action</th></tr></thead>
+  <thead><tr><th>Report</th><th>Format</th><th>Status</th><th>AI Disclosure</th><th>Action</th></tr></thead>
   <tbody>{rows}</tbody>
 </table>
 """
@@ -527,12 +581,86 @@ def _render_packet_settings(packet: dict[str, Any]) -> str:
 <h1>Packet Settings</h1>
 <p>{escape(str(packet.get('packet_name')))}</p>
 <p class="note">Deleting customer data is tracked as a deletion request and audit event. Retention rules must be reviewed before hosted use.</p>
+<p><a href="/settings/ai-data-policy">AI data policy</a> | <a href="/privacy">Privacy</a> | <a href="/terms">Terms</a> | <a href="/data-retention">Data retention</a></p>
 <form method="post" action="/api/packets/{escape(str(packet.get('packet_id')))}/delete-request">
   <input type="hidden" name="csrf_token" value="{CSRF_TOKEN}">
   <button type="submit">Request data deletion</button>
 </form>
 """
     return _render_page("Packet Settings", body)
+
+
+def _render_ai_data_policy(runtime: dict[str, Any], actor: dict[str, Any]) -> str:
+    policy = ai_policy_for_org(str(actor.get("organization_id") or "org-importer-demo"))
+    endpoints = runtime.get("model_endpoints", [])
+    endpoint_rows = "".join(
+        "<tr>"
+        f"<td>{escape(str(row.get('id')))}</td>"
+        f"<td>{escape(str(row.get('mode')))}</td>"
+        f"<td>{escape(str(row.get('model_name')))}</td>"
+        f"<td>{escape(str(row.get('health_check_status')))}</td>"
+        f"<td>{escape(str(row.get('retention_policy')))}</td>"
+        "</tr>"
+        for row in endpoints
+    )
+    requirement_rows = "".join(
+        "<tr>"
+        f"<td>{escape(str(row.get('id')))}</td>"
+        f"<td>{escape(str(row.get('name')))}</td>"
+        f"<td>{escape(str(row.get('status')))}</td>"
+        f"<td>{escape(str(row.get('boundary')))}</td>"
+        "</tr>"
+        for row in runtime.get("requirements_traceability", [])
+    )
+    body = f"""
+<h1>AI Data Policy</h1>
+<p class="note">Organization policy controls whether evidence can use AI, which model route is allowed, what must be redacted, and what falls back to manual review.</p>
+<section class="grid">
+  <div class="metric"><div class="label">Default mode</div><div class="value">{escape(str(policy.get('default_mode')))}</div></div>
+  <div class="metric"><div class="label">Allowed modes</div><div class="value">{escape(', '.join(policy.get('allowed_modes', [])))}</div></div>
+  <div class="metric"><div class="label">Allowed sensitivity</div><div class="value">{escape(', '.join(policy.get('allowed_sensitivity', [])))}</div></div>
+  <div class="metric"><div class="label">No-AI fallback</div><div class="value">{escape(str(policy.get('no_ai_fallback')))}</div></div>
+</section>
+<h2>Endpoint Contracts</h2>
+<table>
+  <thead><tr><th>ID</th><th>Mode</th><th>Model</th><th>Status</th><th>Retention</th></tr></thead>
+  <tbody>{endpoint_rows}</tbody>
+</table>
+<h2>Requirement Traceability</h2>
+<table>
+  <thead><tr><th>ID</th><th>Requirement</th><th>Status</th><th>Boundary</th></tr></thead>
+  <tbody>{requirement_rows}</tbody>
+</table>
+"""
+    return _render_page("AI Data Policy", body)
+
+
+def _render_static_policy_page(kind: str) -> str:
+    pages = {
+        "privacy": (
+            "Privacy Notice",
+            "Evidence, packet metadata, audit events, AI route decisions, and deletion requests are stored locally for review. Hosted use still requires qualified privacy/legal review.",
+        ),
+        "terms": (
+            "Terms",
+            "The product provides source-readiness organization, blocker tracking, and draft reports. It does not provide legal, customs, tariff, CFIA, financial, supplier, buyer, or launch advice.",
+        ),
+        "ai-use": (
+            "AI Use",
+            "AI is optional and policy-routed. Simulated AI reviewers can suggest blockers and next moves, but cannot open gates or replace qualified people.",
+        ),
+        "data-retention": (
+            "Data Retention",
+            "Local artifacts are retained for auditability. Customer deletion requests are logged and must be reviewed before hosted deployment.",
+        ),
+    }
+    title, message = pages[kind]
+    body = f"""
+<h1>{escape(title)}</h1>
+<p class="note">{escape(message)}</p>
+<p><a href="/settings/ai-data-policy">AI data policy</a> | <a href="/support">Support</a></p>
+"""
+    return _render_page(title, body)
 
 
 def _render_account(actor: dict[str, Any]) -> str:
@@ -735,6 +863,8 @@ def _render_packet_evidence(packet: dict[str, Any]) -> str:
     summary = packet.get("evidence_summary") or {}
     rows = []
     for evidence in packet.get("evidence_items", []):
+        route = _route_for_evidence(packet, evidence)
+        redaction = redaction_preview_for_evidence(evidence)
         rows.append(
             "<tr>"
             f"<td>{escape(str(evidence.get('evidence_id')))}</td>"
@@ -742,6 +872,10 @@ def _render_packet_evidence(packet: dict[str, Any]) -> str:
             f"<td>{escape(str(evidence.get('ledger_status')))}</td>"
             f"<td>{escape(str(evidence.get('rights_status')))}</td>"
             f"<td>{escape(str(evidence.get('freshness_status')))}</td>"
+            f"<td>{escape(str(evidence.get('sensitivity_level')))}</td>"
+            f"<td>{escape(str(evidence.get('ai_processing_mode')))}</td>"
+            f"<td>{escape(str(route.get('allowed')))}</td>"
+            f"<td>{escape(str(redaction.get('redaction_status')))}</td>"
             f"<td>{escape(str(evidence.get('claim_supported')))}</td>"
             f"<td>{escape(str(evidence.get('review_required')))}</td>"
             f"<td>{escape(str(evidence.get('claim_boundary')))}</td>"
@@ -755,6 +889,8 @@ def _render_packet_evidence(packet: dict[str, Any]) -> str:
   <div class="metric"><div class="label">Accepted</div><div class="value">{escape(str(summary.get('accepted')))}</div></div>
   <div class="metric"><div class="label">Stale</div><div class="value">{escape(str(summary.get('stale')))}</div></div>
   <div class="metric"><div class="label">Missing</div><div class="value">{escape(str(summary.get('missing')))}</div></div>
+  <div class="metric"><div class="label">AI Allowed</div><div class="value">{escape(str(summary.get('ai_allowed')))}</div></div>
+  <div class="metric"><div class="label">Redaction Required</div><div class="value">{escape(str(summary.get('redaction_required')))}</div></div>
 </section>
 <h2>Upload Evidence</h2>
 <form method="post" action="/packets/{escape(str(packet.get('packet_id')))}/actions">
@@ -762,12 +898,15 @@ def _render_packet_evidence(packet: dict[str, Any]) -> str:
   <input type="hidden" name="csrf_token" value="{CSRF_TOKEN}">
   <label>Evidence type</label><input name="evidence_type" value="customer_uploaded_reference">
   <label>Source URL</label><input name="source_url" value="">
+  <label>Sensitivity</label><select name="sensitivity_level">{_select_options(SENSITIVITY_LEVELS, 'internal')}</select>
+  <label>AI processing mode</label><select name="ai_processing_mode">{_select_options(AI_PROCESSING_MODES, 'metadata_only')}</select>
+  <label><input type="checkbox" name="redaction_required" value="true"> Redaction required</label>
   <label>Claim supported</label><input name="claim_supported" value="Customer-uploaded evidence for internal review">
   <button type="submit">Upload Evidence</button>
 </form>
 <table>
-  <thead><tr><th>ID</th><th>Type</th><th>Status</th><th>Rights</th><th>Freshness</th><th>Claim Supported</th><th>Review Required</th><th>Boundary</th></tr></thead>
-  <tbody>{''.join(rows) or '<tr><td colspan="8">No evidence.</td></tr>'}</tbody>
+  <thead><tr><th>ID</th><th>Type</th><th>Status</th><th>Rights</th><th>Freshness</th><th>Sensitivity</th><th>AI Mode</th><th>AI Allowed</th><th>Redaction</th><th>Claim Supported</th><th>Review Required</th><th>Boundary</th></tr></thead>
+  <tbody>{''.join(rows) or '<tr><td colspan="12">No evidence.</td></tr>'}</tbody>
 </table>
 """
     return _render_page("Packet Evidence", body)
@@ -918,6 +1057,7 @@ def _index_payload(repo_root: Path) -> dict[str, Any]:
                 "/packets/:id/reviews",
                 "/packets/:id/reports",
                 "/packets/:id/settings",
+                "/settings/ai-data-policy",
                 "/source-packets",
                 "/source-packets/new",
                 "/source-packets/:id",
@@ -943,6 +1083,13 @@ def _index_payload(repo_root: Path) -> dict[str, Any]:
                 "/admin/system-health",
                 "/account",
                 "/support",
+                "/privacy",
+                "/terms",
+                "/ai-use",
+                "/data-retention",
+                "/api/orgs/current/ai-policy",
+                "/api/orgs/current/ai-policy/test-model-endpoint",
+                "/api/evidence/:evidenceId/ai-permission",
             ]
         ),
         "proof_boundary": (
@@ -1004,6 +1151,12 @@ def build_operator_app_handler(repo_root: Path) -> type[BaseHTTPRequestHandler]:
                 return
             if path == "/support":
                 self._send_html(_render_support())
+                return
+            if path == "/settings/ai-data-policy":
+                self._send_html(_render_ai_data_policy(runtime, actor))
+                return
+            if path in {"/privacy", "/terms", "/ai-use", "/data-retention"}:
+                self._send_html(_render_static_policy_page(path.removeprefix("/")))
                 return
             if path in STATIC_ROUTES:
                 self._send_file(STATIC_ROUTES[path], "text/html; charset=utf-8")
@@ -1144,6 +1297,15 @@ def build_operator_app_handler(repo_root: Path) -> type[BaseHTTPRequestHandler]:
             self.send_header("Location", f"/packets/{packet['packet_id']}/readiness")
             self.end_headers()
 
+        def do_PATCH(self) -> None:  # noqa: N802
+            parsed = urlparse(self.path)
+            path = unquote(parsed.path)
+            actor = _actor_from_headers(self.headers)
+            if path.startswith("/api/"):
+                self._handle_api_patch(path, actor)
+                return
+            self.send_error(HTTPStatus.NOT_FOUND, "Unknown operator app route")
+
         def _read_fields(self) -> dict[str, Any]:
             length = int(self.headers.get("Content-Length") or 0)
             if length > MAX_EVIDENCE_UPLOAD_BYTES:
@@ -1159,6 +1321,57 @@ def build_operator_app_handler(repo_root: Path) -> type[BaseHTTPRequestHandler]:
         def _append_audit(self, event: dict[str, Any]) -> None:
             path = repo_root / "system_review_graph" / "customer_action_log.json"
             _append_json_list(path, event)
+
+        def _handle_api_patch(self, path: str, actor: dict[str, Any]) -> None:
+            fields = self._read_fields()
+            now = __import__("datetime").datetime.now(__import__("datetime").timezone.utc).replace(microsecond=0).isoformat()
+            if path.startswith("/api/evidence/") and path.endswith("/ai-permission"):
+                evidence_id = path.removeprefix("/api/evidence/").removesuffix("/ai-permission").strip("/")
+                packets, evidence_rows = _load_mutable_customer_rows(repo_root)
+                workflow = build_customer_workflow(
+                    source_packets=packets,
+                    evidence_items=evidence_rows,
+                    official_sources=_load_json(repo_root / "data" / "official_source_registry.json"),
+                )
+                packet_lookup = _packet_lookup(workflow)
+                target = next((row for row in evidence_rows if str(row.get("evidence_id")) == evidence_id), None)
+                if target is None:
+                    self.send_error(HTTPStatus.NOT_FOUND, "Evidence not found")
+                    return
+                packet = packet_lookup.get(str(target.get("packet_id")))
+                if packet is None or not can_access_packet(actor, packet):
+                    self.send_error(HTTPStatus.FORBIDDEN, "Evidence is outside this organization")
+                    return
+                ai_fields = _evidence_ai_fields(fields)
+                updated_rows = []
+                updated_evidence: dict[str, Any] = {}
+                for row in evidence_rows:
+                    if str(row.get("evidence_id")) == evidence_id:
+                        updated_evidence = {**row, **ai_fields, "ai_permission_updated_at": now, "ai_permission_updated_by": actor.get("id")}
+                        updated_rows.append(updated_evidence)
+                    else:
+                        updated_rows.append(row)
+                rebuilt = _write_customer_workflow(repo_root, packets, updated_rows)
+                rebuilt_packet = _packet_lookup(rebuilt).get(str(packet.get("packet_id"))) or packet
+                rebuilt_evidence = next(
+                    (row for row in rebuilt_packet.get("evidence_items", []) if str(row.get("evidence_id")) == evidence_id),
+                    updated_evidence,
+                )
+                route = _route_for_evidence(rebuilt_packet, rebuilt_evidence, "evidence_permission_update")
+                self._append_audit(
+                    {
+                        "event_id": f"{evidence_id}:ai-permission-updated:{now}",
+                        "packet_id": rebuilt_packet.get("packet_id"),
+                        "organization_id": packet_org_id(rebuilt_packet),
+                        "event_type": "ai_permission_updated",
+                        "actor_user_id": actor.get("id"),
+                        "after_json": ai_fields,
+                        "created_at": now,
+                    }
+                )
+                self._send_json({"status": "ai_permission_updated", "evidence": rebuilt_evidence, "route_decision": route})
+                return
+            self.send_error(HTTPStatus.NOT_FOUND, "API route not found")
 
         def _system_health_payload(self) -> dict[str, Any]:
             runtime = _runtime_state(repo_root)
@@ -1200,6 +1413,19 @@ def build_operator_app_handler(repo_root: Path) -> type[BaseHTTPRequestHandler]:
                     if row.get("organization_id") == actor.get("organization_id") or actor.get("role") == "admin"
                 ]
                 self._send_json({"members": members})
+                return
+            if path == "/api/orgs/current/ai-policy":
+                policy = ai_policy_for_org(str(actor.get("organization_id") or "org-importer-demo"))
+                self._send_json(
+                    {
+                        "policy": policy,
+                        "model_endpoints": runtime.get("model_endpoints", []),
+                        "router": runtime.get("ai_model_router", {}),
+                        "manual_no_ai_workflow": runtime.get("manual_no_ai_workflow", {}),
+                        "redaction_pipeline": runtime.get("redaction_pipeline", {}),
+                        "proof_boundary": "Policy response exposes product controls only; it does not prove hosted privacy/legal approval.",
+                    }
+                )
                 return
             if path == "/api/packets":
                 self._send_json({"packets": packets})
@@ -1299,6 +1525,22 @@ def build_operator_app_handler(repo_root: Path) -> type[BaseHTTPRequestHandler]:
                 self.send_header("Set-Cookie", "isr_session=; Max-Age=0; HttpOnly; SameSite=Lax")
                 self.end_headers()
                 return
+            if path == "/api/orgs/current/ai-policy/test-model-endpoint":
+                policy = ai_policy_for_org(str(actor.get("organization_id") or "org-importer-demo"))
+                mode = _valid_ai_mode(fields.get("mode") or policy.get("default_mode"))
+                endpoint = endpoint_for_mode(mode, policy)
+                allowed = mode in policy.get("allowed_modes", [])
+                self._send_json(
+                    {
+                        "status": "endpoint_contract_ready" if allowed and (endpoint or mode in {"no_ai", "metadata_only", "on_prem_manual"}) else "endpoint_contract_blocked",
+                        "mode": mode,
+                        "allowed_by_policy": allowed,
+                        "endpoint": endpoint or {},
+                        "live_call_made": False,
+                        "next_valid_move": "Configure and test real provider credentials in staging before hosted customer use.",
+                    }
+                )
+                return
             if path == "/api/packets":
                 packet = packet_from_submission({**fields, "organization_id": actor.get("organization_id")})
                 evidence = evidence_from_submission(packet)
@@ -1331,11 +1573,15 @@ def build_operator_app_handler(repo_root: Path) -> type[BaseHTTPRequestHandler]:
                     if any(_contains_script(str(value)) for value in fields.values()):
                         self.send_error(HTTPStatus.BAD_REQUEST, "Evidence metadata contains unsafe HTML")
                         return
+                    ai_fields = _evidence_ai_fields(fields)
                     packets, evidence_rows = _load_mutable_customer_rows(repo_root)
                     evidence_rows.append(
                         {
                             "evidence_id": f"evidence-{packet_id}-api-{len(evidence_rows) + 1}",
                             "packet_id": packet_id,
+                            "organization_id": packet_org_id(packet),
+                            "title": fields.get("title") or fields.get("claim_supported") or "Customer uploaded evidence",
+                            "description": fields.get("description") or "",
                             "evidence_type": fields.get("evidence_type"),
                             "source_url": fields.get("source_url") or "",
                             "source_owner": actor.get("email"),
@@ -1347,6 +1593,7 @@ def build_operator_app_handler(repo_root: Path) -> type[BaseHTTPRequestHandler]:
                             "claim_boundary": "Customer-uploaded evidence is internal review material until refreshed and reviewed.",
                             "review_required": True,
                             "human_review_status": "not_reviewed",
+                            **ai_fields,
                         }
                     )
                     _write_customer_workflow(repo_root, packets, evidence_rows)
@@ -1475,10 +1722,14 @@ def build_operator_app_handler(repo_root: Path) -> type[BaseHTTPRequestHandler]:
                 if any(_contains_script(str(value)) for value in fields.values()):
                     self.send_error(HTTPStatus.BAD_REQUEST, "Evidence metadata contains unsafe HTML")
                     return
+                ai_fields = _evidence_ai_fields(fields)
                 evidence_rows.append(
                     {
                         "evidence_id": f"evidence-{packet_id}-customer-{len(evidence_rows) + 1}",
                         "packet_id": packet_id,
+                        "organization_id": packet_org_id(packet_for_access),
+                        "title": fields.get("title") or fields.get("claim_supported") or "Customer uploaded evidence",
+                        "description": fields.get("description") or "",
                         "evidence_type": evidence_type,
                         "source_url": fields.get("source_url") or "",
                         "file_path": "",
@@ -1496,6 +1747,7 @@ def build_operator_app_handler(repo_root: Path) -> type[BaseHTTPRequestHandler]:
                         "human_review_status": "not_reviewed",
                         "reviewed_by": "",
                         "reviewed_at": "",
+                        **ai_fields,
                     }
                 )
                 _append_json_list(

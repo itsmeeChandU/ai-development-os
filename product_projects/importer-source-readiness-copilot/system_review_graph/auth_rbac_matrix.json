@@ -145,11 +145,15 @@
     }
   ],
   "security_controls": {
+    "ai_data_policy": "organization policy controls allowed modes, sensitivity, endpoint routing, retention, and no-AI fallback",
     "audit": "packet, AI, review, export, deletion, and permission events are recorded",
     "authentication": "local session auth implemented for private beta dry-run",
     "csrf": "local form token available for browser unsafe actions",
+    "model_router": "per-evidence model routing denies disallowed modes and records endpoint decisions",
+    "no_ai_mode": "manual workflow remains available when AI is disabled at org or evidence level",
     "organization_isolation": "packet queries filter by organization unless operator/admin",
     "rbac": "role permission matrix enforced by route handlers",
+    "redaction_pipeline": "sensitive evidence is marked for redaction before AI processing",
     "route_traversal": "route-specific artifact base directories with resolved-path checks",
     "scoped_expert_links": "review tokens grant packet-scoped access only",
     "upload_validation": {

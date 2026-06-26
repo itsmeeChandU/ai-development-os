@@ -77,6 +77,7 @@ def main() -> int:
         PROJECT / "scripts" / "check_product.py",
         PROJECT / "docs" / "PRODUCT_AUTOMATION_RUNBOOK.md",
         PROJECT / "docs" / "PRODUCT_STATUS.md",
+        PROJECT / "docs" / "REQUIREMENTS_ANALYSIS.md",
         PROJECT / "docs" / "STARTUP_LIFECYCLE.md",
         PROJECT / "docs" / "OPERATOR_GUIDE.md",
         PROJECT / "system_review_graph" / "external_gate_report.json",
@@ -103,6 +104,14 @@ def main() -> int:
         PROJECT / "system_review_graph" / "deletion_requests.json",
         PROJECT / "system_review_graph" / "deployment_readiness_report.json",
         PROJECT / "system_review_graph" / "private_beta_readiness_checklist.json",
+        PROJECT / "system_review_graph" / "ai_data_policy.json",
+        PROJECT / "system_review_graph" / "model_endpoints.json",
+        PROJECT / "system_review_graph" / "ai_model_router.json",
+        PROJECT / "system_review_graph" / "redaction_pipeline.json",
+        PROJECT / "system_review_graph" / "manual_no_ai_workflow.json",
+        PROJECT / "system_review_graph" / "requirements_traceability_matrix.json",
+        PROJECT / "system_review_graph" / "source_refresh_runs.json",
+        PROJECT / "system_review_graph" / "source_refresh_report_packet-frozen-tuna-canada-001.json",
         PROJECT / "system_review_graph" / "expert_review_packet_packet-frozen-tuna-canada-001.md",
         PROJECT / "investor" / "vc_pitch_deck.md",
         PROJECT / "investor" / "one_pager.md",
@@ -208,6 +217,21 @@ def main() -> int:
     )
     deployment = json.loads(
         (PROJECT / "system_review_graph" / "deployment_readiness_report.json").read_text(encoding="utf-8")
+    )
+    ai_data_policy = json.loads(
+        (PROJECT / "system_review_graph" / "ai_data_policy.json").read_text(encoding="utf-8")
+    )
+    ai_model_router = json.loads(
+        (PROJECT / "system_review_graph" / "ai_model_router.json").read_text(encoding="utf-8")
+    )
+    redaction_pipeline = json.loads(
+        (PROJECT / "system_review_graph" / "redaction_pipeline.json").read_text(encoding="utf-8")
+    )
+    manual_no_ai_workflow = json.loads(
+        (PROJECT / "system_review_graph" / "manual_no_ai_workflow.json").read_text(encoding="utf-8")
+    )
+    requirements_traceability = json.loads(
+        (PROJECT / "system_review_graph" / "requirements_traceability_matrix.json").read_text(encoding="utf-8")
     )
     screenshot_manifest = json.loads(
         (PROJECT / "system_review_graph" / "operator_screenshot_manifest.json").read_text(encoding="utf-8")
@@ -337,6 +361,10 @@ def main() -> int:
         print("Product project check: FAIL")
         print("customer source-packet workflow missing evidence quality summary")
         return 1
+    if evidence_summary.get("ai_allowed", 0) < 1:
+        print("Product project check: FAIL")
+        print("customer source-packet workflow missing AI permission summary")
+        return 1
     group_titles = {row.get("title") for row in packet.get("blocker_groups", [])}
     required_groups = {"Source Freshness", "Compliance Review", "Source Rights / Contract", "Buyer Validation"}
     if not required_groups.issubset(group_titles):
@@ -363,6 +391,10 @@ def main() -> int:
         print("Product project check: FAIL")
         print("evidence ledger missing quality counts")
         return 1
+    if not all("sensitivity_level" in row and "ai_processing_mode" in row for row in evidence_ledger.get("rows", [])):
+        print("Product project check: FAIL")
+        print("evidence ledger missing sensitivity or AI permission fields")
+        return 1
     if runtime.get("status") != "private_beta_candidate_with_external_human_gates":
         print("Product project check: FAIL")
         print("runtime state missing private-beta candidate status")
@@ -374,6 +406,18 @@ def main() -> int:
     if "/api/auth/login" not in runtime.get("api_routes", []):
         print("Product project check: FAIL")
         print("runtime state missing auth routes")
+        return 1
+    if "/api/orgs/current/ai-policy" not in runtime.get("api_routes", []):
+        print("Product project check: FAIL")
+        print("runtime state missing AI policy routes")
+        return 1
+    if "/api/evidence/:evidenceId/ai-permission" not in runtime.get("api_routes", []):
+        print("Product project check: FAIL")
+        print("runtime state missing evidence AI permission route")
+        return 1
+    if "/settings/ai-data-policy" not in runtime.get("ui_routes", {}).get("customer", []):
+        print("Product project check: FAIL")
+        print("runtime state missing AI policy settings route")
         return 1
     if "/review/:reviewToken" not in runtime.get("ui_routes", {}).get("expert", []):
         print("Product project check: FAIL")
@@ -398,6 +442,26 @@ def main() -> int:
     if deployment.get("status") != "deployable_local_stack_ready_with_external_hosting_gates":
         print("Product project check: FAIL")
         print("deployment readiness missing hostable local stack status")
+        return 1
+    if ai_data_policy.get("status") != "ai_data_policy_ready" or len(ai_data_policy.get("policies", [])) < 2:
+        print("Product project check: FAIL")
+        print("AI data policy missing organization policies")
+        return 1
+    if ai_model_router.get("status") != "ai_model_router_ready" or not ai_model_router.get("route_decisions"):
+        print("Product project check: FAIL")
+        print("AI model router missing route decisions")
+        return 1
+    if redaction_pipeline.get("status") != "redaction_pipeline_ready" or "emails" not in redaction_pipeline.get("categories", []):
+        print("Product project check: FAIL")
+        print("redaction pipeline missing categories")
+        return 1
+    if manual_no_ai_workflow.get("status") != "manual_no_ai_workflow_ready":
+        print("Product project check: FAIL")
+        print("manual no-AI workflow is not ready")
+        return 1
+    if len(requirements_traceability.get("requirements", [])) < 17:
+        print("Product project check: FAIL")
+        print("requirements traceability matrix is incomplete")
         return 1
     store_path = PROJECT / "system_review_graph" / "customer_workflow.sqlite"
     with sqlite3.connect(store_path) as conn:
@@ -444,6 +508,9 @@ def main() -> int:
     print(f"evidence_ledger_status={evidence_ledger['status']}")
     print(f"runtime_status={runtime['status']}")
     print(f"runtime_users={len(runtime['users'])}")
+    print(f"ai_policy_status={ai_data_policy['status']}")
+    print(f"ai_router_status={ai_model_router['status']}")
+    print(f"requirements_traceability={len(requirements_traceability['requirements'])}")
     print(f"review_requests={len(review_requests)}")
     print(f"audit_events={len(audit_events['events'])}")
     print(f"deployment_status={deployment['status']}")

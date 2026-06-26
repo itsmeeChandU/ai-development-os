@@ -1,5 +1,6 @@
 [
   {
+    "ai_involvement_disclosure": "AI simulated review may be included when present; AI never opens approval gates.",
     "file_id": "",
     "format": "markdown",
     "generated_at": "2026-06-25T00:00:00+00:00",
@@ -28,11 +29,13 @@
       "evidence-frozen-tuna-cfia-airs-reference"
     ],
     "packet_id": "packet-frozen-tuna-canada-001",
+    "proof_boundary": "Importer Source Readiness Copilot organizes evidence and blockers. It does not provide legal, customs, tariff, tax, CFIA, supplier, buyer, compliance, or launch advice.",
     "report_type": "customer_readiness_report",
-    "source_snapshot_hash": "f6d669f5e79239366700092239808dbd3f91983b98b65bf197d469bb799b93ef",
+    "source_snapshot_hash": "70b7ebe12d6cc4e8d6b78aa6be64cf047a17e5ec5bf73fe12928f1a7408eecd6",
     "status": "draft_internal_export_ready"
   },
   {
+    "ai_involvement_disclosure": "AI simulated review may be included when present; AI never opens approval gates.",
     "file_id": "",
     "format": "json",
     "generated_at": "2026-06-25T00:00:00+00:00",
@@ -61,11 +64,13 @@
       "evidence-frozen-tuna-cfia-airs-reference"
     ],
     "packet_id": "packet-frozen-tuna-canada-001",
+    "proof_boundary": "Importer Source Readiness Copilot organizes evidence and blockers. It does not provide legal, customs, tariff, tax, CFIA, supplier, buyer, compliance, or launch advice.",
     "report_type": "customer_readiness_report",
-    "source_snapshot_hash": "f6d669f5e79239366700092239808dbd3f91983b98b65bf197d469bb799b93ef",
+    "source_snapshot_hash": "70b7ebe12d6cc4e8d6b78aa6be64cf047a17e5ec5bf73fe12928f1a7408eecd6",
     "status": "draft_internal_export_ready"
   },
   {
+    "ai_involvement_disclosure": "AI simulated review may be included when present; AI never opens approval gates.",
     "file_id": "",
     "format": "markdown",
     "generated_at": "2026-06-25T00:00:00+00:00",
@@ -94,11 +99,13 @@
       "evidence-frozen-tuna-cfia-airs-reference"
     ],
     "packet_id": "packet-frozen-tuna-canada-001",
+    "proof_boundary": "Importer Source Readiness Copilot organizes evidence and blockers. It does not provide legal, customs, tariff, tax, CFIA, supplier, buyer, compliance, or launch advice.",
     "report_type": "expert_review_packet",
-    "source_snapshot_hash": "f6d669f5e79239366700092239808dbd3f91983b98b65bf197d469bb799b93ef",
+    "source_snapshot_hash": "70b7ebe12d6cc4e8d6b78aa6be64cf047a17e5ec5bf73fe12928f1a7408eecd6",
     "status": "draft_internal_export_ready"
   },
   {
+    "ai_involvement_disclosure": "AI simulated review may be included when present; AI never opens approval gates.",
     "file_id": "",
     "format": "html",
     "generated_at": "2026-06-25T00:00:00+00:00",
@@ -127,11 +134,13 @@
       "evidence-frozen-tuna-cfia-airs-reference"
     ],
     "packet_id": "packet-frozen-tuna-canada-001",
+    "proof_boundary": "Importer Source Readiness Copilot organizes evidence and blockers. It does not provide legal, customs, tariff, tax, CFIA, supplier, buyer, compliance, or launch advice.",
     "report_type": "operator_blocker_report",
-    "source_snapshot_hash": "f6d669f5e79239366700092239808dbd3f91983b98b65bf197d469bb799b93ef",
+    "source_snapshot_hash": "70b7ebe12d6cc4e8d6b78aa6be64cf047a17e5ec5bf73fe12928f1a7408eecd6",
     "status": "draft_internal_export_ready"
   },
   {
+    "ai_involvement_disclosure": "AI simulated review may be included when present; AI never opens approval gates.",
     "file_id": "",
     "format": "json",
     "generated_at": "2026-06-25T00:00:00+00:00",
@@ -160,11 +169,13 @@
       "evidence-frozen-tuna-cfia-airs-reference"
     ],
     "packet_id": "packet-frozen-tuna-canada-001",
+    "proof_boundary": "Importer Source Readiness Copilot organizes evidence and blockers. It does not provide legal, customs, tariff, tax, CFIA, supplier, buyer, compliance, or launch advice.",
     "report_type": "private_beta_gate_report",
-    "source_snapshot_hash": "f6d669f5e79239366700092239808dbd3f91983b98b65bf197d469bb799b93ef",
+    "source_snapshot_hash": "70b7ebe12d6cc4e8d6b78aa6be64cf047a17e5ec5bf73fe12928f1a7408eecd6",
     "status": "draft_internal_export_ready"
   },
   {
+    "ai_involvement_disclosure": "AI simulated review may be included when present; AI never opens approval gates.",
     "file_id": "",
     "format": "pdf",
     "generated_at": "2026-06-25T00:00:00+00:00",
@@ -193,8 +204,9 @@
       "evidence-frozen-tuna-cfia-airs-reference"
     ],
     "packet_id": "packet-frozen-tuna-canada-001",
+    "proof_boundary": "Importer Source Readiness Copilot organizes evidence and blockers. It does not provide legal, customs, tariff, tax, CFIA, supplier, buyer, compliance, or launch advice.",
     "report_type": "customer_readiness_report",
-    "source_snapshot_hash": "f6d669f5e79239366700092239808dbd3f91983b98b65bf197d469bb799b93ef",
+    "source_snapshot_hash": "70b7ebe12d6cc4e8d6b78aa6be64cf047a17e5ec5bf73fe12928f1a7408eecd6",
     "status": "pdf_renderer_ready_basic"
   }
 ]

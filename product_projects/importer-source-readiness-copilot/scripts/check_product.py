@@ -101,6 +101,11 @@ def main() -> int:
     review_requests = _load_json(ROOT / "system_review_graph" / "review_requests.json")
     audit_events = _load_json(ROOT / "system_review_graph" / "audit_events.json")
     deployment = _load_json(ROOT / "system_review_graph" / "deployment_readiness_report.json")
+    ai_data_policy = _load_json(ROOT / "system_review_graph" / "ai_data_policy.json")
+    ai_model_router = _load_json(ROOT / "system_review_graph" / "ai_model_router.json")
+    redaction_pipeline = _load_json(ROOT / "system_review_graph" / "redaction_pipeline.json")
+    manual_no_ai_workflow = _load_json(ROOT / "system_review_graph" / "manual_no_ai_workflow.json")
+    requirements_traceability = _load_json(ROOT / "system_review_graph" / "requirements_traceability_matrix.json")
     screenshot_manifest_path = ROOT / "system_review_graph" / "operator_screenshot_manifest.json"
     screenshot_manifest = _load_json(screenshot_manifest_path) if screenshot_manifest_path.exists() else {}
     expected = {
@@ -175,6 +180,14 @@ def main() -> int:
         "system_review_graph/deletion_requests.json",
         "system_review_graph/deployment_readiness_report.json",
         "system_review_graph/private_beta_readiness_checklist.json",
+        "system_review_graph/ai_data_policy.json",
+        "system_review_graph/model_endpoints.json",
+        "system_review_graph/ai_model_router.json",
+        "system_review_graph/redaction_pipeline.json",
+        "system_review_graph/manual_no_ai_workflow.json",
+        "system_review_graph/requirements_traceability_matrix.json",
+        "system_review_graph/source_refresh_runs.json",
+        "system_review_graph/source_refresh_report_packet-frozen-tuna-canada-001.json",
         "system_review_graph/expert_review_packet_packet-frozen-tuna-canada-001.md",
         "migrations/0001_product_runtime.sql",
         "Dockerfile",
@@ -281,6 +294,8 @@ def main() -> int:
     evidence_summary = packet.get("evidence_summary", {})
     if evidence_summary.get("attached", 0) < 3 or evidence_summary.get("missing", 0) < 4:
         failures.append("customer packet should expose evidence quality summary")
+    if evidence_summary.get("ai_allowed", 0) < 1:
+        failures.append("customer packet should expose AI permission summary")
     group_titles = {row.get("title") for row in packet.get("blocker_groups", [])}
     for group in ("Source Freshness", "Compliance Review", "Source Rights / Contract", "Buyer Validation"):
         if group not in group_titles:
@@ -301,12 +316,20 @@ def main() -> int:
         failures.append("evidence ledger should include customer, CID, and official Canadian reference evidence")
     if "stale" not in evidence_ledger.get("counts_by_quality", {}):
         failures.append("evidence ledger should expose evidence quality counts")
+    if not all("sensitivity_level" in row and "ai_processing_mode" in row for row in evidence_ledger.get("rows", [])):
+        failures.append("evidence ledger should include sensitivity and AI permission fields")
     if runtime.get("status") != "private_beta_candidate_with_external_human_gates":
         failures.append(f"runtime state has unexpected status {runtime.get('status')!r}")
     if len(runtime.get("users", [])) < 4 or len(runtime.get("organizations", [])) < 3:
         failures.append("runtime state should include users and organizations")
     if "/api/auth/login" not in runtime.get("api_routes", []):
         failures.append("runtime state should expose auth API routes")
+    if "/api/orgs/current/ai-policy" not in runtime.get("api_routes", []):
+        failures.append("runtime state should expose AI policy API routes")
+    if "/api/evidence/:evidenceId/ai-permission" not in runtime.get("api_routes", []):
+        failures.append("runtime state should expose evidence AI permission API routes")
+    if "/settings/ai-data-policy" not in runtime.get("ui_routes", {}).get("customer", []):
+        failures.append("runtime state should expose customer AI policy settings route")
     if "/review/:reviewToken" not in runtime.get("ui_routes", {}).get("expert", []):
         failures.append("runtime state should expose scoped expert review routes")
     if runtime.get("security_controls", {}).get("organization_isolation") is None:
@@ -321,6 +344,16 @@ def main() -> int:
         failures.append("audit events should include packet, AI review, and report export events")
     if deployment.get("status") != "deployable_local_stack_ready_with_external_hosting_gates":
         failures.append("deployment readiness should describe hostable local stack with external gates")
+    if ai_data_policy.get("status") != "ai_data_policy_ready" or len(ai_data_policy.get("policies", [])) < 2:
+        failures.append("AI data policy artifact should expose organization policies")
+    if ai_model_router.get("status") != "ai_model_router_ready" or not ai_model_router.get("route_decisions"):
+        failures.append("AI model router artifact should expose route decisions")
+    if redaction_pipeline.get("status") != "redaction_pipeline_ready" or "emails" not in redaction_pipeline.get("categories", []):
+        failures.append("redaction pipeline artifact should expose redaction categories")
+    if manual_no_ai_workflow.get("status") != "manual_no_ai_workflow_ready":
+        failures.append("manual/no-AI workflow artifact should be ready")
+    if len(requirements_traceability.get("requirements", [])) < 17:
+        failures.append("requirements traceability matrix should cover the full requirements analysis")
     store_path = ROOT / "system_review_graph" / "customer_workflow.sqlite"
     if store_path.exists():
         with sqlite3.connect(store_path) as conn:

@@ -17,6 +17,32 @@ if str(SRC) not in sys.path:
 from importer_source_readiness.operator_app import make_server
 
 
+MUTABLE_GENERATED_PATHS = [
+    ROOT / "system_review_graph" / "customer_source_packets.json",
+    ROOT / "system_review_graph" / "evidence_ledger.json",
+    ROOT / "system_review_graph" / "customer_readiness_report.json",
+    ROOT / "system_review_graph" / "customer_readiness_report.md",
+    ROOT / "system_review_graph" / "customer_ai_review_runs.json",
+    ROOT / "system_review_graph" / "customer_workflow.sqlite",
+    ROOT / "system_review_graph" / "product_runtime_state.json",
+    ROOT / "system_review_graph" / "auth_rbac_matrix.json",
+    ROOT / "system_review_graph" / "claims_gate_matrix.json",
+    ROOT / "system_review_graph" / "review_requests.json",
+    ROOT / "system_review_graph" / "report_exports.json",
+    ROOT / "system_review_graph" / "audit_events.json",
+    ROOT / "system_review_graph" / "deletion_requests.json",
+    ROOT / "system_review_graph" / "deployment_readiness_report.json",
+    ROOT / "system_review_graph" / "private_beta_readiness_checklist.json",
+    ROOT / "system_review_graph" / "ai_data_policy.json",
+    ROOT / "system_review_graph" / "model_endpoints.json",
+    ROOT / "system_review_graph" / "ai_model_router.json",
+    ROOT / "system_review_graph" / "redaction_pipeline.json",
+    ROOT / "system_review_graph" / "manual_no_ai_workflow.json",
+    ROOT / "system_review_graph" / "requirements_traceability_matrix.json",
+    ROOT / "system_review_graph" / "customer_action_log.json",
+]
+
+
 class OperatorAppTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
@@ -109,11 +135,16 @@ class OperatorAppTests(unittest.TestCase):
     def test_customer_source_packet_guided_pages_exist(self) -> None:
         routes = {
             "/packets/packet-frozen-tuna-canada-001": "Refresh Official Sources",
-            "/packets/packet-frozen-tuna-canada-001/evidence": "Upload Evidence",
+            "/packets/packet-frozen-tuna-canada-001/evidence": "AI processing mode",
             "/packets/packet-frozen-tuna-canada-001/blockers": "Resolve",
             "/packets/packet-frozen-tuna-canada-001/ai-reviews": "AI simulated reviews",
             "/packets/packet-frozen-tuna-canada-001/reviews": "Scoped review link",
             "/packets/packet-frozen-tuna-canada-001/reports": "Reports",
+            "/settings/ai-data-policy": "Requirement Traceability",
+            "/privacy": "Privacy Notice",
+            "/terms": "Terms",
+            "/ai-use": "AI Use",
+            "/data-retention": "Data Retention",
             "/review/review-token-packet-frozen-tuna-canada-001": "Out Of Scope",
             "/admin/sources": "Official Source Registry",
             "/admin/gates": "Private Beta Gates",
@@ -148,14 +179,7 @@ class OperatorAppTests(unittest.TestCase):
 
     def test_customer_source_packet_post_creates_local_readiness_report(self) -> None:
         generated_paths = [
-            ROOT / "system_review_graph" / "customer_source_packets.json",
-            ROOT / "system_review_graph" / "evidence_ledger.json",
-            ROOT / "system_review_graph" / "customer_readiness_report.json",
-            ROOT / "system_review_graph" / "customer_readiness_report.md",
-            ROOT / "system_review_graph" / "customer_ai_review_runs.json",
-            ROOT / "system_review_graph" / "customer_workflow.sqlite",
-            ROOT / "system_review_graph" / "product_runtime_state.json",
-            ROOT / "system_review_graph" / "audit_events.json",
+            *MUTABLE_GENERATED_PATHS,
             ROOT / "system_review_graph" / "expert_review_packet_packet-local-test-product.md",
         ]
         backups = {path: path.read_bytes() if path.exists() else None for path in generated_paths}
@@ -193,6 +217,46 @@ class OperatorAppTests(unittest.TestCase):
                 "/packets/packet-local-test-product/readiness",
                 ctx.exception.headers["Location"],
             )
+        finally:
+            for path, content in backups.items():
+                if content is None:
+                    path.unlink(missing_ok=True)
+                else:
+                    path.write_bytes(content)
+
+    def test_ai_policy_api_and_permission_patch_work(self) -> None:
+        backups = {path: path.read_bytes() if path.exists() else None for path in MUTABLE_GENERATED_PATHS}
+        try:
+            with urlopen(f"{self.base_url}/api/orgs/current/ai-policy", timeout=5) as response:
+                policy = json.loads(response.read().decode("utf-8"))
+            self.assertEqual(policy["policy"]["default_mode"], "redacted")
+            self.assertEqual(policy["router"]["status"], "ai_model_router_ready")
+
+            endpoint_body = urlencode({"mode": "metadata_only"}).encode("utf-8")
+            endpoint_request = Request(
+                f"{self.base_url}/api/orgs/current/ai-policy/test-model-endpoint",
+                data=endpoint_body,
+                method="POST",
+                headers={"Content-Type": "application/x-www-form-urlencoded"},
+            )
+            with urlopen(endpoint_request, timeout=5) as response:
+                endpoint = json.loads(response.read().decode("utf-8"))
+            self.assertEqual(endpoint["status"], "endpoint_contract_ready")
+            self.assertFalse(endpoint["live_call_made"])
+
+            patch_body = urlencode({"ai_processing_mode": "no_ai", "sensitivity_level": "confidential"}).encode("utf-8")
+            patch_request = Request(
+                f"{self.base_url}/api/evidence/evidence-frozen-tuna-cid-reference/ai-permission",
+                data=patch_body,
+                method="PATCH",
+                headers={"Content-Type": "application/x-www-form-urlencoded"},
+            )
+            with urlopen(patch_request, timeout=5) as response:
+                patched = json.loads(response.read().decode("utf-8"))
+            self.assertEqual(patched["status"], "ai_permission_updated")
+            self.assertEqual(patched["evidence"]["ai_processing_mode"], "no_ai")
+            self.assertFalse(patched["route_decision"]["allowed"])
+            self.assertEqual(patched["route_decision"]["mode"], "no_ai")
         finally:
             for path, content in backups.items():
                 if content is None:
