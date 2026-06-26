@@ -1,0 +1,166 @@
+{
+  "executed_usage_event_count": 1,
+  "external_charge_created": false,
+  "generated_at": "2026-06-26T14:52:45+00:00",
+  "proof_boundary": "The usage ledger estimates and blocks cost exposure locally; no payment, invoice, or live checkout is performed.",
+  "status": "billing_usage_ledger_ready_local_no_charges",
+  "total_reserved_credits": 0,
+  "usage_events": [
+    {
+      "action": "ai_extraction",
+      "authorization_status": "blocked_requires_upgrade_or_manual_approval",
+      "credits_charged": 0,
+      "credits_reserved": 0,
+      "estimated_credits": 4,
+      "external_charge_created": false,
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "usage_event_id": "usage-event-packet-frozen-tuna-canada-001-ai_extraction-2026-06-26T145245Z0000"
+    }
+  ],
+  "usage_rows": [
+    {
+      "action": "ocr_page",
+      "authorization_status": "allowed_local",
+      "credits_charged": 0,
+      "estimated_credits": 2,
+      "external_charge_created": false,
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "usage_id": "usage:packet-frozen-tuna-canada-001:ocr_page"
+    },
+    {
+      "action": "ocr_document_batch",
+      "authorization_status": "blocked_requires_upgrade_or_manual_approval",
+      "credits_charged": 0,
+      "estimated_credits": 12,
+      "external_charge_created": false,
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "usage_id": "usage:packet-frozen-tuna-canada-001:ocr_document_batch"
+    },
+    {
+      "action": "ai_extraction",
+      "authorization_status": "blocked_requires_upgrade_or_manual_approval",
+      "credits_charged": 0,
+      "estimated_credits": 4,
+      "external_charge_created": false,
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "usage_id": "usage:packet-frozen-tuna-canada-001:ai_extraction"
+    },
+    {
+      "action": "ai_job_deep_research",
+      "authorization_status": "blocked_requires_upgrade_or_manual_approval",
+      "credits_charged": 0,
+      "estimated_credits": 12,
+      "external_charge_created": false,
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "usage_id": "usage:packet-frozen-tuna-canada-001:ai_job_deep_research"
+    },
+    {
+      "action": "large_document_packet",
+      "authorization_status": "blocked_requires_upgrade_or_manual_approval",
+      "credits_charged": 0,
+      "estimated_credits": 10,
+      "external_charge_created": false,
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "usage_id": "usage:packet-frozen-tuna-canada-001:large_document_packet"
+    },
+    {
+      "action": "saved_workspace",
+      "authorization_status": "allowed_local",
+      "credits_charged": 0,
+      "estimated_credits": 1,
+      "external_charge_created": false,
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "usage_id": "usage:packet-frozen-tuna-canada-001:saved_workspace"
+    },
+    {
+      "action": "report_export",
+      "authorization_status": "allowed_local",
+      "credits_charged": 0,
+      "estimated_credits": 2,
+      "external_charge_created": false,
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "usage_id": "usage:packet-frozen-tuna-canada-001:report_export"
+    },
+    {
+      "action": "buyer_ready_packet",
+      "authorization_status": "allowed_local",
+      "credits_charged": 0,
+      "estimated_credits": 3,
+      "external_charge_created": false,
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "usage_id": "usage:packet-frozen-tuna-canada-001:buyer_ready_packet"
+    },
+    {
+      "action": "broker_ready_packet",
+      "authorization_status": "allowed_local",
+      "credits_charged": 0,
+      "estimated_credits": 3,
+      "external_charge_created": false,
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "usage_id": "usage:packet-frozen-tuna-canada-001:broker_ready_packet"
+    },
+    {
+      "action": "source_monitoring",
+      "authorization_status": "blocked_requires_upgrade_or_manual_approval",
+      "credits_charged": 0,
+      "estimated_credits": 5,
+      "external_charge_created": false,
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "usage_id": "usage:packet-frozen-tuna-canada-001:source_monitoring"
+    },
+    {
+      "action": "source_monitoring_watchlist",
+      "authorization_status": "blocked_requires_upgrade_or_manual_approval",
+      "credits_charged": 0,
+      "estimated_credits": 8,
+      "external_charge_created": false,
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "usage_id": "usage:packet-frozen-tuna-canada-001:source_monitoring_watchlist"
+    },
+    {
+      "action": "opportunity_report",
+      "authorization_status": "blocked_requires_upgrade_or_manual_approval",
+      "credits_charged": 0,
+      "estimated_credits": 4,
+      "external_charge_created": false,
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "usage_id": "usage:packet-frozen-tuna-canada-001:opportunity_report"
+    },
+    {
+      "action": "expert_review_request",
+      "authorization_status": "blocked_requires_upgrade_or_manual_approval",
+      "credits_charged": 0,
+      "estimated_credits": 0,
+      "external_charge_created": false,
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "usage_id": "usage:packet-frozen-tuna-canada-001:expert_review_request"
+    },
+    {
+      "action": "private_ai",
+      "authorization_status": "blocked_requires_upgrade_or_manual_approval",
+      "credits_charged": 0,
+      "estimated_credits": 8,
+      "external_charge_created": false,
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "usage_id": "usage:packet-frozen-tuna-canada-001:private_ai"
+    },
+    {
+      "action": "agent_api_call",
+      "authorization_status": "allowed_local",
+      "credits_charged": 0,
+      "estimated_credits": 1,
+      "external_charge_created": false,
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "usage_id": "usage:packet-frozen-tuna-canada-001:agent_api_call"
+    },
+    {
+      "action": "api_agent_usage",
+      "authorization_status": "blocked_requires_upgrade_or_manual_approval",
+      "credits_charged": 0,
+      "estimated_credits": 2,
+      "external_charge_created": false,
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "usage_id": "usage:packet-frozen-tuna-canada-001:api_agent_usage"
+    }
+  ]
+}

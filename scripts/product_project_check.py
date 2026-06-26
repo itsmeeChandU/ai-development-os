@@ -25,6 +25,7 @@ def main() -> int:
         PROJECT / "CUSTOMER_SOURCE_PACKET_SPEC.md",
         PROJECT / "SOURCE_OF_TRUTH.md",
         PROJECT / "RUN_RESULTS.md",
+        PROJECT / "EXTERNAL_REVIEW_SUMMARY.md",
         PROJECT / "REDACTION_REPORT.md",
         PROJECT / "REVIEW_USE_TERMS.md",
         PROJECT / "OFFLINE_REPRODUCTION.md",
@@ -56,6 +57,7 @@ def main() -> int:
         PROJECT / "src" / "importer_source_readiness" / "completion_platform.py",
         PROJECT / "src" / "importer_source_readiness" / "product_operations.py",
         PROJECT / "src" / "importer_source_readiness" / "ai_review_validation.py",
+        PROJECT / "src" / "importer_source_readiness" / "external_review.py",
         PROJECT / "tests" / "test_readiness.py",
         PROJECT / "tests" / "test_external_gates.py",
         PROJECT / "tests" / "test_continuation.py",
@@ -70,6 +72,7 @@ def main() -> int:
         PROJECT / "tests" / "test_policy_intelligence.py",
         PROJECT / "tests" / "test_completion_platform.py",
         PROJECT / "tests" / "test_external_package_audit.py",
+        PROJECT / "tests" / "test_external_review_workflow.py",
         PROJECT / "scripts" / "run_readiness.py",
         PROJECT / "scripts" / "run_external_gates.py",
         PROJECT / "scripts" / "export_operator_dashboard.py",
@@ -82,6 +85,7 @@ def main() -> int:
         PROJECT / "scripts" / "run_policy_intelligence.py",
         PROJECT / "scripts" / "run_completion_platform.py",
         PROJECT / "scripts" / "run_product_operations.py",
+        PROJECT / "scripts" / "build_external_review_packet.py",
         PROJECT / "scripts" / "audit_external_package.py",
         PROJECT / "scripts" / "check_product.py",
         PROJECT / "docs" / "PRODUCT_AUTOMATION_RUNBOOK.md",
@@ -97,6 +101,7 @@ def main() -> int:
         PROJECT / "docs" / "STARTUP_LIFECYCLE.md",
         PROJECT / "docs" / "OPERATOR_GUIDE.md",
         PROJECT / "docs" / "UI_UX_COMPONENT_SYSTEM.md",
+        PROJECT / "docs" / "EXTERNAL_REVIEW_PROCESS.md",
         PROJECT / "system_review_graph" / "external_gate_report.json",
         PROJECT / "system_review_graph" / "continuation_plan.json",
         PROJECT / "system_review_graph" / "vc_pitch_readiness_report.json",
@@ -151,6 +156,9 @@ def main() -> int:
         PROJECT / "system_review_graph" / "all_stage_readiness_report.json",
         PROJECT / "system_review_graph" / "product_operations_report.json",
         PROJECT / "system_review_graph" / "product_operations_log.json",
+        PROJECT / "system_review_graph" / "external_review_findings_report.json",
+        PROJECT / "system_review_graph" / "external_review_blocker_ledger.jsonl",
+        PROJECT / "system_review_graph" / "ai_assisted_external_review_plan.json",
         PROJECT / "system_review_graph" / "research_execution_runs.json",
         PROJECT / "system_review_graph" / "expert_review_work_orders.json",
         PROJECT / "system_review_graph" / "team_workspace_activity.json",
@@ -178,6 +186,39 @@ def main() -> int:
         PROJECT / "docs" / "SECURITY_PRIVACY.md",
         PROJECT / "docs" / "DEPLOYMENT.md",
         PROJECT / "handoffs" / "product_completion_handoff.md",
+        PROJECT / "external_review_findings" / "README.md",
+        PROJECT / "external_review_findings" / "UX_PRODUCT_REVIEW.md",
+        PROJECT / "external_review_findings" / "SECURITY_PUBLIC_UPLOAD_REVIEW.md",
+        PROJECT / "external_review_findings" / "PRIVACY_LEGAL_REVIEW.md",
+        PROJECT / "external_review_findings" / "AI_SAFETY_REVIEW.md",
+        PROJECT / "external_review_findings" / "TRADE_BOUNDARY_REVIEW.md",
+        PROJECT / "external_review_findings" / "FREIGHT_LOGISTICS_REVIEW.md",
+        PROJECT / "external_review_findings" / "REPORT_LANGUAGE_REVIEW.md",
+        PROJECT / "external_review_findings" / "DEVOPS_PRODUCTION_READINESS_REVIEW.md",
+        PROJECT / "external_review_findings" / "BILLING_PAYMENT_REVIEW.md",
+        PROJECT / "external_review_findings" / "EXTERNAL_REVIEW_SUMMARY.json",
+        PROJECT / "reviewer_packets" / "README.md",
+        PROJECT / "reviewer_packets" / "WAVE_1_UX_PRODUCT_REVIEW.md",
+        PROJECT / "reviewer_packets" / "WAVE_1_SECURITY_PUBLIC_UPLOAD_REVIEW.md",
+        PROJECT / "reviewer_packets" / "WAVE_1_PRIVACY_LEGAL_REVIEW.md",
+        PROJECT / "reviewer_packets" / "WAVE_1_AI_SAFETY_REVIEW.md",
+        PROJECT / "reviewer_packets" / "WAVE_1_DEVOPS_PRODUCTION_READINESS_REVIEW.md",
+        PROJECT / "reviewer_packets" / "WAVE_2_TRADE_BOUNDARY_REVIEW.md",
+        PROJECT / "reviewer_packets" / "WAVE_2_FREIGHT_LOGISTICS_REVIEW.md",
+        PROJECT / "reviewer_packets" / "WAVE_2_REPORT_LANGUAGE_REVIEW.md",
+        PROJECT / "reviewer_packets" / "WAVE_3_BILLING_PAYMENT_REVIEW.md",
+        PROJECT / "ai_assisted_review" / "README.md",
+        PROJECT / "ai_assisted_review" / "WEB_RESEARCH_SOURCE_LOG.md",
+        PROJECT / "ai_assisted_review" / "simulated_findings" / ".gitkeep",
+        PROJECT / "ai_assisted_review" / "role_prompts" / "WAVE_1_UX_PRODUCT_REVIEW.md",
+        PROJECT / "ai_assisted_review" / "role_prompts" / "WAVE_1_SECURITY_PUBLIC_UPLOAD_REVIEW.md",
+        PROJECT / "ai_assisted_review" / "role_prompts" / "WAVE_1_PRIVACY_LEGAL_REVIEW.md",
+        PROJECT / "ai_assisted_review" / "role_prompts" / "WAVE_1_AI_SAFETY_REVIEW.md",
+        PROJECT / "ai_assisted_review" / "role_prompts" / "WAVE_1_DEVOPS_PRODUCTION_READINESS_REVIEW.md",
+        PROJECT / "ai_assisted_review" / "role_prompts" / "WAVE_2_TRADE_BOUNDARY_REVIEW.md",
+        PROJECT / "ai_assisted_review" / "role_prompts" / "WAVE_2_FREIGHT_LOGISTICS_REVIEW.md",
+        PROJECT / "ai_assisted_review" / "role_prompts" / "WAVE_2_REPORT_LANGUAGE_REVIEW.md",
+        PROJECT / "ai_assisted_review" / "role_prompts" / "WAVE_3_BILLING_PAYMENT_REVIEW.md",
     ]
     missing = [path.relative_to(ROOT) for path in required if not path.exists()]
     if missing:
@@ -198,6 +239,7 @@ def main() -> int:
         ["python3", "scripts/run_policy_intelligence.py"],
         ["python3", "scripts/run_completion_platform.py"],
         ["python3", "scripts/run_product_operations.py"],
+        ["python3", "scripts/build_external_review_packet.py"],
         ["python3", "scripts/export_operator_dashboard.py"],
         ["python3", "scripts/audit_external_package.py", "--root", "."],
         ["python3", "scripts/check_product.py"],
@@ -228,6 +270,23 @@ def main() -> int:
         print(blocker_result.stdout)
         print(blocker_result.stderr)
         return blocker_result.returncode
+    external_review_blocker_result = _run(
+        [
+            "python3",
+            "scripts/blocker_ledger.py",
+            "validate",
+            "--input",
+            "product_projects/importer-source-readiness-copilot/system_review_graph/external_review_blocker_ledger.jsonl",
+            "--out",
+            str(Path(tempfile.gettempdir()) / "ados-product-project-external-review-blockers.json"),
+        ],
+        ROOT,
+    )
+    if external_review_blocker_result.returncode != 0:
+        print("Product project check: FAIL")
+        print(external_review_blocker_result.stdout)
+        print(external_review_blocker_result.stderr)
+        return external_review_blocker_result.returncode
 
     report = json.loads(
         (PROJECT / "system_review_graph" / "readiness_report.json").read_text(encoding="utf-8")
@@ -352,6 +411,22 @@ def main() -> int:
     product_operations = json.loads(
         (PROJECT / "system_review_graph" / "product_operations_report.json").read_text(encoding="utf-8")
     )
+    external_review = json.loads(
+        (PROJECT / "system_review_graph" / "external_review_findings_report.json").read_text(encoding="utf-8")
+    )
+    ai_assisted_review = json.loads(
+        (PROJECT / "system_review_graph" / "ai_assisted_external_review_plan.json").read_text(encoding="utf-8")
+    )
+    external_review_summary = json.loads(
+        (PROJECT / "external_review_findings" / "EXTERNAL_REVIEW_SUMMARY.json").read_text(encoding="utf-8")
+    )
+    external_review_blockers = [
+        json.loads(line)
+        for line in (PROJECT / "system_review_graph" / "external_review_blocker_ledger.jsonl")
+        .read_text(encoding="utf-8")
+        .splitlines()
+        if line.strip()
+    ]
     research_runs = json.loads(
         (PROJECT / "system_review_graph" / "research_execution_runs.json").read_text(encoding="utf-8")
     )
@@ -891,6 +966,43 @@ def main() -> int:
         print("Product project check: FAIL")
         print("product operations opened an external effect or claim")
         return 1
+    if (
+        external_review.get("status") != "external_review_ready_findings_pending"
+        or external_review.get("actual_external_review_completed") is not False
+        or external_review.get("required_review_count") != 9
+        or external_review.get("completed_review_count") != 0
+        or external_review.get("pending_review_count") != 9
+        or external_review.get("private_beta_blocked_until_wave_1_complete") is not True
+        or external_review.get("public_launch_ready") is not False
+        or external_review.get("unsafe_gates_closed") is not True
+    ):
+        print("Product project check: FAIL")
+        print("external review report must stay pending with private-beta/public-launch gates closed")
+        return 1
+    if (
+        external_review_summary.get("actual_external_review_completed") is not False
+        or external_review_summary.get("completed_review_count") != 0
+        or len(external_review_blockers) != 9
+    ):
+        print("Product project check: FAIL")
+        print("external review summary/blocker ledger does not match pending review truth")
+        return 1
+    if any(row.get("gate") != "closed" or row.get("unsafe_to_bypass") is not True for row in external_review_blockers):
+        print("Product project check: FAIL")
+        print("external review blocker ledger must keep all reviewer gates closed")
+        return 1
+    if (
+        ai_assisted_review.get("status") != "ai_assisted_external_review_ready"
+        or ai_assisted_review.get("solo_developer_mode") is not True
+        or ai_assisted_review.get("human_equivalent_approval") is not False
+        or ai_assisted_review.get("can_open_private_beta_gate") is not False
+        or ai_assisted_review.get("can_open_public_launch_gate") is not False
+        or ai_assisted_review.get("can_reduce_findings_before_real_review") is not True
+        or ai_assisted_review.get("required_role_count") != 9
+    ):
+        print("Product project check: FAIL")
+        print("AI-assisted review plan must support solo review without opening approval gates")
+        return 1
     operation_coverage = product_operations.get("execution_coverage", {})
     for key in (
         "data_intake",
@@ -1012,6 +1124,11 @@ def main() -> int:
     print(f"launch_operations={launch_operations['status']}")
     print(f"product_operations={product_operations['status']}")
     print(f"product_operation_count={product_operations['operation_count']}")
+    print(f"external_review_status={external_review['status']}")
+    print(f"external_review_required={external_review['required_review_count']}")
+    print(f"external_review_completed={external_review['completed_review_count']}")
+    print(f"external_review_blockers={len(external_review_blockers)}")
+    print(f"ai_assisted_review_status={ai_assisted_review['status']}")
     print(f"review_requests={len(review_requests)}")
     print(f"audit_events={len(audit_events['events'])}")
     print(f"deployment_status={deployment['status']}")

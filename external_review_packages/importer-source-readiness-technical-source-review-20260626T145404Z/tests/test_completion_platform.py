@@ -1,0 +1,168 @@
+from __future__ import annotations
+
+import sys
+import tempfile
+import unittest
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parent.parent
+SRC = ROOT / "src"
+if str(SRC) not in sys.path:
+    sys.path.insert(0, str(SRC))
+
+from importer_source_readiness import load_json
+from importer_source_readiness.completion_platform import build_completion_platform, write_completion_platform_artifacts
+from importer_source_readiness.source_packet_workflow import build_customer_workflow, load_json_list
+
+
+class CompletionPlatformTests(unittest.TestCase):
+    def _payload(self) -> dict:
+        official_sources = load_json(ROOT / "data" / "official_source_registry.json")
+        workflow = build_customer_workflow(
+            source_packets=load_json_list(ROOT / "data" / "customer_source_packets.json"),
+            evidence_items=load_json_list(ROOT / "data" / "evidence_ledger.json"),
+            official_sources=official_sources,
+            generated_at="2026-06-25T00:00:00+00:00",
+        )
+        return build_completion_platform(workflow, official_sources)
+
+    def test_completion_platform_contracts_are_fail_closed(self) -> None:
+        payload = self._payload()
+
+        self.assertEqual(payload["status"], "all_local_stages_implemented_with_external_gates")
+        self.assertEqual(payload["country_coverage"]["status"], "country_coverage_ready_with_claim_gates")
+        self.assertEqual(payload["opportunity_scanner"]["status"], "opportunity_scanner_ready_with_research_gates")
+        self.assertEqual(payload["transport_readiness"]["status"], "transport_readiness_ready_with_forwarder_gates")
+        self.assertEqual(payload["billing_credit_controls"]["status"], "billing_credit_controls_ready_local_no_live_checkout")
+        self.assertEqual(payload["agent_api_manifest"]["status"], "agent_api_manifest_ready_scoped_and_metered")
+        self.assertEqual(payload["traffic_pages_manifest"]["status"], "traffic_pages_manifest_ready")
+        self.assertEqual(payload["research_execution_plan"]["status"], "research_execution_ready_with_evidence_gates")
+        self.assertEqual(payload["team_workspace"]["status"], "team_workspace_ready_local_with_approval_gates")
+        self.assertEqual(payload["expert_network"]["status"], "expert_network_ready_local_with_human_review_gates")
+        self.assertEqual(payload["billing_usage_ledger"]["status"], "billing_usage_ledger_ready_local_no_charges")
+        self.assertEqual(payload["agent_api_gateway"]["status"], "agent_api_gateway_ready_local_executor_no_external_effects")
+        self.assertEqual(payload["launch_operations"]["status"], "launch_operations_ready_for_private_beta_review")
+        self.assertEqual(payload["all_stage_readiness"]["status"], "all_local_stages_implemented_with_external_gates")
+        self.assertEqual(payload["all_stage_readiness"]["stage_count"], 19)
+        self.assertEqual(payload["all_stage_readiness"]["implemented_stage_count"], 19)
+        self.assertEqual(payload["all_stage_readiness"]["go_live_state_count"], 18)
+        self.assertEqual(payload["all_stage_readiness"]["runbook_stage_range"], "0-18")
+        stage_ids = {stage["stage_id"] for stage in payload["all_stage_readiness"]["stages"]}
+        self.assertEqual(stage_ids, {f"stage-{index:02d}" for index in range(19)})
+        stage_zero = next(stage for stage in payload["all_stage_readiness"]["stages"] if stage["stage_id"] == "stage-00")
+        stage_eighteen = next(stage for stage in payload["all_stage_readiness"]["stages"] if stage["stage_id"] == "stage-18")
+        self.assertIsNone(stage_zero["state_number"])
+        self.assertEqual(stage_zero["name"], "Freeze product promise")
+        self.assertEqual(stage_eighteen["state_number"], 18)
+        self.assertEqual(stage_eighteen["name"], "Public go-live")
+        self.assertEqual(stage_eighteen["status"], "public_go_live_subset_defined_blocked_until_approval")
+        self.assertFalse(any(stage["external_claims_opened"] for stage in payload["all_stage_readiness"]["stages"]))
+
+        self.assertGreaterEqual(payload["opportunity_scanner"]["signal_count"], 1)
+        for signal in payload["opportunity_scanner"]["signals"]:
+            self.assertEqual(signal["opportunity_signal"], "possible opportunity signal")
+            self.assertEqual(signal["recommendation_claim"], "blocked")
+            self.assertEqual(signal["buyer_validation"], "missing")
+            self.assertGreaterEqual(signal["source_provenance_count"], 1)
+            self.assertEqual(signal["source_provenance_count"], len(signal["source_provenance"]))
+            self.assertIn("claim_boundary", signal["source_provenance"][0])
+            self.assertIn("coverage_tier", signal["confidence"])
+            self.assertEqual(signal["confidence"]["market_confidence"], "unknown_requires_external_research")
+            self.assertEqual(signal["confidence"]["claim_confidence"], "blocked_until_buyer_source_logistics_and_expert_evidence")
+            self.assertEqual(signal["create_packet_hint"]["route"], "/packets/new")
+            self.assertEqual(signal["create_packet_hint"]["api_route"], "/api/agent-tools/create_trade_packet")
+            self.assertFalse(signal["create_packet_hint"]["external_effects_allowed"])
+        self.assertEqual(payload["opportunity_scanner"]["create_packet_route"], "/packets/new")
+        self.assertEqual(payload["opportunity_scanner"]["create_packet_api_hint"]["tool"], "create_trade_packet")
+        self.assertIn("source_provenance_count", payload["opportunity_scanner"]["confidence_fields"])
+
+        canada = next(row for row in payload["country_coverage"]["countries"] if row["country"] == "Canada")
+        self.assertEqual([row["tier"] for row in payload["country_coverage"]["tier_definitions"]], [0, 1, 2, 3, 4, 5])
+        self.assertEqual(payload["country_coverage"]["country_specific_claim_policy"]["default"], "blocked")
+        self.assertEqual(payload["country_coverage"]["country_specific_claim_policy"]["allowed_only_at_tier"], 5)
+        self.assertFalse(canada["can_make_country_specific_claims"])
+        self.assertGreaterEqual(canada["coverage_tier"], 1)
+        self.assertEqual(canada["country_specific_claim_gate"]["status"], "blocked_unsupported_country_specific_claims")
+        self.assertIn("customs_or_tariff_correctness", canada["unsupported_country_specific_claims"])
+        packet_coverage = payload["country_coverage"]["packet_coverage"][0]
+        self.assertFalse(packet_coverage["can_make_country_specific_claims"])
+        self.assertIn("tariff_confirmed", packet_coverage["blocked_country_specific_claims"])
+
+        transport_row = payload["transport_readiness"]["rows"][0]
+        self.assertIn("forwarder", transport_row["missing_transport_inputs"])
+        self.assertIn("Incoterms or delivery responsibility", transport_row["missing_transport_inputs"])
+        self.assertIn("weight and dimensions", transport_row["missing_transport_inputs"])
+        self.assertIn("commercial invoice", transport_row["missing_transport_inputs"])
+        self.assertIn("cold-chain requirement", transport_row["missing_transport_inputs"])
+        self.assertIn("dangerous goods declaration", transport_row["missing_transport_inputs"])
+        self.assertEqual(transport_row["shipment_profile"]["incoterms"], "unknown")
+        self.assertEqual(transport_row["shipment_profile"]["commercial_invoice_status"], "missing")
+        section_ids = {row["section_id"] for row in transport_row["freight_forwarder_packet_sections"]}
+        self.assertIn("incoterms_and_responsibility", section_ids)
+        self.assertIn("mode_route_ports", section_ids)
+        self.assertIn("weight_dimensions_packaging", section_ids)
+        self.assertIn("commercial_invoice_and_packing_list", section_ids)
+        self.assertIn("cold_chain_and_dangerous_goods", section_ids)
+        self.assertIn("forwarder_quote_packet", section_ids)
+        self.assertIn("shipment_ready", payload["transport_readiness"]["blocked_claims"])
+
+        billing = payload["billing_credit_controls"]
+        self.assertFalse(billing["live_checkout_enabled"])
+        self.assertTrue(any(row["free_plan_behavior"] == "blocked_requires_upgrade" for row in billing["billable_actions"]))
+        metering = {row["id"] for row in billing["metering_dimensions"]}
+        self.assertGreaterEqual(
+            metering,
+            {"ocr_pages", "ai_jobs", "report_exports", "source_monitoring", "agent_api_calls"},
+        )
+        action_map = {row["action"]: row for row in billing["billable_actions"]}
+        self.assertEqual(action_map["ocr_page"]["metering_category"], "ocr_pages")
+        self.assertEqual(action_map["ai_extraction"]["metering_category"], "ai_jobs")
+        self.assertEqual(action_map["report_export"]["metering_category"], "report_exports")
+        self.assertEqual(action_map["source_monitoring"]["metering_category"], "source_monitoring")
+        self.assertEqual(action_map["agent_api_call"]["metering_category"], "agent_api_calls")
+        self.assertTrue(action_map["ai_extraction"]["requires_pre_authorization"])
+        self.assertEqual(billing["heavy_job_policy"]["status"], "heavy_jobs_blocked_without_authorization")
+
+        agent = payload["agent_api_manifest"]
+        forbidden = set(agent["forbidden_tools"])
+        self.assertIn("approve_import", forbidden)
+        self.assertIn("confirm_tariff", forbidden)
+        self.assertIn("confirm_cfia_clearance", forbidden)
+        self.assertIn("send_email_or_external_message", forbidden)
+        self.assertTrue(all(row["can_open_claim_gate"] is False for row in agent["allowed_tools"]))
+        self.assertTrue(all(row["audit_event_required"] is True for row in agent["allowed_tools"]))
+        self.assertTrue(any(row["requires_confirmation"] for row in agent["allowed_tools"]))
+        self.assertTrue(agent["audit_rules"])
+        self.assertTrue(agent["confirmation_rules"])
+        self.assertTrue(agent["scope_rules"])
+        self.assertGreaterEqual(len(payload["traffic_pages_manifest"]["pages"]), 10)
+        self.assertTrue(payload["launch_operations"]["private_beta_entry"]["local_product_ready"])
+        self.assertFalse(payload["launch_operations"]["private_beta_entry"]["public_launch_allowed"])
+
+    def test_completion_platform_artifacts_are_written(self) -> None:
+        payload = self._payload()
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            write_completion_platform_artifacts(payload, root)
+
+            for name in (
+                "completion_platform_manifest.json",
+                "country_coverage_report.json",
+                "opportunity_scanner_report.json",
+                "transport_readiness_report.json",
+                "billing_credit_controls.json",
+                "agent_api_manifest.json",
+                "traffic_pages_manifest.json",
+                "research_execution_plan.json",
+                "team_workspace_report.json",
+                "expert_network_report.json",
+                "billing_usage_ledger.json",
+                "agent_api_gateway_contract.json",
+                "launch_operations_report.json",
+                "all_stage_readiness_report.json",
+            ):
+                self.assertTrue((root / "system_review_graph" / name).exists(), name)
+
+
+if __name__ == "__main__":
+    unittest.main()

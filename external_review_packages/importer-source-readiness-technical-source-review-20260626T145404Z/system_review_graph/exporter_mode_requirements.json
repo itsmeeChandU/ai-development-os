@@ -1,0 +1,33 @@
+{
+  "acceptance": [
+    "create Export-to-Canada packet",
+    "generate buyer-ready packet PDF",
+    "generate Canadian broker-review packet PDF",
+    "block compliance/tariff/CFIA/buyer/shipment claims"
+  ],
+  "readiness_lanes": [
+    "exporter_side_readiness",
+    "importer_side_readiness"
+  ],
+  "required_fields": [
+    "trade_direction",
+    "origin_country",
+    "destination_country",
+    "exporter_name",
+    "buyer_name_or_importer_name",
+    "importer_of_record",
+    "incoterms_if_known",
+    "hs_code_if_known",
+    "product_documents",
+    "commercial_documents",
+    "certificates",
+    "proof_of_origin"
+  ],
+  "status": "exporter_mode_requirements_ready",
+  "user_types": [
+    "foreign_exporter",
+    "canadian_importer",
+    "broker_or_consultant",
+    "operator"
+  ]
+}

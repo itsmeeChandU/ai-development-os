@@ -1,0 +1,50 @@
+{
+  "categories": [
+    "person_names",
+    "emails",
+    "phone_numbers",
+    "addresses",
+    "supplier_names",
+    "buyer_names",
+    "prices",
+    "bank_details",
+    "contract_terms",
+    "signatures",
+    "ids",
+    "sensitive_notes"
+  ],
+  "previews": [
+    {
+      "audit_event_type": "redaction_not_required",
+      "evidence_id": "evidence-frozen-tuna-cid-reference",
+      "linked_original_evidence_id": "evidence-frozen-tuna-cid-reference",
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "redacted_artifact_id": "",
+      "redaction_categories": [],
+      "redaction_required": false,
+      "redaction_status": "not_required"
+    },
+    {
+      "audit_event_type": "redaction_not_required",
+      "evidence_id": "evidence-frozen-tuna-cbsa-import-workflow",
+      "linked_original_evidence_id": "evidence-frozen-tuna-cbsa-import-workflow",
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "redacted_artifact_id": "",
+      "redaction_categories": [],
+      "redaction_required": false,
+      "redaction_status": "not_required"
+    },
+    {
+      "audit_event_type": "redaction_not_required",
+      "evidence_id": "evidence-frozen-tuna-cfia-airs-reference",
+      "linked_original_evidence_id": "evidence-frozen-tuna-cfia-airs-reference",
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "redacted_artifact_id": "",
+      "redaction_categories": [],
+      "redaction_required": false,
+      "redaction_status": "not_required"
+    }
+  ],
+  "proof_boundary": "Redaction preview names fields/categories to remove before AI; production redaction requires security/privacy review.",
+  "status": "redaction_pipeline_ready"
+}

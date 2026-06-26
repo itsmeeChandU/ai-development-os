@@ -1,0 +1,331 @@
+{
+  "countries": [
+    {
+      "can_make_country_specific_claims": false,
+      "claim_scope_allowed": "generic_readiness_only",
+      "country": "Canada",
+      "country_specific_claim_gate": {
+        "current_source_refresh_required": true,
+        "external_claims_opened": false,
+        "qualified_review_required": true,
+        "required_tier": 5,
+        "status": "blocked_unsupported_country_specific_claims"
+      },
+      "coverage_label": "monitored sources",
+      "coverage_tier": 3,
+      "next_valid_move": "Add current monitored official sources, category templates, and qualified review before country-specific claims.",
+      "source_count": 10,
+      "source_provenance": [
+        {
+          "accessed_at": "2026-06-25",
+          "claim_boundary": "Reference source only; does not prove CARM registration, accounting setup, duty payment readiness, or customs advice.",
+          "evidence_role": "commercial importer duty and tax account workflow",
+          "jurisdiction": "Canada",
+          "name": "CBSA Assessment and Revenue Management (CARM)",
+          "provenance_type": "official_source_registry",
+          "source_id": "cbsa-carm",
+          "url": "https://www.cbsa-asfc.gc.ca/services/carm-gcra/menu-eng.html"
+        },
+        {
+          "accessed_at": "2026-06-25",
+          "claim_boundary": "Reference source only; does not replace CBSA, broker, customs, or legal review.",
+          "evidence_role": "commercial import process orientation",
+          "jurisdiction": "Canada",
+          "name": "CBSA Import Commercial Goods Into Canada",
+          "provenance_type": "official_source_registry",
+          "source_id": "cbsa-import-commercial-goods",
+          "url": "https://www.cbsa-asfc.gc.ca/import/menu-eng.html"
+        },
+        {
+          "accessed_at": "2026-06-25",
+          "claim_boundary": "Reference source only; classification and tariff treatment require qualified review.",
+          "evidence_role": "Canadian tariff classification starting point",
+          "jurisdiction": "Canada",
+          "name": "CBSA Customs Tariff 2026",
+          "provenance_type": "official_source_registry",
+          "source_id": "cbsa-customs-tariff-2026",
+          "url": "https://www.cbsa-asfc.gc.ca/trade-commerce/tariff-tarif/2026/menu-eng.html"
+        },
+        {
+          "accessed_at": "2026-06-25",
+          "claim_boundary": "Reference source only; product-specific food import compliance requires qualified review and source verification.",
+          "evidence_role": "CFIA-regulated commodity import requirement lookup",
+          "jurisdiction": "Canada",
+          "name": "CFIA Automated Import Reference System (AIRS)",
+          "provenance_type": "official_source_registry",
+          "source_id": "cfia-airs",
+          "url": "https://inspection.canada.ca/en/importing-food-plants-animals/airs"
+        },
+        {
+          "accessed_at": "2026-06-25",
+          "claim_boundary": "Reference source only; does not prove whether a specific product requires an import permit.",
+          "evidence_role": "import control and permit orientation",
+          "jurisdiction": "Canada",
+          "name": "Global Affairs Canada Import Controls and Import Permits",
+          "provenance_type": "official_source_registry",
+          "source_id": "gac-import-controls",
+          "url": "https://www.international.gc.ca/controls-controles/about-a_propos/impor/permits-licences.aspx?lang=eng"
+        },
+        {
+          "accessed_at": "2026-06-25",
+          "claim_boundary": "Reference source only; legal interpretation and product applicability require qualified review.",
+          "evidence_role": "legal reference for controlled imports",
+          "jurisdiction": "Canada",
+          "name": "Justice Laws Import Control List",
+          "provenance_type": "official_source_registry",
+          "source_id": "justice-import-control-list",
+          "url": "https://laws-lois.justice.gc.ca/eng/regulations/c.r.c.%2C_c._604/index.html"
+        },
+        {
+          "accessed_at": "2026-06-25",
+          "claim_boundary": "Reference source only; screening results require dated search records and reviewer signoff.",
+          "evidence_role": "restricted-party and sanctions screening source",
+          "jurisdiction": "Canada",
+          "name": "Global Affairs Canada Consolidated Canadian Autonomous Sanctions List",
+          "provenance_type": "official_source_registry",
+          "source_id": "canada-sanctions",
+          "url": "https://www.international.gc.ca/world-monde/international_relations-relations_internationales/sanctions/consolidated-consolide.aspx?lang=eng"
+        },
+        {
+          "accessed_at": "2026-06-25",
+          "claim_boundary": "Reference source only; does not prove market size, buyer demand, or revenue.",
+          "evidence_role": "Canadian trade data research source",
+          "jurisdiction": "Canada",
+          "name": "ISED Trade Data Online",
+          "provenance_type": "official_source_registry",
+          "source_id": "ised-trade-data-online",
+          "url": "https://ised-isde.canada.ca/site/trade-data-online/en/overview"
+        },
+        {
+          "accessed_at": "2026-06-25",
+          "claim_boundary": "Reference source only; does not prove buyer validation, supplier fit, customs advice, or freshness of a specific product row.",
+          "evidence_role": "importer discovery orientation",
+          "jurisdiction": "Canada",
+          "name": "Canadian Importers Database",
+          "provenance_type": "official_source_registry",
+          "source_id": "canada-cid",
+          "url": "https://ised-isde.canada.ca/site/ised/en/research-and-business-intelligence/canadian-importers-database"
+        },
+        {
+          "accessed_at": "2026-06-25",
+          "claim_boundary": "Reference source only; does not prove a broker relationship, review, or signoff.",
+          "evidence_role": "qualified broker discovery source",
+          "jurisdiction": "Canada",
+          "name": "CBSA Licensed Customs Brokers",
+          "provenance_type": "official_source_registry",
+          "source_id": "cbsa-licensed-customs-brokers",
+          "url": "https://www.cbsa-asfc.gc.ca/services/cb-cd/cb-cd-eng.html"
+        }
+      ],
+      "unsupported_country_specific_claims": [
+        "customs_or_tariff_correctness",
+        "country_rules_current",
+        "permit_or_license_required",
+        "food_or_regulated_product_clearance",
+        "shipment_or_import_ready"
+      ]
+    },
+    {
+      "can_make_country_specific_claims": false,
+      "claim_scope_allowed": "generic_readiness_only",
+      "country": "Generic",
+      "country_specific_claim_gate": {
+        "current_source_refresh_required": true,
+        "external_claims_opened": false,
+        "qualified_review_required": true,
+        "required_tier": 5,
+        "status": "blocked_unsupported_country_specific_claims"
+      },
+      "coverage_label": "selectable only",
+      "coverage_tier": 0,
+      "next_valid_move": "Add current monitored official sources, category templates, and qualified review before country-specific claims.",
+      "source_count": 0,
+      "source_provenance": [],
+      "unsupported_country_specific_claims": [
+        "customs_or_tariff_correctness",
+        "country_rules_current",
+        "permit_or_license_required",
+        "food_or_regulated_product_clearance",
+        "shipment_or_import_ready"
+      ]
+    },
+    {
+      "can_make_country_specific_claims": false,
+      "claim_scope_allowed": "generic_readiness_only",
+      "country": "India",
+      "country_specific_claim_gate": {
+        "current_source_refresh_required": true,
+        "external_claims_opened": false,
+        "qualified_review_required": true,
+        "required_tier": 5,
+        "status": "blocked_unsupported_country_specific_claims"
+      },
+      "coverage_label": "generic starter checklist",
+      "coverage_tier": 1,
+      "next_valid_move": "Add current monitored official sources, category templates, and qualified review before country-specific claims.",
+      "source_count": 0,
+      "source_provenance": [],
+      "unsupported_country_specific_claims": [
+        "customs_or_tariff_correctness",
+        "country_rules_current",
+        "permit_or_license_required",
+        "food_or_regulated_product_clearance",
+        "shipment_or_import_ready"
+      ]
+    },
+    {
+      "can_make_country_specific_claims": false,
+      "claim_scope_allowed": "generic_readiness_only",
+      "country": "United Kingdom",
+      "country_specific_claim_gate": {
+        "current_source_refresh_required": true,
+        "external_claims_opened": false,
+        "qualified_review_required": true,
+        "required_tier": 5,
+        "status": "blocked_unsupported_country_specific_claims"
+      },
+      "coverage_label": "generic starter checklist",
+      "coverage_tier": 1,
+      "next_valid_move": "Add current monitored official sources, category templates, and qualified review before country-specific claims.",
+      "source_count": 0,
+      "source_provenance": [],
+      "unsupported_country_specific_claims": [
+        "customs_or_tariff_correctness",
+        "country_rules_current",
+        "permit_or_license_required",
+        "food_or_regulated_product_clearance",
+        "shipment_or_import_ready"
+      ]
+    },
+    {
+      "can_make_country_specific_claims": false,
+      "claim_scope_allowed": "generic_readiness_only",
+      "country": "United States",
+      "country_specific_claim_gate": {
+        "current_source_refresh_required": true,
+        "external_claims_opened": false,
+        "qualified_review_required": true,
+        "required_tier": 5,
+        "status": "blocked_unsupported_country_specific_claims"
+      },
+      "coverage_label": "generic starter checklist",
+      "coverage_tier": 1,
+      "next_valid_move": "Add current monitored official sources, category templates, and qualified review before country-specific claims.",
+      "source_count": 0,
+      "source_provenance": [],
+      "unsupported_country_specific_claims": [
+        "customs_or_tariff_correctness",
+        "country_rules_current",
+        "permit_or_license_required",
+        "food_or_regulated_product_clearance",
+        "shipment_or_import_ready"
+      ]
+    },
+    {
+      "can_make_country_specific_claims": false,
+      "claim_scope_allowed": "generic_readiness_only",
+      "country": "Vietnam",
+      "country_specific_claim_gate": {
+        "current_source_refresh_required": true,
+        "external_claims_opened": false,
+        "qualified_review_required": true,
+        "required_tier": 5,
+        "status": "blocked_unsupported_country_specific_claims"
+      },
+      "coverage_label": "generic starter checklist",
+      "coverage_tier": 1,
+      "next_valid_move": "Add current monitored official sources, category templates, and qualified review before country-specific claims.",
+      "source_count": 0,
+      "source_provenance": [],
+      "unsupported_country_specific_claims": [
+        "customs_or_tariff_correctness",
+        "country_rules_current",
+        "permit_or_license_required",
+        "food_or_regulated_product_clearance",
+        "shipment_or_import_ready"
+      ]
+    }
+  ],
+  "country_specific_claim_policy": {
+    "allowed_only_at_tier": 5,
+    "default": "blocked",
+    "requires_current_sources": true,
+    "requires_qualified_review": true,
+    "unsupported_claim_behavior": "block_and_emit_next_valid_move"
+  },
+  "coverage_levels": {
+    "0": "selectable only",
+    "1": "generic starter checklist",
+    "2": "reference sources catalogued",
+    "3": "monitored sources",
+    "4": "category template support",
+    "5": "expert-reviewed templates"
+  },
+  "generated_at": "2026-06-26T14:52:45+00:00",
+  "packet_coverage": [
+    {
+      "blocked_country_specific_claims": [
+        "tariff_confirmed",
+        "customs_process_current",
+        "country_requirements_complete",
+        "regulated_product_clearance",
+        "import_or_export_approved"
+      ],
+      "can_make_country_specific_claims": false,
+      "coverage_label": "generic starter checklist",
+      "coverage_status": "country_specific_claims_blocked",
+      "destination_country": "Canada",
+      "effective_coverage_tier": 1,
+      "next_valid_move": "Use generic readiness output unless both countries and category have monitored/expert-reviewed coverage.",
+      "origin_country": "Vietnam",
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "product_category": "food_import"
+    }
+  ],
+  "proof_boundary": "Coverage tiers describe product support level only; they do not prove country-specific legal, customs, tariff, or compliance correctness.",
+  "status": "country_coverage_ready_with_claim_gates",
+  "tier_definitions": [
+    {
+      "country_specific_claims_allowed": false,
+      "label": "selectable only",
+      "minimum_evidence": "No country-specific source coverage.",
+      "support": "Country can be selected in generic product flows only.",
+      "tier": 0
+    },
+    {
+      "country_specific_claims_allowed": false,
+      "label": "generic starter checklist",
+      "minimum_evidence": "Country appears in a packet but lacks monitored official sources.",
+      "support": "Generic import/export checklist language may be shown.",
+      "tier": 1
+    },
+    {
+      "country_specific_claims_allowed": false,
+      "label": "reference sources catalogued",
+      "minimum_evidence": "At least one official or official-adjacent source is catalogued.",
+      "support": "Reference sources can orient research, with claim gates closed.",
+      "tier": 2
+    },
+    {
+      "country_specific_claims_allowed": false,
+      "label": "monitored sources",
+      "minimum_evidence": "Multiple official sources are recorded with access dates.",
+      "support": "Multiple official sources are tracked for internal review prompts.",
+      "tier": 3
+    },
+    {
+      "country_specific_claims_allowed": false,
+      "label": "category template support",
+      "minimum_evidence": "Country, category, and route templates are maintained.",
+      "support": "Category-specific templates can be prepared for expert review.",
+      "tier": 4
+    },
+    {
+      "country_specific_claims_allowed": true,
+      "label": "expert-reviewed templates",
+      "minimum_evidence": "Current official sources, category templates, and qualified review are attached.",
+      "support": "Expert-reviewed templates may support scoped country-specific product copy.",
+      "tier": 5
+    }
+  ]
+}

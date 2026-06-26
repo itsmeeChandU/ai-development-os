@@ -1,0 +1,70 @@
+{
+  "execution_report": "system_review_graph/product_operations_report.json",
+  "generated_at": "2026-06-26T14:52:45+00:00",
+  "operation_status": "team_workspace_operational_local_with_approval_gates",
+  "proof_boundary": "Team workspace roles and approvals are local coordination surfaces; they do not prove real owner approval or external launch permission.",
+  "status": "team_workspace_ready_local_with_approval_gates",
+  "workspace_count": 1,
+  "workspaces": [
+    {
+      "approval_board": [
+        {
+          "gate": "buyer_validation",
+          "owner": "founder_or_customer",
+          "status": "blocked"
+        },
+        {
+          "gate": "qualified_trade_review",
+          "owner": "expert_reviewer",
+          "status": "blocked"
+        },
+        {
+          "gate": "privacy_security_review",
+          "owner": "admin",
+          "status": "blocked"
+        },
+        {
+          "gate": "private_beta_launch",
+          "owner": "operator",
+          "status": "blocked"
+        }
+      ],
+      "next_valid_move": "Assign owners, collect evidence, and keep the packet in private review until gates are approved.",
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "team": [
+        {
+          "permissions": [
+            "packet_read",
+            "packet_update",
+            "report_download"
+          ],
+          "role": "founder_or_customer"
+        },
+        {
+          "permissions": [
+            "queue_triage",
+            "source_refresh",
+            "review_request"
+          ],
+          "role": "operator"
+        },
+        {
+          "permissions": [
+            "scoped_packet_read",
+            "finding_submit"
+          ],
+          "role": "expert_reviewer"
+        },
+        {
+          "permissions": [
+            "member_manage",
+            "policy_manage",
+            "audit_read"
+          ],
+          "role": "admin"
+        }
+      ],
+      "workspace_id": "workspace:packet-frozen-tuna-canada-001"
+    }
+  ]
+}

@@ -1,0 +1,234 @@
+{
+  "blocked_unsafe_rows": 0,
+  "blocker_count": 9,
+  "blockers": [
+    {
+      "evidence": "Canadian Importers Database",
+      "gate": "closed",
+      "id": "frozen-tuna-fillet-readiness:freshness-not-proven",
+      "issue": "data freshness is not proven for product claims",
+      "module": "data_freshness",
+      "next_valid_move": "Run a dated refresh or mark the row as fixture-only.",
+      "owner": "data",
+      "unsafe_to_bypass": true
+    },
+    {
+      "evidence": "Canadian Importers Database",
+      "gate": "closed",
+      "id": "frozen-tuna-fillet-readiness:buyer-validation-missing",
+      "issue": "buyer validation is missing",
+      "module": "buyer_validation",
+      "next_valid_move": "Collect dated buyer feedback or no-fit evidence before commercial claims.",
+      "owner": "product",
+      "unsafe_to_bypass": true
+    },
+    {
+      "evidence": "Canadian Importers Database",
+      "gate": "closed",
+      "id": "frozen-tuna-fillet-readiness:legal-review-missing",
+      "issue": "legal/compliance review is missing",
+      "module": "legal_compliance",
+      "next_valid_move": "Get qualified review before legal, customs, import/export, or public claims.",
+      "owner": "compliance",
+      "unsafe_to_bypass": true
+    },
+    {
+      "evidence": "Canadian Importers Database",
+      "gate": "closed",
+      "id": "frozen-tuna-fillet-readiness:contract-missing",
+      "issue": "commercial/source contract is missing",
+      "module": "commercial_contract",
+      "next_valid_move": "Attach written source, supplier, buyer, or commercial terms before readiness claims.",
+      "owner": "operations",
+      "unsafe_to_bypass": true
+    },
+    {
+      "evidence": "Fixture country requirements placeholder",
+      "gate": "closed",
+      "id": "country-requirement-template:official-source-missing",
+      "issue": "official source URL is missing or the row is fixture-only",
+      "module": "official_source_review",
+      "next_valid_move": "Attach a current official source URL and access date before source claims.",
+      "owner": "research",
+      "unsafe_to_bypass": true
+    },
+    {
+      "evidence": "Fixture country requirements placeholder",
+      "gate": "closed",
+      "id": "country-requirement-template:freshness-not-proven",
+      "issue": "data freshness is not proven for product claims",
+      "module": "data_freshness",
+      "next_valid_move": "Run a dated refresh or mark the row as fixture-only.",
+      "owner": "data",
+      "unsafe_to_bypass": true
+    },
+    {
+      "evidence": "Fixture country requirements placeholder",
+      "gate": "closed",
+      "id": "country-requirement-template:buyer-validation-missing",
+      "issue": "buyer validation is missing",
+      "module": "buyer_validation",
+      "next_valid_move": "Collect dated buyer feedback or no-fit evidence before commercial claims.",
+      "owner": "product",
+      "unsafe_to_bypass": true
+    },
+    {
+      "evidence": "Fixture country requirements placeholder",
+      "gate": "closed",
+      "id": "country-requirement-template:legal-review-missing",
+      "issue": "legal/compliance review is missing",
+      "module": "legal_compliance",
+      "next_valid_move": "Get qualified review before legal, customs, import/export, or public claims.",
+      "owner": "compliance",
+      "unsafe_to_bypass": true
+    },
+    {
+      "evidence": "Fixture country requirements placeholder",
+      "gate": "closed",
+      "id": "country-requirement-template:contract-missing",
+      "issue": "commercial/source contract is missing",
+      "module": "commercial_contract",
+      "next_valid_move": "Attach written source, supplier, buyer, or commercial terms before readiness claims.",
+      "owner": "operations",
+      "unsafe_to_bypass": true
+    }
+  ],
+  "generated_at": "2026-06-25T00:00:00+00:00",
+  "proof_boundary": "This report proves local fixture evaluation only. It does not prove customs, tariff, supplier, buyer, legal, payment, launch, or market readiness.",
+  "ready_rows": 0,
+  "ready_with_external_gates_rows": 2,
+  "row_count": 2,
+  "rows": [
+    {
+      "blockers": [
+        {
+          "evidence": "Canadian Importers Database",
+          "gate": "closed",
+          "id": "frozen-tuna-fillet-readiness:freshness-not-proven",
+          "issue": "data freshness is not proven for product claims",
+          "module": "data_freshness",
+          "next_valid_move": "Run a dated refresh or mark the row as fixture-only.",
+          "owner": "data",
+          "unsafe_to_bypass": true
+        },
+        {
+          "evidence": "Canadian Importers Database",
+          "gate": "closed",
+          "id": "frozen-tuna-fillet-readiness:buyer-validation-missing",
+          "issue": "buyer validation is missing",
+          "module": "buyer_validation",
+          "next_valid_move": "Collect dated buyer feedback or no-fit evidence before commercial claims.",
+          "owner": "product",
+          "unsafe_to_bypass": true
+        },
+        {
+          "evidence": "Canadian Importers Database",
+          "gate": "closed",
+          "id": "frozen-tuna-fillet-readiness:legal-review-missing",
+          "issue": "legal/compliance review is missing",
+          "module": "legal_compliance",
+          "next_valid_move": "Get qualified review before legal, customs, import/export, or public claims.",
+          "owner": "compliance",
+          "unsafe_to_bypass": true
+        },
+        {
+          "evidence": "Canadian Importers Database",
+          "gate": "closed",
+          "id": "frozen-tuna-fillet-readiness:contract-missing",
+          "issue": "commercial/source contract is missing",
+          "module": "commercial_contract",
+          "next_valid_move": "Attach written source, supplier, buyer, or commercial terms before readiness claims.",
+          "owner": "operations",
+          "unsafe_to_bypass": true
+        }
+      ],
+      "country": "CA",
+      "hs_code": "0304870000",
+      "next_valid_move": "Use this row for internal operator readiness only; collect external evidence before claims.",
+      "official_source_attached": true,
+      "product_slug": "frozen-tuna-fillet-readiness",
+      "queue_id": "IQ-0197",
+      "source_name": "Canadian Importers Database",
+      "status": "ready_with_external_gates",
+      "unsafe_counters": {
+        "customs_or_tariff_claims_made": 0,
+        "external_api_calls_run": 0,
+        "external_sends_run": 0,
+        "import_export_advice_claims_made": 0,
+        "paid_actions_run": 0,
+        "supplier_recommendation_claims_made": 0
+      }
+    },
+    {
+      "blockers": [
+        {
+          "evidence": "Fixture country requirements placeholder",
+          "gate": "closed",
+          "id": "country-requirement-template:official-source-missing",
+          "issue": "official source URL is missing or the row is fixture-only",
+          "module": "official_source_review",
+          "next_valid_move": "Attach a current official source URL and access date before source claims.",
+          "owner": "research",
+          "unsafe_to_bypass": true
+        },
+        {
+          "evidence": "Fixture country requirements placeholder",
+          "gate": "closed",
+          "id": "country-requirement-template:freshness-not-proven",
+          "issue": "data freshness is not proven for product claims",
+          "module": "data_freshness",
+          "next_valid_move": "Run a dated refresh or mark the row as fixture-only.",
+          "owner": "data",
+          "unsafe_to_bypass": true
+        },
+        {
+          "evidence": "Fixture country requirements placeholder",
+          "gate": "closed",
+          "id": "country-requirement-template:buyer-validation-missing",
+          "issue": "buyer validation is missing",
+          "module": "buyer_validation",
+          "next_valid_move": "Collect dated buyer feedback or no-fit evidence before commercial claims.",
+          "owner": "product",
+          "unsafe_to_bypass": true
+        },
+        {
+          "evidence": "Fixture country requirements placeholder",
+          "gate": "closed",
+          "id": "country-requirement-template:legal-review-missing",
+          "issue": "legal/compliance review is missing",
+          "module": "legal_compliance",
+          "next_valid_move": "Get qualified review before legal, customs, import/export, or public claims.",
+          "owner": "compliance",
+          "unsafe_to_bypass": true
+        },
+        {
+          "evidence": "Fixture country requirements placeholder",
+          "gate": "closed",
+          "id": "country-requirement-template:contract-missing",
+          "issue": "commercial/source contract is missing",
+          "module": "commercial_contract",
+          "next_valid_move": "Attach written source, supplier, buyer, or commercial terms before readiness claims.",
+          "owner": "operations",
+          "unsafe_to_bypass": true
+        }
+      ],
+      "country": "CA",
+      "hs_code": "",
+      "next_valid_move": "Use this row for internal operator readiness only; collect external evidence before claims.",
+      "official_source_attached": false,
+      "product_slug": "country-requirement-template",
+      "queue_id": "DEMO-COUNTRY-GATE",
+      "source_name": "Fixture country requirements placeholder",
+      "status": "ready_with_external_gates",
+      "unsafe_counters": {
+        "customs_or_tariff_claims_made": 0,
+        "external_api_calls_run": 0,
+        "external_sends_run": 0,
+        "import_export_advice_claims_made": 0,
+        "paid_actions_run": 0,
+        "supplier_recommendation_claims_made": 0
+      }
+    }
+  ],
+  "status": "ready_with_external_gates"
+}

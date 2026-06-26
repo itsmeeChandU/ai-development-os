@@ -1,0 +1,49 @@
+{
+  "accepted_file_types": [
+    "application/pdf"
+  ],
+  "ai_modes": [
+    "no_ai",
+    "metadata_only",
+    "redacted",
+    "private_hosted_llm",
+    "customer_managed_llm"
+  ],
+  "audit_event_types": [
+    "public_upload_received",
+    "public_pdf_triaged",
+    "public_upload_quarantined",
+    "public_fields_confirmed",
+    "public_upload_deleted"
+  ],
+  "delete_route": "/api/public/packets/:id/delete-files",
+  "direct_file_serving": false,
+  "generated_storage_names": true,
+  "max_bytes": 5242880,
+  "max_pages_per_pdf": 25,
+  "notice_required": true,
+  "ocr_cost_gate": {
+    "estimated_credits_per_page": 2,
+    "external_charge_created": false,
+    "requires_user_approval": true
+  },
+  "ocr_decision": "flag OCR requirement when native text is not available",
+  "parser_sandbox": {
+    "direct_file_serving": false,
+    "mode": "local_bounded_metadata_parser",
+    "native_text_limit_chars": 4000,
+    "no_network_fetch": true,
+    "no_shell_execution": true
+  },
+  "quarantine": "enabled",
+  "rate_limit": {
+    "bucket": "public_quick_check",
+    "implementation_status": "local_policy_ready_hosted_enforcement_required",
+    "limit": 6,
+    "window_minutes": 10
+  },
+  "retention": "delete or expire after public quick check",
+  "review_boundary": "Controls are implemented locally; qualified privacy/security/legal review remains required before hosted public use.",
+  "status": "public_upload_policy_ready",
+  "user_confirmation_required": true
+}

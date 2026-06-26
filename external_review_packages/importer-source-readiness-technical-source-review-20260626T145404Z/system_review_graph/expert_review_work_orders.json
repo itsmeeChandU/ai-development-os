@@ -1,0 +1,50 @@
+[
+  {
+    "blocker_group_id": "compliance_review",
+    "can_open_claim_gate": false,
+    "next_valid_move": "Generate a compliance review packet and request qualified review.",
+    "packet_id": "packet-frozen-tuna-canada-001",
+    "questions": [
+      "Who is the Canadian importer of record for this shipment?",
+      "Which Incoterms or delivery responsibility applies?",
+      "What HS/tariff classification should a qualified reviewer use for the product?",
+      "Does the product need CFIA/AIRS, import permit, controlled goods, sanctions, or restricted-party review?",
+      "Which product specs, invoice/proforma, packing list, certificate, proof-of-origin, and contract documents are still missing?"
+    ],
+    "review_scope": "Compliance Review",
+    "status": "ready_to_send_to_qualified_person",
+    "work_order_id": "expert-work:packet-frozen-tuna-canada-001:compliance_review"
+  },
+  {
+    "blocker_group_id": "source_rights_contract",
+    "can_open_claim_gate": false,
+    "next_valid_move": "Attach source-rights or commercial terms before external use.",
+    "packet_id": "packet-frozen-tuna-canada-001",
+    "questions": [
+      "Who is the Canadian importer of record for this shipment?",
+      "Which Incoterms or delivery responsibility applies?",
+      "What HS/tariff classification should a qualified reviewer use for the product?",
+      "Does the product need CFIA/AIRS, import permit, controlled goods, sanctions, or restricted-party review?",
+      "Which product specs, invoice/proforma, packing list, certificate, proof-of-origin, and contract documents are still missing?"
+    ],
+    "review_scope": "Source Rights / Contract",
+    "status": "ready_to_send_to_qualified_person",
+    "work_order_id": "expert-work:packet-frozen-tuna-canada-001:source_rights_contract"
+  },
+  {
+    "blocker_group_id": "buyer_validation",
+    "can_open_claim_gate": false,
+    "next_valid_move": "Collect buyer/operator validation before demand or PMF claims.",
+    "packet_id": "packet-frozen-tuna-canada-001",
+    "questions": [
+      "Who is the Canadian importer of record for this shipment?",
+      "Which Incoterms or delivery responsibility applies?",
+      "What HS/tariff classification should a qualified reviewer use for the product?",
+      "Does the product need CFIA/AIRS, import permit, controlled goods, sanctions, or restricted-party review?",
+      "Which product specs, invoice/proforma, packing list, certificate, proof-of-origin, and contract documents are still missing?"
+    ],
+    "review_scope": "Buyer Validation",
+    "status": "ready_to_send_to_qualified_person",
+    "work_order_id": "expert-work:packet-frozen-tuna-canada-001:buyer_validation"
+  }
+]

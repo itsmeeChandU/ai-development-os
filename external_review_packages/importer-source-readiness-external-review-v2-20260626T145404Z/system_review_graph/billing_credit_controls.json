@@ -1,0 +1,253 @@
+{
+  "authorization_algorithm": [
+    "estimate cost",
+    "check plan and credits",
+    "block heavy free-plan jobs",
+    "require confirmation for OCR batches, AI jobs, source monitoring, and agent/API execution",
+    "reserve credits before worker execution",
+    "record usage",
+    "refund or adjust on failed worker job"
+  ],
+  "billable_actions": [
+    {
+      "action": "ocr_page",
+      "estimated_credits": 2,
+      "external_charge_created": false,
+      "free_plan_behavior": "allowed_with_limits",
+      "heavy_job": false,
+      "heavy_job_gate": "standard_credit_metering",
+      "metered_unit": "page",
+      "metering_category": "ocr_pages",
+      "requires_pre_authorization": false
+    },
+    {
+      "action": "ocr_document_batch",
+      "estimated_credits": 12,
+      "external_charge_created": false,
+      "free_plan_behavior": "blocked_requires_upgrade",
+      "heavy_job": true,
+      "heavy_job_gate": "blocked_requires_upgrade_or_manual_approval",
+      "metered_unit": "document_batch",
+      "metering_category": "ocr_pages",
+      "requires_pre_authorization": true
+    },
+    {
+      "action": "ai_extraction",
+      "estimated_credits": 4,
+      "external_charge_created": false,
+      "free_plan_behavior": "blocked_requires_upgrade",
+      "heavy_job": true,
+      "heavy_job_gate": "blocked_requires_upgrade_or_manual_approval",
+      "metered_unit": "job",
+      "metering_category": "ai_jobs",
+      "requires_pre_authorization": true
+    },
+    {
+      "action": "ai_job_deep_research",
+      "estimated_credits": 12,
+      "external_charge_created": false,
+      "free_plan_behavior": "blocked_requires_upgrade",
+      "heavy_job": true,
+      "heavy_job_gate": "blocked_requires_upgrade_or_manual_approval",
+      "metered_unit": "job",
+      "metering_category": "ai_jobs",
+      "requires_pre_authorization": true
+    },
+    {
+      "action": "large_document_packet",
+      "estimated_credits": 10,
+      "external_charge_created": false,
+      "free_plan_behavior": "blocked_requires_upgrade",
+      "heavy_job": true,
+      "heavy_job_gate": "blocked_requires_upgrade_or_manual_approval",
+      "metered_unit": "packet",
+      "metering_category": "ai_jobs",
+      "requires_pre_authorization": true
+    },
+    {
+      "action": "saved_workspace",
+      "estimated_credits": 1,
+      "external_charge_created": false,
+      "free_plan_behavior": "allowed_with_limits",
+      "heavy_job": false,
+      "heavy_job_gate": "standard_credit_metering",
+      "metered_unit": "workspace",
+      "metering_category": "workspace_storage",
+      "requires_pre_authorization": false
+    },
+    {
+      "action": "report_export",
+      "estimated_credits": 2,
+      "external_charge_created": false,
+      "free_plan_behavior": "allowed_with_limits",
+      "heavy_job": false,
+      "heavy_job_gate": "standard_credit_metering",
+      "metered_unit": "export",
+      "metering_category": "report_exports",
+      "requires_pre_authorization": false
+    },
+    {
+      "action": "buyer_ready_packet",
+      "estimated_credits": 3,
+      "external_charge_created": false,
+      "free_plan_behavior": "allowed_with_limits",
+      "heavy_job": false,
+      "heavy_job_gate": "standard_credit_metering",
+      "metered_unit": "export",
+      "metering_category": "report_exports",
+      "requires_pre_authorization": false
+    },
+    {
+      "action": "broker_ready_packet",
+      "estimated_credits": 3,
+      "external_charge_created": false,
+      "free_plan_behavior": "allowed_with_limits",
+      "heavy_job": false,
+      "heavy_job_gate": "standard_credit_metering",
+      "metered_unit": "export",
+      "metering_category": "report_exports",
+      "requires_pre_authorization": false
+    },
+    {
+      "action": "source_monitoring",
+      "estimated_credits": 5,
+      "external_charge_created": false,
+      "free_plan_behavior": "blocked_requires_upgrade",
+      "heavy_job": true,
+      "heavy_job_gate": "blocked_requires_upgrade_or_manual_approval",
+      "metered_unit": "refresh",
+      "metering_category": "source_monitoring",
+      "requires_pre_authorization": true
+    },
+    {
+      "action": "source_monitoring_watchlist",
+      "estimated_credits": 8,
+      "external_charge_created": false,
+      "free_plan_behavior": "blocked_requires_upgrade",
+      "heavy_job": true,
+      "heavy_job_gate": "blocked_requires_upgrade_or_manual_approval",
+      "metered_unit": "watchlist",
+      "metering_category": "source_monitoring",
+      "requires_pre_authorization": true
+    },
+    {
+      "action": "opportunity_report",
+      "estimated_credits": 4,
+      "external_charge_created": false,
+      "free_plan_behavior": "blocked_requires_upgrade",
+      "heavy_job": true,
+      "heavy_job_gate": "blocked_requires_upgrade_or_manual_approval",
+      "metered_unit": "report",
+      "metering_category": "report_exports",
+      "requires_pre_authorization": true
+    },
+    {
+      "action": "expert_review_request",
+      "estimated_credits": 0,
+      "external_charge_created": false,
+      "free_plan_behavior": "blocked_requires_upgrade",
+      "heavy_job": true,
+      "heavy_job_gate": "blocked_requires_upgrade_or_manual_approval",
+      "metered_unit": "request",
+      "metering_category": "human_review_routing",
+      "requires_pre_authorization": true
+    },
+    {
+      "action": "private_ai",
+      "estimated_credits": 8,
+      "external_charge_created": false,
+      "free_plan_behavior": "blocked_requires_upgrade",
+      "heavy_job": true,
+      "heavy_job_gate": "blocked_requires_upgrade_or_manual_approval",
+      "metered_unit": "job",
+      "metering_category": "ai_jobs",
+      "requires_pre_authorization": true
+    },
+    {
+      "action": "agent_api_call",
+      "estimated_credits": 1,
+      "external_charge_created": false,
+      "free_plan_behavior": "allowed_with_limits",
+      "heavy_job": false,
+      "heavy_job_gate": "standard_credit_metering",
+      "metered_unit": "call",
+      "metering_category": "agent_api_calls",
+      "requires_pre_authorization": true
+    },
+    {
+      "action": "api_agent_usage",
+      "estimated_credits": 2,
+      "external_charge_created": false,
+      "free_plan_behavior": "blocked_requires_upgrade",
+      "heavy_job": true,
+      "heavy_job_gate": "blocked_requires_upgrade_or_manual_approval",
+      "metered_unit": "tool_execution",
+      "metering_category": "agent_api_calls",
+      "requires_pre_authorization": true
+    }
+  ],
+  "generated_at": "2026-06-26T14:52:45+00:00",
+  "heavy_job_policy": {
+    "external_charge_created": false,
+    "free_plan_behavior": "block_before_worker_execution",
+    "requires_credit_reservation": true,
+    "requires_manual_approval_when_cost_or_external_review_risk_is_high": true,
+    "status": "heavy_jobs_blocked_without_authorization"
+  },
+  "live_checkout_enabled": false,
+  "metering_dimensions": [
+    {
+      "heavy_job_threshold": "large or batch OCR requires upgrade/manual approval",
+      "id": "ocr_pages",
+      "unit": "page"
+    },
+    {
+      "heavy_job_threshold": "all model extraction, private AI, and deep-research jobs require authorization",
+      "id": "ai_jobs",
+      "unit": "job"
+    },
+    {
+      "heavy_job_threshold": "large/opportunity report exports require authorization",
+      "id": "report_exports",
+      "unit": "export"
+    },
+    {
+      "heavy_job_threshold": "all monitoring refreshes require authorization",
+      "id": "source_monitoring",
+      "unit": "refresh_or_watchlist"
+    },
+    {
+      "heavy_job_threshold": "agent tool execution requires scope and credit checks",
+      "id": "agent_api_calls",
+      "unit": "call_or_tool_execution"
+    }
+  ],
+  "plans": [
+    {
+      "heavy_jobs": "blocked_requires_upgrade",
+      "id": "free",
+      "monthly_credits": 20,
+      "packet_limit": 3
+    },
+    {
+      "heavy_jobs": "metered",
+      "id": "pro",
+      "monthly_credits": 500,
+      "packet_limit": 50
+    },
+    {
+      "heavy_jobs": "metered_team",
+      "id": "business",
+      "monthly_credits": 5000,
+      "packet_limit": 500
+    },
+    {
+      "heavy_jobs": "private_contract",
+      "id": "enterprise",
+      "monthly_credits": "contract",
+      "packet_limit": "contract"
+    }
+  ],
+  "proof_boundary": "Billing controls define metering and cost gates only; no live payment, invoice, or checkout session is created.",
+  "status": "billing_credit_controls_ready_local_no_live_checkout"
+}

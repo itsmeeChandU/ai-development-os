@@ -1,0 +1,219 @@
+{
+  "packet_source_impacts": [
+    {
+      "destination_country": "Canada",
+      "impact_status": "packet_recheck_required_on_source_change",
+      "matched_source_ids": [
+        "canada-cid",
+        "canada-sanctions",
+        "cbsa-carm",
+        "cbsa-customs-tariff-2026",
+        "cbsa-import-commercial-goods",
+        "cbsa-licensed-customs-brokers",
+        "cfia-airs",
+        "gac-import-controls",
+        "ised-trade-data-online",
+        "justice-import-control-list"
+      ],
+      "matched_tag_ids": [
+        "buyer_importer_discovery",
+        "expert_review",
+        "food_import",
+        "import_controls",
+        "official_reference",
+        "restricted_party_screening",
+        "tariff"
+      ],
+      "next_valid_move": "If any matched source hash changes, mark this packet stale and rerun the readiness/expert-review lane.",
+      "origin_country": "Vietnam",
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "product_name": "Frozen tuna fillet",
+      "trade_direction": "import"
+    }
+  ],
+  "proof_boundary": "This artifact defines how Intelligence Hub should monitor official sources and stale packets. It does not prove current tariff, CFIA, import permit, sanctions, buyer, supplier, legal, or commercial readiness.",
+  "source_change_classifications": [
+    {
+      "affected_tags": [
+        "buyer_importer_discovery",
+        "official_reference"
+      ],
+      "change_type": "baseline_registered",
+      "classification_id": "classification:cbsa-carm:051d957a3104",
+      "human_review_required": true,
+      "live_fetch_allowed": false,
+      "next_valid_move": "Run the live source loader, compare hashes, classify the diff, and route affected packets for qualified review.",
+      "requires_packet_recheck": true,
+      "scheduled_fetch_job": "source-monitor:cbsa-carm:metadata-refresh",
+      "severity": "watch",
+      "source_id": "cbsa-carm"
+    },
+    {
+      "affected_tags": [
+        "expert_review",
+        "official_reference"
+      ],
+      "change_type": "baseline_registered",
+      "classification_id": "classification:cbsa-import-commercial-goods:7b9a665f1826",
+      "human_review_required": true,
+      "live_fetch_allowed": false,
+      "next_valid_move": "Run the live source loader, compare hashes, classify the diff, and route affected packets for qualified review.",
+      "requires_packet_recheck": true,
+      "scheduled_fetch_job": "source-monitor:cbsa-import-commercial-goods:metadata-refresh",
+      "severity": "watch",
+      "source_id": "cbsa-import-commercial-goods"
+    },
+    {
+      "affected_tags": [
+        "official_reference",
+        "tariff"
+      ],
+      "change_type": "baseline_registered",
+      "classification_id": "classification:cbsa-customs-tariff-2026:ee60c236f481",
+      "human_review_required": true,
+      "live_fetch_allowed": false,
+      "next_valid_move": "Run the live source loader, compare hashes, classify the diff, and route affected packets for qualified review.",
+      "requires_packet_recheck": true,
+      "scheduled_fetch_job": "source-monitor:cbsa-customs-tariff-2026:metadata-refresh",
+      "severity": "watch",
+      "source_id": "cbsa-customs-tariff-2026"
+    },
+    {
+      "affected_tags": [
+        "food_import",
+        "official_reference"
+      ],
+      "change_type": "baseline_registered",
+      "classification_id": "classification:cfia-airs:774c8ca5e418",
+      "human_review_required": true,
+      "live_fetch_allowed": false,
+      "next_valid_move": "Run the live source loader, compare hashes, classify the diff, and route affected packets for qualified review.",
+      "requires_packet_recheck": true,
+      "scheduled_fetch_job": "source-monitor:cfia-airs:metadata-refresh",
+      "severity": "watch",
+      "source_id": "cfia-airs"
+    },
+    {
+      "affected_tags": [
+        "food_import",
+        "import_controls",
+        "official_reference"
+      ],
+      "change_type": "baseline_registered",
+      "classification_id": "classification:gac-import-controls:e3769ed4e668",
+      "human_review_required": true,
+      "live_fetch_allowed": false,
+      "next_valid_move": "Run the live source loader, compare hashes, classify the diff, and route affected packets for qualified review.",
+      "requires_packet_recheck": true,
+      "scheduled_fetch_job": "source-monitor:gac-import-controls:metadata-refresh",
+      "severity": "watch",
+      "source_id": "gac-import-controls"
+    },
+    {
+      "affected_tags": [
+        "import_controls",
+        "official_reference"
+      ],
+      "change_type": "baseline_registered",
+      "classification_id": "classification:justice-import-control-list:decae43c34aa",
+      "human_review_required": true,
+      "live_fetch_allowed": false,
+      "next_valid_move": "Run the live source loader, compare hashes, classify the diff, and route affected packets for qualified review.",
+      "requires_packet_recheck": true,
+      "scheduled_fetch_job": "source-monitor:justice-import-control-list:metadata-refresh",
+      "severity": "watch",
+      "source_id": "justice-import-control-list"
+    },
+    {
+      "affected_tags": [
+        "food_import",
+        "official_reference",
+        "restricted_party_screening"
+      ],
+      "change_type": "baseline_registered",
+      "classification_id": "classification:canada-sanctions:e6de68515aaa",
+      "human_review_required": true,
+      "live_fetch_allowed": false,
+      "next_valid_move": "Run the live source loader, compare hashes, classify the diff, and route affected packets for qualified review.",
+      "requires_packet_recheck": true,
+      "scheduled_fetch_job": "source-monitor:canada-sanctions:metadata-refresh",
+      "severity": "watch",
+      "source_id": "canada-sanctions"
+    },
+    {
+      "affected_tags": [
+        "buyer_importer_discovery",
+        "official_reference",
+        "trade_data"
+      ],
+      "change_type": "baseline_registered",
+      "classification_id": "classification:ised-trade-data-online:a42858d26d37",
+      "human_review_required": true,
+      "live_fetch_allowed": false,
+      "next_valid_move": "Run the live source loader, compare hashes, classify the diff, and route affected packets for qualified review.",
+      "requires_packet_recheck": true,
+      "scheduled_fetch_job": "source-monitor:ised-trade-data-online:metadata-refresh",
+      "severity": "watch",
+      "source_id": "ised-trade-data-online"
+    },
+    {
+      "affected_tags": [
+        "buyer_importer_discovery",
+        "official_reference",
+        "trade_data"
+      ],
+      "change_type": "baseline_registered",
+      "classification_id": "classification:canada-cid:bc87c47aa027",
+      "human_review_required": true,
+      "live_fetch_allowed": false,
+      "next_valid_move": "Run the live source loader, compare hashes, classify the diff, and route affected packets for qualified review.",
+      "requires_packet_recheck": true,
+      "scheduled_fetch_job": "source-monitor:canada-cid:metadata-refresh",
+      "severity": "watch",
+      "source_id": "canada-cid"
+    },
+    {
+      "affected_tags": [
+        "expert_review",
+        "official_reference"
+      ],
+      "change_type": "baseline_registered",
+      "classification_id": "classification:cbsa-licensed-customs-brokers:3f1645674a9a",
+      "human_review_required": true,
+      "live_fetch_allowed": false,
+      "next_valid_move": "Run the live source loader, compare hashes, classify the diff, and route affected packets for qualified review.",
+      "requires_packet_recheck": true,
+      "scheduled_fetch_job": "source-monitor:cbsa-licensed-customs-brokers:metadata-refresh",
+      "severity": "watch",
+      "source_id": "cbsa-licensed-customs-brokers"
+    }
+  ],
+  "stale_source_blockers": [
+    {
+      "claim_blocked": "current official-source correctness",
+      "evidence": "system_review_graph/intelligence_hub_policy_monitor.json",
+      "gate": "closed",
+      "id": "packet-frozen-tuna-canada-001:policy-source-monitoring-live-refresh",
+      "issue": "Official-source monitoring contract exists, but live source refresh/diff proof is not attached.",
+      "module": "policy_source_monitoring",
+      "next_valid_move": "Run Intelligence Hub source snapshots, diff classifiers, and qualified packet review before claiming current import/export correctness.",
+      "owner": "research",
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "source_ids": [
+        "canada-cid",
+        "canada-sanctions",
+        "cbsa-carm",
+        "cbsa-customs-tariff-2026",
+        "cbsa-import-commercial-goods",
+        "cbsa-licensed-customs-brokers",
+        "cfia-airs",
+        "gac-import-controls",
+        "ised-trade-data-online",
+        "justice-import-control-list"
+      ],
+      "status": "open",
+      "unsafe_to_bypass": true
+    }
+  ],
+  "status": "policy_change_impact_report_ready"
+}

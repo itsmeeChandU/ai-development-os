@@ -1,0 +1,33 @@
+{
+  "reports": [
+    "Starter Checklist.pdf",
+    "Draft Trade Readiness Report.pdf",
+    "Buyer-Ready Packet.pdf",
+    "Broker Review Packet.pdf",
+    "Broker/Freight-Forwarder Packet.pdf",
+    "Missing Evidence Checklist.pdf",
+    "Opportunity Research Report.pdf",
+    "Policy Change Impact Report.pdf",
+    "Operator Review Report.pdf",
+    "Expert Review Packet.pdf"
+  ],
+  "sections": [
+    "Summary",
+    "Product details",
+    "Trade direction",
+    "Countries",
+    "Beginner starter unknowns",
+    "Documents provided",
+    "PDF triage",
+    "User-confirmed fields",
+    "Evidence quality",
+    "Missing docs",
+    "Blocked claims",
+    "Official/reference sources",
+    "Required reviews",
+    "Next valid moves",
+    "AI involvement disclosure",
+    "Boundary/disclaimer"
+  ],
+  "status": "public_report_types_ready"
+}

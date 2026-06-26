@@ -1,0 +1,8 @@
+[project]
+name = "importer-source-readiness-copilot"
+version = "0.1.0"
+description = "Blocked-safe importer/exporter source readiness copilot."
+requires-python = ">=3.11"
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]

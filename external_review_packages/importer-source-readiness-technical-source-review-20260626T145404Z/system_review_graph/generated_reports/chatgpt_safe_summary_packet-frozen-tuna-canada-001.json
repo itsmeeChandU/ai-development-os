@@ -1,0 +1,8 @@
+{
+  "copy_paste_prompt": "Use this as an internal draft only. Do not provide legal, customs, tariff, CFIA, financial, supplier, buyer, or shipment advice. Identify missing evidence and questions.",
+  "external_claims_opened": false,
+  "packet_id": "packet-frozen-tuna-canada-001",
+  "redacted_fields_required": true,
+  "status": "chatgpt_safe_summary_generated",
+  "summary": "This packet is not ready for external action. It needs more evidence, operator review, or qualified expert review before any customs, tariff, supplier, buyer, CFIA, legal, or launch claim can be made."
+}

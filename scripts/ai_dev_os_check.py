@@ -71,6 +71,7 @@ REQUIRED = [
     "product_projects/importer-source-readiness-copilot/CUSTOMER_SOURCE_PACKET_SPEC.md",
     "product_projects/importer-source-readiness-copilot/SOURCE_OF_TRUTH.md",
     "product_projects/importer-source-readiness-copilot/RUN_RESULTS.md",
+    "product_projects/importer-source-readiness-copilot/EXTERNAL_REVIEW_SUMMARY.md",
     "product_projects/importer-source-readiness-copilot/REDACTION_REPORT.md",
     "product_projects/importer-source-readiness-copilot/REVIEW_USE_TERMS.md",
     "product_projects/importer-source-readiness-copilot/OFFLINE_REPRODUCTION.md",
@@ -88,6 +89,7 @@ REQUIRED = [
     "product_projects/importer-source-readiness-copilot/docs/STARTUP_LIFECYCLE.md",
     "product_projects/importer-source-readiness-copilot/docs/OPERATOR_GUIDE.md",
     "product_projects/importer-source-readiness-copilot/docs/UI_UX_COMPONENT_SYSTEM.md",
+    "product_projects/importer-source-readiness-copilot/docs/EXTERNAL_REVIEW_PROCESS.md",
     "product_projects/importer-source-readiness-copilot/data/sample_source_cards.json",
     "product_projects/importer-source-readiness-copilot/data/country_requirements_matrix.json",
     "product_projects/importer-source-readiness-copilot/data/evidence_packets.json",
@@ -115,6 +117,7 @@ REQUIRED = [
     "product_projects/importer-source-readiness-copilot/src/importer_source_readiness/completion_platform.py",
     "product_projects/importer-source-readiness-copilot/src/importer_source_readiness/product_operations.py",
     "product_projects/importer-source-readiness-copilot/src/importer_source_readiness/ai_review_validation.py",
+    "product_projects/importer-source-readiness-copilot/src/importer_source_readiness/external_review.py",
     "product_projects/importer-source-readiness-copilot/scripts/run_readiness.py",
     "product_projects/importer-source-readiness-copilot/scripts/run_external_gates.py",
     "product_projects/importer-source-readiness-copilot/scripts/export_operator_dashboard.py",
@@ -127,6 +130,7 @@ REQUIRED = [
     "product_projects/importer-source-readiness-copilot/scripts/run_policy_intelligence.py",
     "product_projects/importer-source-readiness-copilot/scripts/run_completion_platform.py",
     "product_projects/importer-source-readiness-copilot/scripts/run_product_operations.py",
+    "product_projects/importer-source-readiness-copilot/scripts/build_external_review_packet.py",
     "product_projects/importer-source-readiness-copilot/scripts/audit_external_package.py",
     "product_projects/importer-source-readiness-copilot/scripts/check_product.py",
     "product_projects/importer-source-readiness-copilot/tests/test_readiness.py",
@@ -143,6 +147,7 @@ REQUIRED = [
     "product_projects/importer-source-readiness-copilot/tests/test_policy_intelligence.py",
     "product_projects/importer-source-readiness-copilot/tests/test_completion_platform.py",
     "product_projects/importer-source-readiness-copilot/tests/test_external_package_audit.py",
+    "product_projects/importer-source-readiness-copilot/tests/test_external_review_workflow.py",
     "product_projects/importer-source-readiness-copilot/system_review_graph/readiness_report.json",
     "product_projects/importer-source-readiness-copilot/system_review_graph/external_gate_report.json",
     "product_projects/importer-source-readiness-copilot/system_review_graph/continuation_plan.json",
@@ -198,6 +203,9 @@ REQUIRED = [
     "product_projects/importer-source-readiness-copilot/system_review_graph/all_stage_readiness_report.json",
     "product_projects/importer-source-readiness-copilot/system_review_graph/product_operations_report.json",
     "product_projects/importer-source-readiness-copilot/system_review_graph/product_operations_log.json",
+    "product_projects/importer-source-readiness-copilot/system_review_graph/external_review_findings_report.json",
+    "product_projects/importer-source-readiness-copilot/system_review_graph/external_review_blocker_ledger.jsonl",
+    "product_projects/importer-source-readiness-copilot/system_review_graph/ai_assisted_external_review_plan.json",
     "product_projects/importer-source-readiness-copilot/system_review_graph/research_execution_runs.json",
     "product_projects/importer-source-readiness-copilot/system_review_graph/expert_review_work_orders.json",
     "product_projects/importer-source-readiness-copilot/system_review_graph/team_workspace_activity.json",
@@ -226,6 +234,39 @@ REQUIRED = [
     "product_projects/importer-source-readiness-copilot/docs/SECURITY_PRIVACY.md",
     "product_projects/importer-source-readiness-copilot/docs/DEPLOYMENT.md",
     "product_projects/importer-source-readiness-copilot/handoffs/product_completion_handoff.md",
+    "product_projects/importer-source-readiness-copilot/external_review_findings/README.md",
+    "product_projects/importer-source-readiness-copilot/external_review_findings/UX_PRODUCT_REVIEW.md",
+    "product_projects/importer-source-readiness-copilot/external_review_findings/SECURITY_PUBLIC_UPLOAD_REVIEW.md",
+    "product_projects/importer-source-readiness-copilot/external_review_findings/PRIVACY_LEGAL_REVIEW.md",
+    "product_projects/importer-source-readiness-copilot/external_review_findings/AI_SAFETY_REVIEW.md",
+    "product_projects/importer-source-readiness-copilot/external_review_findings/TRADE_BOUNDARY_REVIEW.md",
+    "product_projects/importer-source-readiness-copilot/external_review_findings/FREIGHT_LOGISTICS_REVIEW.md",
+    "product_projects/importer-source-readiness-copilot/external_review_findings/REPORT_LANGUAGE_REVIEW.md",
+    "product_projects/importer-source-readiness-copilot/external_review_findings/DEVOPS_PRODUCTION_READINESS_REVIEW.md",
+    "product_projects/importer-source-readiness-copilot/external_review_findings/BILLING_PAYMENT_REVIEW.md",
+    "product_projects/importer-source-readiness-copilot/external_review_findings/EXTERNAL_REVIEW_SUMMARY.json",
+    "product_projects/importer-source-readiness-copilot/reviewer_packets/README.md",
+    "product_projects/importer-source-readiness-copilot/reviewer_packets/WAVE_1_UX_PRODUCT_REVIEW.md",
+    "product_projects/importer-source-readiness-copilot/reviewer_packets/WAVE_1_SECURITY_PUBLIC_UPLOAD_REVIEW.md",
+    "product_projects/importer-source-readiness-copilot/reviewer_packets/WAVE_1_PRIVACY_LEGAL_REVIEW.md",
+    "product_projects/importer-source-readiness-copilot/reviewer_packets/WAVE_1_AI_SAFETY_REVIEW.md",
+    "product_projects/importer-source-readiness-copilot/reviewer_packets/WAVE_1_DEVOPS_PRODUCTION_READINESS_REVIEW.md",
+    "product_projects/importer-source-readiness-copilot/reviewer_packets/WAVE_2_TRADE_BOUNDARY_REVIEW.md",
+    "product_projects/importer-source-readiness-copilot/reviewer_packets/WAVE_2_FREIGHT_LOGISTICS_REVIEW.md",
+    "product_projects/importer-source-readiness-copilot/reviewer_packets/WAVE_2_REPORT_LANGUAGE_REVIEW.md",
+    "product_projects/importer-source-readiness-copilot/reviewer_packets/WAVE_3_BILLING_PAYMENT_REVIEW.md",
+    "product_projects/importer-source-readiness-copilot/ai_assisted_review/README.md",
+    "product_projects/importer-source-readiness-copilot/ai_assisted_review/WEB_RESEARCH_SOURCE_LOG.md",
+    "product_projects/importer-source-readiness-copilot/ai_assisted_review/simulated_findings/.gitkeep",
+    "product_projects/importer-source-readiness-copilot/ai_assisted_review/role_prompts/WAVE_1_UX_PRODUCT_REVIEW.md",
+    "product_projects/importer-source-readiness-copilot/ai_assisted_review/role_prompts/WAVE_1_SECURITY_PUBLIC_UPLOAD_REVIEW.md",
+    "product_projects/importer-source-readiness-copilot/ai_assisted_review/role_prompts/WAVE_1_PRIVACY_LEGAL_REVIEW.md",
+    "product_projects/importer-source-readiness-copilot/ai_assisted_review/role_prompts/WAVE_1_AI_SAFETY_REVIEW.md",
+    "product_projects/importer-source-readiness-copilot/ai_assisted_review/role_prompts/WAVE_1_DEVOPS_PRODUCTION_READINESS_REVIEW.md",
+    "product_projects/importer-source-readiness-copilot/ai_assisted_review/role_prompts/WAVE_2_TRADE_BOUNDARY_REVIEW.md",
+    "product_projects/importer-source-readiness-copilot/ai_assisted_review/role_prompts/WAVE_2_FREIGHT_LOGISTICS_REVIEW.md",
+    "product_projects/importer-source-readiness-copilot/ai_assisted_review/role_prompts/WAVE_2_REPORT_LANGUAGE_REVIEW.md",
+    "product_projects/importer-source-readiness-copilot/ai_assisted_review/role_prompts/WAVE_3_BILLING_PAYMENT_REVIEW.md",
     "templates/STARTUP_BRIEF.md",
     "templates/STARTUP_LIFECYCLE.md",
     "templates/INSTRUCTION_CONTRACT.md",
@@ -269,16 +310,32 @@ REQUIRED = [
     "handoffs/ci_fix_workflow-manifest-ci.json",
 ]
 
+REQUIRED_GLOBS = [
+    "external_review_packages/importer-source-readiness-external-review-v2-*.zip",
+    "external_review_packages/importer-source-readiness-external-review-v2-*.zip.sha256",
+    "external_review_packages/importer-source-readiness-external-review-v2-*/REVIEW_PACKAGE_MANIFEST.json",
+    "external_review_packages/importer-source-readiness-technical-source-review-*.zip",
+    "external_review_packages/importer-source-readiness-technical-source-review-*.zip.sha256",
+    "external_review_packages/importer-source-readiness-technical-source-review-*/REVIEW_PACKAGE_MANIFEST.json",
+]
+
 
 def main() -> int:
     missing = [path for path in REQUIRED if not (ROOT / path).exists()]
+    missing_patterns = [pattern for pattern in REQUIRED_GLOBS if not list(ROOT.glob(pattern))]
     if missing:
         print("AI Dev OS check: FAIL")
         for path in missing:
             print(f"missing: {path}")
         return 1
+    if missing_patterns:
+        print("AI Dev OS check: FAIL")
+        for pattern in missing_patterns:
+            print(f"missing_pattern: {pattern}")
+        return 1
     print("AI Dev OS check: PASS")
     print(f"required_files={len(REQUIRED)}")
+    print(f"required_globs={len(REQUIRED_GLOBS)}")
     return 0
 
 

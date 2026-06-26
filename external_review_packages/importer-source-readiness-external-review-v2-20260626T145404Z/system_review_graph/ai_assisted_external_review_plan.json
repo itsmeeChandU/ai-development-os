@@ -1,0 +1,345 @@
+{
+  "blocked_claims": [
+    "external_review_completed",
+    "qualified_security_approval",
+    "qualified_privacy_legal_approval",
+    "qualified_trade_compliance_approval",
+    "qualified_freight_approval",
+    "qualified_payment_approval",
+    "hosted_private_beta_ready",
+    "public_launch_ready"
+  ],
+  "can_open_private_beta_gate": false,
+  "can_open_public_launch_gate": false,
+  "can_reduce_findings_before_real_review": true,
+  "capture_paths": {
+    "prompts": "ai_assisted_review/role_prompts/",
+    "real_external_findings": "external_review_findings/",
+    "simulated_findings": "ai_assisted_review/simulated_findings/",
+    "source_log": "ai_assisted_review/WEB_RESEARCH_SOURCE_LOG.md"
+  },
+  "generated_at": "2026-06-26T14:36:31Z",
+  "human_equivalent_approval": false,
+  "next_valid_move": "Run each role prompt through separate ChatGPT modes/agents, attach web source notes where needed, record simulated findings, fix P0/P1 items, rerun proof, and keep qualified approval gates closed unless real reviewer evidence is later added.",
+  "proof_boundary": "AI-assisted reviews are useful solo-developer risk discovery. They are not qualified external approvals and cannot open launch, legal, customs, security, privacy, freight, or payment gates by themselves.",
+  "required_finding_fields": [
+    "finding_id",
+    "reviewer_role",
+    "severity",
+    "affected_stage",
+    "affected_file_or_artifact",
+    "issue",
+    "owner",
+    "required_fix",
+    "retest_command",
+    "blocks_private_beta",
+    "blocks_public_launch",
+    "review_origin",
+    "model_or_agent_used",
+    "web_sources_checked",
+    "confidence",
+    "human_followup_required"
+  ],
+  "required_output_label": "ai_assisted_simulated_review",
+  "required_role_count": 9,
+  "research_anchors": {
+    "ai-safety": [
+      {
+        "label": "OWASP LLM01 Prompt Injection",
+        "url": "https://genai.owasp.org/llmrisk/llm01-prompt-injection/",
+        "use": "Prompt-injection and model-input/output risk review anchor."
+      },
+      {
+        "label": "NIST AI Risk Management Framework",
+        "url": "https://www.nist.gov/itl/ai-risk-management-framework",
+        "use": "AI risk framing, governance, measurement, and monitoring review anchor."
+      }
+    ],
+    "privacy-legal": [
+      {
+        "label": "Office of the Privacy Commissioner of Canada PIPEDA guidance",
+        "url": "https://www.priv.gc.ca/en/privacy-topics/privacy-laws-in-canada/the-personal-information-protection-and-electronic-documents-act-pipeda/",
+        "use": "Canadian privacy-law self-check anchor for notices, consent, access, retention, and safeguards."
+      }
+    ],
+    "security-public-upload": [
+      {
+        "label": "OWASP File Upload Cheat Sheet",
+        "url": "https://cheatsheetseries.owasp.org/cheatsheets/File_Upload_Cheat_Sheet.html",
+        "use": "Public upload, validation, storage, malware, and access-control review anchor."
+      }
+    ],
+    "trade-boundary-customs-language": [
+      {
+        "label": "CBSA importing commercial goods",
+        "url": "https://www.cbsa-asfc.gc.ca/import/menu-eng.html",
+        "use": "Canadian import/customs boundary and official-source language anchor."
+      },
+      {
+        "label": "CFIA importing food, plants, or animals",
+        "url": "https://inspection.canada.ca/en/importing-food-plants-animals",
+        "use": "Food/agriculture import-control boundary anchor for report wording."
+      }
+    ]
+  },
+  "reviewer_roles": [
+    {
+      "affected_stage": "hosted_private_beta",
+      "ai_assisted_prompt_path": "ai_assisted_review/role_prompts/WAVE_1_UX_PRODUCT_REVIEW.md",
+      "blocks_private_beta": true,
+      "blocks_public_launch": true,
+      "next_valid_move": "Send Wave 1 UX/product packet, collect structured findings, fix every P0 before private beta.",
+      "owner": "product/UX reviewer",
+      "primary_artifacts": [
+        "README.md",
+        "docs/GO_LIVE_READINESS.md",
+        "system_review_graph/operator_dashboard.html",
+        "system_review_graph/customer_readiness_report.md",
+        "system_review_graph/public_trade_readiness_manifest.json"
+      ],
+      "required_decision": "Private-beta usability decision with P0/P1 findings listed.",
+      "research_anchors": [],
+      "retest_command": "python3 scripts/check_product.py",
+      "reviewer_packet_path": "reviewer_packets/WAVE_1_UX_PRODUCT_REVIEW.md",
+      "reviewer_role": "UX/Product Usability Review",
+      "role_id": "ux-product",
+      "scope": "Can a target importer/exporter understand the flow, blockers, generated reports, and next valid move without unsafe advice?",
+      "severity_floor": "P0",
+      "template_path": "external_review_findings/UX_PRODUCT_REVIEW.md",
+      "wave": 1
+    },
+    {
+      "affected_stage": "hosted_private_beta",
+      "ai_assisted_prompt_path": "ai_assisted_review/role_prompts/WAVE_1_SECURITY_PUBLIC_UPLOAD_REVIEW.md",
+      "blocks_private_beta": true,
+      "blocks_public_launch": true,
+      "next_valid_move": "Send Wave 1 security packet, collect structured findings, fix every P0 before hosted private beta.",
+      "owner": "security reviewer",
+      "primary_artifacts": [
+        "docs/SECURITY_PRIVACY.md",
+        "docs/DEPLOYMENT.md",
+        "system_review_graph/public_upload_policy.json",
+        "system_review_graph/auth_rbac_matrix.json",
+        "src/importer_source_readiness/operator_app.py"
+      ],
+      "required_decision": "Public upload, file handling, auth/RBAC, and deployment security decision.",
+      "research_anchors": [
+        {
+          "label": "OWASP File Upload Cheat Sheet",
+          "url": "https://cheatsheetseries.owasp.org/cheatsheets/File_Upload_Cheat_Sheet.html",
+          "use": "Public upload, validation, storage, malware, and access-control review anchor."
+        }
+      ],
+      "retest_command": "python3 -m unittest tests/test_operator_app.py tests/test_document_processing.py",
+      "reviewer_packet_path": "reviewer_packets/WAVE_1_SECURITY_PUBLIC_UPLOAD_REVIEW.md",
+      "reviewer_role": "Security/Public Upload Review",
+      "role_id": "security-public-upload",
+      "scope": "Review file upload, quarantine, auth/RBAC, scoped expert links, deletion controls, and public route exposure.",
+      "severity_floor": "P0",
+      "template_path": "external_review_findings/SECURITY_PUBLIC_UPLOAD_REVIEW.md",
+      "wave": 1
+    },
+    {
+      "affected_stage": "hosted_private_beta",
+      "ai_assisted_prompt_path": "ai_assisted_review/role_prompts/WAVE_1_PRIVACY_LEGAL_REVIEW.md",
+      "blocks_private_beta": true,
+      "blocks_public_launch": true,
+      "next_valid_move": "Send Wave 1 privacy/legal packet, collect structured findings, fix every P0 before private beta.",
+      "owner": "privacy/legal reviewer",
+      "primary_artifacts": [
+        "REVIEW_USE_TERMS.md",
+        "docs/AI_DATA_POLICY.md",
+        "docs/SECURITY_PRIVACY.md",
+        "system_review_graph/ai_data_policy.json",
+        "system_review_graph/deletion_requests.json"
+      ],
+      "required_decision": "Privacy, terms, data handling, and legal-claim boundary decision.",
+      "research_anchors": [
+        {
+          "label": "Office of the Privacy Commissioner of Canada PIPEDA guidance",
+          "url": "https://www.priv.gc.ca/en/privacy-topics/privacy-laws-in-canada/the-personal-information-protection-and-electronic-documents-act-pipeda/",
+          "use": "Canadian privacy-law self-check anchor for notices, consent, access, retention, and safeguards."
+        }
+      ],
+      "retest_command": "python3 scripts/check_product.py",
+      "reviewer_packet_path": "reviewer_packets/WAVE_1_PRIVACY_LEGAL_REVIEW.md",
+      "reviewer_role": "Privacy/Legal Review",
+      "role_id": "privacy-legal",
+      "scope": "Review upload notices, AI/data policy, retention/deletion controls, terms, and claim-boundary language.",
+      "severity_floor": "P0",
+      "template_path": "external_review_findings/PRIVACY_LEGAL_REVIEW.md",
+      "wave": 1
+    },
+    {
+      "affected_stage": "hosted_private_beta",
+      "ai_assisted_prompt_path": "ai_assisted_review/role_prompts/WAVE_1_AI_SAFETY_REVIEW.md",
+      "blocks_private_beta": true,
+      "blocks_public_launch": true,
+      "next_valid_move": "Send Wave 1 AI safety packet, collect structured findings, fix every P0 before private beta.",
+      "owner": "AI safety reviewer",
+      "primary_artifacts": [
+        "docs/AI_DATA_POLICY.md",
+        "system_review_graph/ai_model_router.json",
+        "system_review_graph/redaction_pipeline.json",
+        "system_review_graph/manual_no_ai_workflow.json",
+        "tests/test_operator_app.py"
+      ],
+      "required_decision": "AI data, prompt-injection, no-AI fallback, and redaction safety decision.",
+      "research_anchors": [
+        {
+          "label": "OWASP LLM01 Prompt Injection",
+          "url": "https://genai.owasp.org/llmrisk/llm01-prompt-injection/",
+          "use": "Prompt-injection and model-input/output risk review anchor."
+        },
+        {
+          "label": "NIST AI Risk Management Framework",
+          "url": "https://www.nist.gov/itl/ai-risk-management-framework",
+          "use": "AI risk framing, governance, measurement, and monitoring review anchor."
+        }
+      ],
+      "retest_command": "python3 -m unittest tests/test_operator_app.py tests/test_product_runtime.py",
+      "reviewer_packet_path": "reviewer_packets/WAVE_1_AI_SAFETY_REVIEW.md",
+      "reviewer_role": "AI Safety/Prompt Injection Review",
+      "role_id": "ai-safety",
+      "scope": "Review model routing, AI permission controls, redaction previews, manual fallback, and prompt-injection boundaries.",
+      "severity_floor": "P0",
+      "template_path": "external_review_findings/AI_SAFETY_REVIEW.md",
+      "wave": 1
+    },
+    {
+      "affected_stage": "hosted_private_beta",
+      "ai_assisted_prompt_path": "ai_assisted_review/role_prompts/WAVE_1_DEVOPS_PRODUCTION_READINESS_REVIEW.md",
+      "blocks_private_beta": true,
+      "blocks_public_launch": true,
+      "next_valid_move": "Send Wave 1 DevOps packet, collect structured findings, fix every P0 before hosted private beta.",
+      "owner": "DevOps/production reviewer",
+      "primary_artifacts": [
+        "Dockerfile",
+        "compose.yaml",
+        ".env.example",
+        "docs/DEPLOYMENT.md",
+        "system_review_graph/deployment_readiness_report.json"
+      ],
+      "required_decision": "Hosted private-beta readiness decision for infrastructure, config, secrets, logging, and rollback.",
+      "research_anchors": [],
+      "retest_command": "python3 scripts/check_product.py",
+      "reviewer_packet_path": "reviewer_packets/WAVE_1_DEVOPS_PRODUCTION_READINESS_REVIEW.md",
+      "reviewer_role": "DevOps/Production Readiness Review",
+      "role_id": "devops-production-readiness",
+      "scope": "Review Docker/Compose, env contract, deployment readiness, health routes, logging, and external hosting gaps.",
+      "severity_floor": "P0",
+      "template_path": "external_review_findings/DEVOPS_PRODUCTION_READINESS_REVIEW.md",
+      "wave": 1
+    },
+    {
+      "affected_stage": "stronger_trade_claims",
+      "ai_assisted_prompt_path": "ai_assisted_review/role_prompts/WAVE_2_TRADE_BOUNDARY_REVIEW.md",
+      "blocks_private_beta": false,
+      "blocks_public_launch": true,
+      "next_valid_move": "Send Wave 2 trade-boundary packet before any stronger trade/customs wording is used publicly.",
+      "owner": "trade compliance reviewer",
+      "primary_artifacts": [
+        "docs/PUBLIC_TRADE_READINESS.md",
+        "system_review_graph/claims_gate_matrix.json",
+        "system_review_graph/public_report_types.json",
+        "system_review_graph/generated_reports/starter_checklist_packet-frozen-tuna-canada-001.json"
+      ],
+      "required_decision": "Customs, tariff, CFIA, import/export wording and claim-boundary decision.",
+      "research_anchors": [
+        {
+          "label": "CBSA importing commercial goods",
+          "url": "https://www.cbsa-asfc.gc.ca/import/menu-eng.html",
+          "use": "Canadian import/customs boundary and official-source language anchor."
+        },
+        {
+          "label": "CFIA importing food, plants, or animals",
+          "url": "https://inspection.canada.ca/en/importing-food-plants-animals",
+          "use": "Food/agriculture import-control boundary anchor for report wording."
+        }
+      ],
+      "retest_command": "python3 scripts/check_product.py",
+      "reviewer_packet_path": "reviewer_packets/WAVE_2_TRADE_BOUNDARY_REVIEW.md",
+      "reviewer_role": "Trade-Boundary/Customs-Language Review",
+      "role_id": "trade-boundary-customs-language",
+      "scope": "Review public report and UI language for unsupported customs, tariff, legal, CFIA, and import/export readiness claims.",
+      "severity_floor": "P1",
+      "template_path": "external_review_findings/TRADE_BOUNDARY_REVIEW.md",
+      "wave": 2
+    },
+    {
+      "affected_stage": "stronger_trade_claims",
+      "ai_assisted_prompt_path": "ai_assisted_review/role_prompts/WAVE_2_FREIGHT_LOGISTICS_REVIEW.md",
+      "blocks_private_beta": false,
+      "blocks_public_launch": true,
+      "next_valid_move": "Send Wave 2 freight/logistics packet before shipment or forwarder-readiness claims are strengthened.",
+      "owner": "freight/logistics reviewer",
+      "primary_artifacts": [
+        "system_review_graph/transport_readiness_report.json",
+        "system_review_graph/generated_reports/broker_packet_packet-frozen-tuna-canada-001.json",
+        "system_review_graph/public_report_types.json"
+      ],
+      "required_decision": "Forwarder packet, transport questions, and shipment-readiness boundary decision.",
+      "research_anchors": [],
+      "retest_command": "python3 scripts/check_product.py",
+      "reviewer_packet_path": "reviewer_packets/WAVE_2_FREIGHT_LOGISTICS_REVIEW.md",
+      "reviewer_role": "Freight/Logistics Review",
+      "role_id": "freight-logistics",
+      "scope": "Review transport readiness rows, broker/forwarder packets, Incoterms-style questions, and shipment-readiness boundaries.",
+      "severity_floor": "P1",
+      "template_path": "external_review_findings/FREIGHT_LOGISTICS_REVIEW.md",
+      "wave": 2
+    },
+    {
+      "affected_stage": "stronger_trade_claims",
+      "ai_assisted_prompt_path": "ai_assisted_review/role_prompts/WAVE_2_REPORT_LANGUAGE_REVIEW.md",
+      "blocks_private_beta": false,
+      "blocks_public_launch": true,
+      "next_valid_move": "Send Wave 2 report-language packet before public report language is treated as approved.",
+      "owner": "report-language reviewer",
+      "primary_artifacts": [
+        "system_review_graph/public_report_types.json",
+        "system_review_graph/generated_reports/missing_evidence_packet-frozen-tuna-canada-001.json",
+        "system_review_graph/generated_reports/chatgpt_safe_summary_packet-frozen-tuna-canada-001.json",
+        "system_review_graph/customer_readiness_report.md"
+      ],
+      "required_decision": "Generated PDF/report wording decision for customer-safe language.",
+      "research_anchors": [],
+      "retest_command": "python3 scripts/check_product.py",
+      "reviewer_packet_path": "reviewer_packets/WAVE_2_REPORT_LANGUAGE_REVIEW.md",
+      "reviewer_role": "Report-Language Review",
+      "role_id": "report-language",
+      "scope": "Review generated report types, missing-evidence language, buyer/broker packet wording, and customer-safe next moves.",
+      "severity_floor": "P1",
+      "template_path": "external_review_findings/REPORT_LANGUAGE_REVIEW.md",
+      "wave": 2
+    },
+    {
+      "affected_stage": "monetization_or_public_scale",
+      "ai_assisted_prompt_path": "ai_assisted_review/role_prompts/WAVE_3_BILLING_PAYMENT_REVIEW.md",
+      "blocks_private_beta": false,
+      "blocks_public_launch": true,
+      "next_valid_move": "Send Wave 3 billing/payment packet before enabling live checkout or monetized public scale.",
+      "owner": "billing/payment reviewer",
+      "primary_artifacts": [
+        "system_review_graph/billing_credit_controls.json",
+        "system_review_graph/billing_usage_ledger.json",
+        "system_review_graph/product_operations_report.json",
+        "README.md"
+      ],
+      "required_decision": "Billing, tax/invoice/refund/payment-flow decision before live checkout.",
+      "research_anchors": [],
+      "retest_command": "python3 -m unittest tests/test_product_runtime.py tests/test_completion_platform.py",
+      "reviewer_packet_path": "reviewer_packets/WAVE_3_BILLING_PAYMENT_REVIEW.md",
+      "reviewer_role": "Billing/Payment Review",
+      "role_id": "billing-payment",
+      "scope": "Review billing controls, usage ledger, pricing page, live-checkout disabled state, refund/tax/invoice gaps, and payment-flow blockers.",
+      "severity_floor": "P1",
+      "template_path": "external_review_findings/BILLING_PAYMENT_REVIEW.md",
+      "wave": 3
+    }
+  ],
+  "simulated_review_count": 0,
+  "solo_developer_mode": true,
+  "status": "ai_assisted_external_review_ready",
+  "uses_chatgpt_modes_agents_and_web_research": true
+}

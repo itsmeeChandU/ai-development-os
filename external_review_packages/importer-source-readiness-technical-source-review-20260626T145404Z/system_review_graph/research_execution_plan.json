@@ -1,0 +1,43 @@
+{
+  "execution_report": "system_review_graph/product_operations_report.json",
+  "generated_at": "2026-06-26T14:52:45+00:00",
+  "operation_status": "research_execution_operational_local_with_evidence_gates",
+  "proof_boundary": "Research execution routes the work to model-prior, web, official-source, dataset, and expert/user evidence lanes; it does not itself prove the external facts.",
+  "rows": [
+    {
+      "blocked_claims_until_evidence": [
+        "demand_validated",
+        "country_rules_current",
+        "tariff_or_compliance_confirmed",
+        "supplier_or_buyer_validated",
+        "profitability_confirmed"
+      ],
+      "dataset_or_api_needs": [
+        "trade volume or importer/exporter dataset if opportunity ranking is needed",
+        "logistics cost dataset or forwarder quote if route comparison is needed"
+      ],
+      "expert_or_user_validation": [
+        "customs broker or qualified trade reviewer",
+        "buyer/operator interview",
+        "privacy/security owner if customer data is uploaded"
+      ],
+      "model_prior_use": "allowed_as_first_hypothesis_only",
+      "next_valid_move": "Collect dated official-source records, dataset references, buyer/operator notes, and qualified review findings before external claims.",
+      "normal_web_search": [
+        "buyer/operator interview targets",
+        "category vocabulary and common document names",
+        "public market orientation sources"
+      ],
+      "official_source_search": [
+        "country import/export agency sources",
+        "tariff and classification source",
+        "sanctions or restricted party source",
+        "regulated product source if category requires it"
+      ],
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "product_name": "Frozen tuna fillet",
+      "research_mode": "deep_research_required"
+    }
+  ],
+  "status": "research_execution_ready_with_evidence_gates"
+}

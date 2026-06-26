@@ -1,0 +1,65 @@
+{
+  "beginner_context": {
+    "current_stage": "unknown",
+    "examples_supported": [
+      "export furniture to Canada",
+      "import food into Canada",
+      "document-only user"
+    ],
+    "product_only_start_supported": true,
+    "unknown_fields": []
+  },
+  "checklist": [
+    "Name product, origin, destination, and intended trade direction.",
+    "Collect product specs, invoice or proforma, packing details, certificates, and proof of origin.",
+    "Confirm importer of record and Incoterms before shipment decisions.",
+    "Refresh official sources and record dated evidence.",
+    "Send broker/expert packet for scoped review before external claims."
+  ],
+  "external_claims_opened": false,
+  "next_valid_move": "Name product, origin, destination, and intended trade direction.",
+  "packet_id": "packet-frozen-tuna-canada-001",
+  "sections": [
+    {
+      "items": [
+        "Product name",
+        "category",
+        "composition/specs",
+        "intended use",
+        "photos/spec sheet if available"
+      ],
+      "title": "Product identity"
+    },
+    {
+      "items": [
+        "Origin country",
+        "destination country",
+        "buyer/importer",
+        "supplier/exporter",
+        "importer of record",
+        "Incoterms"
+      ],
+      "title": "Country and party path"
+    },
+    {
+      "items": [
+        "invoice/proforma",
+        "packing list",
+        "certificates",
+        "proof of origin",
+        "shipping/transport details"
+      ],
+      "title": "Document pile"
+    },
+    {
+      "items": [
+        "official source refresh",
+        "broker/customs review",
+        "food/import review when relevant",
+        "buyer validation evidence"
+      ],
+      "title": "Review gates"
+    }
+  ],
+  "status": "starter_checklist_generated"
+}

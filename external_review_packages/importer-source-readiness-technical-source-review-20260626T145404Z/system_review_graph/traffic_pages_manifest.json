@@ -1,0 +1,136 @@
+{
+  "generated_at": "2026-06-26T14:52:45+00:00",
+  "pages": [
+    {
+      "claim_boundary": "Traffic page educates and routes to the tool; it is not legal, customs, tariff, supplier, buyer, or shipment advice.",
+      "route": "/tools/import-export-starter-checklist",
+      "sections": [
+        "short explanation",
+        "simple checklist",
+        "tool CTA",
+        "PDF generation",
+        "account save CTA"
+      ],
+      "slug": "import-export-starter-checklist",
+      "title": "Import Export Starter Checklist"
+    },
+    {
+      "claim_boundary": "Traffic page educates and routes to the tool; it is not legal, customs, tariff, supplier, buyer, or shipment advice.",
+      "route": "/tools/export-from-canada-checklist",
+      "sections": [
+        "short explanation",
+        "simple checklist",
+        "tool CTA",
+        "PDF generation",
+        "account save CTA"
+      ],
+      "slug": "export-from-canada-checklist",
+      "title": "Export from Canada Checklist"
+    },
+    {
+      "claim_boundary": "Traffic page educates and routes to the tool; it is not legal, customs, tariff, supplier, buyer, or shipment advice.",
+      "route": "/tools/import-into-canada-checklist",
+      "sections": [
+        "short explanation",
+        "simple checklist",
+        "tool CTA",
+        "PDF generation",
+        "account save CTA"
+      ],
+      "slug": "import-into-canada-checklist",
+      "title": "Import into Canada Checklist"
+    },
+    {
+      "claim_boundary": "Traffic page educates and routes to the tool; it is not legal, customs, tariff, supplier, buyer, or shipment advice.",
+      "route": "/tools/export-documents-checklist",
+      "sections": [
+        "short explanation",
+        "simple checklist",
+        "tool CTA",
+        "PDF generation",
+        "account save CTA"
+      ],
+      "slug": "export-documents-checklist",
+      "title": "Export Documents Checklist"
+    },
+    {
+      "claim_boundary": "Traffic page educates and routes to the tool; it is not legal, customs, tariff, supplier, buyer, or shipment advice.",
+      "route": "/tools/commercial-invoice-checklist",
+      "sections": [
+        "short explanation",
+        "simple checklist",
+        "tool CTA",
+        "PDF generation",
+        "account save CTA"
+      ],
+      "slug": "commercial-invoice-checklist",
+      "title": "Commercial Invoice Checklist"
+    },
+    {
+      "claim_boundary": "Traffic page educates and routes to the tool; it is not legal, customs, tariff, supplier, buyer, or shipment advice.",
+      "route": "/tools/packing-list-checklist",
+      "sections": [
+        "short explanation",
+        "simple checklist",
+        "tool CTA",
+        "PDF generation",
+        "account save CTA"
+      ],
+      "slug": "packing-list-checklist",
+      "title": "Packing List Checklist"
+    },
+    {
+      "claim_boundary": "Traffic page educates and routes to the tool; it is not legal, customs, tariff, supplier, buyer, or shipment advice.",
+      "route": "/tools/certificate-of-origin-checklist",
+      "sections": [
+        "short explanation",
+        "simple checklist",
+        "tool CTA",
+        "PDF generation",
+        "account save CTA"
+      ],
+      "slug": "certificate-of-origin-checklist",
+      "title": "Certificate of Origin Checklist"
+    },
+    {
+      "claim_boundary": "Traffic page educates and routes to the tool; it is not legal, customs, tariff, supplier, buyer, or shipment advice.",
+      "route": "/tools/broker-ready-packet-generator",
+      "sections": [
+        "short explanation",
+        "simple checklist",
+        "tool CTA",
+        "PDF generation",
+        "account save CTA"
+      ],
+      "slug": "broker-ready-packet-generator",
+      "title": "Broker-Ready Packet Generator"
+    },
+    {
+      "claim_boundary": "Traffic page educates and routes to the tool; it is not legal, customs, tariff, supplier, buyer, or shipment advice.",
+      "route": "/tools/buyer-ready-export-packet-generator",
+      "sections": [
+        "short explanation",
+        "simple checklist",
+        "tool CTA",
+        "PDF generation",
+        "account save CTA"
+      ],
+      "slug": "buyer-ready-export-packet-generator",
+      "title": "Buyer-Ready Export Packet Generator"
+    },
+    {
+      "claim_boundary": "Traffic page educates and routes to the tool; it is not legal, customs, tariff, supplier, buyer, or shipment advice.",
+      "route": "/tools/food-import-readiness-checker",
+      "sections": [
+        "short explanation",
+        "simple checklist",
+        "tool CTA",
+        "PDF generation",
+        "account save CTA"
+      ],
+      "slug": "food-import-readiness-checker",
+      "title": "Food Import Readiness Checker"
+    }
+  ],
+  "status": "traffic_pages_manifest_ready"
+}

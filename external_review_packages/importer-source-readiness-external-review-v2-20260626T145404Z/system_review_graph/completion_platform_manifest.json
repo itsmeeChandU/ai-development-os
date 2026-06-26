@@ -1,0 +1,2270 @@
+{
+  "agent_api_gateway": {
+    "billing_plans": [
+      {
+        "heavy_jobs": "blocked_requires_upgrade",
+        "id": "free",
+        "monthly_credits": 20,
+        "packet_limit": 3
+      },
+      {
+        "heavy_jobs": "metered",
+        "id": "pro",
+        "monthly_credits": 500,
+        "packet_limit": 50
+      },
+      {
+        "heavy_jobs": "metered_team",
+        "id": "business",
+        "monthly_credits": 5000,
+        "packet_limit": 500
+      },
+      {
+        "heavy_jobs": "private_contract",
+        "id": "enterprise",
+        "monthly_credits": "contract",
+        "packet_limit": "contract"
+      }
+    ],
+    "forbidden_tools": [
+      "approve_import",
+      "approve_export",
+      "confirm_tariff",
+      "confirm_cfia_clearance",
+      "provide_legal_advice",
+      "verify_supplier",
+      "validate_buyer",
+      "collect_payment",
+      "ship_goods",
+      "book_freight",
+      "send_email_or_external_message",
+      "submit_government_form",
+      "send_report_externally_without_confirmation"
+    ],
+    "generated_at": "2026-06-26T14:52:45+00:00",
+    "proof_boundary": "The gateway executes local product operations with external effects disabled; it does not expose a live public API, credentials, payment integration, or claim-opening authority.",
+    "status": "agent_api_gateway_ready_local_executor_no_external_effects",
+    "tools": [
+      {
+        "billing_gate": "included_with_limits",
+        "example_request": {
+          "dry_run": true,
+          "external_effects_allowed": false,
+          "packet_id": "packet-frozen-tuna-canada-001"
+        },
+        "example_response": {
+          "can_open_claim_gate": false,
+          "external_effects_created": false,
+          "status": "accepted_for_local_execution"
+        },
+        "method": "GET",
+        "route": "/api/agent-tools/get_supported_countries",
+        "scope_required": "packet:read",
+        "tool": "get_supported_countries"
+      },
+      {
+        "billing_gate": "included_with_limits",
+        "example_request": {
+          "dry_run": true,
+          "external_effects_allowed": false,
+          "packet_id": "packet-frozen-tuna-canada-001"
+        },
+        "example_response": {
+          "can_open_claim_gate": false,
+          "external_effects_created": false,
+          "status": "accepted_for_local_execution"
+        },
+        "method": "GET",
+        "route": "/api/agent-tools/get_country_coverage",
+        "scope_required": "packet:read",
+        "tool": "get_country_coverage"
+      },
+      {
+        "billing_gate": "included_with_limits",
+        "example_request": {
+          "dry_run": true,
+          "external_effects_allowed": false,
+          "packet_id": "packet-frozen-tuna-canada-001"
+        },
+        "example_response": {
+          "can_open_claim_gate": false,
+          "external_effects_created": false,
+          "status": "accepted_for_local_execution"
+        },
+        "method": "POST",
+        "route": "/api/agent-tools/create_trade_packet",
+        "scope_required": "packet:write",
+        "tool": "create_trade_packet"
+      },
+      {
+        "billing_gate": "included_with_limits",
+        "example_request": {
+          "dry_run": true,
+          "external_effects_allowed": false,
+          "packet_id": "packet-frozen-tuna-canada-001"
+        },
+        "example_response": {
+          "can_open_claim_gate": false,
+          "external_effects_created": false,
+          "status": "accepted_for_local_execution"
+        },
+        "method": "POST",
+        "route": "/api/agent-tools/generate_starter_checklist",
+        "scope_required": "packet:write",
+        "tool": "generate_starter_checklist"
+      },
+      {
+        "billing_gate": "metered",
+        "example_request": {
+          "dry_run": true,
+          "external_effects_allowed": false,
+          "packet_id": "packet-frozen-tuna-canada-001"
+        },
+        "example_response": {
+          "can_open_claim_gate": false,
+          "external_effects_created": false,
+          "status": "accepted_for_local_execution"
+        },
+        "method": "POST",
+        "route": "/api/agent-tools/generate_missing_evidence_report",
+        "scope_required": "packet:write",
+        "tool": "generate_missing_evidence_report"
+      },
+      {
+        "billing_gate": "included_with_limits",
+        "example_request": {
+          "dry_run": true,
+          "external_effects_allowed": false,
+          "packet_id": "packet-frozen-tuna-canada-001"
+        },
+        "example_response": {
+          "can_open_claim_gate": false,
+          "external_effects_created": false,
+          "status": "accepted_for_local_execution"
+        },
+        "method": "POST",
+        "route": "/api/agent-tools/generate_chatgpt_safe_summary",
+        "scope_required": "packet:write",
+        "tool": "generate_chatgpt_safe_summary"
+      },
+      {
+        "billing_gate": "metered",
+        "example_request": {
+          "dry_run": true,
+          "external_effects_allowed": false,
+          "packet_id": "packet-frozen-tuna-canada-001"
+        },
+        "example_response": {
+          "can_open_claim_gate": false,
+          "external_effects_created": false,
+          "status": "accepted_for_local_execution"
+        },
+        "method": "POST",
+        "route": "/api/agent-tools/generate_broker_packet",
+        "scope_required": "packet:write",
+        "tool": "generate_broker_packet"
+      },
+      {
+        "billing_gate": "included_with_limits",
+        "example_request": {
+          "dry_run": true,
+          "external_effects_allowed": false,
+          "packet_id": "packet-frozen-tuna-canada-001"
+        },
+        "example_response": {
+          "can_open_claim_gate": false,
+          "external_effects_created": false,
+          "status": "accepted_for_local_execution"
+        },
+        "method": "GET",
+        "route": "/api/agent-tools/get_packet_status",
+        "scope_required": "packet:read",
+        "tool": "get_packet_status"
+      },
+      {
+        "billing_gate": "metered",
+        "example_request": {
+          "dry_run": true,
+          "external_effects_allowed": false,
+          "packet_id": "packet-frozen-tuna-canada-001"
+        },
+        "example_response": {
+          "can_open_claim_gate": false,
+          "external_effects_created": false,
+          "status": "accepted_for_local_execution"
+        },
+        "method": "POST",
+        "route": "/api/agent-tools/request_billing_quote",
+        "scope_required": "packet:read",
+        "tool": "request_billing_quote"
+      }
+    ]
+  },
+  "agent_api_manifest": {
+    "allowed_tools": [
+      {
+        "audit_event_required": true,
+        "audit_event_type": "agent_tool:get_supported_countries",
+        "billing_gate": "included_with_limits",
+        "can_open_claim_gate": false,
+        "external_effects_allowed": false,
+        "input_scope_rule": "packet_scoped_fields_only",
+        "method": "GET",
+        "name": "get_supported_countries",
+        "requires_confirmation": false,
+        "route": "/api/agent-tools/get_supported_countries",
+        "scope_required": "packet:read"
+      },
+      {
+        "audit_event_required": true,
+        "audit_event_type": "agent_tool:get_country_coverage",
+        "billing_gate": "included_with_limits",
+        "can_open_claim_gate": false,
+        "external_effects_allowed": false,
+        "input_scope_rule": "packet_scoped_fields_only",
+        "method": "GET",
+        "name": "get_country_coverage",
+        "requires_confirmation": false,
+        "route": "/api/agent-tools/get_country_coverage",
+        "scope_required": "packet:read"
+      },
+      {
+        "audit_event_required": true,
+        "audit_event_type": "agent_tool:create_trade_packet",
+        "billing_gate": "included_with_limits",
+        "can_open_claim_gate": false,
+        "external_effects_allowed": false,
+        "input_scope_rule": "packet_scoped_fields_only",
+        "method": "POST",
+        "name": "create_trade_packet",
+        "requires_confirmation": true,
+        "route": "/api/agent-tools/create_trade_packet",
+        "scope_required": "packet:write"
+      },
+      {
+        "audit_event_required": true,
+        "audit_event_type": "agent_tool:generate_starter_checklist",
+        "billing_gate": "included_with_limits",
+        "can_open_claim_gate": false,
+        "external_effects_allowed": false,
+        "input_scope_rule": "packet_scoped_fields_only",
+        "method": "POST",
+        "name": "generate_starter_checklist",
+        "requires_confirmation": false,
+        "route": "/api/agent-tools/generate_starter_checklist",
+        "scope_required": "packet:write"
+      },
+      {
+        "audit_event_required": true,
+        "audit_event_type": "agent_tool:generate_missing_evidence_report",
+        "billing_gate": "metered",
+        "can_open_claim_gate": false,
+        "external_effects_allowed": false,
+        "input_scope_rule": "packet_scoped_fields_only",
+        "method": "POST",
+        "name": "generate_missing_evidence_report",
+        "requires_confirmation": true,
+        "route": "/api/agent-tools/generate_missing_evidence_report",
+        "scope_required": "packet:write"
+      },
+      {
+        "audit_event_required": true,
+        "audit_event_type": "agent_tool:generate_chatgpt_safe_summary",
+        "billing_gate": "included_with_limits",
+        "can_open_claim_gate": false,
+        "external_effects_allowed": false,
+        "input_scope_rule": "packet_scoped_fields_only",
+        "method": "POST",
+        "name": "generate_chatgpt_safe_summary",
+        "requires_confirmation": true,
+        "route": "/api/agent-tools/generate_chatgpt_safe_summary",
+        "scope_required": "packet:write"
+      },
+      {
+        "audit_event_required": true,
+        "audit_event_type": "agent_tool:generate_broker_packet",
+        "billing_gate": "metered",
+        "can_open_claim_gate": false,
+        "external_effects_allowed": false,
+        "input_scope_rule": "packet_scoped_fields_only",
+        "method": "POST",
+        "name": "generate_broker_packet",
+        "requires_confirmation": true,
+        "route": "/api/agent-tools/generate_broker_packet",
+        "scope_required": "packet:write"
+      },
+      {
+        "audit_event_required": true,
+        "audit_event_type": "agent_tool:get_packet_status",
+        "billing_gate": "included_with_limits",
+        "can_open_claim_gate": false,
+        "external_effects_allowed": false,
+        "input_scope_rule": "packet_scoped_fields_only",
+        "method": "GET",
+        "name": "get_packet_status",
+        "requires_confirmation": false,
+        "route": "/api/agent-tools/get_packet_status",
+        "scope_required": "packet:read"
+      },
+      {
+        "audit_event_required": true,
+        "audit_event_type": "agent_tool:request_billing_quote",
+        "billing_gate": "metered",
+        "can_open_claim_gate": false,
+        "external_effects_allowed": false,
+        "input_scope_rule": "packet_scoped_fields_only",
+        "method": "POST",
+        "name": "request_billing_quote",
+        "requires_confirmation": true,
+        "route": "/api/agent-tools/request_billing_quote",
+        "scope_required": "packet:read"
+      }
+    ],
+    "audit_rules": [
+      "Record actor, organization, packet_id, tool, scope, confirmation state, dry_run flag, and external_effects_allowed for every agent tool call.",
+      "Record billing estimate and authorization result before heavy or metered jobs run.",
+      "Record blocked forbidden-tool attempts as audit events with can_open_claim_gate=false."
+    ],
+    "confirmation_rules": [
+      "Customer-visible packet creation, report generation, safe-summary generation, broker packet generation, and billing quotes require explicit user confirmation.",
+      "External sends are always disabled even after confirmation.",
+      "Confirmation can start local work only; it cannot open customs, tariff, legal, buyer, supplier, payment, or shipment claims."
+    ],
+    "forbidden_tool_patterns": [
+      "approve_*",
+      "confirm_tariff_or_compliance_*",
+      "verify_supplier_or_buyer_*",
+      "send_or_submit_external_*",
+      "book_or_ship_goods_*",
+      "collect_payment_*"
+    ],
+    "forbidden_tools": [
+      "approve_import",
+      "approve_export",
+      "confirm_tariff",
+      "confirm_cfia_clearance",
+      "provide_legal_advice",
+      "verify_supplier",
+      "validate_buyer",
+      "collect_payment",
+      "ship_goods",
+      "book_freight",
+      "send_email_or_external_message",
+      "submit_government_form",
+      "send_report_externally_without_confirmation"
+    ],
+    "generated_at": "2026-06-26T14:52:45+00:00",
+    "proof_boundary": "This is a local API/MCP contract. It does not expose a live public API gateway or payment integration.",
+    "safety_rules": [
+      "Agents can create packets and reports only through backend claim/blocker rules.",
+      "Agents cannot approve import/export, tariff, supplier, buyer, shipment, or launch claims.",
+      "Billable or heavy jobs require plan/credit authorization before execution.",
+      "Agents must preserve audit, confirmation, and scope rules for every tool call."
+    ],
+    "scope_rules": [
+      "Every tool must execute inside a packet or read-only coverage scope.",
+      "Write tools require packet:write scope and cannot modify external systems.",
+      "Read tools require packet:read scope and must not expose private uploaded file contents outside the local product.",
+      "Billing-sensitive tools require plan and credit authorization before worker execution."
+    ],
+    "status": "agent_api_manifest_ready_scoped_and_metered"
+  },
+  "all_stage_readiness": {
+    "external_gate_count": 10,
+    "generated_at": "2026-06-26T14:52:45+00:00",
+    "go_live_state_count": 18,
+    "implemented_stage_count": 19,
+    "proof_boundary": "Stage 0 and Stages 1-18 are represented by local routes, APIs, generated artifacts, tests, and blocker rows. Real reviewers, private-beta users, production hosting, monitoring, legal/privacy/security approval, payment activation, qualified trade review, and public go-live owner approval remain external gates.",
+    "runbook_stage_range": "0-18",
+    "stage_count": 19,
+    "stages": [
+      {
+        "acceptance": "No customer-facing route or report may imply approval, tariff confirmation, CFIA clearance, supplier verification, buyer validation, or legal/customs advice.",
+        "artifacts": [
+          "PRODUCT_DOCTRINE.md",
+          "README.md",
+          "docs/PUBLIC_TRADE_READINESS.md",
+          "system_review_graph/public_trade_readiness_manifest.json",
+          "system_review_graph/claims_gate_matrix.json"
+        ],
+        "can_use_locally_now": true,
+        "external_claims_opened": false,
+        "external_gate": "Qualified legal/customs/privacy review is still required before public claims or advice language changes.",
+        "local_execution_report": "system_review_graph/product_operations_report.json",
+        "local_proof": "Claim-boundary copy, blocked-claims manifests, product check, and package audit all preserve the promise: Before you import or export, know what is missing.",
+        "name": "Freeze product promise",
+        "next_valid_move": "Keep the promise frozen and route any stronger claim to qualified review plus dated evidence.",
+        "requires_external_evidence": false,
+        "routes": [
+          "/",
+          "/security",
+          "/ai-data-policy"
+        ],
+        "runbook_stage": 0,
+        "stage_id": "stage-00",
+        "state_number": null,
+        "status": "implemented_local_claim_language_frozen"
+      },
+      {
+        "acceptance": "A beginner can start with unknowns and leave with a starter checklist and blockers.",
+        "artifacts": [
+          "system_review_graph/generated_reports/starter_checklist_packet-frozen-tuna-canada-001.json",
+          "system_review_graph/customer_readiness_report.json"
+        ],
+        "can_use_locally_now": true,
+        "external_claims_opened": false,
+        "external_gate": "Real beginner usability still needs private-beta users.",
+        "local_execution_report": "system_review_graph/product_operations_report.json",
+        "local_proof": "Starter packet generation preserves unknown answers as missing-evidence blockers.",
+        "name": "Beginner Start UX",
+        "next_valid_move": "Run timed beginner smoke tests with real users and record misunderstandings.",
+        "requires_external_evidence": false,
+        "routes": [
+          "/start",
+          "/tools/import-readiness",
+          "/tools/export-readiness",
+          "/tools/document-check"
+        ],
+        "runbook_stage": 1,
+        "stage_id": "stage-01",
+        "state_number": 1,
+        "status": "implemented_local"
+      },
+      {
+        "acceptance": "Digital-text PDFs produce extracted fields with confidence; scanned PDFs create OCR_REQUIRED blockers.",
+        "artifacts": [
+          "system_review_graph/public_upload_policy.json",
+          "system_review_graph/public_upload_manifest.json",
+          "system_review_graph/generated_reports/missing_evidence_packet-frozen-tuna-canada-001.json"
+        ],
+        "can_use_locally_now": true,
+        "external_claims_opened": false,
+        "external_gate": "Hosted upload security and OCR cost controls need qualified security/privacy review before public use.",
+        "local_execution_report": "system_review_graph/product_operations_report.json",
+        "local_proof": "Document triage, file limits, native extraction, OCR_REQUIRED routing, and confirmation gates are tested locally.",
+        "name": "Real PDF quick check",
+        "next_valid_move": "Run public-upload security review and hosted sandbox proof before opening production uploads.",
+        "requires_external_evidence": false,
+        "routes": [
+          "/trade-check",
+          "/tools/document-check",
+          "/public/packets/:id/result"
+        ],
+        "runbook_stage": 2,
+        "stage_id": "stage-02",
+        "state_number": 2,
+        "status": "implemented_local"
+      },
+      {
+        "acceptance": "Critical product, country, buyer, supplier, and HS-code fields remain blocked until confirmed or corrected.",
+        "artifacts": [
+          "system_review_graph/customer_readiness_report.json",
+          "system_review_graph/evidence_ledger.json",
+          "system_review_graph/blockers.jsonl"
+        ],
+        "can_use_locally_now": true,
+        "external_claims_opened": false,
+        "external_gate": "Customer acceptance needs real user smoke testing.",
+        "local_execution_report": "system_review_graph/product_operations_report.json",
+        "local_proof": "Confirmation routes, grouped blockers, evidence ledger, and draft-unconfirmed behavior are exercised in local tests.",
+        "name": "Field confirmation and missing evidence",
+        "next_valid_move": "Observe users correcting extracted fields and record any failed comprehension as blocker rows.",
+        "requires_external_evidence": false,
+        "routes": [
+          "/public/packets/:id/confirm",
+          "/packets/:id/evidence",
+          "/packets/:id/blockers",
+          "/packets/:id/readiness"
+        ],
+        "runbook_stage": 3,
+        "stage_id": "stage-03",
+        "state_number": 3,
+        "status": "implemented_local"
+      },
+      {
+        "acceptance": "Reports include summary, trade direction, documents, missing evidence, blocked claims, next valid moves, questions, coverage, AI/no-AI disclosure, and not-advice boundaries.",
+        "artifacts": [
+          "system_review_graph/public_report_types.json",
+          "system_review_graph/report_exports.json",
+          "system_review_graph/generated_reports/broker_packet_packet-frozen-tuna-canada-001.json",
+          "system_review_graph/generated_reports/chatgpt_safe_summary_packet-frozen-tuna-canada-001.json"
+        ],
+        "can_use_locally_now": true,
+        "external_claims_opened": false,
+        "external_gate": "Report-language reviewer must approve customer-facing language before public launch.",
+        "local_execution_report": "system_review_graph/product_operations_report.json",
+        "local_proof": "Starter, missing-evidence, buyer, broker, expert, and ChatGPT-safe report artifacts are generated with closed claims.",
+        "name": "Customer-grade reports",
+        "next_valid_move": "Send generated report samples to product, trade-boundary, and report-language reviewers.",
+        "requires_external_evidence": false,
+        "routes": [
+          "/reports/sample",
+          "/packets/:id/reports",
+          "/api/public/packets/:id/reports/starter.pdf"
+        ],
+        "runbook_stage": 4,
+        "stage_id": "stage-04",
+        "state_number": 4,
+        "status": "implemented_local"
+      },
+      {
+        "acceptance": "Uploaded files are quarantined, generated-named, signature checked, size/page limited, not directly served, audited, deletable, and retention-gated.",
+        "artifacts": [
+          "system_review_graph/public_upload_policy.json",
+          "system_review_graph/audit_events.json",
+          "system_review_graph/deletion_requests.json"
+        ],
+        "can_use_locally_now": true,
+        "external_claims_opened": false,
+        "external_gate": "Production malware scanning, rate-limit enforcement, and public upload sandbox need security signoff.",
+        "local_execution_report": "system_review_graph/product_operations_report.json",
+        "local_proof": "Local upload routes enforce PDF limits, no direct serving, delete-files behavior, audit rows, parser limits, rate-limit policy, and malware-scan compensating control.",
+        "name": "Public upload hardening",
+        "next_valid_move": "Run hosted upload threat review and decide malware scanning provider or compensating control owner.",
+        "requires_external_evidence": false,
+        "routes": [
+          "/trade-check",
+          "/api/public/packets/:id/delete-files"
+        ],
+        "runbook_stage": 5,
+        "stage_id": "stage-05",
+        "state_number": 5,
+        "status": "implemented_local_with_security_review_gate"
+      },
+      {
+        "acceptance": "No customer document reaches AI unless organization policy and document permission allow it; AI can create blockers only.",
+        "artifacts": [
+          "system_review_graph/ai_data_policy.json",
+          "system_review_graph/ai_model_router.json",
+          "system_review_graph/redaction_pipeline.json",
+          "system_review_graph/manual_no_ai_workflow.json",
+          "system_review_graph/customer_ai_review_runs.json"
+        ],
+        "can_use_locally_now": true,
+        "external_claims_opened": false,
+        "external_gate": "Live AI providers remain disabled until privacy/security/legal review and explicit configuration.",
+        "local_execution_report": "system_review_graph/product_operations_report.json",
+        "local_proof": "AI validation rejects gate-opening output, unsafe claim language, missing evidence IDs, and cross-organization evidence references.",
+        "name": "AI/no-AI production controls",
+        "next_valid_move": "Run prompt-injection/security review against hosted parser and model-route configuration.",
+        "requires_external_evidence": false,
+        "routes": [
+          "/settings/ai-data-policy",
+          "/ai-data-policy",
+          "/packets/:id/ai-reviews"
+        ],
+        "runbook_stage": 6,
+        "stage_id": "stage-06",
+        "state_number": 6,
+        "status": "implemented_local_fail_closed"
+      },
+      {
+        "acceptance": "A user can create/save a packet locally, return through the workspace, inspect history, request deletion, manage AI policy, and use role-gated views.",
+        "artifacts": [
+          "system_review_graph/customer_workflow.sqlite",
+          "system_review_graph/product_runtime_state.json",
+          "system_review_graph/auth_rbac_matrix.json"
+        ],
+        "can_use_locally_now": true,
+        "external_claims_opened": false,
+        "external_gate": "Hosted identity, account lifecycle, privacy, and deletion process require review before real users.",
+        "local_execution_report": "system_review_graph/product_operations_report.json",
+        "local_proof": "Local session auth, seeded users/orgs, RBAC, packet history, audit view, report history, and deletion requests are generated and tested.",
+        "name": "Saved workspace and account path",
+        "next_valid_move": "Assign identity/privacy owner and run hosted account/session smoke before private beta.",
+        "requires_external_evidence": false,
+        "routes": [
+          "/workspace",
+          "/dashboard",
+          "/packets",
+          "/packets/new",
+          "/settings/ai-data-policy"
+        ],
+        "runbook_stage": 7,
+        "stage_id": "stage-07",
+        "state_number": 7,
+        "status": "implemented_local_private_beta"
+      },
+      {
+        "acceptance": "Role-specific review packets, scoped review requests, finding ingestion, and blocker conversion exist locally.",
+        "artifacts": [
+          "system_review_graph/expert_network_report.json",
+          "system_review_graph/review_requests.json",
+          "system_review_graph/human_review_findings.json",
+          "system_review_graph/expert_review_packet_packet-frozen-tuna-canada-001.md",
+          "board/expert_review_packet.md"
+        ],
+        "can_use_locally_now": true,
+        "external_claims_opened": false,
+        "external_gate": "Real qualified reviewer findings must exist before any public launch or advice claim.",
+        "local_execution_report": "system_review_graph/product_operations_report.json",
+        "local_proof": "The product generates expert queues and scoped review packets while preserving human approval gates.",
+        "name": "External expert review stage",
+        "next_valid_move": "Freeze the package and collect scoped findings from security, privacy/legal, AI safety, UX, trade-boundary, logistics, report-language, billing, and ops reviewers.",
+        "requires_external_evidence": true,
+        "routes": [
+          "/expert-network",
+          "/review/:token",
+          "/packets/:id/reviews"
+        ],
+        "runbook_stage": 8,
+        "stage_id": "stage-08",
+        "state_number": 8,
+        "status": "expert_network_ready_local_with_human_review_gates"
+      },
+      {
+        "acceptance": "Monitored source changes can mark packets stale and create review-required alerts.",
+        "artifacts": [
+          "system_review_graph/intelligence_hub_policy_monitor.json",
+          "system_review_graph/policy_source_snapshots.json",
+          "system_review_graph/policy_change_impact_report.json",
+          "system_review_graph/policy_intelligence.sqlite"
+        ],
+        "can_use_locally_now": true,
+        "external_claims_opened": false,
+        "external_gate": "Live official-source fetching needs terms/robots/API permission and current-source owner review.",
+        "local_execution_report": "system_review_graph/product_operations_report.json",
+        "local_proof": "Source registry, snapshots, hashes, diff classifications, packet impacts, stale blockers, and SQLite store are generated locally.",
+        "name": "Policy/source monitoring",
+        "next_valid_move": "Approve a source-refresh policy and run dated official-source refresh proof.",
+        "requires_external_evidence": false,
+        "routes": [
+          "/packets/:id/source-monitoring"
+        ],
+        "runbook_stage": 9,
+        "stage_id": "stage-09",
+        "state_number": 9,
+        "status": "implemented_local_with_refresh_gates"
+      },
+      {
+        "acceptance": "Every country-pair result shows coverage level and blocks unsupported country-specific claims.",
+        "artifacts": [
+          "system_review_graph/country_coverage_report.json"
+        ],
+        "can_use_locally_now": true,
+        "external_claims_opened": false,
+        "external_gate": "Country-specific copy above generic readiness needs current sources and qualified review.",
+        "local_execution_report": "system_review_graph/product_operations_report.json",
+        "local_proof": "Tier 0-5 coverage policy, country pair rows, and Tier 5 claim gate are generated and tested.",
+        "name": "Country coverage logic",
+        "next_valid_move": "Promote a country/category only after monitored official sources and expert-reviewed templates exist.",
+        "requires_external_evidence": false,
+        "routes": [
+          "/country-coverage",
+          "/api/country-coverage"
+        ],
+        "runbook_stage": 10,
+        "stage_id": "stage-10",
+        "state_number": 10,
+        "status": "country_coverage_ready_with_claim_gates"
+      },
+      {
+        "acceptance": "Opportunity rows show signals, provenance, confidence, buyer-validation-missing state, and create-packet hints without recommendations.",
+        "artifacts": [
+          "system_review_graph/opportunity_scanner_report.json",
+          "system_review_graph/research_execution_plan.json",
+          "system_review_graph/research_execution_runs.json"
+        ],
+        "can_use_locally_now": true,
+        "external_claims_opened": false,
+        "external_gate": "Demand, margin, supplier, and buyer validation remain external evidence lanes.",
+        "local_execution_report": "system_review_graph/product_operations_report.json",
+        "local_proof": "Signal rows, source provenance, confidence fields, and packet-creation hints are generated with demand/profit/buyer claims blocked.",
+        "name": "Opportunity scanner",
+        "next_valid_move": "Attach dated market/source/user evidence before treating a signal as an opportunity decision.",
+        "requires_external_evidence": false,
+        "routes": [
+          "/opportunities",
+          "/research-plan"
+        ],
+        "runbook_stage": 11,
+        "stage_id": "stage-11",
+        "state_number": 11,
+        "status": "opportunity_scanner_ready_with_research_gates"
+      },
+      {
+        "acceptance": "The product generates freight-forwarder questions and missing transport evidence without guaranteeing route, cost, or delivery.",
+        "artifacts": [
+          "system_review_graph/transport_readiness_report.json"
+        ],
+        "can_use_locally_now": true,
+        "external_claims_opened": false,
+        "external_gate": "Freight-forwarder selection, route, cost, insurance, and delivery claims require qualified/logistics evidence.",
+        "local_execution_report": "system_review_graph/product_operations_report.json",
+        "local_proof": "Incoterms, mode, weight/dimensions, packing list, commercial invoice, cold-chain, dangerous goods, insurance, and forwarder checks are generated.",
+        "name": "Transport readiness lane",
+        "next_valid_move": "Send the transport packet to a freight forwarder and record scoped dated feedback.",
+        "requires_external_evidence": false,
+        "routes": [
+          "/transport-readiness",
+          "/api/transport-readiness"
+        ],
+        "runbook_stage": 12,
+        "stage_id": "stage-12",
+        "state_number": 12,
+        "status": "transport_readiness_ready_with_forwarder_gates"
+      },
+      {
+        "acceptance": "Heavy actions are blocked behind local credits/subscription/confirmation; live checkout stays disabled until pricing is validated.",
+        "artifacts": [
+          "system_review_graph/billing_credit_controls.json",
+          "system_review_graph/billing_usage_ledger.json"
+        ],
+        "can_use_locally_now": true,
+        "external_claims_opened": false,
+        "external_gate": "Live checkout, invoices, refunds, tax, pricing, and payment capture require finance/legal/payment-provider approval.",
+        "local_execution_report": "system_review_graph/product_operations_report.json",
+        "local_proof": "OCR, AI, large packets, premium reports, monitoring, agent/API, and expert-review metering rows exist with no live charges.",
+        "name": "Billing and credits",
+        "next_valid_move": "Validate pricing and payment-provider terms before enabling checkout.",
+        "requires_external_evidence": false,
+        "routes": [
+          "/pricing",
+          "/billing",
+          "/billing/usage"
+        ],
+        "runbook_stage": 13,
+        "stage_id": "stage-13",
+        "state_number": 13,
+        "status": "billing_credit_controls_ready_local_no_live_checkout"
+      },
+      {
+        "acceptance": "Agent calls are scoped, audited, metered, and cannot create external effects without user confirmation.",
+        "artifacts": [
+          "system_review_graph/agent_api_manifest.json",
+          "system_review_graph/agent_api_gateway_contract.json"
+        ],
+        "can_use_locally_now": true,
+        "external_claims_opened": false,
+        "external_gate": "Public API gateway, keys, quotas, third-party integrations, and payment routes remain disabled.",
+        "local_execution_report": "system_review_graph/product_operations_report.json",
+        "local_proof": "Allowed and forbidden tools, audit rules, scope rules, confirmation rules, and local executor proof are generated.",
+        "name": "Agent/API layer",
+        "next_valid_move": "Run API security review and issue scoped keys only after product-owner approval.",
+        "requires_external_evidence": false,
+        "routes": [
+          "/agent-api",
+          "/api/agent-tools/:tool"
+        ],
+        "runbook_stage": 14,
+        "stage_id": "stage-14",
+        "state_number": 14,
+        "status": "agent_api_gateway_ready_local_executor_no_external_effects"
+      },
+      {
+        "acceptance": "Normal users can understand the flow, see plain-English blockers and next actions, and do not misread output as approval.",
+        "artifacts": [
+          "system_review_graph/ui_ux_audit_report.json",
+          "system_review_graph/operator_dashboard.html",
+          "docs/UI_UX_COMPONENT_SYSTEM.md"
+        ],
+        "can_use_locally_now": true,
+        "external_claims_opened": false,
+        "external_gate": "Five-user usability test remains required before public launch.",
+        "local_execution_report": "system_review_graph/product_operations_report.json",
+        "local_proof": "Local UI audit covers desktop/mobile H1s, labels, overflow, blank controls, stale copy, tracebacks, and local-path leaks.",
+        "name": "UX and usability",
+        "next_valid_move": "Run private-beta usability sessions for beginner, document, report, save, and deletion flows.",
+        "requires_external_evidence": true,
+        "routes": [
+          "/",
+          "/start",
+          "/trade-check",
+          "/stages",
+          "/operator/queue",
+          "/reports/sample"
+        ],
+        "runbook_stage": 15,
+        "stage_id": "stage-15",
+        "state_number": 15,
+        "status": "ui_ux_audited_ready_for_external_review"
+      },
+      {
+        "acceptance": "Private beta can run only after named owners exist for operations, security, support, rollback, incident response, backups, monitoring, and privacy/terms.",
+        "artifacts": [
+          "docs/DEPLOYMENT.md",
+          "docs/SECURITY_PRIVACY.md",
+          "system_review_graph/deployment_readiness_report.json",
+          "system_review_graph/private_beta_readiness_checklist.json",
+          "Dockerfile",
+          "compose.yaml",
+          ".github/workflows/ci.yml"
+        ],
+        "can_use_locally_now": true,
+        "external_claims_opened": false,
+        "external_gate": "Real staging/production hosting, TLS, secrets, backups, monitoring, support, and incident response require operator/security signoff.",
+        "local_execution_report": "system_review_graph/product_operations_report.json",
+        "local_proof": "Docker/Compose, env example, health endpoints, deployment report, private-beta checklist, and CI proof exist locally.",
+        "name": "Production deployment readiness",
+        "next_valid_move": "Provision staging and assign named owners for hosting, security, support, rollback, backups, and incident response.",
+        "requires_external_evidence": true,
+        "routes": [
+          "/admin/system-health",
+          "/launch-operations"
+        ],
+        "runbook_stage": 16,
+        "stage_id": "stage-16",
+        "state_number": 16,
+        "status": "deployable_local_stack_ready_with_external_hosting_gates"
+      },
+      {
+        "acceptance": "The product has controlled-beta smoke scenarios and owner gates, but real users must complete the flows before beta approval.",
+        "artifacts": [
+          "system_review_graph/private_beta_readiness_checklist.json",
+          "system_review_graph/launch_operations_report.json",
+          "system_review_graph/team_workspace_report.json",
+          "board/launch_control_checklist.md"
+        ],
+        "can_use_locally_now": true,
+        "external_claims_opened": false,
+        "external_gate": "Minimum beta users and reviewer/broker/freight-forwarder feedback are not simulated as proof.",
+        "local_execution_report": "system_review_graph/product_operations_report.json",
+        "local_proof": "Private-beta checklist, launch controls, team workspace, support/feedback path, and closed public-launch state are generated.",
+        "name": "Private beta",
+        "next_valid_move": "Recruit beta users, run the listed smoke tests, record outcomes, and fix critical findings.",
+        "requires_external_evidence": true,
+        "routes": [
+          "/launch-operations",
+          "/expert-network",
+          "/team-workspace"
+        ],
+        "runbook_stage": 17,
+        "stage_id": "stage-17",
+        "state_number": 17,
+        "status": "private_beta_ready_for_human_approval_gates"
+      },
+      {
+        "acceptance": "The safe public subset is defined and measured locally; public launch stays blocked until costs, support, hosting, reviews, beta outcomes, and owner approval pass.",
+        "artifacts": [
+          "system_review_graph/public_trade_readiness_manifest.json",
+          "system_review_graph/launch_operations_report.json",
+          "system_review_graph/continuation_plan.json",
+          "system_review_graph/board_go_live_readiness_report.json"
+        ],
+        "can_use_locally_now": true,
+        "external_claims_opened": false,
+        "external_gate": "Public launch approval, production deployment, legal/privacy/security signoff, monitoring, support, and real-user smoke success are required.",
+        "local_execution_report": "system_review_graph/product_operations_report.json",
+        "local_proof": "Beginner starter, PDF quick check, starter/missing-evidence reports, account save, AI/privacy settings, no live approvals, no unrestricted OCR/AI, and no autonomous effects are all represented locally.",
+        "name": "Public go-live",
+        "next_valid_move": "After private-beta fixes, run go/no-go and explicitly approve the safe public subset.",
+        "requires_external_evidence": true,
+        "routes": [
+          "/start",
+          "/trade-check",
+          "/pricing",
+          "/billing",
+          "/security"
+        ],
+        "runbook_stage": 18,
+        "stage_id": "stage-18",
+        "state_number": 18,
+        "status": "public_go_live_subset_defined_blocked_until_approval"
+      }
+    ],
+    "status": "all_local_stages_implemented_with_external_gates",
+    "still_external": [
+      "public hosting approval",
+      "legal/privacy approval",
+      "customs/tariff/CFIA or regulated compliance approval",
+      "buyer validation",
+      "supplier/manufacturer validation",
+      "payment provider activation",
+      "real expert signoff",
+      "production observability and security signoff",
+      "real private-beta user smoke testing",
+      "public go-live owner approval"
+    ]
+  },
+  "billing_credit_controls": {
+    "authorization_algorithm": [
+      "estimate cost",
+      "check plan and credits",
+      "block heavy free-plan jobs",
+      "require confirmation for OCR batches, AI jobs, source monitoring, and agent/API execution",
+      "reserve credits before worker execution",
+      "record usage",
+      "refund or adjust on failed worker job"
+    ],
+    "billable_actions": [
+      {
+        "action": "ocr_page",
+        "estimated_credits": 2,
+        "external_charge_created": false,
+        "free_plan_behavior": "allowed_with_limits",
+        "heavy_job": false,
+        "heavy_job_gate": "standard_credit_metering",
+        "metered_unit": "page",
+        "metering_category": "ocr_pages",
+        "requires_pre_authorization": false
+      },
+      {
+        "action": "ocr_document_batch",
+        "estimated_credits": 12,
+        "external_charge_created": false,
+        "free_plan_behavior": "blocked_requires_upgrade",
+        "heavy_job": true,
+        "heavy_job_gate": "blocked_requires_upgrade_or_manual_approval",
+        "metered_unit": "document_batch",
+        "metering_category": "ocr_pages",
+        "requires_pre_authorization": true
+      },
+      {
+        "action": "ai_extraction",
+        "estimated_credits": 4,
+        "external_charge_created": false,
+        "free_plan_behavior": "blocked_requires_upgrade",
+        "heavy_job": true,
+        "heavy_job_gate": "blocked_requires_upgrade_or_manual_approval",
+        "metered_unit": "job",
+        "metering_category": "ai_jobs",
+        "requires_pre_authorization": true
+      },
+      {
+        "action": "ai_job_deep_research",
+        "estimated_credits": 12,
+        "external_charge_created": false,
+        "free_plan_behavior": "blocked_requires_upgrade",
+        "heavy_job": true,
+        "heavy_job_gate": "blocked_requires_upgrade_or_manual_approval",
+        "metered_unit": "job",
+        "metering_category": "ai_jobs",
+        "requires_pre_authorization": true
+      },
+      {
+        "action": "large_document_packet",
+        "estimated_credits": 10,
+        "external_charge_created": false,
+        "free_plan_behavior": "blocked_requires_upgrade",
+        "heavy_job": true,
+        "heavy_job_gate": "blocked_requires_upgrade_or_manual_approval",
+        "metered_unit": "packet",
+        "metering_category": "ai_jobs",
+        "requires_pre_authorization": true
+      },
+      {
+        "action": "saved_workspace",
+        "estimated_credits": 1,
+        "external_charge_created": false,
+        "free_plan_behavior": "allowed_with_limits",
+        "heavy_job": false,
+        "heavy_job_gate": "standard_credit_metering",
+        "metered_unit": "workspace",
+        "metering_category": "workspace_storage",
+        "requires_pre_authorization": false
+      },
+      {
+        "action": "report_export",
+        "estimated_credits": 2,
+        "external_charge_created": false,
+        "free_plan_behavior": "allowed_with_limits",
+        "heavy_job": false,
+        "heavy_job_gate": "standard_credit_metering",
+        "metered_unit": "export",
+        "metering_category": "report_exports",
+        "requires_pre_authorization": false
+      },
+      {
+        "action": "buyer_ready_packet",
+        "estimated_credits": 3,
+        "external_charge_created": false,
+        "free_plan_behavior": "allowed_with_limits",
+        "heavy_job": false,
+        "heavy_job_gate": "standard_credit_metering",
+        "metered_unit": "export",
+        "metering_category": "report_exports",
+        "requires_pre_authorization": false
+      },
+      {
+        "action": "broker_ready_packet",
+        "estimated_credits": 3,
+        "external_charge_created": false,
+        "free_plan_behavior": "allowed_with_limits",
+        "heavy_job": false,
+        "heavy_job_gate": "standard_credit_metering",
+        "metered_unit": "export",
+        "metering_category": "report_exports",
+        "requires_pre_authorization": false
+      },
+      {
+        "action": "source_monitoring",
+        "estimated_credits": 5,
+        "external_charge_created": false,
+        "free_plan_behavior": "blocked_requires_upgrade",
+        "heavy_job": true,
+        "heavy_job_gate": "blocked_requires_upgrade_or_manual_approval",
+        "metered_unit": "refresh",
+        "metering_category": "source_monitoring",
+        "requires_pre_authorization": true
+      },
+      {
+        "action": "source_monitoring_watchlist",
+        "estimated_credits": 8,
+        "external_charge_created": false,
+        "free_plan_behavior": "blocked_requires_upgrade",
+        "heavy_job": true,
+        "heavy_job_gate": "blocked_requires_upgrade_or_manual_approval",
+        "metered_unit": "watchlist",
+        "metering_category": "source_monitoring",
+        "requires_pre_authorization": true
+      },
+      {
+        "action": "opportunity_report",
+        "estimated_credits": 4,
+        "external_charge_created": false,
+        "free_plan_behavior": "blocked_requires_upgrade",
+        "heavy_job": true,
+        "heavy_job_gate": "blocked_requires_upgrade_or_manual_approval",
+        "metered_unit": "report",
+        "metering_category": "report_exports",
+        "requires_pre_authorization": true
+      },
+      {
+        "action": "expert_review_request",
+        "estimated_credits": 0,
+        "external_charge_created": false,
+        "free_plan_behavior": "blocked_requires_upgrade",
+        "heavy_job": true,
+        "heavy_job_gate": "blocked_requires_upgrade_or_manual_approval",
+        "metered_unit": "request",
+        "metering_category": "human_review_routing",
+        "requires_pre_authorization": true
+      },
+      {
+        "action": "private_ai",
+        "estimated_credits": 8,
+        "external_charge_created": false,
+        "free_plan_behavior": "blocked_requires_upgrade",
+        "heavy_job": true,
+        "heavy_job_gate": "blocked_requires_upgrade_or_manual_approval",
+        "metered_unit": "job",
+        "metering_category": "ai_jobs",
+        "requires_pre_authorization": true
+      },
+      {
+        "action": "agent_api_call",
+        "estimated_credits": 1,
+        "external_charge_created": false,
+        "free_plan_behavior": "allowed_with_limits",
+        "heavy_job": false,
+        "heavy_job_gate": "standard_credit_metering",
+        "metered_unit": "call",
+        "metering_category": "agent_api_calls",
+        "requires_pre_authorization": true
+      },
+      {
+        "action": "api_agent_usage",
+        "estimated_credits": 2,
+        "external_charge_created": false,
+        "free_plan_behavior": "blocked_requires_upgrade",
+        "heavy_job": true,
+        "heavy_job_gate": "blocked_requires_upgrade_or_manual_approval",
+        "metered_unit": "tool_execution",
+        "metering_category": "agent_api_calls",
+        "requires_pre_authorization": true
+      }
+    ],
+    "generated_at": "2026-06-26T14:52:45+00:00",
+    "heavy_job_policy": {
+      "external_charge_created": false,
+      "free_plan_behavior": "block_before_worker_execution",
+      "requires_credit_reservation": true,
+      "requires_manual_approval_when_cost_or_external_review_risk_is_high": true,
+      "status": "heavy_jobs_blocked_without_authorization"
+    },
+    "live_checkout_enabled": false,
+    "metering_dimensions": [
+      {
+        "heavy_job_threshold": "large or batch OCR requires upgrade/manual approval",
+        "id": "ocr_pages",
+        "unit": "page"
+      },
+      {
+        "heavy_job_threshold": "all model extraction, private AI, and deep-research jobs require authorization",
+        "id": "ai_jobs",
+        "unit": "job"
+      },
+      {
+        "heavy_job_threshold": "large/opportunity report exports require authorization",
+        "id": "report_exports",
+        "unit": "export"
+      },
+      {
+        "heavy_job_threshold": "all monitoring refreshes require authorization",
+        "id": "source_monitoring",
+        "unit": "refresh_or_watchlist"
+      },
+      {
+        "heavy_job_threshold": "agent tool execution requires scope and credit checks",
+        "id": "agent_api_calls",
+        "unit": "call_or_tool_execution"
+      }
+    ],
+    "plans": [
+      {
+        "heavy_jobs": "blocked_requires_upgrade",
+        "id": "free",
+        "monthly_credits": 20,
+        "packet_limit": 3
+      },
+      {
+        "heavy_jobs": "metered",
+        "id": "pro",
+        "monthly_credits": 500,
+        "packet_limit": 50
+      },
+      {
+        "heavy_jobs": "metered_team",
+        "id": "business",
+        "monthly_credits": 5000,
+        "packet_limit": 500
+      },
+      {
+        "heavy_jobs": "private_contract",
+        "id": "enterprise",
+        "monthly_credits": "contract",
+        "packet_limit": "contract"
+      }
+    ],
+    "proof_boundary": "Billing controls define metering and cost gates only; no live payment, invoice, or checkout session is created.",
+    "status": "billing_credit_controls_ready_local_no_live_checkout"
+  },
+  "billing_usage_ledger": {
+    "generated_at": "2026-06-26T14:52:45+00:00",
+    "proof_boundary": "The usage ledger estimates and blocks cost exposure locally; no payment, invoice, or live checkout is performed.",
+    "status": "billing_usage_ledger_ready_local_no_charges",
+    "usage_rows": [
+      {
+        "action": "ocr_page",
+        "authorization_status": "allowed_local",
+        "credits_charged": 0,
+        "estimated_credits": 2,
+        "external_charge_created": false,
+        "packet_id": "packet-frozen-tuna-canada-001",
+        "usage_id": "usage:packet-frozen-tuna-canada-001:ocr_page"
+      },
+      {
+        "action": "ocr_document_batch",
+        "authorization_status": "blocked_requires_upgrade_or_manual_approval",
+        "credits_charged": 0,
+        "estimated_credits": 12,
+        "external_charge_created": false,
+        "packet_id": "packet-frozen-tuna-canada-001",
+        "usage_id": "usage:packet-frozen-tuna-canada-001:ocr_document_batch"
+      },
+      {
+        "action": "ai_extraction",
+        "authorization_status": "blocked_requires_upgrade_or_manual_approval",
+        "credits_charged": 0,
+        "estimated_credits": 4,
+        "external_charge_created": false,
+        "packet_id": "packet-frozen-tuna-canada-001",
+        "usage_id": "usage:packet-frozen-tuna-canada-001:ai_extraction"
+      },
+      {
+        "action": "ai_job_deep_research",
+        "authorization_status": "blocked_requires_upgrade_or_manual_approval",
+        "credits_charged": 0,
+        "estimated_credits": 12,
+        "external_charge_created": false,
+        "packet_id": "packet-frozen-tuna-canada-001",
+        "usage_id": "usage:packet-frozen-tuna-canada-001:ai_job_deep_research"
+      },
+      {
+        "action": "large_document_packet",
+        "authorization_status": "blocked_requires_upgrade_or_manual_approval",
+        "credits_charged": 0,
+        "estimated_credits": 10,
+        "external_charge_created": false,
+        "packet_id": "packet-frozen-tuna-canada-001",
+        "usage_id": "usage:packet-frozen-tuna-canada-001:large_document_packet"
+      },
+      {
+        "action": "saved_workspace",
+        "authorization_status": "allowed_local",
+        "credits_charged": 0,
+        "estimated_credits": 1,
+        "external_charge_created": false,
+        "packet_id": "packet-frozen-tuna-canada-001",
+        "usage_id": "usage:packet-frozen-tuna-canada-001:saved_workspace"
+      },
+      {
+        "action": "report_export",
+        "authorization_status": "allowed_local",
+        "credits_charged": 0,
+        "estimated_credits": 2,
+        "external_charge_created": false,
+        "packet_id": "packet-frozen-tuna-canada-001",
+        "usage_id": "usage:packet-frozen-tuna-canada-001:report_export"
+      },
+      {
+        "action": "buyer_ready_packet",
+        "authorization_status": "allowed_local",
+        "credits_charged": 0,
+        "estimated_credits": 3,
+        "external_charge_created": false,
+        "packet_id": "packet-frozen-tuna-canada-001",
+        "usage_id": "usage:packet-frozen-tuna-canada-001:buyer_ready_packet"
+      },
+      {
+        "action": "broker_ready_packet",
+        "authorization_status": "allowed_local",
+        "credits_charged": 0,
+        "estimated_credits": 3,
+        "external_charge_created": false,
+        "packet_id": "packet-frozen-tuna-canada-001",
+        "usage_id": "usage:packet-frozen-tuna-canada-001:broker_ready_packet"
+      },
+      {
+        "action": "source_monitoring",
+        "authorization_status": "blocked_requires_upgrade_or_manual_approval",
+        "credits_charged": 0,
+        "estimated_credits": 5,
+        "external_charge_created": false,
+        "packet_id": "packet-frozen-tuna-canada-001",
+        "usage_id": "usage:packet-frozen-tuna-canada-001:source_monitoring"
+      },
+      {
+        "action": "source_monitoring_watchlist",
+        "authorization_status": "blocked_requires_upgrade_or_manual_approval",
+        "credits_charged": 0,
+        "estimated_credits": 8,
+        "external_charge_created": false,
+        "packet_id": "packet-frozen-tuna-canada-001",
+        "usage_id": "usage:packet-frozen-tuna-canada-001:source_monitoring_watchlist"
+      },
+      {
+        "action": "opportunity_report",
+        "authorization_status": "blocked_requires_upgrade_or_manual_approval",
+        "credits_charged": 0,
+        "estimated_credits": 4,
+        "external_charge_created": false,
+        "packet_id": "packet-frozen-tuna-canada-001",
+        "usage_id": "usage:packet-frozen-tuna-canada-001:opportunity_report"
+      },
+      {
+        "action": "expert_review_request",
+        "authorization_status": "blocked_requires_upgrade_or_manual_approval",
+        "credits_charged": 0,
+        "estimated_credits": 0,
+        "external_charge_created": false,
+        "packet_id": "packet-frozen-tuna-canada-001",
+        "usage_id": "usage:packet-frozen-tuna-canada-001:expert_review_request"
+      },
+      {
+        "action": "private_ai",
+        "authorization_status": "blocked_requires_upgrade_or_manual_approval",
+        "credits_charged": 0,
+        "estimated_credits": 8,
+        "external_charge_created": false,
+        "packet_id": "packet-frozen-tuna-canada-001",
+        "usage_id": "usage:packet-frozen-tuna-canada-001:private_ai"
+      },
+      {
+        "action": "agent_api_call",
+        "authorization_status": "allowed_local",
+        "credits_charged": 0,
+        "estimated_credits": 1,
+        "external_charge_created": false,
+        "packet_id": "packet-frozen-tuna-canada-001",
+        "usage_id": "usage:packet-frozen-tuna-canada-001:agent_api_call"
+      },
+      {
+        "action": "api_agent_usage",
+        "authorization_status": "blocked_requires_upgrade_or_manual_approval",
+        "credits_charged": 0,
+        "estimated_credits": 2,
+        "external_charge_created": false,
+        "packet_id": "packet-frozen-tuna-canada-001",
+        "usage_id": "usage:packet-frozen-tuna-canada-001:api_agent_usage"
+      }
+    ]
+  },
+  "country_coverage": {
+    "countries": [
+      {
+        "can_make_country_specific_claims": false,
+        "claim_scope_allowed": "generic_readiness_only",
+        "country": "Canada",
+        "country_specific_claim_gate": {
+          "current_source_refresh_required": true,
+          "external_claims_opened": false,
+          "qualified_review_required": true,
+          "required_tier": 5,
+          "status": "blocked_unsupported_country_specific_claims"
+        },
+        "coverage_label": "monitored sources",
+        "coverage_tier": 3,
+        "next_valid_move": "Add current monitored official sources, category templates, and qualified review before country-specific claims.",
+        "source_count": 10,
+        "source_provenance": [
+          {
+            "accessed_at": "2026-06-25",
+            "claim_boundary": "Reference source only; does not prove CARM registration, accounting setup, duty payment readiness, or customs advice.",
+            "evidence_role": "commercial importer duty and tax account workflow",
+            "jurisdiction": "Canada",
+            "name": "CBSA Assessment and Revenue Management (CARM)",
+            "provenance_type": "official_source_registry",
+            "source_id": "cbsa-carm",
+            "url": "https://www.cbsa-asfc.gc.ca/services/carm-gcra/menu-eng.html"
+          },
+          {
+            "accessed_at": "2026-06-25",
+            "claim_boundary": "Reference source only; does not replace CBSA, broker, customs, or legal review.",
+            "evidence_role": "commercial import process orientation",
+            "jurisdiction": "Canada",
+            "name": "CBSA Import Commercial Goods Into Canada",
+            "provenance_type": "official_source_registry",
+            "source_id": "cbsa-import-commercial-goods",
+            "url": "https://www.cbsa-asfc.gc.ca/import/menu-eng.html"
+          },
+          {
+            "accessed_at": "2026-06-25",
+            "claim_boundary": "Reference source only; classification and tariff treatment require qualified review.",
+            "evidence_role": "Canadian tariff classification starting point",
+            "jurisdiction": "Canada",
+            "name": "CBSA Customs Tariff 2026",
+            "provenance_type": "official_source_registry",
+            "source_id": "cbsa-customs-tariff-2026",
+            "url": "https://www.cbsa-asfc.gc.ca/trade-commerce/tariff-tarif/2026/menu-eng.html"
+          },
+          {
+            "accessed_at": "2026-06-25",
+            "claim_boundary": "Reference source only; product-specific food import compliance requires qualified review and source verification.",
+            "evidence_role": "CFIA-regulated commodity import requirement lookup",
+            "jurisdiction": "Canada",
+            "name": "CFIA Automated Import Reference System (AIRS)",
+            "provenance_type": "official_source_registry",
+            "source_id": "cfia-airs",
+            "url": "https://inspection.canada.ca/en/importing-food-plants-animals/airs"
+          },
+          {
+            "accessed_at": "2026-06-25",
+            "claim_boundary": "Reference source only; does not prove whether a specific product requires an import permit.",
+            "evidence_role": "import control and permit orientation",
+            "jurisdiction": "Canada",
+            "name": "Global Affairs Canada Import Controls and Import Permits",
+            "provenance_type": "official_source_registry",
+            "source_id": "gac-import-controls",
+            "url": "https://www.international.gc.ca/controls-controles/about-a_propos/impor/permits-licences.aspx?lang=eng"
+          },
+          {
+            "accessed_at": "2026-06-25",
+            "claim_boundary": "Reference source only; legal interpretation and product applicability require qualified review.",
+            "evidence_role": "legal reference for controlled imports",
+            "jurisdiction": "Canada",
+            "name": "Justice Laws Import Control List",
+            "provenance_type": "official_source_registry",
+            "source_id": "justice-import-control-list",
+            "url": "https://laws-lois.justice.gc.ca/eng/regulations/c.r.c.%2C_c._604/index.html"
+          },
+          {
+            "accessed_at": "2026-06-25",
+            "claim_boundary": "Reference source only; screening results require dated search records and reviewer signoff.",
+            "evidence_role": "restricted-party and sanctions screening source",
+            "jurisdiction": "Canada",
+            "name": "Global Affairs Canada Consolidated Canadian Autonomous Sanctions List",
+            "provenance_type": "official_source_registry",
+            "source_id": "canada-sanctions",
+            "url": "https://www.international.gc.ca/world-monde/international_relations-relations_internationales/sanctions/consolidated-consolide.aspx?lang=eng"
+          },
+          {
+            "accessed_at": "2026-06-25",
+            "claim_boundary": "Reference source only; does not prove market size, buyer demand, or revenue.",
+            "evidence_role": "Canadian trade data research source",
+            "jurisdiction": "Canada",
+            "name": "ISED Trade Data Online",
+            "provenance_type": "official_source_registry",
+            "source_id": "ised-trade-data-online",
+            "url": "https://ised-isde.canada.ca/site/trade-data-online/en/overview"
+          },
+          {
+            "accessed_at": "2026-06-25",
+            "claim_boundary": "Reference source only; does not prove buyer validation, supplier fit, customs advice, or freshness of a specific product row.",
+            "evidence_role": "importer discovery orientation",
+            "jurisdiction": "Canada",
+            "name": "Canadian Importers Database",
+            "provenance_type": "official_source_registry",
+            "source_id": "canada-cid",
+            "url": "https://ised-isde.canada.ca/site/ised/en/research-and-business-intelligence/canadian-importers-database"
+          },
+          {
+            "accessed_at": "2026-06-25",
+            "claim_boundary": "Reference source only; does not prove a broker relationship, review, or signoff.",
+            "evidence_role": "qualified broker discovery source",
+            "jurisdiction": "Canada",
+            "name": "CBSA Licensed Customs Brokers",
+            "provenance_type": "official_source_registry",
+            "source_id": "cbsa-licensed-customs-brokers",
+            "url": "https://www.cbsa-asfc.gc.ca/services/cb-cd/cb-cd-eng.html"
+          }
+        ],
+        "unsupported_country_specific_claims": [
+          "customs_or_tariff_correctness",
+          "country_rules_current",
+          "permit_or_license_required",
+          "food_or_regulated_product_clearance",
+          "shipment_or_import_ready"
+        ]
+      },
+      {
+        "can_make_country_specific_claims": false,
+        "claim_scope_allowed": "generic_readiness_only",
+        "country": "Generic",
+        "country_specific_claim_gate": {
+          "current_source_refresh_required": true,
+          "external_claims_opened": false,
+          "qualified_review_required": true,
+          "required_tier": 5,
+          "status": "blocked_unsupported_country_specific_claims"
+        },
+        "coverage_label": "selectable only",
+        "coverage_tier": 0,
+        "next_valid_move": "Add current monitored official sources, category templates, and qualified review before country-specific claims.",
+        "source_count": 0,
+        "source_provenance": [],
+        "unsupported_country_specific_claims": [
+          "customs_or_tariff_correctness",
+          "country_rules_current",
+          "permit_or_license_required",
+          "food_or_regulated_product_clearance",
+          "shipment_or_import_ready"
+        ]
+      },
+      {
+        "can_make_country_specific_claims": false,
+        "claim_scope_allowed": "generic_readiness_only",
+        "country": "India",
+        "country_specific_claim_gate": {
+          "current_source_refresh_required": true,
+          "external_claims_opened": false,
+          "qualified_review_required": true,
+          "required_tier": 5,
+          "status": "blocked_unsupported_country_specific_claims"
+        },
+        "coverage_label": "generic starter checklist",
+        "coverage_tier": 1,
+        "next_valid_move": "Add current monitored official sources, category templates, and qualified review before country-specific claims.",
+        "source_count": 0,
+        "source_provenance": [],
+        "unsupported_country_specific_claims": [
+          "customs_or_tariff_correctness",
+          "country_rules_current",
+          "permit_or_license_required",
+          "food_or_regulated_product_clearance",
+          "shipment_or_import_ready"
+        ]
+      },
+      {
+        "can_make_country_specific_claims": false,
+        "claim_scope_allowed": "generic_readiness_only",
+        "country": "United Kingdom",
+        "country_specific_claim_gate": {
+          "current_source_refresh_required": true,
+          "external_claims_opened": false,
+          "qualified_review_required": true,
+          "required_tier": 5,
+          "status": "blocked_unsupported_country_specific_claims"
+        },
+        "coverage_label": "generic starter checklist",
+        "coverage_tier": 1,
+        "next_valid_move": "Add current monitored official sources, category templates, and qualified review before country-specific claims.",
+        "source_count": 0,
+        "source_provenance": [],
+        "unsupported_country_specific_claims": [
+          "customs_or_tariff_correctness",
+          "country_rules_current",
+          "permit_or_license_required",
+          "food_or_regulated_product_clearance",
+          "shipment_or_import_ready"
+        ]
+      },
+      {
+        "can_make_country_specific_claims": false,
+        "claim_scope_allowed": "generic_readiness_only",
+        "country": "United States",
+        "country_specific_claim_gate": {
+          "current_source_refresh_required": true,
+          "external_claims_opened": false,
+          "qualified_review_required": true,
+          "required_tier": 5,
+          "status": "blocked_unsupported_country_specific_claims"
+        },
+        "coverage_label": "generic starter checklist",
+        "coverage_tier": 1,
+        "next_valid_move": "Add current monitored official sources, category templates, and qualified review before country-specific claims.",
+        "source_count": 0,
+        "source_provenance": [],
+        "unsupported_country_specific_claims": [
+          "customs_or_tariff_correctness",
+          "country_rules_current",
+          "permit_or_license_required",
+          "food_or_regulated_product_clearance",
+          "shipment_or_import_ready"
+        ]
+      },
+      {
+        "can_make_country_specific_claims": false,
+        "claim_scope_allowed": "generic_readiness_only",
+        "country": "Vietnam",
+        "country_specific_claim_gate": {
+          "current_source_refresh_required": true,
+          "external_claims_opened": false,
+          "qualified_review_required": true,
+          "required_tier": 5,
+          "status": "blocked_unsupported_country_specific_claims"
+        },
+        "coverage_label": "generic starter checklist",
+        "coverage_tier": 1,
+        "next_valid_move": "Add current monitored official sources, category templates, and qualified review before country-specific claims.",
+        "source_count": 0,
+        "source_provenance": [],
+        "unsupported_country_specific_claims": [
+          "customs_or_tariff_correctness",
+          "country_rules_current",
+          "permit_or_license_required",
+          "food_or_regulated_product_clearance",
+          "shipment_or_import_ready"
+        ]
+      }
+    ],
+    "country_specific_claim_policy": {
+      "allowed_only_at_tier": 5,
+      "default": "blocked",
+      "requires_current_sources": true,
+      "requires_qualified_review": true,
+      "unsupported_claim_behavior": "block_and_emit_next_valid_move"
+    },
+    "coverage_levels": {
+      "0": "selectable only",
+      "1": "generic starter checklist",
+      "2": "reference sources catalogued",
+      "3": "monitored sources",
+      "4": "category template support",
+      "5": "expert-reviewed templates"
+    },
+    "generated_at": "2026-06-26T14:52:45+00:00",
+    "packet_coverage": [
+      {
+        "blocked_country_specific_claims": [
+          "tariff_confirmed",
+          "customs_process_current",
+          "country_requirements_complete",
+          "regulated_product_clearance",
+          "import_or_export_approved"
+        ],
+        "can_make_country_specific_claims": false,
+        "coverage_label": "generic starter checklist",
+        "coverage_status": "country_specific_claims_blocked",
+        "destination_country": "Canada",
+        "effective_coverage_tier": 1,
+        "next_valid_move": "Use generic readiness output unless both countries and category have monitored/expert-reviewed coverage.",
+        "origin_country": "Vietnam",
+        "packet_id": "packet-frozen-tuna-canada-001",
+        "product_category": "food_import"
+      }
+    ],
+    "proof_boundary": "Coverage tiers describe product support level only; they do not prove country-specific legal, customs, tariff, or compliance correctness.",
+    "status": "country_coverage_ready_with_claim_gates",
+    "tier_definitions": [
+      {
+        "country_specific_claims_allowed": false,
+        "label": "selectable only",
+        "minimum_evidence": "No country-specific source coverage.",
+        "support": "Country can be selected in generic product flows only.",
+        "tier": 0
+      },
+      {
+        "country_specific_claims_allowed": false,
+        "label": "generic starter checklist",
+        "minimum_evidence": "Country appears in a packet but lacks monitored official sources.",
+        "support": "Generic import/export checklist language may be shown.",
+        "tier": 1
+      },
+      {
+        "country_specific_claims_allowed": false,
+        "label": "reference sources catalogued",
+        "minimum_evidence": "At least one official or official-adjacent source is catalogued.",
+        "support": "Reference sources can orient research, with claim gates closed.",
+        "tier": 2
+      },
+      {
+        "country_specific_claims_allowed": false,
+        "label": "monitored sources",
+        "minimum_evidence": "Multiple official sources are recorded with access dates.",
+        "support": "Multiple official sources are tracked for internal review prompts.",
+        "tier": 3
+      },
+      {
+        "country_specific_claims_allowed": false,
+        "label": "category template support",
+        "minimum_evidence": "Country, category, and route templates are maintained.",
+        "support": "Category-specific templates can be prepared for expert review.",
+        "tier": 4
+      },
+      {
+        "country_specific_claims_allowed": true,
+        "label": "expert-reviewed templates",
+        "minimum_evidence": "Current official sources, category templates, and qualified review are attached.",
+        "support": "Expert-reviewed templates may support scoped country-specific product copy.",
+        "tier": 5
+      }
+    ]
+  },
+  "expert_network": {
+    "expert_roles": [
+      {
+        "label": "Customs Broker / Trade Compliance",
+        "role_id": "customs_broker_or_trade_compliance",
+        "scope": "tariff, importer-of-record, customs process, broker packet review"
+      },
+      {
+        "label": "Food / Regulated Product Reviewer",
+        "role_id": "food_or_regulated_product_reviewer",
+        "scope": "CFIA or regulated product requirement review where applicable"
+      },
+      {
+        "label": "Freight Forwarder",
+        "role_id": "freight_forwarder",
+        "scope": "mode, route, packing, insurance, temperature, and shipment questions"
+      },
+      {
+        "label": "Privacy / Security Reviewer",
+        "role_id": "privacy_security_reviewer",
+        "scope": "uploaded customer evidence, AI processing, retention, and hosted controls"
+      },
+      {
+        "label": "Finance / Operations Reviewer",
+        "role_id": "finance_operator",
+        "scope": "credits, pricing, manual approval, and cost exposure"
+      }
+    ],
+    "generated_at": "2026-06-26T14:52:45+00:00",
+    "proof_boundary": "The product can prepare and route expert packets locally; real qualified review remains an external evidence gate.",
+    "review_queue": [
+      {
+        "next_valid_move": "Send scoped packet to a qualified person and record dated finding before opening any external claim.",
+        "packet_id": "packet-frozen-tuna-canada-001",
+        "review_id": "review:packet-frozen-tuna-canada-001:customs_broker_or_trade_compliance",
+        "role_id": "customs_broker_or_trade_compliance",
+        "simulated_agent_can_approve": false,
+        "simulated_agent_can_prepare_questions": true,
+        "status": "ready_to_request_human_review"
+      },
+      {
+        "next_valid_move": "Send scoped packet to a qualified person and record dated finding before opening any external claim.",
+        "packet_id": "packet-frozen-tuna-canada-001",
+        "review_id": "review:packet-frozen-tuna-canada-001:food_or_regulated_product_reviewer",
+        "role_id": "food_or_regulated_product_reviewer",
+        "simulated_agent_can_approve": false,
+        "simulated_agent_can_prepare_questions": true,
+        "status": "ready_to_request_human_review"
+      },
+      {
+        "next_valid_move": "Send scoped packet to a qualified person and record dated finding before opening any external claim.",
+        "packet_id": "packet-frozen-tuna-canada-001",
+        "review_id": "review:packet-frozen-tuna-canada-001:freight_forwarder",
+        "role_id": "freight_forwarder",
+        "simulated_agent_can_approve": false,
+        "simulated_agent_can_prepare_questions": true,
+        "status": "ready_to_request_human_review"
+      },
+      {
+        "next_valid_move": "Send scoped packet to a qualified person and record dated finding before opening any external claim.",
+        "packet_id": "packet-frozen-tuna-canada-001",
+        "review_id": "review:packet-frozen-tuna-canada-001:privacy_security_reviewer",
+        "role_id": "privacy_security_reviewer",
+        "simulated_agent_can_approve": false,
+        "simulated_agent_can_prepare_questions": true,
+        "status": "ready_to_request_human_review"
+      },
+      {
+        "next_valid_move": "Send scoped packet to a qualified person and record dated finding before opening any external claim.",
+        "packet_id": "packet-frozen-tuna-canada-001",
+        "review_id": "review:packet-frozen-tuna-canada-001:finance_operator",
+        "role_id": "finance_operator",
+        "simulated_agent_can_approve": false,
+        "simulated_agent_can_prepare_questions": true,
+        "status": "ready_to_request_human_review"
+      }
+    ],
+    "status": "expert_network_ready_local_with_human_review_gates"
+  },
+  "generated_at": "2026-06-26T14:52:45+00:00",
+  "launch_operations": {
+    "controls": [
+      {
+        "control": "feature_flags",
+        "external_gate": "owner approval required",
+        "status": "local_contract_ready"
+      },
+      {
+        "control": "support_queue",
+        "external_gate": "support owner required",
+        "status": "local_contract_ready"
+      },
+      {
+        "control": "rollback_plan",
+        "external_gate": "deployment owner required",
+        "status": "local_contract_ready"
+      },
+      {
+        "control": "monitoring",
+        "external_gate": "hosted observability required",
+        "status": "local_contract_ready"
+      },
+      {
+        "control": "incident_response",
+        "external_gate": "security owner required",
+        "status": "local_contract_ready"
+      },
+      {
+        "control": "outcome_log",
+        "external_gate": "real user/operator outcomes required",
+        "status": "local_contract_ready"
+      }
+    ],
+    "generated_at": "2026-06-26T14:52:45+00:00",
+    "packet_count": 1,
+    "private_beta_entry": {
+      "human_approval_required": true,
+      "local_product_ready": true,
+      "next_valid_move": "Use board/private-beta packet to approve or reject a controlled beta after human review gates are signed.",
+      "public_launch_allowed": false
+    },
+    "proof_boundary": "Launch operations are locally specified for private-beta review; they do not approve production deployment or public launch.",
+    "status": "launch_operations_ready_for_private_beta_review"
+  },
+  "opportunity_scanner": {
+    "blocked_claims": [
+      "guaranteed_demand",
+      "profitable_product",
+      "confirmed_surplus",
+      "buyer_validated"
+    ],
+    "confidence_fields": [
+      "coverage_tier",
+      "source_provenance_count",
+      "evidence_confidence",
+      "market_confidence",
+      "logistics_confidence",
+      "claim_confidence"
+    ],
+    "create_packet_api_hint": {
+      "external_effects_allowed": false,
+      "method": "POST",
+      "requires_confirmation": true,
+      "route": "/api/agent-tools/create_trade_packet",
+      "tool": "create_trade_packet"
+    },
+    "create_packet_route": "/packets/new",
+    "generated_at": "2026-06-26T14:52:45+00:00",
+    "proof_boundary": "Opportunity rows are signals and research prompts only, not recommendations, demand proof, margin proof, or buyer validation.",
+    "signal_count": 1,
+    "signals": [
+      {
+        "buyer_validation": "missing",
+        "category": "food_import",
+        "confidence": {
+          "claim_confidence": "blocked_until_buyer_source_logistics_and_expert_evidence",
+          "confidence_reason": "Local packet and source references can seed research, but no buyer, demand, margin, route, or qualified-review evidence is attached.",
+          "coverage_tier": 1,
+          "evidence_confidence": "reference_only",
+          "logistics_confidence": "unknown_requires_forwarder_inputs",
+          "market_confidence": "unknown_requires_external_research",
+          "source_provenance_count": 10
+        },
+        "confidence_level": "low",
+        "country": "Canada",
+        "coverage_confidence": 1,
+        "create_packet_hint": {
+          "agent_tool": "create_trade_packet",
+          "api_route": "/api/agent-tools/create_trade_packet",
+          "claim_gate_can_open": false,
+          "external_effects_allowed": false,
+          "method": "POST",
+          "route": "/packets/new"
+        },
+        "demand_signal": "unknown_requires_external_research",
+        "direction": "import",
+        "next_step": "create or continue readiness packet; collect real buyer, demand, source, and logistics evidence.",
+        "opportunity_signal": "possible opportunity signal",
+        "packet_id": "packet-frozen-tuna-canada-001",
+        "recommendation_claim": "blocked",
+        "requirements_complexity": "high",
+        "signal_id": "opportunity:packet-frozen-tuna-canada-001",
+        "source_provenance": [
+          {
+            "accessed_at": null,
+            "claim_boundary": "Packet source is orientation only; it does not prove demand, supplier fit, tariff, compliance, or shipment readiness.",
+            "evidence_role": "customer packet source reference",
+            "jurisdiction": "Canada",
+            "name": "official_reference",
+            "provenance_type": "packet_source_reference",
+            "source_id": "official_reference",
+            "url": "https://ised-isde.canada.ca/site/ised/en/research-and-business-intelligence/canadian-importers-database"
+          },
+          {
+            "accessed_at": "2026-06-25",
+            "claim_boundary": "Reference source only; does not prove CARM registration, accounting setup, duty payment readiness, or customs advice.",
+            "evidence_role": "commercial importer duty and tax account workflow",
+            "jurisdiction": "Canada",
+            "name": "CBSA Assessment and Revenue Management (CARM)",
+            "provenance_type": "official_source_registry",
+            "source_id": "cbsa-carm",
+            "url": "https://www.cbsa-asfc.gc.ca/services/carm-gcra/menu-eng.html"
+          },
+          {
+            "accessed_at": "2026-06-25",
+            "claim_boundary": "Reference source only; does not replace CBSA, broker, customs, or legal review.",
+            "evidence_role": "commercial import process orientation",
+            "jurisdiction": "Canada",
+            "name": "CBSA Import Commercial Goods Into Canada",
+            "provenance_type": "official_source_registry",
+            "source_id": "cbsa-import-commercial-goods",
+            "url": "https://www.cbsa-asfc.gc.ca/import/menu-eng.html"
+          },
+          {
+            "accessed_at": "2026-06-25",
+            "claim_boundary": "Reference source only; classification and tariff treatment require qualified review.",
+            "evidence_role": "Canadian tariff classification starting point",
+            "jurisdiction": "Canada",
+            "name": "CBSA Customs Tariff 2026",
+            "provenance_type": "official_source_registry",
+            "source_id": "cbsa-customs-tariff-2026",
+            "url": "https://www.cbsa-asfc.gc.ca/trade-commerce/tariff-tarif/2026/menu-eng.html"
+          },
+          {
+            "accessed_at": "2026-06-25",
+            "claim_boundary": "Reference source only; product-specific food import compliance requires qualified review and source verification.",
+            "evidence_role": "CFIA-regulated commodity import requirement lookup",
+            "jurisdiction": "Canada",
+            "name": "CFIA Automated Import Reference System (AIRS)",
+            "provenance_type": "official_source_registry",
+            "source_id": "cfia-airs",
+            "url": "https://inspection.canada.ca/en/importing-food-plants-animals/airs"
+          },
+          {
+            "accessed_at": "2026-06-25",
+            "claim_boundary": "Reference source only; does not prove whether a specific product requires an import permit.",
+            "evidence_role": "import control and permit orientation",
+            "jurisdiction": "Canada",
+            "name": "Global Affairs Canada Import Controls and Import Permits",
+            "provenance_type": "official_source_registry",
+            "source_id": "gac-import-controls",
+            "url": "https://www.international.gc.ca/controls-controles/about-a_propos/impor/permits-licences.aspx?lang=eng"
+          },
+          {
+            "accessed_at": "2026-06-25",
+            "claim_boundary": "Reference source only; legal interpretation and product applicability require qualified review.",
+            "evidence_role": "legal reference for controlled imports",
+            "jurisdiction": "Canada",
+            "name": "Justice Laws Import Control List",
+            "provenance_type": "official_source_registry",
+            "source_id": "justice-import-control-list",
+            "url": "https://laws-lois.justice.gc.ca/eng/regulations/c.r.c.%2C_c._604/index.html"
+          },
+          {
+            "accessed_at": "2026-06-25",
+            "claim_boundary": "Reference source only; screening results require dated search records and reviewer signoff.",
+            "evidence_role": "restricted-party and sanctions screening source",
+            "jurisdiction": "Canada",
+            "name": "Global Affairs Canada Consolidated Canadian Autonomous Sanctions List",
+            "provenance_type": "official_source_registry",
+            "source_id": "canada-sanctions",
+            "url": "https://www.international.gc.ca/world-monde/international_relations-relations_internationales/sanctions/consolidated-consolide.aspx?lang=eng"
+          },
+          {
+            "accessed_at": "2026-06-25",
+            "claim_boundary": "Reference source only; does not prove market size, buyer demand, or revenue.",
+            "evidence_role": "Canadian trade data research source",
+            "jurisdiction": "Canada",
+            "name": "ISED Trade Data Online",
+            "provenance_type": "official_source_registry",
+            "source_id": "ised-trade-data-online",
+            "url": "https://ised-isde.canada.ca/site/trade-data-online/en/overview"
+          },
+          {
+            "accessed_at": "2026-06-25",
+            "claim_boundary": "Reference source only; does not prove a broker relationship, review, or signoff.",
+            "evidence_role": "qualified broker discovery source",
+            "jurisdiction": "Canada",
+            "name": "CBSA Licensed Customs Brokers",
+            "provenance_type": "official_source_registry",
+            "source_id": "cbsa-licensed-customs-brokers",
+            "url": "https://www.cbsa-asfc.gc.ca/services/cb-cd/cb-cd-eng.html"
+          }
+        ],
+        "source_provenance_count": 10,
+        "supply_or_surplus_signal": "unknown_requires_external_research",
+        "trade_growth_signal": "unknown_requires_dataset",
+        "transport_complexity": "unknown_until_dimensions_mode_and_temperature_requirements_known",
+        "trend_signal": "unknown_requires_dataset"
+      }
+    ],
+    "status": "opportunity_scanner_ready_with_research_gates"
+  },
+  "proof_boundary": "Stage 0 and go-live States 1-18 each have a route/API/artifact surface where locally implementable; production hosting, payment activation, live expert signoff, source freshness, buyer validation, legal/customs/compliance proof, private-beta outcomes, and public launch approval remain external gates.",
+  "research_execution_plan": {
+    "generated_at": "2026-06-26T14:52:45+00:00",
+    "proof_boundary": "Research execution routes the work to model-prior, web, official-source, dataset, and expert/user evidence lanes; it does not itself prove the external facts.",
+    "rows": [
+      {
+        "blocked_claims_until_evidence": [
+          "demand_validated",
+          "country_rules_current",
+          "tariff_or_compliance_confirmed",
+          "supplier_or_buyer_validated",
+          "profitability_confirmed"
+        ],
+        "dataset_or_api_needs": [
+          "trade volume or importer/exporter dataset if opportunity ranking is needed",
+          "logistics cost dataset or forwarder quote if route comparison is needed"
+        ],
+        "expert_or_user_validation": [
+          "customs broker or qualified trade reviewer",
+          "buyer/operator interview",
+          "privacy/security owner if customer data is uploaded"
+        ],
+        "model_prior_use": "allowed_as_first_hypothesis_only",
+        "next_valid_move": "Collect dated official-source records, dataset references, buyer/operator notes, and qualified review findings before external claims.",
+        "normal_web_search": [
+          "buyer/operator interview targets",
+          "category vocabulary and common document names",
+          "public market orientation sources"
+        ],
+        "official_source_search": [
+          "country import/export agency sources",
+          "tariff and classification source",
+          "sanctions or restricted party source",
+          "regulated product source if category requires it"
+        ],
+        "packet_id": "packet-frozen-tuna-canada-001",
+        "product_name": "Frozen tuna fillet",
+        "research_mode": "deep_research_required"
+      }
+    ],
+    "status": "research_execution_ready_with_evidence_gates"
+  },
+  "status": "all_local_stages_implemented_with_external_gates",
+  "team_workspace": {
+    "generated_at": "2026-06-26T14:52:45+00:00",
+    "proof_boundary": "Team workspace roles and approvals are local coordination surfaces; they do not prove real owner approval or external launch permission.",
+    "status": "team_workspace_ready_local_with_approval_gates",
+    "workspace_count": 1,
+    "workspaces": [
+      {
+        "approval_board": [
+          {
+            "gate": "buyer_validation",
+            "owner": "founder_or_customer",
+            "status": "blocked"
+          },
+          {
+            "gate": "qualified_trade_review",
+            "owner": "expert_reviewer",
+            "status": "blocked"
+          },
+          {
+            "gate": "privacy_security_review",
+            "owner": "admin",
+            "status": "blocked"
+          },
+          {
+            "gate": "private_beta_launch",
+            "owner": "operator",
+            "status": "blocked"
+          }
+        ],
+        "next_valid_move": "Assign owners, collect evidence, and keep the packet in private review until gates are approved.",
+        "packet_id": "packet-frozen-tuna-canada-001",
+        "team": [
+          {
+            "permissions": [
+              "packet_read",
+              "packet_update",
+              "report_download"
+            ],
+            "role": "founder_or_customer"
+          },
+          {
+            "permissions": [
+              "queue_triage",
+              "source_refresh",
+              "review_request"
+            ],
+            "role": "operator"
+          },
+          {
+            "permissions": [
+              "scoped_packet_read",
+              "finding_submit"
+            ],
+            "role": "expert_reviewer"
+          },
+          {
+            "permissions": [
+              "member_manage",
+              "policy_manage",
+              "audit_read"
+            ],
+            "role": "admin"
+          }
+        ],
+        "workspace_id": "workspace:packet-frozen-tuna-canada-001"
+      }
+    ]
+  },
+  "traffic_pages_manifest": {
+    "generated_at": "2026-06-26T14:52:45+00:00",
+    "pages": [
+      {
+        "claim_boundary": "Traffic page educates and routes to the tool; it is not legal, customs, tariff, supplier, buyer, or shipment advice.",
+        "route": "/tools/import-export-starter-checklist",
+        "sections": [
+          "short explanation",
+          "simple checklist",
+          "tool CTA",
+          "PDF generation",
+          "account save CTA"
+        ],
+        "slug": "import-export-starter-checklist",
+        "title": "Import Export Starter Checklist"
+      },
+      {
+        "claim_boundary": "Traffic page educates and routes to the tool; it is not legal, customs, tariff, supplier, buyer, or shipment advice.",
+        "route": "/tools/export-from-canada-checklist",
+        "sections": [
+          "short explanation",
+          "simple checklist",
+          "tool CTA",
+          "PDF generation",
+          "account save CTA"
+        ],
+        "slug": "export-from-canada-checklist",
+        "title": "Export from Canada Checklist"
+      },
+      {
+        "claim_boundary": "Traffic page educates and routes to the tool; it is not legal, customs, tariff, supplier, buyer, or shipment advice.",
+        "route": "/tools/import-into-canada-checklist",
+        "sections": [
+          "short explanation",
+          "simple checklist",
+          "tool CTA",
+          "PDF generation",
+          "account save CTA"
+        ],
+        "slug": "import-into-canada-checklist",
+        "title": "Import into Canada Checklist"
+      },
+      {
+        "claim_boundary": "Traffic page educates and routes to the tool; it is not legal, customs, tariff, supplier, buyer, or shipment advice.",
+        "route": "/tools/export-documents-checklist",
+        "sections": [
+          "short explanation",
+          "simple checklist",
+          "tool CTA",
+          "PDF generation",
+          "account save CTA"
+        ],
+        "slug": "export-documents-checklist",
+        "title": "Export Documents Checklist"
+      },
+      {
+        "claim_boundary": "Traffic page educates and routes to the tool; it is not legal, customs, tariff, supplier, buyer, or shipment advice.",
+        "route": "/tools/commercial-invoice-checklist",
+        "sections": [
+          "short explanation",
+          "simple checklist",
+          "tool CTA",
+          "PDF generation",
+          "account save CTA"
+        ],
+        "slug": "commercial-invoice-checklist",
+        "title": "Commercial Invoice Checklist"
+      },
+      {
+        "claim_boundary": "Traffic page educates and routes to the tool; it is not legal, customs, tariff, supplier, buyer, or shipment advice.",
+        "route": "/tools/packing-list-checklist",
+        "sections": [
+          "short explanation",
+          "simple checklist",
+          "tool CTA",
+          "PDF generation",
+          "account save CTA"
+        ],
+        "slug": "packing-list-checklist",
+        "title": "Packing List Checklist"
+      },
+      {
+        "claim_boundary": "Traffic page educates and routes to the tool; it is not legal, customs, tariff, supplier, buyer, or shipment advice.",
+        "route": "/tools/certificate-of-origin-checklist",
+        "sections": [
+          "short explanation",
+          "simple checklist",
+          "tool CTA",
+          "PDF generation",
+          "account save CTA"
+        ],
+        "slug": "certificate-of-origin-checklist",
+        "title": "Certificate of Origin Checklist"
+      },
+      {
+        "claim_boundary": "Traffic page educates and routes to the tool; it is not legal, customs, tariff, supplier, buyer, or shipment advice.",
+        "route": "/tools/broker-ready-packet-generator",
+        "sections": [
+          "short explanation",
+          "simple checklist",
+          "tool CTA",
+          "PDF generation",
+          "account save CTA"
+        ],
+        "slug": "broker-ready-packet-generator",
+        "title": "Broker-Ready Packet Generator"
+      },
+      {
+        "claim_boundary": "Traffic page educates and routes to the tool; it is not legal, customs, tariff, supplier, buyer, or shipment advice.",
+        "route": "/tools/buyer-ready-export-packet-generator",
+        "sections": [
+          "short explanation",
+          "simple checklist",
+          "tool CTA",
+          "PDF generation",
+          "account save CTA"
+        ],
+        "slug": "buyer-ready-export-packet-generator",
+        "title": "Buyer-Ready Export Packet Generator"
+      },
+      {
+        "claim_boundary": "Traffic page educates and routes to the tool; it is not legal, customs, tariff, supplier, buyer, or shipment advice.",
+        "route": "/tools/food-import-readiness-checker",
+        "sections": [
+          "short explanation",
+          "simple checklist",
+          "tool CTA",
+          "PDF generation",
+          "account save CTA"
+        ],
+        "slug": "food-import-readiness-checker",
+        "title": "Food Import Readiness Checker"
+      }
+    ],
+    "status": "traffic_pages_manifest_ready"
+  },
+  "transport_readiness": {
+    "blocked_claims": [
+      "shipping_cost_guaranteed",
+      "route_optimized",
+      "freight_forwarder_selected",
+      "shipment_ready"
+    ],
+    "generated_at": "2026-06-26T14:52:45+00:00",
+    "packet_count": 1,
+    "proof_boundary": "Transport readiness prepares questions only; it does not optimize routes, guarantee costs, or approve shipment.",
+    "rows": [
+      {
+        "freight_forwarder_packet_sections": [
+          {
+            "questions": [
+              "Which Incoterms version and named place apply?",
+              "Who is importer of record and who pays duty, freight, and insurance?"
+            ],
+            "section_id": "incoterms_and_responsibility",
+            "status": "missing",
+            "title": "Incoterms and delivery responsibility"
+          },
+          {
+            "questions": [
+              "Which mode is intended: ocean, air, road, rail, courier, or multimodal?",
+              "Which origin/destination ports or terminals are planned?"
+            ],
+            "section_id": "mode_route_ports",
+            "status": "missing",
+            "title": "Mode, route, ports, and transit constraints"
+          },
+          {
+            "questions": [
+              "What are gross weight, net weight, dimensions, carton count, pallet count, and packaging type?",
+              "Does any wood packaging require ISPM 15 review?"
+            ],
+            "section_id": "weight_dimensions_packaging",
+            "status": "missing",
+            "title": "Weight, dimensions, packing, and palletization"
+          },
+          {
+            "questions": [
+              "Does the commercial invoice include seller, buyer, description, HS code if known, value, currency, origin, and Incoterms?",
+              "Does the packing list reconcile to invoice quantities and shipment units?"
+            ],
+            "section_id": "commercial_invoice_and_packing_list",
+            "status": "missing",
+            "title": "Commercial invoice and packing list"
+          },
+          {
+            "questions": [
+              "Is temperature control required and what range/data logger proof is needed?",
+              "Are dangerous goods, batteries, chemicals, or restricted handling declarations required?"
+            ],
+            "section_id": "cold_chain_and_dangerous_goods",
+            "status": "missing",
+            "title": "Cold-chain, dangerous goods, and special handling"
+          },
+          {
+            "questions": [
+              "Which documents and shipment facts should be sent to a forwarder for a quote?",
+              "What remains internal until customer confirmation or qualified review is attached?"
+            ],
+            "section_id": "forwarder_quote_packet",
+            "status": "blocked_missing_inputs",
+            "title": "Freight-forwarder quote packet"
+          }
+        ],
+        "freight_forwarder_packet_status": "blocked_missing_transport_inputs",
+        "freight_forwarder_questions": [
+          "What mode, route, ports, and transit constraints apply?",
+          "Are dimensions, gross weight, packaging, and palletization known?",
+          "Do Incoterms create buyer, seller, or DDP/importer responsibility?",
+          "Is temperature control, insurance, dangerous goods, or wood packaging review required?"
+        ],
+        "missing_transport_inputs": [
+          "Incoterms or delivery responsibility",
+          "Transport mode",
+          "weight and dimensions",
+          "packing list",
+          "commercial invoice",
+          "insurance decision",
+          "ports",
+          "forwarder",
+          "cold-chain requirement",
+          "dangerous goods declaration"
+        ],
+        "next_valid_move": "Collect shipment details and route to freight forwarder/broker review before transport cost or route claims.",
+        "packet_id": "packet-frozen-tuna-canada-001",
+        "packing_and_invoice_sections": [
+          "commercial invoice fields",
+          "packing list quantities",
+          "gross/net weight and dimensions",
+          "cartons, pallets, marks, and packaging type",
+          "country of origin and HS code if known"
+        ],
+        "shipment_profile": {
+          "cold_chain_status": "needs_review",
+          "commercial_invoice_status": "missing",
+          "dangerous_goods_status": "needs_declaration_or_review",
+          "dimensions_status": "missing",
+          "incoterms": "unknown",
+          "mode": "unknown",
+          "packing_list_status": "missing",
+          "weight_status": "missing"
+        },
+        "special_handling_sections": [
+          "cold-chain temperature range and monitoring",
+          "dangerous goods declaration or negative confirmation",
+          "wood packaging and fumigation/ISPM 15 review"
+        ],
+        "status": "transport_questions_ready_claims_blocked"
+      }
+    ],
+    "status": "transport_readiness_ready_with_forwarder_gates"
+  }
+}
