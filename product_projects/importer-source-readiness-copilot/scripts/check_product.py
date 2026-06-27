@@ -128,6 +128,7 @@ def main() -> int:
         [sys.executable, "scripts/run_product_operations.py"],
         [sys.executable, "scripts/export_operator_dashboard.py"],
         [sys.executable, "scripts/run_final_go_live_review.py"],
+        [sys.executable, "scripts/run_external_validation_requirements.py"],
         [sys.executable, "scripts/audit_external_package.py", "--root", "."],
     ]
     for command in commands:
@@ -183,6 +184,10 @@ def main() -> int:
     product_operations = _load_json(ROOT / "system_review_graph" / "product_operations_report.json")
     final_go_live = _load_json(ROOT / "system_review_graph" / "final_go_live_decision_report.json")
     current_sources = _load_json(ROOT / "system_review_graph" / "current_external_gate_research.json")
+    external_validation = _load_json(ROOT / "system_review_graph" / "external_validation_requirements_report.json")
+    external_validation_evidence = _load_json(ROOT / "system_review_graph" / "external_validation_evidence_requirements.json")
+    go_live_input_templates = _load_json(ROOT / "system_review_graph" / "go_live_input_templates.json")
+    go_live_input_readiness = _load_json(ROOT / "system_review_graph" / "go_live_input_readiness_report.json")
     reviewer_wave_plan = _load_json(ROOT / "system_review_graph" / "reviewer_wave_execution_plan.json")
     private_beta_smoke = _load_json(ROOT / "system_review_graph" / "private_beta_smoke_test_plan.json")
     external_review = _load_json(ROOT / "system_review_graph" / "external_review_findings_report.json")
@@ -241,6 +246,7 @@ def main() -> int:
         "src/importer_source_readiness/product_operations.py",
         "src/importer_source_readiness/ai_review_validation.py",
         "src/importer_source_readiness/external_review.py",
+        "src/importer_source_readiness/external_validation_research.py",
         "tests/test_operator_app.py",
         "tests/test_source_packet_workflow.py",
         "tests/test_customer_store.py",
@@ -248,6 +254,7 @@ def main() -> int:
         "tests/test_completion_platform.py",
         "tests/test_external_package_audit.py",
         "tests/test_external_review_workflow.py",
+        "tests/test_external_validation_research.py",
         "scripts/run_customer_workflow.py",
         "scripts/run_policy_intelligence.py",
         "scripts/run_completion_platform.py",
@@ -255,6 +262,7 @@ def main() -> int:
         "scripts/audit_external_package.py",
         "scripts/build_external_review_packet.py",
         "scripts/run_final_go_live_review.py",
+        "scripts/run_external_validation_requirements.py",
         "scripts/package_external_review.py",
         "data/customer_source_packets.json",
         "data/evidence_ledger.json",
@@ -271,6 +279,9 @@ def main() -> int:
         "OFFLINE_REPRODUCTION.md",
         "PACKAGE_AUDIT.md",
         "docs/EXTERNAL_REVIEW_PROCESS.md",
+        "docs/EXTERNAL_VALIDATION_REQUIREMENTS.md",
+        "docs/EXTERNAL_VALIDATION_REVIEWER_BRIEF.md",
+        "docs/GO_LIVE_INPUT_REQUESTS.md",
         "system_review_graph/customer_readiness_report.json",
         "system_review_graph/customer_readiness_report.md",
         "system_review_graph/customer_source_packets.json",
@@ -319,6 +330,10 @@ def main() -> int:
         "system_review_graph/product_operations_log.json",
         "system_review_graph/final_go_live_decision_report.json",
         "system_review_graph/current_external_gate_research.json",
+        "system_review_graph/external_validation_requirements_report.json",
+        "system_review_graph/external_validation_evidence_requirements.json",
+        "system_review_graph/go_live_input_templates.json",
+        "system_review_graph/go_live_input_readiness_report.json",
         "system_review_graph/reviewer_wave_execution_plan.json",
         "system_review_graph/private_beta_smoke_test_plan.json",
         "system_review_graph/external_review_findings_report.json",
@@ -337,6 +352,9 @@ def main() -> int:
         "system_review_graph/source_refresh_runs.json",
         "system_review_graph/source_refresh_report_packet-frozen-tuna-canada-001.json",
         "system_review_graph/expert_review_packet_packet-frozen-tuna-canada-001.md",
+        "output/pdf/external_validation_requirements.pdf",
+        "output/pdf/external_validation_reviewer_brief.pdf",
+        "output/pdf/go_live_input_requests.pdf",
         "migrations/0001_product_runtime.sql",
         "Dockerfile",
         "compose.yaml",
@@ -820,6 +838,70 @@ def main() -> int:
         failures.append("current external gate research artifact should be ready")
     if current_sources.get("source_count", 0) < 8:
         failures.append("current external gate research should include dated official/primary source anchors")
+    if external_validation.get("status") != "external_validation_requirements_ready_all_real_world_gates_blocked":
+        failures.append("external validation requirements report should be ready and blocked-safe")
+    if external_validation.get("gate_count") != 8:
+        failures.append("external validation requirements should cover the eight real-world gates")
+    if external_validation.get("source_count", 0) < 24:
+        failures.append("external validation requirements should include broad official/primary source coverage")
+    if external_validation.get("evidence_requirement_count", 0) < 44:
+        failures.append("external validation requirements should include detailed evidence rows")
+    if external_validation.get("required_data_category_count", 0) < 14:
+        failures.append("external validation requirements should include full-lifecycle project data needs")
+    if external_validation.get("public_launch_ready") is not False:
+        failures.append("external validation requirements must keep public launch blocked")
+    if external_validation.get("hosted_private_beta_ready") is not False:
+        failures.append("external validation requirements must keep hosted private beta blocked")
+    if external_validation.get("live_payment_ready") is not False:
+        failures.append("external validation requirements must keep live payment blocked")
+    if external_validation.get("simulated_ai_review_can_open_gate") is not False:
+        failures.append("external validation requirements must reject AI-only approvals")
+    expected_external_validation_gates = {
+        "real_external_expert_reviews",
+        "legal_privacy_security_approval",
+        "qualified_customs_trade_review",
+        "hosted_staging_production_proof",
+        "live_payment_activation",
+        "real_users_private_beta_outcomes",
+        "buyer_supplier_validation",
+        "public_go_no_go_approval",
+    }
+    if {row.get("gate_id") for row in external_validation.get("gates", [])} != expected_external_validation_gates:
+        failures.append("external validation requirements must include all expected real-world gates")
+    if any(not str(row.get("status", "")).startswith("blocked_") for row in external_validation.get("gates", [])):
+        failures.append("every external validation gate must remain blocked until real evidence is attached")
+    if external_validation_evidence.get("status") != "external_validation_evidence_requirements_ready":
+        failures.append("external validation evidence requirements should be generated")
+    if external_validation_evidence.get("evidence_requirement_count") != external_validation.get("evidence_requirement_count"):
+        failures.append("external validation evidence requirement count should match the report")
+    pdf_path = ROOT / "output" / "pdf" / "external_validation_requirements.pdf"
+    if not pdf_path.exists() or not pdf_path.read_bytes().startswith(b"%PDF"):
+        failures.append("external validation PDF should exist and be a valid PDF")
+    brief_pdf_path = ROOT / "output" / "pdf" / "external_validation_reviewer_brief.pdf"
+    if not brief_pdf_path.exists() or not brief_pdf_path.read_bytes().startswith(b"%PDF"):
+        failures.append("external validation reviewer brief PDF should exist and be a valid PDF")
+    input_pdf_path = ROOT / "output" / "pdf" / "go_live_input_requests.pdf"
+    if not input_pdf_path.exists() or not input_pdf_path.read_bytes().startswith(b"%PDF"):
+        failures.append("go-live input request PDF should exist and be a valid PDF")
+    brief_md = (ROOT / "docs" / "EXTERNAL_VALIDATION_REVIEWER_BRIEF.md").read_text(encoding="utf-8")
+    if "What I need from you" not in brief_md or "What is not approved yet" not in brief_md:
+        failures.append("external validation reviewer brief should use plain reviewer-facing wording")
+    for jargon in ("blocker", "gate"):
+        if jargon in brief_md.lower():
+            failures.append(f"external validation reviewer brief should avoid reviewer-facing jargon: {jargon}")
+    if go_live_input_templates.get("status") != "go_live_input_templates_ready":
+        failures.append("go-live input templates should be ready")
+    if go_live_input_templates.get("template_count") != 8:
+        failures.append("go-live input templates should cover the eight review areas")
+    if go_live_input_readiness.get("status") != "waiting_for_real_inputs_not_ready_yet":
+        failures.append("go-live input readiness should wait for real returned inputs")
+    if go_live_input_readiness.get("public_launch_ready") is not False:
+        failures.append("go-live input readiness must keep public launch false until real inputs arrive")
+    if go_live_input_readiness.get("missing_input_count") != 8:
+        failures.append("go-live input readiness should list the eight missing real inputs")
+    input_md = (ROOT / "docs" / "GO_LIVE_INPUT_REQUESTS.md").read_text(encoding="utf-8")
+    if "Once Inputs Are Received" not in input_md or "external_inputs/" not in input_md:
+        failures.append("go-live input request doc should explain how returned inputs are used")
     if reviewer_wave_plan.get("status") != "reviewer_wave_execution_plan_ready":
         failures.append("reviewer wave execution plan should be ready")
     if reviewer_wave_plan.get("wave_count") != 3:
@@ -1053,6 +1135,14 @@ def main() -> int:
     print(f"final_go_live_status={final_go_live['status']}")
     print(f"final_public_launch_ready={final_go_live['public_launch_ready']}")
     print(f"current_external_source_anchors={current_sources['source_count']}")
+    print(f"external_validation_status={external_validation['status']}")
+    print(f"external_validation_gates={external_validation['gate_count']}")
+    print(f"external_validation_evidence_requirements={external_validation['evidence_requirement_count']}")
+    print(f"external_validation_pdf={pdf_path.relative_to(ROOT)}")
+    print(f"external_validation_reviewer_brief_pdf={brief_pdf_path.relative_to(ROOT)}")
+    print(f"go_live_input_status={go_live_input_readiness['status']}")
+    print(f"go_live_missing_inputs={go_live_input_readiness['missing_input_count']}")
+    print(f"go_live_input_pdf={input_pdf_path.relative_to(ROOT)}")
     print(f"external_review_status={external_review['status']}")
     print(f"external_review_required={external_review['required_review_count']}")
     print(f"external_review_completed={external_review['completed_review_count']}")

@@ -1,0 +1,131 @@
+{
+  "accepted_inputs": [],
+  "generated_at": "2026-06-27T00:09:33Z",
+  "hosted_private_beta_ready": false,
+  "input_record_count": 0,
+  "live_payment_ready": false,
+  "missing_input_count": 8,
+  "missing_inputs": [
+    {
+      "minimum_input": [
+        "reviewer name",
+        "reviewed scope",
+        "decision",
+        "top issues",
+        "missing evidence",
+        "signed date"
+      ],
+      "plain_title": "Outside Expert Review",
+      "review_area": "real_external_expert_reviews",
+      "simple_question": "Have the right outside reviewers checked the right scope?",
+      "who_to_ask": "Product, security, privacy/legal, AI safety, operations, trade, and payment reviewers as relevant."
+    },
+    {
+      "minimum_input": [
+        "reviewer name",
+        "data/privacy scope",
+        "security scope",
+        "decision",
+        "missing evidence",
+        "signed date"
+      ],
+      "plain_title": "Legal, Privacy, And Security",
+      "review_area": "legal_privacy_security_approval",
+      "simple_question": "Is customer data handling, security, AI use, retention, deletion, and incident handling acceptable for the launch scope?",
+      "who_to_ask": "Privacy/legal reviewer plus application security reviewer."
+    },
+    {
+      "minimum_input": [
+        "reviewer name",
+        "country/product scope",
+        "approved wording",
+        "wording to avoid",
+        "decision",
+        "signed date"
+      ],
+      "plain_title": "Customs And Trade Language",
+      "review_area": "qualified_customs_trade_review",
+      "simple_question": "Does the product avoid unsupported customs, tariff, CFIA, sanctions, and trade-readiness claims?",
+      "who_to_ask": "Licensed customs broker or qualified trade/compliance reviewer."
+    },
+    {
+      "minimum_input": [
+        "environment URL",
+        "commit/build",
+        "smoke result",
+        "monitoring",
+        "rollback owner",
+        "decision",
+        "signed date"
+      ],
+      "plain_title": "Hosted Staging Or Production",
+      "review_area": "hosted_staging_production_proof",
+      "simple_question": "Is there real hosted evidence for the launch scope, not only localhost?",
+      "who_to_ask": "DevOps, SRE, or operations owner."
+    },
+    {
+      "minimum_input": [
+        "payment scope",
+        "Stripe mode",
+        "webhook evidence",
+        "refund/support owner",
+        "decision",
+        "signed date"
+      ],
+      "plain_title": "Payments",
+      "review_area": "live_payment_activation",
+      "simple_question": "Are live checkout, webhook, tax/refund/support, and billing wording ready, or is payment intentionally off for launch?",
+      "who_to_ask": "Billing/payment owner, tax/accounting advisor if needed, and support owner."
+    },
+    {
+      "minimum_input": [
+        "participant count",
+        "segments",
+        "task results",
+        "top issues",
+        "what changed",
+        "decision",
+        "signed date"
+      ],
+      "plain_title": "Real User Feedback",
+      "review_area": "real_users_private_beta_outcomes",
+      "simple_question": "Have real target users used the product and understood what is and is not approved?",
+      "who_to_ask": "Product/UX owner or user research owner."
+    },
+    {
+      "minimum_input": [
+        "counterparty type",
+        "problem validated",
+        "evidence summary",
+        "permission scope",
+        "decision",
+        "signed date"
+      ],
+      "plain_title": "Buyer Or Supplier Validation",
+      "review_area": "buyer_supplier_validation",
+      "simple_question": "Have real buyers, suppliers, importers, exporters, or advisors validated the problem and workflow?",
+      "who_to_ask": "Founder or commercial validation owner."
+    },
+    {
+      "minimum_input": [
+        "launch scope",
+        "production URL",
+        "remaining risks",
+        "support owner",
+        "rollback owner",
+        "decision",
+        "signed date"
+      ],
+      "plain_title": "Final Go Live Decision",
+      "review_area": "public_go_no_go_approval",
+      "simple_question": "After all other inputs are in, is this launch approved for the exact stated scope?",
+      "who_to_ask": "Named launch owner."
+    }
+  ],
+  "next_step": "Collect the missing real-person inputs, save them under external_inputs/, and rerun this script.",
+  "proof_boundary": "This report changes to go-live-ready only when real dated inputs are attached. It does not approve launch by itself.",
+  "public_launch_ready": false,
+  "ready_input_count": 0,
+  "required_input_count": 8,
+  "status": "waiting_for_real_inputs_not_ready_yet"
+}

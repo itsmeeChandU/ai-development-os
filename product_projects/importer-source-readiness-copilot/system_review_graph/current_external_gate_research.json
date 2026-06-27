@@ -8,7 +8,7 @@
     "payment_ready",
     "public_launch_ready"
   ],
-  "generated_at": "2026-06-26T17:28:42Z",
+  "generated_at": "2026-06-27T00:09:21Z",
   "next_valid_move": "Use these dated anchors in scoped external review; do not treat them as qualified approval.",
   "proof_boundary": "This artifact records dated official/primary source anchors for reviewer work. It does not prove legal, customs, tariff, CFIA, privacy, security, AI, payment, or public-launch readiness.",
   "research_mode": "official_or_primary_source_anchor_snapshot",

@@ -64,6 +64,8 @@ python3 scripts/run_customer_workflow.py
 python3 scripts/run_policy_intelligence.py
 python3 scripts/export_operator_dashboard.py
 python3 scripts/build_external_review_packet.py
+python3 scripts/run_external_validation_requirements.py
+python3 scripts/run_external_validation_requirements.py --input-dir external_inputs
 python3 scripts/audit_external_package.py --root .
 python3 scripts/check_product.py
 ```
@@ -109,9 +111,19 @@ system_review_graph/external_review_findings_report.json
 system_review_graph/external_review_blocker_ledger.jsonl
 system_review_graph/ai_assisted_external_review_plan.json
 system_review_graph/ai_assisted_external_review_findings_report.json
+system_review_graph/external_validation_requirements_report.json
+system_review_graph/external_validation_evidence_requirements.json
+system_review_graph/go_live_input_templates.json
+system_review_graph/go_live_input_readiness_report.json
 external_review_findings/EXTERNAL_REVIEW_SUMMARY.json
 EXTERNAL_REVIEW_SUMMARY.md
 docs/EXTERNAL_REVIEW_PROCESS.md
+docs/EXTERNAL_VALIDATION_REQUIREMENTS.md
+docs/EXTERNAL_VALIDATION_REVIEWER_BRIEF.md
+docs/GO_LIVE_INPUT_REQUESTS.md
+output/pdf/external_validation_reviewer_brief.pdf
+output/pdf/external_validation_requirements.pdf
+output/pdf/go_live_input_requests.pdf
 reviewer_packets/*.md
 ai_assisted_review/*.md
 ai_assisted_review/role_prompts/*.md

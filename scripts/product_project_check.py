@@ -84,6 +84,7 @@ def main() -> int:
         PROJECT / "src" / "importer_source_readiness" / "ai_review_validation.py",
         PROJECT / "src" / "importer_source_readiness" / "external_review.py",
         PROJECT / "src" / "importer_source_readiness" / "final_go_live.py",
+        PROJECT / "src" / "importer_source_readiness" / "external_validation_research.py",
         PROJECT / "tests" / "test_readiness.py",
         PROJECT / "tests" / "test_external_gates.py",
         PROJECT / "tests" / "test_continuation.py",
@@ -100,6 +101,7 @@ def main() -> int:
         PROJECT / "tests" / "test_external_package_audit.py",
         PROJECT / "tests" / "test_external_review_workflow.py",
         PROJECT / "tests" / "test_final_go_live.py",
+        PROJECT / "tests" / "test_external_validation_research.py",
         PROJECT / "scripts" / "run_readiness.py",
         PROJECT / "scripts" / "run_external_gates.py",
         PROJECT / "scripts" / "export_operator_dashboard.py",
@@ -115,6 +117,7 @@ def main() -> int:
         PROJECT / "scripts" / "build_external_review_packet.py",
         PROJECT / "scripts" / "audit_external_package.py",
         PROJECT / "scripts" / "run_final_go_live_review.py",
+        PROJECT / "scripts" / "run_external_validation_requirements.py",
         PROJECT / "scripts" / "package_external_review.py",
         PROJECT / "scripts" / "check_product.py",
         PROJECT / "docs" / "PRODUCT_AUTOMATION_RUNBOOK.md",
@@ -131,6 +134,9 @@ def main() -> int:
         PROJECT / "docs" / "OPERATOR_GUIDE.md",
         PROJECT / "docs" / "UI_UX_COMPONENT_SYSTEM.md",
         PROJECT / "docs" / "EXTERNAL_REVIEW_PROCESS.md",
+        PROJECT / "docs" / "EXTERNAL_VALIDATION_REQUIREMENTS.md",
+        PROJECT / "docs" / "EXTERNAL_VALIDATION_REVIEWER_BRIEF.md",
+        PROJECT / "docs" / "GO_LIVE_INPUT_REQUESTS.md",
         PROJECT / "system_review_graph" / "external_gate_report.json",
         PROJECT / "system_review_graph" / "continuation_plan.json",
         PROJECT / "system_review_graph" / "vc_pitch_readiness_report.json",
@@ -187,6 +193,10 @@ def main() -> int:
         PROJECT / "system_review_graph" / "product_operations_log.json",
         PROJECT / "system_review_graph" / "final_go_live_decision_report.json",
         PROJECT / "system_review_graph" / "current_external_gate_research.json",
+        PROJECT / "system_review_graph" / "external_validation_requirements_report.json",
+        PROJECT / "system_review_graph" / "external_validation_evidence_requirements.json",
+        PROJECT / "system_review_graph" / "go_live_input_templates.json",
+        PROJECT / "system_review_graph" / "go_live_input_readiness_report.json",
         PROJECT / "system_review_graph" / "reviewer_wave_execution_plan.json",
         PROJECT / "system_review_graph" / "private_beta_smoke_test_plan.json",
         PROJECT / "system_review_graph" / "external_review_findings_report.json",
@@ -209,6 +219,9 @@ def main() -> int:
         PROJECT / "system_review_graph" / "source_refresh_runs.json",
         PROJECT / "system_review_graph" / "source_refresh_report_packet-frozen-tuna-canada-001.json",
         PROJECT / "system_review_graph" / "expert_review_packet_packet-frozen-tuna-canada-001.md",
+        PROJECT / "output" / "pdf" / "external_validation_requirements.pdf",
+        PROJECT / "output" / "pdf" / "external_validation_reviewer_brief.pdf",
+        PROJECT / "output" / "pdf" / "go_live_input_requests.pdf",
         PROJECT / "investor" / "vc_pitch_deck.md",
         PROJECT / "investor" / "one_pager.md",
         PROJECT / "investor" / "demo_script.md",
@@ -284,6 +297,7 @@ def main() -> int:
         ["python3", "scripts/run_completion_platform.py"],
         ["python3", "scripts/run_product_operations.py"],
         ["python3", "scripts/run_final_go_live_review.py"],
+        ["python3", "scripts/run_external_validation_requirements.py"],
         ["python3", "scripts/build_external_review_packet.py"],
         ["python3", "scripts/export_operator_dashboard.py"],
         ["python3", "scripts/audit_external_package.py", "--root", "."],
@@ -461,6 +475,18 @@ def main() -> int:
     )
     current_sources = json.loads(
         (PROJECT / "system_review_graph" / "current_external_gate_research.json").read_text(encoding="utf-8")
+    )
+    external_validation = json.loads(
+        (PROJECT / "system_review_graph" / "external_validation_requirements_report.json").read_text(encoding="utf-8")
+    )
+    external_validation_evidence = json.loads(
+        (PROJECT / "system_review_graph" / "external_validation_evidence_requirements.json").read_text(encoding="utf-8")
+    )
+    go_live_input_templates = json.loads(
+        (PROJECT / "system_review_graph" / "go_live_input_templates.json").read_text(encoding="utf-8")
+    )
+    go_live_input_readiness = json.loads(
+        (PROJECT / "system_review_graph" / "go_live_input_readiness_report.json").read_text(encoding="utf-8")
     )
     reviewer_wave_plan = json.loads(
         (PROJECT / "system_review_graph" / "reviewer_wave_execution_plan.json").read_text(encoding="utf-8")
@@ -1057,6 +1083,87 @@ def main() -> int:
         print("Product project check: FAIL")
         print("current external gate research must include dated source anchors")
         return 1
+    if (
+        external_validation.get("status") != "external_validation_requirements_ready_all_real_world_gates_blocked"
+        or external_validation.get("gate_count") != 8
+        or external_validation.get("source_count", 0) < 24
+        or external_validation.get("evidence_requirement_count", 0) < 44
+        or external_validation.get("required_data_category_count", 0) < 14
+        or external_validation.get("public_launch_ready") is not False
+        or external_validation.get("hosted_private_beta_ready") is not False
+        or external_validation.get("live_payment_ready") is not False
+        or external_validation.get("simulated_ai_review_can_open_gate") is not False
+    ):
+        print("Product project check: FAIL")
+        print("external validation requirements must cover all real-world gates while keeping them blocked")
+        return 1
+    expected_external_validation_gates = {
+        "real_external_expert_reviews",
+        "legal_privacy_security_approval",
+        "qualified_customs_trade_review",
+        "hosted_staging_production_proof",
+        "live_payment_activation",
+        "real_users_private_beta_outcomes",
+        "buyer_supplier_validation",
+        "public_go_no_go_approval",
+    }
+    if {row.get("gate_id") for row in external_validation.get("gates", [])} != expected_external_validation_gates:
+        print("Product project check: FAIL")
+        print("external validation requirements missing expected real-world gate IDs")
+        return 1
+    if any(not str(row.get("status", "")).startswith("blocked_") for row in external_validation.get("gates", [])):
+        print("Product project check: FAIL")
+        print("external validation requirements opened a gate without real evidence")
+        return 1
+    if (
+        external_validation_evidence.get("status") != "external_validation_evidence_requirements_ready"
+        or external_validation_evidence.get("evidence_requirement_count") != external_validation.get("evidence_requirement_count")
+    ):
+        print("Product project check: FAIL")
+        print("external validation evidence requirements are missing or inconsistent")
+        return 1
+    external_validation_pdf = PROJECT / "output" / "pdf" / "external_validation_requirements.pdf"
+    if not external_validation_pdf.exists() or not external_validation_pdf.read_bytes().startswith(b"%PDF"):
+        print("Product project check: FAIL")
+        print("external validation PDF is missing or invalid")
+        return 1
+    external_validation_reviewer_brief_pdf = PROJECT / "output" / "pdf" / "external_validation_reviewer_brief.pdf"
+    if not external_validation_reviewer_brief_pdf.exists() or not external_validation_reviewer_brief_pdf.read_bytes().startswith(b"%PDF"):
+        print("Product project check: FAIL")
+        print("external validation reviewer brief PDF is missing or invalid")
+        return 1
+    go_live_input_pdf = PROJECT / "output" / "pdf" / "go_live_input_requests.pdf"
+    if not go_live_input_pdf.exists() or not go_live_input_pdf.read_bytes().startswith(b"%PDF"):
+        print("Product project check: FAIL")
+        print("go-live input request PDF is missing or invalid")
+        return 1
+    reviewer_brief_md = (PROJECT / "docs" / "EXTERNAL_VALIDATION_REVIEWER_BRIEF.md").read_text(encoding="utf-8")
+    for jargon in ("blocker", "gate"):
+        if jargon in reviewer_brief_md.lower():
+            print("Product project check: FAIL")
+            print(f"external validation reviewer brief should avoid reviewer-facing jargon: {jargon}")
+            return 1
+    if go_live_input_templates.get("status") != "go_live_input_templates_ready":
+        print("Product project check: FAIL")
+        print("go-live input templates must be ready")
+        return 1
+    if go_live_input_templates.get("template_count") != 8:
+        print("Product project check: FAIL")
+        print("go-live input templates must cover the eight review areas")
+        return 1
+    if (
+        go_live_input_readiness.get("status") != "waiting_for_real_inputs_not_ready_yet"
+        or go_live_input_readiness.get("public_launch_ready") is not False
+        or go_live_input_readiness.get("missing_input_count") != 8
+    ):
+        print("Product project check: FAIL")
+        print("go-live input readiness must wait for eight real returned inputs before public launch")
+        return 1
+    go_live_input_md = (PROJECT / "docs" / "GO_LIVE_INPUT_REQUESTS.md").read_text(encoding="utf-8")
+    if "Once Inputs Are Received" not in go_live_input_md or "external_inputs/" not in go_live_input_md:
+        print("Product project check: FAIL")
+        print("go-live input request doc must explain how returned inputs are used")
+        return 1
     if reviewer_wave_plan.get("status") != "reviewer_wave_execution_plan_ready" or reviewer_wave_plan.get("wave_count") != 3:
         print("Product project check: FAIL")
         print("reviewer wave execution plan must include three gated waves")
@@ -1270,6 +1377,14 @@ def main() -> int:
     print(f"final_go_live_status={final_go_live['status']}")
     print(f"final_public_launch_ready={final_go_live['public_launch_ready']}")
     print(f"current_external_source_anchors={current_sources['source_count']}")
+    print(f"external_validation_status={external_validation['status']}")
+    print(f"external_validation_gates={external_validation['gate_count']}")
+    print(f"external_validation_evidence_requirements={external_validation['evidence_requirement_count']}")
+    print(f"external_validation_pdf={external_validation_pdf.relative_to(PROJECT)}")
+    print(f"external_validation_reviewer_brief_pdf={external_validation_reviewer_brief_pdf.relative_to(PROJECT)}")
+    print(f"go_live_input_status={go_live_input_readiness['status']}")
+    print(f"go_live_missing_inputs={go_live_input_readiness['missing_input_count']}")
+    print(f"go_live_input_pdf={go_live_input_pdf.relative_to(PROJECT)}")
     print(f"external_review_status={external_review['status']}")
     print(f"external_review_required={external_review['required_review_count']}")
     print(f"external_review_completed={external_review['completed_review_count']}")

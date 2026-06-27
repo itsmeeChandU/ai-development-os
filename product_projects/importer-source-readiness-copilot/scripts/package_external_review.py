@@ -16,6 +16,7 @@ if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
 from importer_source_readiness.final_go_live import write_final_go_live_artifacts
+from importer_source_readiness.external_validation_research import write_external_validation_requirements
 
 EXECUTIVE_FILES = [
     "START_HERE.md",
@@ -38,8 +39,15 @@ EXECUTIVE_FILES = [
     "docs/DOCUMENT_PROCESSING.md",
     "docs/DEPLOYMENT.md",
     "docs/EXTERNAL_REVIEW_PROCESS.md",
+    "docs/EXTERNAL_VALIDATION_REQUIREMENTS.md",
+    "docs/EXTERNAL_VALIDATION_REVIEWER_BRIEF.md",
+    "docs/GO_LIVE_INPUT_REQUESTS.md",
     "system_review_graph/final_go_live_decision_report.json",
     "system_review_graph/current_external_gate_research.json",
+    "system_review_graph/external_validation_requirements_report.json",
+    "system_review_graph/external_validation_evidence_requirements.json",
+    "system_review_graph/go_live_input_templates.json",
+    "system_review_graph/go_live_input_readiness_report.json",
     "system_review_graph/reviewer_wave_execution_plan.json",
     "system_review_graph/private_beta_smoke_test_plan.json",
     "system_review_graph/all_stage_readiness_report.json",
@@ -68,6 +76,9 @@ EXECUTIVE_FILES = [
     "board/expert_review_packet.md",
     "board/launch_control_checklist.md",
     "board/board_go_live_brief.md",
+    "output/pdf/external_validation_requirements.pdf",
+    "output/pdf/external_validation_reviewer_brief.pdf",
+    "output/pdf/go_live_input_requests.pdf",
 ]
 
 TECHNICAL_DIRS = [
@@ -187,6 +198,10 @@ def write_package(zip_path: Path, files: list[Path], root: Path, package_root: s
 def package_review_bundles(root: Path, output_dir: Path, *, stamp: str | None = None) -> dict[str, dict[str, str]]:
     stamp = stamp or utc_stamp()
     write_final_go_live_artifacts(root, generated_at=datetime.now(UTC).replace(microsecond=0).isoformat().replace("+00:00", "Z"))
+    write_external_validation_requirements(
+        root,
+        generated_at=datetime.now(UTC).replace(microsecond=0).isoformat().replace("+00:00", "Z"),
+    )
     executive_files = _iter_existing(EXECUTIVE_FILES, root)
     technical_files = _iter_existing(TECHNICAL_FILES, root) + _iter_dir_files(TECHNICAL_DIRS, root)
     unique_technical = []

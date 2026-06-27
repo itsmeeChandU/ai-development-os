@@ -129,9 +129,13 @@ class FinalGoLiveTests(unittest.TestCase):
                 names = set(archive.namelist())
             self.assertTrue(any(name.endswith("START_HERE.md") for name in names))
             self.assertTrue(any(name.endswith("system_review_graph/final_go_live_decision_report.json") for name in names))
+            self.assertTrue(any(name.endswith("output/pdf/external_validation_requirements.pdf") for name in names))
+            self.assertTrue(any(name.endswith("output/pdf/external_validation_reviewer_brief.pdf") for name in names))
+            self.assertTrue(any(name.endswith("output/pdf/go_live_input_requests.pdf") for name in names))
             with zipfile.ZipFile(technical) as archive:
                 tech_names = set(archive.namelist())
             self.assertTrue(any(name.endswith("src/importer_source_readiness/final_go_live.py") for name in tech_names))
+            self.assertTrue(any(name.endswith("src/importer_source_readiness/external_validation_research.py") for name in tech_names))
             self.assertFalse(any("public_uploads/" in name for name in tech_names))
 
 

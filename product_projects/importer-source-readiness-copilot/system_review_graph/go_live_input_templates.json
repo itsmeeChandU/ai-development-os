@@ -1,0 +1,324 @@
+{
+  "allowed_decisions": [
+    "ready_for_my_area",
+    "not_ready_yet",
+    "need_more_evidence",
+    "not_my_area",
+    "send_to_different_reviewer",
+    "not_applicable_for_this_launch",
+    "go_for_public_launch"
+  ],
+  "generated_at": "2026-06-27T00:09:33Z",
+  "how_to_use": [
+    "Send the reviewer brief PDF first.",
+    "Ask each person to answer only their area.",
+    "Save each returned answer as one JSON file in external_inputs/ using the matching record_template.",
+    "Rerun scripts/run_external_validation_requirements.py --input-dir external_inputs.",
+    "Use system_review_graph/go_live_input_readiness_report.json to see whether go live is ready or what is still missing."
+  ],
+  "input_folder": "external_inputs/",
+  "proof_boundary": "Templates are ready. They are not approvals until real people return signed or dated inputs.",
+  "status": "go_live_input_templates_ready",
+  "template_count": 8,
+  "templates": [
+    {
+      "allowed_decisions": [
+        "ready_for_my_area",
+        "not_ready_yet",
+        "need_more_evidence",
+        "not_my_area",
+        "send_to_different_reviewer",
+        "not_applicable_for_this_launch",
+        "go_for_public_launch"
+      ],
+      "minimum_input": [
+        "reviewer name",
+        "reviewed scope",
+        "decision",
+        "top issues",
+        "missing evidence",
+        "signed date"
+      ],
+      "plain_title": "Outside Expert Review",
+      "ready_answer": "Ready for my area",
+      "record_template": {
+        "claims_the_product_must_not_make": [],
+        "decision": "need_more_evidence",
+        "evidence_links_or_files": [],
+        "evidence_missing": [],
+        "review_area": "real_external_expert_reviews",
+        "reviewer_name": "",
+        "reviewer_role": "",
+        "scope_reviewed": "",
+        "signed_at": "",
+        "top_issues": [],
+        "what_would_make_this_ready": ""
+      },
+      "review_area": "real_external_expert_reviews",
+      "simple_question": "Have the right outside reviewers checked the right scope?",
+      "who_to_ask": "Product, security, privacy/legal, AI safety, operations, trade, and payment reviewers as relevant."
+    },
+    {
+      "allowed_decisions": [
+        "ready_for_my_area",
+        "not_ready_yet",
+        "need_more_evidence",
+        "not_my_area",
+        "send_to_different_reviewer",
+        "not_applicable_for_this_launch",
+        "go_for_public_launch"
+      ],
+      "minimum_input": [
+        "reviewer name",
+        "data/privacy scope",
+        "security scope",
+        "decision",
+        "missing evidence",
+        "signed date"
+      ],
+      "plain_title": "Legal, Privacy, And Security",
+      "ready_answer": "Ready for my area",
+      "record_template": {
+        "claims_the_product_must_not_make": [],
+        "decision": "need_more_evidence",
+        "evidence_links_or_files": [],
+        "evidence_missing": [],
+        "review_area": "legal_privacy_security_approval",
+        "reviewer_name": "",
+        "reviewer_role": "",
+        "scope_reviewed": "",
+        "signed_at": "",
+        "top_issues": [],
+        "what_would_make_this_ready": ""
+      },
+      "review_area": "legal_privacy_security_approval",
+      "simple_question": "Is customer data handling, security, AI use, retention, deletion, and incident handling acceptable for the launch scope?",
+      "who_to_ask": "Privacy/legal reviewer plus application security reviewer."
+    },
+    {
+      "allowed_decisions": [
+        "ready_for_my_area",
+        "not_ready_yet",
+        "need_more_evidence",
+        "not_my_area",
+        "send_to_different_reviewer",
+        "not_applicable_for_this_launch",
+        "go_for_public_launch"
+      ],
+      "minimum_input": [
+        "reviewer name",
+        "country/product scope",
+        "approved wording",
+        "wording to avoid",
+        "decision",
+        "signed date"
+      ],
+      "plain_title": "Customs And Trade Language",
+      "ready_answer": "Ready for my area or not applicable for this launch",
+      "record_template": {
+        "claims_the_product_must_not_make": [],
+        "decision": "need_more_evidence",
+        "evidence_links_or_files": [],
+        "evidence_missing": [],
+        "review_area": "qualified_customs_trade_review",
+        "reviewer_name": "",
+        "reviewer_role": "",
+        "scope_reviewed": "",
+        "signed_at": "",
+        "top_issues": [],
+        "what_would_make_this_ready": ""
+      },
+      "review_area": "qualified_customs_trade_review",
+      "simple_question": "Does the product avoid unsupported customs, tariff, CFIA, sanctions, and trade-readiness claims?",
+      "who_to_ask": "Licensed customs broker or qualified trade/compliance reviewer."
+    },
+    {
+      "allowed_decisions": [
+        "ready_for_my_area",
+        "not_ready_yet",
+        "need_more_evidence",
+        "not_my_area",
+        "send_to_different_reviewer",
+        "not_applicable_for_this_launch",
+        "go_for_public_launch"
+      ],
+      "minimum_input": [
+        "environment URL",
+        "commit/build",
+        "smoke result",
+        "monitoring",
+        "rollback owner",
+        "decision",
+        "signed date"
+      ],
+      "plain_title": "Hosted Staging Or Production",
+      "ready_answer": "Ready for my area",
+      "record_template": {
+        "claims_the_product_must_not_make": [],
+        "decision": "need_more_evidence",
+        "evidence_links_or_files": [],
+        "evidence_missing": [],
+        "review_area": "hosted_staging_production_proof",
+        "reviewer_name": "",
+        "reviewer_role": "",
+        "scope_reviewed": "",
+        "signed_at": "",
+        "top_issues": [],
+        "what_would_make_this_ready": ""
+      },
+      "review_area": "hosted_staging_production_proof",
+      "simple_question": "Is there real hosted evidence for the launch scope, not only localhost?",
+      "who_to_ask": "DevOps, SRE, or operations owner."
+    },
+    {
+      "allowed_decisions": [
+        "ready_for_my_area",
+        "not_ready_yet",
+        "need_more_evidence",
+        "not_my_area",
+        "send_to_different_reviewer",
+        "not_applicable_for_this_launch",
+        "go_for_public_launch"
+      ],
+      "minimum_input": [
+        "payment scope",
+        "Stripe mode",
+        "webhook evidence",
+        "refund/support owner",
+        "decision",
+        "signed date"
+      ],
+      "plain_title": "Payments",
+      "ready_answer": "Ready for my area or not applicable for this launch",
+      "record_template": {
+        "claims_the_product_must_not_make": [],
+        "decision": "need_more_evidence",
+        "evidence_links_or_files": [],
+        "evidence_missing": [],
+        "review_area": "live_payment_activation",
+        "reviewer_name": "",
+        "reviewer_role": "",
+        "scope_reviewed": "",
+        "signed_at": "",
+        "top_issues": [],
+        "what_would_make_this_ready": ""
+      },
+      "review_area": "live_payment_activation",
+      "simple_question": "Are live checkout, webhook, tax/refund/support, and billing wording ready, or is payment intentionally off for launch?",
+      "who_to_ask": "Billing/payment owner, tax/accounting advisor if needed, and support owner."
+    },
+    {
+      "allowed_decisions": [
+        "ready_for_my_area",
+        "not_ready_yet",
+        "need_more_evidence",
+        "not_my_area",
+        "send_to_different_reviewer",
+        "not_applicable_for_this_launch",
+        "go_for_public_launch"
+      ],
+      "minimum_input": [
+        "participant count",
+        "segments",
+        "task results",
+        "top issues",
+        "what changed",
+        "decision",
+        "signed date"
+      ],
+      "plain_title": "Real User Feedback",
+      "ready_answer": "Ready for my area",
+      "record_template": {
+        "claims_the_product_must_not_make": [],
+        "decision": "need_more_evidence",
+        "evidence_links_or_files": [],
+        "evidence_missing": [],
+        "review_area": "real_users_private_beta_outcomes",
+        "reviewer_name": "",
+        "reviewer_role": "",
+        "scope_reviewed": "",
+        "signed_at": "",
+        "top_issues": [],
+        "what_would_make_this_ready": ""
+      },
+      "review_area": "real_users_private_beta_outcomes",
+      "simple_question": "Have real target users used the product and understood what is and is not approved?",
+      "who_to_ask": "Product/UX owner or user research owner."
+    },
+    {
+      "allowed_decisions": [
+        "ready_for_my_area",
+        "not_ready_yet",
+        "need_more_evidence",
+        "not_my_area",
+        "send_to_different_reviewer",
+        "not_applicable_for_this_launch",
+        "go_for_public_launch"
+      ],
+      "minimum_input": [
+        "counterparty type",
+        "problem validated",
+        "evidence summary",
+        "permission scope",
+        "decision",
+        "signed date"
+      ],
+      "plain_title": "Buyer Or Supplier Validation",
+      "ready_answer": "Ready for my area or not applicable for this launch",
+      "record_template": {
+        "claims_the_product_must_not_make": [],
+        "decision": "need_more_evidence",
+        "evidence_links_or_files": [],
+        "evidence_missing": [],
+        "review_area": "buyer_supplier_validation",
+        "reviewer_name": "",
+        "reviewer_role": "",
+        "scope_reviewed": "",
+        "signed_at": "",
+        "top_issues": [],
+        "what_would_make_this_ready": ""
+      },
+      "review_area": "buyer_supplier_validation",
+      "simple_question": "Have real buyers, suppliers, importers, exporters, or advisors validated the problem and workflow?",
+      "who_to_ask": "Founder or commercial validation owner."
+    },
+    {
+      "allowed_decisions": [
+        "ready_for_my_area",
+        "not_ready_yet",
+        "need_more_evidence",
+        "not_my_area",
+        "send_to_different_reviewer",
+        "not_applicable_for_this_launch",
+        "go_for_public_launch"
+      ],
+      "minimum_input": [
+        "launch scope",
+        "production URL",
+        "remaining risks",
+        "support owner",
+        "rollback owner",
+        "decision",
+        "signed date"
+      ],
+      "plain_title": "Final Go Live Decision",
+      "ready_answer": "Go for public launch",
+      "record_template": {
+        "claims_the_product_must_not_make": [],
+        "decision": "need_more_evidence",
+        "evidence_links_or_files": [],
+        "evidence_missing": [],
+        "review_area": "public_go_no_go_approval",
+        "reviewer_name": "",
+        "reviewer_role": "",
+        "scope_reviewed": "",
+        "signed_at": "",
+        "top_issues": [],
+        "what_would_make_this_ready": ""
+      },
+      "review_area": "public_go_no_go_approval",
+      "simple_question": "After all other inputs are in, is this launch approved for the exact stated scope?",
+      "who_to_ask": "Named launch owner."
+    }
+  ]
+}
