@@ -266,7 +266,7 @@
     "status": "local_business_logic_implemented_external_gates_preserved"
   },
   "execution_report": "system_review_graph/product_operations_report.json",
-  "generated_at": "2026-06-28T15:20:03+00:00",
+  "generated_at": "2026-06-28T15:40:34+00:00",
   "hosted_beta_control_contract": {
     "controls": [
       {
@@ -1842,11 +1842,11 @@
             "market_access_approved"
           ],
           "competitor_source_countries": [
-            "China",
-            "Vietnam",
             "European Union",
             "United States",
-            "Mexico"
+            "Mexico",
+            "China",
+            "Vietnam"
           ],
           "destination": "Canada",
           "exporter_origin": "Vietnam",
@@ -2039,7 +2039,7 @@
             "evidence_id": "evidence-frozen-tuna-cid-reference",
             "freshness_status": "source_fresh_reference_only",
             "human_review_status": "not_reviewed",
-            "last_verified_at": "2026-06-28T15:19:58+00:00",
+            "last_verified_at": "2026-06-28T15:40:29+00:00",
             "packet_impact": "blocks_current_source_claims",
             "source_url": "https://ised-isde.canada.ca/site/ised/en/research-and-business-intelligence/canadian-importers-database"
           },
@@ -2049,7 +2049,7 @@
             "evidence_id": "evidence-frozen-tuna-cbsa-import-workflow",
             "freshness_status": "source_fresh_reference_only",
             "human_review_status": "not_reviewed",
-            "last_verified_at": "2026-06-28T15:19:58+00:00",
+            "last_verified_at": "2026-06-28T15:40:29+00:00",
             "packet_impact": "blocks_current_source_claims",
             "source_url": "https://www.cbsa-asfc.gc.ca/import/menu-eng.html"
           },
@@ -2059,7 +2059,7 @@
             "evidence_id": "evidence-frozen-tuna-cfia-airs-reference",
             "freshness_status": "source_fresh_reference_only",
             "human_review_status": "not_reviewed",
-            "last_verified_at": "2026-06-28T15:19:58+00:00",
+            "last_verified_at": "2026-06-28T15:40:29+00:00",
             "packet_impact": "blocks_current_source_claims",
             "source_url": "https://inspection.canada.ca/en/importing-food-plants-animals/airs"
           }

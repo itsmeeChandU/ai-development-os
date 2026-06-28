@@ -50,6 +50,7 @@ This document describes the current non-functional requirements and boundaries f
 | NFR-22 | Require real credentials and evidence before reviewer findings affect claims | Implemented locally; reviewer signoff and scope-limited approval remain blocked until real evidence is attached | `production_reviewer_profiles.json`, `production_review_finding_contracts.json` |
 | NFR-23 | Keep report exports review-safe | Implemented locally; reports include citations, version, draft watermark, review status, and cannot hide blocked claims | `production_report_exports.json`, `production_report_citations.json` |
 | NFR-24 | Keep portal workflows plain, route-covered, and gate-closed | Implemented locally; UX/accessibility/mobile testing and public launch approval remain external gates | `production_portal_workflow_manifest.json`, `production_portal_ux_checks.json`, `production_portal_gate_controls.json` |
+| NFR-25 | Keep enterprise APIs tenant-scoped, rate-limit-ready, and live-effect closed | Implemented locally; hosted auth, live API keys, webhook delivery, enterprise terms, and security review remain external gates | `production_enterprise_api_manifest.json`, `production_enterprise_rbac_policy.json`, `production_enterprise_webhook_policy.json` |
 
 ## Security
 
@@ -151,6 +152,8 @@ Implemented now:
 - policy change impact report
 - generated readiness and blocker reports
 - proof commands in product and root checks
+- enterprise audit export policy for packets, evidence, reports, claim-gate
+  decisions, score records, review requests, audit events, and source refreshes
 
 Still required:
 
@@ -170,15 +173,38 @@ Implemented now:
 - local JSON and SQLite artifacts
 - deterministic local report generation
 - local app route contract
+- local enterprise usage-limit contracts for API requests, packets, report
+  exports, AI safe summaries, webhook deliveries, and real-file upload bytes
 
 Still required before production:
 
 - file-size limits for uploads
 - request-size limits
+- enforced hosted API rate limits and abuse monitoring
 - load testing for report generation
 - storage growth policy
 - background job policy for OCR or heavy processing
 - cost controls for AI/model usage
+
+## Enterprise API Security
+
+Implemented now:
+
+- 17 enterprise API contracts mapped to local routes
+- RBAC permission matrix
+- tenant filtering and object-level authorization requirements
+- API-key fingerprints only, with no raw secret returned
+- webhook event contracts with delivery disabled
+- white-label report policy that forbids removing blocked claims, citations,
+  draft watermark, and claim-gate language
+
+Still required before enterprise hosted use:
+
+- managed authentication and SSO/MFA decisions
+- secure API-token issuance, storage, rotation, and revocation
+- enforced rate limits and abuse monitoring
+- customer-approved webhook endpoints, signing secrets, retries, and monitoring
+- enterprise terms, support policy, retention policy, and security review
 
 ## Accessibility And Usability
 

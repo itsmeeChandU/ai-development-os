@@ -1,0 +1,35 @@
+{
+  "research_references": [
+    {
+      "product_use": "API authorization, object access, resource-use, and inventory controls for enterprise endpoints.",
+      "source_id": "owasp-api-security-2023",
+      "source_name": "OWASP API Security Top 10 2023",
+      "url": "https://owasp.org/API-Security/editions/2023/en/0x11-t10/"
+    },
+    {
+      "product_use": "Future hosted API authorization model and client credential review.",
+      "source_id": "ietf-rfc-6749-oauth2",
+      "source_name": "IETF RFC 6749 OAuth 2.0 Authorization Framework",
+      "url": "https://www.rfc-editor.org/rfc/rfc6749"
+    },
+    {
+      "product_use": "Bearer-token handling boundary for API-key and access-token contracts.",
+      "source_id": "ietf-rfc-6750-bearer",
+      "source_name": "IETF RFC 6750 OAuth 2.0 Bearer Token Usage",
+      "url": "https://www.rfc-editor.org/rfc/rfc6750"
+    },
+    {
+      "product_use": "Access control, audit/accountability, system integrity, and privacy control framing.",
+      "source_id": "nist-sp-800-53-rev5",
+      "source_name": "NIST SP 800-53 Rev. 5",
+      "url": "https://csrc.nist.gov/pubs/sp/800/53/r5/upd1/final"
+    },
+    {
+      "product_use": "Future enterprise identity provisioning boundary; not active locally.",
+      "source_id": "ietf-rfc-7644-scim",
+      "source_name": "IETF RFC 7644 SCIM Protocol",
+      "url": "https://www.rfc-editor.org/rfc/rfc7644"
+    }
+  ],
+  "status": "production_enterprise_research_references_ready"
+}

@@ -58,6 +58,7 @@ The product helps users prepare trade readiness packets, organize evidence, revi
 | FR-30 | Route scoped expert reviews without recorded approval | Implemented locally with reviewer lanes, credential requirements, draft requests, finding templates, and gate impacts | `production_expert_review_network_manifest.json`, `production_review_requests.json` |
 | FR-31 | Export cited packet reports | Implemented locally with 12 report types, JSON/HTML/PDF exports, source/evidence citations, and blocked-claim sections | `production_reports_engine_manifest.json`, `production_report_exports.json` |
 | FR-32 | Provide route-covered portal workflows for public, exporter, importer, reviewer, operator/admin, and enterprise users | Implemented locally with route coverage, UX review hooks, and closed external gates | `production_portal_workflow_manifest.json`, `production_portal_route_matrix.json` |
+| FR-33 | Provide enterprise SaaS/API contracts for broker, advisor, and team workflows | Implemented locally with API contracts, RBAC policy, workspace controls, API-key fingerprints, webhook contracts, audit export, usage limits, and white-label report rules | `production_enterprise_api_manifest.json`, `production_enterprise_api_contracts.json` |
 
 ## Current Main Workflows
 
@@ -163,6 +164,22 @@ Every portal workflow maps to existing local UI/API routes. The workflow engine
 keeps approval, ready-to-ship, tariff-confirmed, buyer-validated,
 supplier-verified, public-launch, unrestricted-upload, and live-payment actions
 blocked.
+
+### Enterprise API Platform
+
+1. Broker, advisor, or enterprise user can review a local API contract for
+   packets, evidence, documents, sources, scores, blocked claims, reviews,
+   reports, AI safe summaries, team workspace, billing usage, audit, API keys,
+   and webhooks.
+2. Product maps every API contract to an existing local route.
+3. Product requires authentication, tenant filtering, object-level
+   authorization, claim-gate reuse, and rate-limit proof before hosted use.
+4. Product records API-key fingerprints only; it does not issue live secrets.
+5. Product records webhook event contracts only; it does not deliver webhooks.
+6. Product keeps white-label reports from removing blocked claims, citations,
+   draft watermark, or claim-gate language.
+7. Hosted enterprise auth, live keys, webhook delivery, unrestricted uploads,
+   enterprise terms, security review, and public launch remain blocked.
 
 ### Expert Review
 

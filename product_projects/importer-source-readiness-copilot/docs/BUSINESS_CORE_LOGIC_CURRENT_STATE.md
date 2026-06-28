@@ -287,6 +287,46 @@ Portal workflow completion is local route and gate coverage only. It does not
 record real UX testing, accessibility signoff, mobile review, hosted proof,
 unrestricted uploads, live payment activation, or public launch approval.
 
+## Enterprise API Business Logic
+
+The production enterprise API platform now turns the same packet, evidence,
+claim-gate, report, audit, workspace, and RBAC rules into 17 local enterprise
+API contracts.
+
+The API contracts cover:
+
+- packet creation and packet read
+- evidence attachment
+- document upload contract with real-file gates closed
+- official-source refresh
+- separate packet scores
+- blocked claims
+- scoped review request drafting
+- report generation/listing
+- AI safe summary with no live model call
+- team workspace, billing usage, and audit export
+- API-key and webhook contracts with live delivery closed
+
+Every enterprise API contract requires authentication, tenant filtering,
+object-level authorization, claim-gate reuse, and rate-limit proof before
+hosting. API outputs cannot bypass blocked claims, hide report uncertainty,
+issue live API secrets, send webhooks, approve white-label claims, accept
+unrestricted files, or open external effects.
+
+Enterprise proof is stored in:
+
+- `system_review_graph/production_enterprise_api_manifest.json`
+- `system_review_graph/production_enterprise_api_contracts.json`
+- `system_review_graph/production_enterprise_rbac_policy.json`
+- `system_review_graph/production_enterprise_workspace_controls.json`
+- `system_review_graph/production_enterprise_webhook_policy.json`
+- `system_review_graph/production_enterprise_audit_export_policy.json`
+- `system_review_graph/production_enterprise_research_references.json`
+
+This is a local enterprise/API contract. It does not record hosted enterprise
+auth, live API-key issuance, webhook delivery, enterprise customer terms,
+security approval, or public launch approval.
+
 ## Reviewer Signoff Rule
 
 Final rule: `no reviewer lane, no claim lane`

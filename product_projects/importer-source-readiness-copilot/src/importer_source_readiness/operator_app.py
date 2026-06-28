@@ -74,6 +74,7 @@ API_ROUTES = {
     "/api/billing/usage": "system_review_graph/billing_usage_ledger.json",
     "/api/agent-api": "system_review_graph/agent_api_manifest.json",
     "/api/agent-api/gateway": "system_review_graph/agent_api_gateway_contract.json",
+    "/api/enterprise-platform": "system_review_graph/production_enterprise_api_manifest.json",
     "/api/traffic-pages": "system_review_graph/traffic_pages_manifest.json",
     "/api/transport-readiness": "system_review_graph/transport_readiness_report.json",
     "/api/stages": "system_review_graph/all_stage_readiness_report.json",
@@ -3530,6 +3531,28 @@ def build_operator_app_handler(repo_root: Path) -> type[BaseHTTPRequestHandler]:
             if path == "/api/sources":
                 self._send_json({"sources": workflow.get("official_sources", [])})
                 return
+            if path == "/api/api-keys":
+                enterprise = _load_graph_json(repo_root, "production_enterprise_api_manifest.json")
+                self._send_json(
+                    {
+                        "api_keys": enterprise.get("api_key_records", []),
+                        "live_keys_issued": False,
+                        "raw_secret_returned": False,
+                        "proof_boundary": "Local API-key records expose scopes and fingerprints only; real key issuance requires hosted auth/security approval.",
+                    }
+                )
+                return
+            if path == "/api/webhooks":
+                enterprise = _load_graph_json(repo_root, "production_enterprise_api_manifest.json")
+                self._send_json(
+                    {
+                        "webhooks": enterprise.get("webhook_records", []),
+                        "delivery_enabled": False,
+                        "external_effects_created": False,
+                        "proof_boundary": "Webhook event contracts exist locally; outbound delivery remains disabled until security and customer approval gates pass.",
+                    }
+                )
+                return
             if path == "/api/audit":
                 visible_ids = {str(packet.get("packet_id")) for packet in packets}
                 events = [
@@ -3610,10 +3633,46 @@ def build_operator_app_handler(repo_root: Path) -> type[BaseHTTPRequestHandler]:
                     self._send_json({"evidence": packet.get("evidence_items", [])})
                 elif view == "blockers":
                     self._send_json({"blockers": packet.get("blockers", []), "groups": packet.get("blocker_groups", [])})
+                elif view == "blocked-claims":
+                    claim_gate = _load_graph_json(repo_root, "production_evidence_claim_gate_manifest.json")
+                    decisions = [
+                        row
+                        for row in claim_gate.get("claim_gate_decisions", [])
+                        if str(row.get("packet_id") or packet_id) == packet_id
+                    ]
+                    blocked = [
+                        row
+                        for row in decisions
+                        if row.get("can_show_claim") is False
+                        or str(row.get("claim_level") or "").startswith("blocked")
+                        or row.get("forbidden_external_claim") is True
+                    ]
+                    self._send_json(
+                        {
+                            "blocked_claims": blocked,
+                            "claims_opened": False,
+                            "proof_boundary": "Blocked claims are filtered through the evidence claim-gate engine and remain preparation-only.",
+                        }
+                    )
                 elif view == "claims":
                     self._send_json({"claims": [row for row in runtime["claims"] if row.get("packet_id") == packet_id]})
                 elif view == "gates":
                     self._send_json({"gates": [row for row in runtime["claims"] if row.get("packet_id") == packet_id]})
+                elif view == "scores":
+                    scoring = _load_graph_json(repo_root, "production_decision_scoring_manifest.json")
+                    scores = [
+                        row
+                        for row in scoring.get("decision_score_records", [])
+                        if str(row.get("packet_id") or packet_id) == packet_id
+                    ]
+                    self._send_json(
+                        {
+                            "scores": scores,
+                            "single_global_readiness_score": False,
+                            "claims_opened": False,
+                            "proof_boundary": "Scores explain packet blockers and caps; they do not approve trade action.",
+                        }
+                    )
                 elif view == "ai-reviews":
                     self._send_json({"ai_reviews": [row for row in workflow.get("ai_review_runs", []) if row.get("packet_id") == packet_id]})
                 elif view == "review-requests":
@@ -3683,6 +3742,140 @@ def build_operator_app_handler(repo_root: Path) -> type[BaseHTTPRequestHandler]:
                 self.send_response(HTTPStatus.NO_CONTENT)
                 self.send_header("Set-Cookie", "isr_session=; Max-Age=0; HttpOnly; SameSite=Lax")
                 self.end_headers()
+                return
+            if path == "/api/documents/upload":
+                workflow = _customer_workflow(repo_root)
+                packet_id = str(fields.get("packet_id") or "")
+                packet = _packet_lookup(workflow).get(packet_id) if packet_id else None
+                if packet_id and (packet is None or not can_access_packet(actor, packet)):
+                    self.send_error(HTTPStatus.FORBIDDEN, "Packet is outside this organization")
+                    return
+                self._send_json(
+                    {
+                        "status": "document_upload_contract_ready_real_files_blocked",
+                        "packet_id": packet_id or None,
+                        "metadata_recorded": bool(fields),
+                        "real_file_accepted": False,
+                        "unrestricted_uploads_enabled": False,
+                        "required_before_real_files": [
+                            "managed auth",
+                            "private object storage",
+                            "malware scanning",
+                            "retention and deletion approval",
+                            "privacy and security review",
+                        ],
+                        "next_valid_move": "Use packet evidence metadata or public quick-check upload only for local review until hosted upload gates pass.",
+                    }
+                )
+                return
+            if path == "/api/sources/refresh":
+                workflow = _customer_workflow(repo_root)
+                packet_id = str(fields.get("packet_id") or "")
+                if not packet_id and workflow.get("packets"):
+                    packet_id = str(workflow["packets"][0].get("packet_id"))
+                packet = _packet_lookup(workflow).get(packet_id)
+                if packet is None:
+                    self.send_error(HTTPStatus.NOT_FOUND, "Packet not found")
+                    return
+                if not can_access_packet(actor, packet):
+                    self.send_error(HTTPStatus.FORBIDDEN, "Packet is outside this organization")
+                    return
+                packets, evidence_rows = _load_mutable_customer_rows(repo_root)
+                evidence_rows, refresh_report = refresh_packet_sources(
+                    packet_id=packet_id,
+                    evidence_items=evidence_rows,
+                    actor=str(actor.get("id")),
+                )
+                write_json(refresh_report, repo_root / "system_review_graph" / f"source_refresh_report_{packet_id}.json")
+                _write_customer_workflow(repo_root, packets, evidence_rows)
+                self._send_json({**refresh_report, "proves_current_law": False, "claims_opened": False})
+                return
+            if path == "/api/reviews":
+                workflow = _customer_workflow(repo_root)
+                packet_id = str(fields.get("packet_id") or "")
+                packet = _packet_lookup(workflow).get(packet_id)
+                if packet is None:
+                    self.send_error(HTTPStatus.NOT_FOUND, "Packet not found")
+                    return
+                if not can_access_packet(actor, packet):
+                    self.send_error(HTTPStatus.FORBIDDEN, "Packet is outside this organization")
+                    return
+                runtime = build_runtime_state(workflow)
+                requests = [row for row in runtime["review_requests"] if row.get("packet_id") == packet_id]
+                self._send_json(
+                    {
+                        "status": "review_request_drafted_local_no_external_contact",
+                        "packet_id": packet_id,
+                        "review_requests": requests,
+                        "external_contact_created": False,
+                        "claims_opened": False,
+                    }
+                )
+                return
+            if path == "/api/reports":
+                workflow = _customer_workflow(repo_root)
+                packet_id = str(fields.get("packet_id") or "")
+                packet = _packet_lookup(workflow).get(packet_id)
+                if packet is None:
+                    self.send_error(HTTPStatus.NOT_FOUND, "Packet not found")
+                    return
+                if not can_access_packet(actor, packet):
+                    self.send_error(HTTPStatus.FORBIDDEN, "Packet is outside this organization")
+                    return
+                runtime = build_runtime_state(workflow)
+                reports = [row for row in runtime["report_exports"] if row.get("packet_id") == packet_id]
+                self._send_json(
+                    {
+                        "status": "report_generation_contract_ready_local",
+                        "packet_id": packet_id,
+                        "reports": reports,
+                        "can_hide_blocked_claims": False,
+                        "claims_opened": False,
+                        "external_effects_created": False,
+                    }
+                )
+                return
+            if path == "/api/ai/safe-summary":
+                workflow = _customer_workflow(repo_root)
+                packet_id = str(fields.get("packet_id") or "")
+                packet = _packet_lookup(workflow).get(packet_id)
+                if packet is None:
+                    self.send_error(HTTPStatus.NOT_FOUND, "Packet not found")
+                    return
+                if not can_access_packet(actor, packet):
+                    self.send_error(HTTPStatus.FORBIDDEN, "Packet is outside this organization")
+                    return
+                self._send_json(
+                    {
+                        "status": "safe_summary_ready_local_no_model_call",
+                        "summary": _chatgpt_safe_summary(packet),
+                        "live_model_call_made": False,
+                        "can_open_gate": False,
+                    }
+                )
+                return
+            if path == "/api/api-keys":
+                self._send_json(
+                    {
+                        "status": "api_key_contract_recorded_local_no_live_secret",
+                        "organization_id": actor.get("organization_id"),
+                        "raw_secret_returned": False,
+                        "live_key_issued": False,
+                        "required_before_live_key": ["managed auth", "secret storage", "rate limits", "security review"],
+                    }
+                )
+                return
+            if path == "/api/webhooks":
+                self._send_json(
+                    {
+                        "status": "webhook_contract_recorded_local_delivery_disabled",
+                        "organization_id": actor.get("organization_id"),
+                        "event_types": ["packet.updated", "report.generated", "review.finding_submitted"],
+                        "delivery_enabled": False,
+                        "external_effects_created": False,
+                        "required_before_delivery": ["customer endpoint approval", "signing secret storage", "retry policy", "security review"],
+                    }
+                )
                 return
             if path == "/api/orgs/current/ai-policy/test-model-endpoint":
                 policy = ai_policy_for_org(str(actor.get("organization_id") or "org-importer-demo"))

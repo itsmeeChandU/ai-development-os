@@ -1400,7 +1400,7 @@
     }
   ],
   "external_effects_created": false,
-  "generated_at": "2026-06-28T15:20:04+00:00",
+  "generated_at": "2026-06-28T15:40:35+00:00",
   "pipeline_policy": {
     "accepted_file_types": [
       "application/pdf"

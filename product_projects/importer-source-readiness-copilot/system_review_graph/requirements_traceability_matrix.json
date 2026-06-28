@@ -234,6 +234,20 @@
     },
     {
       "artifacts": [
+        "production_enterprise_api_manifest.json",
+        "production_enterprise_api_contracts.json"
+      ],
+      "boundary": "Enterprise APIs, keys, webhooks, audit exports, usage limits, and white-label report rules are local contracts; hosted auth, live keys, webhook delivery, real customer terms, and security review remain external gates.",
+      "id": "REQ-ENTERPRISE-01",
+      "name": "Enterprise API and workspace contracts",
+      "proof": [
+        "tests/test_production_enterprise_api_platform.py",
+        "scripts/check_product.py"
+      ],
+      "status": "implemented_local_contracts_with_external_gates"
+    },
+    {
+      "artifacts": [
         "public_trade_readiness_manifest.json",
         "public_upload_manifest.json",
         "report_exports.json"

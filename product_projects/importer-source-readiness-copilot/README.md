@@ -78,6 +78,7 @@ python3 scripts/run_production_ai_copilot_engine.py
 python3 scripts/run_production_expert_review_network.py
 python3 scripts/run_production_reports_engine.py
 python3 scripts/run_production_portal_workflow_engine.py
+python3 scripts/run_production_enterprise_api_platform.py
 python3 scripts/audit_external_package.py --root .
 python3 scripts/check_product.py
 ```
@@ -165,6 +166,13 @@ system_review_graph/production_portal_workflow_manifest.json
 system_review_graph/production_portal_route_matrix.json
 system_review_graph/production_portal_ux_checks.json
 system_review_graph/production_portal_gate_controls.json
+system_review_graph/production_enterprise_api_manifest.json
+system_review_graph/production_enterprise_api_contracts.json
+system_review_graph/production_enterprise_rbac_policy.json
+system_review_graph/production_enterprise_workspace_controls.json
+system_review_graph/production_enterprise_webhook_policy.json
+system_review_graph/production_enterprise_audit_export_policy.json
+system_review_graph/production_enterprise_research_references.json
 system_review_graph/production_redevelopment_plan.json
 system_review_graph/production_research_anchors.json
 data/official_sample_documents/canada/*.pdf
@@ -185,6 +193,7 @@ docs/PRODUCTION_AI_COPILOT_ENGINE.md
 docs/PRODUCTION_EXPERT_REVIEW_NETWORK.md
 docs/PRODUCTION_REPORTS_ENGINE.md
 docs/PRODUCTION_PORTAL_WORKFLOWS.md
+docs/PRODUCTION_ENTERPRISE_API_PLATFORM.md
 docs/PRODUCTION_MARKET_INTELLIGENCE_ENGINE.md
 docs/PRODUCTION_REDEVELOPMENT.md
 output/pdf/external_validation_reviewer_brief.pdf
@@ -235,6 +244,18 @@ enterprise portal workflows are mapped to real local UI/API routes with a
 four-choice business-owner first screen. It does not mean UX testing,
 accessibility signoff, mobile review, hosted proof, public launch approval,
 unrestricted uploads, or live payments are complete.
+
+The expected production enterprise API status is:
+
+```text
+production_enterprise_api_platform_ready_local_contracts_external_gates_closed
+```
+
+That means enterprise API contracts, RBAC policy, workspace controls, API-key
+fingerprints, webhook contracts, audit export policy, usage limits, and
+white-label report rules exist locally and follow the same claim gates. It does
+not mean hosted enterprise auth, live API keys, webhook delivery, unrestricted
+uploads, enterprise terms, security approval, or public launch are complete.
 
 That means reviewer-specific packets, blank findings templates, and external
 review blocker rows are ready. It does not mean external review is complete.

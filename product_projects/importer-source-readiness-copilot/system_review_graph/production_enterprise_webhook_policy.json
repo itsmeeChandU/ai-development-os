@@ -1,0 +1,75 @@
+{
+  "api_key_records": [
+    {
+      "api_key_id": "api-key-contract:org-importer-demo",
+      "fingerprint": "327a34a243825d85",
+      "hosted_auth_required": true,
+      "live_key_issued": false,
+      "organization_id": "org-importer-demo",
+      "rate_limit_policy": "100 requests per minute local contract; production limits need hosted proof",
+      "raw_secret_returned": false,
+      "rotation_days": 90,
+      "scopes": [
+        "packets:read",
+        "packets:write",
+        "reports:read",
+        "reviews:write"
+      ],
+      "secret_storage_required": true
+    },
+    {
+      "api_key_id": "api-key-contract:org-other-demo",
+      "fingerprint": "8713538bf987d94a",
+      "hosted_auth_required": true,
+      "live_key_issued": false,
+      "organization_id": "org-other-demo",
+      "rate_limit_policy": "100 requests per minute local contract; production limits need hosted proof",
+      "raw_secret_returned": false,
+      "rotation_days": 90,
+      "scopes": [
+        "packets:read",
+        "packets:write",
+        "reports:read",
+        "reviews:write"
+      ],
+      "secret_storage_required": true
+    }
+  ],
+  "status": "production_enterprise_webhook_policy_ready_delivery_closed",
+  "webhook_records": [
+    {
+      "delivery_enabled": false,
+      "event_types": [
+        "packet.created",
+        "packet.updated",
+        "report.generated",
+        "review.finding_submitted",
+        "source.stale"
+      ],
+      "external_effects_created": false,
+      "next_valid_move": "Approve customer endpoint, signing-secret storage, retry policy, and monitoring before delivery.",
+      "organization_id": "org-importer-demo",
+      "retry_policy_required": true,
+      "signature_required": true,
+      "signing_secret_stored": false,
+      "webhook_id": "webhook-contract:org-importer-demo"
+    },
+    {
+      "delivery_enabled": false,
+      "event_types": [
+        "packet.created",
+        "packet.updated",
+        "report.generated",
+        "review.finding_submitted",
+        "source.stale"
+      ],
+      "external_effects_created": false,
+      "next_valid_move": "Approve customer endpoint, signing-secret storage, retry policy, and monitoring before delivery.",
+      "organization_id": "org-other-demo",
+      "retry_policy_required": true,
+      "signature_required": true,
+      "signing_secret_stored": false,
+      "webhook_id": "webhook-contract:org-other-demo"
+    }
+  ]
+}

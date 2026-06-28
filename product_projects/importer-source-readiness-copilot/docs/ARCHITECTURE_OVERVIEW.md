@@ -29,6 +29,7 @@ src/importer_source_readiness/production_data_model.py
 src/importer_source_readiness/production_decision_scoring_engine.py
 src/importer_source_readiness/production_document_intelligence_engine.py
 src/importer_source_readiness/production_evidence_claim_gate_engine.py
+src/importer_source_readiness/production_enterprise_api_platform.py
 src/importer_source_readiness/production_expert_review_network.py
 src/importer_source_readiness/production_market_intelligence_engine.py
 src/importer_source_readiness/production_packet_engine.py
@@ -92,6 +93,13 @@ system_review_graph/production_portal_workflow_manifest.json
 system_review_graph/production_portal_route_matrix.json
 system_review_graph/production_portal_ux_checks.json
 system_review_graph/production_portal_gate_controls.json
+system_review_graph/production_enterprise_api_manifest.json
+system_review_graph/production_enterprise_api_contracts.json
+system_review_graph/production_enterprise_rbac_policy.json
+system_review_graph/production_enterprise_workspace_controls.json
+system_review_graph/production_enterprise_webhook_policy.json
+system_review_graph/production_enterprise_audit_export_policy.json
+system_review_graph/production_enterprise_research_references.json
 system_review_graph/production_redevelopment_plan.json
 system_review_graph/production_research_anchors.json
 data/official_sample_documents/canada/*.pdf
@@ -101,6 +109,7 @@ docs/PRODUCTION_PACKET_ENGINE.md
 docs/PRODUCTION_COUNTRY_SOURCE_ENGINE.md
 docs/PRODUCTION_DOCUMENT_INTELLIGENCE_ENGINE.md
 docs/PRODUCTION_EVIDENCE_CLAIM_GATE_ENGINE.md
+docs/PRODUCTION_ENTERPRISE_API_PLATFORM.md
 docs/PRODUCTION_DECISION_SCORING_ENGINE.md
 docs/PRODUCTION_AI_COPILOT_ENGINE.md
 docs/PRODUCTION_MARKET_INTELLIGENCE_ENGINE.md
@@ -140,6 +149,7 @@ board/*.md
 | `src/importer_source_readiness/production_decision_scoring_engine.py` | production decision scoring engine for six separate capped scores, reasons, blocker fields, evidence references, and no global readiness score |
 | `src/importer_source_readiness/production_document_intelligence_engine.py` | production document intelligence engine for official sample forms, synthetic parser QA samples, document records, extracted-field provenance, evidence mapping, redaction previews, and closed upload/security/document gates |
 | `src/importer_source_readiness/production_evidence_claim_gate_engine.py` | production evidence claim-gate engine for `can_show_claim`, required evidence types, evidence trails, mapper rows, and closed external claims |
+| `src/importer_source_readiness/production_enterprise_api_platform.py` | production enterprise SaaS/API engine for route-covered API contracts, RBAC policy, workspace controls, API-key fingerprints, webhook contracts, audit export policy, usage limits, white-label report rules, and closed hosted/live gates |
 | `src/importer_source_readiness/production_expert_review_network.py` | production expert review network for reviewer lanes, credential requirements, scoped review requests, finding templates, gate impacts, and no completed signoff recorded |
 | `src/importer_source_readiness/production_market_intelligence_engine.py` | production market intelligence engine for metric records, source routes, dataset connector states, score caps, and blocked demand/profit claims |
 | `src/importer_source_readiness/production_packet_engine.py` | production packet engine for 12 packet states, packet event proof, eight packet views, six scores, blocked claims, and next valid moves |
@@ -161,6 +171,7 @@ board/*.md
 | `scripts/run_production_decision_scoring_engine.py` | production decision score records and cap-policy writer |
 | `scripts/run_production_document_intelligence_engine.py` | production document intelligence sample library, pipeline, and extracted-field writer |
 | `scripts/run_production_evidence_claim_gate_engine.py` | production evidence claim-gate decision, mapper, and review doc writer |
+| `scripts/run_production_enterprise_api_platform.py` | production enterprise API manifest, contracts, RBAC, workspace, webhook, audit export, research, and review doc writer |
 | `scripts/run_production_expert_review_network.py` | production expert review profile, request, finding-template, gate-impact, and audit writer |
 | `scripts/run_production_market_intelligence_engine.py` | production market intelligence signal and dataset connector writer |
 | `scripts/run_production_packet_engine.py` | production packet engine manifest, event, and packet-view writer |
@@ -182,6 +193,7 @@ board/*.md
 | `tests/test_production_decision_scoring_engine.py` | proof that the six score records stay separate, capped, reasoned, and closed to approval language |
 | `tests/test_production_document_intelligence_engine.py` | proof that official samples, country source routes, parser QA fixtures, field provenance, and closed document/security gates are generated |
 | `tests/test_production_evidence_claim_gate_engine.py` | proof that can_show_claim separates safe preparation statements from blocked external claims with evidence mappers |
+| `tests/test_production_enterprise_api_platform.py` | proof that enterprise APIs are route-covered, RBAC/tenant/claim gated, and closed to live API keys, webhooks, uploads, and white-label claim changes |
 | `tests/test_production_expert_review_network.py` | proof that reviewer lanes require real credentials and findings while keeping local requests draft-only and gates closed |
 | `tests/test_production_market_intelligence_engine.py` | proof that market metrics are source-routed without invented values, demand claims, profitability claims, or buyer validation |
 | `tests/test_production_portal_workflow_engine.py` | proof that public, exporter, importer, expert reviewer, operator/admin, and enterprise portals have route coverage, plain first-screen choices, UX review hooks, and closed gates |
@@ -238,7 +250,11 @@ board/*.md
 24. Generate the production portal workflow package: six portal records, four
     default first-screen choices, route coverage checks, UX/accessibility/mobile
     review hooks, and closed upload/payment/approval/public-launch gates.
-25. Generate the production redevelopment contract and research anchors for
+25. Generate the production enterprise API platform package: API contracts,
+    RBAC permission matrix, workspace controls, API-key fingerprints, webhook
+    contracts, audit export policy, usage limits, white-label report rules, and
+    closed hosted/live enterprise gates.
+26. Generate the production redevelopment contract and research anchors for
     the full-scale build: 14 production layers, phases 0-20, permanent source
     registry links, evidence requirements, and launch gates that remain closed.
 
@@ -345,6 +361,15 @@ enterprise workflows are mapped to existing local routes with a plain
 four-choice first screen. It does not mean UX testing, accessibility signoff,
 mobile review, hosted production proof, live payment activation, unrestricted
 upload approval, or public launch approval has been recorded.
+
+The expected production enterprise API status is
+`production_enterprise_api_platform_ready_local_contracts_external_gates_closed`.
+It means route-covered enterprise API contracts, RBAC policy, workspace
+controls, API-key fingerprints, webhook contracts, usage limits, audit export
+policy, and white-label report rules exist locally and follow the claim-gate
+engine. It does not mean hosted enterprise auth, live API keys, webhook
+delivery, unrestricted uploads, enterprise terms, security approval, or public
+launch approval has been recorded.
 
 ## Proof Boundary
 

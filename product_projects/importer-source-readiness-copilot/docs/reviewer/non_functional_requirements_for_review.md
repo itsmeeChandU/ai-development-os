@@ -72,6 +72,15 @@ The document engine is ready for local review and parser QA. It is not yet appro
 - Portal gate controls keep approval claims, unrestricted uploads, live payments, external effects, and public launch closed.
 - Real UX testing, accessibility signoff, mobile approval, hosted proof, and public launch owner approval remain incomplete.
 
+## Enterprise API Controls
+
+- Enterprise API status: `production_enterprise_api_platform_ready_local_contracts_external_gates_closed`.
+- API contracts: `17`.
+- Permission rows: `17`.
+- Usage-limit rows: `6`.
+- API contracts require auth, tenant filtering, object-level authorization, claim-gate reuse, rate-limit proof, and closed external effects.
+- Live API keys, webhook delivery, unrestricted uploads, hosted auth, enterprise terms, and security review remain incomplete.
+
 ## Claim Safety
 
 - Evidence claim-gate status: `production_evidence_claim_gate_engine_ready_claims_fail_closed`.

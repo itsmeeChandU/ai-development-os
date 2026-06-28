@@ -91,6 +91,7 @@ def main() -> int:
         PROJECT / "src" / "importer_source_readiness" / "production_decision_scoring_engine.py",
         PROJECT / "src" / "importer_source_readiness" / "production_document_intelligence_engine.py",
         PROJECT / "src" / "importer_source_readiness" / "production_evidence_claim_gate_engine.py",
+        PROJECT / "src" / "importer_source_readiness" / "production_enterprise_api_platform.py",
         PROJECT / "src" / "importer_source_readiness" / "production_expert_review_network.py",
         PROJECT / "src" / "importer_source_readiness" / "production_market_intelligence_engine.py",
         PROJECT / "src" / "importer_source_readiness" / "production_packet_engine.py",
@@ -120,6 +121,7 @@ def main() -> int:
         PROJECT / "tests" / "test_production_decision_scoring_engine.py",
         PROJECT / "tests" / "test_production_document_intelligence_engine.py",
         PROJECT / "tests" / "test_production_evidence_claim_gate_engine.py",
+        PROJECT / "tests" / "test_production_enterprise_api_platform.py",
         PROJECT / "tests" / "test_production_expert_review_network.py",
         PROJECT / "tests" / "test_production_market_intelligence_engine.py",
         PROJECT / "tests" / "test_production_packet_engine.py",
@@ -148,6 +150,7 @@ def main() -> int:
         PROJECT / "scripts" / "run_production_decision_scoring_engine.py",
         PROJECT / "scripts" / "run_production_document_intelligence_engine.py",
         PROJECT / "scripts" / "run_production_evidence_claim_gate_engine.py",
+        PROJECT / "scripts" / "run_production_enterprise_api_platform.py",
         PROJECT / "scripts" / "run_production_expert_review_network.py",
         PROJECT / "scripts" / "run_production_market_intelligence_engine.py",
         PROJECT / "scripts" / "run_production_packet_engine.py",
@@ -179,6 +182,7 @@ def main() -> int:
         PROJECT / "docs" / "PRODUCTION_DECISION_SCORING_ENGINE.md",
         PROJECT / "docs" / "PRODUCTION_DOCUMENT_INTELLIGENCE_ENGINE.md",
         PROJECT / "docs" / "PRODUCTION_EVIDENCE_CLAIM_GATE_ENGINE.md",
+        PROJECT / "docs" / "PRODUCTION_ENTERPRISE_API_PLATFORM.md",
         PROJECT / "docs" / "PRODUCTION_EXPERT_REVIEW_NETWORK.md",
         PROJECT / "docs" / "PRODUCTION_MARKET_INTELLIGENCE_ENGINE.md",
         PROJECT / "docs" / "PRODUCTION_PACKET_ENGINE.md",
@@ -308,6 +312,13 @@ def main() -> int:
         PROJECT / "system_review_graph" / "production_portal_route_matrix.json",
         PROJECT / "system_review_graph" / "production_portal_ux_checks.json",
         PROJECT / "system_review_graph" / "production_portal_gate_controls.json",
+        PROJECT / "system_review_graph" / "production_enterprise_api_manifest.json",
+        PROJECT / "system_review_graph" / "production_enterprise_api_contracts.json",
+        PROJECT / "system_review_graph" / "production_enterprise_rbac_policy.json",
+        PROJECT / "system_review_graph" / "production_enterprise_workspace_controls.json",
+        PROJECT / "system_review_graph" / "production_enterprise_webhook_policy.json",
+        PROJECT / "system_review_graph" / "production_enterprise_audit_export_policy.json",
+        PROJECT / "system_review_graph" / "production_enterprise_research_references.json",
         PROJECT / "system_review_graph" / "reviewer_wave_execution_plan.json",
         PROJECT / "system_review_graph" / "private_beta_smoke_test_plan.json",
         PROJECT / "system_review_graph" / "external_review_findings_report.json",
@@ -423,6 +434,7 @@ def main() -> int:
         ["python3", "scripts/run_production_expert_review_network.py"],
         ["python3", "scripts/run_production_reports_engine.py"],
         ["python3", "scripts/run_production_portal_workflow_engine.py"],
+        ["python3", "scripts/run_production_enterprise_api_platform.py"],
         ["python3", "scripts/build_external_review_packet.py"],
         ["python3", "scripts/export_operator_dashboard.py"],
         ["python3", "scripts/audit_external_package.py", "--root", "."],
@@ -659,6 +671,9 @@ def main() -> int:
     )
     production_portals = json.loads(
         (PROJECT / "system_review_graph" / "production_portal_workflow_manifest.json").read_text(encoding="utf-8")
+    )
+    production_enterprise = json.loads(
+        (PROJECT / "system_review_graph" / "production_enterprise_api_manifest.json").read_text(encoding="utf-8")
     )
     official_source_registry = json.loads(
         (PROJECT / "data" / "official_source_registry.json").read_text(encoding="utf-8")
@@ -2124,6 +2139,53 @@ def main() -> int:
             print("Product project check: FAIL")
             print(f"portal gate control {control.get('gate_control_id')} should stay closed")
             return 1
+    if (
+        production_enterprise.get("status") != "production_enterprise_api_platform_ready_local_contracts_external_gates_closed"
+        or production_enterprise.get("api_contract_count", 0) < 17
+        or production_enterprise.get("all_required_api_routes_present") is not True
+        or production_enterprise.get("research_reference_count") != 5
+        or production_enterprise.get("workspace_control_count", 0) < 3
+        or production_enterprise.get("api_key_record_count", 0) < 2
+        or production_enterprise.get("webhook_record_count", 0) < 2
+        or production_enterprise.get("hosted_enterprise_ready") is not False
+        or production_enterprise.get("live_api_keys_issued") is not False
+        or production_enterprise.get("webhook_delivery_enabled") is not False
+        or production_enterprise.get("unrestricted_uploads_enabled") is not False
+        or production_enterprise.get("white_label_claims_approved") is not False
+        or production_enterprise.get("claims_opened") is not False
+        or production_enterprise.get("external_effects_created") is not False
+    ):
+        print("Product project check: FAIL")
+        print("production enterprise API platform should be route-covered, researched, and gate-closed")
+        return 1
+    for contract in production_enterprise.get("api_contracts", []):
+        if (
+            contract.get("route_present") is not True
+            or contract.get("auth_required") is not True
+            or contract.get("tenant_filter_required") is not True
+            or contract.get("object_level_authorization_required") is not True
+            or contract.get("claim_gate_required") is not True
+            or contract.get("external_effects_created") is not False
+            or contract.get("claims_opened") is not False
+            or contract.get("live_mode_enabled") is not False
+        ):
+            print("Product project check: FAIL")
+            print(f"enterprise API contract {contract.get('path')} should be auth/tenant/claim gated and effect-closed")
+            return 1
+    for row in production_enterprise.get("api_key_records", []):
+        if row.get("raw_secret_returned") is not False or row.get("live_key_issued") is not False:
+            print("Product project check: FAIL")
+            print(f"enterprise API key {row.get('api_key_id')} should not issue a live secret")
+            return 1
+    for row in production_enterprise.get("webhook_records", []):
+        if row.get("delivery_enabled") is not False or row.get("external_effects_created") is not False:
+            print("Product project check: FAIL")
+            print(f"enterprise webhook {row.get('webhook_id')} should keep delivery closed")
+            return 1
+    if "remove blocked claims" not in production_enterprise.get("white_label_policy", {}).get("forbidden_customization", []):
+        print("Product project check: FAIL")
+        print("enterprise white-label policy should forbid removing blocked claims")
+        return 1
     external_validation_pdf = PROJECT / "output" / "pdf" / "external_validation_requirements.pdf"
     if not external_validation_pdf.exists() or not external_validation_pdf.read_bytes().startswith(b"%PDF"):
         print("Product project check: FAIL")
@@ -2420,6 +2482,9 @@ def main() -> int:
     print(f"production_portals_status={production_portals['status']}")
     print(f"production_portal_count={production_portals['portal_count']}")
     print(f"production_portal_routes_present={production_portals['all_required_routes_present']}")
+    print(f"production_enterprise_status={production_enterprise['status']}")
+    print(f"production_enterprise_api_contracts={production_enterprise['api_contract_count']}")
+    print(f"production_enterprise_routes_present={production_enterprise['all_required_api_routes_present']}")
     print(f"external_validation_pdf={external_validation_pdf.relative_to(PROJECT)}")
     print(f"external_validation_reviewer_brief_pdf={external_validation_reviewer_brief_pdf.relative_to(PROJECT)}")
     print(f"go_live_input_status={go_live_input_readiness['status']}")

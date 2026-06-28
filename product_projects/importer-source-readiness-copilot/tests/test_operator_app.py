@@ -179,6 +179,31 @@ class OperatorAppTests(unittest.TestCase):
                 self.assertEqual(response.status, 200)
                 self.assertEqual(payload["status"], expected_status)
 
+    def test_enterprise_api_contract_routes_are_gate_closed(self) -> None:
+        packet_id = "packet-frozen-tuna-canada-001"
+        get_routes = {
+            "/api/enterprise-platform": ("status", "production_enterprise_api_platform_ready_local_contracts_external_gates_closed"),
+            f"/api/packets/{packet_id}/scores": ("single_global_readiness_score", False),
+            f"/api/packets/{packet_id}/blocked-claims": ("claims_opened", False),
+            "/api/api-keys": ("live_keys_issued", False),
+            "/api/webhooks": ("delivery_enabled", False),
+        }
+        for path, (key, expected) in get_routes.items():
+            with self.subTest(path=path):
+                with urlopen(f"{self.base_url}{path}", timeout=5) as response:
+                    payload = json.loads(response.read().decode("utf-8"))
+                self.assertEqual(response.status, 200)
+                self.assertEqual(payload[key], expected)
+
+        body = urlencode({"packet_id": packet_id, "document_type": "commercial_invoice"}).encode("utf-8")
+        request = Request(f"{self.base_url}/api/documents/upload", data=body, method="POST")
+        with urlopen(request, timeout=5) as response:
+            upload_payload = json.loads(response.read().decode("utf-8"))
+        self.assertEqual(response.status, 200)
+        self.assertEqual(upload_payload["status"], "document_upload_contract_ready_real_files_blocked")
+        self.assertFalse(upload_payload["real_file_accepted"])
+        self.assertFalse(upload_payload["unrestricted_uploads_enabled"])
+
         with urlopen(f"{self.base_url}/api/agent-tools/generate_missing_evidence_report", timeout=5) as response:
             ready = json.loads(response.read().decode("utf-8"))
         self.assertEqual(ready["status"], "agent_tool_ready_with_local_executor")

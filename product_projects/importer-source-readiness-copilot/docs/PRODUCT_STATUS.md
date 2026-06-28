@@ -113,6 +113,19 @@ The portal workflow slice writes
 expert reviewer, operator/admin, and enterprise portals to existing local
 UI/API routes, keeps the four-choice business-owner first screen explicit, and
 keeps UX/accessibility/mobile/hosted/payment/public-launch gates closed.
+The enterprise API platform slice writes
+`system_review_graph/production_enterprise_api_manifest.json`,
+`system_review_graph/production_enterprise_api_contracts.json`,
+`system_review_graph/production_enterprise_rbac_policy.json`,
+`system_review_graph/production_enterprise_workspace_controls.json`,
+`system_review_graph/production_enterprise_webhook_policy.json`,
+`system_review_graph/production_enterprise_audit_export_policy.json`,
+`system_review_graph/production_enterprise_research_references.json`, and
+`docs/PRODUCTION_ENTERPRISE_API_PLATFORM.md`. It turns the existing
+organization, workspace, RBAC, packet, report, audit, portal, and claim-gate
+artifacts into 17 local enterprise API contracts with API-key fingerprints,
+webhook contracts, usage limits, audit export policy, and white-label report
+rules while hosted enterprise gates remain closed.
 Those stages are backed by an executable local operations engine in
 `src/importer_source_readiness/product_operations.py` and
 `scripts/run_product_operations.py`. The engine creates/updates packet intake
@@ -222,6 +235,10 @@ security/privacy/human review gates are completed.
 - production portal workflow engine with six route-covered portals, four
   business-owner first-screen choices, UX/accessibility/mobile review hooks,
   and closed upload/payment/approval/public-launch gates
+- production enterprise API platform with 17 local API contracts, RBAC
+  permission matrix, workspace controls, API-key fingerprints, webhook
+  contracts, audit export policy, usage limits, and white-label report rules
+  with hosted/live gates closed
 - production research anchor registry for CBSA, CFIA, Global Affairs Canada,
   ISED, DGFT, WITS, ITC, WCO, ICC, OPC/PIPEDA, OWASP, NIST, and Stripe source
   routing
@@ -284,6 +301,19 @@ This is a private investor conversation state, not a public launch state.
 This is a local workflow and route-coverage state. It is not UX signoff,
 accessibility approval, mobile approval, hosted production proof, live payment
 activation, unrestricted upload approval, or public launch approval.
+
+## Ready For Enterprise API Review
+
+- enterprise API status: `production_enterprise_api_platform_ready_local_contracts_external_gates_closed`
+- proof command: `python3 scripts/run_production_enterprise_api_platform.py`
+- API contracts: `system_review_graph/production_enterprise_api_contracts.json`
+- RBAC policy: `system_review_graph/production_enterprise_rbac_policy.json`
+- workspace controls: `system_review_graph/production_enterprise_workspace_controls.json`
+- webhook/API-key policy: `system_review_graph/production_enterprise_webhook_policy.json`
+
+This is a local enterprise/API contract state. It is not hosted enterprise
+approval, live API-key issuance, webhook delivery, unrestricted upload approval,
+enterprise terms approval, security signoff, or public launch approval.
 
 ## Ready For Board Go-Live Review
 

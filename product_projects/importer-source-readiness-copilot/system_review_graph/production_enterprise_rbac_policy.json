@@ -1,0 +1,194 @@
+{
+  "permission_matrix": [
+    {
+      "allowed_roles": [
+        "customer",
+        "customer_admin"
+      ],
+      "cross_org_access_allowed": false,
+      "deny_by_default": true,
+      "method": "POST",
+      "path": "/api/packets",
+      "permission": "packet:create"
+    },
+    {
+      "allowed_roles": [
+        "customer",
+        "customer_admin"
+      ],
+      "cross_org_access_allowed": false,
+      "deny_by_default": true,
+      "method": "GET",
+      "path": "/api/packets/:id",
+      "permission": "packet:read:own_org"
+    },
+    {
+      "allowed_roles": [
+        "customer",
+        "customer_admin"
+      ],
+      "cross_org_access_allowed": false,
+      "deny_by_default": true,
+      "method": "POST",
+      "path": "/api/packets/:id/evidence",
+      "permission": "evidence:create:own_org"
+    },
+    {
+      "allowed_roles": [
+        "customer",
+        "customer_admin"
+      ],
+      "cross_org_access_allowed": false,
+      "deny_by_default": true,
+      "method": "POST",
+      "path": "/api/documents/upload",
+      "permission": "evidence:create:own_org"
+    },
+    {
+      "allowed_roles": [
+        "customer_admin",
+        "operator"
+      ],
+      "cross_org_access_allowed": false,
+      "deny_by_default": true,
+      "method": "POST",
+      "path": "/api/sources/refresh",
+      "permission": "source:refresh:own_org"
+    },
+    {
+      "allowed_roles": [
+        "customer",
+        "customer_admin"
+      ],
+      "cross_org_access_allowed": false,
+      "deny_by_default": true,
+      "method": "GET",
+      "path": "/api/packets/:id/scores",
+      "permission": "packet:read:own_org"
+    },
+    {
+      "allowed_roles": [
+        "customer",
+        "customer_admin"
+      ],
+      "cross_org_access_allowed": false,
+      "deny_by_default": true,
+      "method": "GET",
+      "path": "/api/packets/:id/blocked-claims",
+      "permission": "packet:read:own_org"
+    },
+    {
+      "allowed_roles": [
+        "customer",
+        "customer_admin"
+      ],
+      "cross_org_access_allowed": false,
+      "deny_by_default": true,
+      "method": "POST",
+      "path": "/api/reviews",
+      "permission": "review:request:own_org"
+    },
+    {
+      "allowed_roles": [
+        "customer",
+        "customer_admin"
+      ],
+      "cross_org_access_allowed": false,
+      "deny_by_default": true,
+      "method": "POST",
+      "path": "/api/reports",
+      "permission": "report:export:own_org"
+    },
+    {
+      "allowed_roles": [
+        "ai_system",
+        "customer",
+        "customer_admin",
+        "operator"
+      ],
+      "cross_org_access_allowed": false,
+      "deny_by_default": true,
+      "method": "POST",
+      "path": "/api/ai/safe-summary",
+      "permission": "report:draft"
+    },
+    {
+      "allowed_roles": [
+        "customer",
+        "customer_admin"
+      ],
+      "cross_org_access_allowed": false,
+      "deny_by_default": true,
+      "method": "GET",
+      "path": "/api/team-workspace",
+      "permission": "packet:read:own_org"
+    },
+    {
+      "allowed_roles": [
+        "admin",
+        "customer_admin"
+      ],
+      "cross_org_access_allowed": false,
+      "deny_by_default": true,
+      "method": "GET",
+      "path": "/api/billing/usage",
+      "permission": "billing:read:own_org"
+    },
+    {
+      "allowed_roles": [
+        "admin",
+        "operator"
+      ],
+      "cross_org_access_allowed": false,
+      "deny_by_default": true,
+      "method": "GET",
+      "path": "/api/audit",
+      "permission": "audit:read:own_org"
+    },
+    {
+      "allowed_roles": [
+        "admin",
+        "customer_admin"
+      ],
+      "cross_org_access_allowed": false,
+      "deny_by_default": true,
+      "method": "POST",
+      "path": "/api/api-keys",
+      "permission": "api_key:manage:own_org"
+    },
+    {
+      "allowed_roles": [
+        "admin",
+        "customer_admin"
+      ],
+      "cross_org_access_allowed": false,
+      "deny_by_default": true,
+      "method": "GET",
+      "path": "/api/api-keys",
+      "permission": "api_key:read:own_org"
+    },
+    {
+      "allowed_roles": [
+        "admin",
+        "customer_admin"
+      ],
+      "cross_org_access_allowed": false,
+      "deny_by_default": true,
+      "method": "POST",
+      "path": "/api/webhooks",
+      "permission": "webhook:manage:own_org"
+    },
+    {
+      "allowed_roles": [
+        "admin",
+        "customer_admin"
+      ],
+      "cross_org_access_allowed": false,
+      "deny_by_default": true,
+      "method": "GET",
+      "path": "/api/webhooks",
+      "permission": "webhook:read:own_org"
+    }
+  ],
+  "status": "production_enterprise_rbac_policy_ready"
+}

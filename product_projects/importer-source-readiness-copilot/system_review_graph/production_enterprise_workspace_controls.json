@@ -1,0 +1,161 @@
+{
+  "status": "production_enterprise_workspace_controls_ready",
+  "usage_limits": [
+    {
+      "hosted_enforcement_required": true,
+      "local_limit": 100,
+      "metric": "api_requests_per_minute"
+    },
+    {
+      "hosted_enforcement_required": true,
+      "local_limit": 250,
+      "metric": "packets_per_workspace"
+    },
+    {
+      "hosted_enforcement_required": true,
+      "local_limit": 100,
+      "metric": "pdf_exports_per_day"
+    },
+    {
+      "hosted_enforcement_required": true,
+      "local_limit": 25,
+      "metric": "ai_safe_summaries_per_day"
+    },
+    {
+      "hosted_enforcement_required": true,
+      "local_limit": 0,
+      "metric": "webhook_deliveries"
+    },
+    {
+      "hosted_enforcement_required": true,
+      "local_limit": 0,
+      "metric": "real_file_upload_bytes"
+    }
+  ],
+  "white_label_policy": {
+    "allowed_customization": [
+      "logo",
+      "organization_name",
+      "contact_email",
+      "report_cover_note"
+    ],
+    "claims_opened": false,
+    "forbidden_customization": [
+      "remove blocked claims",
+      "remove draft watermark before review",
+      "remove source citations",
+      "change claim-gate language",
+      "imply customs, tariff, CFIA, buyer, supplier, payment, or launch approval"
+    ],
+    "report_language_review_required": true,
+    "status": "white_label_report_policy_ready_language_review_required"
+  },
+  "workspace_controls": [
+    {
+      "cross_org_packet_access_allowed": false,
+      "external_claims_opened": false,
+      "membership_count": 1,
+      "organization_id": "org-importer-demo",
+      "organization_name": "Importer Demo Co.",
+      "organization_type": "customer",
+      "packet_count_visible_locally": 1,
+      "roles": [
+        "customer_admin"
+      ],
+      "row_level_security_table_count": 29,
+      "row_level_security_tables_present": true,
+      "tenant_isolation_required": true,
+      "workspace_count": 1,
+      "workspaces": [
+        {
+          "approval_board": [
+            {
+              "gate": "buyer_validation",
+              "owner": "founder_or_customer",
+              "status": "blocked"
+            },
+            {
+              "gate": "qualified_trade_review",
+              "owner": "expert_reviewer",
+              "status": "blocked"
+            },
+            {
+              "gate": "privacy_security_review",
+              "owner": "admin",
+              "status": "blocked"
+            },
+            {
+              "gate": "private_beta_launch",
+              "owner": "operator",
+              "status": "blocked"
+            }
+          ],
+          "packet_id": "packet-frozen-tuna-canada-001",
+          "workspace_id": "workspace:packet-frozen-tuna-canada-001"
+        }
+      ]
+    },
+    {
+      "cross_org_packet_access_allowed": false,
+      "external_claims_opened": false,
+      "membership_count": 1,
+      "organization_id": "org-other-demo",
+      "organization_name": "Other Customer Org",
+      "organization_type": "customer",
+      "packet_count_visible_locally": 0,
+      "roles": [
+        "customer"
+      ],
+      "row_level_security_table_count": 29,
+      "row_level_security_tables_present": true,
+      "tenant_isolation_required": true,
+      "workspace_count": 0,
+      "workspaces": []
+    },
+    {
+      "cross_org_packet_access_allowed": true,
+      "external_claims_opened": false,
+      "membership_count": 2,
+      "organization_id": "org-internal-ops",
+      "organization_name": "Importer Source Readiness Ops",
+      "organization_type": "internal",
+      "packet_count_visible_locally": 1,
+      "roles": [
+        "admin",
+        "operator"
+      ],
+      "row_level_security_table_count": 29,
+      "row_level_security_tables_present": true,
+      "tenant_isolation_required": true,
+      "workspace_count": 1,
+      "workspaces": [
+        {
+          "approval_board": [
+            {
+              "gate": "buyer_validation",
+              "owner": "founder_or_customer",
+              "status": "blocked"
+            },
+            {
+              "gate": "qualified_trade_review",
+              "owner": "expert_reviewer",
+              "status": "blocked"
+            },
+            {
+              "gate": "privacy_security_review",
+              "owner": "admin",
+              "status": "blocked"
+            },
+            {
+              "gate": "private_beta_launch",
+              "owner": "operator",
+              "status": "blocked"
+            }
+          ],
+          "packet_id": "packet-frozen-tuna-canada-001",
+          "workspace_id": "workspace:packet-frozen-tuna-canada-001"
+        }
+      ]
+    }
+  ]
+}

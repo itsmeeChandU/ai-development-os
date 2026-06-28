@@ -1,0 +1,19 @@
+{
+  "audit_event_count": 3,
+  "claim_gate_decision_count": 17,
+  "external_effects_created": false,
+  "included_records": [
+    "packets",
+    "evidence",
+    "reports",
+    "claim_gate_decisions",
+    "score_records",
+    "review_requests",
+    "audit_events",
+    "source_refresh_records"
+  ],
+  "report_export_count": 36,
+  "retention_approval_required": true,
+  "status": "enterprise_audit_export_policy_ready_local",
+  "tamper_evident_hash_required_before_hosting": true
+}

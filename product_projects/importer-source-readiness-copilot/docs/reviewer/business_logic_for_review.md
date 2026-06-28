@@ -105,6 +105,17 @@ Portal workflow logic turns the packet, evidence, review, report, and gate rules
 - Each portal is checked against the real local route map before the workflow is marked covered.
 - Unsafe labels and actions such as approve, ready to ship, confirm tariff, validate buyer, verify supplier, live payment, and public launch remain blocked.
 
+## Enterprise API Logic Implemented Now
+
+Enterprise API logic exposes the same packet and claim-gate rules through local API contracts for brokers, advisors, and teams.
+
+- API contracts generated: `17`.
+- API-key contract records generated: `2`.
+- Webhook contract records generated: `2`.
+- Research references attached: `5`.
+- Each API contract requires auth, tenant filtering, object-level authorization, claim-gate reuse, and rate-limit proof before hosting.
+- API outputs cannot hide blocked claims, issue live secrets, deliver webhooks, accept unrestricted files, approve white-label claims, or create external effects.
+
 ## Current Sample Packet Result
 
 - Packet reviewed: `packet-frozen-tuna-canada-001`.

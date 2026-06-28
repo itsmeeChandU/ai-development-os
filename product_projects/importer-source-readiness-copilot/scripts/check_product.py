@@ -141,6 +141,7 @@ def main() -> int:
         [sys.executable, "scripts/run_production_expert_review_network.py"],
         [sys.executable, "scripts/run_production_reports_engine.py"],
         [sys.executable, "scripts/run_production_portal_workflow_engine.py"],
+        [sys.executable, "scripts/run_production_enterprise_api_platform.py"],
         [sys.executable, "scripts/audit_external_package.py", "--root", "."],
     ]
     for command in commands:
@@ -214,6 +215,7 @@ def main() -> int:
     production_expert_review = _load_json(ROOT / "system_review_graph" / "production_expert_review_network_manifest.json")
     production_reports = _load_json(ROOT / "system_review_graph" / "production_reports_engine_manifest.json")
     production_portals = _load_json(ROOT / "system_review_graph" / "production_portal_workflow_manifest.json")
+    production_enterprise = _load_json(ROOT / "system_review_graph" / "production_enterprise_api_manifest.json")
     official_source_registry = _load_json(ROOT / "data" / "official_source_registry.json")
     business_core_doc = (ROOT / "docs" / "BUSINESS_CORE_LOGIC_CURRENT_STATE.md").read_text(encoding="utf-8")
     functional_doc = (ROOT / "docs" / "FUNCTIONAL_REQUIREMENTS_CURRENT_STATE.md").read_text(encoding="utf-8")
@@ -284,6 +286,7 @@ def main() -> int:
         "src/importer_source_readiness/production_decision_scoring_engine.py",
         "src/importer_source_readiness/production_document_intelligence_engine.py",
         "src/importer_source_readiness/production_evidence_claim_gate_engine.py",
+        "src/importer_source_readiness/production_enterprise_api_platform.py",
         "src/importer_source_readiness/production_expert_review_network.py",
         "src/importer_source_readiness/production_market_intelligence_engine.py",
         "src/importer_source_readiness/production_packet_engine.py",
@@ -304,6 +307,7 @@ def main() -> int:
         "tests/test_production_decision_scoring_engine.py",
         "tests/test_production_document_intelligence_engine.py",
         "tests/test_production_evidence_claim_gate_engine.py",
+        "tests/test_production_enterprise_api_platform.py",
         "tests/test_production_expert_review_network.py",
         "tests/test_production_market_intelligence_engine.py",
         "tests/test_production_packet_engine.py",
@@ -324,6 +328,7 @@ def main() -> int:
         "scripts/run_production_decision_scoring_engine.py",
         "scripts/run_production_document_intelligence_engine.py",
         "scripts/run_production_evidence_claim_gate_engine.py",
+        "scripts/run_production_enterprise_api_platform.py",
         "scripts/run_production_expert_review_network.py",
         "scripts/run_production_market_intelligence_engine.py",
         "scripts/run_production_packet_engine.py",
@@ -355,6 +360,7 @@ def main() -> int:
         "docs/PRODUCTION_DECISION_SCORING_ENGINE.md",
         "docs/PRODUCTION_DOCUMENT_INTELLIGENCE_ENGINE.md",
         "docs/PRODUCTION_EVIDENCE_CLAIM_GATE_ENGINE.md",
+        "docs/PRODUCTION_ENTERPRISE_API_PLATFORM.md",
         "docs/PRODUCTION_EXPERT_REVIEW_NETWORK.md",
         "docs/PRODUCTION_MARKET_INTELLIGENCE_ENGINE.md",
         "docs/PRODUCTION_PACKET_ENGINE.md",
@@ -448,6 +454,13 @@ def main() -> int:
         "system_review_graph/production_portal_route_matrix.json",
         "system_review_graph/production_portal_ux_checks.json",
         "system_review_graph/production_portal_gate_controls.json",
+        "system_review_graph/production_enterprise_api_manifest.json",
+        "system_review_graph/production_enterprise_api_contracts.json",
+        "system_review_graph/production_enterprise_rbac_policy.json",
+        "system_review_graph/production_enterprise_workspace_controls.json",
+        "system_review_graph/production_enterprise_webhook_policy.json",
+        "system_review_graph/production_enterprise_audit_export_policy.json",
+        "system_review_graph/production_enterprise_research_references.json",
         "system_review_graph/production_claim_gate_decisions.json",
         "system_review_graph/production_evidence_claim_mappers.json",
         "data/official_sample_documents/canada/cbsa-ci1-canada-customs-invoice.pdf",
@@ -1245,6 +1258,60 @@ def main() -> int:
             or control.get("external_effects_created") is not False
         ):
             failures.append(f"portal gate control {control.get('gate_control_id')} must stay closed")
+    if production_enterprise.get("status") != "production_enterprise_api_platform_ready_local_contracts_external_gates_closed":
+        failures.append("production enterprise API platform status is incorrect")
+    if production_enterprise.get("api_contract_count", 0) < 17:
+        failures.append("production enterprise API platform should define at least 17 API contracts")
+    if production_enterprise.get("all_required_api_routes_present") is not True:
+        failures.append("production enterprise API platform should have all required local API routes present")
+    for key in (
+        "hosted_enterprise_ready",
+        "live_api_keys_issued",
+        "webhook_delivery_enabled",
+        "unrestricted_uploads_enabled",
+        "white_label_claims_approved",
+        "claims_opened",
+        "external_effects_created",
+        "live_payment_ready",
+        "public_launch_ready",
+    ):
+        if production_enterprise.get(key) is not False:
+            failures.append(f"production enterprise expected {key}=false")
+    if production_enterprise.get("research_reference_count") != 5:
+        failures.append("production enterprise should include five API/enterprise research references")
+    if production_enterprise.get("workspace_control_count", 0) < 3:
+        failures.append("production enterprise should include workspace controls for all local orgs")
+    if production_enterprise.get("api_key_record_count", 0) < 2:
+        failures.append("production enterprise should include customer API-key contract records")
+    if production_enterprise.get("webhook_record_count", 0) < 2:
+        failures.append("production enterprise should include customer webhook contract records")
+    for contract in production_enterprise.get("api_contracts", []):
+        if contract.get("route_present") is not True:
+            failures.append(f"enterprise API route missing: {contract.get('path')}")
+        if (
+            contract.get("auth_required") is not True
+            or contract.get("tenant_filter_required") is not True
+            or contract.get("object_level_authorization_required") is not True
+            or contract.get("claim_gate_required") is not True
+            or contract.get("external_effects_created") is not False
+            or contract.get("claims_opened") is not False
+            or contract.get("live_mode_enabled") is not False
+        ):
+            failures.append(f"enterprise API contract {contract.get('path')} must be auth/tenant/claim gated and effect-closed")
+    for row in production_enterprise.get("permission_matrix", []):
+        if row.get("deny_by_default") is not True or row.get("cross_org_access_allowed") is not False:
+            failures.append(f"enterprise permission row {row.get('path')} must deny by default and block cross-org access")
+    for row in production_enterprise.get("api_key_records", []):
+        if row.get("raw_secret_returned") is not False or row.get("live_key_issued") is not False:
+            failures.append(f"enterprise API key {row.get('api_key_id')} must not issue a live secret")
+    for row in production_enterprise.get("webhook_records", []):
+        if row.get("delivery_enabled") is not False or row.get("external_effects_created") is not False:
+            failures.append(f"enterprise webhook {row.get('webhook_id')} must keep delivery closed")
+    white_label = production_enterprise.get("white_label_policy", {})
+    if "remove blocked claims" not in white_label.get("forbidden_customization", []):
+        failures.append("enterprise white-label policy must forbid removing blocked claims")
+    if white_label.get("claims_opened") is not False:
+        failures.append("enterprise white-label policy must not open claims")
     if not screenshot_manifest_path.exists():
         failures.append("operator screenshot manifest was not generated")
     if screenshot_manifest.get("status") != "screenshots_ready":
@@ -2075,6 +2142,9 @@ def main() -> int:
     print(f"production_portals_status={production_portals['status']}")
     print(f"production_portal_count={production_portals['portal_count']}")
     print(f"production_portal_routes_present={production_portals['all_required_routes_present']}")
+    print(f"production_enterprise_status={production_enterprise['status']}")
+    print(f"production_enterprise_api_contracts={production_enterprise['api_contract_count']}")
+    print(f"production_enterprise_routes_present={production_enterprise['all_required_api_routes_present']}")
     print(f"external_validation_pdf={pdf_path.relative_to(ROOT)}")
     print(f"external_validation_reviewer_brief_pdf={brief_pdf_path.relative_to(ROOT)}")
     print(f"go_live_input_status={go_live_input_readiness['status']}")

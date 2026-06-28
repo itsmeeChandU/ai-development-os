@@ -1,0 +1,875 @@
+{
+  "all_required_api_routes_present": true,
+  "api_contract_count": 17,
+  "api_contracts": [
+    {
+      "auth_required": true,
+      "claim_gate_required": true,
+      "claims_opened": false,
+      "external_effects_created": false,
+      "live_mode_enabled": false,
+      "method": "POST",
+      "object_level_authorization_required": true,
+      "path": "/api/packets",
+      "permission": "packet:create",
+      "proof_boundary": "Enterprise API output must reuse packet, evidence, report, and claim-gate rules.",
+      "purpose": "Create a Trade Readiness Packet.",
+      "rate_limit_required_before_hosting": true,
+      "route_present": true,
+      "status": "route_present_gate_checked",
+      "tenant_filter_required": true,
+      "tenant_scope": "organization"
+    },
+    {
+      "auth_required": true,
+      "claim_gate_required": true,
+      "claims_opened": false,
+      "external_effects_created": false,
+      "live_mode_enabled": false,
+      "method": "GET",
+      "object_level_authorization_required": true,
+      "path": "/api/packets/:id",
+      "permission": "packet:read:own_org",
+      "proof_boundary": "Enterprise API output must reuse packet, evidence, report, and claim-gate rules.",
+      "purpose": "Read a packet visible to the caller.",
+      "rate_limit_required_before_hosting": true,
+      "route_present": true,
+      "status": "route_present_gate_checked",
+      "tenant_filter_required": true,
+      "tenant_scope": "packet.organization_id"
+    },
+    {
+      "auth_required": true,
+      "claim_gate_required": true,
+      "claims_opened": false,
+      "external_effects_created": false,
+      "live_mode_enabled": false,
+      "method": "POST",
+      "object_level_authorization_required": true,
+      "path": "/api/packets/:id/evidence",
+      "permission": "evidence:create:own_org",
+      "proof_boundary": "Enterprise API output must reuse packet, evidence, report, and claim-gate rules.",
+      "purpose": "Attach evidence metadata to a packet.",
+      "rate_limit_required_before_hosting": true,
+      "route_present": true,
+      "status": "route_present_gate_checked",
+      "tenant_filter_required": true,
+      "tenant_scope": "packet.organization_id"
+    },
+    {
+      "auth_required": true,
+      "claim_gate_required": true,
+      "claims_opened": false,
+      "external_effects_created": false,
+      "gate": "real_file_upload_security_gate_closed",
+      "live_mode_enabled": false,
+      "method": "POST",
+      "object_level_authorization_required": true,
+      "path": "/api/documents/upload",
+      "permission": "evidence:create:own_org",
+      "proof_boundary": "Enterprise API output must reuse packet, evidence, report, and claim-gate rules.",
+      "purpose": "Enterprise document-upload contract; real files remain blocked until production upload gates pass.",
+      "rate_limit_required_before_hosting": true,
+      "route_present": true,
+      "status": "route_present_gate_checked",
+      "tenant_filter_required": true,
+      "tenant_scope": "packet.organization_id"
+    },
+    {
+      "auth_required": true,
+      "claim_gate_required": true,
+      "claims_opened": false,
+      "external_effects_created": false,
+      "live_mode_enabled": false,
+      "method": "POST",
+      "object_level_authorization_required": true,
+      "path": "/api/sources/refresh",
+      "permission": "source:refresh:own_org",
+      "proof_boundary": "Enterprise API output must reuse packet, evidence, report, and claim-gate rules.",
+      "purpose": "Refresh packet source routes without proving current law.",
+      "rate_limit_required_before_hosting": true,
+      "route_present": true,
+      "status": "route_present_gate_checked",
+      "tenant_filter_required": true,
+      "tenant_scope": "packet.organization_id"
+    },
+    {
+      "auth_required": true,
+      "claim_gate_required": true,
+      "claims_opened": false,
+      "external_effects_created": false,
+      "live_mode_enabled": false,
+      "method": "GET",
+      "object_level_authorization_required": true,
+      "path": "/api/packets/:id/scores",
+      "permission": "packet:read:own_org",
+      "proof_boundary": "Enterprise API output must reuse packet, evidence, report, and claim-gate rules.",
+      "purpose": "Return separate capped decision scores.",
+      "rate_limit_required_before_hosting": true,
+      "route_present": true,
+      "status": "route_present_gate_checked",
+      "tenant_filter_required": true,
+      "tenant_scope": "packet.organization_id"
+    },
+    {
+      "auth_required": true,
+      "claim_gate_required": true,
+      "claims_opened": false,
+      "external_effects_created": false,
+      "live_mode_enabled": false,
+      "method": "GET",
+      "object_level_authorization_required": true,
+      "path": "/api/packets/:id/blocked-claims",
+      "permission": "packet:read:own_org",
+      "proof_boundary": "Enterprise API output must reuse packet, evidence, report, and claim-gate rules.",
+      "purpose": "Return blocked claims from the evidence claim-gate engine.",
+      "rate_limit_required_before_hosting": true,
+      "route_present": true,
+      "status": "route_present_gate_checked",
+      "tenant_filter_required": true,
+      "tenant_scope": "packet.organization_id"
+    },
+    {
+      "auth_required": true,
+      "claim_gate_required": true,
+      "claims_opened": false,
+      "external_effects_created": false,
+      "live_mode_enabled": false,
+      "method": "POST",
+      "object_level_authorization_required": true,
+      "path": "/api/reviews",
+      "permission": "review:request:own_org",
+      "proof_boundary": "Enterprise API output must reuse packet, evidence, report, and claim-gate rules.",
+      "purpose": "Draft a scoped review request without contacting a reviewer.",
+      "rate_limit_required_before_hosting": true,
+      "route_present": true,
+      "status": "route_present_gate_checked",
+      "tenant_filter_required": true,
+      "tenant_scope": "packet.organization_id"
+    },
+    {
+      "auth_required": true,
+      "claim_gate_required": true,
+      "claims_opened": false,
+      "external_effects_created": false,
+      "live_mode_enabled": false,
+      "method": "POST",
+      "object_level_authorization_required": true,
+      "path": "/api/reports",
+      "permission": "report:export:own_org",
+      "proof_boundary": "Enterprise API output must reuse packet, evidence, report, and claim-gate rules.",
+      "purpose": "Generate or list safe packet reports with blocked claims visible.",
+      "rate_limit_required_before_hosting": true,
+      "route_present": true,
+      "status": "route_present_gate_checked",
+      "tenant_filter_required": true,
+      "tenant_scope": "packet.organization_id"
+    },
+    {
+      "auth_required": true,
+      "claim_gate_required": true,
+      "claims_opened": false,
+      "external_effects_created": false,
+      "gate": "ai_live_model_gate_closed",
+      "live_mode_enabled": false,
+      "method": "POST",
+      "object_level_authorization_required": true,
+      "path": "/api/ai/safe-summary",
+      "permission": "report:draft",
+      "proof_boundary": "Enterprise API output must reuse packet, evidence, report, and claim-gate rules.",
+      "purpose": "Return a safe local packet summary without a live model call.",
+      "rate_limit_required_before_hosting": true,
+      "route_present": true,
+      "status": "route_present_gate_checked",
+      "tenant_filter_required": true,
+      "tenant_scope": "packet.organization_id"
+    },
+    {
+      "auth_required": true,
+      "claim_gate_required": true,
+      "claims_opened": false,
+      "external_effects_created": false,
+      "live_mode_enabled": false,
+      "method": "GET",
+      "object_level_authorization_required": true,
+      "path": "/api/team-workspace",
+      "permission": "packet:read:own_org",
+      "proof_boundary": "Enterprise API output must reuse packet, evidence, report, and claim-gate rules.",
+      "purpose": "Read team workspace and approval-board state.",
+      "rate_limit_required_before_hosting": true,
+      "route_present": true,
+      "status": "route_present_gate_checked",
+      "tenant_filter_required": true,
+      "tenant_scope": "organization"
+    },
+    {
+      "auth_required": true,
+      "claim_gate_required": true,
+      "claims_opened": false,
+      "external_effects_created": false,
+      "live_mode_enabled": false,
+      "method": "GET",
+      "object_level_authorization_required": true,
+      "path": "/api/billing/usage",
+      "permission": "billing:read:own_org",
+      "proof_boundary": "Enterprise API output must reuse packet, evidence, report, and claim-gate rules.",
+      "purpose": "Read local usage ledger with no live charges.",
+      "rate_limit_required_before_hosting": true,
+      "route_present": true,
+      "status": "route_present_gate_checked",
+      "tenant_filter_required": true,
+      "tenant_scope": "organization"
+    },
+    {
+      "auth_required": true,
+      "claim_gate_required": true,
+      "claims_opened": false,
+      "external_effects_created": false,
+      "live_mode_enabled": false,
+      "method": "GET",
+      "object_level_authorization_required": true,
+      "path": "/api/audit",
+      "permission": "audit:read:own_org",
+      "proof_boundary": "Enterprise API output must reuse packet, evidence, report, and claim-gate rules.",
+      "purpose": "Read scoped audit records.",
+      "rate_limit_required_before_hosting": true,
+      "route_present": true,
+      "status": "route_present_gate_checked",
+      "tenant_filter_required": true,
+      "tenant_scope": "organization_or_admin"
+    },
+    {
+      "auth_required": true,
+      "claim_gate_required": true,
+      "claims_opened": false,
+      "external_effects_created": false,
+      "gate": "hosted_auth_and_secret_storage_gate_closed",
+      "live_mode_enabled": false,
+      "method": "POST",
+      "object_level_authorization_required": true,
+      "path": "/api/api-keys",
+      "permission": "api_key:manage:own_org",
+      "proof_boundary": "Enterprise API output must reuse packet, evidence, report, and claim-gate rules.",
+      "purpose": "Record API-key request contract without issuing a live secret.",
+      "rate_limit_required_before_hosting": true,
+      "route_present": true,
+      "status": "route_present_gate_checked",
+      "tenant_filter_required": true,
+      "tenant_scope": "organization"
+    },
+    {
+      "auth_required": true,
+      "claim_gate_required": true,
+      "claims_opened": false,
+      "external_effects_created": false,
+      "gate": "hosted_auth_and_secret_storage_gate_closed",
+      "live_mode_enabled": false,
+      "method": "GET",
+      "object_level_authorization_required": true,
+      "path": "/api/api-keys",
+      "permission": "api_key:read:own_org",
+      "proof_boundary": "Enterprise API output must reuse packet, evidence, report, and claim-gate rules.",
+      "purpose": "List local API-key contract fingerprints only.",
+      "rate_limit_required_before_hosting": true,
+      "route_present": true,
+      "status": "route_present_gate_checked",
+      "tenant_filter_required": true,
+      "tenant_scope": "organization"
+    },
+    {
+      "auth_required": true,
+      "claim_gate_required": true,
+      "claims_opened": false,
+      "external_effects_created": false,
+      "gate": "webhook_delivery_gate_closed",
+      "live_mode_enabled": false,
+      "method": "POST",
+      "object_level_authorization_required": true,
+      "path": "/api/webhooks",
+      "permission": "webhook:manage:own_org",
+      "proof_boundary": "Enterprise API output must reuse packet, evidence, report, and claim-gate rules.",
+      "purpose": "Record webhook subscription contract with delivery disabled.",
+      "rate_limit_required_before_hosting": true,
+      "route_present": true,
+      "status": "route_present_gate_checked",
+      "tenant_filter_required": true,
+      "tenant_scope": "organization"
+    },
+    {
+      "auth_required": true,
+      "claim_gate_required": true,
+      "claims_opened": false,
+      "external_effects_created": false,
+      "gate": "webhook_delivery_gate_closed",
+      "live_mode_enabled": false,
+      "method": "GET",
+      "object_level_authorization_required": true,
+      "path": "/api/webhooks",
+      "permission": "webhook:read:own_org",
+      "proof_boundary": "Enterprise API output must reuse packet, evidence, report, and claim-gate rules.",
+      "purpose": "List local webhook event contracts.",
+      "rate_limit_required_before_hosting": true,
+      "route_present": true,
+      "status": "route_present_gate_checked",
+      "tenant_filter_required": true,
+      "tenant_scope": "organization"
+    }
+  ],
+  "api_key_record_count": 2,
+  "api_key_records": [
+    {
+      "api_key_id": "api-key-contract:org-importer-demo",
+      "fingerprint": "327a34a243825d85",
+      "hosted_auth_required": true,
+      "live_key_issued": false,
+      "organization_id": "org-importer-demo",
+      "rate_limit_policy": "100 requests per minute local contract; production limits need hosted proof",
+      "raw_secret_returned": false,
+      "rotation_days": 90,
+      "scopes": [
+        "packets:read",
+        "packets:write",
+        "reports:read",
+        "reviews:write"
+      ],
+      "secret_storage_required": true
+    },
+    {
+      "api_key_id": "api-key-contract:org-other-demo",
+      "fingerprint": "8713538bf987d94a",
+      "hosted_auth_required": true,
+      "live_key_issued": false,
+      "organization_id": "org-other-demo",
+      "rate_limit_policy": "100 requests per minute local contract; production limits need hosted proof",
+      "raw_secret_returned": false,
+      "rotation_days": 90,
+      "scopes": [
+        "packets:read",
+        "packets:write",
+        "reports:read",
+        "reviews:write"
+      ],
+      "secret_storage_required": true
+    }
+  ],
+  "audit_export_policy": {
+    "audit_event_count": 3,
+    "claim_gate_decision_count": 17,
+    "external_effects_created": false,
+    "included_records": [
+      "packets",
+      "evidence",
+      "reports",
+      "claim_gate_decisions",
+      "score_records",
+      "review_requests",
+      "audit_events",
+      "source_refresh_records"
+    ],
+    "report_export_count": 36,
+    "retention_approval_required": true,
+    "status": "enterprise_audit_export_policy_ready_local",
+    "tamper_evident_hash_required_before_hosting": true
+  },
+  "capabilities": [
+    {
+      "capability": "organizations",
+      "source": "auth_rbac_matrix.json",
+      "status": "implemented_local"
+    },
+    {
+      "capability": "workspaces",
+      "source": "team_workspace_report.json",
+      "status": "implemented_local"
+    },
+    {
+      "capability": "roles_rbac",
+      "source": "auth_rbac_matrix.json",
+      "status": "implemented_local"
+    },
+    {
+      "capability": "client_accounts",
+      "source": "organizations",
+      "status": "implemented_local"
+    },
+    {
+      "capability": "multi_packet_dashboard",
+      "source": "customer_readiness_report.json",
+      "status": "implemented_local"
+    },
+    {
+      "capability": "team_activity",
+      "source": "team_workspace_activity.json",
+      "status": "implemented_local"
+    },
+    {
+      "capability": "review_assignment",
+      "source": "production_review_requests.json",
+      "status": "implemented_local"
+    },
+    {
+      "capability": "audit_export",
+      "source": "audit_events.json plus report_exports.json",
+      "status": "implemented_local"
+    },
+    {
+      "capability": "api_keys",
+      "source": "production_enterprise_api_manifest.json",
+      "status": "local_contract_live_keys_closed"
+    },
+    {
+      "capability": "webhooks",
+      "source": "production_enterprise_webhook_policy.json",
+      "status": "local_contract_delivery_closed"
+    },
+    {
+      "capability": "usage_limits",
+      "source": "billing_usage_ledger.json",
+      "status": "implemented_local_no_charges"
+    },
+    {
+      "capability": "white_label_reports",
+      "source": "production_reports_engine_manifest.json",
+      "status": "local_policy_language_review_required"
+    }
+  ],
+  "capability_count": 12,
+  "claim_gate_dependency_status": "production_evidence_claim_gate_engine_ready_claims_fail_closed",
+  "claims_opened": false,
+  "external_effects_created": false,
+  "generated_at": "2026-06-28T15:40:36+00:00",
+  "hosted_enterprise_ready": false,
+  "live_api_keys_issued": false,
+  "live_payment_ready": false,
+  "permission_matrix": [
+    {
+      "allowed_roles": [
+        "customer",
+        "customer_admin"
+      ],
+      "cross_org_access_allowed": false,
+      "deny_by_default": true,
+      "method": "POST",
+      "path": "/api/packets",
+      "permission": "packet:create"
+    },
+    {
+      "allowed_roles": [
+        "customer",
+        "customer_admin"
+      ],
+      "cross_org_access_allowed": false,
+      "deny_by_default": true,
+      "method": "GET",
+      "path": "/api/packets/:id",
+      "permission": "packet:read:own_org"
+    },
+    {
+      "allowed_roles": [
+        "customer",
+        "customer_admin"
+      ],
+      "cross_org_access_allowed": false,
+      "deny_by_default": true,
+      "method": "POST",
+      "path": "/api/packets/:id/evidence",
+      "permission": "evidence:create:own_org"
+    },
+    {
+      "allowed_roles": [
+        "customer",
+        "customer_admin"
+      ],
+      "cross_org_access_allowed": false,
+      "deny_by_default": true,
+      "method": "POST",
+      "path": "/api/documents/upload",
+      "permission": "evidence:create:own_org"
+    },
+    {
+      "allowed_roles": [
+        "customer_admin",
+        "operator"
+      ],
+      "cross_org_access_allowed": false,
+      "deny_by_default": true,
+      "method": "POST",
+      "path": "/api/sources/refresh",
+      "permission": "source:refresh:own_org"
+    },
+    {
+      "allowed_roles": [
+        "customer",
+        "customer_admin"
+      ],
+      "cross_org_access_allowed": false,
+      "deny_by_default": true,
+      "method": "GET",
+      "path": "/api/packets/:id/scores",
+      "permission": "packet:read:own_org"
+    },
+    {
+      "allowed_roles": [
+        "customer",
+        "customer_admin"
+      ],
+      "cross_org_access_allowed": false,
+      "deny_by_default": true,
+      "method": "GET",
+      "path": "/api/packets/:id/blocked-claims",
+      "permission": "packet:read:own_org"
+    },
+    {
+      "allowed_roles": [
+        "customer",
+        "customer_admin"
+      ],
+      "cross_org_access_allowed": false,
+      "deny_by_default": true,
+      "method": "POST",
+      "path": "/api/reviews",
+      "permission": "review:request:own_org"
+    },
+    {
+      "allowed_roles": [
+        "customer",
+        "customer_admin"
+      ],
+      "cross_org_access_allowed": false,
+      "deny_by_default": true,
+      "method": "POST",
+      "path": "/api/reports",
+      "permission": "report:export:own_org"
+    },
+    {
+      "allowed_roles": [
+        "ai_system",
+        "customer",
+        "customer_admin",
+        "operator"
+      ],
+      "cross_org_access_allowed": false,
+      "deny_by_default": true,
+      "method": "POST",
+      "path": "/api/ai/safe-summary",
+      "permission": "report:draft"
+    },
+    {
+      "allowed_roles": [
+        "customer",
+        "customer_admin"
+      ],
+      "cross_org_access_allowed": false,
+      "deny_by_default": true,
+      "method": "GET",
+      "path": "/api/team-workspace",
+      "permission": "packet:read:own_org"
+    },
+    {
+      "allowed_roles": [
+        "admin",
+        "customer_admin"
+      ],
+      "cross_org_access_allowed": false,
+      "deny_by_default": true,
+      "method": "GET",
+      "path": "/api/billing/usage",
+      "permission": "billing:read:own_org"
+    },
+    {
+      "allowed_roles": [
+        "admin",
+        "operator"
+      ],
+      "cross_org_access_allowed": false,
+      "deny_by_default": true,
+      "method": "GET",
+      "path": "/api/audit",
+      "permission": "audit:read:own_org"
+    },
+    {
+      "allowed_roles": [
+        "admin",
+        "customer_admin"
+      ],
+      "cross_org_access_allowed": false,
+      "deny_by_default": true,
+      "method": "POST",
+      "path": "/api/api-keys",
+      "permission": "api_key:manage:own_org"
+    },
+    {
+      "allowed_roles": [
+        "admin",
+        "customer_admin"
+      ],
+      "cross_org_access_allowed": false,
+      "deny_by_default": true,
+      "method": "GET",
+      "path": "/api/api-keys",
+      "permission": "api_key:read:own_org"
+    },
+    {
+      "allowed_roles": [
+        "admin",
+        "customer_admin"
+      ],
+      "cross_org_access_allowed": false,
+      "deny_by_default": true,
+      "method": "POST",
+      "path": "/api/webhooks",
+      "permission": "webhook:manage:own_org"
+    },
+    {
+      "allowed_roles": [
+        "admin",
+        "customer_admin"
+      ],
+      "cross_org_access_allowed": false,
+      "deny_by_default": true,
+      "method": "GET",
+      "path": "/api/webhooks",
+      "permission": "webhook:read:own_org"
+    }
+  ],
+  "permission_matrix_count": 17,
+  "portal_dependency_status": "production_portal_workflow_engine_ready_routes_gated_business_owner_ux",
+  "product": "Trade Readiness Copilot",
+  "proof_boundary": "Enterprise SaaS/API contracts are local and gate-closed; they do not prove hosted auth, live API credentials, webhook delivery, customer terms, production security, or public launch readiness.",
+  "public_launch_ready": false,
+  "report_dependency_status": "production_reports_engine_ready_cited_exports_blocked_claims_visible",
+  "research_reference_count": 5,
+  "research_references": [
+    {
+      "product_use": "API authorization, object access, resource-use, and inventory controls for enterprise endpoints.",
+      "source_id": "owasp-api-security-2023",
+      "source_name": "OWASP API Security Top 10 2023",
+      "url": "https://owasp.org/API-Security/editions/2023/en/0x11-t10/"
+    },
+    {
+      "product_use": "Future hosted API authorization model and client credential review.",
+      "source_id": "ietf-rfc-6749-oauth2",
+      "source_name": "IETF RFC 6749 OAuth 2.0 Authorization Framework",
+      "url": "https://www.rfc-editor.org/rfc/rfc6749"
+    },
+    {
+      "product_use": "Bearer-token handling boundary for API-key and access-token contracts.",
+      "source_id": "ietf-rfc-6750-bearer",
+      "source_name": "IETF RFC 6750 OAuth 2.0 Bearer Token Usage",
+      "url": "https://www.rfc-editor.org/rfc/rfc6750"
+    },
+    {
+      "product_use": "Access control, audit/accountability, system integrity, and privacy control framing.",
+      "source_id": "nist-sp-800-53-rev5",
+      "source_name": "NIST SP 800-53 Rev. 5",
+      "url": "https://csrc.nist.gov/pubs/sp/800/53/r5/upd1/final"
+    },
+    {
+      "product_use": "Future enterprise identity provisioning boundary; not active locally.",
+      "source_id": "ietf-rfc-7644-scim",
+      "source_name": "IETF RFC 7644 SCIM Protocol",
+      "url": "https://www.rfc-editor.org/rfc/rfc7644"
+    }
+  ],
+  "status": "production_enterprise_api_platform_ready_local_contracts_external_gates_closed",
+  "unrestricted_uploads_enabled": false,
+  "usage_limit_count": 6,
+  "usage_limits": [
+    {
+      "hosted_enforcement_required": true,
+      "local_limit": 100,
+      "metric": "api_requests_per_minute"
+    },
+    {
+      "hosted_enforcement_required": true,
+      "local_limit": 250,
+      "metric": "packets_per_workspace"
+    },
+    {
+      "hosted_enforcement_required": true,
+      "local_limit": 100,
+      "metric": "pdf_exports_per_day"
+    },
+    {
+      "hosted_enforcement_required": true,
+      "local_limit": 25,
+      "metric": "ai_safe_summaries_per_day"
+    },
+    {
+      "hosted_enforcement_required": true,
+      "local_limit": 0,
+      "metric": "webhook_deliveries"
+    },
+    {
+      "hosted_enforcement_required": true,
+      "local_limit": 0,
+      "metric": "real_file_upload_bytes"
+    }
+  ],
+  "webhook_delivery_enabled": false,
+  "webhook_record_count": 2,
+  "webhook_records": [
+    {
+      "delivery_enabled": false,
+      "event_types": [
+        "packet.created",
+        "packet.updated",
+        "report.generated",
+        "review.finding_submitted",
+        "source.stale"
+      ],
+      "external_effects_created": false,
+      "next_valid_move": "Approve customer endpoint, signing-secret storage, retry policy, and monitoring before delivery.",
+      "organization_id": "org-importer-demo",
+      "retry_policy_required": true,
+      "signature_required": true,
+      "signing_secret_stored": false,
+      "webhook_id": "webhook-contract:org-importer-demo"
+    },
+    {
+      "delivery_enabled": false,
+      "event_types": [
+        "packet.created",
+        "packet.updated",
+        "report.generated",
+        "review.finding_submitted",
+        "source.stale"
+      ],
+      "external_effects_created": false,
+      "next_valid_move": "Approve customer endpoint, signing-secret storage, retry policy, and monitoring before delivery.",
+      "organization_id": "org-other-demo",
+      "retry_policy_required": true,
+      "signature_required": true,
+      "signing_secret_stored": false,
+      "webhook_id": "webhook-contract:org-other-demo"
+    }
+  ],
+  "white_label_claims_approved": false,
+  "white_label_policy": {
+    "allowed_customization": [
+      "logo",
+      "organization_name",
+      "contact_email",
+      "report_cover_note"
+    ],
+    "claims_opened": false,
+    "forbidden_customization": [
+      "remove blocked claims",
+      "remove draft watermark before review",
+      "remove source citations",
+      "change claim-gate language",
+      "imply customs, tariff, CFIA, buyer, supplier, payment, or launch approval"
+    ],
+    "report_language_review_required": true,
+    "status": "white_label_report_policy_ready_language_review_required"
+  },
+  "workspace_control_count": 3,
+  "workspace_controls": [
+    {
+      "cross_org_packet_access_allowed": false,
+      "external_claims_opened": false,
+      "membership_count": 1,
+      "organization_id": "org-importer-demo",
+      "organization_name": "Importer Demo Co.",
+      "organization_type": "customer",
+      "packet_count_visible_locally": 1,
+      "roles": [
+        "customer_admin"
+      ],
+      "row_level_security_table_count": 29,
+      "row_level_security_tables_present": true,
+      "tenant_isolation_required": true,
+      "workspace_count": 1,
+      "workspaces": [
+        {
+          "approval_board": [
+            {
+              "gate": "buyer_validation",
+              "owner": "founder_or_customer",
+              "status": "blocked"
+            },
+            {
+              "gate": "qualified_trade_review",
+              "owner": "expert_reviewer",
+              "status": "blocked"
+            },
+            {
+              "gate": "privacy_security_review",
+              "owner": "admin",
+              "status": "blocked"
+            },
+            {
+              "gate": "private_beta_launch",
+              "owner": "operator",
+              "status": "blocked"
+            }
+          ],
+          "packet_id": "packet-frozen-tuna-canada-001",
+          "workspace_id": "workspace:packet-frozen-tuna-canada-001"
+        }
+      ]
+    },
+    {
+      "cross_org_packet_access_allowed": false,
+      "external_claims_opened": false,
+      "membership_count": 1,
+      "organization_id": "org-other-demo",
+      "organization_name": "Other Customer Org",
+      "organization_type": "customer",
+      "packet_count_visible_locally": 0,
+      "roles": [
+        "customer"
+      ],
+      "row_level_security_table_count": 29,
+      "row_level_security_tables_present": true,
+      "tenant_isolation_required": true,
+      "workspace_count": 0,
+      "workspaces": []
+    },
+    {
+      "cross_org_packet_access_allowed": true,
+      "external_claims_opened": false,
+      "membership_count": 2,
+      "organization_id": "org-internal-ops",
+      "organization_name": "Importer Source Readiness Ops",
+      "organization_type": "internal",
+      "packet_count_visible_locally": 1,
+      "roles": [
+        "admin",
+        "operator"
+      ],
+      "row_level_security_table_count": 29,
+      "row_level_security_tables_present": true,
+      "tenant_isolation_required": true,
+      "workspace_count": 1,
+      "workspaces": [
+        {
+          "approval_board": [
+            {
+              "gate": "buyer_validation",
+              "owner": "founder_or_customer",
+              "status": "blocked"
+            },
+            {
+              "gate": "qualified_trade_review",
+              "owner": "expert_reviewer",
+              "status": "blocked"
+            },
+            {
+              "gate": "privacy_security_review",
+              "owner": "admin",
+              "status": "blocked"
+            },
+            {
+              "gate": "private_beta_launch",
+              "owner": "operator",
+              "status": "blocked"
+            }
+          ],
+          "packet_id": "packet-frozen-tuna-canada-001",
+          "workspace_id": "workspace:packet-frozen-tuna-canada-001"
+        }
+      ]
+    }
+  ]
+}

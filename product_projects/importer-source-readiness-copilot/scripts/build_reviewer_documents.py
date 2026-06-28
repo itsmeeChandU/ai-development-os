@@ -184,6 +184,7 @@ def _status_context() -> dict[str, Any]:
     production_expert = _load_json(GRAPH / "production_expert_review_network_manifest.json")
     production_reports = _load_json(GRAPH / "production_reports_engine_manifest.json")
     production_portals = _load_json(GRAPH / "production_portal_workflow_manifest.json")
+    production_enterprise = _load_json(GRAPH / "production_enterprise_api_manifest.json")
     row = business["packet_rows"][0]
     return {
         "today": date.today().isoformat(),
@@ -198,6 +199,7 @@ def _status_context() -> dict[str, Any]:
         "production_expert": production_expert,
         "production_reports": production_reports,
         "production_portals": production_portals,
+        "production_enterprise": production_enterprise,
         "packet": row,
     }
 
@@ -212,6 +214,7 @@ def _functional(ctx: dict[str, Any]) -> ReviewerDocument:
     expert_review = ctx["production_expert"]
     reports = ctx["production_reports"]
     portals = ctx["production_portals"]
+    enterprise = ctx["production_enterprise"]
     return ReviewerDocument(
         title="Functional Requirements For External Review",
         filename="functional_requirements_for_review.md",
@@ -339,6 +342,17 @@ def _functional(ctx: dict[str, Any]) -> ReviewerDocument:
                 ),
             ),
             Section(
+                "Enterprise API Platform Implemented",
+                bullets=(
+                    f"Enterprise API status: `{enterprise['status']}`.",
+                    f"API contracts: `{enterprise.get('api_contract_count')}`.",
+                    f"All required API routes present: `{enterprise.get('all_required_api_routes_present')}`.",
+                    f"Workspace controls: `{enterprise.get('workspace_control_count')}`.",
+                    "The product exposes local contracts for packets, evidence, documents, source refresh, scores, blocked claims, reviews, reports, AI safe summaries, audit, API keys, and webhooks.",
+                    "Live API secrets, webhook delivery, unrestricted uploads, hosted enterprise auth, enterprise terms, security approval, and public launch remain closed.",
+                ),
+            ),
+            Section(
                 "Enterprise And Advisor Use Cases",
                 bullets=(
                     "Broker or trade advisor can manage multiple client packets and export missing-evidence or broker-review packets.",
@@ -394,6 +408,7 @@ def _business_logic(ctx: dict[str, Any]) -> ReviewerDocument:
     expert_review = ctx["production_expert"]
     reports = ctx["production_reports"]
     portals = ctx["production_portals"]
+    enterprise = ctx["production_enterprise"]
     buyer_supplier = packet["buyer_supplier_evidence"]
     gate = packet["business_gate_decision"]
     market = packet["market_intelligence"]["market_signal_evaluation"]
@@ -535,6 +550,20 @@ def _business_logic(ctx: dict[str, Any]) -> ReviewerDocument:
                 ),
             ),
             Section(
+                "Enterprise API Logic Implemented Now",
+                body=(
+                    "Enterprise API logic exposes the same packet and claim-gate rules through local API contracts for brokers, advisors, and teams.",
+                ),
+                bullets=(
+                    f"API contracts generated: `{enterprise.get('api_contract_count')}`.",
+                    f"API-key contract records generated: `{enterprise.get('api_key_record_count')}`.",
+                    f"Webhook contract records generated: `{enterprise.get('webhook_record_count')}`.",
+                    f"Research references attached: `{enterprise.get('research_reference_count')}`.",
+                    "Each API contract requires auth, tenant filtering, object-level authorization, claim-gate reuse, and rate-limit proof before hosting.",
+                    "API outputs cannot hide blocked claims, issue live secrets, deliver webhooks, accept unrestricted files, approve white-label claims, or create external effects.",
+                ),
+            ),
+            Section(
                 "Current Sample Packet Result",
                 bullets=(
                     f"Packet reviewed: `{packet['packet_id']}`.",
@@ -592,6 +621,7 @@ def _non_functional(ctx: dict[str, Any]) -> ReviewerDocument:
     expert_review = ctx["production_expert"]
     reports = ctx["production_reports"]
     portals = ctx["production_portals"]
+    enterprise = ctx["production_enterprise"]
     return ReviewerDocument(
         title="Non-Functional Requirements For External Review",
         filename="non_functional_requirements_for_review.md",
@@ -686,6 +716,17 @@ def _non_functional(ctx: dict[str, Any]) -> ReviewerDocument:
                     "Portal workflows require plain business language, route coverage, mobile review, accessibility review, and blocked-versus-approved confusion testing.",
                     "Portal gate controls keep approval claims, unrestricted uploads, live payments, external effects, and public launch closed.",
                     "Real UX testing, accessibility signoff, mobile approval, hosted proof, and public launch owner approval remain incomplete.",
+                ),
+            ),
+            Section(
+                "Enterprise API Controls",
+                bullets=(
+                    f"Enterprise API status: `{enterprise['status']}`.",
+                    f"API contracts: `{enterprise.get('api_contract_count')}`.",
+                    f"Permission rows: `{enterprise.get('permission_matrix_count')}`.",
+                    f"Usage-limit rows: `{enterprise.get('usage_limit_count')}`.",
+                    "API contracts require auth, tenant filtering, object-level authorization, claim-gate reuse, rate-limit proof, and closed external effects.",
+                    "Live API keys, webhook delivery, unrestricted uploads, hosted auth, enterprise terms, and security review remain incomplete.",
                 ),
             ),
             Section(
