@@ -12,8 +12,10 @@ if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
 from importer_source_readiness.production_market_readiness_evidence_room import (
+    INPUT_LEDGER_STATUS,
     INPUT_RECORD_STATUS,
     STATUS,
+    build_market_readiness_input_ledger,
     build_production_market_readiness_evidence_room,
     build_market_readiness_input_record,
     save_market_readiness_input_record,
@@ -22,6 +24,14 @@ from importer_source_readiness.production_market_readiness_evidence_room import 
 
 
 class ProductionMarketReadinessEvidenceRoomTests(unittest.TestCase):
+    def _temp_root_with_input_templates(self, root: Path) -> None:
+        graph = root / "system_review_graph"
+        graph.mkdir(parents=True)
+        (graph / "go_live_input_templates.json").write_text(
+            (ROOT / "system_review_graph" / "go_live_input_templates.json").read_text(encoding="utf-8"),
+            encoding="utf-8",
+        )
+
     def test_evidence_room_maps_all_real_world_go_live_inputs_without_opening_claims(self) -> None:
         manifest = build_production_market_readiness_evidence_room(ROOT)
 
@@ -36,6 +46,9 @@ class ProductionMarketReadinessEvidenceRoomTests(unittest.TestCase):
         self.assertFalse(manifest["external_effects_created"])
         self.assertFalse(manifest["claims_opened_by_room"])
         self.assertFalse(manifest["market_ready_claim_allowed"])
+        self.assertEqual(manifest["input_ledger_status"], INPUT_LEDGER_STATUS)
+        self.assertEqual(manifest["input_ledger"]["not_received_area_count"], 8)
+        self.assertEqual(manifest["input_ledger_route"], "/api/market-readiness/input-ledger")
         self.assertIn("market_ready", manifest["blocked_claims"])
         self.assertIn("buyer_validated", manifest["blocked_claims"])
 
@@ -108,12 +121,7 @@ class ProductionMarketReadinessEvidenceRoomTests(unittest.TestCase):
         manifest = build_production_market_readiness_evidence_room(ROOT)
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
-            graph = root / "system_review_graph"
-            graph.mkdir(parents=True)
-            (graph / "go_live_input_templates.json").write_text(
-                (ROOT / "system_review_graph" / "go_live_input_templates.json").read_text(encoding="utf-8"),
-                encoding="utf-8",
-            )
+            self._temp_root_with_input_templates(root)
             result = save_market_readiness_input_record(
                 {
                     "review_area": "real_users_private_beta_outcomes",
@@ -134,6 +142,95 @@ class ProductionMarketReadinessEvidenceRoomTests(unittest.TestCase):
             self.assertFalse(written["claims_opened_by_recording"])
             self.assertEqual(manifest["input_capture_route"], "/api/market-readiness/inputs")
 
+    def test_input_ledger_marks_empty_inputs_as_not_received(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            self._temp_root_with_input_templates(root)
+            ledger = build_market_readiness_input_ledger(root)
+
+            self.assertEqual(ledger["status"], INPUT_LEDGER_STATUS)
+            self.assertEqual(ledger["review_area_count"], 8)
+            self.assertEqual(ledger["input_record_count"], 0)
+            self.assertEqual(ledger["accepted_area_count"], 0)
+            self.assertEqual(ledger["not_received_area_count"], 8)
+            self.assertFalse(ledger["public_launch_ready_by_ledger"])
+            self.assertFalse(ledger["claims_opened_by_ledger"])
+            self.assertTrue(all(row["status"] == "not_received" for row in ledger["ledger_rows"]))
+
+    def test_input_ledger_separates_incomplete_needs_evidence_and_accepted_records(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            self._temp_root_with_input_templates(root)
+            input_dir = root / "external_inputs"
+            input_dir.mkdir()
+            (input_dir / "qualified_customs_trade_review.json").write_text(
+                json.dumps(
+                    {
+                        "review_area": "qualified_customs_trade_review",
+                        "reviewer_name": "Example Broker",
+                        "reviewer_role": "Licensed customs broker",
+                        "scope_reviewed": "Canada import language only",
+                        "decision": "need_more_evidence",
+                        "signed_at": "2026-06-28",
+                        "evidence_missing": ["HS classification scope"],
+                    }
+                ),
+                encoding="utf-8",
+            )
+            (input_dir / "legal_privacy_security_approval.json").write_text(
+                json.dumps(
+                    {
+                        "review_area": "legal_privacy_security_approval",
+                        "reviewer_name": "Security reviewer",
+                        "decision": "ready_for_my_area",
+                    }
+                ),
+                encoding="utf-8",
+            )
+            (input_dir / "hosted_staging_production_proof.json").write_text(
+                json.dumps(
+                    {
+                        "review_area": "hosted_staging_production_proof",
+                        "reviewer_name": "Ops owner",
+                        "reviewer_role": "Deployment owner",
+                        "scope_reviewed": "Production URL and smoke proof",
+                        "decision": "ready_for_my_area",
+                        "signed_at": "2026-06-28",
+                    }
+                ),
+                encoding="utf-8",
+            )
+            ledger = build_market_readiness_input_ledger(root)
+            rows = {row["review_area"]: row for row in ledger["ledger_rows"]}
+
+            self.assertEqual(ledger["input_record_count"], 3)
+            self.assertEqual(ledger["accepted_area_count"], 1)
+            self.assertEqual(ledger["needs_more_evidence_area_count"], 1)
+            self.assertEqual(ledger["incomplete_area_count"], 1)
+            self.assertEqual(rows["qualified_customs_trade_review"]["status"], "received_needs_more_evidence")
+            self.assertEqual(rows["legal_privacy_security_approval"]["status"], "received_but_incomplete")
+            self.assertIn("reviewer role or qualification", rows["legal_privacy_security_approval"]["missing_fields"])
+            self.assertEqual(rows["hosted_staging_production_proof"]["status"], "accepted_for_area")
+            self.assertFalse(ledger["public_launch_ready_by_ledger"])
+            self.assertFalse(ledger["claims_opened_by_ledger"])
+
+    def test_input_ledger_tracks_invalid_or_unknown_records_without_claims(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            self._temp_root_with_input_templates(root)
+            input_dir = root / "external_inputs"
+            input_dir.mkdir()
+            (input_dir / "broken.json").write_text("{not-json", encoding="utf-8")
+            (input_dir / "unknown.json").write_text(
+                json.dumps({"review_area": "unsupported_area", "decision": "ready_for_my_area"}),
+                encoding="utf-8",
+            )
+            ledger = build_market_readiness_input_ledger(root)
+
+            self.assertEqual(ledger["invalid_record_count"], 2)
+            self.assertFalse(ledger["claims_opened_by_ledger"])
+            self.assertTrue(all(row["claims_opened_by_ledger"] is False for row in ledger["invalid_records"]))
+
     def test_writer_creates_evidence_room_artifacts(self) -> None:
         manifest = build_production_market_readiness_evidence_room(ROOT)
         with tempfile.TemporaryDirectory() as tmp:
@@ -147,13 +244,16 @@ class ProductionMarketReadinessEvidenceRoomTests(unittest.TestCase):
             written_work_orders = json.loads(paths["work_orders"].read_text(encoding="utf-8"))
             written_cards = json.loads(paths["reviewer_cards"].read_text(encoding="utf-8"))
             written_matrix = json.loads(paths["matrix"].read_text(encoding="utf-8"))
+            written_input_ledger = json.loads(paths["input_ledger"].read_text(encoding="utf-8"))
             written_doc = paths["doc"].read_text(encoding="utf-8")
 
             self.assertEqual(written_manifest["status"], STATUS)
             self.assertEqual(written_work_orders["status"], "production_market_readiness_evidence_work_orders_ready")
             self.assertEqual(written_cards["status"], "production_market_readiness_reviewer_brief_cards_ready")
             self.assertEqual(written_matrix["status"], "production_market_readiness_gate_status_matrix_ready")
+            self.assertEqual(written_input_ledger["status"], INPUT_LEDGER_STATUS)
             self.assertIn("Production Market Readiness Evidence Room", written_doc)
+            self.assertIn("Returned Input Ledger", written_doc)
             self.assertIn("Market-ready claim allowed: false", written_doc)
 
 

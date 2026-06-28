@@ -15,6 +15,8 @@ from typing import Any
 
 STATUS = "production_market_readiness_evidence_room_ready_inputs_mapped_gates_closed"
 INPUT_RECORD_STATUS = "market_readiness_input_record_saved_local_pending_re_evaluation"
+INPUT_LEDGER_STATUS = "production_market_readiness_input_ledger_ready_claims_closed"
+READY_INPUT_DECISIONS = {"ready_for_my_area", "not_applicable_for_this_launch", "go_for_public_launch"}
 
 BLOCKED_MARKET_READY_CLAIMS = (
     "market_ready",
@@ -249,6 +251,205 @@ def save_market_readiness_input_record(fields: dict[str, Any], repo_root: Path) 
     }
 
 
+def _input_records_from_folder(input_dir: Path) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
+    records: list[dict[str, Any]] = []
+    invalid_records: list[dict[str, Any]] = []
+    if not input_dir.exists():
+        return records, invalid_records
+    for path in sorted(input_dir.glob("*.json")):
+        try:
+            payload = json.loads(path.read_text(encoding="utf-8"))
+        except (json.JSONDecodeError, OSError) as exc:
+            invalid_records.append(
+                {
+                    "source_file": path.name,
+                    "status": "invalid_json",
+                    "error": str(exc),
+                    "missing_fields": ["valid JSON input record"],
+                    "next_valid_move": "Replace the file with a valid returned-input JSON record.",
+                    "claims_opened_by_ledger": False,
+                    "external_effects_created": False,
+                }
+            )
+            continue
+        if not isinstance(payload, dict):
+            invalid_records.append(
+                {
+                    "source_file": path.name,
+                    "status": "invalid_json",
+                    "error": "JSON input must be an object",
+                    "missing_fields": ["object-shaped JSON input record"],
+                    "next_valid_move": "Replace the file with the matching returned-input JSON template.",
+                    "claims_opened_by_ledger": False,
+                    "external_effects_created": False,
+                }
+            )
+            continue
+        payload["source_file"] = path.name
+        records.append(payload)
+    return records, invalid_records
+
+
+def _record_missing_fields(record: dict[str, Any]) -> list[str]:
+    missing = []
+    if not (record.get("reviewer_name") or record.get("approver")):
+        missing.append("reviewer or accountable owner name")
+    if not (record.get("reviewer_role") or record.get("approver_role")):
+        missing.append("reviewer role or qualification")
+    if not (record.get("scope_reviewed") or record.get("launch_scope")):
+        missing.append("scope reviewed")
+    if not (record.get("signed_at") or record.get("decided_at")):
+        missing.append("signed or decided date")
+    if not record.get("decision"):
+        missing.append("decision")
+    return missing
+
+
+def _record_is_accepted(record: dict[str, Any]) -> bool:
+    return not _record_missing_fields(record) and str(record.get("decision") or "") in READY_INPUT_DECISIONS
+
+
+def _selected_input_record(records: list[dict[str, Any]]) -> dict[str, Any] | None:
+    accepted = [record for record in records if _record_is_accepted(record)]
+    if accepted:
+        return sorted(accepted, key=lambda row: str(row.get("recorded_at") or row.get("signed_at") or row.get("source_file") or ""))[-1]
+    if records:
+        return sorted(records, key=lambda row: str(row.get("recorded_at") or row.get("signed_at") or row.get("source_file") or ""))[-1]
+    return None
+
+
+def _input_ledger_row(template: dict[str, Any], records: list[dict[str, Any]]) -> dict[str, Any]:
+    review_area = str(template.get("review_area"))
+    selected = _selected_input_record(records)
+    if selected is None:
+        who_to_ask = str(template.get("who_to_ask") or "the responsible reviewer or owner").strip().rstrip(".")
+        return {
+            "review_area": review_area,
+            "plain_title": template.get("plain_title"),
+            "status": "not_received",
+            "decision": "",
+            "source_file": f"external_inputs/{review_area}.json",
+            "reviewer_name": "",
+            "reviewer_role": "",
+            "signed_at": "",
+            "scope_reviewed": "",
+            "record_count_for_area": 0,
+            "minimum_input_present": False,
+            "ready_decision_candidate": False,
+            "accepted_for_area": False,
+            "missing_fields": ["returned input record"],
+            "next_valid_move": f"Send the scoped request to {who_to_ask}, then save the dated response.",
+            "claims_opened_by_ledger": False,
+            "external_effects_created": False,
+        }
+
+    decision = str(selected.get("decision") or "")
+    missing_fields = _record_missing_fields(selected)
+    ready_decision = decision in READY_INPUT_DECISIONS
+    accepted = not missing_fields and ready_decision
+    if accepted:
+        status = "accepted_for_area"
+        next_valid_move = "Keep this scoped input attached, then wait for every other area and final owner approval before launch."
+    elif decision == "need_more_evidence" or selected.get("evidence_missing"):
+        status = "received_needs_more_evidence"
+        next_valid_move = "Collect the missing evidence listed in the returned input and keep the area blocked."
+    elif missing_fields:
+        status = "received_but_incomplete"
+        next_valid_move = "Ask the reviewer or owner to add the missing fields before counting this area as ready."
+    else:
+        status = "received_not_ready"
+        next_valid_move = "Resolve the reviewer decision before this area can be accepted."
+    return {
+        "review_area": review_area,
+        "plain_title": template.get("plain_title"),
+        "status": status,
+        "decision": decision,
+        "source_file": selected.get("source_file"),
+        "reviewer_name": selected.get("reviewer_name") or selected.get("approver") or "",
+        "reviewer_role": selected.get("reviewer_role") or selected.get("approver_role") or "",
+        "signed_at": selected.get("signed_at") or selected.get("decided_at") or "",
+        "scope_reviewed": selected.get("scope_reviewed") or selected.get("launch_scope") or "",
+        "record_count_for_area": len(records),
+        "minimum_input_present": not missing_fields,
+        "ready_decision_candidate": ready_decision,
+        "accepted_for_area": accepted,
+        "missing_fields": missing_fields,
+        "top_issues": _split_lines(selected.get("top_issues")),
+        "evidence_missing": _split_lines(selected.get("evidence_missing")),
+        "claims_the_product_must_not_make": _split_lines(selected.get("claims_the_product_must_not_make")),
+        "next_valid_move": next_valid_move,
+        "claims_opened_by_ledger": False,
+        "external_effects_created": False,
+    }
+
+
+def build_market_readiness_input_ledger(repo_root: Path | None = None) -> dict[str, Any]:
+    root = repo_root or Path(__file__).resolve().parents[2]
+    graph = root / "system_review_graph"
+    templates = _load_json(graph / "go_live_input_templates.json", {})
+    input_dir = root / "external_inputs"
+    records, invalid_records = _input_records_from_folder(input_dir)
+    records_by_area: dict[str, list[dict[str, Any]]] = {
+        str(row.get("review_area")): [] for row in templates.get("templates", [])
+    }
+    unassigned_records: list[dict[str, Any]] = []
+    for record in records:
+        area = str(record.get("review_area") or "")
+        if area in records_by_area:
+            records_by_area[area].append(record)
+        else:
+            unassigned_records.append(
+                {
+                    "source_file": record.get("source_file"),
+                    "review_area": area or "missing",
+                    "status": "unknown_review_area",
+                    "missing_fields": ["supported review area"],
+                    "next_valid_move": "Move the record to one of the supported market-readiness review areas.",
+                    "claims_opened_by_ledger": False,
+                    "external_effects_created": False,
+                }
+            )
+
+    rows = [
+        _input_ledger_row(template, records_by_area.get(str(template.get("review_area")), []))
+        for template in templates.get("templates", [])
+    ]
+    accepted_count = len([row for row in rows if row["status"] == "accepted_for_area"])
+    not_received_count = len([row for row in rows if row["status"] == "not_received"])
+    incomplete_count = len([row for row in rows if row["status"] == "received_but_incomplete"])
+    needs_more_evidence_count = len([row for row in rows if row["status"] == "received_needs_more_evidence"])
+    invalid_count = len(invalid_records) + len(unassigned_records)
+    final_row = next((row for row in rows if row["review_area"] == "public_go_no_go_approval"), {})
+    return {
+        "generated_at": _now(),
+        "status": INPUT_LEDGER_STATUS,
+        "review_area_count": len(rows),
+        "input_record_count": len(records),
+        "accepted_area_count": accepted_count,
+        "not_received_area_count": not_received_count,
+        "incomplete_area_count": incomplete_count,
+        "needs_more_evidence_area_count": needs_more_evidence_count,
+        "invalid_record_count": invalid_count,
+        "all_areas_accepted": accepted_count == len(rows) and bool(rows),
+        "public_launch_ready_by_ledger": accepted_count == len(rows) and final_row.get("decision") == "go_for_public_launch",
+        "input_folder": "external_inputs/",
+        "ledger_rows": rows,
+        "invalid_records": invalid_records + unassigned_records,
+        "blocked_claims": list(BLOCKED_MARKET_READY_CLAIMS),
+        "claims_opened_by_ledger": False,
+        "external_effects_created": False,
+        "next_valid_move": (
+            "Collect and record the missing real inputs."
+            if accepted_count < len(rows)
+            else "Run the launch control plane and require final owner approval for the exact scope."
+        ),
+        "proof_boundary": (
+            "The ledger validates returned input completeness for operators. It does not approve launch, "
+            "payments, customs/trade claims, legal/privacy/security claims, buyer validation, or supplier verification."
+        ),
+    }
+
+
 def build_production_market_readiness_evidence_room(repo_root: Path | None = None) -> dict[str, Any]:
     root = repo_root or Path(__file__).resolve().parents[2]
     graph = root / "system_review_graph"
@@ -295,6 +496,7 @@ def build_production_market_readiness_evidence_room(repo_root: Path | None = Non
     missing_count = int(readiness.get("missing_input_count", len([row for row in work_orders if not row["ready_for_area"]])))
     ready_count = int(readiness.get("ready_input_count", len([row for row in work_orders if row["ready_for_area"]])))
     required_count = int(readiness.get("required_input_count", external_validation.get("gate_count", len(work_orders))))
+    input_ledger = build_market_readiness_input_ledger(root)
     return {
         "generated_at": _now(),
         "status": STATUS,
@@ -323,6 +525,9 @@ def build_production_market_readiness_evidence_room(repo_root: Path | None = Non
         "source_anchor_count": sum(row["source_anchor_count"] for row in work_orders),
         "input_folder": templates.get("input_folder", "external_inputs/"),
         "input_form_contract": market_readiness_input_form_contract(root),
+        "input_ledger": input_ledger,
+        "input_ledger_status": input_ledger["status"],
+        "input_ledger_route": "/api/market-readiness/input-ledger",
         "input_capture_enabled_local": True,
         "input_capture_route": "/api/market-readiness/inputs",
         "template_status": templates.get("status", "missing"),
@@ -331,6 +536,7 @@ def build_production_market_readiness_evidence_room(repo_root: Path | None = Non
         "blocked_claims": list(BLOCKED_MARKET_READY_CLAIMS),
         "safe_next_loop": [
             "Collect the missing real-world input files in external_inputs/.",
+            "Use production_market_readiness_input_ledger.json to inspect incomplete or unaccepted returned inputs.",
             "Rerun scripts/run_external_validation_requirements.py --input-dir external_inputs.",
             "Rerun scripts/run_production_market_readiness_evidence_room.py.",
             "Route any returned issue into external_review_blocker_ledger.jsonl before launch scope changes.",
@@ -363,6 +569,15 @@ def render_market_readiness_evidence_room_markdown(payload: dict[str, Any]) -> s
         f"- Market-ready claim allowed: {str(payload['market_ready_claim_allowed']).lower()}",
         f"- Local returned-input capture: {str(payload['input_capture_enabled_local']).lower()}",
         f"- Input capture route: `{payload['input_capture_route']}`",
+        f"- Input ledger route: `{payload['input_ledger_route']}`",
+        "",
+        "## Returned Input Ledger",
+        "",
+        f"- Accepted areas: {payload['input_ledger']['accepted_area_count']}",
+        f"- Not received areas: {payload['input_ledger']['not_received_area_count']}",
+        f"- Needs more evidence: {payload['input_ledger']['needs_more_evidence_area_count']}",
+        f"- Incomplete areas: {payload['input_ledger']['incomplete_area_count']}",
+        f"- Claims opened by ledger: {str(payload['input_ledger']['claims_opened_by_ledger']).lower()}",
         "",
         "## Work Orders",
         "",
@@ -396,6 +611,7 @@ def write_production_market_readiness_evidence_room_artifacts(payload: dict[str,
     work_orders_path = graph / "production_market_readiness_evidence_work_orders.json"
     reviewer_cards_path = graph / "production_market_readiness_reviewer_brief_cards.json"
     matrix_path = graph / "production_market_readiness_gate_status_matrix.json"
+    input_ledger_path = graph / "production_market_readiness_input_ledger.json"
     doc_path = docs / "PRODUCTION_MARKET_READINESS_EVIDENCE_ROOM.md"
 
     manifest_path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
@@ -446,11 +662,13 @@ def write_production_market_readiness_evidence_room_artifacts(payload: dict[str,
         + "\n",
         encoding="utf-8",
     )
+    input_ledger_path.write_text(json.dumps(payload["input_ledger"], indent=2, sort_keys=True) + "\n", encoding="utf-8")
     doc_path.write_text(render_market_readiness_evidence_room_markdown(payload), encoding="utf-8")
     return {
         "manifest": manifest_path,
         "work_orders": work_orders_path,
         "reviewer_cards": reviewer_cards_path,
         "matrix": matrix_path,
+        "input_ledger": input_ledger_path,
         "doc": doc_path,
     }

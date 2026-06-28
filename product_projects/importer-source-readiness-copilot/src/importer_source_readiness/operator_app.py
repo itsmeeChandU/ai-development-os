@@ -94,6 +94,7 @@ API_ROUTES = {
     "/api/launch-operations": "system_review_graph/launch_operations_report.json",
     "/api/launch-control-plane": "system_review_graph/production_launch_control_plane_manifest.json",
     "/api/market-readiness": "system_review_graph/production_market_readiness_evidence_room_manifest.json",
+    "/api/market-readiness/input-ledger": "system_review_graph/production_market_readiness_input_ledger.json",
     "/api/product-operations/report": "system_review_graph/product_operations_report.json",
 }
 
@@ -1617,6 +1618,7 @@ def _render_launch_operations(repo_root: Path) -> str:
 
 def _render_market_readiness(repo_root: Path) -> str:
     room = _load_graph_json(repo_root, "production_market_readiness_evidence_room_manifest.json")
+    input_ledger = room.get("input_ledger") or _load_graph_json(repo_root, "production_market_readiness_input_ledger.json")
     form_contract = room.get("input_form_contract", {})
     review_area_options = _select_labeled_options(
         [
@@ -1648,6 +1650,17 @@ def _render_market_readiness(repo_root: Path) -> str:
         "</tr>"
         for row in room.get("work_orders", [])
     )
+    ledger_rows = "".join(
+        "<tr>"
+        f"<td>{escape(str(row.get('plain_title') or _plain_label(row.get('review_area'))))}</td>"
+        f"<td>{escape(_plain_label(row.get('status')))}</td>"
+        f"<td>{escape(str(row.get('reviewer_name') or 'Not received'))}</td>"
+        f"<td>{escape(str(row.get('decision') or 'Waiting'))}</td>"
+        f"<td>{escape(', '.join(row.get('missing_fields') or ['None']))}</td>"
+        f"<td>{escape(str(row.get('next_valid_move')))}</td>"
+        "</tr>"
+        for row in input_ledger.get("ledger_rows", [])
+    )
     blocked = _list_items(room.get("blocked_claims", []))
     next_loop = _list_items(room.get("safe_next_loop", []))
     body = f"""
@@ -1663,6 +1676,7 @@ def _render_market_readiness(repo_root: Path) -> str:
   <div class="actions">
     {_button_link("/launch-operations", "Launch operations", "shield", tone="secondary")}
     {_button_link("/api/market-readiness", "Open JSON", "database", tone="secondary")}
+    {_button_link("/api/market-readiness/input-ledger", "Input ledger", "list-checks", tone="secondary")}
     {_button_link("/system_review_graph/production_market_readiness_evidence_work_orders.json", "Work orders", "file-text", tone="secondary")}
   </div>
 </section>
@@ -1686,6 +1700,19 @@ def _render_market_readiness(repo_root: Path) -> str:
     <label><input type="checkbox" name="accept_real_input_notice" value="accepted"> This is a real returned input or an intentionally incomplete response; do not treat AI-only or founder-only notes as approval.</label>
     <button type="submit">{_icon("check")}Save Response</button>
   </form>
+</section>
+<section class="surface">
+  <h2>Returned Inputs</h2>
+  <p class="note">{escape(str(input_ledger.get('proof_boundary') or 'Returned inputs are checked for completeness, but launch claims stay closed.'))}</p>
+  <div class="grid grid-3">
+    {_metric_card("Accepted Areas", input_ledger.get("accepted_area_count"), "Scoped inputs that pass the local completeness rule.")}
+    {_metric_card("Not Received", input_ledger.get("not_received_area_count"), "Real replies still missing.")}
+    {_metric_card("Need More Evidence", input_ledger.get("needs_more_evidence_area_count"), "Replies saved but still blocking.")}
+  </div>
+  <table>
+    <thead><tr><th>Area</th><th>Input Status</th><th>Who Answered</th><th>Decision</th><th>Missing</th><th>Next</th></tr></thead>
+    <tbody>{ledger_rows or '<tr><td colspan="6">Run scripts/run_production_market_readiness_evidence_room.py to generate the input ledger.</td></tr>'}</tbody>
+  </table>
 </section>
 <section class="surface">
   <h2>Gate Status</h2>
@@ -2796,6 +2823,7 @@ def _index_payload(repo_root: Path) -> dict[str, Any]:
                 "/api/launch-operations",
                 "/api/product-operations/report",
                 "/api/market-readiness",
+                "/api/market-readiness/input-ledger",
                 "/api/market-readiness/inputs",
                 "/api/product-operations/run",
                 "/api/agent-tools/:tool",

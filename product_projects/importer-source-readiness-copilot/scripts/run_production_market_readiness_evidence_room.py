@@ -35,6 +35,7 @@ def main() -> int:
                 "work_orders": str(paths["work_orders"].relative_to(ROOT)),
                 "reviewer_cards": str(paths["reviewer_cards"].relative_to(ROOT)),
                 "matrix": str(paths["matrix"].relative_to(ROOT)),
+                "input_ledger": str(paths["input_ledger"].relative_to(ROOT)),
                 "doc": str(paths["doc"].relative_to(ROOT)),
             },
             sort_keys=True,

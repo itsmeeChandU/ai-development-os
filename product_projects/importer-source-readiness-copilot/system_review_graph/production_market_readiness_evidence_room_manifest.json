@@ -124,7 +124,7 @@
       "source_anchor_count": 4
     }
   ],
-  "generated_at": "2026-06-28T18:55:48+00:00",
+  "generated_at": "2026-06-28T19:10:48+00:00",
   "go_live_input_status": "waiting_for_real_inputs_not_ready_yet",
   "hosted_private_beta_ready": false,
   "input_capture_enabled_local": true,
@@ -262,6 +262,210 @@
     ],
     "status": "market_readiness_input_form_contract_ready"
   },
+  "input_ledger": {
+    "accepted_area_count": 0,
+    "all_areas_accepted": false,
+    "blocked_claims": [
+      "market_ready",
+      "public_launch_approved",
+      "hosted_private_beta_approved",
+      "live_payment_activated",
+      "legal_privacy_security_approved",
+      "customs_trade_approved",
+      "tariff_confirmed",
+      "cfia_approved",
+      "buyer_validated",
+      "supplier_verified",
+      "ready_to_ship"
+    ],
+    "claims_opened_by_ledger": false,
+    "external_effects_created": false,
+    "generated_at": "2026-06-28T19:10:48+00:00",
+    "incomplete_area_count": 0,
+    "input_folder": "external_inputs/",
+    "input_record_count": 0,
+    "invalid_record_count": 0,
+    "invalid_records": [],
+    "ledger_rows": [
+      {
+        "accepted_for_area": false,
+        "claims_opened_by_ledger": false,
+        "decision": "",
+        "external_effects_created": false,
+        "minimum_input_present": false,
+        "missing_fields": [
+          "returned input record"
+        ],
+        "next_valid_move": "Send the scoped request to Product, security, privacy/legal, AI safety, operations, trade, and payment reviewers as relevant, then save the dated response.",
+        "plain_title": "Outside Expert Review",
+        "ready_decision_candidate": false,
+        "record_count_for_area": 0,
+        "review_area": "real_external_expert_reviews",
+        "reviewer_name": "",
+        "reviewer_role": "",
+        "scope_reviewed": "",
+        "signed_at": "",
+        "source_file": "external_inputs/real_external_expert_reviews.json",
+        "status": "not_received"
+      },
+      {
+        "accepted_for_area": false,
+        "claims_opened_by_ledger": false,
+        "decision": "",
+        "external_effects_created": false,
+        "minimum_input_present": false,
+        "missing_fields": [
+          "returned input record"
+        ],
+        "next_valid_move": "Send the scoped request to Privacy/legal reviewer plus application security reviewer, then save the dated response.",
+        "plain_title": "Legal, Privacy, And Security",
+        "ready_decision_candidate": false,
+        "record_count_for_area": 0,
+        "review_area": "legal_privacy_security_approval",
+        "reviewer_name": "",
+        "reviewer_role": "",
+        "scope_reviewed": "",
+        "signed_at": "",
+        "source_file": "external_inputs/legal_privacy_security_approval.json",
+        "status": "not_received"
+      },
+      {
+        "accepted_for_area": false,
+        "claims_opened_by_ledger": false,
+        "decision": "",
+        "external_effects_created": false,
+        "minimum_input_present": false,
+        "missing_fields": [
+          "returned input record"
+        ],
+        "next_valid_move": "Send the scoped request to Licensed customs broker or qualified trade/compliance reviewer, then save the dated response.",
+        "plain_title": "Customs And Trade Language",
+        "ready_decision_candidate": false,
+        "record_count_for_area": 0,
+        "review_area": "qualified_customs_trade_review",
+        "reviewer_name": "",
+        "reviewer_role": "",
+        "scope_reviewed": "",
+        "signed_at": "",
+        "source_file": "external_inputs/qualified_customs_trade_review.json",
+        "status": "not_received"
+      },
+      {
+        "accepted_for_area": false,
+        "claims_opened_by_ledger": false,
+        "decision": "",
+        "external_effects_created": false,
+        "minimum_input_present": false,
+        "missing_fields": [
+          "returned input record"
+        ],
+        "next_valid_move": "Send the scoped request to DevOps, SRE, or operations owner, then save the dated response.",
+        "plain_title": "Hosted Staging Or Production",
+        "ready_decision_candidate": false,
+        "record_count_for_area": 0,
+        "review_area": "hosted_staging_production_proof",
+        "reviewer_name": "",
+        "reviewer_role": "",
+        "scope_reviewed": "",
+        "signed_at": "",
+        "source_file": "external_inputs/hosted_staging_production_proof.json",
+        "status": "not_received"
+      },
+      {
+        "accepted_for_area": false,
+        "claims_opened_by_ledger": false,
+        "decision": "",
+        "external_effects_created": false,
+        "minimum_input_present": false,
+        "missing_fields": [
+          "returned input record"
+        ],
+        "next_valid_move": "Send the scoped request to Billing/payment owner, tax/accounting advisor if needed, and support owner, then save the dated response.",
+        "plain_title": "Payments",
+        "ready_decision_candidate": false,
+        "record_count_for_area": 0,
+        "review_area": "live_payment_activation",
+        "reviewer_name": "",
+        "reviewer_role": "",
+        "scope_reviewed": "",
+        "signed_at": "",
+        "source_file": "external_inputs/live_payment_activation.json",
+        "status": "not_received"
+      },
+      {
+        "accepted_for_area": false,
+        "claims_opened_by_ledger": false,
+        "decision": "",
+        "external_effects_created": false,
+        "minimum_input_present": false,
+        "missing_fields": [
+          "returned input record"
+        ],
+        "next_valid_move": "Send the scoped request to Product/UX owner or user research owner, then save the dated response.",
+        "plain_title": "Real User Feedback",
+        "ready_decision_candidate": false,
+        "record_count_for_area": 0,
+        "review_area": "real_users_private_beta_outcomes",
+        "reviewer_name": "",
+        "reviewer_role": "",
+        "scope_reviewed": "",
+        "signed_at": "",
+        "source_file": "external_inputs/real_users_private_beta_outcomes.json",
+        "status": "not_received"
+      },
+      {
+        "accepted_for_area": false,
+        "claims_opened_by_ledger": false,
+        "decision": "",
+        "external_effects_created": false,
+        "minimum_input_present": false,
+        "missing_fields": [
+          "returned input record"
+        ],
+        "next_valid_move": "Send the scoped request to Founder or commercial validation owner, then save the dated response.",
+        "plain_title": "Buyer Or Supplier Validation",
+        "ready_decision_candidate": false,
+        "record_count_for_area": 0,
+        "review_area": "buyer_supplier_validation",
+        "reviewer_name": "",
+        "reviewer_role": "",
+        "scope_reviewed": "",
+        "signed_at": "",
+        "source_file": "external_inputs/buyer_supplier_validation.json",
+        "status": "not_received"
+      },
+      {
+        "accepted_for_area": false,
+        "claims_opened_by_ledger": false,
+        "decision": "",
+        "external_effects_created": false,
+        "minimum_input_present": false,
+        "missing_fields": [
+          "returned input record"
+        ],
+        "next_valid_move": "Send the scoped request to Named launch owner, then save the dated response.",
+        "plain_title": "Final Go Live Decision",
+        "ready_decision_candidate": false,
+        "record_count_for_area": 0,
+        "review_area": "public_go_no_go_approval",
+        "reviewer_name": "",
+        "reviewer_role": "",
+        "scope_reviewed": "",
+        "signed_at": "",
+        "source_file": "external_inputs/public_go_no_go_approval.json",
+        "status": "not_received"
+      }
+    ],
+    "needs_more_evidence_area_count": 0,
+    "next_valid_move": "Collect and record the missing real inputs.",
+    "not_received_area_count": 8,
+    "proof_boundary": "The ledger validates returned input completeness for operators. It does not approve launch, payments, customs/trade claims, legal/privacy/security claims, buyer validation, or supplier verification.",
+    "public_launch_ready_by_ledger": false,
+    "review_area_count": 8,
+    "status": "production_market_readiness_input_ledger_ready_claims_closed"
+  },
+  "input_ledger_route": "/api/market-readiness/input-ledger",
+  "input_ledger_status": "production_market_readiness_input_ledger_ready_claims_closed",
   "launch_control_activation_allowed": false,
   "launch_control_status": "production_launch_control_plane_ready_exact_scope_public_launch_blocked",
   "live_payment_ready": false,
@@ -594,6 +798,7 @@
   ],
   "safe_next_loop": [
     "Collect the missing real-world input files in external_inputs/.",
+    "Use production_market_readiness_input_ledger.json to inspect incomplete or unaccepted returned inputs.",
     "Rerun scripts/run_external_validation_requirements.py --input-dir external_inputs.",
     "Rerun scripts/run_production_market_readiness_evidence_room.py.",
     "Route any returned issue into external_review_blocker_ledger.jsonl before launch scope changes.",

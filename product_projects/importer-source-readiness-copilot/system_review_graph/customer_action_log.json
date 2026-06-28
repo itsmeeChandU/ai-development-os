@@ -191,5 +191,24 @@
     "event_id": "packet-frozen-tuna-canada-001:review-finding-submitted:2026-06-28T03:12:37+00:00",
     "event_type": "review_finding_submitted",
     "packet_id": "packet-frozen-tuna-canada-001"
+  },
+  {
+    "actor_type": "customer",
+    "actor_user_id": "user-customer-001",
+    "after_json": {
+      "destination_country": "Canada",
+      "file_count": 0,
+      "origin_country": "India",
+      "product_name": "No document browser check"
+    },
+    "created_at": "2026-06-28T19:06:56+00:00",
+    "entity_id": "packet-no-document-browser-check",
+    "entity_type": "PublicQuickCheck",
+    "event_id": "packet-no-document-browser-check:public_no_document_quick_check_created:2026-06-28T19:06:56+00:00",
+    "event_type": "public_no_document_quick_check_created",
+    "ip_address": "local-dev",
+    "organization_id": "org-importer-demo",
+    "packet_id": "packet-no-document-browser-check",
+    "user_agent": "Python-urllib/3.11"
   }
 ]

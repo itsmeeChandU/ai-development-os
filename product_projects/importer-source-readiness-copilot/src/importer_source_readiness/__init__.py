@@ -46,6 +46,7 @@ from .production_market_intelligence_engine import (
     write_production_market_intelligence_engine_artifacts,
 )
 from .production_market_readiness_evidence_room import (
+    build_market_readiness_input_ledger,
     build_production_market_readiness_evidence_room,
     write_production_market_readiness_evidence_room_artifacts,
 )
@@ -91,6 +92,7 @@ __all__ = [
     "build_production_enterprise_api_platform",
     "build_production_expert_review_network",
     "build_production_market_intelligence_engine",
+    "build_market_readiness_input_ledger",
     "build_production_market_readiness_evidence_room",
     "build_production_launch_control_plane",
     "build_production_packet_engine",

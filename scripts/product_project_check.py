@@ -296,6 +296,7 @@ def main() -> int:
         PROJECT / "system_review_graph" / "production_market_readiness_evidence_work_orders.json",
         PROJECT / "system_review_graph" / "production_market_readiness_reviewer_brief_cards.json",
         PROJECT / "system_review_graph" / "production_market_readiness_gate_status_matrix.json",
+        PROJECT / "system_review_graph" / "production_market_readiness_input_ledger.json",
         PROJECT / "system_review_graph" / "production_trade_discovery_manifest.json",
         PROJECT / "system_review_graph" / "production_trade_discovery_category_map.json",
         PROJECT / "system_review_graph" / "production_trade_discovery_country_lanes.json",
@@ -718,6 +719,9 @@ def main() -> int:
     )
     production_market_readiness = json.loads(
         (PROJECT / "system_review_graph" / "production_market_readiness_evidence_room_manifest.json").read_text(encoding="utf-8")
+    )
+    production_market_readiness_input_ledger = json.loads(
+        (PROJECT / "system_review_graph" / "production_market_readiness_input_ledger.json").read_text(encoding="utf-8")
     )
     production_document_intelligence = json.loads(
         (PROJECT / "system_review_graph" / "production_document_intelligence_manifest.json").read_text(encoding="utf-8")
@@ -2584,9 +2588,27 @@ def main() -> int:
         or production_market_readiness.get("input_capture_enabled_local") is not True
         or production_market_readiness.get("input_capture_route") != "/api/market-readiness/inputs"
         or production_market_readiness.get("input_form_contract", {}).get("status") != "market_readiness_input_form_contract_ready"
+        or production_market_readiness.get("input_ledger_status") != "production_market_readiness_input_ledger_ready_claims_closed"
+        or production_market_readiness.get("input_ledger_route") != "/api/market-readiness/input-ledger"
     ):
         print("Product project check: FAIL")
-        print("market readiness evidence room must map all real-world inputs, work orders, source anchors, and local input capture")
+        print("market readiness evidence room must map all real-world inputs, work orders, source anchors, local input capture, and input ledger")
+        return 1
+    unaccepted_input_areas = (
+        production_market_readiness_input_ledger.get("review_area_count", 0)
+        - production_market_readiness_input_ledger.get("accepted_area_count", 0)
+    )
+    if (
+        production_market_readiness_input_ledger.get("status") != "production_market_readiness_input_ledger_ready_claims_closed"
+        or production_market_readiness_input_ledger.get("review_area_count") != 8
+        or production_market_readiness_input_ledger.get("accepted_area_count") != production_market_readiness.get("ready_input_count")
+        or unaccepted_input_areas != production_market_readiness.get("missing_input_count")
+        or production_market_readiness_input_ledger.get("claims_opened_by_ledger") is not False
+        or production_market_readiness_input_ledger.get("public_launch_ready_by_ledger") is not False
+        or production_market_readiness_input_ledger.get("invalid_record_count") != 0
+    ):
+        print("Product project check: FAIL")
+        print("market readiness input ledger must track returned-input quality without opening claims")
         return 1
     for key in (
         "public_launch_ready",
@@ -2607,9 +2629,10 @@ def main() -> int:
         print("Product project check: FAIL")
         print("market readiness evidence room missing expected work-order gate IDs")
         return 1
-    if any(row.get("input_state") != "missing_real_input" for row in market_work_orders):
+    allowed_market_input_states = {"missing_real_input", "real_input_received_for_scope_review"}
+    if any(row.get("input_state") not in allowed_market_input_states for row in market_work_orders):
         print("Product project check: FAIL")
-        print("market readiness evidence room should show current real inputs as missing")
+        print("market readiness evidence room should show missing or scoped-received input states only")
         return 1
     if any(row.get("claims_opened_by_this_work_order") is not False for row in market_work_orders):
         print("Product project check: FAIL")
@@ -2865,6 +2888,7 @@ def main() -> int:
     print(f"production_market_readiness_status={production_market_readiness['status']}")
     print(f"production_market_readiness_work_orders={production_market_readiness['work_order_count']}")
     print(f"production_market_readiness_missing_inputs={production_market_readiness['missing_input_count']}")
+    print(f"production_market_readiness_input_ledger={production_market_readiness_input_ledger['status']}")
     print(f"production_evidence_claim_gate_status={production_evidence_claim_gate['status']}")
     print(f"production_evidence_claim_gate_decisions={production_evidence_claim_gate['claim_gate_decision_count']}")
     print(f"production_evidence_claim_gate_safe_claims={production_evidence_claim_gate['safe_research_claim_count']}")
