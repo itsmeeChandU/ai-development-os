@@ -37,7 +37,7 @@ Current example flow: Vietnam origin to Canada destination for a food import pac
 | Buyer evidence language | Use evidence levels; do not say buyer validated |
 | Supplier evidence language | Use evidence collected; do not say supplier verified |
 | Source freshness promise | Checked before packet generation or paid review, not continuous legal freshness |
-| Outreach policy | Questions only for MVP; no automatic sending |
+| Outreach policy | Questions only for initial controlled scope; no automatic sending |
 
 ## Core Business Object
 

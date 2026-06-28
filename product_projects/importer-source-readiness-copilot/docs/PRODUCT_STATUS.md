@@ -31,6 +31,25 @@ It also writes the production redevelopment contract:
 `docs/PRODUCTION_REDEVELOPMENT.md`. That contract converts the full-scale
 plan into 14 production layers and phases 0-20, with build, research, source,
 evidence, and gate tracks for every phase.
+The first rebuild package now also writes the production data model package:
+`migrations/0002_production_domain_model.sql`,
+`system_review_graph/production_data_model_manifest.json`,
+`system_review_graph/production_data_model_seed.json`, and
+`docs/PRODUCTION_DATA_MODEL.md`. That package defines the Postgres-oriented
+schema, relationships, row-level tenant isolation contract, domain events, and
+JSON-to-table migration map for the production platform.
+The next production slices now write the packet and country/source engines:
+`system_review_graph/production_packet_engine_manifest.json`,
+`system_review_graph/production_packet_events.json`,
+`system_review_graph/production_packet_views/`,
+`docs/PRODUCTION_PACKET_ENGINE.md`,
+`system_review_graph/production_country_source_engine_manifest.json`,
+`system_review_graph/production_country_packs.json`,
+`system_review_graph/production_source_lifecycle.json`, and
+`docs/PRODUCTION_COUNTRY_SOURCE_ENGINE.md`. These engines evaluate the real
+local fixture packet into production packet states/views/scores and turn the
+official source registry plus source-refresh records into reference-only
+country packs, source lifecycle rows, and packet source impacts.
 Those stages are backed by an executable local operations engine in
 `src/importer_source_readiness/product_operations.py` and
 `scripts/run_product_operations.py`. The engine creates/updates packet intake
@@ -115,6 +134,13 @@ security/privacy/human review gates are completed.
 - launch operations controls and local launch-control event records
 - production redevelopment contract with phases 0-20 and permanent
   research/source/evidence/gate tracks
+- production data model migration package with 40 production tables, foreign
+  keys, tenant RLS policies, domain events, and seed/migration proof
+- production packet engine with 12 packet states, eight packet views, packet
+  event proof, six scores, blocked claims, and next valid moves
+- production country/source engine with Canada import, India export, Vietnam
+  demo-origin, and generic fallback packs, plus source lifecycle and packet
+  impact rows
 - production research anchor registry for CBSA, CFIA, Global Affairs Canada,
   ISED, DGFT, WITS, ITC, WCO, ICC, OPC/PIPEDA, OWASP, NIST, and Stripe source
   routing
@@ -198,6 +224,55 @@ This means the full-scale rebuild is specified and source-backed. It does not
 mean production deployment is complete, live payments are active, real users
 have validated the product, a customs/trade expert has approved it, or public
 launch is approved.
+
+## Ready For Production Data Model Review
+
+- data model status:
+  `production_data_model_ready_local_schema_proof_external_db_gates_closed`
+- migration: `migrations/0002_production_domain_model.sql`
+- machine manifest: `system_review_graph/production_data_model_manifest.json`
+- seed fixture: `system_review_graph/production_data_model_seed.json`
+- reviewer-readable doc: `docs/PRODUCTION_DATA_MODEL.md`
+- proof command: `python3 scripts/run_production_data_model.py`
+
+This means the first rebuild package is no longer just a plan. It has a
+Postgres-oriented schema with entity relationships, tenant isolation policy
+shape, domain events, and JSON migration mapping. It still does not prove a
+hosted managed database, backup/restore, production migration application, or
+public launch readiness.
+
+## Ready For Production Packet Engine Review
+
+- packet engine status:
+  `production_packet_engine_ready_local_state_machine_claim_gates_closed`
+- machine manifest: `system_review_graph/production_packet_engine_manifest.json`
+- packet events: `system_review_graph/production_packet_events.json`
+- packet views: `system_review_graph/production_packet_views/`
+- reviewer-readable doc: `docs/PRODUCTION_PACKET_ENGINE.md`
+- proof command: `python3 scripts/run_production_packet_engine.py`
+
+This means the second rebuild package is no longer just a plan. It evaluates
+actual local packet, evidence, source, review, and report artifacts into the
+12-state production packet lifecycle, eight packet views, six scores, blocked
+claims, and next valid moves. It still does not approve the packet or open
+customs, tariff, CFIA, buyer, supplier, payment, shipment, or launch claims.
+
+## Ready For Production Country/Source Review
+
+- country/source engine status:
+  `production_country_source_engine_ready_reference_packs_claim_gates_closed`
+- machine manifest:
+  `system_review_graph/production_country_source_engine_manifest.json`
+- country packs: `system_review_graph/production_country_packs.json`
+- source lifecycle: `system_review_graph/production_source_lifecycle.json`
+- reviewer-readable doc: `docs/PRODUCTION_COUNTRY_SOURCE_ENGINE.md`
+- proof command: `python3 scripts/run_production_country_source_engine.py`
+
+This means Canada import, India export, Vietnam demo-origin, and generic
+fallback packs are generated from the official source registry and dated source
+refresh records. It still does not prove current law, tariff treatment, CFIA
+approval, sanctions clearance, buyer validation, supplier verification, hosted
+readiness, or launch approval.
 
 ## Ready For Internal Source-Packet Review
 

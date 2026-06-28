@@ -85,6 +85,9 @@ def main() -> int:
         PROJECT / "src" / "importer_source_readiness" / "external_review.py",
         PROJECT / "src" / "importer_source_readiness" / "final_go_live.py",
         PROJECT / "src" / "importer_source_readiness" / "external_validation_research.py",
+        PROJECT / "src" / "importer_source_readiness" / "production_country_source_engine.py",
+        PROJECT / "src" / "importer_source_readiness" / "production_data_model.py",
+        PROJECT / "src" / "importer_source_readiness" / "production_packet_engine.py",
         PROJECT / "src" / "importer_source_readiness" / "production_redevelopment.py",
         PROJECT / "tests" / "test_readiness.py",
         PROJECT / "tests" / "test_external_gates.py",
@@ -103,6 +106,9 @@ def main() -> int:
         PROJECT / "tests" / "test_external_review_workflow.py",
         PROJECT / "tests" / "test_final_go_live.py",
         PROJECT / "tests" / "test_external_validation_research.py",
+        PROJECT / "tests" / "test_production_country_source_engine.py",
+        PROJECT / "tests" / "test_production_data_model.py",
+        PROJECT / "tests" / "test_production_packet_engine.py",
         PROJECT / "tests" / "test_production_redevelopment.py",
         PROJECT / "scripts" / "run_readiness.py",
         PROJECT / "scripts" / "run_external_gates.py",
@@ -120,6 +126,9 @@ def main() -> int:
         PROJECT / "scripts" / "audit_external_package.py",
         PROJECT / "scripts" / "run_final_go_live_review.py",
         PROJECT / "scripts" / "run_external_validation_requirements.py",
+        PROJECT / "scripts" / "run_production_country_source_engine.py",
+        PROJECT / "scripts" / "run_production_data_model.py",
+        PROJECT / "scripts" / "run_production_packet_engine.py",
         PROJECT / "scripts" / "run_production_redevelopment.py",
         PROJECT / "scripts" / "package_external_review.py",
         PROJECT / "scripts" / "check_product.py",
@@ -140,6 +149,9 @@ def main() -> int:
         PROJECT / "docs" / "EXTERNAL_VALIDATION_REQUIREMENTS.md",
         PROJECT / "docs" / "EXTERNAL_VALIDATION_REVIEWER_BRIEF.md",
         PROJECT / "docs" / "GO_LIVE_INPUT_REQUESTS.md",
+        PROJECT / "docs" / "PRODUCTION_COUNTRY_SOURCE_ENGINE.md",
+        PROJECT / "docs" / "PRODUCTION_DATA_MODEL.md",
+        PROJECT / "docs" / "PRODUCTION_PACKET_ENGINE.md",
         PROJECT / "docs" / "PRODUCTION_REDEVELOPMENT.md",
         PROJECT / "docs" / "BUSINESS_CORE_LOGIC_CURRENT_STATE.md",
         PROJECT / "docs" / "FUNCTIONAL_REQUIREMENTS_CURRENT_STATE.md",
@@ -206,6 +218,21 @@ def main() -> int:
         PROJECT / "system_review_graph" / "external_validation_evidence_requirements.json",
         PROJECT / "system_review_graph" / "go_live_input_templates.json",
         PROJECT / "system_review_graph" / "go_live_input_readiness_report.json",
+        PROJECT / "system_review_graph" / "production_country_source_engine_manifest.json",
+        PROJECT / "system_review_graph" / "production_country_packs.json",
+        PROJECT / "system_review_graph" / "production_source_lifecycle.json",
+        PROJECT / "system_review_graph" / "production_data_model_manifest.json",
+        PROJECT / "system_review_graph" / "production_data_model_seed.json",
+        PROJECT / "system_review_graph" / "production_packet_engine_manifest.json",
+        PROJECT / "system_review_graph" / "production_packet_events.json",
+        PROJECT / "system_review_graph" / "production_packet_views" / "packet-frozen-tuna-canada-001" / "starter_packet.json",
+        PROJECT / "system_review_graph" / "production_packet_views" / "packet-frozen-tuna-canada-001" / "market_research_packet.json",
+        PROJECT / "system_review_graph" / "production_packet_views" / "packet-frozen-tuna-canada-001" / "buyer_ready_packet.json",
+        PROJECT / "system_review_graph" / "production_packet_views" / "packet-frozen-tuna-canada-001" / "supplier_request_packet.json",
+        PROJECT / "system_review_graph" / "production_packet_views" / "packet-frozen-tuna-canada-001" / "broker_review_packet.json",
+        PROJECT / "system_review_graph" / "production_packet_views" / "packet-frozen-tuna-canada-001" / "operator_packet.json",
+        PROJECT / "system_review_graph" / "production_packet_views" / "packet-frozen-tuna-canada-001" / "executive_decision_packet.json",
+        PROJECT / "system_review_graph" / "production_packet_views" / "packet-frozen-tuna-canada-001" / "blocked_claims_packet.json",
         PROJECT / "system_review_graph" / "production_redevelopment_plan.json",
         PROJECT / "system_review_graph" / "production_research_anchors.json",
         PROJECT / "system_review_graph" / "reviewer_wave_execution_plan.json",
@@ -243,6 +270,7 @@ def main() -> int:
         PROJECT / "board" / "launch_control_checklist.md",
         PROJECT / "board" / "financial_operating_model.md",
         PROJECT / "migrations" / "0001_product_runtime.sql",
+        PROJECT / "migrations" / "0002_production_domain_model.sql",
         PROJECT / "Dockerfile",
         PROJECT / "compose.yaml",
         PROJECT / ".env.example",
@@ -311,6 +339,9 @@ def main() -> int:
         ["python3", "scripts/run_final_go_live_review.py"],
         ["python3", "scripts/run_external_validation_requirements.py"],
         ["python3", "scripts/run_production_redevelopment.py"],
+        ["python3", "scripts/run_production_data_model.py"],
+        ["python3", "scripts/run_production_packet_engine.py"],
+        ["python3", "scripts/run_production_country_source_engine.py"],
         ["python3", "scripts/build_external_review_packet.py"],
         ["python3", "scripts/export_operator_dashboard.py"],
         ["python3", "scripts/audit_external_package.py", "--root", "."],
@@ -512,6 +543,15 @@ def main() -> int:
     )
     production_research = json.loads(
         (PROJECT / "system_review_graph" / "production_research_anchors.json").read_text(encoding="utf-8")
+    )
+    production_data_model = json.loads(
+        (PROJECT / "system_review_graph" / "production_data_model_manifest.json").read_text(encoding="utf-8")
+    )
+    production_packet_engine = json.loads(
+        (PROJECT / "system_review_graph" / "production_packet_engine_manifest.json").read_text(encoding="utf-8")
+    )
+    production_country_source_engine = json.loads(
+        (PROJECT / "system_review_graph" / "production_country_source_engine_manifest.json").read_text(encoding="utf-8")
     )
     official_source_registry = json.loads(
         (PROJECT / "data" / "official_source_registry.json").read_text(encoding="utf-8")
@@ -1310,6 +1350,161 @@ def main() -> int:
             print("Product project check: FAIL")
             print(f"production phase {phase.get('phase')} references an unknown source ID")
             return 1
+    if (
+        production_data_model.get("status") != "production_data_model_ready_local_schema_proof_external_db_gates_closed"
+        or production_data_model.get("table_count", 0) < 40
+        or production_data_model.get("foreign_key_count", 0) < 70
+        or production_data_model.get("index_count", 0) < 35
+        or production_data_model.get("row_level_security_table_count", 0) < 25
+        or production_data_model.get("domain_event_count", 0) < 14
+        or production_data_model.get("hosted_database_ready") is not False
+        or production_data_model.get("external_claims_opened") is not False
+    ):
+        print("Product project check: FAIL")
+        print("production data model must include schema, relationships, RLS, domain events, and closed external gates")
+        return 1
+    production_schema_sql = (PROJECT / "migrations" / "0002_production_domain_model.sql").read_text(encoding="utf-8")
+    for expected_sql in (
+        "enable row level security",
+        "current_setting('app.current_organization_id', true)",
+        "constraint decision_scores_name_check",
+        "buyer_supplier_evidence_score",
+        "external_charge_created boolean not null default false",
+    ):
+        if expected_sql not in production_schema_sql:
+            print("Product project check: FAIL")
+            print(f"production data model migration missing SQL invariant: {expected_sql}")
+            return 1
+    production_table_names = {row.get("table") for row in production_data_model.get("tables", [])}
+    for required_table in (
+        "trade_readiness_packets",
+        "packet_events",
+        "source_records",
+        "source_snapshots",
+        "evidence_items",
+        "market_signals",
+        "blocked_claims",
+        "decision_scores",
+        "review_requests",
+        "reports",
+        "audit_events",
+    ):
+        if required_table not in production_table_names:
+            print("Product project check: FAIL")
+            print(f"production data model missing table {required_table}")
+            return 1
+    if (
+        production_packet_engine.get("status") != "production_packet_engine_ready_local_state_machine_claim_gates_closed"
+        or production_packet_engine.get("packet_count", 0) < 1
+        or production_packet_engine.get("state_count") != 12
+        or production_packet_engine.get("packet_view_type_count") != 8
+        or production_packet_engine.get("packet_view_count", 0) < 8
+        or production_packet_engine.get("packet_event_count", 0) < 12
+        or production_packet_engine.get("external_effects_created") is not False
+        or production_packet_engine.get("claims_opened") is not False
+    ):
+        print("Product project check: FAIL")
+        print("production packet engine manifest should prove local state/view engine with closed gates")
+        return 1
+    packet_runs = production_packet_engine.get("packet_runs", [])
+    if not packet_runs:
+        print("Product project check: FAIL")
+        print("production packet engine missing packet run evidence")
+        return 1
+    packet_run = packet_runs[0]
+    view_types = {row.get("view_type") for row in packet_run.get("packet_views", [])}
+    score_ids = {row.get("score") for row in packet_run.get("scores", [])}
+    event_states = {row.get("state") for row in packet_run.get("state_events", [])}
+    if view_types != {
+        "starter_packet",
+        "market_research_packet",
+        "buyer_ready_packet",
+        "supplier_request_packet",
+        "broker_review_packet",
+        "operator_packet",
+        "executive_decision_packet",
+        "blocked_claims_packet",
+    }:
+        print("Product project check: FAIL")
+        print("production packet engine should generate all eight packet views")
+        return 1
+    if score_ids != {
+        "market_signal_score",
+        "evidence_completeness_score",
+        "source_freshness_score",
+        "buyer_supplier_evidence_score",
+        "responsibility_clarity_score",
+        "decision_safety_score",
+    }:
+        print("Product project check: FAIL")
+        print("production packet engine should output the six canonical scores")
+        return 1
+    if event_states != set(production_packet_engine.get("states", [])):
+        print("Product project check: FAIL")
+        print("production packet engine should write an event row for every production state")
+        return 1
+    if packet_run.get("state") != "reviewer_ready":
+        print("Product project check: FAIL")
+        print(f"fixture packet should be reviewer_ready, got {packet_run.get('state')!r}")
+        return 1
+    if packet_run.get("reviewer_ready_not_approved") is not True:
+        print("Product project check: FAIL")
+        print("reviewer-ready packet must explicitly remain not approved")
+        return 1
+    if (
+        production_country_source_engine.get("status") != "production_country_source_engine_ready_reference_packs_claim_gates_closed"
+        or production_country_source_engine.get("country_pack_count") != 4
+        or production_country_source_engine.get("source_lifecycle_count", 0) < 20
+        or production_country_source_engine.get("researched_source_fact_count", 0) < 18
+        or production_country_source_engine.get("external_effects_created") is not False
+        or production_country_source_engine.get("claims_opened") is not False
+    ):
+        print("Product project check: FAIL")
+        print("production country/source engine should build reference packs, lifecycle rows, and closed gates")
+        return 1
+    country_packs = {row.get("country_pack_id"): row for row in production_country_source_engine.get("country_packs", [])}
+    for pack_id in ("CA-import", "IN-export", "VN-demo-origin", "GENERIC-fallback"):
+        if pack_id not in country_packs:
+            print("Product project check: FAIL")
+            print(f"production country/source engine missing country pack {pack_id}")
+            return 1
+    canada_required_source_areas = {
+        "customs_import_process",
+        "tariff_orientation",
+        "regulated_goods",
+        "sanctions_restricted_party",
+        "trade_data",
+        "buyer_importer_discovery",
+        "broker_directory",
+        "import_controls",
+    }
+    if not canada_required_source_areas.issubset(set(country_packs["CA-import"].get("source_types_present", []))):
+        print("Product project check: FAIL")
+        print("Canada import pack missing required source areas")
+        return 1
+    if country_packs["CA-import"].get("coverage_level") != "reference_only":
+        print("Product project check: FAIL")
+        print("Canada import pack should remain reference_only until qualified review")
+        return 1
+    if country_packs["GENERIC-fallback"].get("coverage_level") != "generic":
+        print("Product project check: FAIL")
+        print("generic fallback country pack should stay generic")
+        return 1
+    source_lifecycle = {row.get("source_id"): row for row in production_country_source_engine.get("source_lifecycle", [])}
+    for source_id in ("cbsa-import-commercial-goods", "cfia-airs", "canada-cid"):
+        if source_lifecycle.get(source_id, {}).get("source_state") != "checked_current_reference_only":
+            print("Product project check: FAIL")
+            print(f"{source_id} should be checked_current_reference_only from dated refresh records")
+            return 1
+    if source_lifecycle.get("cbsa-customs-tariff-2026", {}).get("source_state") != "not_checked":
+        print("Product project check: FAIL")
+        print("tariff source should remain not_checked until a dated refresh exists")
+        return 1
+    impacts = production_country_source_engine.get("packet_source_impacts", [])
+    if not impacts or "tariff_confirmed" not in impacts[0].get("blocked_claims", []) or "cfia_approved" not in impacts[0].get("blocked_claims", []):
+        print("Product project check: FAIL")
+        print("packet source impact should preserve tariff and CFIA claim blocks")
+        return 1
     external_validation_pdf = PROJECT / "output" / "pdf" / "external_validation_requirements.pdf"
     if not external_validation_pdf.exists() or not external_validation_pdf.read_bytes().startswith(b"%PDF"):
         print("Product project check: FAIL")
@@ -1574,6 +1769,17 @@ def main() -> int:
     print(f"production_redevelopment_layers={production_redevelopment['production_layer_count']}")
     print(f"production_redevelopment_phases={production_redevelopment['phase_count']}")
     print(f"production_redevelopment_sources={production_redevelopment['research_anchor_count']}")
+    print(f"production_data_model_status={production_data_model['status']}")
+    print(f"production_data_model_tables={production_data_model['table_count']}")
+    print(f"production_data_model_foreign_keys={production_data_model['foreign_key_count']}")
+    print(f"production_data_model_rls_tables={production_data_model['row_level_security_table_count']}")
+    print(f"production_packet_engine_status={production_packet_engine['status']}")
+    print(f"production_packet_engine_packets={production_packet_engine['packet_count']}")
+    print(f"production_packet_engine_views={production_packet_engine['packet_view_count']}")
+    print(f"production_packet_engine_events={production_packet_engine['packet_event_count']}")
+    print(f"production_country_source_engine_status={production_country_source_engine['status']}")
+    print(f"production_country_packs={production_country_source_engine['country_pack_count']}")
+    print(f"production_source_lifecycle_rows={production_country_source_engine['source_lifecycle_count']}")
     print(f"external_validation_pdf={external_validation_pdf.relative_to(PROJECT)}")
     print(f"external_validation_reviewer_brief_pdf={external_validation_reviewer_brief_pdf.relative_to(PROJECT)}")
     print(f"go_live_input_status={go_live_input_readiness['status']}")

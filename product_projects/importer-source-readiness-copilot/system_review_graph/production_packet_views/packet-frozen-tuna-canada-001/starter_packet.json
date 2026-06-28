@@ -1,0 +1,29 @@
+{
+  "audience": "beginner_or_customer",
+  "blocked_claim_count": 15,
+  "blocked_claims_visible": true,
+  "claim_boundary": "Preparation and evidence organization only; no approval, compliance, buyer, supplier, tariff, shipment, payment, or launch claim is opened.",
+  "claims_opened": false,
+  "current_state": "reviewer_ready",
+  "destination_country": "Canada",
+  "document_checklist": [
+    "product specification",
+    "CFIA/AIRS route",
+    "health or catch/processing evidence when applicable"
+  ],
+  "evidence_count": 3,
+  "external_effects_created": false,
+  "includes": [
+    "required fields",
+    "starter checklist",
+    "next safe move"
+  ],
+  "next_valid_move": "Refresh official sources and attach dated source snapshots before reviewer assessment.",
+  "origin_country": "Vietnam",
+  "packet_id": "packet-frozen-tuna-canada-001",
+  "product": "Frozen tuna fillet",
+  "score_count": 6,
+  "source_route_count": 14,
+  "view_status": "ready",
+  "view_type": "starter_packet"
+}

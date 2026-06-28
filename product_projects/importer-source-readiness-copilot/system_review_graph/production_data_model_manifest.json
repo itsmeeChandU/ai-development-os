@@ -1,0 +1,577 @@
+{
+  "check_constraint_count": 70,
+  "domain_event_count": 15,
+  "domain_events": [
+    {
+      "event": "packet_created",
+      "external_effect": "none",
+      "table": "packet_events"
+    },
+    {
+      "event": "packet_state_changed",
+      "external_effect": "none",
+      "table": "packet_events"
+    },
+    {
+      "event": "product_profile_confirmed",
+      "external_effect": "none",
+      "table": "field_provenance"
+    },
+    {
+      "event": "document_uploaded_quarantined",
+      "external_effect": "none",
+      "table": "documents"
+    },
+    {
+      "event": "field_extracted_draft",
+      "external_effect": "none",
+      "table": "extracted_fields"
+    },
+    {
+      "event": "evidence_attached",
+      "external_effect": "none",
+      "table": "evidence_items"
+    },
+    {
+      "event": "source_snapshotted",
+      "external_effect": "none",
+      "table": "source_snapshots"
+    },
+    {
+      "event": "market_signal_recorded",
+      "external_effect": "none",
+      "table": "market_signals"
+    },
+    {
+      "event": "claim_blocked",
+      "external_effect": "none",
+      "table": "blocked_claims"
+    },
+    {
+      "event": "score_calculated",
+      "external_effect": "none",
+      "table": "decision_scores"
+    },
+    {
+      "event": "review_requested",
+      "external_effect": "none",
+      "table": "review_requests"
+    },
+    {
+      "event": "review_finding_recorded",
+      "external_effect": "none",
+      "table": "review_findings"
+    },
+    {
+      "event": "report_exported",
+      "external_effect": "none",
+      "table": "reports"
+    },
+    {
+      "event": "billing_usage_reserved",
+      "external_effect": "no_live_charge",
+      "table": "usage_records"
+    },
+    {
+      "event": "audit_event_recorded",
+      "external_effect": "none",
+      "table": "audit_events"
+    }
+  ],
+  "external_claims_opened": false,
+  "foreign_key_count": 73,
+  "generated_at": "2026-06-28T12:30:07+00:00",
+  "hosted_database_ready": false,
+  "index_count": 38,
+  "json_artifact_migration_map": [
+    {
+      "artifact": "system_review_graph/customer_source_packets.json",
+      "migration_rule": "One source packet becomes a packet, lane, product profile, responsibility path, and blocked claim rows.",
+      "target_tables": [
+        "trade_readiness_packets",
+        "trade_lanes",
+        "product_profiles",
+        "blocked_claims",
+        "responsibility_paths"
+      ]
+    },
+    {
+      "artifact": "system_review_graph/evidence_ledger.json",
+      "migration_rule": "Evidence rows keep provenance, freshness, AI-permission metadata, and claim support/block maps.",
+      "target_tables": [
+        "evidence_items",
+        "evidence_mappers",
+        "documents"
+      ]
+    },
+    {
+      "artifact": "data/official_source_registry.json",
+      "migration_rule": "Permanent source registry rows become source records and connector policy rows.",
+      "target_tables": [
+        "source_records",
+        "country_pack_sources",
+        "dataset_connectors"
+      ]
+    },
+    {
+      "artifact": "system_review_graph/policy_source_snapshots.json",
+      "migration_rule": "Source hashes and observed dates become source snapshot history.",
+      "target_tables": [
+        "source_snapshots"
+      ]
+    },
+    {
+      "artifact": "system_review_graph/business_logic_phase_report.json",
+      "migration_rule": "Business scores and evidence ladders become durable decision and gate rows.",
+      "target_tables": [
+        "decision_scores",
+        "buyer_profiles",
+        "supplier_profiles",
+        "claim_gate_mappers"
+      ]
+    },
+    {
+      "artifact": "system_review_graph/review_requests.json",
+      "migration_rule": "Scoped review links and finding templates become review workflow records.",
+      "target_tables": [
+        "reviewer_lanes",
+        "review_requests",
+        "review_findings"
+      ]
+    },
+    {
+      "artifact": "system_review_graph/report_exports.json",
+      "migration_rule": "Report export records become versioned reports and download audit events.",
+      "target_tables": [
+        "reports",
+        "audit_events"
+      ]
+    },
+    {
+      "artifact": "system_review_graph/billing_usage_ledger.json",
+      "migration_rule": "Local reservations become usage records with external_charge_created=false.",
+      "target_tables": [
+        "billing_accounts",
+        "subscriptions",
+        "usage_records"
+      ]
+    }
+  ],
+  "json_migration_map_count": 8,
+  "migration_path": "migrations/0002_production_domain_model.sql",
+  "package_id": "production_data_model",
+  "postgres_design_sources": [
+    {
+      "name": "PostgreSQL constraints documentation",
+      "url": "https://www.postgresql.org/docs/current/ddl-constraints.html",
+      "used_for": "foreign keys, check constraints, primary keys, and data-integrity rules"
+    },
+    {
+      "name": "PostgreSQL row security documentation",
+      "url": "https://www.postgresql.org/docs/current/ddl-rowsecurity.html",
+      "used_for": "tenant row-level security policy shape"
+    },
+    {
+      "name": "PostgreSQL indexes documentation",
+      "url": "https://www.postgresql.org/docs/current/indexes-intro.html",
+      "used_for": "query-path index requirements for packet, evidence, source, review, and audit tables"
+    }
+  ],
+  "production_migration_applied": false,
+  "proof_boundary": "This package proves the production domain schema, migration map, and tenant isolation contract locally. It does not prove a hosted managed database, live production migration, backup/restore, external review, public launch, or any customs/trade/payment/legal claim.",
+  "public_launch_ready": false,
+  "row_level_security_table_count": 29,
+  "row_level_security_tables": [
+    "users",
+    "roles",
+    "user_roles",
+    "workspaces",
+    "trade_lanes",
+    "trade_readiness_packets",
+    "packet_events",
+    "product_profiles",
+    "research_intakes",
+    "documents",
+    "extracted_fields",
+    "field_provenance",
+    "evidence_items",
+    "evidence_mappers",
+    "market_signals",
+    "buyer_profiles",
+    "buyer_evidence_events",
+    "supplier_profiles",
+    "supplier_evidence_events",
+    "responsibility_paths",
+    "blocked_claims",
+    "decision_scores",
+    "review_requests",
+    "review_findings",
+    "reports",
+    "audit_events",
+    "billing_accounts",
+    "subscriptions",
+    "usage_records"
+  ],
+  "seed_fixture": {
+    "blocked_claims": [
+      "tariff_confirmed",
+      "cfia_approved",
+      "buyer_validated",
+      "supplier_verified",
+      "ready_to_ship"
+    ],
+    "decision_scores": [
+      "market_signal_score",
+      "evidence_completeness_score",
+      "source_freshness_score",
+      "buyer_supplier_evidence_score",
+      "responsibility_clarity_score",
+      "decision_safety_score"
+    ],
+    "organization": {
+      "name": "Importer Demo Co.",
+      "organization_id": "org-importer-demo"
+    },
+    "packet": {
+      "claim_boundary_status": "external_claims_closed",
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "state": "document_reviewing"
+    },
+    "proof_boundary": "Seed data proves schema shape only; it does not create real buyer, supplier, customs, payment, or launch evidence.",
+    "status": "production_data_model_seed_ready_no_external_effects",
+    "trade_lane": {
+      "destination_country": "CA",
+      "direction": "export",
+      "origin_country": "VN",
+      "trade_lane_id": "lane-vn-ca-food-001"
+    },
+    "workspace": {
+      "organization_id": "org-importer-demo",
+      "workspace_id": "workspace-demo-canada"
+    }
+  },
+  "status": "production_data_model_ready_local_schema_proof_external_db_gates_closed",
+  "table_count": 40,
+  "tables": [
+    {
+      "column_count": 8,
+      "constraint_count": 1,
+      "entity": "Organization",
+      "index_count": 0,
+      "organization_scoped": false,
+      "table": "organizations"
+    },
+    {
+      "column_count": 7,
+      "constraint_count": 1,
+      "entity": "User",
+      "index_count": 1,
+      "organization_scoped": true,
+      "table": "users"
+    },
+    {
+      "column_count": 5,
+      "constraint_count": 0,
+      "entity": "Role",
+      "index_count": 1,
+      "organization_scoped": true,
+      "table": "roles"
+    },
+    {
+      "column_count": 5,
+      "constraint_count": 0,
+      "entity": "RoleAssignment",
+      "index_count": 1,
+      "organization_scoped": true,
+      "table": "user_roles"
+    },
+    {
+      "column_count": 8,
+      "constraint_count": 1,
+      "entity": "Workspace",
+      "index_count": 1,
+      "organization_scoped": true,
+      "table": "workspaces"
+    },
+    {
+      "column_count": 5,
+      "constraint_count": 2,
+      "entity": "IncotermRecord",
+      "index_count": 1,
+      "organization_scoped": false,
+      "table": "incoterm_records"
+    },
+    {
+      "column_count": 8,
+      "constraint_count": 1,
+      "entity": "TradeLane",
+      "index_count": 1,
+      "organization_scoped": true,
+      "table": "trade_lanes"
+    },
+    {
+      "column_count": 10,
+      "constraint_count": 2,
+      "entity": "TradeReadinessPacket",
+      "index_count": 2,
+      "organization_scoped": true,
+      "table": "trade_readiness_packets"
+    },
+    {
+      "column_count": 7,
+      "constraint_count": 0,
+      "entity": "PacketEvent",
+      "index_count": 1,
+      "organization_scoped": true,
+      "table": "packet_events"
+    },
+    {
+      "column_count": 9,
+      "constraint_count": 1,
+      "entity": "ProductProfile",
+      "index_count": 1,
+      "organization_scoped": true,
+      "table": "product_profiles"
+    },
+    {
+      "column_count": 9,
+      "constraint_count": 2,
+      "entity": "CountryPack",
+      "index_count": 1,
+      "organization_scoped": false,
+      "table": "country_packs"
+    },
+    {
+      "column_count": 11,
+      "constraint_count": 2,
+      "entity": "SourceRecord",
+      "index_count": 1,
+      "organization_scoped": false,
+      "table": "source_records"
+    },
+    {
+      "column_count": 7,
+      "constraint_count": 1,
+      "entity": "SourceSnapshot",
+      "index_count": 1,
+      "organization_scoped": false,
+      "table": "source_snapshots"
+    },
+    {
+      "column_count": 10,
+      "constraint_count": 1,
+      "entity": "ResearchIntake",
+      "index_count": 1,
+      "organization_scoped": true,
+      "table": "research_intakes"
+    },
+    {
+      "column_count": 6,
+      "constraint_count": 2,
+      "entity": "DatasetConnector",
+      "index_count": 0,
+      "organization_scoped": false,
+      "table": "dataset_connectors"
+    },
+    {
+      "column_count": 6,
+      "constraint_count": 0,
+      "entity": "CountryPackSource",
+      "index_count": 1,
+      "organization_scoped": false,
+      "table": "country_pack_sources"
+    },
+    {
+      "column_count": 10,
+      "constraint_count": 1,
+      "entity": "Document",
+      "index_count": 1,
+      "organization_scoped": true,
+      "table": "documents"
+    },
+    {
+      "column_count": 8,
+      "constraint_count": 2,
+      "entity": "ExtractedField",
+      "index_count": 1,
+      "organization_scoped": true,
+      "table": "extracted_fields"
+    },
+    {
+      "column_count": 8,
+      "constraint_count": 1,
+      "entity": "FieldProvenance",
+      "index_count": 1,
+      "organization_scoped": true,
+      "table": "field_provenance"
+    },
+    {
+      "column_count": 12,
+      "constraint_count": 3,
+      "entity": "EvidenceItem",
+      "index_count": 1,
+      "organization_scoped": true,
+      "table": "evidence_items"
+    },
+    {
+      "column_count": 6,
+      "constraint_count": 0,
+      "entity": "EvidenceMapper",
+      "index_count": 1,
+      "organization_scoped": true,
+      "table": "evidence_mappers"
+    },
+    {
+      "column_count": 9,
+      "constraint_count": 2,
+      "entity": "MarketSignal",
+      "index_count": 1,
+      "organization_scoped": true,
+      "table": "market_signals"
+    },
+    {
+      "column_count": 6,
+      "constraint_count": 0,
+      "entity": "MarketSignalSource",
+      "index_count": 1,
+      "organization_scoped": false,
+      "table": "market_signal_sources"
+    },
+    {
+      "column_count": 6,
+      "constraint_count": 2,
+      "entity": "BuyerProfile",
+      "index_count": 1,
+      "organization_scoped": true,
+      "table": "buyer_profiles"
+    },
+    {
+      "column_count": 8,
+      "constraint_count": 0,
+      "entity": "BuyerEvidence",
+      "index_count": 1,
+      "organization_scoped": true,
+      "table": "buyer_evidence_events"
+    },
+    {
+      "column_count": 6,
+      "constraint_count": 2,
+      "entity": "SupplierProfile",
+      "index_count": 1,
+      "organization_scoped": true,
+      "table": "supplier_profiles"
+    },
+    {
+      "column_count": 8,
+      "constraint_count": 0,
+      "entity": "SupplierEvidence",
+      "index_count": 1,
+      "organization_scoped": true,
+      "table": "supplier_evidence_events"
+    },
+    {
+      "column_count": 8,
+      "constraint_count": 1,
+      "entity": "ResponsibilityPath",
+      "index_count": 1,
+      "organization_scoped": true,
+      "table": "responsibility_paths"
+    },
+    {
+      "column_count": 10,
+      "constraint_count": 1,
+      "entity": "BlockedClaim",
+      "index_count": 1,
+      "organization_scoped": true,
+      "table": "blocked_claims"
+    },
+    {
+      "column_count": 7,
+      "constraint_count": 0,
+      "entity": "ClaimGateMapper",
+      "index_count": 1,
+      "organization_scoped": false,
+      "table": "claim_gate_mappers"
+    },
+    {
+      "column_count": 10,
+      "constraint_count": 2,
+      "entity": "DecisionScore",
+      "index_count": 1,
+      "organization_scoped": true,
+      "table": "decision_scores"
+    },
+    {
+      "column_count": 5,
+      "constraint_count": 0,
+      "entity": "ReviewerLane",
+      "index_count": 0,
+      "organization_scoped": false,
+      "table": "reviewer_lanes"
+    },
+    {
+      "column_count": 9,
+      "constraint_count": 1,
+      "entity": "ReviewRequest",
+      "index_count": 1,
+      "organization_scoped": true,
+      "table": "review_requests"
+    },
+    {
+      "column_count": 9,
+      "constraint_count": 2,
+      "entity": "ReviewFinding",
+      "index_count": 1,
+      "organization_scoped": true,
+      "table": "review_findings"
+    },
+    {
+      "column_count": 5,
+      "constraint_count": 0,
+      "entity": "ExpertFindingSource",
+      "index_count": 1,
+      "organization_scoped": false,
+      "table": "expert_finding_sources"
+    },
+    {
+      "column_count": 9,
+      "constraint_count": 1,
+      "entity": "Report",
+      "index_count": 1,
+      "organization_scoped": true,
+      "table": "reports"
+    },
+    {
+      "column_count": 8,
+      "constraint_count": 0,
+      "entity": "AuditEvent",
+      "index_count": 1,
+      "organization_scoped": true,
+      "table": "audit_events"
+    },
+    {
+      "column_count": 7,
+      "constraint_count": 1,
+      "entity": "BillingAccount",
+      "index_count": 1,
+      "organization_scoped": true,
+      "table": "billing_accounts"
+    },
+    {
+      "column_count": 7,
+      "constraint_count": 1,
+      "entity": "Subscription",
+      "index_count": 1,
+      "organization_scoped": true,
+      "table": "subscriptions"
+    },
+    {
+      "column_count": 8,
+      "constraint_count": 1,
+      "entity": "UsageRecord",
+      "index_count": 1,
+      "organization_scoped": true,
+      "table": "usage_records"
+    }
+  ]
+}

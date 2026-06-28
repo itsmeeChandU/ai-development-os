@@ -135,7 +135,7 @@
       "human_review_finding_id": "",
       "human_review_required": false,
       "id": "packet-frozen-tuna-canada-001:source_freshness_claim",
-      "last_evaluated_at": "2026-06-28T08:55:14+00:00",
+      "last_evaluated_at": "2026-06-28T12:30:06+00:00",
       "packet_id": "packet-frozen-tuna-canada-001",
       "source_ids": [],
       "status": "blocked_stale_source"
@@ -166,7 +166,7 @@
       "human_review_finding_id": "",
       "human_review_required": true,
       "id": "packet-frozen-tuna-canada-001:tariff_classification_claim",
-      "last_evaluated_at": "2026-06-28T08:55:14+00:00",
+      "last_evaluated_at": "2026-06-28T12:30:06+00:00",
       "packet_id": "packet-frozen-tuna-canada-001",
       "source_ids": [],
       "status": "blocked_requires_human_review"
@@ -197,7 +197,7 @@
       "human_review_finding_id": "",
       "human_review_required": true,
       "id": "packet-frozen-tuna-canada-001:food_safety_claim",
-      "last_evaluated_at": "2026-06-28T08:55:14+00:00",
+      "last_evaluated_at": "2026-06-28T12:30:06+00:00",
       "packet_id": "packet-frozen-tuna-canada-001",
       "source_ids": [],
       "status": "blocked_requires_human_review"
@@ -229,7 +229,7 @@
       "human_review_finding_id": "",
       "human_review_required": true,
       "id": "packet-frozen-tuna-canada-001:export_to_canada_readiness_claim",
-      "last_evaluated_at": "2026-06-28T08:55:14+00:00",
+      "last_evaluated_at": "2026-06-28T12:30:06+00:00",
       "packet_id": "packet-frozen-tuna-canada-001",
       "source_ids": [],
       "status": "blocked_missing_evidence"
@@ -260,7 +260,7 @@
       "human_review_finding_id": "",
       "human_review_required": true,
       "id": "packet-frozen-tuna-canada-001:importer_of_record_claim",
-      "last_evaluated_at": "2026-06-28T08:55:14+00:00",
+      "last_evaluated_at": "2026-06-28T12:30:06+00:00",
       "packet_id": "packet-frozen-tuna-canada-001",
       "source_ids": [],
       "status": "blocked_missing_evidence"
@@ -291,7 +291,7 @@
       "human_review_finding_id": "",
       "human_review_required": true,
       "id": "packet-frozen-tuna-canada-001:trade_document_completeness_claim",
-      "last_evaluated_at": "2026-06-28T08:55:14+00:00",
+      "last_evaluated_at": "2026-06-28T12:30:06+00:00",
       "packet_id": "packet-frozen-tuna-canada-001",
       "source_ids": [],
       "status": "blocked_missing_evidence"
@@ -322,7 +322,7 @@
       "human_review_finding_id": "",
       "human_review_required": true,
       "id": "packet-frozen-tuna-canada-001:trade_agreement_preference_claim",
-      "last_evaluated_at": "2026-06-28T08:55:14+00:00",
+      "last_evaluated_at": "2026-06-28T12:30:06+00:00",
       "packet_id": "packet-frozen-tuna-canada-001",
       "source_ids": [],
       "status": "blocked_requires_human_review"
@@ -352,7 +352,7 @@
       "human_review_finding_id": "",
       "human_review_required": true,
       "id": "packet-frozen-tuna-canada-001:source_rights_claim",
-      "last_evaluated_at": "2026-06-28T08:55:14+00:00",
+      "last_evaluated_at": "2026-06-28T12:30:06+00:00",
       "packet_id": "packet-frozen-tuna-canada-001",
       "source_ids": [],
       "status": "blocked_source_rights_unknown"
@@ -382,7 +382,7 @@
       "human_review_finding_id": "",
       "human_review_required": false,
       "id": "packet-frozen-tuna-canada-001:buyer_validation_claim",
-      "last_evaluated_at": "2026-06-28T08:55:14+00:00",
+      "last_evaluated_at": "2026-06-28T12:30:06+00:00",
       "packet_id": "packet-frozen-tuna-canada-001",
       "source_ids": [],
       "status": "blocked_missing_evidence"
@@ -412,7 +412,7 @@
       "human_review_finding_id": "",
       "human_review_required": true,
       "id": "packet-frozen-tuna-canada-001:launch_readiness_claim",
-      "last_evaluated_at": "2026-06-28T08:55:14+00:00",
+      "last_evaluated_at": "2026-06-28T12:30:06+00:00",
       "packet_id": "packet-frozen-tuna-canada-001",
       "source_ids": [],
       "status": "blocked_missing_evidence"

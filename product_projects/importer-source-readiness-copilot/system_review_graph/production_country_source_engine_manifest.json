@@ -1,0 +1,1615 @@
+{
+  "claims_opened": false,
+  "country_pack_count": 4,
+  "country_pack_order": [
+    "CA-import",
+    "IN-export",
+    "VN-demo-origin",
+    "GENERIC-fallback"
+  ],
+  "country_packs": [
+    {
+      "claim_boundaries": [
+        "country pack routes official sources only",
+        "country-specific claims require source freshness and qualified review",
+        "unsupported or partial paths remain research-only"
+      ],
+      "country_code": "CA",
+      "country_name": "Canada",
+      "country_pack_id": "CA-import",
+      "coverage_level": "reference_only",
+      "direction": "import",
+      "external_claims_opened": false,
+      "next_valid_move": "Attach current source snapshots and qualified review before country-specific claims.",
+      "refresh_cadence": {
+        "material_change": "mark affected packets stale and require review",
+        "packet_generation": "check before generating customer packet",
+        "paid_review": "check before paid/expert review"
+      },
+      "reviewer_required": true,
+      "source_count": 14,
+      "source_ids": [
+        "cbsa-carm",
+        "cbsa-import-commercial-goods",
+        "cbsa-customs-tariff-2026",
+        "cfia-airs",
+        "gac-import-controls",
+        "justice-import-control-list",
+        "canada-sanctions",
+        "ised-trade-data-online",
+        "canada-cid",
+        "cbsa-licensed-customs-brokers",
+        "gac-sanctions",
+        "itc-trade-map",
+        "opc-pipeda-principles",
+        "owasp-file-upload"
+      ],
+      "source_types_missing": [],
+      "source_types_present": [
+        "broker_directory",
+        "buyer_importer_discovery",
+        "customs_import_process",
+        "import_controls",
+        "regulated_goods",
+        "sanctions_restricted_party",
+        "tariff_orientation",
+        "trade_data"
+      ],
+      "source_types_required": [
+        "customs_import_process",
+        "tariff_orientation",
+        "regulated_goods",
+        "sanctions_restricted_party",
+        "trade_data",
+        "buyer_importer_discovery",
+        "broker_directory",
+        "import_controls"
+      ]
+    },
+    {
+      "claim_boundaries": [
+        "country pack routes official sources only",
+        "country-specific claims require source freshness and qualified review",
+        "unsupported or partial paths remain research-only"
+      ],
+      "country_code": "IN",
+      "country_name": "India",
+      "country_pack_id": "IN-export",
+      "coverage_level": "reference_only",
+      "direction": "export",
+      "external_claims_opened": false,
+      "next_valid_move": "Attach current source snapshots and qualified review before country-specific claims.",
+      "refresh_cadence": {
+        "material_change": "mark affected packets stale and require review",
+        "packet_generation": "check before generating customer packet",
+        "paid_review": "check before paid/expert review"
+      },
+      "reviewer_required": true,
+      "source_count": 2,
+      "source_ids": [
+        "india-dgft-foreign-trade-policy",
+        "india-cbic-customs"
+      ],
+      "source_types_missing": [],
+      "source_types_present": [
+        "customs_reference",
+        "export_policy",
+        "import_export_code",
+        "origin_export_controls"
+      ],
+      "source_types_required": [
+        "export_policy",
+        "import_export_code",
+        "origin_export_controls",
+        "customs_reference"
+      ]
+    },
+    {
+      "claim_boundaries": [
+        "country pack routes official sources only",
+        "country-specific claims require source freshness and qualified review",
+        "unsupported or partial paths remain research-only"
+      ],
+      "country_code": "VN",
+      "country_name": "Vietnam",
+      "country_pack_id": "VN-demo-origin",
+      "coverage_level": "reference_only",
+      "direction": "export",
+      "external_claims_opened": false,
+      "next_valid_move": "Attach current source snapshots and qualified review before country-specific claims.",
+      "refresh_cadence": {
+        "material_change": "mark affected packets stale and require review",
+        "packet_generation": "check before generating customer packet",
+        "paid_review": "check before paid/expert review"
+      },
+      "reviewer_required": true,
+      "source_count": 0,
+      "source_ids": [],
+      "source_types_missing": [
+        "customs_reference",
+        "origin_export_controls",
+        "supplier_registry"
+      ],
+      "source_types_present": [],
+      "source_types_required": [
+        "origin_export_controls",
+        "customs_reference",
+        "supplier_registry"
+      ]
+    },
+    {
+      "claim_boundaries": [
+        "country pack routes official sources only",
+        "country-specific claims require source freshness and qualified review",
+        "unsupported or partial paths remain research-only"
+      ],
+      "country_code": "GENERIC",
+      "country_name": "Generic fallback",
+      "country_pack_id": "GENERIC-fallback",
+      "coverage_level": "generic",
+      "direction": "generic",
+      "external_claims_opened": false,
+      "next_valid_move": "Use generic research-only workflow until country pack sources are added.",
+      "refresh_cadence": {
+        "material_change": "mark affected packets stale and require review",
+        "packet_generation": "check before generating customer packet",
+        "paid_review": "check before paid/expert review"
+      },
+      "reviewer_required": true,
+      "source_count": 2,
+      "source_ids": [
+        "owasp-llm01-prompt-injection",
+        "stripe-go-live"
+      ],
+      "source_types_missing": [],
+      "source_types_present": [
+        "official_reference"
+      ],
+      "source_types_required": [
+        "official_reference"
+      ]
+    }
+  ],
+  "external_effects_created": false,
+  "generated_at": "2026-06-28T12:30:07+00:00",
+  "hosted_private_beta_ready": false,
+  "live_payment_ready": false,
+  "official_source_registry_count": 23,
+  "packet_impact_count": 1,
+  "packet_source_impacts": [
+    {
+      "blocked_claims": [
+        "current_law_confirmed",
+        "tariff_confirmed",
+        "cfia_approved",
+        "sanctions_clear",
+        "ready_to_import",
+        "ready_to_export"
+      ],
+      "destination_country": "Canada",
+      "external_claims_opened": false,
+      "matched_source_ids": [
+        "cbsa-carm",
+        "cbsa-import-commercial-goods",
+        "cbsa-customs-tariff-2026",
+        "cfia-airs",
+        "gac-import-controls",
+        "justice-import-control-list",
+        "canada-sanctions",
+        "ised-trade-data-online",
+        "canada-cid",
+        "cbsa-licensed-customs-brokers",
+        "gac-sanctions",
+        "itc-trade-map",
+        "opc-pipeda-principles",
+        "owasp-file-upload"
+      ],
+      "needed_source_areas": [
+        "broker_directory",
+        "buyer_importer_discovery",
+        "customs_import_process",
+        "import_controls",
+        "regulated_goods",
+        "sanctions_restricted_party",
+        "tariff_orientation",
+        "trade_data"
+      ],
+      "next_valid_move": "Refresh unchecked sources, preserve reference-only wording, and route the packet to scoped expert review.",
+      "origin_country": "Vietnam",
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "packet_source_state": "source_checking_or_reviewer_ready_reference_only",
+      "packet_stale_if_material_change": true,
+      "review_required_source_ids": [
+        "cbsa-carm",
+        "cbsa-customs-tariff-2026",
+        "gac-import-controls",
+        "justice-import-control-list",
+        "canada-sanctions",
+        "ised-trade-data-online",
+        "cbsa-licensed-customs-brokers",
+        "gac-sanctions",
+        "itc-trade-map",
+        "opc-pipeda-principles",
+        "owasp-file-upload"
+      ],
+      "unchecked_source_ids": [
+        "cbsa-carm",
+        "cbsa-customs-tariff-2026",
+        "gac-import-controls",
+        "justice-import-control-list",
+        "canada-sanctions",
+        "ised-trade-data-online",
+        "cbsa-licensed-customs-brokers",
+        "gac-sanctions",
+        "itc-trade-map",
+        "opc-pipeda-principles",
+        "owasp-file-upload"
+      ]
+    }
+  ],
+  "product": "Trade Readiness Copilot",
+  "proof_boundary": "This engine turns researched official-source routes into country/source logic. It does not prove current law, tariff treatment, CFIA approval, sanctions clearance, buyer validation, supplier verification, hosted readiness, or public launch approval.",
+  "public_launch_ready": false,
+  "researched_source_fact_count": 18,
+  "source_change_type_values": [
+    "cosmetic",
+    "date_change",
+    "source_unavailable",
+    "material_regulatory_or_tariff_change",
+    "new_requirement",
+    "removed_requirement",
+    "baseline_registered"
+  ],
+  "source_lifecycle": [
+    {
+      "allowed_automation": "manual_or_approved_loader_only",
+      "allowed_change_types": [
+        "cosmetic",
+        "date_change",
+        "source_unavailable",
+        "material_regulatory_or_tariff_change",
+        "new_requirement",
+        "removed_requirement",
+        "baseline_registered"
+      ],
+      "allowed_states": [
+        "not_checked",
+        "checked_current_reference_only",
+        "changed_minor",
+        "changed_material",
+        "source_unavailable",
+        "stale",
+        "review_required"
+      ],
+      "authority_level": "official",
+      "blocked_claims": [
+        "current_law_confirmed",
+        "tariff_confirmed",
+        "cfia_approved",
+        "sanctions_clear",
+        "buyer_validated",
+        "supplier_verified",
+        "ready_to_import",
+        "ready_to_export"
+      ],
+      "canonical_url": "https://www.cbsa-asfc.gc.ca/services/carm-gcra/menu-eng.html",
+      "change_type": "baseline_registered",
+      "claim_boundary": "Reference source only; does not prove CARM registration, accounting setup, duty payment readiness, or customs advice.",
+      "content_hash": "",
+      "country_code": "CA",
+      "http_status": "",
+      "jurisdiction": "Canada",
+      "last_checked_at": "2026-06-25",
+      "name": "CBSA Assessment and Revenue Management (CARM)",
+      "packet_impact_rule": "If source changes or is not checked for the packet date, affected packet claims stay blocked.",
+      "parser_method": "metadata_hash_then_source_specific_parser_when_allowed",
+      "refresh_cadence": "before_packet_generation_or_paid_review",
+      "review_required_if_material_change": true,
+      "robots_status": "not_checked_before_automation",
+      "source_area": "buyer_importer_discovery",
+      "source_areas": [
+        "buyer_importer_discovery"
+      ],
+      "source_id": "cbsa-carm",
+      "source_state": "not_checked",
+      "source_type": "official_or_primary_reference",
+      "supports_claims": [],
+      "terms_status": "not_checked_before_automation",
+      "usable_facts": [
+        "commercial importer duty and tax account workflow"
+      ]
+    },
+    {
+      "allowed_automation": "manual_or_approved_loader_only",
+      "allowed_change_types": [
+        "cosmetic",
+        "date_change",
+        "source_unavailable",
+        "material_regulatory_or_tariff_change",
+        "new_requirement",
+        "removed_requirement",
+        "baseline_registered"
+      ],
+      "allowed_states": [
+        "not_checked",
+        "checked_current_reference_only",
+        "changed_minor",
+        "changed_material",
+        "source_unavailable",
+        "stale",
+        "review_required"
+      ],
+      "authority_level": "official",
+      "blocked_claims": [
+        "current_law_confirmed",
+        "tariff_confirmed",
+        "cfia_approved",
+        "sanctions_clear",
+        "buyer_validated",
+        "supplier_verified",
+        "ready_to_import",
+        "ready_to_export"
+      ],
+      "canonical_url": "https://www.cbsa-asfc.gc.ca/import/menu-eng.html",
+      "change_type": "date_change",
+      "claim_boundary": "Routes users to official and qualified review paths; it does not approve import readiness.",
+      "content_hash": "cb32fb77f5957f0826dea999e85b3575aa9f64c5fe64bcbbc666b3f24e2e4a72",
+      "country_code": "CA",
+      "http_status": 200,
+      "jurisdiction": "Canada",
+      "last_checked_at": "2026-06-28T12:30:01+00:00",
+      "name": "CBSA Import Commercial Goods Into Canada",
+      "packet_impact_rule": "If source changes or is not checked for the packet date, affected packet claims stay blocked.",
+      "parser_method": "metadata_hash_then_source_specific_parser_when_allowed",
+      "refresh_cadence": "before_packet_generation_or_paid_review",
+      "review_required_if_material_change": true,
+      "robots_status": "not_checked_before_automation",
+      "source_area": "customs_import_process",
+      "source_areas": [
+        "customs_import_process"
+      ],
+      "source_id": "cbsa-import-commercial-goods",
+      "source_state": "checked_current_reference_only",
+      "source_type": "official_or_primary_reference",
+      "supports_claims": [],
+      "terms_status": "not_checked_before_automation",
+      "usable_facts": [
+        "CBSA is the Canada commercial-import workflow route for import preparation, origin, rulings, and other government requirement routing."
+      ]
+    },
+    {
+      "allowed_automation": "manual_or_approved_loader_only",
+      "allowed_change_types": [
+        "cosmetic",
+        "date_change",
+        "source_unavailable",
+        "material_regulatory_or_tariff_change",
+        "new_requirement",
+        "removed_requirement",
+        "baseline_registered"
+      ],
+      "allowed_states": [
+        "not_checked",
+        "checked_current_reference_only",
+        "changed_minor",
+        "changed_material",
+        "source_unavailable",
+        "stale",
+        "review_required"
+      ],
+      "authority_level": "official",
+      "blocked_claims": [
+        "current_law_confirmed",
+        "tariff_confirmed",
+        "cfia_approved",
+        "sanctions_clear",
+        "buyer_validated",
+        "supplier_verified",
+        "ready_to_import",
+        "ready_to_export"
+      ],
+      "canonical_url": "https://www.cbsa-asfc.gc.ca/trade-commerce/tariff-tarif/2026/menu-eng.html",
+      "change_type": "baseline_registered",
+      "claim_boundary": "HS or tariff treatment remains a candidate until qualified review or authoritative ruling evidence exists.",
+      "content_hash": "",
+      "country_code": "CA",
+      "http_status": "",
+      "jurisdiction": "Canada",
+      "last_checked_at": "2026-06-25",
+      "name": "CBSA Customs Tariff 2026",
+      "packet_impact_rule": "If source changes or is not checked for the packet date, affected packet claims stay blocked.",
+      "parser_method": "metadata_hash_then_source_specific_parser_when_allowed",
+      "refresh_cadence": "before_packet_generation_or_paid_review",
+      "review_required_if_material_change": true,
+      "robots_status": "not_checked_before_automation",
+      "source_area": "tariff_orientation",
+      "source_areas": [
+        "tariff_orientation"
+      ],
+      "source_id": "cbsa-customs-tariff-2026",
+      "source_state": "not_checked",
+      "source_type": "official_or_primary_reference",
+      "supports_claims": [],
+      "terms_status": "not_checked_before_automation",
+      "usable_facts": [
+        "CBSA Customs Tariff is the Canada tariff-orientation route for HS candidate research."
+      ]
+    },
+    {
+      "allowed_automation": "manual_or_approved_loader_only",
+      "allowed_change_types": [
+        "cosmetic",
+        "date_change",
+        "source_unavailable",
+        "material_regulatory_or_tariff_change",
+        "new_requirement",
+        "removed_requirement",
+        "baseline_registered"
+      ],
+      "allowed_states": [
+        "not_checked",
+        "checked_current_reference_only",
+        "changed_minor",
+        "changed_material",
+        "source_unavailable",
+        "stale",
+        "review_required"
+      ],
+      "authority_level": "official",
+      "blocked_claims": [
+        "current_law_confirmed",
+        "tariff_confirmed",
+        "cfia_approved",
+        "sanctions_clear",
+        "buyer_validated",
+        "supplier_verified",
+        "ready_to_import",
+        "ready_to_export"
+      ],
+      "canonical_url": "https://inspection.canada.ca/en/importing-food-plants-animals/airs",
+      "change_type": "date_change",
+      "claim_boundary": "AIRS is reference-only and importers remain responsible for accurate import-time information.",
+      "content_hash": "48b45c032fd410d6576c388db764ca42db294072b14a0ebe030fb36ee74370e1",
+      "country_code": "CA",
+      "http_status": 200,
+      "jurisdiction": "Canada",
+      "last_checked_at": "2026-06-28T12:30:01+00:00",
+      "name": "CFIA Automated Import Reference System (AIRS)",
+      "packet_impact_rule": "If source changes or is not checked for the packet date, affected packet claims stay blocked.",
+      "parser_method": "metadata_hash_then_source_specific_parser_when_allowed",
+      "refresh_cadence": "before_packet_generation_or_paid_review",
+      "review_required_if_material_change": true,
+      "robots_status": "not_checked_before_automation",
+      "source_area": "regulated_goods",
+      "source_areas": [
+        "regulated_goods"
+      ],
+      "source_id": "cfia-airs",
+      "source_state": "checked_current_reference_only",
+      "source_type": "official_or_primary_reference",
+      "supports_claims": [],
+      "terms_status": "not_checked_before_automation",
+      "usable_facts": [
+        "CFIA AIRS is a reference route for food, plant, animal, and other CFIA-regulated import requirements."
+      ]
+    },
+    {
+      "allowed_automation": "manual_or_approved_loader_only",
+      "allowed_change_types": [
+        "cosmetic",
+        "date_change",
+        "source_unavailable",
+        "material_regulatory_or_tariff_change",
+        "new_requirement",
+        "removed_requirement",
+        "baseline_registered"
+      ],
+      "allowed_states": [
+        "not_checked",
+        "checked_current_reference_only",
+        "changed_minor",
+        "changed_material",
+        "source_unavailable",
+        "stale",
+        "review_required"
+      ],
+      "authority_level": "official",
+      "blocked_claims": [
+        "current_law_confirmed",
+        "tariff_confirmed",
+        "cfia_approved",
+        "sanctions_clear",
+        "buyer_validated",
+        "supplier_verified",
+        "ready_to_import",
+        "ready_to_export"
+      ],
+      "canonical_url": "https://www.international.gc.ca/controls-controles/about-a_propos/impor/permits-licences.aspx?lang=eng",
+      "change_type": "baseline_registered",
+      "claim_boundary": "Import-control applicability requires current source evidence and qualified review.",
+      "content_hash": "",
+      "country_code": "CA",
+      "http_status": "",
+      "jurisdiction": "Canada",
+      "last_checked_at": "2026-06-25",
+      "name": "Global Affairs Canada Import Controls and Import Permits",
+      "packet_impact_rule": "If source changes or is not checked for the packet date, affected packet claims stay blocked.",
+      "parser_method": "metadata_hash_then_source_specific_parser_when_allowed",
+      "refresh_cadence": "before_packet_generation_or_paid_review",
+      "review_required_if_material_change": true,
+      "robots_status": "not_checked_before_automation",
+      "source_area": "import_controls",
+      "source_areas": [
+        "import_controls"
+      ],
+      "source_id": "gac-import-controls",
+      "source_state": "not_checked",
+      "source_type": "official_or_primary_reference",
+      "supports_claims": [],
+      "terms_status": "not_checked_before_automation",
+      "usable_facts": [
+        "Global Affairs Canada import-control and permit pages route users to controlled-import questions."
+      ]
+    },
+    {
+      "allowed_automation": "manual_or_approved_loader_only",
+      "allowed_change_types": [
+        "cosmetic",
+        "date_change",
+        "source_unavailable",
+        "material_regulatory_or_tariff_change",
+        "new_requirement",
+        "removed_requirement",
+        "baseline_registered"
+      ],
+      "allowed_states": [
+        "not_checked",
+        "checked_current_reference_only",
+        "changed_minor",
+        "changed_material",
+        "source_unavailable",
+        "stale",
+        "review_required"
+      ],
+      "authority_level": "official",
+      "blocked_claims": [
+        "current_law_confirmed",
+        "tariff_confirmed",
+        "cfia_approved",
+        "sanctions_clear",
+        "buyer_validated",
+        "supplier_verified",
+        "ready_to_import",
+        "ready_to_export"
+      ],
+      "canonical_url": "https://laws-lois.justice.gc.ca/eng/regulations/c.r.c.%2C_c._604/index.html",
+      "change_type": "baseline_registered",
+      "claim_boundary": "Legal interpretation and product applicability require qualified review.",
+      "content_hash": "",
+      "country_code": "CA",
+      "http_status": "",
+      "jurisdiction": "Canada",
+      "last_checked_at": "2026-06-25",
+      "name": "Justice Laws Import Control List",
+      "packet_impact_rule": "If source changes or is not checked for the packet date, affected packet claims stay blocked.",
+      "parser_method": "metadata_hash_then_source_specific_parser_when_allowed",
+      "refresh_cadence": "before_packet_generation_or_paid_review",
+      "review_required_if_material_change": true,
+      "robots_status": "not_checked_before_automation",
+      "source_area": "import_controls",
+      "source_areas": [
+        "import_controls"
+      ],
+      "source_id": "justice-import-control-list",
+      "source_state": "not_checked",
+      "source_type": "official_or_primary_reference",
+      "supports_claims": [],
+      "terms_status": "not_checked_before_automation",
+      "usable_facts": [
+        "Justice Laws source routes legal-reference checks for controlled imports."
+      ]
+    },
+    {
+      "allowed_automation": "manual_or_approved_loader_only",
+      "allowed_change_types": [
+        "cosmetic",
+        "date_change",
+        "source_unavailable",
+        "material_regulatory_or_tariff_change",
+        "new_requirement",
+        "removed_requirement",
+        "baseline_registered"
+      ],
+      "allowed_states": [
+        "not_checked",
+        "checked_current_reference_only",
+        "changed_minor",
+        "changed_material",
+        "source_unavailable",
+        "stale",
+        "review_required"
+      ],
+      "authority_level": "official",
+      "blocked_claims": [
+        "current_law_confirmed",
+        "tariff_confirmed",
+        "cfia_approved",
+        "sanctions_clear",
+        "buyer_validated",
+        "supplier_verified",
+        "ready_to_import",
+        "ready_to_export"
+      ],
+      "canonical_url": "https://www.international.gc.ca/world-monde/international_relations-relations_internationales/sanctions/consolidated-consolide.aspx?lang=eng",
+      "change_type": "baseline_registered",
+      "claim_boundary": "A source listing route does not prove the packet is sanctions-clear.",
+      "content_hash": "",
+      "country_code": "CA",
+      "http_status": "",
+      "jurisdiction": "Canada",
+      "last_checked_at": "2026-06-25",
+      "name": "Global Affairs Canada Consolidated Canadian Autonomous Sanctions List",
+      "packet_impact_rule": "If source changes or is not checked for the packet date, affected packet claims stay blocked.",
+      "parser_method": "metadata_hash_then_source_specific_parser_when_allowed",
+      "refresh_cadence": "before_packet_generation_or_paid_review",
+      "review_required_if_material_change": true,
+      "robots_status": "not_checked_before_automation",
+      "source_area": "sanctions_restricted_party",
+      "source_areas": [
+        "sanctions_restricted_party"
+      ],
+      "source_id": "canada-sanctions",
+      "source_state": "not_checked",
+      "source_type": "official_or_primary_reference",
+      "supports_claims": [],
+      "terms_status": "not_checked_before_automation",
+      "usable_facts": [
+        "Global Affairs Canada consolidated sanctions records support restricted-party routing."
+      ]
+    },
+    {
+      "allowed_automation": "manual_or_approved_loader_only",
+      "allowed_change_types": [
+        "cosmetic",
+        "date_change",
+        "source_unavailable",
+        "material_regulatory_or_tariff_change",
+        "new_requirement",
+        "removed_requirement",
+        "baseline_registered"
+      ],
+      "allowed_states": [
+        "not_checked",
+        "checked_current_reference_only",
+        "changed_minor",
+        "changed_material",
+        "source_unavailable",
+        "stale",
+        "review_required"
+      ],
+      "authority_level": "official",
+      "blocked_claims": [
+        "current_law_confirmed",
+        "tariff_confirmed",
+        "cfia_approved",
+        "sanctions_clear",
+        "buyer_validated",
+        "supplier_verified",
+        "ready_to_import",
+        "ready_to_export"
+      ],
+      "canonical_url": "https://ised-isde.canada.ca/site/trade-data-online/en/overview",
+      "change_type": "baseline_registered",
+      "claim_boundary": "Trade data is a research signal only, not demand, margin, or buyer validation.",
+      "content_hash": "",
+      "country_code": "CA",
+      "http_status": "",
+      "jurisdiction": "Canada",
+      "last_checked_at": "2026-06-25",
+      "name": "ISED Trade Data Online",
+      "packet_impact_rule": "If source changes or is not checked for the packet date, affected packet claims stay blocked.",
+      "parser_method": "metadata_hash_then_source_specific_parser_when_allowed",
+      "refresh_cadence": "before_packet_generation_or_paid_review",
+      "review_required_if_material_change": true,
+      "robots_status": "not_checked_before_automation",
+      "source_area": "trade_data",
+      "source_areas": [
+        "trade_data"
+      ],
+      "source_id": "ised-trade-data-online",
+      "source_state": "not_checked",
+      "source_type": "official_or_primary_reference",
+      "supports_claims": [],
+      "terms_status": "not_checked_before_automation",
+      "usable_facts": [
+        "ISED Trade Data Online supports Canada and U.S. goods-trade research reports with many partner countries."
+      ]
+    },
+    {
+      "allowed_automation": "manual_or_approved_loader_only",
+      "allowed_change_types": [
+        "cosmetic",
+        "date_change",
+        "source_unavailable",
+        "material_regulatory_or_tariff_change",
+        "new_requirement",
+        "removed_requirement",
+        "baseline_registered"
+      ],
+      "allowed_states": [
+        "not_checked",
+        "checked_current_reference_only",
+        "changed_minor",
+        "changed_material",
+        "source_unavailable",
+        "stale",
+        "review_required"
+      ],
+      "authority_level": "official",
+      "blocked_claims": [
+        "current_law_confirmed",
+        "tariff_confirmed",
+        "cfia_approved",
+        "sanctions_clear",
+        "buyer_validated",
+        "supplier_verified",
+        "ready_to_import",
+        "ready_to_export"
+      ],
+      "canonical_url": "https://ised-isde.canada.ca/site/ised/en/research-and-business-intelligence/canadian-importers-database",
+      "change_type": "date_change",
+      "claim_boundary": "Importer rows are lead-discovery only and never buyer validation.",
+      "content_hash": "56bf441083cd94ee1736cf45a59761f101b595c8a635d0bba06973f74df75d64",
+      "country_code": "CA",
+      "http_status": 200,
+      "jurisdiction": "Canada",
+      "last_checked_at": "2026-06-28T12:30:01+00:00",
+      "name": "Canadian Importers Database",
+      "packet_impact_rule": "If source changes or is not checked for the packet date, affected packet claims stay blocked.",
+      "parser_method": "metadata_hash_then_source_specific_parser_when_allowed",
+      "refresh_cadence": "before_packet_generation_or_paid_review",
+      "review_required_if_material_change": true,
+      "robots_status": "not_checked_before_automation",
+      "source_area": "buyer_importer_discovery",
+      "source_areas": [
+        "buyer_importer_discovery"
+      ],
+      "source_id": "canada-cid",
+      "source_state": "checked_current_reference_only",
+      "source_type": "official_or_primary_reference",
+      "supports_claims": [],
+      "terms_status": "not_checked_before_automation",
+      "usable_facts": [
+        "Canadian Importers Database lists companies importing goods into Canada by product, city, and origin."
+      ]
+    },
+    {
+      "allowed_automation": "manual_or_approved_loader_only",
+      "allowed_change_types": [
+        "cosmetic",
+        "date_change",
+        "source_unavailable",
+        "material_regulatory_or_tariff_change",
+        "new_requirement",
+        "removed_requirement",
+        "baseline_registered"
+      ],
+      "allowed_states": [
+        "not_checked",
+        "checked_current_reference_only",
+        "changed_minor",
+        "changed_material",
+        "source_unavailable",
+        "stale",
+        "review_required"
+      ],
+      "authority_level": "official",
+      "blocked_claims": [
+        "current_law_confirmed",
+        "tariff_confirmed",
+        "cfia_approved",
+        "sanctions_clear",
+        "buyer_validated",
+        "supplier_verified",
+        "ready_to_import",
+        "ready_to_export"
+      ],
+      "canonical_url": "https://www.cbsa-asfc.gc.ca/services/cb-cd/cb-cd-eng.html",
+      "change_type": "baseline_registered",
+      "claim_boundary": "The product does not act as a customs broker and does not imply broker signoff.",
+      "content_hash": "",
+      "country_code": "CA",
+      "http_status": "",
+      "jurisdiction": "Canada",
+      "last_checked_at": "2026-06-25",
+      "name": "CBSA Licensed Customs Brokers",
+      "packet_impact_rule": "If source changes or is not checked for the packet date, affected packet claims stay blocked.",
+      "parser_method": "metadata_hash_then_source_specific_parser_when_allowed",
+      "refresh_cadence": "before_packet_generation_or_paid_review",
+      "review_required_if_material_change": true,
+      "robots_status": "not_checked_before_automation",
+      "source_area": "broker_directory",
+      "source_areas": [
+        "broker_directory"
+      ],
+      "source_id": "cbsa-licensed-customs-brokers",
+      "source_state": "not_checked",
+      "source_type": "official_or_primary_reference",
+      "supports_claims": [],
+      "terms_status": "not_checked_before_automation",
+      "usable_facts": [
+        "CBSA licensed customs broker records route users to qualified broker discovery."
+      ]
+    },
+    {
+      "allowed_automation": "manual_or_approved_loader_only",
+      "allowed_change_types": [
+        "cosmetic",
+        "date_change",
+        "source_unavailable",
+        "material_regulatory_or_tariff_change",
+        "new_requirement",
+        "removed_requirement",
+        "baseline_registered"
+      ],
+      "allowed_states": [
+        "not_checked",
+        "checked_current_reference_only",
+        "changed_minor",
+        "changed_material",
+        "source_unavailable",
+        "stale",
+        "review_required"
+      ],
+      "authority_level": "primary_reference",
+      "blocked_claims": [
+        "current_law_confirmed",
+        "tariff_confirmed",
+        "cfia_approved",
+        "sanctions_clear",
+        "buyer_validated",
+        "supplier_verified",
+        "ready_to_import",
+        "ready_to_export"
+      ],
+      "canonical_url": "https://www.macmap.org/",
+      "change_type": "baseline_registered",
+      "claim_boundary": "Market-access comparison is not tariff confirmation or market entry approval.",
+      "content_hash": "",
+      "country_code": "INTL",
+      "http_status": "",
+      "jurisdiction": "International",
+      "last_checked_at": "2026-06-28",
+      "name": "ITC Market Access Map",
+      "packet_impact_rule": "If source changes or is not checked for the packet date, affected packet claims stay blocked.",
+      "parser_method": "metadata_hash_then_source_specific_parser_when_allowed",
+      "refresh_cadence": "before_packet_generation_or_paid_review",
+      "review_required_if_material_change": true,
+      "robots_status": "not_checked_before_automation",
+      "source_area": "market_access_comparison",
+      "source_areas": [
+        "market_access_comparison"
+      ],
+      "source_id": "itc-market-access-map",
+      "source_state": "not_checked",
+      "source_type": "official_or_primary_reference",
+      "supports_claims": [],
+      "terms_status": "not_checked_before_automation",
+      "usable_facts": [
+        "ITC Market Access Map routes tariff, market-access, and regulatory-requirement comparison."
+      ]
+    },
+    {
+      "allowed_automation": "manual_or_approved_loader_only",
+      "allowed_change_types": [
+        "cosmetic",
+        "date_change",
+        "source_unavailable",
+        "material_regulatory_or_tariff_change",
+        "new_requirement",
+        "removed_requirement",
+        "baseline_registered"
+      ],
+      "allowed_states": [
+        "not_checked",
+        "checked_current_reference_only",
+        "changed_minor",
+        "changed_material",
+        "source_unavailable",
+        "stale",
+        "review_required"
+      ],
+      "authority_level": "official",
+      "blocked_claims": [
+        "current_law_confirmed",
+        "tariff_confirmed",
+        "cfia_approved",
+        "sanctions_clear",
+        "buyer_validated",
+        "supplier_verified",
+        "ready_to_import",
+        "ready_to_export"
+      ],
+      "canonical_url": "https://www.dgft.gov.in/",
+      "change_type": "baseline_registered",
+      "claim_boundary": "IEC, licensing, incentive, and product-specific export claims require current source and qualified review.; The product can ask for IEC evidence; it cannot confirm registration or permission.; Origin export controls require qualified review before any permission claim.",
+      "content_hash": "",
+      "country_code": "IN",
+      "http_status": "",
+      "jurisdiction": "India",
+      "last_checked_at": "2026-06-28",
+      "name": "India Directorate General of Foreign Trade",
+      "packet_impact_rule": "If source changes or is not checked for the packet date, affected packet claims stay blocked.",
+      "parser_method": "metadata_hash_then_source_specific_parser_when_allowed",
+      "refresh_cadence": "before_packet_generation_or_paid_review",
+      "review_required_if_material_change": true,
+      "robots_status": "not_checked_before_automation",
+      "source_area": "export_policy",
+      "source_areas": [
+        "export_policy",
+        "import_export_code",
+        "origin_export_controls"
+      ],
+      "source_id": "india-dgft-foreign-trade-policy",
+      "source_state": "not_checked",
+      "source_type": "official_or_primary_reference",
+      "supports_claims": [],
+      "terms_status": "not_checked_before_automation",
+      "usable_facts": [
+        "DGFT is the India foreign-trade and IEC route for export/import policy orientation.",
+        "DGFT identifies IEC as the key business identification number for India export/import activity.",
+        "DGFT is the origin-side route for export policy, SCOMET, certificates, and export-management checks."
+      ]
+    },
+    {
+      "allowed_automation": "manual_or_approved_loader_only",
+      "allowed_change_types": [
+        "cosmetic",
+        "date_change",
+        "source_unavailable",
+        "material_regulatory_or_tariff_change",
+        "new_requirement",
+        "removed_requirement",
+        "baseline_registered"
+      ],
+      "allowed_states": [
+        "not_checked",
+        "checked_current_reference_only",
+        "changed_minor",
+        "changed_material",
+        "source_unavailable",
+        "stale",
+        "review_required"
+      ],
+      "authority_level": "official",
+      "blocked_claims": [
+        "current_law_confirmed",
+        "tariff_confirmed",
+        "cfia_approved",
+        "sanctions_clear",
+        "buyer_validated",
+        "supplier_verified",
+        "ready_to_import",
+        "ready_to_export"
+      ],
+      "canonical_url": "https://www.cbic.gov.in/",
+      "change_type": "baseline_registered",
+      "claim_boundary": "Customs and duty treatment remains blocked until qualified review.",
+      "content_hash": "",
+      "country_code": "IN",
+      "http_status": "",
+      "jurisdiction": "India",
+      "last_checked_at": "2026-06-28",
+      "name": "India Central Board of Indirect Taxes and Customs",
+      "packet_impact_rule": "If source changes or is not checked for the packet date, affected packet claims stay blocked.",
+      "parser_method": "metadata_hash_then_source_specific_parser_when_allowed",
+      "refresh_cadence": "before_packet_generation_or_paid_review",
+      "review_required_if_material_change": true,
+      "robots_status": "not_checked_before_automation",
+      "source_area": "customs_reference",
+      "source_areas": [
+        "customs_reference"
+      ],
+      "source_id": "india-cbic-customs",
+      "source_state": "not_checked",
+      "source_type": "official_or_primary_reference",
+      "supports_claims": [],
+      "terms_status": "not_checked_before_automation",
+      "usable_facts": [
+        "CBIC is the India customs-reference route."
+      ]
+    },
+    {
+      "allowed_automation": "manual_or_approved_loader_only",
+      "allowed_change_types": [
+        "cosmetic",
+        "date_change",
+        "source_unavailable",
+        "material_regulatory_or_tariff_change",
+        "new_requirement",
+        "removed_requirement",
+        "baseline_registered"
+      ],
+      "allowed_states": [
+        "not_checked",
+        "checked_current_reference_only",
+        "changed_minor",
+        "changed_material",
+        "source_unavailable",
+        "stale",
+        "review_required"
+      ],
+      "authority_level": "official",
+      "blocked_claims": [
+        "current_law_confirmed",
+        "tariff_confirmed",
+        "cfia_approved",
+        "sanctions_clear",
+        "buyer_validated",
+        "supplier_verified",
+        "ready_to_import",
+        "ready_to_export"
+      ],
+      "canonical_url": "https://www.international.gc.ca/world-monde/international_relations-relations_internationales/sanctions/index.aspx?lang=eng",
+      "change_type": "baseline_registered",
+      "claim_boundary": "Sanctions clearance requires dated screening records and qualified review.",
+      "content_hash": "",
+      "country_code": "CA",
+      "http_status": "",
+      "jurisdiction": "Canada",
+      "last_checked_at": "2026-06-28",
+      "name": "Global Affairs Canada sanctions",
+      "packet_impact_rule": "If source changes or is not checked for the packet date, affected packet claims stay blocked.",
+      "parser_method": "metadata_hash_then_source_specific_parser_when_allowed",
+      "refresh_cadence": "before_packet_generation_or_paid_review",
+      "review_required_if_material_change": true,
+      "robots_status": "not_checked_before_automation",
+      "source_area": "sanctions_restricted_party",
+      "source_areas": [
+        "sanctions_restricted_party"
+      ],
+      "source_id": "gac-sanctions",
+      "source_state": "not_checked",
+      "source_type": "official_or_primary_reference",
+      "supports_claims": [],
+      "terms_status": "not_checked_before_automation",
+      "usable_facts": [
+        "Global Affairs Canada is the Canada sanctions and restricted-country route."
+      ]
+    },
+    {
+      "allowed_automation": "manual_or_approved_loader_only",
+      "allowed_change_types": [
+        "cosmetic",
+        "date_change",
+        "source_unavailable",
+        "material_regulatory_or_tariff_change",
+        "new_requirement",
+        "removed_requirement",
+        "baseline_registered"
+      ],
+      "allowed_states": [
+        "not_checked",
+        "checked_current_reference_only",
+        "changed_minor",
+        "changed_material",
+        "source_unavailable",
+        "stale",
+        "review_required"
+      ],
+      "authority_level": "primary_reference",
+      "blocked_claims": [
+        "current_law_confirmed",
+        "tariff_confirmed",
+        "cfia_approved",
+        "sanctions_clear",
+        "buyer_validated",
+        "supplier_verified",
+        "ready_to_import",
+        "ready_to_export"
+      ],
+      "canonical_url": "https://wits.worldbank.org/",
+      "change_type": "baseline_registered",
+      "claim_boundary": "Global data supports research signals only.",
+      "content_hash": "",
+      "country_code": "INTL",
+      "http_status": "",
+      "jurisdiction": "International",
+      "last_checked_at": "2026-06-28",
+      "name": "World Bank World Integrated Trade Solution",
+      "packet_impact_rule": "If source changes or is not checked for the packet date, affected packet claims stay blocked.",
+      "parser_method": "metadata_hash_then_source_specific_parser_when_allowed",
+      "refresh_cadence": "before_packet_generation_or_paid_review",
+      "review_required_if_material_change": true,
+      "robots_status": "not_checked_before_automation",
+      "source_area": "global_trade_data",
+      "source_areas": [
+        "global_trade_data"
+      ],
+      "source_id": "world-bank-wits",
+      "source_state": "not_checked",
+      "source_type": "official_or_primary_reference",
+      "supports_claims": [],
+      "terms_status": "not_checked_before_automation",
+      "usable_facts": [
+        "WITS supports merchandise trade, tariff, and non-tariff-measure research."
+      ]
+    },
+    {
+      "allowed_automation": "manual_or_approved_loader_only",
+      "allowed_change_types": [
+        "cosmetic",
+        "date_change",
+        "source_unavailable",
+        "material_regulatory_or_tariff_change",
+        "new_requirement",
+        "removed_requirement",
+        "baseline_registered"
+      ],
+      "allowed_states": [
+        "not_checked",
+        "checked_current_reference_only",
+        "changed_minor",
+        "changed_material",
+        "source_unavailable",
+        "stale",
+        "review_required"
+      ],
+      "authority_level": "primary_reference",
+      "blocked_claims": [
+        "current_law_confirmed",
+        "tariff_confirmed",
+        "cfia_approved",
+        "sanctions_clear",
+        "buyer_validated",
+        "supplier_verified",
+        "ready_to_import",
+        "ready_to_export"
+      ],
+      "canonical_url": "https://www.trademap.org/",
+      "change_type": "baseline_registered",
+      "claim_boundary": "Reference source only; company or market rows are research signals and lead routes, not buyer validation or demand proof.",
+      "content_hash": "",
+      "country_code": "INTL",
+      "http_status": "",
+      "jurisdiction": "International",
+      "last_checked_at": "2026-06-28",
+      "name": "International Trade Centre Trade Map",
+      "packet_impact_rule": "If source changes or is not checked for the packet date, affected packet claims stay blocked.",
+      "parser_method": "metadata_hash_then_source_specific_parser_when_allowed",
+      "refresh_cadence": "before_packet_generation_or_paid_review",
+      "review_required_if_material_change": true,
+      "robots_status": "not_checked_before_automation",
+      "source_area": "buyer_importer_discovery",
+      "source_areas": [
+        "buyer_importer_discovery"
+      ],
+      "source_id": "itc-trade-map",
+      "source_state": "not_checked",
+      "source_type": "official_or_primary_reference",
+      "supports_claims": [],
+      "terms_status": "not_checked_before_automation",
+      "usable_facts": [
+        "global import/export values, volumes, growth, market-share, and company-directory research source"
+      ]
+    },
+    {
+      "allowed_automation": "manual_or_approved_loader_only",
+      "allowed_change_types": [
+        "cosmetic",
+        "date_change",
+        "source_unavailable",
+        "material_regulatory_or_tariff_change",
+        "new_requirement",
+        "removed_requirement",
+        "baseline_registered"
+      ],
+      "allowed_states": [
+        "not_checked",
+        "checked_current_reference_only",
+        "changed_minor",
+        "changed_material",
+        "source_unavailable",
+        "stale",
+        "review_required"
+      ],
+      "authority_level": "primary_reference",
+      "blocked_claims": [
+        "current_law_confirmed",
+        "tariff_confirmed",
+        "cfia_approved",
+        "sanctions_clear",
+        "buyer_validated",
+        "supplier_verified",
+        "ready_to_import",
+        "ready_to_export"
+      ],
+      "canonical_url": "https://www.wcoomd.org/en/topics/nomenclature/overview/what-is-the-harmonized-system.aspx",
+      "change_type": "baseline_registered",
+      "claim_boundary": "HS candidates are not classification confirmation.",
+      "content_hash": "",
+      "country_code": "INTL",
+      "http_status": "",
+      "jurisdiction": "International",
+      "last_checked_at": "2026-06-28",
+      "name": "World Customs Organization Harmonized System",
+      "packet_impact_rule": "If source changes or is not checked for the packet date, affected packet claims stay blocked.",
+      "parser_method": "metadata_hash_then_source_specific_parser_when_allowed",
+      "refresh_cadence": "before_packet_generation_or_paid_review",
+      "review_required_if_material_change": true,
+      "robots_status": "not_checked_before_automation",
+      "source_area": "hs_code_doctrine",
+      "source_areas": [
+        "hs_code_doctrine"
+      ],
+      "source_id": "wco-harmonized-system",
+      "source_state": "not_checked",
+      "source_type": "official_or_primary_reference",
+      "supports_claims": [],
+      "terms_status": "not_checked_before_automation",
+      "usable_facts": [
+        "HS doctrine supports commodity-candidate and six-digit HS structure logic."
+      ]
+    },
+    {
+      "allowed_automation": "manual_or_approved_loader_only",
+      "allowed_change_types": [
+        "cosmetic",
+        "date_change",
+        "source_unavailable",
+        "material_regulatory_or_tariff_change",
+        "new_requirement",
+        "removed_requirement",
+        "baseline_registered"
+      ],
+      "allowed_states": [
+        "not_checked",
+        "checked_current_reference_only",
+        "changed_minor",
+        "changed_material",
+        "source_unavailable",
+        "stale",
+        "review_required"
+      ],
+      "authority_level": "primary_reference",
+      "blocked_claims": [
+        "current_law_confirmed",
+        "tariff_confirmed",
+        "cfia_approved",
+        "sanctions_clear",
+        "buyer_validated",
+        "supplier_verified",
+        "ready_to_import",
+        "ready_to_export"
+      ],
+      "canonical_url": "https://iccwbo.org/business-solutions/incoterms-rules/incoterms-2020/",
+      "change_type": "baseline_registered",
+      "claim_boundary": "Responsibility guidance needs user confirmation and legal/freight review where applicable.",
+      "content_hash": "",
+      "country_code": "INTL",
+      "http_status": "",
+      "jurisdiction": "International",
+      "last_checked_at": "2026-06-28",
+      "name": "ICC Incoterms 2020",
+      "packet_impact_rule": "If source changes or is not checked for the packet date, affected packet claims stay blocked.",
+      "parser_method": "metadata_hash_then_source_specific_parser_when_allowed",
+      "refresh_cadence": "before_packet_generation_or_paid_review",
+      "review_required_if_material_change": true,
+      "robots_status": "not_checked_before_automation",
+      "source_area": "responsibility_path",
+      "source_areas": [
+        "responsibility_path"
+      ],
+      "source_id": "icc-incoterms-2020",
+      "source_state": "not_checked",
+      "source_type": "official_or_primary_reference",
+      "supports_claims": [],
+      "terms_status": "not_checked_before_automation",
+      "usable_facts": [
+        "ICC Incoterms route responsibility, task, cost, and risk questions between buyer and seller."
+      ]
+    },
+    {
+      "allowed_automation": "manual_or_approved_loader_only",
+      "allowed_change_types": [
+        "cosmetic",
+        "date_change",
+        "source_unavailable",
+        "material_regulatory_or_tariff_change",
+        "new_requirement",
+        "removed_requirement",
+        "baseline_registered"
+      ],
+      "allowed_states": [
+        "not_checked",
+        "checked_current_reference_only",
+        "changed_minor",
+        "changed_material",
+        "source_unavailable",
+        "stale",
+        "review_required"
+      ],
+      "authority_level": "official",
+      "blocked_claims": [
+        "current_law_confirmed",
+        "tariff_confirmed",
+        "cfia_approved",
+        "sanctions_clear",
+        "buyer_validated",
+        "supplier_verified",
+        "ready_to_import",
+        "ready_to_export"
+      ],
+      "canonical_url": "https://www.priv.gc.ca/en/privacy-topics/privacy-laws-in-canada/the-personal-information-protection-and-electronic-documents-act-pipeda/",
+      "change_type": "baseline_registered",
+      "claim_boundary": "Reference source only; does not prove privacy compliance, legal approval, or production data-processing readiness.",
+      "content_hash": "",
+      "country_code": "CA",
+      "http_status": "",
+      "jurisdiction": "Canada",
+      "last_checked_at": "2026-06-28",
+      "name": "Office of the Privacy Commissioner of Canada PIPEDA principles",
+      "packet_impact_rule": "If source changes or is not checked for the packet date, affected packet claims stay blocked.",
+      "parser_method": "metadata_hash_then_source_specific_parser_when_allowed",
+      "refresh_cadence": "before_packet_generation_or_paid_review",
+      "review_required_if_material_change": true,
+      "robots_status": "not_checked_before_automation",
+      "source_area": "trade_data",
+      "source_areas": [
+        "trade_data"
+      ],
+      "source_id": "opc-pipeda-principles",
+      "source_state": "not_checked",
+      "source_type": "official_or_primary_reference",
+      "supports_claims": [],
+      "terms_status": "not_checked_before_automation",
+      "usable_facts": [
+        "privacy notice, consent, retention, deletion, safeguards, and access-rights design source"
+      ]
+    },
+    {
+      "allowed_automation": "manual_or_approved_loader_only",
+      "allowed_change_types": [
+        "cosmetic",
+        "date_change",
+        "source_unavailable",
+        "material_regulatory_or_tariff_change",
+        "new_requirement",
+        "removed_requirement",
+        "baseline_registered"
+      ],
+      "allowed_states": [
+        "not_checked",
+        "checked_current_reference_only",
+        "changed_minor",
+        "changed_material",
+        "source_unavailable",
+        "stale",
+        "review_required"
+      ],
+      "authority_level": "primary_reference",
+      "blocked_claims": [
+        "current_law_confirmed",
+        "tariff_confirmed",
+        "cfia_approved",
+        "sanctions_clear",
+        "buyer_validated",
+        "supplier_verified",
+        "ready_to_import",
+        "ready_to_export"
+      ],
+      "canonical_url": "https://cheatsheetseries.owasp.org/cheatsheets/File_Upload_Cheat_Sheet.html",
+      "change_type": "baseline_registered",
+      "claim_boundary": "Reference source only; hosted upload readiness requires product-specific security controls, scans, storage isolation, and review evidence.",
+      "content_hash": "",
+      "country_code": "INTL",
+      "http_status": "",
+      "jurisdiction": "International",
+      "last_checked_at": "2026-06-28",
+      "name": "OWASP File Upload Cheat Sheet",
+      "packet_impact_rule": "If source changes or is not checked for the packet date, affected packet claims stay blocked.",
+      "parser_method": "metadata_hash_then_source_specific_parser_when_allowed",
+      "refresh_cadence": "before_packet_generation_or_paid_review",
+      "review_required_if_material_change": true,
+      "robots_status": "not_checked_before_automation",
+      "source_area": "import_controls",
+      "source_areas": [
+        "import_controls"
+      ],
+      "source_id": "owasp-file-upload",
+      "source_state": "not_checked",
+      "source_type": "official_or_primary_reference",
+      "supports_claims": [],
+      "terms_status": "not_checked_before_automation",
+      "usable_facts": [
+        "secure upload architecture and file-handling control source"
+      ]
+    },
+    {
+      "allowed_automation": "manual_or_approved_loader_only",
+      "allowed_change_types": [
+        "cosmetic",
+        "date_change",
+        "source_unavailable",
+        "material_regulatory_or_tariff_change",
+        "new_requirement",
+        "removed_requirement",
+        "baseline_registered"
+      ],
+      "allowed_states": [
+        "not_checked",
+        "checked_current_reference_only",
+        "changed_minor",
+        "changed_material",
+        "source_unavailable",
+        "stale",
+        "review_required"
+      ],
+      "authority_level": "primary_reference",
+      "blocked_claims": [
+        "current_law_confirmed",
+        "tariff_confirmed",
+        "cfia_approved",
+        "sanctions_clear",
+        "buyer_validated",
+        "supplier_verified",
+        "ready_to_import",
+        "ready_to_export"
+      ],
+      "canonical_url": "https://genai.owasp.org/llmrisk/llm01-prompt-injection/",
+      "change_type": "baseline_registered",
+      "claim_boundary": "Reference source only; does not prove AI safety, document safety, or model-output reliability.",
+      "content_hash": "",
+      "country_code": "INTL",
+      "http_status": "",
+      "jurisdiction": "International",
+      "last_checked_at": "2026-06-28",
+      "name": "OWASP GenAI prompt injection guidance",
+      "packet_impact_rule": "If source changes or is not checked for the packet date, affected packet claims stay blocked.",
+      "parser_method": "metadata_hash_then_source_specific_parser_when_allowed",
+      "refresh_cadence": "before_packet_generation_or_paid_review",
+      "review_required_if_material_change": true,
+      "robots_status": "not_checked_before_automation",
+      "source_area": "official_reference",
+      "source_areas": [
+        "official_reference"
+      ],
+      "source_id": "owasp-llm01-prompt-injection",
+      "source_state": "not_checked",
+      "source_type": "official_or_primary_reference",
+      "supports_claims": [],
+      "terms_status": "not_checked_before_automation",
+      "usable_facts": [
+        "AI prompt-injection and external-content risk source"
+      ]
+    },
+    {
+      "allowed_automation": "manual_or_approved_loader_only",
+      "allowed_change_types": [
+        "cosmetic",
+        "date_change",
+        "source_unavailable",
+        "material_regulatory_or_tariff_change",
+        "new_requirement",
+        "removed_requirement",
+        "baseline_registered"
+      ],
+      "allowed_states": [
+        "not_checked",
+        "checked_current_reference_only",
+        "changed_minor",
+        "changed_material",
+        "source_unavailable",
+        "stale",
+        "review_required"
+      ],
+      "authority_level": "primary_reference",
+      "blocked_claims": [
+        "current_law_confirmed",
+        "tariff_confirmed",
+        "cfia_approved",
+        "sanctions_clear",
+        "buyer_validated",
+        "supplier_verified",
+        "ready_to_import",
+        "ready_to_export"
+      ],
+      "canonical_url": "https://www.nist.gov/itl/ai-risk-management-framework",
+      "change_type": "baseline_registered",
+      "claim_boundary": "Reference source only; does not certify the product or authorize AI to open compliance, customs, payment, privacy, or launch gates.",
+      "content_hash": "",
+      "country_code": "US",
+      "http_status": "",
+      "jurisdiction": "US",
+      "last_checked_at": "2026-06-28",
+      "name": "NIST AI Risk Management Framework",
+      "packet_impact_rule": "If source changes or is not checked for the packet date, affected packet claims stay blocked.",
+      "parser_method": "metadata_hash_then_source_specific_parser_when_allowed",
+      "refresh_cadence": "before_packet_generation_or_paid_review",
+      "review_required_if_material_change": true,
+      "robots_status": "not_checked_before_automation",
+      "source_area": "official_reference",
+      "source_areas": [
+        "official_reference"
+      ],
+      "source_id": "nist-ai-rmf",
+      "source_state": "not_checked",
+      "source_type": "official_or_primary_reference",
+      "supports_claims": [],
+      "terms_status": "not_checked_before_automation",
+      "usable_facts": [
+        "AI risk-management and trustworthy-AI governance source"
+      ]
+    },
+    {
+      "allowed_automation": "manual_or_approved_loader_only",
+      "allowed_change_types": [
+        "cosmetic",
+        "date_change",
+        "source_unavailable",
+        "material_regulatory_or_tariff_change",
+        "new_requirement",
+        "removed_requirement",
+        "baseline_registered"
+      ],
+      "allowed_states": [
+        "not_checked",
+        "checked_current_reference_only",
+        "changed_minor",
+        "changed_material",
+        "source_unavailable",
+        "stale",
+        "review_required"
+      ],
+      "authority_level": "primary_reference",
+      "blocked_claims": [
+        "current_law_confirmed",
+        "tariff_confirmed",
+        "cfia_approved",
+        "sanctions_clear",
+        "buyer_validated",
+        "supplier_verified",
+        "ready_to_import",
+        "ready_to_export"
+      ],
+      "canonical_url": "https://docs.stripe.com/get-started/checklist/go-live",
+      "change_type": "baseline_registered",
+      "claim_boundary": "Reference source only; does not prove live payment readiness, tax review, refund/support readiness, webhook safety, or secure key handling.",
+      "content_hash": "",
+      "country_code": "INTL",
+      "http_status": "",
+      "jurisdiction": "International",
+      "last_checked_at": "2026-06-28",
+      "name": "Stripe go-live checklist",
+      "packet_impact_rule": "If source changes or is not checked for the packet date, affected packet claims stay blocked.",
+      "parser_method": "metadata_hash_then_source_specific_parser_when_allowed",
+      "refresh_cadence": "before_packet_generation_or_paid_review",
+      "review_required_if_material_change": true,
+      "robots_status": "not_checked_before_automation",
+      "source_area": "official_reference",
+      "source_areas": [
+        "official_reference"
+      ],
+      "source_id": "stripe-go-live",
+      "source_state": "not_checked",
+      "source_type": "official_or_primary_reference",
+      "supports_claims": [],
+      "terms_status": "not_checked_before_automation",
+      "usable_facts": [
+        "live payment launch checklist source"
+      ]
+    }
+  ],
+  "source_lifecycle_count": 23,
+  "source_refresh_record_count": 3,
+  "source_state_values": [
+    "not_checked",
+    "checked_current_reference_only",
+    "changed_minor",
+    "changed_material",
+    "source_unavailable",
+    "stale",
+    "review_required"
+  ],
+  "status": "production_country_source_engine_ready_reference_packs_claim_gates_closed"
+}

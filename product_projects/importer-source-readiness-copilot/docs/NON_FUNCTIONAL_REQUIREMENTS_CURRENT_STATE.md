@@ -242,12 +242,13 @@ python3 scripts/ai_dev_os_check.py
 python3 scripts/self_test_flow.py
 ```
 
-## Non-Functional Questions To Resolve
+## External Non-Functional Inputs Still Required
 
-1. Will private beta use real uploaded files, metadata-only packets, or both?
-2. Which authentication option do we want for hosted beta?
-3. Which database and object storage should be used for hosted beta?
-4. Which AI provider policy is acceptable for real customer data?
-5. Who will review security, privacy, legal, customs/trade, and report language?
-6. What is the maximum file size and retention period for uploaded documents?
-7. Should payments stay fully disabled through private beta?
+The local non-functional answers are locked for the current controlled scope:
+metadata-first private beta, managed auth before hosted beta, managed Postgres
+for packet state, private object storage for files, explicit AI consent, and
+payments disabled until review. Production still needs dated external inputs:
+security/privacy/legal/trade/report-language reviewers, hosted infrastructure
+proof, upload size and retention approval, vendor/processor review, backup and
+restore proof, and payment/tax/refund/support approval before any wider launch
+or real file/payment scope can open.

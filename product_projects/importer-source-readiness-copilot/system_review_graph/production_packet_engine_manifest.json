@@ -1,0 +1,1090 @@
+{
+  "claim_gate_count": 13,
+  "claims_opened": false,
+  "external_effects_created": false,
+  "generated_at": "2026-06-28T12:30:07+00:00",
+  "hosted_private_beta_ready": false,
+  "live_payment_ready": false,
+  "official_source_purposes": [
+    "import process",
+    "tariff orientation",
+    "regulated goods",
+    "sanctions or restricted party",
+    "trade data",
+    "buyer lead discovery",
+    "broker discovery"
+  ],
+  "packet_count": 1,
+  "packet_event_count": 12,
+  "packet_runs": [
+    {
+      "blocked_claim_count": 15,
+      "blocked_claims": [
+        {
+          "claim": "tariff_confirmed",
+          "next_valid_move": "Attach current evidence and route this exact claim to a qualified reviewer.",
+          "reason": "Evidence is stale or reference-only; stronger claim must remain blocked.",
+          "required_evidence": "authoritative tariff/classification evidence",
+          "required_reviewer_lane": "qualified_trade_or_customs_review",
+          "status": "blocked",
+          "unsafe_to_bypass": true
+        },
+        {
+          "claim": "cfia_compliant",
+          "next_valid_move": "Attach current evidence and route this exact claim to a qualified reviewer.",
+          "reason": "Evidence is stale or reference-only; stronger claim must remain blocked.",
+          "required_evidence": "current CFIA/AIRS product-specific evidence",
+          "required_reviewer_lane": "qualified_food_or_regulated_goods_review",
+          "status": "blocked",
+          "unsafe_to_bypass": true
+        },
+        {
+          "claim": "supplier_recommended",
+          "next_valid_move": "Attach current evidence and route this exact claim to a qualified reviewer.",
+          "reason": "Evidence is stale or reference-only; stronger claim must remain blocked.",
+          "required_evidence": "supplier registration, product, certificate, and inspection evidence",
+          "required_reviewer_lane": "supplier_evidence_review",
+          "status": "blocked",
+          "unsafe_to_bypass": true
+        },
+        {
+          "claim": "buyer_validated",
+          "next_valid_move": "Attach current evidence and route this exact claim to a qualified reviewer.",
+          "reason": "Evidence is stale or reference-only; stronger claim must remain blocked.",
+          "required_evidence": "dated buyer reply, meeting, sample, LOI, PO, or paid-order evidence",
+          "required_reviewer_lane": "buyer_evidence_review",
+          "status": "blocked",
+          "unsafe_to_bypass": true
+        },
+        {
+          "claim": "ready_to_import",
+          "next_valid_move": "Attach current evidence and route this exact claim to a qualified reviewer.",
+          "reason": "Evidence is stale or reference-only; stronger claim must remain blocked.",
+          "required_evidence": "importer of record, Incoterms, source freshness, broker review",
+          "required_reviewer_lane": "qualified_import_review",
+          "status": "blocked",
+          "unsafe_to_bypass": true
+        },
+        {
+          "claim": "ready_to_export_to_canada",
+          "next_valid_move": "Attach current evidence and route this exact claim to a qualified reviewer.",
+          "reason": "Evidence is stale or reference-only; stronger claim must remain blocked.",
+          "required_evidence": "origin export and Canada import review evidence",
+          "required_reviewer_lane": "qualified_export_to_canada_review",
+          "status": "blocked",
+          "unsafe_to_bypass": true
+        },
+        {
+          "claim": "canadian_importer_confirmed",
+          "next_valid_move": "Attach current evidence and route this exact claim to a qualified reviewer.",
+          "reason": "Evidence is stale or reference-only; stronger claim must remain blocked.",
+          "required_evidence": "dated importer confirmation and permission scope",
+          "required_reviewer_lane": "buyer_importer_review",
+          "status": "blocked",
+          "unsafe_to_bypass": true
+        },
+        {
+          "claim": "export_documentation_complete",
+          "next_valid_move": "Attach current evidence and route this exact claim to a qualified reviewer.",
+          "reason": "Evidence is stale or reference-only; stronger claim must remain blocked.",
+          "required_evidence": "confirmed product, commercial, origin, and shipping documents",
+          "required_reviewer_lane": "document_review",
+          "status": "blocked",
+          "unsafe_to_bypass": true
+        },
+        {
+          "claim": "trade_agreement_preference_confirmed",
+          "next_valid_move": "Attach current evidence and route this exact claim to a qualified reviewer.",
+          "reason": "Evidence is stale or reference-only; stronger claim must remain blocked.",
+          "required_evidence": "rules-of-origin and preference evidence",
+          "required_reviewer_lane": "trade_agreement_review",
+          "status": "blocked",
+          "unsafe_to_bypass": true
+        },
+        {
+          "claim": "public_launch_ready",
+          "next_valid_move": "Attach current evidence and route this exact claim to a qualified reviewer.",
+          "reason": "Evidence is stale or reference-only; stronger claim must remain blocked.",
+          "required_evidence": "all launch gates approved for exact public scope",
+          "required_reviewer_lane": "final_launch_owner_review",
+          "status": "blocked",
+          "unsafe_to_bypass": true
+        },
+        {
+          "claim": "customs_or_tariff_advice_ready",
+          "next_valid_move": "Attach current evidence and route this exact claim to a qualified reviewer.",
+          "reason": "Evidence is stale or reference-only; stronger claim must remain blocked.",
+          "required_evidence": "customs broker or qualified reviewer finding",
+          "required_reviewer_lane": "qualified_customs_review",
+          "status": "blocked",
+          "unsafe_to_bypass": true
+        },
+        {
+          "claim": "legal_or_compliance_approved",
+          "next_valid_move": "Attach current evidence and route this exact claim to a qualified reviewer.",
+          "reason": "Evidence is stale or reference-only; stronger claim must remain blocked.",
+          "required_evidence": "qualified legal/privacy/security approval",
+          "required_reviewer_lane": "legal_privacy_security_review",
+          "status": "blocked",
+          "unsafe_to_bypass": true
+        },
+        {
+          "claim": "ready_to_ship",
+          "next_valid_move": "Attach current evidence and route this exact claim to a qualified reviewer.",
+          "reason": "Evidence is stale or reference-only; stronger claim must remain blocked.",
+          "required_evidence": "shipment responsibility, documents, permits, and reviewer approval",
+          "required_reviewer_lane": "qualified_trade_review",
+          "status": "blocked",
+          "unsafe_to_bypass": true
+        },
+        {
+          "claim": "responsibility_clarity",
+          "next_valid_move": "Confirm who is importer of record before any import-readiness statement.",
+          "reason": "Importer of record is missing.",
+          "required_evidence": "Buyer/importer responsibility confirmation",
+          "required_reviewer_lane": "trade_or_broker_review",
+          "status": "blocked",
+          "unsafe_to_bypass": true
+        },
+        {
+          "claim": "incoterms_responsibility",
+          "next_valid_move": "Ask buyer/importer and supplier who handles freight, customs, duties, and delivery risk.",
+          "reason": "Incoterms or delivery responsibility are missing.",
+          "required_evidence": "Incoterms or responsibility split confirmation",
+          "required_reviewer_lane": "freight_logistics_review",
+          "status": "blocked",
+          "unsafe_to_bypass": true
+        }
+      ],
+      "claims_opened": false,
+      "evidence_summary": {
+        "all_evidence_is_draft_or_reference_only": true,
+        "evidence_count": 3,
+        "evidence_ids": [
+          "evidence-frozen-tuna-cid-reference",
+          "evidence-frozen-tuna-cbsa-import-workflow",
+          "evidence-frozen-tuna-cfia-airs-reference"
+        ],
+        "review_required_count": 3,
+        "stale_evidence_count": 3,
+        "stale_evidence_ids": [
+          "evidence-frozen-tuna-cid-reference",
+          "evidence-frozen-tuna-cbsa-import-workflow",
+          "evidence-frozen-tuna-cfia-airs-reference"
+        ]
+      },
+      "external_effects_created": false,
+      "live_payment_ready": false,
+      "next_valid_move": "Refresh official sources and attach dated source snapshots before reviewer assessment.",
+      "organization_id": "demo-importer-org",
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "packet_view_count": 8,
+      "packet_views": [
+        {
+          "audience": "beginner_or_customer",
+          "blocked_claim_count": 15,
+          "blocked_claims_visible": true,
+          "claim_boundary": "Preparation and evidence organization only; no approval, compliance, buyer, supplier, tariff, shipment, payment, or launch claim is opened.",
+          "claims_opened": false,
+          "current_state": "reviewer_ready",
+          "destination_country": "Canada",
+          "document_checklist": [
+            "product specification",
+            "CFIA/AIRS route",
+            "health or catch/processing evidence when applicable"
+          ],
+          "evidence_count": 3,
+          "external_effects_created": false,
+          "includes": [
+            "required fields",
+            "starter checklist",
+            "next safe move"
+          ],
+          "next_valid_move": "Refresh official sources and attach dated source snapshots before reviewer assessment.",
+          "origin_country": "Vietnam",
+          "packet_id": "packet-frozen-tuna-canada-001",
+          "product": "Frozen tuna fillet",
+          "score_count": 6,
+          "source_route_count": 14,
+          "view_status": "ready",
+          "view_type": "starter_packet"
+        },
+        {
+          "audience": "customer_or_operator",
+          "blocked_claim_count": 15,
+          "blocked_claims_visible": true,
+          "claim_boundary": "Preparation and evidence organization only; no approval, compliance, buyer, supplier, tariff, shipment, payment, or launch claim is opened.",
+          "claims_opened": false,
+          "current_state": "reviewer_ready",
+          "destination_country": "Canada",
+          "document_checklist": [],
+          "evidence_count": 3,
+          "external_effects_created": false,
+          "includes": [
+            "source routes",
+            "market research questions",
+            "limitations"
+          ],
+          "next_valid_move": "Refresh official sources and attach dated source snapshots before reviewer assessment.",
+          "origin_country": "Vietnam",
+          "packet_id": "packet-frozen-tuna-canada-001",
+          "product": "Frozen tuna fillet",
+          "score_count": 6,
+          "source_route_count": 14,
+          "view_status": "reference_only",
+          "view_type": "market_research_packet"
+        },
+        {
+          "audience": "buyer_or_importer",
+          "blocked_claim_count": 15,
+          "blocked_claims_visible": true,
+          "claim_boundary": "Preparation and evidence organization only; no approval, compliance, buyer, supplier, tariff, shipment, payment, or launch claim is opened.",
+          "claims_opened": false,
+          "current_state": "reviewer_ready",
+          "destination_country": "Canada",
+          "document_checklist": [],
+          "evidence_count": 3,
+          "external_effects_created": false,
+          "includes": [
+            "buyer questions",
+            "evidence boundaries",
+            "blocked buyer validation"
+          ],
+          "next_valid_move": "Refresh official sources and attach dated source snapshots before reviewer assessment.",
+          "origin_country": "Vietnam",
+          "packet_id": "packet-frozen-tuna-canada-001",
+          "product": "Frozen tuna fillet",
+          "score_count": 6,
+          "source_route_count": 14,
+          "view_status": "blocked_claims_visible",
+          "view_type": "buyer_ready_packet"
+        },
+        {
+          "audience": "supplier",
+          "blocked_claim_count": 15,
+          "blocked_claims_visible": true,
+          "claim_boundary": "Preparation and evidence organization only; no approval, compliance, buyer, supplier, tariff, shipment, payment, or launch claim is opened.",
+          "claims_opened": false,
+          "current_state": "reviewer_ready",
+          "destination_country": "Canada",
+          "document_checklist": [
+            "product specification",
+            "CFIA/AIRS route",
+            "health or catch/processing evidence when applicable"
+          ],
+          "evidence_count": 3,
+          "external_effects_created": false,
+          "includes": [
+            "supplier documents",
+            "risk questions",
+            "missing evidence"
+          ],
+          "next_valid_move": "Refresh official sources and attach dated source snapshots before reviewer assessment.",
+          "origin_country": "Vietnam",
+          "packet_id": "packet-frozen-tuna-canada-001",
+          "product": "Frozen tuna fillet",
+          "score_count": 6,
+          "source_route_count": 14,
+          "view_status": "evidence_collection_ready",
+          "view_type": "supplier_request_packet"
+        },
+        {
+          "audience": "customs_broker_or_trade_expert",
+          "blocked_claim_count": 15,
+          "blocked_claims_visible": true,
+          "claim_boundary": "Preparation and evidence organization only; no approval, compliance, buyer, supplier, tariff, shipment, payment, or launch claim is opened.",
+          "claims_opened": false,
+          "current_state": "reviewer_ready",
+          "destination_country": "Canada",
+          "document_checklist": [
+            "product specification",
+            "CFIA/AIRS route",
+            "health or catch/processing evidence when applicable"
+          ],
+          "evidence_count": 3,
+          "external_effects_created": false,
+          "includes": [
+            "source routes",
+            "HS candidate",
+            "CFIA/tariff blockers"
+          ],
+          "next_valid_move": "Refresh official sources and attach dated source snapshots before reviewer assessment.",
+          "origin_country": "Vietnam",
+          "packet_id": "packet-frozen-tuna-canada-001",
+          "product": "Frozen tuna fillet",
+          "score_count": 6,
+          "source_route_count": 14,
+          "view_status": "ready_for_scoped_review",
+          "view_type": "broker_review_packet"
+        },
+        {
+          "audience": "internal_operator",
+          "blocked_claim_count": 15,
+          "blocked_claims_visible": true,
+          "claim_boundary": "Preparation and evidence organization only; no approval, compliance, buyer, supplier, tariff, shipment, payment, or launch claim is opened.",
+          "claims_opened": false,
+          "current_state": "reviewer_ready",
+          "destination_country": "Canada",
+          "document_checklist": [],
+          "evidence_count": 3,
+          "external_effects_created": false,
+          "includes": [
+            "state events",
+            "scores",
+            "blockers"
+          ],
+          "next_valid_move": "Refresh official sources and attach dated source snapshots before reviewer assessment.",
+          "origin_country": "Vietnam",
+          "packet_id": "packet-frozen-tuna-canada-001",
+          "product": "Frozen tuna fillet",
+          "score_count": 6,
+          "source_route_count": 14,
+          "view_status": "ready",
+          "view_type": "operator_packet"
+        },
+        {
+          "audience": "owner_or_manager",
+          "blocked_claim_count": 15,
+          "blocked_claims_visible": true,
+          "claim_boundary": "Preparation and evidence organization only; no approval, compliance, buyer, supplier, tariff, shipment, payment, or launch claim is opened.",
+          "claims_opened": false,
+          "current_state": "reviewer_ready",
+          "destination_country": "Canada",
+          "document_checklist": [],
+          "evidence_count": 3,
+          "external_effects_created": false,
+          "includes": [
+            "six scores",
+            "next move",
+            "go/no-go blockers"
+          ],
+          "next_valid_move": "Refresh official sources and attach dated source snapshots before reviewer assessment.",
+          "origin_country": "Vietnam",
+          "packet_id": "packet-frozen-tuna-canada-001",
+          "product": "Frozen tuna fillet",
+          "score_count": 6,
+          "source_route_count": 14,
+          "view_status": "internal_decision_prep_only",
+          "view_type": "executive_decision_packet"
+        },
+        {
+          "audience": "reviewer_or_operator",
+          "blocked_claim_count": 15,
+          "blocked_claims_visible": true,
+          "claim_boundary": "Preparation and evidence organization only; no approval, compliance, buyer, supplier, tariff, shipment, payment, or launch claim is opened.",
+          "claims_opened": false,
+          "current_state": "reviewer_ready",
+          "destination_country": "Canada",
+          "document_checklist": [],
+          "evidence_count": 3,
+          "external_effects_created": false,
+          "includes": [
+            "blocked claims",
+            "required evidence",
+            "reviewer lanes"
+          ],
+          "next_valid_move": "Refresh official sources and attach dated source snapshots before reviewer assessment.",
+          "origin_country": "Vietnam",
+          "packet_id": "packet-frozen-tuna-canada-001",
+          "product": "Frozen tuna fillet",
+          "score_count": 6,
+          "source_route_count": 14,
+          "view_status": "ready",
+          "view_type": "blocked_claims_packet"
+        }
+      ],
+      "product_class": "seafood",
+      "proof_boundary": "Local packet engine proof only. Reviewer-ready is not approved, and packet progress is not trade readiness.",
+      "public_launch_ready": false,
+      "required_fields": [
+        {
+          "field": "trade_direction",
+          "provenance": "system_derived_needs_user_confirmation",
+          "status": "needs_user_confirmation",
+          "value": "import"
+        },
+        {
+          "field": "product_name",
+          "provenance": "user_input",
+          "status": "provided",
+          "value": "Frozen tuna fillet"
+        },
+        {
+          "field": "product_category",
+          "provenance": "user_input",
+          "status": "provided",
+          "value": "food_import"
+        },
+        {
+          "field": "origin_country",
+          "provenance": "user_input",
+          "status": "provided",
+          "value": "Vietnam"
+        },
+        {
+          "field": "destination_country",
+          "provenance": "user_input",
+          "status": "provided",
+          "value": "Canada"
+        },
+        {
+          "field": "intended_use",
+          "provenance": "user_input",
+          "status": "provided",
+          "value": "Assess whether this source packet is ready for internal importer/source-readiness review."
+        },
+        {
+          "field": "hs_code_value",
+          "provenance": "user_input",
+          "status": "candidate_needs_qualified_review",
+          "value": "0304870000"
+        },
+        {
+          "field": "supplier_name",
+          "provenance": "user_input",
+          "status": "provided",
+          "value": "Example Seafood Supplier"
+        },
+        {
+          "field": "buyer_name",
+          "provenance": "missing",
+          "status": "missing",
+          "value": ""
+        },
+        {
+          "field": "importer_name",
+          "provenance": "missing",
+          "status": "missing",
+          "value": ""
+        },
+        {
+          "field": "importer_of_record",
+          "provenance": "missing",
+          "status": "missing",
+          "value": ""
+        },
+        {
+          "field": "incoterms",
+          "provenance": "missing",
+          "status": "missing",
+          "value": ""
+        }
+      ],
+      "reviewer_ready_not_approved": true,
+      "score_count": 6,
+      "scores": [
+        {
+          "blocking_fields": [],
+          "label": "yellow",
+          "next_action": "Attach source-backed market metrics before any market conclusion.",
+          "reason": "Official market/source routes exist as research signals only.",
+          "score": "market_signal_score"
+        },
+        {
+          "blocking_fields": [
+            "trade_direction",
+            "buyer_name",
+            "importer_name",
+            "importer_of_record",
+            "incoterms"
+          ],
+          "label": "yellow",
+          "next_action": "Collect missing packet fields and confirm extracted or attached evidence.",
+          "reason": "Some evidence exists, but missing fields and reviewer proof still cap the score.",
+          "score": "evidence_completeness_score"
+        },
+        {
+          "blocking_fields": [
+            "evidence-frozen-tuna-cid-reference",
+            "evidence-frozen-tuna-cbsa-import-workflow",
+            "evidence-frozen-tuna-cfia-airs-reference"
+          ],
+          "label": "red",
+          "next_action": "Refresh official sources and attach source snapshots.",
+          "reason": "Stale or reference-only source evidence blocks stronger claims.",
+          "score": "source_freshness_score"
+        },
+        {
+          "blocking_fields": [
+            "buyer_evidence",
+            "supplier_verification_evidence"
+          ],
+          "label": "red",
+          "next_action": "Collect buyer reply/meeting/LOI/PO evidence and supplier registration/product/certificate evidence.",
+          "reason": "Supplier is named, but buyer/supplier validation evidence is not attached.",
+          "score": "buyer_supplier_evidence_score"
+        },
+        {
+          "blocking_fields": [
+            "importer_of_record",
+            "incoterms"
+          ],
+          "label": "red",
+          "next_action": "Confirm importer of record, Incoterms, and broker/reviewer responsibility path.",
+          "reason": "Importer of record or Incoterms are missing.",
+          "score": "responsibility_clarity_score"
+        },
+        {
+          "blocking_fields": [
+            "buyer_validated",
+            "canadian_importer_confirmed",
+            "cfia_compliant",
+            "customs_or_tariff_advice_ready",
+            "export_documentation_complete",
+            "incoterms_responsibility",
+            "legal_or_compliance_approved",
+            "public_launch_ready",
+            "ready_to_export_to_canada",
+            "ready_to_import",
+            "ready_to_ship",
+            "responsibility_clarity",
+            "supplier_recommended",
+            "tariff_confirmed",
+            "trade_agreement_preference_confirmed"
+          ],
+          "label": "red",
+          "next_action": "Resolve blocker evidence and reviewer lanes before customer-visible stronger claims.",
+          "reason": "External gates and blocked claims remain open.",
+          "score": "decision_safety_score"
+        }
+      ],
+      "source_route_count": 14,
+      "source_routes": [
+        {
+          "blocked_claims": [
+            "tariff_confirmed",
+            "cfia_compliant",
+            "supplier_recommended",
+            "buyer_validated",
+            "ready_to_import",
+            "ready_to_export_to_canada",
+            "canadian_importer_confirmed",
+            "export_documentation_complete",
+            "trade_agreement_preference_confirmed",
+            "public_launch_ready",
+            "customs_or_tariff_advice_ready",
+            "legal_or_compliance_approved",
+            "ready_to_ship"
+          ],
+          "claim_boundary": "Reference source only; does not prove CARM registration, accounting setup, duty payment readiness, or customs advice.",
+          "evidence_role": "commercial importer duty and tax account workflow",
+          "jurisdiction": "Canada",
+          "name": "CBSA Assessment and Revenue Management (CARM)",
+          "route_status": "reference_route_only",
+          "source_id": "cbsa-carm",
+          "supports_claims": [],
+          "terms_status": "must_check_before_fetch",
+          "url": "https://www.cbsa-asfc.gc.ca/services/carm-gcra/menu-eng.html"
+        },
+        {
+          "blocked_claims": [
+            "tariff_confirmed",
+            "cfia_compliant",
+            "supplier_recommended",
+            "buyer_validated",
+            "ready_to_import",
+            "ready_to_export_to_canada",
+            "canadian_importer_confirmed",
+            "export_documentation_complete",
+            "trade_agreement_preference_confirmed",
+            "public_launch_ready",
+            "customs_or_tariff_advice_ready",
+            "legal_or_compliance_approved",
+            "ready_to_ship"
+          ],
+          "claim_boundary": "Reference source only; does not replace CBSA, broker, customs, or legal review.",
+          "evidence_role": "commercial import process orientation",
+          "jurisdiction": "Canada",
+          "name": "CBSA Import Commercial Goods Into Canada",
+          "route_status": "reference_route_only",
+          "source_id": "cbsa-import-commercial-goods",
+          "supports_claims": [],
+          "terms_status": "must_check_before_fetch",
+          "url": "https://www.cbsa-asfc.gc.ca/import/menu-eng.html"
+        },
+        {
+          "blocked_claims": [
+            "tariff_confirmed",
+            "cfia_compliant",
+            "supplier_recommended",
+            "buyer_validated",
+            "ready_to_import",
+            "ready_to_export_to_canada",
+            "canadian_importer_confirmed",
+            "export_documentation_complete",
+            "trade_agreement_preference_confirmed",
+            "public_launch_ready",
+            "customs_or_tariff_advice_ready",
+            "legal_or_compliance_approved",
+            "ready_to_ship"
+          ],
+          "claim_boundary": "Reference source only; classification and tariff treatment require qualified review.",
+          "evidence_role": "Canadian tariff classification starting point",
+          "jurisdiction": "Canada",
+          "name": "CBSA Customs Tariff 2026",
+          "route_status": "reference_route_only",
+          "source_id": "cbsa-customs-tariff-2026",
+          "supports_claims": [],
+          "terms_status": "must_check_before_fetch",
+          "url": "https://www.cbsa-asfc.gc.ca/trade-commerce/tariff-tarif/2026/menu-eng.html"
+        },
+        {
+          "blocked_claims": [
+            "tariff_confirmed",
+            "cfia_compliant",
+            "supplier_recommended",
+            "buyer_validated",
+            "ready_to_import",
+            "ready_to_export_to_canada",
+            "canadian_importer_confirmed",
+            "export_documentation_complete",
+            "trade_agreement_preference_confirmed",
+            "public_launch_ready",
+            "customs_or_tariff_advice_ready",
+            "legal_or_compliance_approved",
+            "ready_to_ship"
+          ],
+          "claim_boundary": "Reference source only; product-specific food import compliance requires qualified review and source verification.",
+          "evidence_role": "CFIA-regulated commodity import requirement lookup",
+          "jurisdiction": "Canada",
+          "name": "CFIA Automated Import Reference System (AIRS)",
+          "route_status": "reference_route_only",
+          "source_id": "cfia-airs",
+          "supports_claims": [],
+          "terms_status": "must_check_before_fetch",
+          "url": "https://inspection.canada.ca/en/importing-food-plants-animals/airs"
+        },
+        {
+          "blocked_claims": [
+            "tariff_confirmed",
+            "cfia_compliant",
+            "supplier_recommended",
+            "buyer_validated",
+            "ready_to_import",
+            "ready_to_export_to_canada",
+            "canadian_importer_confirmed",
+            "export_documentation_complete",
+            "trade_agreement_preference_confirmed",
+            "public_launch_ready",
+            "customs_or_tariff_advice_ready",
+            "legal_or_compliance_approved",
+            "ready_to_ship"
+          ],
+          "claim_boundary": "Reference source only; does not prove whether a specific product requires an import permit.",
+          "evidence_role": "import control and permit orientation",
+          "jurisdiction": "Canada",
+          "name": "Global Affairs Canada Import Controls and Import Permits",
+          "route_status": "reference_route_only",
+          "source_id": "gac-import-controls",
+          "supports_claims": [],
+          "terms_status": "must_check_before_fetch",
+          "url": "https://www.international.gc.ca/controls-controles/about-a_propos/impor/permits-licences.aspx?lang=eng"
+        },
+        {
+          "blocked_claims": [
+            "tariff_confirmed",
+            "cfia_compliant",
+            "supplier_recommended",
+            "buyer_validated",
+            "ready_to_import",
+            "ready_to_export_to_canada",
+            "canadian_importer_confirmed",
+            "export_documentation_complete",
+            "trade_agreement_preference_confirmed",
+            "public_launch_ready",
+            "customs_or_tariff_advice_ready",
+            "legal_or_compliance_approved",
+            "ready_to_ship"
+          ],
+          "claim_boundary": "Reference source only; legal interpretation and product applicability require qualified review.",
+          "evidence_role": "legal reference for controlled imports",
+          "jurisdiction": "Canada",
+          "name": "Justice Laws Import Control List",
+          "route_status": "reference_route_only",
+          "source_id": "justice-import-control-list",
+          "supports_claims": [],
+          "terms_status": "must_check_before_fetch",
+          "url": "https://laws-lois.justice.gc.ca/eng/regulations/c.r.c.%2C_c._604/index.html"
+        },
+        {
+          "blocked_claims": [
+            "tariff_confirmed",
+            "cfia_compliant",
+            "supplier_recommended",
+            "buyer_validated",
+            "ready_to_import",
+            "ready_to_export_to_canada",
+            "canadian_importer_confirmed",
+            "export_documentation_complete",
+            "trade_agreement_preference_confirmed",
+            "public_launch_ready",
+            "customs_or_tariff_advice_ready",
+            "legal_or_compliance_approved",
+            "ready_to_ship"
+          ],
+          "claim_boundary": "Reference source only; screening results require dated search records and reviewer signoff.",
+          "evidence_role": "restricted-party and sanctions screening source",
+          "jurisdiction": "Canada",
+          "name": "Global Affairs Canada Consolidated Canadian Autonomous Sanctions List",
+          "route_status": "reference_route_only",
+          "source_id": "canada-sanctions",
+          "supports_claims": [],
+          "terms_status": "must_check_before_fetch",
+          "url": "https://www.international.gc.ca/world-monde/international_relations-relations_internationales/sanctions/consolidated-consolide.aspx?lang=eng"
+        },
+        {
+          "blocked_claims": [
+            "tariff_confirmed",
+            "cfia_compliant",
+            "supplier_recommended",
+            "buyer_validated",
+            "ready_to_import",
+            "ready_to_export_to_canada",
+            "canadian_importer_confirmed",
+            "export_documentation_complete",
+            "trade_agreement_preference_confirmed",
+            "public_launch_ready",
+            "customs_or_tariff_advice_ready",
+            "legal_or_compliance_approved",
+            "ready_to_ship"
+          ],
+          "claim_boundary": "Reference source only; does not prove buyer validation, supplier fit, customs advice, or freshness of a specific product row.",
+          "evidence_role": "importer discovery orientation",
+          "jurisdiction": "Canada",
+          "name": "Canadian Importers Database",
+          "route_status": "reference_route_only",
+          "source_id": "canada-cid",
+          "supports_claims": [],
+          "terms_status": "must_check_before_fetch",
+          "url": "https://ised-isde.canada.ca/site/ised/en/research-and-business-intelligence/canadian-importers-database"
+        },
+        {
+          "blocked_claims": [
+            "tariff_confirmed",
+            "cfia_compliant",
+            "supplier_recommended",
+            "buyer_validated",
+            "ready_to_import",
+            "ready_to_export_to_canada",
+            "canadian_importer_confirmed",
+            "export_documentation_complete",
+            "trade_agreement_preference_confirmed",
+            "public_launch_ready",
+            "customs_or_tariff_advice_ready",
+            "legal_or_compliance_approved",
+            "ready_to_ship"
+          ],
+          "claim_boundary": "Reference source only; does not prove a broker relationship, review, or signoff.",
+          "evidence_role": "qualified broker discovery source",
+          "jurisdiction": "Canada",
+          "name": "CBSA Licensed Customs Brokers",
+          "route_status": "reference_route_only",
+          "source_id": "cbsa-licensed-customs-brokers",
+          "supports_claims": [],
+          "terms_status": "must_check_before_fetch",
+          "url": "https://www.cbsa-asfc.gc.ca/services/cb-cd/cb-cd-eng.html"
+        },
+        {
+          "blocked_claims": [
+            "tariff_confirmed",
+            "cfia_compliant",
+            "supplier_recommended",
+            "buyer_validated",
+            "ready_to_import",
+            "ready_to_export_to_canada",
+            "canadian_importer_confirmed",
+            "export_documentation_complete",
+            "trade_agreement_preference_confirmed",
+            "public_launch_ready",
+            "customs_or_tariff_advice_ready",
+            "legal_or_compliance_approved",
+            "ready_to_ship"
+          ],
+          "claim_boundary": "Reference source only; does not prove tariff treatment, preference qualification, regulatory requirements, or market-access approval.",
+          "evidence_role": "tariff and market-access comparison research source",
+          "jurisdiction": "International",
+          "name": "ITC Market Access Map",
+          "route_status": "reference_route_only",
+          "source_id": "itc-market-access-map",
+          "supports_claims": [],
+          "terms_status": "must_check_before_fetch",
+          "url": "https://www.macmap.org/"
+        },
+        {
+          "blocked_claims": [
+            "tariff_confirmed",
+            "cfia_compliant",
+            "supplier_recommended",
+            "buyer_validated",
+            "ready_to_import",
+            "ready_to_export_to_canada",
+            "canadian_importer_confirmed",
+            "export_documentation_complete",
+            "trade_agreement_preference_confirmed",
+            "public_launch_ready",
+            "customs_or_tariff_advice_ready",
+            "legal_or_compliance_approved",
+            "ready_to_ship"
+          ],
+          "claim_boundary": "Reference source only; does not prove sanctions clearance, restricted-party screening, or permission to trade.",
+          "evidence_role": "sanctions and restricted-country routing",
+          "jurisdiction": "Canada",
+          "name": "Global Affairs Canada sanctions",
+          "route_status": "reference_route_only",
+          "source_id": "gac-sanctions",
+          "supports_claims": [],
+          "terms_status": "must_check_before_fetch",
+          "url": "https://www.international.gc.ca/world-monde/international_relations-relations_internationales/sanctions/index.aspx?lang=eng"
+        },
+        {
+          "blocked_claims": [
+            "tariff_confirmed",
+            "cfia_compliant",
+            "supplier_recommended",
+            "buyer_validated",
+            "ready_to_import",
+            "ready_to_export_to_canada",
+            "canadian_importer_confirmed",
+            "export_documentation_complete",
+            "trade_agreement_preference_confirmed",
+            "public_launch_ready",
+            "customs_or_tariff_advice_ready",
+            "legal_or_compliance_approved",
+            "ready_to_ship"
+          ],
+          "claim_boundary": "Reference source only; does not prove buyer demand, profitability, market entry approval, or compliance.",
+          "evidence_role": "global trade, tariff, and non-tariff-measure research source",
+          "jurisdiction": "International",
+          "name": "World Bank World Integrated Trade Solution",
+          "route_status": "reference_route_only",
+          "source_id": "world-bank-wits",
+          "supports_claims": [],
+          "terms_status": "must_check_before_fetch",
+          "url": "https://wits.worldbank.org/"
+        },
+        {
+          "blocked_claims": [
+            "tariff_confirmed",
+            "cfia_compliant",
+            "supplier_recommended",
+            "buyer_validated",
+            "ready_to_import",
+            "ready_to_export_to_canada",
+            "canadian_importer_confirmed",
+            "export_documentation_complete",
+            "trade_agreement_preference_confirmed",
+            "public_launch_ready",
+            "customs_or_tariff_advice_ready",
+            "legal_or_compliance_approved",
+            "ready_to_ship"
+          ],
+          "claim_boundary": "Reference source only; company or market rows are research signals and lead routes, not buyer validation or demand proof.",
+          "evidence_role": "global import/export values, volumes, growth, market-share, and company-directory research source",
+          "jurisdiction": "International",
+          "name": "International Trade Centre Trade Map",
+          "route_status": "reference_route_only",
+          "source_id": "itc-trade-map",
+          "supports_claims": [],
+          "terms_status": "must_check_before_fetch",
+          "url": "https://www.trademap.org/"
+        },
+        {
+          "blocked_claims": [
+            "tariff_confirmed",
+            "cfia_compliant",
+            "supplier_recommended",
+            "buyer_validated",
+            "ready_to_import",
+            "ready_to_export_to_canada",
+            "canadian_importer_confirmed",
+            "export_documentation_complete",
+            "trade_agreement_preference_confirmed",
+            "public_launch_ready",
+            "customs_or_tariff_advice_ready",
+            "legal_or_compliance_approved",
+            "ready_to_ship"
+          ],
+          "claim_boundary": "Reference source only; HS candidates are not tariff classification confirmation.",
+          "evidence_role": "HS-code structure and commodity-classification doctrine source",
+          "jurisdiction": "International",
+          "name": "World Customs Organization Harmonized System",
+          "route_status": "reference_route_only",
+          "source_id": "wco-harmonized-system",
+          "supports_claims": [],
+          "terms_status": "must_check_before_fetch",
+          "url": "https://www.wcoomd.org/en/topics/nomenclature/overview/what-is-the-harmonized-system.aspx"
+        }
+      ],
+      "state": "reviewer_ready",
+      "state_event_count": 12,
+      "state_events": [
+        {
+          "claims_opened": false,
+          "event_id": "packet-frozen-tuna-canada-001:01:draft",
+          "event_type": "packet_state_reached",
+          "external_effects_created": false,
+          "is_current_state": false,
+          "packet_id": "packet-frozen-tuna-canada-001",
+          "reason": "state requirements met for local/internal workflow",
+          "state": "draft",
+          "status": "reached"
+        },
+        {
+          "claims_opened": false,
+          "event_id": "packet-frozen-tuna-canada-001:02:starter_ready",
+          "event_type": "packet_state_reached",
+          "external_effects_created": false,
+          "is_current_state": false,
+          "packet_id": "packet-frozen-tuna-canada-001",
+          "reason": "state requirements met for local/internal workflow",
+          "state": "starter_ready",
+          "status": "reached"
+        },
+        {
+          "claims_opened": false,
+          "event_id": "packet-frozen-tuna-canada-001:03:research_ready",
+          "event_type": "packet_state_reached",
+          "external_effects_created": false,
+          "is_current_state": false,
+          "packet_id": "packet-frozen-tuna-canada-001",
+          "reason": "state requirements met for local/internal workflow",
+          "state": "research_ready",
+          "status": "reached"
+        },
+        {
+          "claims_opened": false,
+          "event_id": "packet-frozen-tuna-canada-001:04:evidence_collecting",
+          "event_type": "packet_state_reached",
+          "external_effects_created": false,
+          "is_current_state": false,
+          "packet_id": "packet-frozen-tuna-canada-001",
+          "reason": "state requirements met for local/internal workflow",
+          "state": "evidence_collecting",
+          "status": "reached"
+        },
+        {
+          "claims_opened": false,
+          "event_id": "packet-frozen-tuna-canada-001:05:document_reviewing",
+          "event_type": "packet_state_reached",
+          "external_effects_created": false,
+          "is_current_state": false,
+          "packet_id": "packet-frozen-tuna-canada-001",
+          "reason": "state requirements met for local/internal workflow",
+          "state": "document_reviewing",
+          "status": "reached"
+        },
+        {
+          "claims_opened": false,
+          "event_id": "packet-frozen-tuna-canada-001:06:source_checking",
+          "event_type": "packet_state_reached",
+          "external_effects_created": false,
+          "is_current_state": false,
+          "packet_id": "packet-frozen-tuna-canada-001",
+          "reason": "state requirements met for local/internal workflow",
+          "state": "source_checking",
+          "status": "reached"
+        },
+        {
+          "claims_opened": false,
+          "event_id": "packet-frozen-tuna-canada-001:07:decision_preparing",
+          "event_type": "packet_state_reached",
+          "external_effects_created": false,
+          "is_current_state": false,
+          "packet_id": "packet-frozen-tuna-canada-001",
+          "reason": "state requirements met for local/internal workflow",
+          "state": "decision_preparing",
+          "status": "reached"
+        },
+        {
+          "claims_opened": false,
+          "event_id": "packet-frozen-tuna-canada-001:08:reviewer_ready",
+          "event_type": "packet_state_reached",
+          "external_effects_created": false,
+          "is_current_state": true,
+          "packet_id": "packet-frozen-tuna-canada-001",
+          "reason": "state requirements met for local/internal workflow",
+          "state": "reviewer_ready",
+          "status": "reached"
+        },
+        {
+          "claims_opened": false,
+          "event_id": "packet-frozen-tuna-canada-001:09:expert_reviewing",
+          "event_type": "packet_state_blocked",
+          "external_effects_created": false,
+          "is_current_state": false,
+          "packet_id": "packet-frozen-tuna-canada-001",
+          "reason": "external evidence, reviewer, payment, or archive condition not met",
+          "state": "expert_reviewing",
+          "status": "blocked"
+        },
+        {
+          "claims_opened": false,
+          "event_id": "packet-frozen-tuna-canada-001:10:customer_report_ready",
+          "event_type": "packet_state_reached",
+          "external_effects_created": false,
+          "is_current_state": false,
+          "packet_id": "packet-frozen-tuna-canada-001",
+          "reason": "state requirements met for local/internal workflow",
+          "state": "customer_report_ready",
+          "status": "reached"
+        },
+        {
+          "claims_opened": false,
+          "event_id": "packet-frozen-tuna-canada-001:11:paid_packet_ready",
+          "event_type": "packet_state_blocked",
+          "external_effects_created": false,
+          "is_current_state": false,
+          "packet_id": "packet-frozen-tuna-canada-001",
+          "reason": "external evidence, reviewer, payment, or archive condition not met",
+          "state": "paid_packet_ready",
+          "status": "blocked"
+        },
+        {
+          "claims_opened": false,
+          "event_id": "packet-frozen-tuna-canada-001:12:archived",
+          "event_type": "packet_state_blocked",
+          "external_effects_created": false,
+          "is_current_state": false,
+          "packet_id": "packet-frozen-tuna-canada-001",
+          "reason": "external evidence, reviewer, payment, or archive condition not met",
+          "state": "archived",
+          "status": "blocked"
+        }
+      ],
+      "state_index": 7,
+      "state_machine_status": "local_state_machine_evaluated_external_gates_closed",
+      "trade_direction": "import",
+      "trade_direction_provenance": "system_derived_needs_user_confirmation"
+    }
+  ],
+  "packet_state_machine_status": "implemented_local_engine_external_gates_closed",
+  "packet_view_count": 8,
+  "packet_view_type_count": 8,
+  "product": "Trade Readiness Copilot",
+  "proof_boundary": "This is a real local packet state/view/gate engine. It does not prove hosted production, live payments, legal/privacy/security approval, qualified customs/trade review, buyer validation, supplier verification, or public go-live approval.",
+  "public_launch_ready": false,
+  "score_ids": [
+    "market_signal_score",
+    "evidence_completeness_score",
+    "source_freshness_score",
+    "buyer_supplier_evidence_score",
+    "responsibility_clarity_score",
+    "decision_safety_score"
+  ],
+  "state_count": 12,
+  "states": [
+    "draft",
+    "starter_ready",
+    "research_ready",
+    "evidence_collecting",
+    "document_reviewing",
+    "source_checking",
+    "decision_preparing",
+    "reviewer_ready",
+    "expert_reviewing",
+    "customer_report_ready",
+    "paid_packet_ready",
+    "archived"
+  ],
+  "status": "production_packet_engine_ready_local_state_machine_claim_gates_closed"
+}

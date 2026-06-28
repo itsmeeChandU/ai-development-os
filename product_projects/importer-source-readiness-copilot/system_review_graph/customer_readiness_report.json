@@ -130,7 +130,7 @@
       "generated_at": "2026-06-25T00:00:00+00:00",
       "human_gate": "required_before_external_claims",
       "human_review_required": true,
-      "input_snapshot_hash": "9827af3f8ca8a75076e48e8465143f2da710593ac8d56044fe84b70df890ca6d",
+      "input_snapshot_hash": "034063c303f0b6aff4957a3eb2fb0cb49f0711583516a398db3a86675bf5fe71",
       "model_mode": "metadata_only",
       "model_name": "deterministic-safety-rules",
       "model_name_or_endpoint": "local_rule_simulator",
@@ -1073,7 +1073,7 @@
       "blockers": [
         {
           "claim_blocked": "Source Freshness",
-          "created_at": "2026-06-28T08:55:14+00:00",
+          "created_at": "2026-06-28T12:30:06+00:00",
           "evidence": "source packet packet-frozen-tuna-canada-001",
           "evidence_required": "Fresh official-source refresh record with accessed_at, last_verified_at, content_hash, HTTP status, and reviewer boundary.",
           "gate": "closed",
@@ -1104,7 +1104,7 @@
         },
         {
           "claim_blocked": "Source Freshness",
-          "created_at": "2026-06-28T08:55:14+00:00",
+          "created_at": "2026-06-28T12:30:06+00:00",
           "evidence": "source packet packet-frozen-tuna-canada-001",
           "evidence_required": "Fresh official-source refresh record with accessed_at, last_verified_at, content_hash, HTTP status, and reviewer boundary.",
           "gate": "closed",
@@ -1135,7 +1135,7 @@
         },
         {
           "claim_blocked": "Source Freshness",
-          "created_at": "2026-06-28T08:55:14+00:00",
+          "created_at": "2026-06-28T12:30:06+00:00",
           "evidence": "source packet packet-frozen-tuna-canada-001",
           "evidence_required": "Fresh official-source refresh record with accessed_at, last_verified_at, content_hash, HTTP status, and reviewer boundary.",
           "gate": "closed",
@@ -1166,7 +1166,7 @@
         },
         {
           "claim_blocked": "Compliance Review",
-          "created_at": "2026-06-28T08:55:14+00:00",
+          "created_at": "2026-06-28T12:30:06+00:00",
           "evidence": "source packet packet-frozen-tuna-canada-001",
           "evidence_required": "Dated restricted-party screening record with source and reviewer boundary.",
           "gate": "closed",
@@ -1197,7 +1197,7 @@
         },
         {
           "claim_blocked": "Compliance Review",
-          "created_at": "2026-06-28T08:55:14+00:00",
+          "created_at": "2026-06-28T12:30:06+00:00",
           "evidence": "source packet packet-frozen-tuna-canada-001",
           "evidence_required": "Scoped Canadian import/export, food, customs, or broker review finding.",
           "gate": "closed",
@@ -1228,7 +1228,7 @@
         },
         {
           "claim_blocked": "Buyer Validation",
-          "created_at": "2026-06-28T08:55:14+00:00",
+          "created_at": "2026-06-28T12:30:06+00:00",
           "evidence": "source packet packet-frozen-tuna-canada-001",
           "evidence_required": "Dated buyer/operator feedback tied to the packet and intended use.",
           "gate": "closed",
@@ -1259,7 +1259,7 @@
         },
         {
           "claim_blocked": "Source Rights / Contract",
-          "created_at": "2026-06-28T08:55:14+00:00",
+          "created_at": "2026-06-28T12:30:06+00:00",
           "evidence": "source packet packet-frozen-tuna-canada-001",
           "evidence_required": "Signed source-rights, data-rights, or commercial terms record.",
           "gate": "closed",

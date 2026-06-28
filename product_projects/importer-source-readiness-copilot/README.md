@@ -67,6 +67,9 @@ python3 scripts/build_external_review_packet.py
 python3 scripts/run_external_validation_requirements.py
 python3 scripts/run_external_validation_requirements.py --input-dir external_inputs
 python3 scripts/run_production_redevelopment.py
+python3 scripts/run_production_data_model.py
+python3 scripts/run_production_packet_engine.py
+python3 scripts/run_production_country_source_engine.py
 python3 scripts/audit_external_package.py --root .
 python3 scripts/check_product.py
 ```
@@ -116,6 +119,14 @@ system_review_graph/external_validation_requirements_report.json
 system_review_graph/external_validation_evidence_requirements.json
 system_review_graph/go_live_input_templates.json
 system_review_graph/go_live_input_readiness_report.json
+system_review_graph/production_data_model_manifest.json
+system_review_graph/production_data_model_seed.json
+system_review_graph/production_packet_engine_manifest.json
+system_review_graph/production_packet_events.json
+system_review_graph/production_packet_views/packet-frozen-tuna-canada-001/*.json
+system_review_graph/production_country_source_engine_manifest.json
+system_review_graph/production_country_packs.json
+system_review_graph/production_source_lifecycle.json
 system_review_graph/production_redevelopment_plan.json
 system_review_graph/production_research_anchors.json
 external_review_findings/EXTERNAL_REVIEW_SUMMARY.json
@@ -124,6 +135,9 @@ docs/EXTERNAL_REVIEW_PROCESS.md
 docs/EXTERNAL_VALIDATION_REQUIREMENTS.md
 docs/EXTERNAL_VALIDATION_REVIEWER_BRIEF.md
 docs/GO_LIVE_INPUT_REQUESTS.md
+docs/PRODUCTION_DATA_MODEL.md
+docs/PRODUCTION_PACKET_ENGINE.md
+docs/PRODUCTION_COUNTRY_SOURCE_ENGINE.md
 docs/PRODUCTION_REDEVELOPMENT.md
 output/pdf/external_validation_reviewer_brief.pdf
 output/pdf/external_validation_requirements.pdf
@@ -132,6 +146,7 @@ reviewer_packets/*.md
 ai_assisted_review/*.md
 ai_assisted_review/role_prompts/*.md
 ai_assisted_review/simulated_findings/*.json
+migrations/0002_production_domain_model.sql
 system_review_graph/blockers.jsonl
 system_review_graph/operator_dashboard.html
 investor/vc_pitch_deck.md
@@ -223,6 +238,39 @@ production layers, phases 0-20, and build/research/source/evidence/gate tracks
 for every phase. It still does not prove production deployment, legal/privacy
 approval, security approval, customs/trade approval, live payment activation,
 real buyer/supplier validation, real user outcomes, or public go/no-go approval.
+
+The expected production data model status is:
+
+```text
+production_data_model_ready_local_schema_proof_external_db_gates_closed
+```
+
+That means the first rebuild package now has a Postgres-oriented migration,
+entity relationships, row-level tenant isolation policies, domain events, a
+seed fixture, and a JSON-to-table migration map. It still does not prove a
+hosted managed database or production migration application.
+
+The expected production packet engine status is:
+
+```text
+production_packet_engine_ready_local_state_machine_claim_gates_closed
+```
+
+That means the packet engine now evaluates real local packet, evidence,
+source, review, and report artifacts into the 12-state production packet
+machine, eight packet views, six scores, packet event proof, blocked claims,
+and next valid moves. Reviewer-ready still does not mean approved.
+
+The expected production country/source engine status is:
+
+```text
+production_country_source_engine_ready_reference_packs_claim_gates_closed
+```
+
+That means Canada import, India export, Vietnam demo-origin, and generic
+fallback country packs are generated from the official source registry and
+dated source-refresh records. Sources remain reference-only until freshness,
+terms/automation, and qualified reviewer gates are proven.
 
 The expected customer source-packet status is:
 

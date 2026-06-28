@@ -57,13 +57,15 @@ The product helps users prepare trade readiness packets, organize evidence, revi
 
 | Question | Current Answer |
 | --- | --- |
-| Default first screen | Exporter quick start |
-| First-screen choices | Explore a market, Prepare buyer packet, Check my documents |
+| Default first screen | What are you trying to do? |
+| First-screen choices | Explore a market, Prepare buyer packet, Check my documents, Prepare for broker/expert review |
 | Primary deliverable | Trade Readiness Packet |
 | Other packet views | Starter checklist, buyer-ready packet, broker-review packet, business decision report |
 | Buyer/supplier outreach | Questions and preparation checklist only in private beta |
 | First-class countries | Canada destination, India origin, Vietnam demo/sample, Generic fallback |
 | Private beta upload scope | Metadata-only packets plus optional redacted/sample documents until upload review passes |
+| Business scores | Six separate scores, including `buyer_supplier_evidence_score`; no single global readiness score |
+| Business questions | Resolved for local scope; remaining work is external evidence, hosted proof, reviewer approval, and real user validation |
 
 ### Public Quick Check
 
@@ -91,7 +93,7 @@ The product helps users prepare trade readiness packets, organize evidence, revi
 3. Product generates market research requirements.
 4. Product builds destination, origin, and generic country packs.
 5. Product builds source-monitor rows.
-6. Product calculates five business scores.
+6. Product calculates six separate business scores.
 7. Product generates a business decision report.
 8. Product keeps approval, tariff, buyer, supplier, shipment, and launch claims blocked.
 
@@ -161,10 +163,6 @@ The product does not currently:
 - claim production hosting proof
 - claim public launch approval
 
-## Functional Questions To Resolve
+## Local Functional Questions
 
-1. Which user role should be the default first screen: public beginner, exporter, importer, broker/operator, or internal reviewer?
-2. Which report should be the primary customer deliverable: starter checklist, trade readiness packet, buyer-ready packet, broker-review packet, or business decision report?
-3. Should buyer/supplier outreach stay as questions only, or should the product prepare draft messages after review?
-4. Which countries must be first-class at launch beyond Canada?
-5. Should the private beta include real file uploads, or start with metadata-only packet entry?
+There are no open local business-logic questions for the current controlled scope. The remaining questions require external evidence or approval: hosted staging proof, qualified customs/trade review, privacy/legal/security review, buyer/supplier evidence, real-user outcomes, payment approval, and named public go/no-go approval.

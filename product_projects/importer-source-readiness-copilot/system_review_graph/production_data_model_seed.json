@@ -1,0 +1,38 @@
+{
+  "blocked_claims": [
+    "tariff_confirmed",
+    "cfia_approved",
+    "buyer_validated",
+    "supplier_verified",
+    "ready_to_ship"
+  ],
+  "decision_scores": [
+    "market_signal_score",
+    "evidence_completeness_score",
+    "source_freshness_score",
+    "buyer_supplier_evidence_score",
+    "responsibility_clarity_score",
+    "decision_safety_score"
+  ],
+  "organization": {
+    "name": "Importer Demo Co.",
+    "organization_id": "org-importer-demo"
+  },
+  "packet": {
+    "claim_boundary_status": "external_claims_closed",
+    "packet_id": "packet-frozen-tuna-canada-001",
+    "state": "document_reviewing"
+  },
+  "proof_boundary": "Seed data proves schema shape only; it does not create real buyer, supplier, customs, payment, or launch evidence.",
+  "status": "production_data_model_seed_ready_no_external_effects",
+  "trade_lane": {
+    "destination_country": "CA",
+    "direction": "export",
+    "origin_country": "VN",
+    "trade_lane_id": "lane-vn-ca-food-001"
+  },
+  "workspace": {
+    "organization_id": "org-importer-demo",
+    "workspace_id": "workspace-demo-canada"
+  }
+}

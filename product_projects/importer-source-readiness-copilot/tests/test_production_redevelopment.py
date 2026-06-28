@@ -119,6 +119,25 @@ class ProductionRedevelopmentTests(unittest.TestCase):
             self.assertIn("approval", route["forbidden"])
             self.assertIn("live_charge", route["forbidden"])
 
+    def test_first_rebuild_packages_record_real_local_implementation_artifacts(self) -> None:
+        plan = build_production_redevelopment_plan()
+        packages = {row["id"]: row for row in plan["first_five_rebuild_work_packages"]}
+
+        self.assertEqual(
+            packages["production_data_model"]["implementation_status"],
+            "local_schema_proof_ready_external_db_gates_closed",
+        )
+        self.assertEqual(
+            packages["packet_engine"]["implementation_status"],
+            "local_state_machine_and_view_engine_ready_external_gates_closed",
+        )
+        self.assertEqual(
+            packages["country_source_engine"]["implementation_status"],
+            "local_country_pack_and_source_lifecycle_engine_ready_external_gates_closed",
+        )
+        self.assertIn("system_review_graph/production_packet_engine_manifest.json", packages["packet_engine"]["artifacts"])
+        self.assertIn("system_review_graph/production_country_source_engine_manifest.json", packages["country_source_engine"]["artifacts"])
+
     def test_writer_creates_plan_research_and_review_doc(self) -> None:
         plan = build_production_redevelopment_plan()
         with tempfile.TemporaryDirectory() as tmp:

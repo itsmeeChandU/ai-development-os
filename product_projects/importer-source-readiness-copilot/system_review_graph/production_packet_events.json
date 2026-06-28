@@ -1,0 +1,141 @@
+{
+  "claims_opened": false,
+  "event_count": 12,
+  "events": [
+    {
+      "claims_opened": false,
+      "event_id": "packet-frozen-tuna-canada-001:01:draft",
+      "event_type": "packet_state_reached",
+      "external_effects_created": false,
+      "is_current_state": false,
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "reason": "state requirements met for local/internal workflow",
+      "state": "draft",
+      "status": "reached"
+    },
+    {
+      "claims_opened": false,
+      "event_id": "packet-frozen-tuna-canada-001:02:starter_ready",
+      "event_type": "packet_state_reached",
+      "external_effects_created": false,
+      "is_current_state": false,
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "reason": "state requirements met for local/internal workflow",
+      "state": "starter_ready",
+      "status": "reached"
+    },
+    {
+      "claims_opened": false,
+      "event_id": "packet-frozen-tuna-canada-001:03:research_ready",
+      "event_type": "packet_state_reached",
+      "external_effects_created": false,
+      "is_current_state": false,
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "reason": "state requirements met for local/internal workflow",
+      "state": "research_ready",
+      "status": "reached"
+    },
+    {
+      "claims_opened": false,
+      "event_id": "packet-frozen-tuna-canada-001:04:evidence_collecting",
+      "event_type": "packet_state_reached",
+      "external_effects_created": false,
+      "is_current_state": false,
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "reason": "state requirements met for local/internal workflow",
+      "state": "evidence_collecting",
+      "status": "reached"
+    },
+    {
+      "claims_opened": false,
+      "event_id": "packet-frozen-tuna-canada-001:05:document_reviewing",
+      "event_type": "packet_state_reached",
+      "external_effects_created": false,
+      "is_current_state": false,
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "reason": "state requirements met for local/internal workflow",
+      "state": "document_reviewing",
+      "status": "reached"
+    },
+    {
+      "claims_opened": false,
+      "event_id": "packet-frozen-tuna-canada-001:06:source_checking",
+      "event_type": "packet_state_reached",
+      "external_effects_created": false,
+      "is_current_state": false,
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "reason": "state requirements met for local/internal workflow",
+      "state": "source_checking",
+      "status": "reached"
+    },
+    {
+      "claims_opened": false,
+      "event_id": "packet-frozen-tuna-canada-001:07:decision_preparing",
+      "event_type": "packet_state_reached",
+      "external_effects_created": false,
+      "is_current_state": false,
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "reason": "state requirements met for local/internal workflow",
+      "state": "decision_preparing",
+      "status": "reached"
+    },
+    {
+      "claims_opened": false,
+      "event_id": "packet-frozen-tuna-canada-001:08:reviewer_ready",
+      "event_type": "packet_state_reached",
+      "external_effects_created": false,
+      "is_current_state": true,
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "reason": "state requirements met for local/internal workflow",
+      "state": "reviewer_ready",
+      "status": "reached"
+    },
+    {
+      "claims_opened": false,
+      "event_id": "packet-frozen-tuna-canada-001:09:expert_reviewing",
+      "event_type": "packet_state_blocked",
+      "external_effects_created": false,
+      "is_current_state": false,
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "reason": "external evidence, reviewer, payment, or archive condition not met",
+      "state": "expert_reviewing",
+      "status": "blocked"
+    },
+    {
+      "claims_opened": false,
+      "event_id": "packet-frozen-tuna-canada-001:10:customer_report_ready",
+      "event_type": "packet_state_reached",
+      "external_effects_created": false,
+      "is_current_state": false,
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "reason": "state requirements met for local/internal workflow",
+      "state": "customer_report_ready",
+      "status": "reached"
+    },
+    {
+      "claims_opened": false,
+      "event_id": "packet-frozen-tuna-canada-001:11:paid_packet_ready",
+      "event_type": "packet_state_blocked",
+      "external_effects_created": false,
+      "is_current_state": false,
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "reason": "external evidence, reviewer, payment, or archive condition not met",
+      "state": "paid_packet_ready",
+      "status": "blocked"
+    },
+    {
+      "claims_opened": false,
+      "event_id": "packet-frozen-tuna-canada-001:12:archived",
+      "event_type": "packet_state_blocked",
+      "external_effects_created": false,
+      "is_current_state": false,
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "reason": "external evidence, reviewer, payment, or archive condition not met",
+      "state": "archived",
+      "status": "blocked"
+    }
+  ],
+  "external_effects_created": false,
+  "generated_at": "2026-06-28T12:30:07+00:00",
+  "status": "production_packet_events_ready_no_external_effects"
+}

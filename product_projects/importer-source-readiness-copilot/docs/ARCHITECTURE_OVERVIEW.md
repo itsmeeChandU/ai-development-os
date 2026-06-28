@@ -23,6 +23,9 @@ src/importer_source_readiness/operator_screenshots.py
 src/importer_source_readiness/document_processing.py
 src/importer_source_readiness/policy_intelligence.py
 src/importer_source_readiness/completion_platform.py
+src/importer_source_readiness/production_country_source_engine.py
+src/importer_source_readiness/production_data_model.py
+src/importer_source_readiness/production_packet_engine.py
 src/importer_source_readiness/production_redevelopment.py
         |
         v
@@ -46,9 +49,21 @@ system_review_graph/transport_readiness_report.json
 system_review_graph/billing_credit_controls.json
 system_review_graph/agent_api_manifest.json
 system_review_graph/traffic_pages_manifest.json
+system_review_graph/production_data_model_manifest.json
+system_review_graph/production_data_model_seed.json
+system_review_graph/production_packet_engine_manifest.json
+system_review_graph/production_packet_events.json
+system_review_graph/production_packet_views/packet-frozen-tuna-canada-001/*.json
+system_review_graph/production_country_source_engine_manifest.json
+system_review_graph/production_country_packs.json
+system_review_graph/production_source_lifecycle.json
 system_review_graph/production_redevelopment_plan.json
 system_review_graph/production_research_anchors.json
+docs/PRODUCTION_DATA_MODEL.md
+docs/PRODUCTION_PACKET_ENGINE.md
+docs/PRODUCTION_COUNTRY_SOURCE_ENGINE.md
 docs/PRODUCTION_REDEVELOPMENT.md
+migrations/0002_production_domain_model.sql
 investor/*.md
 board/*.md
 ```
@@ -75,6 +90,9 @@ board/*.md
 | `src/importer_source_readiness/document_processing.py` | triage public PDF uploads, native text extraction, OCR decision, hashes, and confirmation requirement |
 | `src/importer_source_readiness/policy_intelligence.py` | database-style Intelligence Hub source monitoring contract, source snapshots, packet impacts, and stale-source blockers |
 | `src/importer_source_readiness/completion_platform.py` | completion-stage contracts for opportunities, country coverage, transport readiness, billing, agent/API, and traffic pages |
+| `src/importer_source_readiness/production_country_source_engine.py` | production country/source engine for country packs, source lifecycle states, source refresh evidence, packet impacts, and closed claim gates |
+| `src/importer_source_readiness/production_data_model.py` | first production rebuild package: PostgreSQL migration, domain-event list, tenant RLS contract, seed fixture, and JSON-to-table migration map |
+| `src/importer_source_readiness/production_packet_engine.py` | production packet engine for 12 packet states, packet event proof, eight packet views, six scores, blocked claims, and next valid moves |
 | `src/importer_source_readiness/production_redevelopment.py` | full-scale production redevelopment contract with 14 layers, phases 0-20, research/source/evidence/gate tracks, permanent research entities, and closed external gates |
 | `scripts/run_readiness.py` | CLI entrypoint and report writer |
 | `scripts/run_external_gates.py` | external-gate report writer |
@@ -85,6 +103,9 @@ board/*.md
 | `scripts/run_operator_workflow.py` | operator work queue writer |
 | `scripts/run_policy_intelligence.py` | Intelligence Hub policy/source monitor artifact writer |
 | `scripts/run_completion_platform.py` | completion-stage artifact writer |
+| `scripts/run_production_country_source_engine.py` | production country/source engine manifest and source lifecycle writer |
+| `scripts/run_production_data_model.py` | production data model migration and manifest writer |
+| `scripts/run_production_packet_engine.py` | production packet engine manifest, event, and packet-view writer |
 | `scripts/run_production_redevelopment.py` | production redevelopment contract and research-anchor writer |
 | `tests/test_readiness.py` | proof for blocked-safe behavior |
 | `tests/test_external_gates.py` | proof for external-gate and dashboard behavior |
@@ -93,6 +114,9 @@ board/*.md
 | `tests/test_board_go_live.py` | proof that Canada board/go-live candidate status keeps human approval gates visible |
 | `tests/test_operator_workflow.py` | proof that the product has an operator work queue with Canadian tool references and closed claims |
 | `tests/test_operator_screenshots.py` | proof that screenshot artifacts are indexed and rendered without replacing generated truth |
+| `tests/test_production_data_model.py` | proof that the first rebuild package has production tables, relationships, RLS policies, domain events, and closed external gates |
+| `tests/test_production_packet_engine.py` | proof that the packet engine evaluates real local packet artifacts into states, views, scores, events, blockers, and closed external gates |
+| `tests/test_production_country_source_engine.py` | proof that country packs, source lifecycle rows, and packet source impacts are generated from the official source registry and refresh records |
 | `tests/test_production_redevelopment.py` | proof that every redevelopment phase has build, research, source, evidence, and gate tracks backed by known source IDs |
 | `system_review_graph/` | generated packets, reports, blockers, handoff evidence |
 
@@ -126,7 +150,17 @@ board/*.md
 18. Generate completion-stage platform artifacts for opportunity signals,
     country coverage, transport questions, billing/credit gates, agent/API
     rules, and traffic-first pages.
-19. Generate the production redevelopment contract and research anchors for
+19. Generate the production data model package: PostgreSQL migration, tenant
+    row-level security contract, domain events, seed fixture, and JSON artifact
+    migration map for the first rebuild package.
+20. Generate the production packet engine package: 12-state packet lifecycle,
+    packet events, eight packet views, six scores, blocked claims, and next
+    valid moves from actual local packet/evidence/source/review/report data.
+21. Generate the production country/source engine package: Canada import,
+    India export, Vietnam demo-origin, and generic fallback country packs,
+    source lifecycle states, source-refresh evidence, and packet source-impact
+    rows.
+22. Generate the production redevelopment contract and research anchors for
     the full-scale build: 14 production layers, phases 0-20, permanent source
     registry links, evidence requirements, and launch gates that remain closed.
 
@@ -159,6 +193,26 @@ the next full-scale build contract exists and every phase has build, research,
 source, evidence, and gate tracks. It does not mean production deployment,
 legal/privacy/security approval, customs/trade approval, live payments, real
 buyer/supplier validation, or public go/no-go approval.
+
+The expected production data model status is
+`production_data_model_ready_local_schema_proof_external_db_gates_closed`. It
+means the first rebuild package now has a Postgres-oriented migration, entity
+relationships, tenant isolation policies, domain events, and JSON migration
+mapping. It does not mean the migration has been applied to a hosted managed
+database.
+
+The expected production packet engine status is
+`production_packet_engine_ready_local_state_machine_claim_gates_closed`. It
+means local packet state, packet views, scores, events, blockers, and next
+moves are executable from current artifacts. It does not mean reviewer-ready
+equals approved.
+
+The expected production country/source engine status is
+`production_country_source_engine_ready_reference_packs_claim_gates_closed`.
+It means source-backed country packs and source lifecycle rows exist locally.
+It does not mean source routes prove current law, tariff treatment, CFIA
+approval, sanctions clearance, buyer validation, supplier verification, or
+public launch readiness.
 
 ## Proof Boundary
 
