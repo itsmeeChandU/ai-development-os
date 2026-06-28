@@ -163,6 +163,7 @@ class OperatorAppTests(unittest.TestCase):
             "/api/billing/controls": "billing_credit_controls_ready_local_no_live_checkout",
             "/api/billing/usage": "billing_usage_ledger_ready_local_no_charges",
             "/api/payments/monetization": "production_payment_monetization_engine_ready_live_checkout_closed",
+            "/api/production-trust": "production_security_privacy_reliability_engine_ready_local_controls_external_trust_gates_closed",
             "/api/agent-api": "agent_api_manifest_ready_scoped_and_metered",
             "/api/agent-api/gateway": "agent_api_gateway_ready_local_executor_no_external_effects",
             "/api/traffic-pages": "traffic_pages_manifest_ready",

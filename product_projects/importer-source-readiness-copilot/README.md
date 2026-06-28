@@ -80,6 +80,7 @@ python3 scripts/run_production_reports_engine.py
 python3 scripts/run_production_portal_workflow_engine.py
 python3 scripts/run_production_enterprise_api_platform.py
 python3 scripts/run_production_payment_monetization_engine.py
+python3 scripts/run_production_security_privacy_reliability_engine.py
 python3 scripts/audit_external_package.py --root .
 python3 scripts/check_product.py
 ```
@@ -180,6 +181,12 @@ system_review_graph/production_paid_scope_policy.json
 system_review_graph/production_checkout_gate_controls.json
 system_review_graph/production_payment_webhook_controls.json
 system_review_graph/production_payment_research_references.json
+system_review_graph/production_security_privacy_reliability_manifest.json
+system_review_graph/production_trust_control_matrix.json
+system_review_graph/production_vendor_register.json
+system_review_graph/production_backup_restore_drill.json
+system_review_graph/production_incident_runbooks.json
+system_review_graph/production_trust_research_references.json
 system_review_graph/production_redevelopment_plan.json
 system_review_graph/production_research_anchors.json
 data/official_sample_documents/canada/*.pdf
@@ -276,6 +283,19 @@ controls, webhook controls, and payment review gates exist locally. It does not
 mean live checkout, live Stripe objects, external charges, tax/accounting
 approval, refund/support approval, payment security approval, or public launch
 are complete.
+
+The expected production trust status is:
+
+```text
+production_security_privacy_reliability_engine_ready_local_controls_external_trust_gates_closed
+```
+
+That means managed-auth, MFA, RBAC, session, upload, storage, malware,
+audit, deletion, retention, vendor, backup, monitoring, incident, secrets, and
+data-residency controls are mapped locally, and a local backup/restore hash
+drill has passed. It does not mean real file uploads, hosted private beta,
+vendor approval, privacy/security approval, production backup restore,
+monitoring approval, incident rehearsal, or public launch are complete.
 
 That means reviewer-specific packets, blank findings templates, and external
 review blocker rows are ready. It does not mean external review is complete.

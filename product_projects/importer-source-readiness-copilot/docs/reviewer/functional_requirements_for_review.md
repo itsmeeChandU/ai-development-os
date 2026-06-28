@@ -117,6 +117,16 @@ The current product is usable for local review and controlled preparation. It do
 - Forbidden paid scope includes customs approval, tariff confirmation, legal advice, CFIA approval, buyer validation, supplier verification, shipment approval, and public launch approval.
 - Live checkout, external charges, webhook delivery, tax/accounting approval, refund/support approval, payment security approval, and claim-language approval remain closed.
 
+## Production Trust Controls Implemented
+
+- Production trust status: `production_security_privacy_reliability_engine_ready_local_controls_external_trust_gates_closed`.
+- Trust controls: `15`.
+- Trust gates: `16`.
+- Vendor records: `6`.
+- Local backup/restore drill: `local_backup_restore_hash_drill_passed`.
+- The product maps managed auth, admin MFA, RBAC, sessions, CSRF, rate limits, private storage, malware scanning, audit logs, deletion, retention, vendors, backups, monitoring, incidents, secrets, and data residency.
+- Real file uploads, hosted private beta, production trust approval, and public launch remain closed until hosted proof and qualified privacy/security review exist.
+
 ## Enterprise And Advisor Use Cases
 
 - Broker or trade advisor can manage multiple client packets and export missing-evidence or broker-review packets.

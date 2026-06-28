@@ -52,6 +52,7 @@ This document describes the current non-functional requirements and boundaries f
 | NFR-24 | Keep portal workflows plain, route-covered, and gate-closed | Implemented locally; UX/accessibility/mobile testing and public launch approval remain external gates | `production_portal_workflow_manifest.json`, `production_portal_ux_checks.json`, `production_portal_gate_controls.json` |
 | NFR-25 | Keep enterprise APIs tenant-scoped, rate-limit-ready, and live-effect closed | Implemented locally; hosted auth, live API keys, webhook delivery, enterprise terms, and security review remain external gates | `production_enterprise_api_manifest.json`, `production_enterprise_rbac_policy.json`, `production_enterprise_webhook_policy.json` |
 | NFR-26 | Keep payment monetization preparation-only and live-checkout closed | Implemented locally; live Stripe mode, external charges, webhook delivery, refund/support approval, tax review, and payment security signoff remain external gates | `production_payment_monetization_manifest.json`, `production_payment_webhook_controls.json` |
+| NFR-27 | Keep production trust controls evidence-based and real-file gates closed | Implemented locally; managed auth, MFA, private storage, malware scanning, vendor approval, monitoring, incident rehearsal, and production backup restore remain external gates | `production_security_privacy_reliability_manifest.json`, `production_backup_restore_drill.json` |
 
 ## Security
 
@@ -294,6 +295,30 @@ Still required:
 - payment security review
 - written approval to activate live checkout
 - claim-language review for all paid copy, checkout copy, invoices, and reports
+
+## Production Trust Controls
+
+Implemented now:
+
+- production trust control matrix with 15 security, privacy, reliability, and
+  operational controls
+- vendor register for hosting/storage, AI, payment, malware/CDR, monitoring,
+  and support/email review
+- local backup/restore hash drill over critical artifacts
+- incident runbook scenarios for privacy breach, malicious upload, prompt
+  injection, tenant access issue, restore incident, payment incident, source
+  change, and public claim-language issue
+- explicit closed gates for real file uploads, hosted private beta, production
+  trust approval, and public launch
+
+Still required:
+
+- managed hosted auth and admin MFA proof
+- private object storage and malware scanning
+- approved retention/deletion policy and privacy/security review
+- vendor DPA/security/privacy review and data-residency decision
+- production backup/restore test, monitoring alerts, incident rehearsal, and
+  secrets manager proof
 
 ## Non-Functional Acceptance Criteria
 

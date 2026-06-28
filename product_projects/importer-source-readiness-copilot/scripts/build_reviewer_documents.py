@@ -186,6 +186,7 @@ def _status_context() -> dict[str, Any]:
     production_portals = _load_json(GRAPH / "production_portal_workflow_manifest.json")
     production_enterprise = _load_json(GRAPH / "production_enterprise_api_manifest.json")
     production_payments = _load_json(GRAPH / "production_payment_monetization_manifest.json")
+    production_trust = _load_json(GRAPH / "production_security_privacy_reliability_manifest.json")
     row = business["packet_rows"][0]
     return {
         "today": date.today().isoformat(),
@@ -202,6 +203,7 @@ def _status_context() -> dict[str, Any]:
         "production_portals": production_portals,
         "production_enterprise": production_enterprise,
         "production_payments": production_payments,
+        "production_trust": production_trust,
         "packet": row,
     }
 
@@ -218,6 +220,7 @@ def _functional(ctx: dict[str, Any]) -> ReviewerDocument:
     portals = ctx["production_portals"]
     enterprise = ctx["production_enterprise"]
     payments = ctx["production_payments"]
+    trust = ctx["production_trust"]
     return ReviewerDocument(
         title="Functional Requirements For External Review",
         filename="functional_requirements_for_review.md",
@@ -367,6 +370,18 @@ def _functional(ctx: dict[str, Any]) -> ReviewerDocument:
                 ),
             ),
             Section(
+                "Production Trust Controls Implemented",
+                bullets=(
+                    f"Production trust status: `{trust['status']}`.",
+                    f"Trust controls: `{trust.get('trust_control_count')}`.",
+                    f"Trust gates: `{trust.get('trust_gate_count')}`.",
+                    f"Vendor records: `{trust.get('vendor_record_count')}`.",
+                    f"Local backup/restore drill: `{trust.get('backup_restore_drill', {}).get('status')}`.",
+                    "The product maps managed auth, admin MFA, RBAC, sessions, CSRF, rate limits, private storage, malware scanning, audit logs, deletion, retention, vendors, backups, monitoring, incidents, secrets, and data residency.",
+                    "Real file uploads, hosted private beta, production trust approval, and public launch remain closed until hosted proof and qualified privacy/security review exist.",
+                ),
+            ),
+            Section(
                 "Enterprise And Advisor Use Cases",
                 bullets=(
                     "Broker or trade advisor can manage multiple client packets and export missing-evidence or broker-review packets.",
@@ -424,6 +439,7 @@ def _business_logic(ctx: dict[str, Any]) -> ReviewerDocument:
     portals = ctx["production_portals"]
     enterprise = ctx["production_enterprise"]
     payments = ctx["production_payments"]
+    trust = ctx["production_trust"]
     buyer_supplier = packet["buyer_supplier_evidence"]
     gate = packet["business_gate_decision"]
     market = packet["market_intelligence"]["market_signal_evaluation"]
@@ -592,6 +608,20 @@ def _business_logic(ctx: dict[str, Any]) -> ReviewerDocument:
                 ),
             ),
             Section(
+                "Production Trust Logic Implemented Now",
+                body=(
+                    "Production trust logic turns security, privacy, reliability, vendor, incident, and backup requirements into explicit gates before real users or real files are allowed.",
+                ),
+                bullets=(
+                    f"Trust controls generated: `{trust.get('trust_control_count')}`.",
+                    f"Blocked trust gates: `{trust.get('blocked_trust_gate_count')}`.",
+                    f"Vendor records generated: `{trust.get('vendor_record_count')}`.",
+                    f"Local backup/restore drill status: `{trust.get('backup_restore_drill', {}).get('status')}`.",
+                    "Local evidence is mapped from auth/RBAC, upload policy, AI policy, audit, deletion, runtime, payment, and redevelopment artifacts.",
+                    "Managed auth, admin MFA, private storage, malware scanning, vendor approval, production restore, monitoring, incident rehearsal, data residency, real uploads, hosted private beta, and launch approval remain blocked.",
+                ),
+            ),
+            Section(
                 "Current Sample Packet Result",
                 bullets=(
                     f"Packet reviewed: `{packet['packet_id']}`.",
@@ -651,6 +681,7 @@ def _non_functional(ctx: dict[str, Any]) -> ReviewerDocument:
     portals = ctx["production_portals"]
     enterprise = ctx["production_enterprise"]
     payments = ctx["production_payments"]
+    trust = ctx["production_trust"]
     return ReviewerDocument(
         title="Non-Functional Requirements For External Review",
         filename="non_functional_requirements_for_review.md",
@@ -766,6 +797,18 @@ def _non_functional(ctx: dict[str, Any]) -> ReviewerDocument:
                     f"Webhook controls: `{payments.get('webhook_control_count')}`.",
                     "Payment webhooks require signature verification, idempotency, duplicate handling, delayed handling, and out-of-order handling.",
                     "Live Stripe mode, checkout URLs, external charges, refund/support policy, tax/accounting review, payment security review, and claim-language review remain incomplete.",
+                ),
+            ),
+            Section(
+                "Production Trust Control Plane",
+                bullets=(
+                    f"Production trust status: `{trust['status']}`.",
+                    f"Trust controls: `{trust.get('trust_control_count')}`.",
+                    f"Blocked trust gates: `{trust.get('blocked_trust_gate_count')}`.",
+                    f"Unapproved vendor records: `{trust.get('unapproved_vendor_count')}`.",
+                    f"Local backup/restore drill: `{trust.get('backup_restore_drill', {}).get('status')}`.",
+                    "The local backup/restore drill hash-matches existing critical artifacts, but production backup/restore remains unproven.",
+                    "Real uploads, hosted customer use, production monitoring, incident response approval, vendor approval, and privacy/security signoff remain incomplete.",
                 ),
             ),
             Section(

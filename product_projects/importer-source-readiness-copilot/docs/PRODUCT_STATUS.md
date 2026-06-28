@@ -253,6 +253,9 @@ security/privacy/human review gates are completed.
 - production payment monetization engine with seven pricing tiers, paid-scope
   and forbidden-scope policy, checkout and webhook controls, and live checkout
   disabled
+- production security/privacy/reliability engine with 15 trust controls,
+  vendor review records, incident runbooks, official trust research references,
+  local backup/restore hash proof, and real-file/hosted/public gates closed
 - production research anchor registry for CBSA, CFIA, Global Affairs Canada,
   ISED, DGFT, WITS, ITC, WCO, ICC, OPC/PIPEDA, OWASP, NIST, and Stripe source
   routing
@@ -341,6 +344,21 @@ enterprise terms approval, security signoff, or public launch approval.
 This is a local monetization contract. It is not live checkout activation,
 live Stripe object proof, external charge proof, refund/support approval,
 tax/accounting approval, payment security signoff, or public launch approval.
+
+## Ready For Production Trust Review
+
+- production trust status: `production_security_privacy_reliability_engine_ready_local_controls_external_trust_gates_closed`
+- proof command: `python3 scripts/run_production_security_privacy_reliability_engine.py`
+- trust controls: `system_review_graph/production_trust_control_matrix.json`
+- vendor register: `system_review_graph/production_vendor_register.json`
+- backup/restore drill: `system_review_graph/production_backup_restore_drill.json`
+- incident runbooks: `system_review_graph/production_incident_runbooks.json`
+
+This is a local trust-control package. It is not hosted authentication proof,
+admin MFA proof, private object storage proof, malware-scanning proof,
+vendor/privacy/security approval, production backup restore proof, incident
+rehearsal proof, real-file upload approval, hosted private-beta approval, or
+public launch approval.
 
 ## Ready For Board Go-Live Review
 

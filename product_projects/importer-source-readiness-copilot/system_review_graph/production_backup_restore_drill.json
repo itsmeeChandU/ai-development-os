@@ -1,0 +1,67 @@
+{
+  "artifact_count": 6,
+  "existing_artifact_count": 6,
+  "generated_at": "2026-06-28T16:13:57+00:00",
+  "hash_match_count": 6,
+  "production_backup_restore_test_passed": false,
+  "proof_boundary": "This proves local artifact backup/restore hashing only; hosted database, private object storage, and managed backup restore proof remain external gates.",
+  "records": [
+    {
+      "hash_matches": true,
+      "relative_path": "system_review_graph/customer_workflow.sqlite",
+      "restored": true,
+      "restored_sha256": "39b9f5e286e3e614920fcaf1f351f4f38aad37053af83d8f00bbb0e6b8e80d30",
+      "source_bytes": 274432,
+      "source_exists": true,
+      "source_sha256": "39b9f5e286e3e614920fcaf1f351f4f38aad37053af83d8f00bbb0e6b8e80d30"
+    },
+    {
+      "hash_matches": true,
+      "relative_path": "system_review_graph/product_runtime_state.json",
+      "restored": true,
+      "restored_sha256": "b5920b699d103cb60bcaf72ddf9dad5b1c58c7e1a94d3b7e61643485282204fd",
+      "source_bytes": 98447,
+      "source_exists": true,
+      "source_sha256": "b5920b699d103cb60bcaf72ddf9dad5b1c58c7e1a94d3b7e61643485282204fd"
+    },
+    {
+      "hash_matches": true,
+      "relative_path": "system_review_graph/production_redevelopment_plan.json",
+      "restored": true,
+      "restored_sha256": "eb24574c01fb3ec337c466dec976d3fd50bb055062275297a6f690653b7c4e80",
+      "source_bytes": 87614,
+      "source_exists": true,
+      "source_sha256": "eb24574c01fb3ec337c466dec976d3fd50bb055062275297a6f690653b7c4e80"
+    },
+    {
+      "hash_matches": true,
+      "relative_path": "system_review_graph/production_payment_monetization_manifest.json",
+      "restored": true,
+      "restored_sha256": "0fd7d50dcb1da30029de7092d6e417c37cf744f80146d6d5e09ce5194e2f1092",
+      "source_bytes": 14205,
+      "source_exists": true,
+      "source_sha256": "0fd7d50dcb1da30029de7092d6e417c37cf744f80146d6d5e09ce5194e2f1092"
+    },
+    {
+      "hash_matches": true,
+      "relative_path": "system_review_graph/auth_rbac_matrix.json",
+      "restored": true,
+      "restored_sha256": "298228a80cd90922f76c656e101a98b59c0ea932449f8e09a59f1e8a347fec52",
+      "source_bytes": 6726,
+      "source_exists": true,
+      "source_sha256": "298228a80cd90922f76c656e101a98b59c0ea932449f8e09a59f1e8a347fec52"
+    },
+    {
+      "hash_matches": true,
+      "relative_path": "system_review_graph/public_upload_policy.json",
+      "restored": true,
+      "restored_sha256": "4acd8461380262114ebe553578c166086da075b907820d511ac5236e8cad19d2",
+      "source_bytes": 1465,
+      "source_exists": true,
+      "source_sha256": "4acd8461380262114ebe553578c166086da075b907820d511ac5236e8cad19d2"
+    }
+  ],
+  "restored_artifact_count": 6,
+  "scope": "local_artifact_roundtrip_only",
+  "status": "local_backup_restore_hash_drill_passed"
+}

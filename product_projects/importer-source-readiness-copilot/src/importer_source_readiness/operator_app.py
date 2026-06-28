@@ -76,6 +76,7 @@ API_ROUTES = {
     "/api/agent-api": "system_review_graph/agent_api_manifest.json",
     "/api/agent-api/gateway": "system_review_graph/agent_api_gateway_contract.json",
     "/api/enterprise-platform": "system_review_graph/production_enterprise_api_manifest.json",
+    "/api/production-trust": "system_review_graph/production_security_privacy_reliability_manifest.json",
     "/api/traffic-pages": "system_review_graph/traffic_pages_manifest.json",
     "/api/transport-readiness": "system_review_graph/transport_readiness_report.json",
     "/api/stages": "system_review_graph/all_stage_readiness_report.json",

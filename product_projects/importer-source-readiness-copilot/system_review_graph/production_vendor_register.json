@@ -1,0 +1,116 @@
+{
+  "status": "production_vendor_register_ready_approvals_required",
+  "vendor_register": [
+    {
+      "contract_or_dpa_status": "not_attached",
+      "customer_data_allowed": false,
+      "data_categories": [
+        "account",
+        "packet",
+        "trade_document",
+        "audit",
+        "report"
+      ],
+      "data_residency_decision": "not_decided",
+      "exit_plan_required": true,
+      "privacy_review_status": "not_approved",
+      "production_approved": false,
+      "provider_selected": false,
+      "purpose": "Hosted app, database, object storage, backups, and logs.",
+      "security_review_status": "not_approved",
+      "vendor_id": "hosting_storage_provider_tbd",
+      "vendor_name": "Cloud hosting and private object storage provider"
+    },
+    {
+      "contract_or_dpa_status": "not_attached",
+      "customer_data_allowed": false,
+      "data_categories": [
+        "redacted_document_text",
+        "packet_metadata",
+        "structured_ai_output"
+      ],
+      "data_residency_decision": "not_decided",
+      "exit_plan_required": true,
+      "privacy_review_status": "not_approved",
+      "production_approved": false,
+      "provider_selected": false,
+      "purpose": "Optional AI extraction, summarization, redaction, and reviewer-work-order drafting.",
+      "security_review_status": "not_approved",
+      "vendor_id": "openai_api_candidate",
+      "vendor_name": "OpenAI API candidate"
+    },
+    {
+      "contract_or_dpa_status": "not_attached",
+      "customer_data_allowed": false,
+      "data_categories": [
+        "billing_contact",
+        "subscription",
+        "payment_event"
+      ],
+      "data_residency_decision": "not_decided",
+      "exit_plan_required": true,
+      "privacy_review_status": "not_approved",
+      "production_approved": false,
+      "provider_selected": false,
+      "purpose": "Future live checkout and billing if payment gates pass.",
+      "security_review_status": "not_approved",
+      "vendor_id": "stripe_candidate",
+      "vendor_name": "Stripe payment processor candidate"
+    },
+    {
+      "contract_or_dpa_status": "not_attached",
+      "customer_data_allowed": false,
+      "data_categories": [
+        "uploaded_file",
+        "file_hash",
+        "scan_result"
+      ],
+      "data_residency_decision": "not_decided",
+      "exit_plan_required": true,
+      "privacy_review_status": "not_approved",
+      "production_approved": false,
+      "provider_selected": false,
+      "purpose": "Production upload quarantine scanning and file-safety decisioning.",
+      "security_review_status": "not_approved",
+      "vendor_id": "malware_cdr_provider_tbd",
+      "vendor_name": "Malware scanning or CDR provider"
+    },
+    {
+      "contract_or_dpa_status": "not_attached",
+      "customer_data_allowed": false,
+      "data_categories": [
+        "logs",
+        "metrics",
+        "trace_ids",
+        "error_context"
+      ],
+      "data_residency_decision": "not_decided",
+      "exit_plan_required": true,
+      "privacy_review_status": "not_approved",
+      "production_approved": false,
+      "provider_selected": false,
+      "purpose": "Operational monitoring, errors, alerting, and incident response.",
+      "security_review_status": "not_approved",
+      "vendor_id": "monitoring_error_provider_tbd",
+      "vendor_name": "Monitoring and error reporting provider"
+    },
+    {
+      "contract_or_dpa_status": "not_attached",
+      "customer_data_allowed": false,
+      "data_categories": [
+        "email",
+        "support_message",
+        "incident_notice"
+      ],
+      "data_residency_decision": "not_decided",
+      "exit_plan_required": true,
+      "privacy_review_status": "not_approved",
+      "production_approved": false,
+      "provider_selected": false,
+      "purpose": "Support contact, incident notices, and account communications.",
+      "security_review_status": "not_approved",
+      "vendor_id": "support_email_provider_tbd",
+      "vendor_name": "Support/email provider"
+    }
+  ]
+}

@@ -1413,6 +1413,7 @@ def build_runtime_state(workflow: dict[str, Any], *, extra_audit_events: list[di
             "/api/agent-api",
             "/api/agent-api/gateway",
             "/api/enterprise-platform",
+            "/api/production-trust",
             "/api/traffic-pages",
             "/api/transport-readiness",
             "/api/stages",

@@ -33,5 +33,18 @@ Local private-beta controls are implemented in the modular monolith:
 - AI data policy, model router, endpoint contract, and redaction artifacts
 - HTML output escaping and script-bearing evidence metadata rejection
 - health endpoints for local/container deployments
+- production trust control matrix
+- vendor/data-processing register
+- local backup/restore hash drill for critical artifacts
+- incident runbook scenarios for privacy, upload, AI prompt-injection, tenant
+  access, restore, payment, source-change, and claim-language issues
 
-Before real external customer hosting, replace demo session auth with a production identity provider, configure TLS, secrets management, managed database/object storage, malware scanning, backup restore tests, and qualified privacy/security review.
+Phase 19 proof is stored in:
+
+- `system_review_graph/production_security_privacy_reliability_manifest.json`
+- `system_review_graph/production_trust_control_matrix.json`
+- `system_review_graph/production_vendor_register.json`
+- `system_review_graph/production_backup_restore_drill.json`
+- `system_review_graph/production_incident_runbooks.json`
+
+Before real external customer hosting, replace demo session auth with a production identity provider, enforce admin MFA, configure TLS, secrets management, managed database/private object storage, malware scanning, production backup restore, monitoring, incident response, data-residency approval, and qualified privacy/security review.

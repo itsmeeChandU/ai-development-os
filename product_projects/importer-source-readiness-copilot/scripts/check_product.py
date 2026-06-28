@@ -143,6 +143,7 @@ def main() -> int:
         [sys.executable, "scripts/run_production_portal_workflow_engine.py"],
         [sys.executable, "scripts/run_production_enterprise_api_platform.py"],
         [sys.executable, "scripts/run_production_payment_monetization_engine.py"],
+        [sys.executable, "scripts/run_production_security_privacy_reliability_engine.py"],
         [sys.executable, "scripts/audit_external_package.py", "--root", "."],
     ]
     for command in commands:
@@ -218,6 +219,7 @@ def main() -> int:
     production_portals = _load_json(ROOT / "system_review_graph" / "production_portal_workflow_manifest.json")
     production_enterprise = _load_json(ROOT / "system_review_graph" / "production_enterprise_api_manifest.json")
     production_payments = _load_json(ROOT / "system_review_graph" / "production_payment_monetization_manifest.json")
+    production_trust = _load_json(ROOT / "system_review_graph" / "production_security_privacy_reliability_manifest.json")
     official_source_registry = _load_json(ROOT / "data" / "official_source_registry.json")
     business_core_doc = (ROOT / "docs" / "BUSINESS_CORE_LOGIC_CURRENT_STATE.md").read_text(encoding="utf-8")
     functional_doc = (ROOT / "docs" / "FUNCTIONAL_REQUIREMENTS_CURRENT_STATE.md").read_text(encoding="utf-8")
@@ -295,6 +297,7 @@ def main() -> int:
         "src/importer_source_readiness/production_payment_monetization_engine.py",
         "src/importer_source_readiness/production_portal_workflow_engine.py",
         "src/importer_source_readiness/production_reports_engine.py",
+        "src/importer_source_readiness/production_security_privacy_reliability_engine.py",
         "src/importer_source_readiness/production_redevelopment.py",
         "tests/test_operator_app.py",
         "tests/test_source_packet_workflow.py",
@@ -317,6 +320,7 @@ def main() -> int:
         "tests/test_production_payment_monetization_engine.py",
         "tests/test_production_portal_workflow_engine.py",
         "tests/test_production_reports_engine.py",
+        "tests/test_production_security_privacy_reliability_engine.py",
         "tests/test_production_redevelopment.py",
         "scripts/run_customer_workflow.py",
         "scripts/run_policy_intelligence.py",
@@ -339,6 +343,7 @@ def main() -> int:
         "scripts/run_production_payment_monetization_engine.py",
         "scripts/run_production_portal_workflow_engine.py",
         "scripts/run_production_reports_engine.py",
+        "scripts/run_production_security_privacy_reliability_engine.py",
         "scripts/run_production_redevelopment.py",
         "scripts/package_external_review.py",
         "data/customer_source_packets.json",
@@ -372,6 +377,7 @@ def main() -> int:
         "docs/PRODUCTION_PAYMENT_MONETIZATION_ENGINE.md",
         "docs/PRODUCTION_PORTAL_WORKFLOWS.md",
         "docs/PRODUCTION_REPORTS_ENGINE.md",
+        "docs/PRODUCTION_SECURITY_PRIVACY_RELIABILITY_ENGINE.md",
         "docs/PRODUCTION_REDEVELOPMENT.md",
         "docs/BUSINESS_CORE_LOGIC_CURRENT_STATE.md",
         "docs/FUNCTIONAL_REQUIREMENTS_CURRENT_STATE.md",
@@ -473,6 +479,12 @@ def main() -> int:
         "system_review_graph/production_checkout_gate_controls.json",
         "system_review_graph/production_payment_webhook_controls.json",
         "system_review_graph/production_payment_research_references.json",
+        "system_review_graph/production_security_privacy_reliability_manifest.json",
+        "system_review_graph/production_trust_control_matrix.json",
+        "system_review_graph/production_vendor_register.json",
+        "system_review_graph/production_backup_restore_drill.json",
+        "system_review_graph/production_incident_runbooks.json",
+        "system_review_graph/production_trust_research_references.json",
         "system_review_graph/production_claim_gate_decisions.json",
         "system_review_graph/production_evidence_claim_mappers.json",
         "data/official_sample_documents/canada/cbsa-ci1-canada-customs-invoice.pdf",
@@ -1371,6 +1383,52 @@ def main() -> int:
             or webhook.get("out_of_order_event_handling_required") is not True
         ):
             failures.append(f"payment webhook {webhook.get('event_type')} should stay closed and robust")
+    if production_trust.get("status") != "production_security_privacy_reliability_engine_ready_local_controls_external_trust_gates_closed":
+        failures.append("production trust status is incorrect")
+    if production_trust.get("trust_control_count", 0) < 15:
+        failures.append("production trust should define at least fifteen controls")
+    if production_trust.get("research_reference_count", 0) < 9:
+        failures.append("production trust should include current privacy/security/AI research references")
+    if production_trust.get("blocked_trust_gate_count") != production_trust.get("trust_gate_count"):
+        failures.append("production trust should keep every production trust gate blocked")
+    if production_trust.get("unapproved_vendor_count") != production_trust.get("vendor_record_count"):
+        failures.append("production trust should keep every vendor unapproved until real review")
+    for key in (
+        "managed_auth_ready",
+        "admin_mfa_enforced",
+        "hosted_secure_sessions_ready",
+        "hosted_rate_limits_enforced",
+        "private_object_storage_ready",
+        "malware_scanning_ready",
+        "production_audit_log_ready",
+        "retention_policy_approved",
+        "vendor_register_approved",
+        "production_backup_restore_passed",
+        "production_monitoring_ready",
+        "incident_runbook_rehearsed",
+        "secrets_manager_ready",
+        "data_residency_approved",
+        "real_file_uploads_allowed",
+        "unrestricted_uploads_enabled",
+        "hosted_private_beta_ready",
+        "production_trust_approved",
+        "public_launch_ready",
+    ):
+        if production_trust.get(key) is not False:
+            failures.append(f"production trust expected {key}=false")
+    backup_drill = production_trust.get("backup_restore_drill", {})
+    if (
+        backup_drill.get("status") != "local_backup_restore_hash_drill_passed"
+        or backup_drill.get("production_backup_restore_test_passed") is not False
+        or backup_drill.get("hash_match_count") != backup_drill.get("existing_artifact_count")
+    ):
+        failures.append("production trust should pass local artifact restore hash drill while keeping production restore gate closed")
+    for vendor in production_trust.get("vendor_register", []):
+        if vendor.get("production_approved") is not False or vendor.get("customer_data_allowed") is not False:
+            failures.append(f"vendor {vendor.get('vendor_id')} should not be production-approved")
+    for gate in production_trust.get("trust_gates", []):
+        if gate.get("state") != "blocked" or gate.get("opened_by_local_artifact") is not False:
+            failures.append(f"trust gate {gate.get('gate_id')} should stay blocked")
     if not screenshot_manifest_path.exists():
         failures.append("operator screenshot manifest was not generated")
     if screenshot_manifest.get("status") != "screenshots_ready":
@@ -2207,6 +2265,9 @@ def main() -> int:
     print(f"production_payments_status={production_payments['status']}")
     print(f"production_payment_tiers={production_payments['pricing_tier_count']}")
     print(f"production_live_checkout_enabled={production_payments['live_checkout_enabled']}")
+    print(f"production_trust_status={production_trust['status']}")
+    print(f"production_trust_controls={production_trust['trust_control_count']}")
+    print(f"production_real_file_uploads_allowed={production_trust['real_file_uploads_allowed']}")
     print(f"external_validation_pdf={pdf_path.relative_to(ROOT)}")
     print(f"external_validation_reviewer_brief_pdf={brief_pdf_path.relative_to(ROOT)}")
     print(f"go_live_input_status={go_live_input_readiness['status']}")

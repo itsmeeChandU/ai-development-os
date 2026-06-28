@@ -60,6 +60,7 @@ class ProductRuntimeTests(unittest.TestCase):
         self.assertIn("/api/payments/monetization", runtime["api_routes"])
         self.assertIn("/api/payments/checkout-session", runtime["api_routes"])
         self.assertIn("/api/payments/webhook-test", runtime["api_routes"])
+        self.assertIn("/api/production-trust", runtime["api_routes"])
         self.assertIn("/api/agent-api", runtime["api_routes"])
         self.assertIn("/api/agent-api/gateway", runtime["api_routes"])
         self.assertIn("/api/enterprise-platform", runtime["api_routes"])

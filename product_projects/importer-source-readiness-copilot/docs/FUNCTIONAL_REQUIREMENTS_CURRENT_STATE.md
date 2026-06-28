@@ -60,6 +60,7 @@ The product helps users prepare trade readiness packets, organize evidence, revi
 | FR-32 | Provide route-covered portal workflows for public, exporter, importer, reviewer, operator/admin, and enterprise users | Implemented locally with route coverage, UX review hooks, and closed external gates | `production_portal_workflow_manifest.json`, `production_portal_route_matrix.json` |
 | FR-33 | Provide enterprise SaaS/API contracts for broker, advisor, and team workflows | Implemented locally with API contracts, RBAC policy, workspace controls, API-key fingerprints, webhook contracts, audit export, usage limits, and white-label report rules | `production_enterprise_api_manifest.json`, `production_enterprise_api_contracts.json` |
 | FR-34 | Provide payment monetization contract without live checkout | Implemented locally with pricing tiers, paid-scope boundaries, checkout controls, webhook controls, and payment gates | `production_payment_monetization_manifest.json`, `production_checkout_gate_controls.json` |
+| FR-35 | Provide production trust control plane without accepting real files | Implemented locally with trust controls, vendor register, incident runbooks, local backup/restore hash drill, and closed hosted/real-file gates | `production_security_privacy_reliability_manifest.json`, `production_trust_control_matrix.json` |
 
 ## Current Main Workflows
 
@@ -198,6 +199,21 @@ blocked.
    event handling, delayed event handling, and out-of-order event handling.
 6. Live checkout remains disabled until pricing, refund/support, tax/accounting,
    webhook, payment security, and claim-language reviews pass.
+
+### Production Trust Controls
+
+1. Product maps 15 production trust controls: managed auth, admin MFA, RBAC,
+   secure sessions/CSRF, rate limits, private storage, malware scanning, audit,
+   deletion, retention, vendor register, backup/restore, monitoring, incident
+   runbooks, secrets, and data residency.
+2. Product stores vendor review records for hosting/storage, OpenAI API,
+   Stripe, malware/CDR, monitoring, and support/email candidates.
+3. Product performs a local backup/restore hash drill over critical repo
+   artifacts and stores the result.
+4. Product keeps every production trust gate blocked until hosted proof and
+   qualified privacy/security review exist.
+5. Product does not allow unrestricted real files, hosted private beta, or
+   public launch from local trust artifacts alone.
 
 ### Expert Review
 

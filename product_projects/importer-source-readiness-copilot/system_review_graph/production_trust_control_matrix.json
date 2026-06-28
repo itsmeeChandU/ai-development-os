@@ -1,0 +1,580 @@
+{
+  "status": "production_trust_control_matrix_ready_external_gates_closed",
+  "trust_controls": [
+    {
+      "basis_artifacts": [
+        {
+          "artifact": "auth_rbac_matrix.json",
+          "bytes": 6726,
+          "exists": true
+        }
+      ],
+      "control_id": "managed_auth",
+      "gate_id": "hosted_managed_auth_gate",
+      "label": "Managed authentication",
+      "local_basis": [
+        "auth_rbac_matrix.json"
+      ],
+      "local_evidence_present": true,
+      "local_status": "local_session_auth_contract_ready",
+      "production_approved": false,
+      "production_gate_state": "blocked",
+      "production_required_evidence": "Managed identity provider, account lifecycle, password/MFA policy, session settings, and hosted smoke proof.",
+      "real_user_data_allowed": false,
+      "source_ids": [
+        "canadian-centre-baseline-controls",
+        "nist-csf-2"
+      ]
+    },
+    {
+      "basis_artifacts": [
+        {
+          "artifact": "auth_rbac_matrix.json",
+          "bytes": 6726,
+          "exists": true
+        }
+      ],
+      "control_id": "admin_mfa",
+      "gate_id": "admin_mfa_gate",
+      "label": "Admin MFA",
+      "local_basis": [
+        "auth_rbac_matrix.json"
+      ],
+      "local_evidence_present": true,
+      "local_status": "role_identified_mfa_not_configured",
+      "production_approved": false,
+      "production_gate_state": "blocked",
+      "production_required_evidence": "Admin MFA enforced in hosted identity provider with recovery and break-glass policy.",
+      "real_user_data_allowed": false,
+      "source_ids": [
+        "canadian-centre-baseline-controls"
+      ]
+    },
+    {
+      "basis_artifacts": [
+        {
+          "artifact": "auth_rbac_matrix.json",
+          "bytes": 6726,
+          "exists": true
+        },
+        {
+          "artifact": "production_enterprise_rbac_policy.json",
+          "bytes": 4614,
+          "exists": true
+        }
+      ],
+      "control_id": "organization_rbac",
+      "gate_id": "tenant_authorization_gate",
+      "label": "Organization RBAC and tenant isolation",
+      "local_basis": [
+        "auth_rbac_matrix.json",
+        "production_enterprise_rbac_policy.json"
+      ],
+      "local_evidence_present": true,
+      "local_status": "local_rbac_and_org_scope_ready",
+      "production_approved": false,
+      "production_gate_state": "blocked",
+      "production_required_evidence": "Hosted object-level authorization tests for every customer, operator, expert, and admin route.",
+      "real_user_data_allowed": false,
+      "source_ids": [
+        "nist-csf-2"
+      ]
+    },
+    {
+      "basis_artifacts": [
+        {
+          "artifact": "auth_rbac_matrix.json",
+          "bytes": 6726,
+          "exists": true
+        },
+        {
+          "artifact": "product_runtime_state.json",
+          "bytes": 98447,
+          "exists": true
+        }
+      ],
+      "control_id": "secure_sessions_csrf",
+      "gate_id": "hosted_session_security_gate",
+      "label": "Secure sessions and CSRF",
+      "local_basis": [
+        "auth_rbac_matrix.json",
+        "product_runtime_state.json"
+      ],
+      "local_evidence_present": true,
+      "local_status": "local_cookie_and_csrf_contract_ready",
+      "production_approved": false,
+      "production_gate_state": "blocked",
+      "production_required_evidence": "TLS, secure cookies, same-site policy, CSRF tests, logout/session-expiry tests, and cookie flag proof.",
+      "real_user_data_allowed": false,
+      "source_ids": [
+        "owasp-file-upload",
+        "canadian-centre-baseline-controls"
+      ]
+    },
+    {
+      "basis_artifacts": [
+        {
+          "artifact": "public_upload_policy.json",
+          "bytes": 1465,
+          "exists": true
+        },
+        {
+          "artifact": "production_enterprise_api_manifest.json",
+          "bytes": 29011,
+          "exists": true
+        }
+      ],
+      "control_id": "rate_limits",
+      "gate_id": "hosted_rate_limit_gate",
+      "label": "Rate limits",
+      "local_basis": [
+        "public_upload_policy.json",
+        "production_enterprise_api_manifest.json"
+      ],
+      "local_evidence_present": true,
+      "local_status": "local_policy_ready_hosted_enforcement_required",
+      "production_approved": false,
+      "production_gate_state": "blocked",
+      "production_required_evidence": "Hosted per-user/per-IP/per-organization limits with alerting and abuse-case tests.",
+      "real_user_data_allowed": false,
+      "source_ids": [
+        "owasp-file-upload",
+        "nist-csf-2"
+      ]
+    },
+    {
+      "basis_artifacts": [
+        {
+          "artifact": "public_upload_policy.json",
+          "bytes": 1465,
+          "exists": true
+        },
+        {
+          "artifact": "production_document_intelligence_manifest.json",
+          "bytes": 142954,
+          "exists": true
+        }
+      ],
+      "control_id": "private_object_storage",
+      "gate_id": "private_storage_gate",
+      "label": "Private object storage",
+      "local_basis": [
+        "public_upload_policy.json",
+        "production_document_intelligence_manifest.json"
+      ],
+      "local_evidence_present": true,
+      "local_status": "local_quarantine_metadata_ready_private_storage_missing",
+      "production_approved": false,
+      "production_gate_state": "blocked",
+      "production_required_evidence": "Private object bucket, no public listing, signed-access policy, retention tags, and storage-region decision.",
+      "real_user_data_allowed": false,
+      "source_ids": [
+        "opc-pipeda-principles",
+        "owasp-file-upload"
+      ]
+    },
+    {
+      "basis_artifacts": [
+        {
+          "artifact": "public_upload_policy.json",
+          "bytes": 1465,
+          "exists": true
+        },
+        {
+          "artifact": "production_document_intelligence_manifest.json",
+          "bytes": 142954,
+          "exists": true
+        }
+      ],
+      "control_id": "malware_scanning",
+      "gate_id": "malware_scan_gate",
+      "label": "Malware scanning and file safety",
+      "local_basis": [
+        "public_upload_policy.json",
+        "production_document_intelligence_manifest.json"
+      ],
+      "local_evidence_present": true,
+      "local_status": "local_parser_limits_ready_malware_scanner_missing",
+      "production_approved": false,
+      "production_gate_state": "blocked",
+      "production_required_evidence": "Malware scanner or CDR provider, quarantine workflow, positive/negative sample tests, and reviewer signoff.",
+      "real_user_data_allowed": false,
+      "source_ids": [
+        "owasp-file-upload"
+      ]
+    },
+    {
+      "basis_artifacts": [
+        {
+          "artifact": "audit_events.json",
+          "bytes": 1768,
+          "exists": true
+        },
+        {
+          "artifact": "production_enterprise_audit_export_policy.json",
+          "bytes": 478,
+          "exists": true
+        }
+      ],
+      "control_id": "audit_logs",
+      "gate_id": "production_audit_log_gate",
+      "label": "Audit logs",
+      "local_basis": [
+        "audit_events.json",
+        "production_enterprise_audit_export_policy.json"
+      ],
+      "local_evidence_present": true,
+      "local_status": "local_audit_records_ready",
+      "production_approved": false,
+      "production_gate_state": "blocked",
+      "production_required_evidence": "Immutable audit storage, retention period, export controls, alerting, and access-review proof.",
+      "real_user_data_allowed": false,
+      "source_ids": [
+        "opc-pipeda-principles",
+        "nist-csf-2"
+      ]
+    },
+    {
+      "basis_artifacts": [
+        {
+          "artifact": "deletion_requests.json",
+          "bytes": 21,
+          "exists": true
+        },
+        {
+          "artifact": "public_upload_manifest.json",
+          "bytes": 8801,
+          "exists": true
+        },
+        {
+          "artifact": "public_upload_policy.json",
+          "bytes": 1465,
+          "exists": true
+        }
+      ],
+      "control_id": "deletion_retention",
+      "gate_id": "retention_deletion_gate",
+      "label": "Deletion and retention",
+      "local_basis": [
+        "deletion_requests.json",
+        "public_upload_manifest.json",
+        "public_upload_policy.json"
+      ],
+      "local_evidence_present": true,
+      "local_status": "local_deletion_request_and_expiry_contract_ready",
+      "production_approved": false,
+      "production_gate_state": "blocked",
+      "production_required_evidence": "Approved retention schedule, deletion SLA, export/delete workflow test, and privacy/legal review.",
+      "real_user_data_allowed": false,
+      "source_ids": [
+        "opc-pipeda-principles"
+      ]
+    },
+    {
+      "basis_artifacts": [
+        {
+          "artifact": "ai_data_policy.json",
+          "bytes": 3785,
+          "exists": true
+        },
+        {
+          "artifact": "production_payment_monetization_manifest.json",
+          "bytes": 14205,
+          "exists": true
+        }
+      ],
+      "control_id": "vendor_register",
+      "gate_id": "vendor_approval_gate",
+      "label": "Vendor register",
+      "local_basis": [
+        "ai_data_policy.json",
+        "production_payment_monetization_manifest.json"
+      ],
+      "local_evidence_present": true,
+      "local_status": "vendor_register_generated_approvals_missing",
+      "production_approved": false,
+      "production_gate_state": "blocked",
+      "production_required_evidence": "Vendor DPA/security/privacy review, data-residency decision, subprocessors, support contact, and exit plan.",
+      "real_user_data_allowed": false,
+      "source_ids": [
+        "opc-pipeda-principles",
+        "openai-api-data-controls"
+      ]
+    },
+    {
+      "basis_artifacts": [
+        {
+          "artifact": "customer_workflow.sqlite",
+          "bytes": 274432,
+          "exists": true
+        },
+        {
+          "artifact": "product_runtime_state.json",
+          "bytes": 98447,
+          "exists": true
+        },
+        {
+          "artifact": "production_redevelopment_plan.json",
+          "bytes": 87614,
+          "exists": true
+        }
+      ],
+      "control_id": "backup_restore",
+      "gate_id": "production_backup_restore_gate",
+      "label": "Backup and restore",
+      "local_basis": [
+        "customer_workflow.sqlite",
+        "product_runtime_state.json",
+        "production_redevelopment_plan.json"
+      ],
+      "local_evidence_present": true,
+      "local_status": "local_backup_restore_hash_drill_ready",
+      "production_approved": false,
+      "production_gate_state": "blocked",
+      "production_required_evidence": "Managed database/object-store backup schedule, restore drill, RPO/RTO decision, and recovery owner.",
+      "real_user_data_allowed": false,
+      "source_ids": [
+        "canadian-centre-baseline-controls",
+        "nist-csf-2"
+      ]
+    },
+    {
+      "basis_artifacts": [
+        {
+          "artifact": "product_runtime_state.json",
+          "bytes": 98447,
+          "exists": true
+        },
+        {
+          "artifact": "launch_operations_report.json",
+          "bytes": 1568,
+          "exists": true
+        }
+      ],
+      "control_id": "monitoring",
+      "gate_id": "production_monitoring_gate",
+      "label": "Monitoring and alerting",
+      "local_basis": [
+        "product_runtime_state.json",
+        "launch_operations_report.json"
+      ],
+      "local_evidence_present": true,
+      "local_status": "local_health_and_operations_reports_ready",
+      "production_approved": false,
+      "production_gate_state": "blocked",
+      "production_required_evidence": "Hosted uptime, error, queue, upload, AI, payment, and source-refresh alerts with owner escalation.",
+      "real_user_data_allowed": false,
+      "source_ids": [
+        "nist-csf-2",
+        "canadian-centre-baseline-controls"
+      ]
+    },
+    {
+      "basis_artifacts": [
+        {
+          "artifact": "launch_operations_report.json",
+          "bytes": 1568,
+          "exists": true
+        }
+      ],
+      "control_id": "incident_runbooks",
+      "gate_id": "incident_response_gate",
+      "label": "Incident response runbooks",
+      "local_basis": [
+        "launch_operations_report.json"
+      ],
+      "local_evidence_present": true,
+      "local_status": "incident_runbook_contract_generated_rehearsal_missing",
+      "production_approved": false,
+      "production_gate_state": "blocked",
+      "production_required_evidence": "Runbook rehearsal for security, privacy, data deletion, upload abuse, AI prompt injection, payment, and rollback incidents.",
+      "real_user_data_allowed": false,
+      "source_ids": [
+        "nist-sp-800-61r2",
+        "opc-privacy-breach-response"
+      ]
+    },
+    {
+      "basis_artifacts": [
+        {
+          "artifact": "production_enterprise_api_manifest.json",
+          "bytes": 29011,
+          "exists": true
+        },
+        {
+          "artifact": "production_payment_monetization_manifest.json",
+          "bytes": 14205,
+          "exists": true
+        },
+        {
+          "artifact": "ai_data_policy.json",
+          "bytes": 3785,
+          "exists": true
+        }
+      ],
+      "control_id": "secrets_management",
+      "gate_id": "secret_management_gate",
+      "label": "Secrets management",
+      "local_basis": [
+        "production_enterprise_api_manifest.json",
+        "production_payment_monetization_manifest.json",
+        "ai_data_policy.json"
+      ],
+      "local_evidence_present": true,
+      "local_status": "no_live_secrets_issued_secret_manager_missing",
+      "production_approved": false,
+      "production_gate_state": "blocked",
+      "production_required_evidence": "Hosted secret manager, key rotation, restricted live keys, no secrets in logs, and reviewer proof.",
+      "real_user_data_allowed": false,
+      "source_ids": [
+        "canadian-centre-baseline-controls",
+        "openai-api-data-controls"
+      ]
+    },
+    {
+      "basis_artifacts": [
+        {
+          "artifact": "ai_data_policy.json",
+          "bytes": 3785,
+          "exists": true
+        },
+        {
+          "artifact": "public_upload_policy.json",
+          "bytes": 1465,
+          "exists": true
+        }
+      ],
+      "control_id": "data_residency",
+      "gate_id": "data_residency_gate",
+      "label": "Data residency and processing location",
+      "local_basis": [
+        "ai_data_policy.json",
+        "public_upload_policy.json"
+      ],
+      "local_evidence_present": true,
+      "local_status": "processing_location_decision_required",
+      "production_approved": false,
+      "production_gate_state": "blocked",
+      "production_required_evidence": "Chosen hosting/storage/AI/payment/support regions and privacy/legal approval for customer data flows.",
+      "real_user_data_allowed": false,
+      "source_ids": [
+        "opc-pipeda-principles",
+        "openai-api-data-controls"
+      ]
+    }
+  ],
+  "trust_gates": [
+    {
+      "gate_id": "hosted_managed_auth_gate",
+      "opened_by_local_artifact": false,
+      "owner": "security_owner",
+      "required_evidence": "Managed identity provider, account lifecycle, password/MFA policy, session settings, and hosted smoke proof.",
+      "state": "blocked"
+    },
+    {
+      "gate_id": "admin_mfa_gate",
+      "opened_by_local_artifact": false,
+      "owner": "security_owner",
+      "required_evidence": "Admin MFA enforced in hosted identity provider with recovery and break-glass policy.",
+      "state": "blocked"
+    },
+    {
+      "gate_id": "tenant_authorization_gate",
+      "opened_by_local_artifact": false,
+      "owner": "engineering_owner",
+      "required_evidence": "Hosted object-level authorization tests for every customer, operator, expert, and admin route.",
+      "state": "blocked"
+    },
+    {
+      "gate_id": "hosted_session_security_gate",
+      "opened_by_local_artifact": false,
+      "owner": "security_owner",
+      "required_evidence": "TLS, secure cookies, same-site policy, CSRF tests, logout/session-expiry tests, and cookie flag proof.",
+      "state": "blocked"
+    },
+    {
+      "gate_id": "hosted_rate_limit_gate",
+      "opened_by_local_artifact": false,
+      "owner": "engineering_owner",
+      "required_evidence": "Hosted per-user/per-IP/per-organization limits with alerting and abuse-case tests.",
+      "state": "blocked"
+    },
+    {
+      "gate_id": "private_storage_gate",
+      "opened_by_local_artifact": false,
+      "owner": "security_owner",
+      "required_evidence": "Private object bucket, no public listing, signed-access policy, retention tags, and storage-region decision.",
+      "state": "blocked"
+    },
+    {
+      "gate_id": "malware_scan_gate",
+      "opened_by_local_artifact": false,
+      "owner": "security_owner",
+      "required_evidence": "Malware scanner or CDR provider, quarantine workflow, positive/negative sample tests, and reviewer signoff.",
+      "state": "blocked"
+    },
+    {
+      "gate_id": "production_audit_log_gate",
+      "opened_by_local_artifact": false,
+      "owner": "security_owner",
+      "required_evidence": "Immutable audit storage, retention period, export controls, alerting, and access-review proof.",
+      "state": "blocked"
+    },
+    {
+      "gate_id": "retention_deletion_gate",
+      "opened_by_local_artifact": false,
+      "owner": "privacy_owner",
+      "required_evidence": "Approved retention schedule, deletion SLA, export/delete workflow test, and privacy/legal review.",
+      "state": "blocked"
+    },
+    {
+      "gate_id": "vendor_approval_gate",
+      "opened_by_local_artifact": false,
+      "owner": "privacy_owner",
+      "required_evidence": "Vendor DPA/security/privacy review, data-residency decision, subprocessors, support contact, and exit plan.",
+      "state": "blocked"
+    },
+    {
+      "gate_id": "production_backup_restore_gate",
+      "opened_by_local_artifact": false,
+      "owner": "operations_owner",
+      "required_evidence": "Managed database/object-store backup schedule, restore drill, RPO/RTO decision, and recovery owner.",
+      "state": "blocked"
+    },
+    {
+      "gate_id": "production_monitoring_gate",
+      "opened_by_local_artifact": false,
+      "owner": "operations_owner",
+      "required_evidence": "Hosted uptime, error, queue, upload, AI, payment, and source-refresh alerts with owner escalation.",
+      "state": "blocked"
+    },
+    {
+      "gate_id": "incident_response_gate",
+      "opened_by_local_artifact": false,
+      "owner": "operations_owner",
+      "required_evidence": "Runbook rehearsal for security, privacy, data deletion, upload abuse, AI prompt injection, payment, and rollback incidents.",
+      "state": "blocked"
+    },
+    {
+      "gate_id": "secret_management_gate",
+      "opened_by_local_artifact": false,
+      "owner": "security_owner",
+      "required_evidence": "Hosted secret manager, key rotation, restricted live keys, no secrets in logs, and reviewer proof.",
+      "state": "blocked"
+    },
+    {
+      "gate_id": "data_residency_gate",
+      "opened_by_local_artifact": false,
+      "owner": "privacy_owner",
+      "required_evidence": "Chosen hosting/storage/AI/payment/support regions and privacy/legal approval for customer data flows.",
+      "state": "blocked"
+    },
+    {
+      "gate_id": "real_file_upload_gate",
+      "opened_by_local_artifact": false,
+      "owner": "security_privacy_reviewer",
+      "required_evidence": "Production security/privacy/reliability reviewer approval.",
+      "state": "blocked"
+    }
+  ]
+}

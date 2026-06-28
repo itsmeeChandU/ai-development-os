@@ -37,6 +37,7 @@ src/importer_source_readiness/production_payment_monetization_engine.py
 src/importer_source_readiness/production_portal_workflow_engine.py
 src/importer_source_readiness/production_redevelopment.py
 src/importer_source_readiness/production_reports_engine.py
+src/importer_source_readiness/production_security_privacy_reliability_engine.py
         |
         v
 system_review_graph/readiness_report.json
@@ -164,6 +165,7 @@ board/*.md
 | `src/importer_source_readiness/production_portal_workflow_engine.py` | production portal workflow engine that maps six user portals and the default business-owner first screen to real local UI/API routes while keeping UX/accessibility/mobile/hosted/payment/public-launch gates closed |
 | `src/importer_source_readiness/production_redevelopment.py` | full-scale production redevelopment contract with 14 layers, phases 0-20, research/source/evidence/gate tracks, permanent research entities, and closed external gates |
 | `src/importer_source_readiness/production_reports_engine.py` | production reports engine for twelve cited report types, JSON/HTML/PDF exports, version/watermark/review metadata, and blocked-claim sections |
+| `src/importer_source_readiness/production_security_privacy_reliability_engine.py` | production trust engine for security, privacy, reliability, vendors, incident runbooks, local backup/restore hash proof, and closed real-file/hosted/public gates |
 | `scripts/run_readiness.py` | CLI entrypoint and report writer |
 | `scripts/run_external_gates.py` | external-gate report writer |
 | `scripts/export_operator_dashboard.py` | dashboard exporter |
@@ -187,6 +189,7 @@ board/*.md
 | `scripts/run_production_portal_workflow_engine.py` | production portal workflow manifest, route matrix, UX check, gate-control, and review doc writer |
 | `scripts/run_production_redevelopment.py` | production redevelopment contract and research-anchor writer |
 | `scripts/run_production_reports_engine.py` | production reports manifest, catalog, export, citation, HTML, JSON, and PDF writer |
+| `scripts/run_production_security_privacy_reliability_engine.py` | production trust control, vendor register, backup/restore drill, incident runbook, research, and review doc writer |
 | `tests/test_readiness.py` | proof for blocked-safe behavior |
 | `tests/test_external_gates.py` | proof for external-gate and dashboard behavior |
 | `tests/test_continuation.py` | proof that externally gated status keeps work in progress |
@@ -208,6 +211,7 @@ board/*.md
 | `tests/test_production_portal_workflow_engine.py` | proof that public, exporter, importer, expert reviewer, operator/admin, and enterprise portals have route coverage, plain first-screen choices, UX review hooks, and closed gates |
 | `tests/test_production_payment_monetization_engine.py` | proof that monetization charges only for preparation and keeps live checkout, external charges, and payment claims closed |
 | `tests/test_production_redevelopment.py` | proof that every redevelopment phase has build, research, source, evidence, and gate tracks backed by known source IDs |
+| `tests/test_production_security_privacy_reliability_engine.py` | proof that local trust controls map to evidence, vendors stay unapproved, local backup/restore hashes match, and production trust gates stay closed |
 | `system_review_graph/` | generated packets, reports, blockers, handoff evidence |
 
 ## Data Flow
@@ -267,7 +271,10 @@ board/*.md
 26. Generate the production payment monetization package: pricing tiers, paid
     scope, forbidden paid claims, checkout gate controls, webhook controls,
     Stripe/payment research references, and closed live-checkout gates.
-27. Generate the production redevelopment contract and research anchors for
+27. Generate the production security/privacy/reliability package: trust
+    controls, vendor review records, incident runbooks, local backup/restore
+    hash proof, and closed real-file/hosted/public gates.
+28. Generate the production redevelopment contract and research anchors for
     the full-scale build: 14 production layers, phases 0-20, permanent source
     registry links, evidence requirements, and launch gates that remain closed.
 
@@ -391,6 +398,14 @@ webhook controls, and payment gates exist locally. It does not mean live
 checkout, live Stripe objects, external charges, tax/accounting approval,
 refund/support approval, payment security approval, claim-language approval, or
 public launch approval has been recorded.
+
+The expected production trust status is
+`production_security_privacy_reliability_engine_ready_local_controls_external_trust_gates_closed`.
+It means security, privacy, reliability, vendor, incident, and backup controls
+exist locally and a local backup/restore hash drill has passed. It does not
+mean hosted auth, admin MFA, private object storage, malware scanning,
+production monitoring, vendor approval, privacy/security signoff, real file
+uploads, hosted private beta, or public launch approval has been recorded.
 
 ## Proof Boundary
 

@@ -374,6 +374,32 @@ This is a local monetization contract. It does not create live Stripe objects,
 checkout URLs, external charges, webhook delivery, payment approval, tax or
 accounting approval, or public launch approval.
 
+## Production Trust Business Logic
+
+The production security/privacy/reliability engine now decides whether the
+product can accept real files, hosted beta users, or public traffic. The local
+answer remains no until required proof exists.
+
+Implemented locally:
+
+- 15 trust controls across managed auth, admin MFA, RBAC, sessions/CSRF, rate
+  limits, private storage, malware scanning, audit, deletion, retention,
+  vendors, backup/restore, monitoring, incidents, secrets, and data residency
+- vendor/data-processing register for hosting/storage, OpenAI API, Stripe,
+  malware/CDR, monitoring/error, and support/email candidates
+- incident runbook scenarios for privacy, upload, prompt-injection, tenant
+  access, restore, payment, source-change, and claim-language events
+- local backup/restore hash drill over critical repo artifacts
+
+Still blocked:
+
+- managed hosted auth and admin MFA
+- private object storage and malware scanning
+- production backup/restore, monitoring, incident rehearsal, and secrets
+  manager proof
+- vendor approval, privacy/security signoff, data-residency approval, real file
+  uploads, hosted private beta, and public launch
+
 ## Reviewer Signoff Rule
 
 Final rule: `no reviewer lane, no claim lane`
@@ -468,6 +494,10 @@ Payments remain downstream. Live checkout stays disabled until scope, support, r
 | Production reports engine | `system_review_graph/production_reports_engine_manifest.json` |
 | Production report exports | `system_review_graph/production_report_exports.json` |
 | Production report citations | `system_review_graph/production_report_citations.json` |
+| Production security/privacy/reliability | `system_review_graph/production_security_privacy_reliability_manifest.json` |
+| Production trust controls | `system_review_graph/production_trust_control_matrix.json` |
+| Vendor register | `system_review_graph/production_vendor_register.json` |
+| Backup/restore drill | `system_review_graph/production_backup_restore_drill.json` |
 | Tests | `tests/test_business_logic.py`, `tests/test_completion_platform.py` |
 | Product proof | `python3 scripts/check_product.py` |
 | Root proof | `python3 scripts/product_project_check.py` |
@@ -488,6 +518,8 @@ Payments remain downstream. Live checkout stays disabled until scope, support, r
 - production AI copilot engine with label-bound outputs and no gate-opening authority
 - production expert review network with credential-required reviewer lanes, scoped requests, finding templates, and no completed signoff recorded
 - production reports engine with cited JSON/HTML/PDF packet views and blocked claims preserved
+- production security/privacy/reliability engine with trust controls, vendor
+  records, incident runbooks, and a local backup/restore hash drill
 - official sample document library and synthetic parser QA fixtures for local parser validation
 - Canada/Vietnam/India/Generic country-pack rows with route checks
 - source-monitor contract with source metadata and executable evidence freshness evaluation

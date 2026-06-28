@@ -99,6 +99,7 @@ def main() -> int:
         PROJECT / "src" / "importer_source_readiness" / "production_portal_workflow_engine.py",
         PROJECT / "src" / "importer_source_readiness" / "production_redevelopment.py",
         PROJECT / "src" / "importer_source_readiness" / "production_reports_engine.py",
+        PROJECT / "src" / "importer_source_readiness" / "production_security_privacy_reliability_engine.py",
         PROJECT / "tests" / "test_readiness.py",
         PROJECT / "tests" / "test_external_gates.py",
         PROJECT / "tests" / "test_continuation.py",
@@ -130,6 +131,7 @@ def main() -> int:
         PROJECT / "tests" / "test_production_portal_workflow_engine.py",
         PROJECT / "tests" / "test_production_redevelopment.py",
         PROJECT / "tests" / "test_production_reports_engine.py",
+        PROJECT / "tests" / "test_production_security_privacy_reliability_engine.py",
         PROJECT / "scripts" / "run_readiness.py",
         PROJECT / "scripts" / "run_external_gates.py",
         PROJECT / "scripts" / "export_operator_dashboard.py",
@@ -160,6 +162,7 @@ def main() -> int:
         PROJECT / "scripts" / "run_production_portal_workflow_engine.py",
         PROJECT / "scripts" / "run_production_redevelopment.py",
         PROJECT / "scripts" / "run_production_reports_engine.py",
+        PROJECT / "scripts" / "run_production_security_privacy_reliability_engine.py",
         PROJECT / "scripts" / "package_external_review.py",
         PROJECT / "scripts" / "check_product.py",
         PROJECT / "docs" / "PRODUCT_AUTOMATION_RUNBOOK.md",
@@ -193,6 +196,7 @@ def main() -> int:
         PROJECT / "docs" / "PRODUCTION_PORTAL_WORKFLOWS.md",
         PROJECT / "docs" / "PRODUCTION_REDEVELOPMENT.md",
         PROJECT / "docs" / "PRODUCTION_REPORTS_ENGINE.md",
+        PROJECT / "docs" / "PRODUCTION_SECURITY_PRIVACY_RELIABILITY_ENGINE.md",
         PROJECT / "docs" / "BUSINESS_CORE_LOGIC_CURRENT_STATE.md",
         PROJECT / "docs" / "FUNCTIONAL_REQUIREMENTS_CURRENT_STATE.md",
         PROJECT / "docs" / "NON_FUNCTIONAL_REQUIREMENTS_CURRENT_STATE.md",
@@ -329,6 +333,12 @@ def main() -> int:
         PROJECT / "system_review_graph" / "production_checkout_gate_controls.json",
         PROJECT / "system_review_graph" / "production_payment_webhook_controls.json",
         PROJECT / "system_review_graph" / "production_payment_research_references.json",
+        PROJECT / "system_review_graph" / "production_security_privacy_reliability_manifest.json",
+        PROJECT / "system_review_graph" / "production_trust_control_matrix.json",
+        PROJECT / "system_review_graph" / "production_vendor_register.json",
+        PROJECT / "system_review_graph" / "production_backup_restore_drill.json",
+        PROJECT / "system_review_graph" / "production_incident_runbooks.json",
+        PROJECT / "system_review_graph" / "production_trust_research_references.json",
         PROJECT / "system_review_graph" / "reviewer_wave_execution_plan.json",
         PROJECT / "system_review_graph" / "private_beta_smoke_test_plan.json",
         PROJECT / "system_review_graph" / "external_review_findings_report.json",
@@ -446,6 +456,7 @@ def main() -> int:
         ["python3", "scripts/run_production_portal_workflow_engine.py"],
         ["python3", "scripts/run_production_enterprise_api_platform.py"],
         ["python3", "scripts/run_production_payment_monetization_engine.py"],
+        ["python3", "scripts/run_production_security_privacy_reliability_engine.py"],
         ["python3", "scripts/build_external_review_packet.py"],
         ["python3", "scripts/export_operator_dashboard.py"],
         ["python3", "scripts/audit_external_package.py", "--root", "."],
@@ -688,6 +699,9 @@ def main() -> int:
     )
     production_payments = json.loads(
         (PROJECT / "system_review_graph" / "production_payment_monetization_manifest.json").read_text(encoding="utf-8")
+    )
+    production_trust = json.loads(
+        (PROJECT / "system_review_graph" / "production_security_privacy_reliability_manifest.json").read_text(encoding="utf-8")
     )
     official_source_registry = json.loads(
         (PROJECT / "data" / "official_source_registry.json").read_text(encoding="utf-8")
@@ -2239,6 +2253,60 @@ def main() -> int:
             print("Product project check: FAIL")
             print(f"payment webhook {webhook.get('event_type')} should stay closed and robust")
             return 1
+    if (
+        production_trust.get("status") != "production_security_privacy_reliability_engine_ready_local_controls_external_trust_gates_closed"
+        or production_trust.get("trust_control_count", 0) < 15
+        or production_trust.get("research_reference_count", 0) < 9
+        or production_trust.get("blocked_trust_gate_count") != production_trust.get("trust_gate_count")
+        or production_trust.get("unapproved_vendor_count") != production_trust.get("vendor_record_count")
+        or production_trust.get("real_file_uploads_allowed") is not False
+        or production_trust.get("unrestricted_uploads_enabled") is not False
+        or production_trust.get("hosted_private_beta_ready") is not False
+        or production_trust.get("production_trust_approved") is not False
+        or production_trust.get("public_launch_ready") is not False
+    ):
+        print("Product project check: FAIL")
+        print("production trust should map controls while keeping real-file, hosted, and public gates closed")
+        return 1
+    for key in (
+        "managed_auth_ready",
+        "admin_mfa_enforced",
+        "hosted_secure_sessions_ready",
+        "hosted_rate_limits_enforced",
+        "private_object_storage_ready",
+        "malware_scanning_ready",
+        "production_audit_log_ready",
+        "retention_policy_approved",
+        "vendor_register_approved",
+        "production_backup_restore_passed",
+        "production_monitoring_ready",
+        "incident_runbook_rehearsed",
+        "secrets_manager_ready",
+        "data_residency_approved",
+    ):
+        if production_trust.get(key) is not False:
+            print("Product project check: FAIL")
+            print(f"production trust expected {key}=false")
+            return 1
+    backup_drill = production_trust.get("backup_restore_drill", {})
+    if (
+        backup_drill.get("status") != "local_backup_restore_hash_drill_passed"
+        or backup_drill.get("production_backup_restore_test_passed") is not False
+        or backup_drill.get("hash_match_count") != backup_drill.get("existing_artifact_count")
+    ):
+        print("Product project check: FAIL")
+        print("production trust local restore drill should pass without claiming production restore proof")
+        return 1
+    for vendor in production_trust.get("vendor_register", []):
+        if vendor.get("production_approved") is not False or vendor.get("customer_data_allowed") is not False:
+            print("Product project check: FAIL")
+            print(f"vendor {vendor.get('vendor_id')} should not be production-approved")
+            return 1
+    for gate in production_trust.get("trust_gates", []):
+        if gate.get("state") != "blocked" or gate.get("opened_by_local_artifact") is not False:
+            print("Product project check: FAIL")
+            print(f"trust gate {gate.get('gate_id')} should stay blocked")
+            return 1
     external_validation_pdf = PROJECT / "output" / "pdf" / "external_validation_requirements.pdf"
     if not external_validation_pdf.exists() or not external_validation_pdf.read_bytes().startswith(b"%PDF"):
         print("Product project check: FAIL")
@@ -2541,6 +2609,9 @@ def main() -> int:
     print(f"production_payments_status={production_payments['status']}")
     print(f"production_payment_tiers={production_payments['pricing_tier_count']}")
     print(f"production_live_checkout_enabled={production_payments['live_checkout_enabled']}")
+    print(f"production_trust_status={production_trust['status']}")
+    print(f"production_trust_controls={production_trust['trust_control_count']}")
+    print(f"production_real_file_uploads_allowed={production_trust['real_file_uploads_allowed']}")
     print(f"external_validation_pdf={external_validation_pdf.relative_to(PROJECT)}")
     print(f"external_validation_reviewer_brief_pdf={external_validation_reviewer_brief_pdf.relative_to(PROJECT)}")
     print(f"go_live_input_status={go_live_input_readiness['status']}")

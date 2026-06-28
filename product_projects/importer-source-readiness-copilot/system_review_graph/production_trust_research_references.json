@@ -1,0 +1,59 @@
+{
+  "research_references": [
+    {
+      "product_use": "Privacy control mapping for accountability, consent, limiting collection/use/retention, safeguards, openness, access, and challenge rights.",
+      "source_id": "opc-pipeda-principles",
+      "source_name": "Office of the Privacy Commissioner of Canada PIPEDA principles",
+      "url": "https://www.priv.gc.ca/en/privacy-topics/privacy-laws-in-canada/the-personal-information-protection-and-electronic-documents-act-pipeda/"
+    },
+    {
+      "product_use": "Breach-process, notification, and incident runbook requirements before real user data is accepted.",
+      "source_id": "opc-privacy-breach-response",
+      "source_name": "Office of the Privacy Commissioner of Canada breach response guidance",
+      "url": "https://www.priv.gc.ca/en/privacy-topics/privacy-breaches/respond-to-a-privacy-breach-at-your-business/"
+    },
+    {
+      "product_use": "Upload allowlisting, signature/type validation, generated filenames, size limits, authorization, isolated storage, malware checks, and CSRF.",
+      "source_id": "owasp-file-upload",
+      "source_name": "OWASP File Upload Cheat Sheet",
+      "url": "https://cheatsheetseries.owasp.org/cheatsheets/File_Upload_Cheat_Sheet.html"
+    },
+    {
+      "product_use": "AI prompt-injection review for uploaded files, source summaries, and reviewer work-order drafts.",
+      "source_id": "owasp-llm01-prompt-injection",
+      "source_name": "OWASP LLM01 Prompt Injection",
+      "url": "https://genai.owasp.org/llmrisk/llm01-prompt-injection/"
+    },
+    {
+      "product_use": "AI governance framing for trustworthy design, evaluation, and human-review boundaries.",
+      "source_id": "nist-ai-rmf",
+      "source_name": "NIST AI Risk Management Framework",
+      "url": "https://www.nist.gov/itl/ai-risk-management-framework"
+    },
+    {
+      "product_use": "SMB-focused baseline controls for account security, backups, patching, monitoring, and incident readiness.",
+      "source_id": "canadian-centre-baseline-controls",
+      "source_name": "Canadian Centre for Cyber Security baseline cyber security controls",
+      "url": "https://www.cyber.gc.ca/en/guidance/baseline-cyber-security-controls-small-and-medium-organizations"
+    },
+    {
+      "product_use": "Govern, identify, protect, detect, respond, and recover control grouping.",
+      "source_id": "nist-csf-2",
+      "source_name": "NIST Cybersecurity Framework 2.0",
+      "url": "https://www.nist.gov/cyberframework"
+    },
+    {
+      "product_use": "Incident preparation, detection, analysis, containment, eradication, recovery, and lessons-learned runbook structure.",
+      "source_id": "nist-sp-800-61r2",
+      "source_name": "NIST SP 800-61 Rev. 2 Computer Security Incident Handling Guide",
+      "url": "https://csrc.nist.gov/pubs/sp/800/61/r2/final"
+    },
+    {
+      "product_use": "AI vendor data-use, retention, and endpoint-review input if OpenAI API processing is enabled later.",
+      "source_id": "openai-api-data-controls",
+      "source_name": "OpenAI platform data controls",
+      "url": "https://platform.openai.com/docs/guides/your-data"
+    }
+  ],
+  "status": "production_trust_research_references_ready"
+}

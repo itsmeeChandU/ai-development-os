@@ -89,6 +89,16 @@ The document engine is ready for local review and parser QA. It is not yet appro
 - Payment webhooks require signature verification, idempotency, duplicate handling, delayed handling, and out-of-order handling.
 - Live Stripe mode, checkout URLs, external charges, refund/support policy, tax/accounting review, payment security review, and claim-language review remain incomplete.
 
+## Production Trust Control Plane
+
+- Production trust status: `production_security_privacy_reliability_engine_ready_local_controls_external_trust_gates_closed`.
+- Trust controls: `15`.
+- Blocked trust gates: `16`.
+- Unapproved vendor records: `6`.
+- Local backup/restore drill: `local_backup_restore_hash_drill_passed`.
+- The local backup/restore drill hash-matches existing critical artifacts, but production backup/restore remains unproven.
+- Real uploads, hosted customer use, production monitoring, incident response approval, vendor approval, and privacy/security signoff remain incomplete.
+
 ## Claim Safety
 
 - Evidence claim-gate status: `production_evidence_claim_gate_engine_ready_claims_fail_closed`.

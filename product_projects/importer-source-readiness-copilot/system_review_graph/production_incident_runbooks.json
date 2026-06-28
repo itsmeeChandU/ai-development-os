@@ -1,0 +1,109 @@
+{
+  "incident_runbooks": [
+    {
+      "owner": "operations_owner",
+      "production_ready": false,
+      "rehearsed": false,
+      "scenario": "privacy_breach_or_wrong_recipient",
+      "steps": [
+        "triage severity and affected records",
+        "contain external effects and disable risky workflow",
+        "preserve audit evidence",
+        "notify required owner/reviewer",
+        "record corrective action and retest"
+      ]
+    },
+    {
+      "owner": "operations_owner",
+      "production_ready": false,
+      "rehearsed": false,
+      "scenario": "malicious_file_upload",
+      "steps": [
+        "triage severity and affected records",
+        "contain external effects and disable risky workflow",
+        "preserve audit evidence",
+        "notify required owner/reviewer",
+        "record corrective action and retest"
+      ]
+    },
+    {
+      "owner": "operations_owner",
+      "production_ready": false,
+      "rehearsed": false,
+      "scenario": "prompt_injection_from_uploaded_document",
+      "steps": [
+        "triage severity and affected records",
+        "contain external effects and disable risky workflow",
+        "preserve audit evidence",
+        "notify required owner/reviewer",
+        "record corrective action and retest"
+      ]
+    },
+    {
+      "owner": "operations_owner",
+      "production_ready": false,
+      "rehearsed": false,
+      "scenario": "tenant_access_violation",
+      "steps": [
+        "triage severity and affected records",
+        "contain external effects and disable risky workflow",
+        "preserve audit evidence",
+        "notify required owner/reviewer",
+        "record corrective action and retest"
+      ]
+    },
+    {
+      "owner": "operations_owner",
+      "production_ready": false,
+      "rehearsed": false,
+      "scenario": "lost_or_corrupt_data_restore_needed",
+      "steps": [
+        "triage severity and affected records",
+        "contain external effects and disable risky workflow",
+        "preserve audit evidence",
+        "notify required owner/reviewer",
+        "record corrective action and retest"
+      ]
+    },
+    {
+      "owner": "operations_owner",
+      "production_ready": false,
+      "rehearsed": false,
+      "scenario": "payment_webhook_or_live_checkout_incident",
+      "steps": [
+        "triage severity and affected records",
+        "contain external effects and disable risky workflow",
+        "preserve audit evidence",
+        "notify required owner/reviewer",
+        "record corrective action and retest"
+      ]
+    },
+    {
+      "owner": "operations_owner",
+      "production_ready": false,
+      "rehearsed": false,
+      "scenario": "source_monitor_material_change",
+      "steps": [
+        "triage severity and affected records",
+        "contain external effects and disable risky workflow",
+        "preserve audit evidence",
+        "notify required owner/reviewer",
+        "record corrective action and retest"
+      ]
+    },
+    {
+      "owner": "operations_owner",
+      "production_ready": false,
+      "rehearsed": false,
+      "scenario": "public_claim_or_report_language_issue",
+      "steps": [
+        "triage severity and affected records",
+        "contain external effects and disable risky workflow",
+        "preserve audit evidence",
+        "notify required owner/reviewer",
+        "record corrective action and retest"
+      ]
+    }
+  ],
+  "status": "production_incident_runbooks_ready_rehearsal_required"
+}
