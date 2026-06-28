@@ -293,6 +293,17 @@ def _select_options(values: list[str], selected: str) -> str:
     )
 
 
+def _select_labeled_options(options: list[tuple[str, str]], selected: str) -> str:
+    return "".join(
+        f"<option value='{escape(value)}'{' selected' if value == selected else ''}>{escape(label)}</option>"
+        for value, label in options
+    )
+
+
+def _plain_label(value: Any) -> str:
+    return str(value or "").replace("_", " ").strip().title()
+
+
 def _valid_sensitivity(value: Any) -> str:
     candidate = str(value or "internal")
     return candidate if candidate in SENSITIVITY_LEVELS else "internal"
@@ -1607,18 +1618,21 @@ def _render_launch_operations(repo_root: Path) -> str:
 def _render_market_readiness(repo_root: Path) -> str:
     room = _load_graph_json(repo_root, "production_market_readiness_evidence_room_manifest.json")
     form_contract = room.get("input_form_contract", {})
-    review_area_options = _select_options(
-        [str(row.get("review_area")) for row in form_contract.get("review_areas", [])],
+    review_area_options = _select_labeled_options(
+        [
+            (str(row.get("review_area")), str(row.get("plain_title") or _plain_label(row.get("review_area"))))
+            for row in form_contract.get("review_areas", [])
+        ],
         "qualified_customs_trade_review",
     )
-    decision_options = _select_options(
-        form_contract.get("allowed_decisions", ["need_more_evidence"]),
+    decision_options = _select_labeled_options(
+        [(str(value), _plain_label(value)) for value in form_contract.get("allowed_decisions", ["need_more_evidence"])],
         "need_more_evidence",
     )
     matrix_rows = "".join(
         "<tr>"
         f"<td>{escape(str(row.get('gate_name')))}</td>"
-        f"<td>{escape(str(row.get('input_state')))}</td>"
+        f"<td>{escape(_plain_label(row.get('input_state')))}</td>"
         f"<td>{escape(str(row.get('drop_path')))}</td>"
         f"<td>{escape(str(row.get('source_anchor_count')))}</td>"
         f"<td>{escape(str(row.get('next_valid_move')))}</td>"

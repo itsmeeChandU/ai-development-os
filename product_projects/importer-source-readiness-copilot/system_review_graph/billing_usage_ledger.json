@@ -1,7 +1,7 @@
 {
   "executed_usage_event_count": 1,
   "external_charge_created": false,
-  "generated_at": "2026-06-28T18:52:01+00:00",
+  "generated_at": "2026-06-28T18:55:46+00:00",
   "proof_boundary": "The usage ledger estimates and blocks cost exposure locally; no payment, invoice, or live checkout is performed.",
   "status": "billing_usage_ledger_ready_local_no_charges",
   "total_reserved_credits": 0,
@@ -14,7 +14,7 @@
       "estimated_credits": 4,
       "external_charge_created": false,
       "packet_id": "packet-frozen-tuna-canada-001",
-      "usage_event_id": "usage-event-packet-frozen-tuna-canada-001-ai_extraction-2026-06-28T185201Z0000"
+      "usage_event_id": "usage-event-packet-frozen-tuna-canada-001-ai_extraction-2026-06-28T185546Z0000"
     }
   ],
   "usage_rows": [
