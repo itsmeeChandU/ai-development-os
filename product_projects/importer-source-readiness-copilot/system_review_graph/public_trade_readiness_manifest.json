@@ -38,7 +38,7 @@
     "beginner_no_documents": "Creates a missing-evidence starter packet and checklist without requiring uploads.",
     "billing_controls": "Estimates plan/credit gates locally; live checkout remains disabled.",
     "document_mode": "Quarantines uploaded PDFs, triages native text/OCR need, and requires user confirmation.",
-    "market_readiness_evidence_room": "Maps real go-live input requests into operator work orders, captures returned inputs locally, and shows a returned-input ledger while keeping market-ready claims closed.",
+    "market_readiness_evidence_room": "Maps real go-live input requests into operator work orders, captures returned inputs locally, and shows a returned-input ledger and history trail while keeping market-ready claims closed.",
     "opportunity_scanner": "Shows possible opportunity signals and research prompts only.",
     "saved_workspace": "Local SQLite/artifact workspace with account CTA and external hosting gates.",
     "trade_data_catalog": "Turns discovery choices into source-routed query plans, browse cards, and dataset work orders without showing values.",
@@ -149,6 +149,7 @@
       "/api/launch-operations",
       "/api/market-readiness",
       "/api/market-readiness/input-ledger",
+      "/api/market-readiness/input-history",
       "/api/market-readiness/inputs"
     ],
     "ui": [

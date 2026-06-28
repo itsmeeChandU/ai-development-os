@@ -124,7 +124,7 @@
       "source_anchor_count": 4
     }
   ],
-  "generated_at": "2026-06-28T19:10:48+00:00",
+  "generated_at": "2026-06-28T19:18:40+00:00",
   "go_live_input_status": "waiting_for_real_inputs_not_ready_yet",
   "hosted_private_beta_ready": false,
   "input_capture_enabled_local": true,
@@ -262,6 +262,8 @@
     ],
     "status": "market_readiness_input_form_contract_ready"
   },
+  "input_history_route": "/api/market-readiness/input-history",
+  "input_history_status": "production_market_readiness_input_history_ready_local_audit_trail",
   "input_ledger": {
     "accepted_area_count": 0,
     "all_areas_accepted": false,
@@ -280,10 +282,24 @@
     ],
     "claims_opened_by_ledger": false,
     "external_effects_created": false,
-    "generated_at": "2026-06-28T19:10:48+00:00",
+    "generated_at": "2026-06-28T19:18:40+00:00",
+    "history_record_count": 0,
     "incomplete_area_count": 0,
     "input_folder": "external_inputs/",
+    "input_history": {
+      "claims_opened_by_history": false,
+      "external_effects_created": false,
+      "generated_at": "2026-06-28T19:18:40+00:00",
+      "history_folder": "external_inputs/history/",
+      "history_record_count": 0,
+      "history_rows": [],
+      "invalid_history_record_count": 0,
+      "invalid_history_records": [],
+      "proof_boundary": "Input history preserves returned review iterations for audit. It does not approve launch, payments, customs/trade claims, legal/privacy/security claims, buyer validation, or supplier verification.",
+      "status": "production_market_readiness_input_history_ready_local_audit_trail"
+    },
     "input_record_count": 0,
+    "invalid_history_record_count": 0,
     "invalid_record_count": 0,
     "invalid_records": [],
     "ledger_rows": [
@@ -799,6 +815,7 @@
   "safe_next_loop": [
     "Collect the missing real-world input files in external_inputs/.",
     "Use production_market_readiness_input_ledger.json to inspect incomplete or unaccepted returned inputs.",
+    "Use production_market_readiness_input_history.json to preserve every returned-input iteration.",
     "Rerun scripts/run_external_validation_requirements.py --input-dir external_inputs.",
     "Rerun scripts/run_production_market_readiness_evidence_room.py.",
     "Route any returned issue into external_review_blocker_ledger.jsonl before launch scope changes.",

@@ -297,6 +297,7 @@ def main() -> int:
         PROJECT / "system_review_graph" / "production_market_readiness_reviewer_brief_cards.json",
         PROJECT / "system_review_graph" / "production_market_readiness_gate_status_matrix.json",
         PROJECT / "system_review_graph" / "production_market_readiness_input_ledger.json",
+        PROJECT / "system_review_graph" / "production_market_readiness_input_history.json",
         PROJECT / "system_review_graph" / "production_trade_discovery_manifest.json",
         PROJECT / "system_review_graph" / "production_trade_discovery_category_map.json",
         PROJECT / "system_review_graph" / "production_trade_discovery_country_lanes.json",
@@ -722,6 +723,9 @@ def main() -> int:
     )
     production_market_readiness_input_ledger = json.loads(
         (PROJECT / "system_review_graph" / "production_market_readiness_input_ledger.json").read_text(encoding="utf-8")
+    )
+    production_market_readiness_input_history = json.loads(
+        (PROJECT / "system_review_graph" / "production_market_readiness_input_history.json").read_text(encoding="utf-8")
     )
     production_document_intelligence = json.loads(
         (PROJECT / "system_review_graph" / "production_document_intelligence_manifest.json").read_text(encoding="utf-8")
@@ -2590,6 +2594,8 @@ def main() -> int:
         or production_market_readiness.get("input_form_contract", {}).get("status") != "market_readiness_input_form_contract_ready"
         or production_market_readiness.get("input_ledger_status") != "production_market_readiness_input_ledger_ready_claims_closed"
         or production_market_readiness.get("input_ledger_route") != "/api/market-readiness/input-ledger"
+        or production_market_readiness.get("input_history_status") != "production_market_readiness_input_history_ready_local_audit_trail"
+        or production_market_readiness.get("input_history_route") != "/api/market-readiness/input-history"
     ):
         print("Product project check: FAIL")
         print("market readiness evidence room must map all real-world inputs, work orders, source anchors, local input capture, and input ledger")
@@ -2609,6 +2615,14 @@ def main() -> int:
     ):
         print("Product project check: FAIL")
         print("market readiness input ledger must track returned-input quality without opening claims")
+        return 1
+    if (
+        production_market_readiness_input_history.get("status") != "production_market_readiness_input_history_ready_local_audit_trail"
+        or production_market_readiness_input_history.get("claims_opened_by_history") is not False
+        or production_market_readiness_input_history.get("invalid_history_record_count") != 0
+    ):
+        print("Product project check: FAIL")
+        print("market readiness input history must preserve returned-input iterations without opening claims")
         return 1
     for key in (
         "public_launch_ready",
@@ -2889,6 +2903,7 @@ def main() -> int:
     print(f"production_market_readiness_work_orders={production_market_readiness['work_order_count']}")
     print(f"production_market_readiness_missing_inputs={production_market_readiness['missing_input_count']}")
     print(f"production_market_readiness_input_ledger={production_market_readiness_input_ledger['status']}")
+    print(f"production_market_readiness_input_history={production_market_readiness_input_history['status']}")
     print(f"production_evidence_claim_gate_status={production_evidence_claim_gate['status']}")
     print(f"production_evidence_claim_gate_decisions={production_evidence_claim_gate['claim_gate_decision_count']}")
     print(f"production_evidence_claim_gate_safe_claims={production_evidence_claim_gate['safe_research_claim_count']}")

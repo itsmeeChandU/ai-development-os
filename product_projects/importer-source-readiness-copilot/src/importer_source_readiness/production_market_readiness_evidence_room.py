@@ -16,6 +16,7 @@ from typing import Any
 STATUS = "production_market_readiness_evidence_room_ready_inputs_mapped_gates_closed"
 INPUT_RECORD_STATUS = "market_readiness_input_record_saved_local_pending_re_evaluation"
 INPUT_LEDGER_STATUS = "production_market_readiness_input_ledger_ready_claims_closed"
+INPUT_HISTORY_STATUS = "production_market_readiness_input_history_ready_local_audit_trail"
 READY_INPUT_DECISIONS = {"ready_for_my_area", "not_applicable_for_this_launch", "go_for_public_launch"}
 
 BLOCKED_MARKET_READY_CLAIMS = (
@@ -56,6 +57,12 @@ def _split_lines(value: Any) -> list[str]:
 def _clean_text(value: Any, limit: int = 1000) -> str:
     text = str(value or "").replace("\x00", "").strip()
     return text[:limit]
+
+
+def _safe_file_stem(value: Any, fallback: str = "record") -> str:
+    cleaned = "".join(char if char.isalnum() else "-" for char in str(value or fallback).strip())
+    cleaned = "-".join(part for part in cleaned.split("-") if part)
+    return cleaned.lower() or fallback
 
 
 def _source_anchors_for_gate(report: dict[str, Any], gate_id: str) -> list[dict[str, Any]]:
@@ -241,11 +248,30 @@ def save_market_readiness_input_record(fields: dict[str, Any], repo_root: Path) 
     input_dir.mkdir(parents=True, exist_ok=True)
     path = input_dir / f"{record['review_area']}.json"
     path.write_text(json.dumps(record, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    history_dir = input_dir / "history" / record["review_area"]
+    history_dir.mkdir(parents=True, exist_ok=True)
+    history_stem = _safe_file_stem(record.get("recorded_at"), "returned-input")
+    history_path = history_dir / f"{history_stem}.json"
+    counter = 2
+    while history_path.exists():
+        history_path = history_dir / f"{history_stem}-{counter}.json"
+        counter += 1
+    history_record = {
+        **record,
+        "status": INPUT_HISTORY_STATUS,
+        "current_record_path": str(path.relative_to(repo_root)),
+        "history_record_path": str(history_path.relative_to(repo_root)),
+        "history_preserved": True,
+        "claims_opened_by_history": False,
+    }
+    history_path.write_text(json.dumps(history_record, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     return {
         "status": INPUT_RECORD_STATUS,
         "record": record,
         "path": path,
         "relative_path": str(path.relative_to(repo_root)),
+        "history_path": history_path,
+        "history_relative_path": str(history_path.relative_to(repo_root)),
         "external_effects_created": False,
         "claims_opened": False,
     }
@@ -288,6 +314,69 @@ def _input_records_from_folder(input_dir: Path) -> tuple[list[dict[str, Any]], l
         payload["source_file"] = path.name
         records.append(payload)
     return records, invalid_records
+
+
+def _input_history_from_folder(input_dir: Path) -> dict[str, Any]:
+    history_dir = input_dir / "history"
+    records: list[dict[str, Any]] = []
+    invalid_records: list[dict[str, Any]] = []
+    if history_dir.exists():
+        for path in sorted(history_dir.glob("*/*.json")):
+            try:
+                payload = json.loads(path.read_text(encoding="utf-8"))
+            except (json.JSONDecodeError, OSError) as exc:
+                invalid_records.append(
+                    {
+                        "source_file": str(path.relative_to(input_dir)),
+                        "status": "invalid_history_json",
+                        "error": str(exc),
+                        "claims_opened_by_history": False,
+                    }
+                )
+                continue
+            if not isinstance(payload, dict):
+                invalid_records.append(
+                    {
+                        "source_file": str(path.relative_to(input_dir)),
+                        "status": "invalid_history_json",
+                        "error": "JSON input history must be an object",
+                        "claims_opened_by_history": False,
+                    }
+                )
+                continue
+            payload["source_file"] = str(path.relative_to(input_dir))
+            records.append(payload)
+    rows = [
+        {
+            "review_area": record.get("review_area"),
+            "plain_title": record.get("plain_title"),
+            "decision": record.get("decision"),
+            "reviewer_name": record.get("reviewer_name") or record.get("approver") or "",
+            "recorded_at": record.get("recorded_at"),
+            "signed_at": record.get("signed_at") or record.get("decided_at") or "",
+            "source_file": record.get("source_file"),
+            "minimum_input_present": record.get("minimum_input_present") is True,
+            "ready_decision_candidate": record.get("ready_decision_candidate") is True,
+            "history_preserved": record.get("history_preserved") is True,
+            "claims_opened_by_history": False,
+        }
+        for record in sorted(records, key=lambda row: str(row.get("recorded_at") or row.get("source_file") or ""), reverse=True)
+    ]
+    return {
+        "generated_at": _now(),
+        "status": INPUT_HISTORY_STATUS,
+        "history_folder": "external_inputs/history/",
+        "history_record_count": len(records),
+        "invalid_history_record_count": len(invalid_records),
+        "history_rows": rows,
+        "invalid_history_records": invalid_records,
+        "claims_opened_by_history": False,
+        "external_effects_created": False,
+        "proof_boundary": (
+            "Input history preserves returned review iterations for audit. It does not approve launch, payments, "
+            "customs/trade claims, legal/privacy/security claims, buyer validation, or supplier verification."
+        ),
+    }
 
 
 def _record_missing_fields(record: dict[str, Any]) -> list[str]:
@@ -389,6 +478,7 @@ def build_market_readiness_input_ledger(repo_root: Path | None = None) -> dict[s
     templates = _load_json(graph / "go_live_input_templates.json", {})
     input_dir = root / "external_inputs"
     records, invalid_records = _input_records_from_folder(input_dir)
+    input_history = _input_history_from_folder(input_dir)
     records_by_area: dict[str, list[dict[str, Any]]] = {
         str(row.get("review_area")): [] for row in templates.get("templates", [])
     }
@@ -425,6 +515,8 @@ def build_market_readiness_input_ledger(repo_root: Path | None = None) -> dict[s
         "status": INPUT_LEDGER_STATUS,
         "review_area_count": len(rows),
         "input_record_count": len(records),
+        "history_record_count": input_history["history_record_count"],
+        "invalid_history_record_count": input_history["invalid_history_record_count"],
         "accepted_area_count": accepted_count,
         "not_received_area_count": not_received_count,
         "incomplete_area_count": incomplete_count,
@@ -433,6 +525,7 @@ def build_market_readiness_input_ledger(repo_root: Path | None = None) -> dict[s
         "all_areas_accepted": accepted_count == len(rows) and bool(rows),
         "public_launch_ready_by_ledger": accepted_count == len(rows) and final_row.get("decision") == "go_for_public_launch",
         "input_folder": "external_inputs/",
+        "input_history": input_history,
         "ledger_rows": rows,
         "invalid_records": invalid_records + unassigned_records,
         "blocked_claims": list(BLOCKED_MARKET_READY_CLAIMS),
@@ -528,6 +621,8 @@ def build_production_market_readiness_evidence_room(repo_root: Path | None = Non
         "input_ledger": input_ledger,
         "input_ledger_status": input_ledger["status"],
         "input_ledger_route": "/api/market-readiness/input-ledger",
+        "input_history_status": input_ledger["input_history"]["status"],
+        "input_history_route": "/api/market-readiness/input-history",
         "input_capture_enabled_local": True,
         "input_capture_route": "/api/market-readiness/inputs",
         "template_status": templates.get("status", "missing"),
@@ -537,6 +632,7 @@ def build_production_market_readiness_evidence_room(repo_root: Path | None = Non
         "safe_next_loop": [
             "Collect the missing real-world input files in external_inputs/.",
             "Use production_market_readiness_input_ledger.json to inspect incomplete or unaccepted returned inputs.",
+            "Use production_market_readiness_input_history.json to preserve every returned-input iteration.",
             "Rerun scripts/run_external_validation_requirements.py --input-dir external_inputs.",
             "Rerun scripts/run_production_market_readiness_evidence_room.py.",
             "Route any returned issue into external_review_blocker_ledger.jsonl before launch scope changes.",
@@ -570,6 +666,7 @@ def render_market_readiness_evidence_room_markdown(payload: dict[str, Any]) -> s
         f"- Local returned-input capture: {str(payload['input_capture_enabled_local']).lower()}",
         f"- Input capture route: `{payload['input_capture_route']}`",
         f"- Input ledger route: `{payload['input_ledger_route']}`",
+        f"- Input history route: `{payload['input_history_route']}`",
         "",
         "## Returned Input Ledger",
         "",
@@ -577,6 +674,7 @@ def render_market_readiness_evidence_room_markdown(payload: dict[str, Any]) -> s
         f"- Not received areas: {payload['input_ledger']['not_received_area_count']}",
         f"- Needs more evidence: {payload['input_ledger']['needs_more_evidence_area_count']}",
         f"- Incomplete areas: {payload['input_ledger']['incomplete_area_count']}",
+        f"- Preserved history records: {payload['input_ledger']['history_record_count']}",
         f"- Claims opened by ledger: {str(payload['input_ledger']['claims_opened_by_ledger']).lower()}",
         "",
         "## Work Orders",
@@ -612,6 +710,7 @@ def write_production_market_readiness_evidence_room_artifacts(payload: dict[str,
     reviewer_cards_path = graph / "production_market_readiness_reviewer_brief_cards.json"
     matrix_path = graph / "production_market_readiness_gate_status_matrix.json"
     input_ledger_path = graph / "production_market_readiness_input_ledger.json"
+    input_history_path = graph / "production_market_readiness_input_history.json"
     doc_path = docs / "PRODUCTION_MARKET_READINESS_EVIDENCE_ROOM.md"
 
     manifest_path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
@@ -663,6 +762,7 @@ def write_production_market_readiness_evidence_room_artifacts(payload: dict[str,
         encoding="utf-8",
     )
     input_ledger_path.write_text(json.dumps(payload["input_ledger"], indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    input_history_path.write_text(json.dumps(payload["input_ledger"]["input_history"], indent=2, sort_keys=True) + "\n", encoding="utf-8")
     doc_path.write_text(render_market_readiness_evidence_room_markdown(payload), encoding="utf-8")
     return {
         "manifest": manifest_path,
@@ -670,5 +770,6 @@ def write_production_market_readiness_evidence_room_artifacts(payload: dict[str,
         "reviewer_cards": reviewer_cards_path,
         "matrix": matrix_path,
         "input_ledger": input_ledger_path,
+        "input_history": input_history_path,
         "doc": doc_path,
     }

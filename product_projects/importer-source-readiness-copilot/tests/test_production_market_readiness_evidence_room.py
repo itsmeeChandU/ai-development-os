@@ -12,6 +12,7 @@ if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
 from importer_source_readiness.production_market_readiness_evidence_room import (
+    INPUT_HISTORY_STATUS,
     INPUT_LEDGER_STATUS,
     INPUT_RECORD_STATUS,
     STATUS,
@@ -136,11 +137,52 @@ class ProductionMarketReadinessEvidenceRoomTests(unittest.TestCase):
 
             self.assertEqual(result["status"], INPUT_RECORD_STATUS)
             self.assertEqual(result["relative_path"], "external_inputs/real_users_private_beta_outcomes.json")
+            self.assertTrue(result["history_relative_path"].startswith("external_inputs/history/real_users_private_beta_outcomes/"))
             self.assertTrue(result["path"].exists())
+            self.assertTrue(result["history_path"].exists())
             written = json.loads(result["path"].read_text(encoding="utf-8"))
+            history = json.loads(result["history_path"].read_text(encoding="utf-8"))
             self.assertEqual(written["review_area"], "real_users_private_beta_outcomes")
+            self.assertEqual(history["status"], INPUT_HISTORY_STATUS)
+            self.assertTrue(history["history_preserved"])
+            self.assertFalse(history["claims_opened_by_history"])
             self.assertFalse(written["claims_opened_by_recording"])
             self.assertEqual(manifest["input_capture_route"], "/api/market-readiness/inputs")
+
+    def test_input_record_writer_preserves_multiple_history_versions_for_same_area(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            self._temp_root_with_input_templates(root)
+            first = save_market_readiness_input_record(
+                {
+                    "review_area": "buyer_supplier_validation",
+                    "reviewer_name": "Commercial owner",
+                    "reviewer_role": "Founder",
+                    "scope_reviewed": "Buyer feedback v1",
+                    "decision": "need_more_evidence",
+                    "signed_at": "2026-06-28",
+                },
+                root,
+            )
+            second = save_market_readiness_input_record(
+                {
+                    "review_area": "buyer_supplier_validation",
+                    "reviewer_name": "Commercial owner",
+                    "reviewer_role": "Founder",
+                    "scope_reviewed": "Buyer feedback v2",
+                    "decision": "ready_for_my_area",
+                    "signed_at": "2026-06-28",
+                },
+                root,
+            )
+
+            self.assertNotEqual(first["history_relative_path"], second["history_relative_path"])
+            ledger = build_market_readiness_input_ledger(root)
+            rows = {row["review_area"]: row for row in ledger["ledger_rows"]}
+            self.assertEqual(ledger["history_record_count"], 2)
+            self.assertEqual(ledger["input_history"]["status"], INPUT_HISTORY_STATUS)
+            self.assertEqual(rows["buyer_supplier_validation"]["status"], "accepted_for_area")
+            self.assertFalse(ledger["input_history"]["claims_opened_by_history"])
 
     def test_input_ledger_marks_empty_inputs_as_not_received(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
@@ -151,6 +193,7 @@ class ProductionMarketReadinessEvidenceRoomTests(unittest.TestCase):
             self.assertEqual(ledger["status"], INPUT_LEDGER_STATUS)
             self.assertEqual(ledger["review_area_count"], 8)
             self.assertEqual(ledger["input_record_count"], 0)
+            self.assertEqual(ledger["history_record_count"], 0)
             self.assertEqual(ledger["accepted_area_count"], 0)
             self.assertEqual(ledger["not_received_area_count"], 8)
             self.assertFalse(ledger["public_launch_ready_by_ledger"])
@@ -252,6 +295,9 @@ class ProductionMarketReadinessEvidenceRoomTests(unittest.TestCase):
             self.assertEqual(written_cards["status"], "production_market_readiness_reviewer_brief_cards_ready")
             self.assertEqual(written_matrix["status"], "production_market_readiness_gate_status_matrix_ready")
             self.assertEqual(written_input_ledger["status"], INPUT_LEDGER_STATUS)
+            self.assertTrue(paths["input_history"].exists())
+            written_input_history = json.loads(paths["input_history"].read_text(encoding="utf-8"))
+            self.assertEqual(written_input_history["status"], INPUT_HISTORY_STATUS)
             self.assertIn("Production Market Readiness Evidence Room", written_doc)
             self.assertIn("Returned Input Ledger", written_doc)
             self.assertIn("Market-ready claim allowed: false", written_doc)

@@ -16,6 +16,7 @@ The evidence room organizes real go-live inputs and review work orders. It is no
 - Local returned-input capture: true
 - Input capture route: `/api/market-readiness/inputs`
 - Input ledger route: `/api/market-readiness/input-ledger`
+- Input history route: `/api/market-readiness/input-history`
 
 ## Returned Input Ledger
 
@@ -23,6 +24,7 @@ The evidence room organizes real go-live inputs and review work orders. It is no
 - Not received areas: 8
 - Needs more evidence: 0
 - Incomplete areas: 0
+- Preserved history records: 0
 - Claims opened by ledger: false
 
 ## Work Orders
@@ -95,6 +97,7 @@ The evidence room organizes real go-live inputs and review work orders. It is no
 
 - Collect the missing real-world input files in external_inputs/.
 - Use production_market_readiness_input_ledger.json to inspect incomplete or unaccepted returned inputs.
+- Use production_market_readiness_input_history.json to preserve every returned-input iteration.
 - Rerun scripts/run_external_validation_requirements.py --input-dir external_inputs.
 - Rerun scripts/run_production_market_readiness_evidence_room.py.
 - Route any returned issue into external_review_blocker_ledger.jsonl before launch scope changes.

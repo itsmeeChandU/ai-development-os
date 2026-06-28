@@ -95,6 +95,7 @@ API_ROUTES = {
     "/api/launch-control-plane": "system_review_graph/production_launch_control_plane_manifest.json",
     "/api/market-readiness": "system_review_graph/production_market_readiness_evidence_room_manifest.json",
     "/api/market-readiness/input-ledger": "system_review_graph/production_market_readiness_input_ledger.json",
+    "/api/market-readiness/input-history": "system_review_graph/production_market_readiness_input_history.json",
     "/api/product-operations/report": "system_review_graph/product_operations_report.json",
 }
 
@@ -1619,6 +1620,7 @@ def _render_launch_operations(repo_root: Path) -> str:
 def _render_market_readiness(repo_root: Path) -> str:
     room = _load_graph_json(repo_root, "production_market_readiness_evidence_room_manifest.json")
     input_ledger = room.get("input_ledger") or _load_graph_json(repo_root, "production_market_readiness_input_ledger.json")
+    input_history = input_ledger.get("input_history") or _load_graph_json(repo_root, "production_market_readiness_input_history.json")
     form_contract = room.get("input_form_contract", {})
     review_area_options = _select_labeled_options(
         [
@@ -1661,6 +1663,16 @@ def _render_market_readiness(repo_root: Path) -> str:
         "</tr>"
         for row in input_ledger.get("ledger_rows", [])
     )
+    history_rows = "".join(
+        "<tr>"
+        f"<td>{escape(str(row.get('recorded_at') or 'Waiting'))}</td>"
+        f"<td>{escape(str(row.get('plain_title') or _plain_label(row.get('review_area'))))}</td>"
+        f"<td>{escape(str(row.get('reviewer_name') or 'Not recorded'))}</td>"
+        f"<td>{escape(_plain_label(row.get('decision') or 'waiting'))}</td>"
+        f"<td>{escape(str(row.get('source_file') or ''))}</td>"
+        "</tr>"
+        for row in input_history.get("history_rows", [])[:8]
+    )
     blocked = _list_items(room.get("blocked_claims", []))
     next_loop = _list_items(room.get("safe_next_loop", []))
     body = f"""
@@ -1677,6 +1689,7 @@ def _render_market_readiness(repo_root: Path) -> str:
     {_button_link("/launch-operations", "Launch operations", "shield", tone="secondary")}
     {_button_link("/api/market-readiness", "Open JSON", "database", tone="secondary")}
     {_button_link("/api/market-readiness/input-ledger", "Input ledger", "list-checks", tone="secondary")}
+    {_button_link("/api/market-readiness/input-history", "Input history", "history", tone="secondary")}
     {_button_link("/system_review_graph/production_market_readiness_evidence_work_orders.json", "Work orders", "file-text", tone="secondary")}
   </div>
 </section>
@@ -1712,6 +1725,19 @@ def _render_market_readiness(repo_root: Path) -> str:
   <table>
     <thead><tr><th>Area</th><th>Input Status</th><th>Who Answered</th><th>Decision</th><th>Missing</th><th>Next</th></tr></thead>
     <tbody>{ledger_rows or '<tr><td colspan="6">Run scripts/run_production_market_readiness_evidence_room.py to generate the input ledger.</td></tr>'}</tbody>
+  </table>
+</section>
+<section class="surface">
+  <h2>Input History</h2>
+  <p class="note">{escape(str(input_history.get('proof_boundary') or 'Every returned-input iteration is preserved locally for audit.'))}</p>
+  <div class="grid grid-3">
+    {_metric_card("History Records", input_history.get("history_record_count"), "Saved returned-input iterations.")}
+    {_metric_card("Invalid History", input_history.get("invalid_history_record_count"), "Files that need repair.")}
+    {_metric_card("Claims Opened", input_history.get("claims_opened_by_history"), "Must stay false.")}
+  </div>
+  <table>
+    <thead><tr><th>Recorded</th><th>Area</th><th>Who</th><th>Decision</th><th>History File</th></tr></thead>
+    <tbody>{history_rows or '<tr><td colspan="5">No returned inputs have been recorded yet.</td></tr>'}</tbody>
   </table>
 </section>
 <section class="surface">
@@ -2824,6 +2850,7 @@ def _index_payload(repo_root: Path) -> dict[str, Any]:
                 "/api/product-operations/report",
                 "/api/market-readiness",
                 "/api/market-readiness/input-ledger",
+                "/api/market-readiness/input-history",
                 "/api/market-readiness/inputs",
                 "/api/product-operations/run",
                 "/api/agent-tools/:tool",

@@ -218,6 +218,7 @@ def main() -> int:
     production_market_intelligence = _load_json(ROOT / "system_review_graph" / "production_market_intelligence_manifest.json")
     production_market_readiness = _load_json(ROOT / "system_review_graph" / "production_market_readiness_evidence_room_manifest.json")
     production_market_readiness_input_ledger = _load_json(ROOT / "system_review_graph" / "production_market_readiness_input_ledger.json")
+    production_market_readiness_input_history = _load_json(ROOT / "system_review_graph" / "production_market_readiness_input_history.json")
     production_document_intelligence = _load_json(ROOT / "system_review_graph" / "production_document_intelligence_manifest.json")
     production_evidence_claim_gate = _load_json(ROOT / "system_review_graph" / "production_evidence_claim_gate_manifest.json")
     production_decision_scoring = _load_json(ROOT / "system_review_graph" / "production_decision_scoring_manifest.json")
@@ -480,6 +481,7 @@ def main() -> int:
         "system_review_graph/production_market_readiness_reviewer_brief_cards.json",
         "system_review_graph/production_market_readiness_gate_status_matrix.json",
         "system_review_graph/production_market_readiness_input_ledger.json",
+        "system_review_graph/production_market_readiness_input_history.json",
         "system_review_graph/production_trade_discovery_manifest.json",
         "system_review_graph/production_trade_discovery_category_map.json",
         "system_review_graph/production_trade_discovery_country_lanes.json",
@@ -2204,8 +2206,14 @@ def main() -> int:
         failures.append("market readiness evidence room should include the returned-input ledger")
     if production_market_readiness.get("input_ledger_route") != "/api/market-readiness/input-ledger":
         failures.append("market readiness evidence room should expose the returned-input ledger route")
+    if production_market_readiness.get("input_history_status") != "production_market_readiness_input_history_ready_local_audit_trail":
+        failures.append("market readiness evidence room should include the returned-input history")
+    if production_market_readiness.get("input_history_route") != "/api/market-readiness/input-history":
+        failures.append("market readiness evidence room should expose the returned-input history route")
     if production_market_readiness_input_ledger.get("status") != "production_market_readiness_input_ledger_ready_claims_closed":
         failures.append("market readiness input ledger should be generated")
+    if production_market_readiness_input_history.get("status") != "production_market_readiness_input_history_ready_local_audit_trail":
+        failures.append("market readiness input history should be generated")
     if production_market_readiness_input_ledger.get("review_area_count") != 8:
         failures.append("market readiness input ledger should cover the eight review areas")
     if production_market_readiness_input_ledger.get("accepted_area_count") != production_market_readiness.get("ready_input_count"):
@@ -2222,6 +2230,10 @@ def main() -> int:
         failures.append("market readiness input ledger must not approve public launch")
     if production_market_readiness_input_ledger.get("invalid_record_count") != 0:
         failures.append("market readiness input ledger should not contain invalid records in committed artifacts")
+    if production_market_readiness_input_history.get("claims_opened_by_history") is not False:
+        failures.append("market readiness input history must not open claims")
+    if production_market_readiness_input_history.get("invalid_history_record_count") != 0:
+        failures.append("market readiness input history should not contain invalid records in committed artifacts")
     for key in (
         "public_launch_ready",
         "hosted_private_beta_ready",
@@ -2518,6 +2530,7 @@ def main() -> int:
     print(f"production_market_readiness_work_orders={production_market_readiness['work_order_count']}")
     print(f"production_market_readiness_missing_inputs={production_market_readiness['missing_input_count']}")
     print(f"production_market_readiness_input_ledger={production_market_readiness_input_ledger['status']}")
+    print(f"production_market_readiness_input_history={production_market_readiness_input_history['status']}")
     print(f"production_evidence_claim_gate_status={production_evidence_claim_gate['status']}")
     print(f"production_evidence_claim_gate_decisions={production_evidence_claim_gate['claim_gate_decision_count']}")
     print(f"production_evidence_claim_gate_safe_claims={production_evidence_claim_gate['safe_research_claim_count']}")

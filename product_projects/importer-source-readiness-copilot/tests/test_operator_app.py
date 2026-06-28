@@ -181,6 +181,7 @@ class OperatorAppTests(unittest.TestCase):
             "/api/launch-control-plane": "production_launch_control_plane_ready_exact_scope_public_launch_blocked",
             "/api/market-readiness": "production_market_readiness_evidence_room_ready_inputs_mapped_gates_closed",
             "/api/market-readiness/input-ledger": "production_market_readiness_input_ledger_ready_claims_closed",
+            "/api/market-readiness/input-history": "production_market_readiness_input_history_ready_local_audit_trail",
         }
         for path, expected_status in api_routes.items():
             with self.subTest(path=path):
@@ -222,7 +223,9 @@ class OperatorAppTests(unittest.TestCase):
         self.assertIn('action="/api/market-readiness/inputs"', html)
         self.assertIn("Record A Returned Input", html)
         self.assertIn("Returned Inputs", html)
+        self.assertIn("Input History", html)
         self.assertIn("/api/market-readiness/input-ledger", html)
+        self.assertIn("/api/market-readiness/input-history", html)
         self.assertIn("need_more_evidence", html)
 
         body = urlencode(
