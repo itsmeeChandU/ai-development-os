@@ -44,7 +44,7 @@
     "team_workspace_activity": true
   },
   "external_effects_created": false,
-  "generated_at": "2026-06-28T17:33:57+00:00",
+  "generated_at": "2026-06-28T18:15:10+00:00",
   "operation_count": 12,
   "operations": [
     {
@@ -59,7 +59,7 @@
       ],
       "details": {},
       "external_effects_created": false,
-      "generated_at": "2026-06-28T17:33:52+00:00",
+      "generated_at": "2026-06-28T18:15:05+00:00",
       "operation": "record_data_intake_snapshot",
       "operation_id": "op-record_data_intake_snapshot-1",
       "packet_id": "packet-frozen-tuna-canada-001"
@@ -78,7 +78,7 @@
       ],
       "details": {},
       "external_effects_created": false,
-      "generated_at": "2026-06-28T17:33:52+00:00",
+      "generated_at": "2026-06-28T18:15:05+00:00",
       "operation": "generate_business_decision_report",
       "operation_id": "op-generate_business_decision_report-2",
       "packet_id": "packet-frozen-tuna-canada-001"
@@ -97,7 +97,7 @@
         "source_refresh_rows": 3
       },
       "external_effects_created": false,
-      "generated_at": "2026-06-28T17:33:57+00:00",
+      "generated_at": "2026-06-28T18:15:10+00:00",
       "operation": "run_research_execution",
       "operation_id": "op-run_research_execution-3",
       "packet_id": "packet-frozen-tuna-canada-001"
@@ -115,7 +115,7 @@
         "missing_count": 10
       },
       "external_effects_created": false,
-      "generated_at": "2026-06-28T17:33:57+00:00",
+      "generated_at": "2026-06-28T18:15:10+00:00",
       "operation": "generate_missing_evidence_report",
       "operation_id": "op-generate_missing_evidence_report-4",
       "packet_id": "packet-frozen-tuna-canada-001"
@@ -131,7 +131,7 @@
       ],
       "details": {},
       "external_effects_created": false,
-      "generated_at": "2026-06-28T17:33:57+00:00",
+      "generated_at": "2026-06-28T18:15:10+00:00",
       "operation": "generate_starter_checklist",
       "operation_id": "op-generate_starter_checklist-5",
       "packet_id": "packet-frozen-tuna-canada-001"
@@ -147,7 +147,7 @@
       ],
       "details": {},
       "external_effects_created": false,
-      "generated_at": "2026-06-28T17:33:57+00:00",
+      "generated_at": "2026-06-28T18:15:10+00:00",
       "operation": "generate_chatgpt_safe_summary",
       "operation_id": "op-generate_chatgpt_safe_summary-6",
       "packet_id": "packet-frozen-tuna-canada-001"
@@ -164,7 +164,7 @@
       ],
       "details": {},
       "external_effects_created": false,
-      "generated_at": "2026-06-28T17:33:57+00:00",
+      "generated_at": "2026-06-28T18:15:10+00:00",
       "operation": "generate_broker_packet",
       "operation_id": "op-generate_broker_packet-7",
       "packet_id": "packet-frozen-tuna-canada-001"
@@ -182,7 +182,7 @@
         "work_order_count": 3
       },
       "external_effects_created": false,
-      "generated_at": "2026-06-28T17:33:57+00:00",
+      "generated_at": "2026-06-28T18:15:10+00:00",
       "operation": "request_expert_review_work_orders",
       "operation_id": "op-request_expert_review_work_orders-8",
       "packet_id": "packet-frozen-tuna-canada-001"
@@ -201,7 +201,7 @@
         "authorization_status": "blocked_requires_upgrade_or_manual_approval"
       },
       "external_effects_created": false,
-      "generated_at": "2026-06-28T17:33:57+00:00",
+      "generated_at": "2026-06-28T18:15:10+00:00",
       "operation": "authorize_billing_usage",
       "operation_id": "op-authorize_billing_usage-9",
       "packet_id": "packet-frozen-tuna-canada-001"
@@ -216,7 +216,7 @@
       ],
       "details": {},
       "external_effects_created": false,
-      "generated_at": "2026-06-28T17:33:57+00:00",
+      "generated_at": "2026-06-28T18:15:10+00:00",
       "operation": "record_team_workspace_activity",
       "operation_id": "op-record_team_workspace_activity-10",
       "packet_id": "packet-frozen-tuna-canada-001"
@@ -231,7 +231,7 @@
       ],
       "details": {},
       "external_effects_created": false,
-      "generated_at": "2026-06-28T17:33:57+00:00",
+      "generated_at": "2026-06-28T18:15:10+00:00",
       "operation": "record_launch_control_event",
       "operation_id": "op-record_launch_control_event-11",
       "packet_id": "packet-frozen-tuna-canada-001"
@@ -248,7 +248,7 @@
         "customer_visible_status": "needs_expert_review"
       },
       "external_effects_created": false,
-      "generated_at": "2026-06-28T17:33:57+00:00",
+      "generated_at": "2026-06-28T18:15:10+00:00",
       "operation": "get_packet_status",
       "operation_id": "op-get_packet_status-12",
       "packet_id": "packet-frozen-tuna-canada-001"

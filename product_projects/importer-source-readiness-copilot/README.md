@@ -71,6 +71,7 @@ python3 scripts/run_production_data_model.py
 python3 scripts/run_production_packet_engine.py
 python3 scripts/run_production_country_source_engine.py
 python3 scripts/run_production_trade_discovery_engine.py
+python3 scripts/run_production_trade_data_catalog_engine.py
 python3 scripts/run_production_market_intelligence_engine.py
 python3 scripts/run_production_document_intelligence_engine.py
 python3 scripts/run_production_evidence_claim_gate_engine.py
@@ -146,6 +147,11 @@ system_review_graph/production_trade_discovery_country_lanes.json
 system_review_graph/production_trade_discovery_beginner_flows.json
 system_review_graph/production_trade_discovery_source_registry.json
 system_review_graph/production_trade_discovery_requirement_audit.json
+system_review_graph/production_trade_data_catalog_manifest.json
+system_review_graph/production_trade_data_query_templates.json
+system_review_graph/production_trade_data_query_work_orders.json
+system_review_graph/production_trade_data_browse_cards.json
+system_review_graph/production_trade_data_ingestion_policy.json
 system_review_graph/production_market_intelligence_manifest.json
 system_review_graph/production_market_signals.json
 system_review_graph/production_market_dataset_connectors.json
@@ -438,6 +444,18 @@ families, country lanes into Canada, Canada export lanes, source routes, and
 no-document starter flows before they know an HS code or have files. It still
 does not recommend products, prove market demand, validate buyers, verify
 suppliers, approve customs/CFIA status, or prove shipment readiness.
+
+The expected production trade data catalog status is:
+
+```text
+production_trade_data_catalog_engine_ready_query_plans_no_values_loaded
+```
+
+That means discovery choices are converted into plain-language browse cards,
+official-source query templates, and lane/category work orders. It still does
+not show numeric trade values, rank products, prove demand, prove profit,
+validate buyers, verify suppliers, or approve trade action until dated dataset
+rows and review evidence are attached.
 
 The expected production document intelligence status is:
 

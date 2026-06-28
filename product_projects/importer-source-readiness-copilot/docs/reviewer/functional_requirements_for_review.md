@@ -20,6 +20,7 @@ The current product is usable for local review and controlled preparation. It do
 
 - Create or inspect a Trade Readiness Packet.
 - Let beginners browse Canada import/export directions, product families, and country lanes before they know an HS code or have files.
+- Turn discovery choices into trade-data query templates and work orders without showing unverified values.
 - Support a beginner flow with little or no documentation.
 - Support a no-document quick check that creates a missing-evidence packet without showing upload-only actions.
 - Support uploaded PDF triage with quarantine metadata, draft field extraction, user confirmation, delete-file action, and blocked-claim boundaries.
@@ -34,6 +35,7 @@ The current product is usable for local review and controlled preparation. It do
 
 - Quick check: user gives product and country details, optionally adds documents, then receives missing evidence and next safe action.
 - Trade discovery: user browses source-routed product families and country lanes, then chooses a safe next research move or starter packet.
+- Trade data catalog: user sees required inputs, source routes, and query work orders before any numeric value or market conclusion is shown.
 - Packet workspace: user reviews the packet, evidence, official-source routes, unresolved items, and report outputs.
 - Document intelligence: product separates official samples, synthetic parser QA fixtures, no-document intake, and customer-uploaded evidence.
 - Business decision preparation: product runs the decision tree, scores, source freshness check, buyer/supplier evidence ladder, and allowed/blocked action matrix.
@@ -48,6 +50,15 @@ The current product is usable for local review and controlled preparation. It do
 - Beginner flows: `8`.
 - Users can browse Canada import/export research paths before choosing a product, HS code, buyer, supplier, or documents.
 - The product does not recommend products, prove demand, prove profit, validate buyers, verify suppliers, approve customs/CFIA status, or prove shipment readiness.
+
+## Trade Data Catalog Implemented
+
+- Trade data catalog status: `production_trade_data_catalog_engine_ready_query_plans_no_values_loaded`.
+- Query templates: `7`.
+- Browse cards: `5`.
+- Query work orders: `206`.
+- The catalog can show source routes and required inputs before ingestion.
+- Numeric values, product rankings, demand proof, profitability, buyer validation, supplier verification, and approval claims remain blocked.
 
 ## Document Intelligence Implemented
 

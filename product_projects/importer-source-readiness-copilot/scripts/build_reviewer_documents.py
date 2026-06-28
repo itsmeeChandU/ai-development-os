@@ -189,6 +189,7 @@ def _status_context() -> dict[str, Any]:
     production_trust = _load_json(GRAPH / "production_security_privacy_reliability_manifest.json")
     production_launch = _load_json(GRAPH / "production_launch_control_plane_manifest.json")
     production_trade_discovery = _load_json(GRAPH / "production_trade_discovery_manifest.json")
+    production_trade_data_catalog = _load_json(GRAPH / "production_trade_data_catalog_manifest.json")
     row = business["packet_rows"][0]
     return {
         "today": date.today().isoformat(),
@@ -208,6 +209,7 @@ def _status_context() -> dict[str, Any]:
         "production_trust": production_trust,
         "production_launch": production_launch,
         "production_trade_discovery": production_trade_discovery,
+        "production_trade_data_catalog": production_trade_data_catalog,
         "packet": row,
     }
 
@@ -227,6 +229,7 @@ def _functional(ctx: dict[str, Any]) -> ReviewerDocument:
     trust = ctx["production_trust"]
     launch = ctx["production_launch"]
     discovery = ctx["production_trade_discovery"]
+    trade_data = ctx["production_trade_data_catalog"]
     return ReviewerDocument(
         title="Functional Requirements For External Review",
         filename="functional_requirements_for_review.md",
@@ -257,6 +260,7 @@ def _functional(ctx: dict[str, Any]) -> ReviewerDocument:
                 bullets=(
                     "Create or inspect a Trade Readiness Packet.",
                     "Let beginners browse Canada import/export directions, product families, and country lanes before they know an HS code or have files.",
+                    "Turn discovery choices into trade-data query templates and work orders without showing unverified values.",
                     "Support a beginner flow with little or no documentation.",
                     "Support a no-document quick check that creates a missing-evidence packet without showing upload-only actions.",
                     "Support uploaded PDF triage with quarantine metadata, draft field extraction, user confirmation, delete-file action, and blocked-claim boundaries.",
@@ -273,6 +277,7 @@ def _functional(ctx: dict[str, Any]) -> ReviewerDocument:
                 bullets=(
                     "Quick check: user gives product and country details, optionally adds documents, then receives missing evidence and next safe action.",
                     "Trade discovery: user browses source-routed product families and country lanes, then chooses a safe next research move or starter packet.",
+                    "Trade data catalog: user sees required inputs, source routes, and query work orders before any numeric value or market conclusion is shown.",
                     "Packet workspace: user reviews the packet, evidence, official-source routes, unresolved items, and report outputs.",
                     "Document intelligence: product separates official samples, synthetic parser QA fixtures, no-document intake, and customer-uploaded evidence.",
                     "Business decision preparation: product runs the decision tree, scores, source freshness check, buyer/supplier evidence ladder, and allowed/blocked action matrix.",
@@ -289,6 +294,17 @@ def _functional(ctx: dict[str, Any]) -> ReviewerDocument:
                     f"Beginner flows: `{discovery.get('beginner_flow_count')}`.",
                     "Users can browse Canada import/export research paths before choosing a product, HS code, buyer, supplier, or documents.",
                     "The product does not recommend products, prove demand, prove profit, validate buyers, verify suppliers, approve customs/CFIA status, or prove shipment readiness.",
+                ),
+            ),
+            Section(
+                "Trade Data Catalog Implemented",
+                bullets=(
+                    f"Trade data catalog status: `{trade_data['status']}`.",
+                    f"Query templates: `{trade_data.get('template_count')}`.",
+                    f"Browse cards: `{trade_data.get('browse_card_count')}`.",
+                    f"Query work orders: `{trade_data.get('query_work_order_count')}`.",
+                    "The catalog can show source routes and required inputs before ingestion.",
+                    "Numeric values, product rankings, demand proof, profitability, buyer validation, supplier verification, and approval claims remain blocked.",
                 ),
             ),
             Section(
@@ -473,6 +489,7 @@ def _business_logic(ctx: dict[str, Any]) -> ReviewerDocument:
     trust = ctx["production_trust"]
     launch = ctx["production_launch"]
     discovery = ctx["production_trade_discovery"]
+    trade_data = ctx["production_trade_data_catalog"]
     buyer_supplier = packet["buyer_supplier_evidence"]
     gate = packet["business_gate_decision"]
     market = packet["market_intelligence"]["market_signal_evaluation"]
@@ -500,6 +517,7 @@ def _business_logic(ctx: dict[str, Any]) -> ReviewerDocument:
                     "First persona: beginner-to-intermediate exporter.",
                     "Country path: Canada destination, Vietnam demo origin, India strategic next origin, Generic fallback.",
                     "Beginner discovery: users can browse Canada import/export categories and country lanes as research routes before a packet exists.",
+                    "Trade-data catalog: discovery choices become query plans and work orders, not market conclusions.",
                     "Core object: Trade Readiness Packet.",
                 ),
             ),
@@ -508,6 +526,7 @@ def _business_logic(ctx: dict[str, Any]) -> ReviewerDocument:
                 bullets=(
                     "12-question decision tree: trade direction, product, origin, destination, HS code, buyer/importer, importer of record, Incoterms, documents, regulated-product risk, official sources, and next safe move.",
                     "Trade discovery: supports pre-packet category browsing, Canada import/export lanes, regulated-goods warnings, official source routes, and no-document starter packet handoff.",
+                    "Trade data catalog: builds browse cards, source-query templates, lane/category query work orders, and ingestion policy before any numeric value is shown.",
                     "Starter flow: checks minimum inputs and allows a starter packet when product, country, direction, intended use, and source routes exist.",
                     "Market signal: computes a bounded local signal from source routes and evidence, capped before real demand proof.",
                     "Country packs: checks whether required import, tariff, regulated-product, restricted-party, and market/buyer source routes exist.",
@@ -529,6 +548,20 @@ def _business_logic(ctx: dict[str, Any]) -> ReviewerDocument:
                     f"Beginner flows: `{discovery.get('beginner_flow_count')}`.",
                     "Discovery rows are reference-only and source-routed.",
                     "Best product, demand, profitability, buyer validation, supplier verification, customs approval, CFIA approval, and shipment readiness claims remain blocked.",
+                ),
+            ),
+            Section(
+                "Trade Data Catalog Logic Implemented Now",
+                body=(
+                    "The catalog turns discovery lanes into query plans without pretending source data is already ingested.",
+                ),
+                bullets=(
+                    f"Trade data catalog status: `{trade_data['status']}`.",
+                    f"Query templates: `{trade_data.get('template_count')}`.",
+                    f"Browse cards: `{trade_data.get('browse_card_count')}`.",
+                    f"Query work orders: `{trade_data.get('query_work_order_count')}`.",
+                    "Manual query planning is allowed; approved connector status remains blocked until source terms and connector controls are reviewed.",
+                    "Numeric values and market conclusions require dated dataset rows, source URL, period, field mapping, limitation text, and review evidence.",
                 ),
             ),
             Section(
@@ -747,6 +780,7 @@ def _non_functional(ctx: dict[str, Any]) -> ReviewerDocument:
     trust = ctx["production_trust"]
     launch = ctx["production_launch"]
     discovery = ctx["production_trade_discovery"]
+    trade_data = ctx["production_trade_data_catalog"]
     return ReviewerDocument(
         title="Non-Functional Requirements For External Review",
         filename="non_functional_requirements_for_review.md",
@@ -786,6 +820,16 @@ def _non_functional(ctx: dict[str, Any]) -> ReviewerDocument:
                     "No trade value is shown unless a dated dataset row is ingested and cited.",
                     "No country lane is presented as best, safest, profitable, approved, or buyer-validated.",
                     "The UI must keep beginner language plain enough for business owners and conservative enough for external review.",
+                ),
+            ),
+            Section(
+                "Trade Data Catalog Boundary",
+                bullets=(
+                    f"Trade data catalog status: `{trade_data['status']}`.",
+                    "Browse cards and query work orders can show source routes and required inputs.",
+                    "Numeric values are hidden until dated dataset rows are attached.",
+                    "Approved connectors remain blocked until source terms, licensing, security, and audit controls are reviewed.",
+                    "No product ranking, demand proof, profitability, buyer validation, supplier verification, or approval claim can come from a query plan alone.",
                 ),
             ),
             Section(

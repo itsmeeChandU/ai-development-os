@@ -40,6 +40,7 @@
     "document_mode": "Quarantines uploaded PDFs, triages native text/OCR need, and requires user confirmation.",
     "opportunity_scanner": "Shows possible opportunity signals and research prompts only.",
     "saved_workspace": "Local SQLite/artifact workspace with account CTA and external hosting gates.",
+    "trade_data_catalog": "Turns discovery choices into source-routed query plans, browse cards, and dataset work orders without showing values.",
     "trade_discovery": "Lets beginner users browse Canada import/export categories and country lanes as source-routed research only.",
     "transport_readiness": "Creates freight-forwarder questions and blocks route/cost/shipment claims."
   },
@@ -131,6 +132,7 @@
       "/api/public/packets/:id/reports/broker.pdf",
       "/api/public/packets/:id/delete-files",
       "/api/trade-discovery",
+      "/api/trade-data-catalog",
       "/api/opportunities",
       "/api/country-coverage",
       "/api/billing/controls",
@@ -151,6 +153,7 @@
       "/tools",
       "/trade-check",
       "/trade-discovery",
+      "/trade-data-catalog",
       "/tools/import-readiness",
       "/tools/export-readiness",
       "/tools/buyer-broker-packet",

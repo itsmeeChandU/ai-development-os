@@ -63,6 +63,7 @@ The product helps users prepare trade readiness packets, organize evidence, revi
 | FR-35 | Provide production trust control plane without accepting real files | Implemented locally with trust controls, vendor register, incident runbooks, local backup/restore hash drill, and closed hosted/real-file gates | `production_security_privacy_reliability_manifest.json`, `production_trust_control_matrix.json` |
 | FR-36 | Provide exact-scope launch control plane without activation | Implemented locally with 13 launch gates, candidate public scope, blocked public scope, and public launch approval false | `production_launch_control_plane_manifest.json`, `production_launch_scope_matrix.json` |
 | FR-37 | Provide beginner trade discovery before packet creation | Implemented locally with Canada import/export browsing, category families, diverse country lanes, source routes, and no-document flows; recommendations and opportunity claims remain blocked | `production_trade_discovery_manifest.json`, `production_trade_discovery_category_map.json`, `production_trade_discovery_country_lanes.json` |
+| FR-38 | Provide trade-data query catalog without unverified values | Implemented locally with browse cards, query templates, lane/category query work orders, and ingestion policy; numeric values and market conclusions remain blocked | `production_trade_data_catalog_manifest.json`, `production_trade_data_query_work_orders.json`, `production_trade_data_ingestion_policy.json` |
 
 ## Current Main Workflows
 
@@ -135,6 +136,24 @@ qualified reviewer checks the relevant scope.
 6. Product does not recommend products, prove demand, prove profit, validate
    buyers, verify suppliers, approve customs/CFIA status, or prove shipment
    readiness.
+
+### Trade Data Catalog
+
+1. User can open plain-language browse cards for imports into Canada, exports
+   from Canada, origin-country comparison, possible importer leads, and
+   regulated-goods risk.
+2. Product maps each card to official-source query templates with required
+   inputs, optional inputs, allowed output fields after ingestion, and claim
+   boundaries.
+3. Product generates lane/category query work orders from discovery country
+   lanes and category families.
+4. Product allows manual query planning but blocks approved connector status
+   until source terms and connector controls are reviewed.
+5. Product does not show numeric trade values until a dated dataset row, source
+   URL, period, field mapping, and limitation text are attached.
+6. Product does not rank products as best or prove demand, profitability, buyer
+   validation, supplier verification, tariff status, regulated approval, or
+   shipment readiness.
 
 ### Production Document Intelligence
 
@@ -267,8 +286,8 @@ blocked.
 
 The runtime contract currently includes:
 
-- 50 customer UI routes
-- 56 API routes
+- 51 customer UI routes
+- 57 API routes
 - scoped expert review route
 - admin/source/gate/audit/health routes
 - public start, tool, result, confirmation, and report routes

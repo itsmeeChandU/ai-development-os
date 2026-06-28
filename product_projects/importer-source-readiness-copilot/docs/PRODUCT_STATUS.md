@@ -482,6 +482,30 @@ have files. It still does not recommend products, prove demand, prove profit,
 validate buyers, verify suppliers, approve customs/CFIA status, or prove
 shipment readiness.
 
+## Ready For Production Trade Data Catalog Review
+
+- trade data catalog status:
+  `production_trade_data_catalog_engine_ready_query_plans_no_values_loaded`
+- machine manifest:
+  `system_review_graph/production_trade_data_catalog_manifest.json`
+- query templates:
+  `system_review_graph/production_trade_data_query_templates.json`
+- query work orders:
+  `system_review_graph/production_trade_data_query_work_orders.json`
+- browse cards:
+  `system_review_graph/production_trade_data_browse_cards.json`
+- ingestion policy:
+  `system_review_graph/production_trade_data_ingestion_policy.json`
+- reviewer-readable doc: `docs/PRODUCTION_TRADE_DATA_CATALOG_ENGINE.md`
+- proof command: `python3 scripts/run_production_trade_data_catalog_engine.py`
+
+This means discovery choices are converted into official-source query plans and
+work orders for Canada imports, Canada exports, origin-country comparison,
+importer-lead lookup, regulated-goods overlays, market access, and global
+fallback context. Numeric values remain hidden until dated dataset rows are
+attached, and recommendations, demand, profitability, buyer validation, supplier
+verification, and approval claims remain blocked.
+
 ## Ready For Production Market Intelligence Review
 
 - market intelligence status:

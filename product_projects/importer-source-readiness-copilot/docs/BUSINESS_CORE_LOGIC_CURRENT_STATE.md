@@ -39,6 +39,7 @@ Current example flow: Vietnam origin to Canada destination for a food import pac
 | Source freshness promise | Checked before packet generation or paid review, not continuous legal freshness |
 | Outreach policy | Questions only for initial controlled scope; no automatic sending |
 | Beginner discovery policy | Browse product families and country lanes as source-routed research only; do not recommend products or claim demand |
+| Trade data policy | Query plans and work orders can be shown before ingestion; numeric values and market conclusions require dated dataset rows |
 
 ## Core Business Object
 
@@ -187,6 +188,27 @@ research yet.
 6. Product keeps best-product, demand, profitability, buyer validation,
    supplier verification, customs approval, CFIA approval, and shipment
    readiness claims closed.
+
+## Trade Data Catalog Business Logic
+
+The trade-data catalog converts discovery choices into query plans without
+pretending the data has already been ingested.
+
+1. Product exposes browse cards for imports into Canada, exports from Canada,
+   origin-country comparison, possible importer leads, regulated-goods risk,
+   and market-access context.
+2. Each browse card maps to query templates with official source routes,
+   required inputs, optional inputs, allowed output fields after ingestion, and
+   claim boundaries.
+3. Each discovery country/category lane creates query work orders so a user or
+   operator knows exactly what data row is needed next.
+4. Manual query planning is allowed, but approved connector status remains
+   blocked until source terms and connector controls are reviewed.
+5. Numeric values are not shown until a dated dataset row, source URL, period,
+   field mapping, and limitation text are attached.
+6. The catalog cannot rank the best product or market and cannot prove demand,
+   profitability, buyer validation, supplier verification, tariff status,
+   regulated approval, or shipment readiness.
 
 ## Business Scores
 

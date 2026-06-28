@@ -23,10 +23,14 @@ draft watermark, and records review status.
 
 ## Counts
 
+- Packets: 1
 - Report types: 12
 - Report records: 12
 - Export records: 36
 - Citation records: 132
+
+Report records are generated as report types per packet. In a multi-packet
+workspace, export counts increase without opening new claims.
 
 ## Gate Boundary
 

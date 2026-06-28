@@ -5,7 +5,7 @@
     "freight_forwarder_selected",
     "shipment_ready"
   ],
-  "generated_at": "2026-06-28T17:33:57+00:00",
+  "generated_at": "2026-06-28T18:15:10+00:00",
   "packet_count": 1,
   "proof_boundary": "Transport readiness prepares questions only; it does not optimize routes, guarantee costs, or approve shipment.",
   "rows": [

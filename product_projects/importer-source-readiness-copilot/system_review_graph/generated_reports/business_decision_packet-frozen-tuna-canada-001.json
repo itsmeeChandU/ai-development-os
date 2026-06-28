@@ -1314,11 +1314,11 @@
         "market_access_approved"
       ],
       "competitor_source_countries": [
+        "China",
         "Vietnam",
         "European Union",
-        "China",
-        "United States",
-        "Mexico"
+        "Mexico",
+        "United States"
       ],
       "destination": "Canada",
       "exporter_origin": "Vietnam",

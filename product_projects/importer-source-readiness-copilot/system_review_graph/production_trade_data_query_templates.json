@@ -1,0 +1,627 @@
+{
+  "generated_at": "2026-06-28T18:15:11+00:00",
+  "query_templates": [
+    {
+      "allowed_output_fields_after_ingestion": [
+        "period",
+        "product_or_hs_label",
+        "origin_country",
+        "destination_country",
+        "import_value",
+        "quantity",
+        "unit",
+        "source_id",
+        "source_url",
+        "checked_at"
+      ],
+      "allowed_to_rank_as_research_signal_after_ingestion": true,
+      "allowed_to_show_numeric_values": false,
+      "automation_ready": false,
+      "blocked_claims": [
+        "top_product_recommended",
+        "best_origin_country",
+        "best_destination_market",
+        "confirmed_market_size",
+        "guaranteed_demand",
+        "profitable_market",
+        "buyer_validated",
+        "supplier_verified",
+        "tariff_confirmed",
+        "regulated_product_approved",
+        "customs_approved",
+        "ready_to_ship"
+      ],
+      "business_use": "Rank research lanes for deeper validation.",
+      "claim_boundary": "Import rows are research signals only and do not prove demand, profit, buyer intent, or import approval.",
+      "direction": "import_into_canada",
+      "label": "Canada imports by product and origin",
+      "next_valid_move": "Collect required inputs, check source terms, run a manual or approved connector query, then attach dated rows.",
+      "optional_inputs": [
+        "hs_code_candidate",
+        "unit_of_measure",
+        "province_or_region_if_source_supports_it"
+      ],
+      "plain_language_question": "What goods does Canada import, and from which origin countries?",
+      "primary_source_ids": [
+        "ised-trade-data-online",
+        "statcan-wds"
+      ],
+      "required_inputs": [
+        "product_family_or_hs_candidate",
+        "origin_country",
+        "destination_country=Canada",
+        "period"
+      ],
+      "secondary_source_ids": [
+        "world-bank-wits",
+        "itc-trade-map"
+      ],
+      "source_routes": [
+        {
+          "access_mode": "manual_query_or_terms_checked_connector",
+          "claim_boundary": "Reference source only; does not prove market size, buyer demand, or revenue.",
+          "name": "ISED Trade Data Online",
+          "registry_status": "registered",
+          "source_id": "ised-trade-data-online",
+          "url": "https://ised-isde.canada.ca/site/trade-data-online/en/overview"
+        },
+        {
+          "access_mode": "manual_query_or_terms_checked_connector",
+          "claim_boundary": "Reference source only; a data-service route does not prove a current trade value until a dated dataset row is ingested and cited.",
+          "name": "Statistics Canada Web Data Service",
+          "registry_status": "registered",
+          "source_id": "statcan-wds",
+          "url": "https://www.statcan.gc.ca/en/developers/wds/user-guide"
+        },
+        {
+          "access_mode": "manual_query_or_terms_checked_connector",
+          "claim_boundary": "Reference source only; does not prove buyer demand, profitability, market entry approval, or compliance.",
+          "name": "World Bank World Integrated Trade Solution",
+          "registry_status": "registered",
+          "source_id": "world-bank-wits",
+          "url": "https://wits.worldbank.org/"
+        },
+        {
+          "access_mode": "manual_query_or_terms_checked_connector",
+          "claim_boundary": "Reference source only; company or market rows are research signals and lead routes, not buyer validation or demand proof.",
+          "name": "International Trade Centre Trade Map",
+          "registry_status": "registered",
+          "source_id": "itc-trade-map",
+          "url": "https://www.trademap.org/"
+        }
+      ],
+      "status": "query_template_ready_no_values_loaded",
+      "template_id": "canada_imports_by_product_origin",
+      "terms_review_required": true,
+      "values_loaded": false
+    },
+    {
+      "allowed_output_fields_after_ingestion": [
+        "period",
+        "product_or_hs_label",
+        "origin_country",
+        "destination_country",
+        "export_value",
+        "quantity",
+        "unit",
+        "source_id",
+        "source_url",
+        "checked_at"
+      ],
+      "allowed_to_rank_as_research_signal_after_ingestion": true,
+      "allowed_to_show_numeric_values": false,
+      "automation_ready": false,
+      "blocked_claims": [
+        "top_product_recommended",
+        "best_origin_country",
+        "best_destination_market",
+        "confirmed_market_size",
+        "guaranteed_demand",
+        "profitable_market",
+        "buyer_validated",
+        "supplier_verified",
+        "tariff_confirmed",
+        "regulated_product_approved",
+        "customs_approved",
+        "ready_to_ship"
+      ],
+      "business_use": "Help Canadian exporters choose which destination market deserves deeper validation.",
+      "claim_boundary": "Export rows are research signals only and do not prove export readiness, demand, profit, or destination approval.",
+      "direction": "export_from_canada",
+      "label": "Canada exports by product and destination",
+      "next_valid_move": "Collect required inputs, check source terms, run a manual or approved connector query, then attach dated rows.",
+      "optional_inputs": [
+        "hs_code_candidate",
+        "unit_of_measure",
+        "destination_market_access_route"
+      ],
+      "plain_language_question": "What goods does Canada export, and which destination countries should be researched?",
+      "primary_source_ids": [
+        "ised-trade-data-online",
+        "statcan-wds"
+      ],
+      "required_inputs": [
+        "product_family_or_hs_candidate",
+        "origin_country=Canada",
+        "destination_country",
+        "period"
+      ],
+      "secondary_source_ids": [
+        "canada-trade-commissioner-export-guide",
+        "itc-market-access-map"
+      ],
+      "source_routes": [
+        {
+          "access_mode": "manual_query_or_terms_checked_connector",
+          "claim_boundary": "Reference source only; does not prove market size, buyer demand, or revenue.",
+          "name": "ISED Trade Data Online",
+          "registry_status": "registered",
+          "source_id": "ised-trade-data-online",
+          "url": "https://ised-isde.canada.ca/site/trade-data-online/en/overview"
+        },
+        {
+          "access_mode": "manual_query_or_terms_checked_connector",
+          "claim_boundary": "Reference source only; a data-service route does not prove a current trade value until a dated dataset row is ingested and cited.",
+          "name": "Statistics Canada Web Data Service",
+          "registry_status": "registered",
+          "source_id": "statcan-wds",
+          "url": "https://www.statcan.gc.ca/en/developers/wds/user-guide"
+        },
+        {
+          "access_mode": "manual_query_or_terms_checked_connector",
+          "claim_boundary": "Reference source only; does not prove a specific exporter, product, destination, permit, or shipment is export-ready.",
+          "name": "Government of Canada Export Guide",
+          "registry_status": "registered",
+          "source_id": "canada-trade-commissioner-export-guide",
+          "url": "https://www.tradecommissioner.gc.ca/guides/exporter-exportateurs/index.aspx?lang=eng"
+        },
+        {
+          "access_mode": "manual_query_or_terms_checked_connector",
+          "claim_boundary": "Reference source only; does not prove tariff treatment, preference qualification, regulatory requirements, or market-access approval.",
+          "name": "ITC Market Access Map",
+          "registry_status": "registered",
+          "source_id": "itc-market-access-map",
+          "url": "https://www.macmap.org/"
+        }
+      ],
+      "status": "query_template_ready_no_values_loaded",
+      "template_id": "canada_exports_by_product_destination",
+      "terms_review_required": true,
+      "values_loaded": false
+    },
+    {
+      "allowed_output_fields_after_ingestion": [
+        "period",
+        "origin_country",
+        "trade_value",
+        "share_or_rank_if_source_provides_it",
+        "source_id",
+        "source_url",
+        "checked_at"
+      ],
+      "allowed_to_rank_as_research_signal_after_ingestion": true,
+      "allowed_to_show_numeric_values": false,
+      "automation_ready": false,
+      "blocked_claims": [
+        "top_product_recommended",
+        "best_origin_country",
+        "best_destination_market",
+        "confirmed_market_size",
+        "guaranteed_demand",
+        "profitable_market",
+        "buyer_validated",
+        "supplier_verified",
+        "tariff_confirmed",
+        "regulated_product_approved",
+        "customs_approved",
+        "ready_to_ship"
+      ],
+      "business_use": "Create a short list of origin countries to validate with supplier and buyer evidence.",
+      "claim_boundary": "Country comparison does not prove the country is best, safe, sanctions-clear, profitable, or supplier-verified.",
+      "direction": "import_into_canada",
+      "label": "Origin-country comparison for Canada",
+      "next_valid_move": "Collect required inputs, check source terms, run a manual or approved connector query, then attach dated rows.",
+      "optional_inputs": [
+        "origin_country_shortlist",
+        "sanctions_screening_date",
+        "market_access_notes"
+      ],
+      "plain_language_question": "Which countries appear in source-backed Canada import research for this product family?",
+      "primary_source_ids": [
+        "ised-trade-data-online",
+        "world-bank-wits",
+        "itc-trade-map"
+      ],
+      "required_inputs": [
+        "product_family_or_hs_candidate",
+        "destination_country=Canada",
+        "period"
+      ],
+      "secondary_source_ids": [
+        "gac-sanctions",
+        "itc-market-access-map"
+      ],
+      "source_routes": [
+        {
+          "access_mode": "manual_query_or_terms_checked_connector",
+          "claim_boundary": "Reference source only; does not prove market size, buyer demand, or revenue.",
+          "name": "ISED Trade Data Online",
+          "registry_status": "registered",
+          "source_id": "ised-trade-data-online",
+          "url": "https://ised-isde.canada.ca/site/trade-data-online/en/overview"
+        },
+        {
+          "access_mode": "manual_query_or_terms_checked_connector",
+          "claim_boundary": "Reference source only; does not prove buyer demand, profitability, market entry approval, or compliance.",
+          "name": "World Bank World Integrated Trade Solution",
+          "registry_status": "registered",
+          "source_id": "world-bank-wits",
+          "url": "https://wits.worldbank.org/"
+        },
+        {
+          "access_mode": "manual_query_or_terms_checked_connector",
+          "claim_boundary": "Reference source only; company or market rows are research signals and lead routes, not buyer validation or demand proof.",
+          "name": "International Trade Centre Trade Map",
+          "registry_status": "registered",
+          "source_id": "itc-trade-map",
+          "url": "https://www.trademap.org/"
+        },
+        {
+          "access_mode": "manual_query_or_terms_checked_connector",
+          "claim_boundary": "Reference source only; does not prove sanctions clearance, restricted-party screening, or permission to trade.",
+          "name": "Global Affairs Canada sanctions",
+          "registry_status": "registered",
+          "source_id": "gac-sanctions",
+          "url": "https://www.international.gc.ca/world-monde/international_relations-relations_internationales/sanctions/index.aspx?lang=eng"
+        },
+        {
+          "access_mode": "manual_query_or_terms_checked_connector",
+          "claim_boundary": "Reference source only; does not prove tariff treatment, preference qualification, regulatory requirements, or market-access approval.",
+          "name": "ITC Market Access Map",
+          "registry_status": "registered",
+          "source_id": "itc-market-access-map",
+          "url": "https://www.macmap.org/"
+        }
+      ],
+      "status": "query_template_ready_no_values_loaded",
+      "template_id": "origin_country_comparison_for_canada",
+      "terms_review_required": true,
+      "values_loaded": false
+    },
+    {
+      "allowed_output_fields_after_ingestion": [
+        "company_name",
+        "city",
+        "province",
+        "product_or_hs_label",
+        "origin_country",
+        "source_id",
+        "source_url",
+        "checked_at"
+      ],
+      "allowed_to_rank_as_research_signal_after_ingestion": true,
+      "allowed_to_show_numeric_values": false,
+      "automation_ready": false,
+      "blocked_claims": [
+        "top_product_recommended",
+        "best_origin_country",
+        "best_destination_market",
+        "confirmed_market_size",
+        "guaranteed_demand",
+        "profitable_market",
+        "buyer_validated",
+        "supplier_verified",
+        "tariff_confirmed",
+        "regulated_product_approved",
+        "customs_approved",
+        "ready_to_ship"
+      ],
+      "business_use": "Prepare outreach questions and buyer-evidence ladder entries.",
+      "claim_boundary": "Importer rows are possible lead sources only and never buyer validation or purchase intent.",
+      "direction": "import_into_canada",
+      "label": "Possible Canadian importer leads",
+      "next_valid_move": "Collect required inputs, check source terms, run a manual or approved connector query, then attach dated rows.",
+      "optional_inputs": [
+        "city",
+        "company_name",
+        "lead_source_date"
+      ],
+      "plain_language_question": "Which Canadian companies might be lead sources for this product family?",
+      "primary_source_ids": [
+        "canada-cid"
+      ],
+      "required_inputs": [
+        "product_family_or_hs_candidate",
+        "origin_country"
+      ],
+      "secondary_source_ids": [
+        "ised-trade-data-online"
+      ],
+      "source_routes": [
+        {
+          "access_mode": "manual_query_or_terms_checked_connector",
+          "claim_boundary": "Reference source only; does not prove buyer validation, supplier fit, customs advice, or freshness of a specific product row.",
+          "name": "Canadian Importers Database",
+          "registry_status": "registered",
+          "source_id": "canada-cid",
+          "url": "https://ised-isde.canada.ca/site/ised/en/research-and-business-intelligence/canadian-importers-database"
+        },
+        {
+          "access_mode": "manual_query_or_terms_checked_connector",
+          "claim_boundary": "Reference source only; does not prove market size, buyer demand, or revenue.",
+          "name": "ISED Trade Data Online",
+          "registry_status": "registered",
+          "source_id": "ised-trade-data-online",
+          "url": "https://ised-isde.canada.ca/site/trade-data-online/en/overview"
+        }
+      ],
+      "status": "query_template_ready_no_values_loaded",
+      "template_id": "canadian_importer_lead_lookup",
+      "terms_review_required": true,
+      "values_loaded": false
+    },
+    {
+      "allowed_output_fields_after_ingestion": [
+        "source_id",
+        "source_url",
+        "risk_tag",
+        "question_to_answer",
+        "review_lane",
+        "checked_at"
+      ],
+      "allowed_to_rank_as_research_signal_after_ingestion": true,
+      "allowed_to_show_numeric_values": false,
+      "automation_ready": false,
+      "blocked_claims": [
+        "top_product_recommended",
+        "best_origin_country",
+        "best_destination_market",
+        "confirmed_market_size",
+        "guaranteed_demand",
+        "profitable_market",
+        "buyer_validated",
+        "supplier_verified",
+        "tariff_confirmed",
+        "regulated_product_approved",
+        "customs_approved",
+        "ready_to_ship"
+      ],
+      "business_use": "Warn the user before they invest time in a regulated or controlled lane.",
+      "claim_boundary": "Regulated-source routing does not prove CFIA approval, permit status, sanctions clearance, or legal compliance.",
+      "direction": "both",
+      "label": "Regulated goods source overlay",
+      "next_valid_move": "Collect required inputs, check source terms, run a manual or approved connector query, then attach dated rows.",
+      "optional_inputs": [
+        "ingredients_or_materials",
+        "end_user",
+        "certificate_type"
+      ],
+      "plain_language_question": "Could this product family trigger CFIA, import-control, export-control, or sanctions review?",
+      "primary_source_ids": [
+        "cfia-airs",
+        "gac-import-controls",
+        "gac-export-controls",
+        "gac-sanctions"
+      ],
+      "required_inputs": [
+        "product_description",
+        "intended_use",
+        "origin_country",
+        "destination_country"
+      ],
+      "secondary_source_ids": [
+        "cbsa-import-commercial-goods"
+      ],
+      "source_routes": [
+        {
+          "access_mode": "manual_query_or_terms_checked_connector",
+          "claim_boundary": "Reference source only; product-specific food import compliance requires qualified review and source verification.",
+          "name": "CFIA Automated Import Reference System (AIRS)",
+          "registry_status": "registered",
+          "source_id": "cfia-airs",
+          "url": "https://inspection.canada.ca/en/importing-food-plants-animals/airs"
+        },
+        {
+          "access_mode": "manual_query_or_terms_checked_connector",
+          "claim_boundary": "Reference source only; does not prove whether a specific product requires an import permit.",
+          "name": "Global Affairs Canada Import Controls and Import Permits",
+          "registry_status": "registered",
+          "source_id": "gac-import-controls",
+          "url": "https://www.international.gc.ca/controls-controles/about-a_propos/impor/permits-licences.aspx?lang=eng"
+        },
+        {
+          "access_mode": "manual_query_or_terms_checked_connector",
+          "claim_boundary": "Reference source only; does not prove export-control classification, permit status, destination permission, or legal compliance.",
+          "name": "Global Affairs Canada Export Controls",
+          "registry_status": "registered",
+          "source_id": "gac-export-controls",
+          "url": "https://www.international.gc.ca/controls-controles/index.aspx?lang=eng"
+        },
+        {
+          "access_mode": "manual_query_or_terms_checked_connector",
+          "claim_boundary": "Reference source only; does not prove sanctions clearance, restricted-party screening, or permission to trade.",
+          "name": "Global Affairs Canada sanctions",
+          "registry_status": "registered",
+          "source_id": "gac-sanctions",
+          "url": "https://www.international.gc.ca/world-monde/international_relations-relations_internationales/sanctions/index.aspx?lang=eng"
+        },
+        {
+          "access_mode": "manual_query_or_terms_checked_connector",
+          "claim_boundary": "Reference source only; does not replace CBSA, broker, customs, or legal review.",
+          "name": "CBSA Import Commercial Goods Into Canada",
+          "registry_status": "registered",
+          "source_id": "cbsa-import-commercial-goods",
+          "url": "https://www.cbsa-asfc.gc.ca/import/menu-eng.html"
+        }
+      ],
+      "status": "query_template_ready_no_values_loaded",
+      "template_id": "regulated_goods_source_overlay",
+      "terms_review_required": true,
+      "values_loaded": false
+    },
+    {
+      "allowed_output_fields_after_ingestion": [
+        "source_id",
+        "source_url",
+        "market_access_issue",
+        "tariff_or_requirement_reference",
+        "checked_at"
+      ],
+      "allowed_to_rank_as_research_signal_after_ingestion": true,
+      "allowed_to_show_numeric_values": false,
+      "automation_ready": false,
+      "blocked_claims": [
+        "top_product_recommended",
+        "best_origin_country",
+        "best_destination_market",
+        "confirmed_market_size",
+        "guaranteed_demand",
+        "profitable_market",
+        "buyer_validated",
+        "supplier_verified",
+        "tariff_confirmed",
+        "regulated_product_approved",
+        "customs_approved",
+        "ready_to_ship"
+      ],
+      "business_use": "Prepare broker or expert questions before external claims are made.",
+      "claim_boundary": "Market-access comparison is not tariff confirmation, preference eligibility, or market-entry approval.",
+      "direction": "both",
+      "label": "Market access comparison",
+      "next_valid_move": "Collect required inputs, check source terms, run a manual or approved connector query, then attach dated rows.",
+      "optional_inputs": [
+        "trade_agreement_candidate",
+        "tariff_line_candidate",
+        "regulatory_requirement_notes"
+      ],
+      "plain_language_question": "Which tariff, regulatory, or preference questions should be checked before choosing the lane?",
+      "primary_source_ids": [
+        "itc-market-access-map"
+      ],
+      "required_inputs": [
+        "product_family_or_hs_candidate",
+        "origin_country",
+        "destination_country"
+      ],
+      "secondary_source_ids": [
+        "cbsa-customs-tariff-2026",
+        "wco-harmonized-system"
+      ],
+      "source_routes": [
+        {
+          "access_mode": "manual_query_or_terms_checked_connector",
+          "claim_boundary": "Reference source only; does not prove tariff treatment, preference qualification, regulatory requirements, or market-access approval.",
+          "name": "ITC Market Access Map",
+          "registry_status": "registered",
+          "source_id": "itc-market-access-map",
+          "url": "https://www.macmap.org/"
+        },
+        {
+          "access_mode": "manual_query_or_terms_checked_connector",
+          "claim_boundary": "Reference source only; classification and tariff treatment require qualified review.",
+          "name": "CBSA Customs Tariff 2026",
+          "registry_status": "registered",
+          "source_id": "cbsa-customs-tariff-2026",
+          "url": "https://www.cbsa-asfc.gc.ca/trade-commerce/tariff-tarif/2026/menu-eng.html"
+        },
+        {
+          "access_mode": "manual_query_or_terms_checked_connector",
+          "claim_boundary": "Reference source only; HS candidates are not tariff classification confirmation.",
+          "name": "World Customs Organization Harmonized System",
+          "registry_status": "registered",
+          "source_id": "wco-harmonized-system",
+          "url": "https://www.wcoomd.org/en/topics/nomenclature/overview/what-is-the-harmonized-system.aspx"
+        }
+      ],
+      "status": "query_template_ready_no_values_loaded",
+      "template_id": "market_access_comparison",
+      "terms_review_required": true,
+      "values_loaded": false
+    },
+    {
+      "allowed_output_fields_after_ingestion": [
+        "period",
+        "country",
+        "trade_flow",
+        "trade_value",
+        "indicator_name",
+        "source_id",
+        "source_url",
+        "checked_at"
+      ],
+      "allowed_to_rank_as_research_signal_after_ingestion": true,
+      "allowed_to_show_numeric_values": false,
+      "automation_ready": false,
+      "blocked_claims": [
+        "top_product_recommended",
+        "best_origin_country",
+        "best_destination_market",
+        "confirmed_market_size",
+        "guaranteed_demand",
+        "profitable_market",
+        "buyer_validated",
+        "supplier_verified",
+        "tariff_confirmed",
+        "regulated_product_approved",
+        "customs_approved",
+        "ready_to_ship"
+      ],
+      "business_use": "Add context for unsupported or generic country packs.",
+      "claim_boundary": "Global context does not prove Canada-specific demand, buyer validation, or compliance.",
+      "direction": "both",
+      "label": "Global trade context fallback",
+      "next_valid_move": "Collect required inputs, check source terms, run a manual or approved connector query, then attach dated rows.",
+      "optional_inputs": [
+        "comparison_countries",
+        "non_tariff_measure_notes"
+      ],
+      "plain_language_question": "What global context should be checked when Canada-specific rows are not enough?",
+      "primary_source_ids": [
+        "world-bank-wits",
+        "itc-trade-map"
+      ],
+      "required_inputs": [
+        "product_family_or_hs_candidate",
+        "origin_country",
+        "destination_country",
+        "period"
+      ],
+      "secondary_source_ids": [
+        "itc-market-access-map"
+      ],
+      "source_routes": [
+        {
+          "access_mode": "manual_query_or_terms_checked_connector",
+          "claim_boundary": "Reference source only; does not prove buyer demand, profitability, market entry approval, or compliance.",
+          "name": "World Bank World Integrated Trade Solution",
+          "registry_status": "registered",
+          "source_id": "world-bank-wits",
+          "url": "https://wits.worldbank.org/"
+        },
+        {
+          "access_mode": "manual_query_or_terms_checked_connector",
+          "claim_boundary": "Reference source only; company or market rows are research signals and lead routes, not buyer validation or demand proof.",
+          "name": "International Trade Centre Trade Map",
+          "registry_status": "registered",
+          "source_id": "itc-trade-map",
+          "url": "https://www.trademap.org/"
+        },
+        {
+          "access_mode": "manual_query_or_terms_checked_connector",
+          "claim_boundary": "Reference source only; does not prove tariff treatment, preference qualification, regulatory requirements, or market-access approval.",
+          "name": "ITC Market Access Map",
+          "registry_status": "registered",
+          "source_id": "itc-market-access-map",
+          "url": "https://www.macmap.org/"
+        }
+      ],
+      "status": "query_template_ready_no_values_loaded",
+      "template_id": "global_context_fallback",
+      "terms_review_required": true,
+      "values_loaded": false
+    }
+  ],
+  "status": "production_trade_data_query_templates_ready",
+  "template_count": 7,
+  "values_loaded": false
+}

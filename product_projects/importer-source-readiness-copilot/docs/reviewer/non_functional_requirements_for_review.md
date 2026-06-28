@@ -28,6 +28,14 @@ The product is not ready for unrestricted real files, live payments, public laun
 - No country lane is presented as best, safest, profitable, approved, or buyer-validated.
 - The UI must keep beginner language plain enough for business owners and conservative enough for external review.
 
+## Trade Data Catalog Boundary
+
+- Trade data catalog status: `production_trade_data_catalog_engine_ready_query_plans_no_values_loaded`.
+- Browse cards and query work orders can show source routes and required inputs.
+- Numeric values are hidden until dated dataset rows are attached.
+- Approved connectors remain blocked until source terms, licensing, security, and audit controls are reviewed.
+- No product ranking, demand proof, profitability, buyer validation, supplier verification, or approval claim can come from a query plan alone.
+
 ## Document Handling Boundary
 
 The document engine is ready for local review and parser QA. It is not yet approved for unrestricted real customer files in production.

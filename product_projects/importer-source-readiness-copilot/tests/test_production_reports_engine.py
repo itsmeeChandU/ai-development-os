@@ -27,8 +27,10 @@ class ProductionReportsEngineTests(unittest.TestCase):
         self.assertEqual(manifest["status"], STATUS)
         self.assertEqual(manifest["report_type_count"], 12)
         self.assertEqual(manifest["report_type_count"], len(REPORT_TYPES))
-        self.assertEqual(manifest["report_record_count"], 12)
-        self.assertEqual(manifest["export_record_count"], 36)
+        expected_report_records = manifest["packet_count"] * len(REPORT_TYPES)
+        self.assertGreaterEqual(manifest["packet_count"], 1)
+        self.assertEqual(manifest["report_record_count"], expected_report_records)
+        self.assertEqual(manifest["export_record_count"], expected_report_records * 3)
         self.assertTrue(manifest["html_preview_supported"])
         self.assertTrue(manifest["pdf_export_supported"])
         self.assertTrue(manifest["json_export_supported"])
@@ -102,7 +104,7 @@ class ProductionReportsEngineTests(unittest.TestCase):
             self.assertEqual(written_exports["status"], "production_report_exports_ready_cited")
             self.assertEqual(written_citations["status"], "production_report_citations_ready")
             self.assertIn("Production Reports Engine", written_doc)
-            self.assertEqual(len(written_exports["written_report_paths"]), 12)
+            self.assertEqual(len(written_exports["written_report_paths"]), manifest["report_record_count"])
 
             first_paths = written_exports["written_report_paths"][0]
             self.assertTrue((root / first_paths["json"]).exists())

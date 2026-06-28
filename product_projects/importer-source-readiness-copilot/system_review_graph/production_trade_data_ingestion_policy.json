@@ -1,0 +1,36 @@
+{
+  "approved_connector_required_for_automation": true,
+  "blocked_claims": [
+    "top_product_recommended",
+    "best_origin_country",
+    "best_destination_market",
+    "confirmed_market_size",
+    "guaranteed_demand",
+    "profitable_market",
+    "buyer_validated",
+    "supplier_verified",
+    "tariff_confirmed",
+    "regulated_product_approved",
+    "customs_approved",
+    "ready_to_ship"
+  ],
+  "manual_query_allowed": true,
+  "numeric_values_before_ingestion_allowed": false,
+  "required_before_market_conclusion": [
+    "dated dataset rows",
+    "market-access comparison",
+    "buyer evidence",
+    "supplier evidence where relevant",
+    "qualified reviewer finding for external wording"
+  ],
+  "required_before_numeric_display": [
+    "source_terms_or_manual-use check",
+    "query parameters",
+    "dated dataset row",
+    "source URL",
+    "period",
+    "field mapping",
+    "limitation text"
+  ],
+  "status": "trade_data_ingestion_policy_ready_fail_closed"
+}

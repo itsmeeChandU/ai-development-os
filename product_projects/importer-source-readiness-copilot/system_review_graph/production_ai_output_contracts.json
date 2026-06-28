@@ -9,7 +9,7 @@
   ],
   "claims_opened": false,
   "external_effects_created": false,
-  "generated_at": "2026-06-28T17:33:59+00:00",
+  "generated_at": "2026-06-28T18:15:12+00:00",
   "output_contracts": [
     {
       "ai_output_contract_id": "ai-output:intake_assistant",

@@ -16,12 +16,14 @@ The logic deliberately does not approve trade action. It blocks stronger claims 
 - First persona: beginner-to-intermediate exporter.
 - Country path: Canada destination, Vietnam demo origin, India strategic next origin, Generic fallback.
 - Beginner discovery: users can browse Canada import/export categories and country lanes as research routes before a packet exists.
+- Trade-data catalog: discovery choices become query plans and work orders, not market conclusions.
 - Core object: Trade Readiness Packet.
 
 ## Implemented Business Rules
 
 - 12-question decision tree: trade direction, product, origin, destination, HS code, buyer/importer, importer of record, Incoterms, documents, regulated-product risk, official sources, and next safe move.
 - Trade discovery: supports pre-packet category browsing, Canada import/export lanes, regulated-goods warnings, official source routes, and no-document starter packet handoff.
+- Trade data catalog: builds browse cards, source-query templates, lane/category query work orders, and ingestion policy before any numeric value is shown.
 - Starter flow: checks minimum inputs and allows a starter packet when product, country, direction, intended use, and source routes exist.
 - Market signal: computes a bounded local signal from source routes and evidence, capped before real demand proof.
 - Country packs: checks whether required import, tariff, regulated-product, restricted-party, and market/buyer source routes exist.
@@ -40,6 +42,17 @@ The discovery layer helps users who do not yet know what to import, export, or r
 - Beginner flows: `8`.
 - Discovery rows are reference-only and source-routed.
 - Best product, demand, profitability, buyer validation, supplier verification, customs approval, CFIA approval, and shipment readiness claims remain blocked.
+
+## Trade Data Catalog Logic Implemented Now
+
+The catalog turns discovery lanes into query plans without pretending source data is already ingested.
+
+- Trade data catalog status: `production_trade_data_catalog_engine_ready_query_plans_no_values_loaded`.
+- Query templates: `7`.
+- Browse cards: `5`.
+- Query work orders: `206`.
+- Manual query planning is allowed; approved connector status remains blocked until source terms and connector controls are reviewed.
+- Numeric values and market conclusions require dated dataset rows, source URL, period, field mapping, limitation text, and review evidence.
 
 ## Document Logic Implemented Now
 

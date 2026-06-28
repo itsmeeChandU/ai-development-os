@@ -64,6 +64,10 @@ from .production_security_privacy_reliability_engine import (
     build_production_security_privacy_reliability_engine,
     write_production_security_privacy_reliability_engine_artifacts,
 )
+from .production_trade_data_catalog_engine import (
+    build_production_trade_data_catalog_engine,
+    write_production_trade_data_catalog_engine_artifacts,
+)
 
 __all__ = [
     "build_continuation_plan",
@@ -90,6 +94,7 @@ __all__ = [
     "build_production_redevelopment_plan",
     "build_production_reports_engine",
     "build_production_security_privacy_reliability_engine",
+    "build_production_trade_data_catalog_engine",
     "build_runtime_state",
     "can_show_claim",
     "build_screenshot_manifest",
@@ -121,6 +126,7 @@ __all__ = [
     "write_production_redevelopment_artifacts",
     "write_production_reports_engine_artifacts",
     "write_production_security_privacy_reliability_engine_artifacts",
+    "write_production_trade_data_catalog_engine_artifacts",
     "write_runtime_artifacts",
     "write_report",
     "write_screenshot_manifest",

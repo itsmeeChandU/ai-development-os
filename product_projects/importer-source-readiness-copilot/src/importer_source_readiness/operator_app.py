@@ -69,6 +69,7 @@ API_ROUTES = {
     "/api/operator-workflow": "system_review_graph/operator_workflow_report.json",
     "/api/operator-screenshots": "system_review_graph/operator_screenshot_manifest.json",
     "/api/trade-discovery": "system_review_graph/production_trade_discovery_manifest.json",
+    "/api/trade-data-catalog": "system_review_graph/production_trade_data_catalog_manifest.json",
     "/api/opportunities": "system_review_graph/opportunity_scanner_report.json",
     "/api/country-coverage": "system_review_graph/country_coverage_report.json",
     "/api/billing/controls": "system_review_graph/billing_credit_controls.json",
@@ -951,6 +952,7 @@ def _render_start_page() -> str:
 def _render_tool_selection() -> str:
     tools = [
         ("Trade Discovery", "/trade-discovery", "Browse Canada import/export categories and country lanes before choosing a product."),
+        ("Trade Data Catalog", "/trade-data-catalog", "Turn discovery choices into official-source query plans without showing unverified values."),
         ("Opportunity Scanner", "/opportunities", "Find possible opportunity signals and route them into research-gated packets."),
         ("Import Readiness Checker", "/tools/import-readiness", "Check Canada-side importer/source readiness gaps."),
         ("Export Readiness Checker", "/tools/export-readiness", "Build an Export-to-Canada packet for a foreign exporter."),
@@ -1174,6 +1176,7 @@ def _render_trade_discovery(repo_root: Path) -> str:
   </div>
   <div class="actions">
     {_button_link("/start", "Create starter packet", "sparkles")}
+    {_button_link("/trade-data-catalog", "Open data catalog", "table", tone="secondary")}
     {_button_link("/opportunities", "View opportunity signals", "search", tone="secondary")}
     {_button_link("/tools/canadian-references", "View sources", "book-open", tone="secondary")}
   </div>
@@ -1201,6 +1204,76 @@ def _render_trade_discovery(repo_root: Path) -> str:
 </section>
 """
     return _render_page("Trade Discovery", body)
+
+
+def _render_trade_data_catalog(repo_root: Path) -> str:
+    catalog = _load_graph_json(repo_root, "production_trade_data_catalog_manifest.json", {})
+    card_rows = "".join(
+        "<tr>"
+        f"<td>{escape(str(row.get('label')))}</td>"
+        f"<td>{escape(str(row.get('plain_language_value')))}</td>"
+        f"<td>{escape(str(row.get('next_valid_move')))}</td>"
+        "</tr>"
+        for row in catalog.get("browse_cards", [])
+    )
+    template_rows = "".join(
+        "<tr>"
+        f"<td>{escape(str(row.get('label')))}</td>"
+        f"<td>{escape(str(row.get('direction')))}</td>"
+        f"<td>{escape(', '.join(row.get('required_inputs', [])))}</td>"
+        f"<td>{escape(str(row.get('claim_boundary')))}</td>"
+        "</tr>"
+        for row in catalog.get("query_templates", [])
+    )
+    work_orders = catalog.get("query_work_orders", [])
+    sample_rows = "".join(
+        "<tr>"
+        f"<td>{escape(str(row.get('lane_id')))}</td>"
+        f"<td>{escape(str(row.get('category_label')))}</td>"
+        f"<td>{escape(str(row.get('template_label')))}</td>"
+        f"<td>{escape(str(row.get('input_status')))}</td>"
+        "</tr>"
+        for row in work_orders[:24]
+    )
+    body = f"""
+<section class="surface">
+  <h1>Trade Data Catalog</h1>
+  <p class="lede">Turn a product family and country lane into an official-source query plan before any value or market claim is shown.</p>
+  <p class="note">{escape(str(catalog.get('proof_boundary') or PRODUCT_BOUNDARY))}</p>
+  <div class="grid grid-3">
+    {_metric_card("Templates", catalog.get("template_count", 0), "Reusable source-query plans.")}
+    {_metric_card("Browse cards", catalog.get("browse_card_count", 0), "Plain-language entry points.")}
+    {_metric_card("Work orders", catalog.get("query_work_order_count", 0), "Lane/category query tasks.")}
+  </div>
+  <div class="actions">
+    {_button_link("/trade-discovery", "Back to discovery", "compass", tone="secondary")}
+    {_button_link("/tools/canadian-references", "View sources", "book-open", tone="secondary")}
+  </div>
+</section>
+<section class="surface">
+  <h2>Browse Cards</h2>
+  <table>
+    <thead><tr><th>Card</th><th>Use</th><th>Next</th></tr></thead>
+    <tbody>{card_rows or '<tr><td colspan="3">Run scripts/run_production_trade_data_catalog_engine.py to generate browse cards.</td></tr>'}</tbody>
+  </table>
+</section>
+<section class="surface">
+  <h2>Query Templates</h2>
+  <table>
+    <thead><tr><th>Template</th><th>Direction</th><th>Required Inputs</th><th>Boundary</th></tr></thead>
+    <tbody>{template_rows or '<tr><td colspan="4">Trade data query templates not generated yet.</td></tr>'}</tbody>
+  </table>
+</section>
+<section class="surface">
+  <h2>Sample Work Orders</h2>
+  <p class="note">Showing the first 24 work orders. Values are not loaded and exact product or HS inputs are still required.</p>
+  <table>
+    <thead><tr><th>Lane</th><th>Category</th><th>Template</th><th>Input Status</th></tr></thead>
+    <tbody>{sample_rows or '<tr><td colspan="4">No query work orders generated yet.</td></tr>'}</tbody>
+  </table>
+</section>
+"""
+    return _render_page("Trade Data Catalog", body)
 
 
 def _render_country_coverage(repo_root: Path) -> str:
@@ -2570,6 +2643,7 @@ def _index_payload(repo_root: Path) -> dict[str, Any]:
                 "/tools/document-check",
                 "/tools/canadian-references",
                 "/trade-discovery",
+                "/trade-data-catalog",
                 "/opportunities",
                 "/country-coverage",
                 "/transport-readiness",
@@ -2720,6 +2794,9 @@ def build_operator_app_handler(repo_root: Path) -> type[BaseHTTPRequestHandler]:
                 return
             if path == "/trade-discovery":
                 self._send_html(_render_trade_discovery(repo_root))
+                return
+            if path == "/trade-data-catalog":
+                self._send_html(_render_trade_data_catalog(repo_root))
                 return
             if path == "/country-coverage":
                 self._send_html(_render_country_coverage(repo_root))

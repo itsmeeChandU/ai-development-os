@@ -134,6 +134,7 @@ def main() -> int:
         [sys.executable, "scripts/run_production_packet_engine.py"],
         [sys.executable, "scripts/run_production_country_source_engine.py"],
         [sys.executable, "scripts/run_production_trade_discovery_engine.py"],
+        [sys.executable, "scripts/run_production_trade_data_catalog_engine.py"],
         [sys.executable, "scripts/run_production_market_intelligence_engine.py"],
         [sys.executable, "scripts/run_production_document_intelligence_engine.py"],
         [sys.executable, "scripts/run_production_evidence_claim_gate_engine.py"],
@@ -212,6 +213,7 @@ def main() -> int:
     production_packet_engine = _load_json(ROOT / "system_review_graph" / "production_packet_engine_manifest.json")
     production_country_source_engine = _load_json(ROOT / "system_review_graph" / "production_country_source_engine_manifest.json")
     production_trade_discovery = _load_json(ROOT / "system_review_graph" / "production_trade_discovery_manifest.json")
+    production_trade_data_catalog = _load_json(ROOT / "system_review_graph" / "production_trade_data_catalog_manifest.json")
     production_market_intelligence = _load_json(ROOT / "system_review_graph" / "production_market_intelligence_manifest.json")
     production_document_intelligence = _load_json(ROOT / "system_review_graph" / "production_document_intelligence_manifest.json")
     production_evidence_claim_gate = _load_json(ROOT / "system_review_graph" / "production_evidence_claim_gate_manifest.json")
@@ -298,6 +300,7 @@ def main() -> int:
         "src/importer_source_readiness/production_expert_review_network.py",
         "src/importer_source_readiness/production_market_intelligence_engine.py",
         "src/importer_source_readiness/production_trade_discovery_engine.py",
+        "src/importer_source_readiness/production_trade_data_catalog_engine.py",
         "src/importer_source_readiness/production_launch_control_plane.py",
         "src/importer_source_readiness/production_packet_engine.py",
         "src/importer_source_readiness/production_payment_monetization_engine.py",
@@ -323,6 +326,7 @@ def main() -> int:
         "tests/test_production_expert_review_network.py",
         "tests/test_production_market_intelligence_engine.py",
         "tests/test_production_trade_discovery_engine.py",
+        "tests/test_production_trade_data_catalog_engine.py",
         "tests/test_production_launch_control_plane.py",
         "tests/test_production_packet_engine.py",
         "tests/test_production_payment_monetization_engine.py",
@@ -348,6 +352,7 @@ def main() -> int:
         "scripts/run_production_expert_review_network.py",
         "scripts/run_production_market_intelligence_engine.py",
         "scripts/run_production_trade_discovery_engine.py",
+        "scripts/run_production_trade_data_catalog_engine.py",
         "scripts/run_production_launch_control_plane.py",
         "scripts/run_production_packet_engine.py",
         "scripts/run_production_payment_monetization_engine.py",
@@ -384,6 +389,7 @@ def main() -> int:
         "docs/PRODUCTION_EXPERT_REVIEW_NETWORK.md",
         "docs/PRODUCTION_MARKET_INTELLIGENCE_ENGINE.md",
         "docs/PRODUCTION_TRADE_DISCOVERY_ENGINE.md",
+        "docs/PRODUCTION_TRADE_DATA_CATALOG_ENGINE.md",
         "docs/PRODUCTION_LAUNCH_CONTROL_PLANE.md",
         "docs/PRODUCTION_PACKET_ENGINE.md",
         "docs/PRODUCTION_PAYMENT_MONETIZATION_ENGINE.md",
@@ -468,6 +474,11 @@ def main() -> int:
         "system_review_graph/production_trade_discovery_beginner_flows.json",
         "system_review_graph/production_trade_discovery_source_registry.json",
         "system_review_graph/production_trade_discovery_requirement_audit.json",
+        "system_review_graph/production_trade_data_catalog_manifest.json",
+        "system_review_graph/production_trade_data_query_templates.json",
+        "system_review_graph/production_trade_data_query_work_orders.json",
+        "system_review_graph/production_trade_data_browse_cards.json",
+        "system_review_graph/production_trade_data_ingestion_policy.json",
         "system_review_graph/production_document_intelligence_manifest.json",
         "system_review_graph/production_document_pipeline.json",
         "system_review_graph/production_document_extracted_fields.json",
@@ -906,6 +917,55 @@ def main() -> int:
         failures.append("production trade discovery categories must not claim recommendations")
     if any(row.get("values_loaded") is not False for row in production_trade_discovery.get("dataset_routes", [])):
         failures.append("production trade discovery dataset routes must not pretend values are loaded")
+    if production_trade_data_catalog.get("status") != "production_trade_data_catalog_engine_ready_query_plans_no_values_loaded":
+        failures.append(
+            "production trade data catalog status expected production_trade_data_catalog_engine_ready_query_plans_no_values_loaded, "
+            f"got {production_trade_data_catalog.get('status')!r}"
+        )
+    if production_trade_data_catalog.get("template_count", 0) < 7:
+        failures.append("production trade data catalog should expose reusable query templates")
+    if production_trade_data_catalog.get("browse_card_count", 0) < 5:
+        failures.append("production trade data catalog should expose beginner browse cards")
+    if production_trade_data_catalog.get("query_work_order_count", 0) < 120:
+        failures.append("production trade data catalog should generate lane/category query work orders")
+    if production_trade_data_catalog.get("missing_registry_sources"):
+        failures.append(
+            "production trade data catalog references missing source registry ids: "
+            + ", ".join(production_trade_data_catalog.get("missing_registry_sources", []))
+        )
+    for key in (
+        "values_loaded",
+        "numeric_values_shown",
+        "recommendations_created",
+        "demand_claimed",
+        "profitability_claimed",
+        "buyer_validation_claimed",
+        "supplier_verification_claimed",
+        "external_effects_created",
+        "claims_opened",
+    ):
+        if production_trade_data_catalog.get(key) is not False:
+            failures.append(f"production trade data catalog expected {key}=false")
+    catalog_template_ids = {row.get("template_id") for row in production_trade_data_catalog.get("query_templates", [])}
+    for template_id in (
+        "canada_imports_by_product_origin",
+        "canada_exports_by_product_destination",
+        "origin_country_comparison_for_canada",
+        "canadian_importer_lead_lookup",
+        "regulated_goods_source_overlay",
+        "market_access_comparison",
+        "global_context_fallback",
+    ):
+        if template_id not in catalog_template_ids:
+            failures.append(f"production trade data catalog missing query template {template_id}")
+    if any(row.get("values_loaded") is not False for row in production_trade_data_catalog.get("query_templates", [])):
+        failures.append("production trade data catalog templates must not pretend values are loaded")
+    if any(row.get("allowed_to_show_numeric_values") is not False for row in production_trade_data_catalog.get("query_templates", [])):
+        failures.append("production trade data catalog templates must block numeric display before ingestion")
+    if any(row.get("values_loaded") is not False for row in production_trade_data_catalog.get("query_work_orders", [])):
+        failures.append("production trade data catalog work orders must not contain values before ingestion")
+    if any(row.get("dated_dataset_row_attached") is not False for row in production_trade_data_catalog.get("query_work_orders", [])):
+        failures.append("production trade data catalog work orders must require dated rows")
     if production_market_intelligence.get("status") != "production_market_intelligence_engine_ready_source_routed_no_demand_claims":
         failures.append(
             "production market intelligence status expected production_market_intelligence_engine_ready_source_routed_no_demand_claims, "
@@ -2369,6 +2429,9 @@ def main() -> int:
     print(f"production_trade_discovery_categories={production_trade_discovery['category_count']}")
     print(f"production_trade_discovery_country_lanes={production_trade_discovery['country_lane_count']}")
     print(f"production_trade_discovery_beginner_flows={production_trade_discovery['beginner_flow_count']}")
+    print(f"production_trade_data_catalog_status={production_trade_data_catalog['status']}")
+    print(f"production_trade_data_catalog_templates={production_trade_data_catalog['template_count']}")
+    print(f"production_trade_data_catalog_work_orders={production_trade_data_catalog['query_work_order_count']}")
     print(f"production_market_intelligence_status={production_market_intelligence['status']}")
     print(f"production_market_signals={production_market_intelligence['market_signal_count']}")
     print(f"production_market_dataset_connectors={production_market_intelligence['dataset_connector_count']}")

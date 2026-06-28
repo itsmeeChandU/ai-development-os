@@ -491,10 +491,14 @@ draft watermark, and records review status.
 
 ## Counts
 
+- Packets: {manifest['packet_count']}
 - Report types: {manifest['report_type_count']}
 - Report records: {manifest['report_record_count']}
 - Export records: {manifest['export_record_count']}
 - Citation records: {manifest['citation_record_count']}
+
+Report records are generated as report types per packet. In a multi-packet
+workspace, export counts increase without opening new claims.
 
 ## Gate Boundary
 

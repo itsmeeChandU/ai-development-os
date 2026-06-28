@@ -55,6 +55,7 @@ This document describes the current non-functional requirements and boundaries f
 | NFR-27 | Keep production trust controls evidence-based and real-file gates closed | Implemented locally; managed auth, MFA, private storage, malware scanning, vendor approval, monitoring, incident rehearsal, and production backup restore remain external gates | `production_security_privacy_reliability_manifest.json`, `production_backup_restore_drill.json` |
 | NFR-28 | Keep launch activation exact-scope and owner-gated | Implemented locally; public launch, activation, hosted private beta, real-user evidence, payment activation, and final owner approval remain false | `production_launch_control_plane_manifest.json`, `production_public_launch_decision.json` |
 | NFR-29 | Keep beginner trade discovery source-routed and non-recommendatory | Implemented locally; product/category/country browsing remains research-only and cannot claim demand, profit, buyer validation, supplier verification, customs/CFIA approval, or shipment readiness | `production_trade_discovery_manifest.json`, `production_trade_discovery_requirement_audit.json` |
+| NFR-30 | Keep trade-data browsing value-gated and auditable | Implemented locally; browse cards and query work orders can show required inputs and source routes, but numeric values require dated dataset rows and no market conclusion is allowed without evidence | `production_trade_data_catalog_manifest.json`, `production_trade_data_ingestion_policy.json` |
 
 ## Security
 
