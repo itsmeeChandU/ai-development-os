@@ -13,13 +13,14 @@
   "business_positioning": "trade_decision_preparation_not_compliance_approval",
   "business_scores": {
     "formula_contract": {
+      "buyer_supplier_evidence_score": "weighted buyer ladder and supplier evidence ladder; cap at 59 until dated direct buyer evidence, supplier evidence, and reviewer checks exist",
       "decision_safety_score": "minimum of blocker gate state and weighted composite of the other scores; cap at 39 while P0 shipment/compliance blockers are open",
       "evidence_completeness_score": "weighted completion of identity, route, parties, docs, source evidence, and review statuses; cap at 49 if core fields or evidence are missing",
       "market_signal_score": "100*(0.25*demand_trend + 0.20*market_size + 0.20*import_dependency + 0.15*competitor_gap + 0.10*lead_signal + 0.10*access_factor); cap at 59 until official datasets are attached",
       "responsibility_clarity_score": "weighted by importer of record, Incoterms, buyer/importer identity, role split, and broker path; cap at 39 if importer of record or Incoterms are unknown",
       "source_freshness_score": "weighted by source age, cadence, and diff review; zero if a critical source changed and review is pending"
     },
-    "score_count": 5,
+    "score_count": 6,
     "score_policy": {
       "forbidden_labels": [
         "approved",
@@ -35,6 +36,15 @@
       "yellow": "research or qualified review needed"
     },
     "scores": {
+      "buyer_supplier_evidence_score": {
+        "cap_reason": "Capped because evidence levels do not equal buyer validation, supplier verification, or market demand proof.",
+        "color": "red",
+        "external_claims_opened": false,
+        "meaning": "Buyer level -1 and supplier level 0 are recorded without validation/verification claims.",
+        "next_valid_move": "Collect dated buyer interaction and supplier evidence, then route to review.",
+        "status": "buyer_supplier_evidence_missing",
+        "value": 0
+      },
       "decision_safety_score": {
         "cap_reason": "Capped because open blocker rows and external gates prevent approval-style decisions.",
         "color": "red",
@@ -54,13 +64,13 @@
         "value": 23
       },
       "market_signal_score": {
-        "cap_reason": "Capped because official trade dataset rows, access comparison, and buyer evidence are not attached.",
-        "color": "grey",
+        "cap_reason": "Capped at 59 because official trade dataset rows, access comparison, and direct buyer evidence are not all attached and reviewed.",
+        "color": "yellow",
         "external_claims_opened": false,
-        "meaning": "Market signal cannot be scored until trade dataset, access-barrier, and buyer evidence are attached.",
+        "meaning": "Local market signal score is 55/100 before external demand, dataset, and buyer proof.",
         "next_valid_move": "Attach dated trade dataset rows, market-access comparison, and buyer/operator validation before treating the signal as a decision.",
         "status": "research_required",
-        "value": 25
+        "value": 55
       },
       "responsibility_clarity_score": {
         "cap_reason": "Capped because importer of record, Incoterms, or role split are not confirmed enough for external decisions.",
@@ -509,6 +519,7 @@
           "qualified review and source refresh are required before country-specific claims"
         ],
         "country": "Canada",
+        "coverage_check_status": "reference_routes_complete_review_required",
         "export_sources": [],
         "food_plant_animal_sources": [
           {
@@ -613,11 +624,44 @@
             "url": "https://www.cbsa-asfc.gc.ca/services/cb-cd/cb-cd-eng.html"
           }
         ],
+        "missing_required_routes": [],
         "permitted_automation_methods": [
           "manual_review",
           "dated_source_refresh",
           "hash_snapshot",
           "terms_or_api_check_before_fetch"
+        ],
+        "required_route_checks": [
+          {
+            "id": "import_or_customs_route",
+            "next_valid_move": "Add official import/customs route source.",
+            "required": true,
+            "satisfied": true
+          },
+          {
+            "id": "tariff_or_market_access_route",
+            "next_valid_move": "Add official tariff or market-access route source.",
+            "required": true,
+            "satisfied": true
+          },
+          {
+            "id": "regulated_product_route",
+            "next_valid_move": "Add regulated-product source route such as food/plant/animal/health reference.",
+            "required": true,
+            "satisfied": true
+          },
+          {
+            "id": "restricted_party_or_control_route",
+            "next_valid_move": "Add restricted-party, sanctions, import-control, or permit route source.",
+            "required": true,
+            "satisfied": true
+          },
+          {
+            "id": "market_or_buyer_research_route",
+            "next_valid_move": "Add market data or buyer/importer discovery route source.",
+            "required": true,
+            "satisfied": true
+          }
         ],
         "reviewer_requirements": [
           "customs or trade reviewer for tariff/import path",
@@ -689,14 +733,48 @@
           "qualified review and source refresh are required before country-specific claims"
         ],
         "country": "Vietnam",
+        "coverage_check_status": "missing_required_source_routes",
         "export_sources": [],
         "food_plant_animal_sources": [],
         "import_sources": [],
+        "missing_required_routes": [],
         "permitted_automation_methods": [
           "manual_review",
           "dated_source_refresh",
           "hash_snapshot",
           "terms_or_api_check_before_fetch"
+        ],
+        "required_route_checks": [
+          {
+            "id": "import_or_customs_route",
+            "next_valid_move": "Add official import/customs route source.",
+            "required": false,
+            "satisfied": false
+          },
+          {
+            "id": "tariff_or_market_access_route",
+            "next_valid_move": "Add official tariff or market-access route source.",
+            "required": false,
+            "satisfied": false
+          },
+          {
+            "id": "regulated_product_route",
+            "next_valid_move": "Add regulated-product source route such as food/plant/animal/health reference.",
+            "required": false,
+            "satisfied": false
+          },
+          {
+            "id": "restricted_party_or_control_route",
+            "next_valid_move": "Add restricted-party, sanctions, import-control, or permit route source.",
+            "required": false,
+            "satisfied": false
+          },
+          {
+            "id": "market_or_buyer_research_route",
+            "next_valid_move": "Add market data or buyer/importer discovery route source.",
+            "required": false,
+            "satisfied": false
+          }
         ],
         "reviewer_requirements": [
           "customs or trade reviewer for tariff/import path",
@@ -719,6 +797,7 @@
           "qualified review and source refresh are required before country-specific claims"
         ],
         "country": "India",
+        "coverage_check_status": "reference_routes_complete_review_required",
         "export_sources": [
           {
             "accessed_at": "2026-06-28",
@@ -751,11 +830,44 @@
             "url": "https://www.cbic.gov.in/"
           }
         ],
+        "missing_required_routes": [],
         "permitted_automation_methods": [
           "manual_review",
           "dated_source_refresh",
           "hash_snapshot",
           "terms_or_api_check_before_fetch"
+        ],
+        "required_route_checks": [
+          {
+            "id": "import_or_customs_route",
+            "next_valid_move": "Add official import/customs route source.",
+            "required": true,
+            "satisfied": true
+          },
+          {
+            "id": "tariff_or_market_access_route",
+            "next_valid_move": "Add official tariff or market-access route source.",
+            "required": false,
+            "satisfied": true
+          },
+          {
+            "id": "regulated_product_route",
+            "next_valid_move": "Add regulated-product source route such as food/plant/animal/health reference.",
+            "required": false,
+            "satisfied": false
+          },
+          {
+            "id": "restricted_party_or_control_route",
+            "next_valid_move": "Add restricted-party, sanctions, import-control, or permit route source.",
+            "required": false,
+            "satisfied": false
+          },
+          {
+            "id": "market_or_buyer_research_route",
+            "next_valid_move": "Add market data or buyer/importer discovery route source.",
+            "required": false,
+            "satisfied": false
+          }
         ],
         "reviewer_requirements": [
           "customs or trade reviewer for tariff/import path",
@@ -798,14 +910,48 @@
           "qualified review and source refresh are required before country-specific claims"
         ],
         "country": "Generic",
+        "coverage_check_status": "missing_required_source_routes",
         "export_sources": [],
         "food_plant_animal_sources": [],
         "import_sources": [],
+        "missing_required_routes": [],
         "permitted_automation_methods": [
           "manual_review",
           "dated_source_refresh",
           "hash_snapshot",
           "terms_or_api_check_before_fetch"
+        ],
+        "required_route_checks": [
+          {
+            "id": "import_or_customs_route",
+            "next_valid_move": "Add official import/customs route source.",
+            "required": false,
+            "satisfied": false
+          },
+          {
+            "id": "tariff_or_market_access_route",
+            "next_valid_move": "Add official tariff or market-access route source.",
+            "required": false,
+            "satisfied": false
+          },
+          {
+            "id": "regulated_product_route",
+            "next_valid_move": "Add regulated-product source route such as food/plant/animal/health reference.",
+            "required": false,
+            "satisfied": false
+          },
+          {
+            "id": "restricted_party_or_control_route",
+            "next_valid_move": "Add restricted-party, sanctions, import-control, or permit route source.",
+            "required": false,
+            "satisfied": false
+          },
+          {
+            "id": "market_or_buyer_research_route",
+            "next_valid_move": "Add market data or buyer/importer discovery route source.",
+            "required": false,
+            "satisfied": false
+          }
         ],
         "reviewer_requirements": [
           "customs or trade reviewer for tariff/import path",
@@ -994,6 +1140,28 @@
       ],
       "status": "unknown_until_trade_and_production_data_attached"
     },
+    "market_signal_evaluation": {
+      "can_claim_market_demand": false,
+      "can_claim_profitable_product": false,
+      "components": {
+        "buyer_evidence_level": 0,
+        "buyer_or_importer_route": 10,
+        "hs_or_product_specificity": 15,
+        "market_access_route": 15,
+        "reviewer_verified_market_evidence": 0,
+        "trade_dataset_route": 15
+      },
+      "confidence_level": "source_backed",
+      "next_required_evidence": [
+        "dated trade dataset row",
+        "market-access comparison row",
+        "buyer reply or interview note",
+        "qualified reviewer note before external market claims"
+      ],
+      "score": 55,
+      "score_cap": 59,
+      "status": "local_signal_computed_external_evidence_required"
+    },
     "market_size_and_trend": {
       "required_metrics": [
         "total imports by destination country",
@@ -1035,11 +1203,11 @@
         "market_access_approved"
       ],
       "competitor_source_countries": [
+        "United States",
         "Mexico",
         "European Union",
         "China",
-        "Vietnam",
-        "United States"
+        "Vietnam"
       ],
       "destination": "Canada",
       "exporter_origin": "Vietnam",

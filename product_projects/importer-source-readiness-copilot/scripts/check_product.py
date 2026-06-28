@@ -750,40 +750,47 @@ def main() -> int:
         failures.append("opportunity scanner should be ready with research gates")
     if opportunity_scanner.get("signal_count", 0) < 1:
         failures.append("opportunity scanner should include at least one signal row")
-    if business_logic.get("status") != "business_logic_phases_ready_with_evidence_gates":
-        failures.append("business logic phase report should be ready with evidence gates")
-    if business_logic.get("phase_count") != 5:
-        failures.append("business logic phase report should include five phases")
+    if business_logic.get("status") != "business_logic_implemented_with_external_evidence_gates":
+        failures.append("business logic report should expose implemented local rules with external evidence gates")
+    if business_logic.get("phase_count") != 8:
+        failures.append("business logic report should include eight executable phases")
     if not business_logic.get("packet_rows"):
         failures.append("business logic phase report should include packet rows")
     else:
         first_business_row = business_logic["packet_rows"][0]
         if first_business_row.get("decision_tree", {}).get("question_count") != 12:
             failures.append("business logic decision tree should include 12 questions")
-        if first_business_row.get("business_scores", {}).get("score_count") != 5:
-            failures.append("business logic should include five separate scores")
+        if first_business_row.get("business_scores", {}).get("score_count") != 6:
+            failures.append("business logic should include six separate scores")
         if first_business_row.get("canonical_packet_contract", {}).get("status") != "canonical_trade_packet_contract_ready":
             failures.append("business logic should include the canonical packet contract")
+        if first_business_row.get("business_gate_decision", {}).get("status") != "business_logic_executable_external_gates_blocked":
+            failures.append("business logic should include executable allowed/blocked action decisions")
+        if first_business_row.get("buyer_supplier_evidence", {}).get("status") != "buyer_supplier_evidence_evaluated_claims_blocked":
+            failures.append("business logic should evaluate buyer/supplier evidence levels")
+        if first_business_row.get("source_freshness", {}).get("status") != "source_freshness_blocked_until_refresh_and_review":
+            failures.append("business logic should evaluate source freshness from evidence rows")
     if business_logic.get("operation_status") != "business_logic_operational_local_with_evidence_gates":
         failures.append("business logic should include local operation proof")
-    if business_phase_completion.get("status") != "all_14_phase_contracts_ready_external_gates_preserved":
-        failures.append("business phase completion report should cover all 14 phase contracts")
+    if business_phase_completion.get("status") != "local_business_logic_implemented_external_gates_preserved":
+        failures.append("business phase completion report should preserve external gates after local business logic implementation")
     if business_phase_completion.get("completion_phase_contracts", {}).get("phase_count") != 14:
         failures.append("business phase completion report should include phases 0-13")
     if business_phase_completion.get("completion_phase_contracts", {}).get("public_launch_ready") is not False:
         failures.append("business phase completion must keep public launch blocked")
-    if business_phase_completion.get("operation_status") != "business_phase_completion_operational_local_external_gates_preserved":
+    if business_phase_completion.get("operation_status") != "business_phase_completion_operational_local_business_logic_external_gates_preserved":
         failures.append("business phase completion report missing local operation proof")
     required_business_doc_terms = [
-        "business_logic_phases_ready_with_evidence_gates",
+        "business_logic_implemented_with_external_evidence_gates",
         "business_logic_operational_local_with_evidence_gates",
-        "all_14_phase_contracts_ready_external_gates_preserved",
+        "local_business_logic_implemented_external_gates_preserved",
         "market_signal_score",
         "evidence_completeness_score",
         "source_freshness_score",
+        "buyer_supplier_evidence_score",
         "responsibility_clarity_score",
         "decision_safety_score",
-        "Questions To Close Before We Lock This Logic",
+        "No Open Local Business-Logic Questions",
     ]
     for term in required_business_doc_terms:
         if term not in business_core_doc:

@@ -32,7 +32,7 @@ class CompletionPlatformTests(unittest.TestCase):
         self.assertEqual(payload["status"], "all_local_stages_implemented_with_external_gates")
         self.assertEqual(payload["country_coverage"]["status"], "country_coverage_ready_with_claim_gates")
         self.assertEqual(payload["opportunity_scanner"]["status"], "opportunity_scanner_ready_with_research_gates")
-        self.assertEqual(payload["business_logic_phases"]["status"], "business_logic_phases_ready_with_evidence_gates")
+        self.assertEqual(payload["business_logic_phases"]["status"], "business_logic_implemented_with_external_evidence_gates")
         self.assertEqual(payload["transport_readiness"]["status"], "transport_readiness_ready_with_forwarder_gates")
         self.assertEqual(payload["billing_credit_controls"]["status"], "billing_credit_controls_ready_local_no_live_checkout")
         self.assertEqual(payload["agent_api_manifest"]["status"], "agent_api_manifest_ready_scoped_and_metered")
@@ -61,15 +61,24 @@ class CompletionPlatformTests(unittest.TestCase):
 
         self.assertGreaterEqual(payload["opportunity_scanner"]["signal_count"], 1)
         business = payload["business_logic_phases"]
-        self.assertEqual(business["phase_count"], 5)
+        self.assertEqual(business["phase_count"], 8)
         self.assertEqual(
             business["completion_phase_contracts"]["status"],
-            "all_14_phase_contracts_ready_external_gates_preserved",
+            "local_business_logic_implemented_external_gates_preserved",
         )
         self.assertEqual(business["completion_phase_contracts"]["phase_count"], 14)
+        self.assertGreaterEqual(business["completion_phase_contracts"]["local_executable_phase_count"], 8)
         self.assertFalse(business["completion_phase_contracts"]["public_launch_ready"])
         self.assertEqual(business["packet_rows"][0]["decision_tree"]["question_count"], 12)
-        self.assertEqual(business["packet_rows"][0]["business_scores"]["score_count"], 5)
+        self.assertEqual(business["packet_rows"][0]["business_scores"]["score_count"], 6)
+        self.assertEqual(
+            business["packet_rows"][0]["business_gate_decision"]["status"],
+            "business_logic_executable_external_gates_blocked",
+        )
+        self.assertEqual(
+            business["packet_rows"][0]["buyer_supplier_evidence"]["status"],
+            "buyer_supplier_evidence_evaluated_claims_blocked",
+        )
         self.assertEqual(
             business["packet_rows"][0]["canonical_packet_contract"]["field_provenance"]["responsibility_path"]["mode"],
             "system_derived",

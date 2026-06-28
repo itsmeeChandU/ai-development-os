@@ -2,11 +2,11 @@
 
 Date: 2026-06-28
 
-Current status: `business_logic_phases_ready_with_evidence_gates`
+Current status: `business_logic_implemented_with_external_evidence_gates`
 
 Operation status: `business_logic_operational_local_with_evidence_gates`
 
-Phase completion status: `all_14_phase_contracts_ready_external_gates_preserved`
+Phase completion status: `local_business_logic_implemented_external_gates_preserved`
 
 ## Product Position
 
@@ -89,10 +89,13 @@ The current example packet is at document stage because it has evidence, but imp
 | Phase | Current Implementation |
 | --- | --- |
 | Decision tree before more features | implemented as 12 packet questions with answered, research, review, and blocked states |
-| Market intelligence module | implemented as a research plan, not a demand claim |
-| Country-pack architecture | implemented for destination, origin, and generic fallback packs |
-| Source monitoring contract | implemented as source registry rows with cadence, terms/robots checks, hash/diff strategy, and stale-source routing |
+| No-document beginner flow | implemented as executable starter input checks, source routes, starter outputs, and questions-only outreach policy |
+| Market intelligence module | implemented as bounded local signal scoring, not a demand claim |
+| Country-pack architecture | implemented for destination, origin, strategic India, and generic fallback packs with required route checks |
+| Source monitoring runtime | implemented as source registry rows plus packet evidence freshness evaluation |
+| Buyer/supplier evidence runtime | implemented as executable evidence ladders that block validation and verification claims |
 | Commercial packet outputs | implemented as beginner, exporter, importer, operator, supplier, buyer/broker, and expert-facing packet sections |
+| Business gate decision | implemented as allowed and blocked action matrix for each packet |
 
 ## Decision Tree
 
@@ -115,13 +118,14 @@ The current packet blocks or routes to review on HS code, buyer/importer, import
 
 ## Business Scores
 
-The product now uses five separate scores, not one generic readiness score.
+The product now uses six separate scores, not one generic readiness score.
 
 | Score | Current Meaning | Current Boundary |
 | --- | --- | --- |
 | Market signal score, `market_signal_score` | whether there is enough market data to treat the opportunity as worth deeper validation | capped until official trade data, market-access comparison, and buyer evidence are attached |
 | Evidence completeness score, `evidence_completeness_score` | whether the packet has enough supporting evidence for the current stage | capped when core fields or evidence are missing |
 | Source freshness score, `source_freshness_score` | whether official/reference sources are fresh enough for the packet | blocked when critical source refresh or change review is pending |
+| Buyer/supplier evidence score, `buyer_supplier_evidence_score` | whether buyer and supplier evidence levels are present enough for internal review | capped because evidence levels do not equal buyer validation or supplier verification |
 | Responsibility clarity score, `responsibility_clarity_score` | whether importer of record, Incoterms, and role split are clear | capped while importer of record or Incoterms are unknown |
 | Decision safety score, `decision_safety_score` | whether it is safe to move beyond internal review | capped while blocker rows or external claim gates remain open |
 
@@ -255,17 +259,17 @@ Payments remain downstream. Live checkout stays disabled until scope, support, r
 | Phase | Name | Current Status | What Is Complete Now | What Still Needs Real Evidence |
 | ---: | --- | --- | --- | --- |
 | 0 | Business identity lock | local complete, claims blocked | wedge, persona, promise, name, forbidden claims | none for local scope |
-| 1 | Business logic contract | local complete, claims blocked | 12 questions, five stages, provenance, five scores, cap reasons | real reviewer verification before stronger claims |
-| 2 | No-document beginner flow | local complete, claims blocked | starter packet contract, source routes, questions, missing evidence | real user feedback |
-| 3 | Market intelligence | local contract complete, datasets required | signal structure, confidence levels, source/date/limitation rules | official dataset rows, buyer/operator validation |
-| 4 | Country packs | local complete, reference boundaries | Canada, India, Vietnam, Generic pack logic | current source refresh and qualified country review |
-| 5 | Source monitoring | local complete, no live freshness claim | freshness status, diff classifier, packet impact logic | permitted refresh evidence and reviewer review |
+| 1 | Business logic runtime | local executable, claims blocked | 12 questions, five stages, provenance, six scores, cap reasons, gate decision | real reviewer verification before stronger claims |
+| 2 | No-document beginner flow | local executable, claims blocked | starter input checks, source routes, questions, missing evidence, no-send policy | real user feedback |
+| 3 | Market intelligence | local signal scoring complete, datasets required | signal components, confidence levels, source/date/limitation rules | official dataset rows, buyer/operator validation |
+| 4 | Country packs | local executable route checks, reference boundaries | Canada, India, Vietnam, Generic pack logic and required source route checks | current source refresh and qualified country review |
+| 5 | Source monitoring | local executable freshness evaluation, no live freshness claim | freshness status, diff classifier, packet impact logic, attached evidence freshness state | permitted refresh evidence and reviewer review |
 | 6 | Packet outputs | local complete, claims blocked | Trade Readiness Packet views and supporting reports | user value validation |
 | 7 | Human review gates | contract ready, external evidence required | reviewer lanes and decision templates | real reviewer records |
 | 8 | Metadata-only beta | contract ready, real users required | beta measurement plan | 5-10 real user outcomes |
 | 9 | Hosted beta infrastructure | contract ready, hosted proof required | hosted control checklist | auth, DB, storage, logs, backups, AI routing proof |
 | 10 | Controlled real-file beta | contract ready, hosted review required | consent, redaction, deletion, audit requirements | supervised real-file beta results |
-| 11 | Buyer/supplier evidence | local contract complete, real evidence required | evidence ladders and language boundaries | dated buyer and supplier evidence |
+| 11 | Buyer/supplier evidence | local executable ladders, real evidence required | buyer/supplier evidence levels and language boundaries | dated buyer and supplier evidence for stronger claims |
 | 12 | Payments | local contract complete, live checkout disabled | paid scope and required reviews | pricing, tax, support, webhook, payment review |
 | 13 | Public launch | launch contract ready, public launch blocked | safe initial launch scope and blocked launch scope | named launch owner approval and all external gates |
 
@@ -285,13 +289,16 @@ Payments remain downstream. Live checkout stays disabled until scope, support, r
 
 ## What Is Implemented Now
 
-- five business phases
+- eight business phases
 - 12-question decision tree
 - canonical Trade Readiness Packet contract
 - field-level provenance
-- Canada/Vietnam/Generic country-pack rows
-- source-monitor contract with source metadata and stale-source behavior
-- five separate business scores
+- executable starter flow
+- Canada/Vietnam/India/Generic country-pack rows with route checks
+- source-monitor contract with source metadata and executable evidence freshness evaluation
+- buyer/supplier evidence ladders
+- six separate business scores
+- business_gate_decision allowed/blocked action matrix
 - beginner, exporter, importer, operator, supplier, buyer/broker, and expert-facing output sections
 - reviewer lane framework
 - hosted beta control boundary
@@ -316,13 +323,17 @@ The following are not complete and must stay blocked until real evidence comes b
 - product-specific tariff or CFIA confirmation
 - current official-source freshness proof for stronger claims
 
-## Questions To Close Before We Lock This Logic
+## No Open Local Business-Logic Questions
 
-1. Should the first commercial wedge remain "foreign exporters selling into Canada", or should we narrow it further to one category such as food, seafood, or agri?
-2. For Canada-first flows, should India be the next origin country to make fully explicit, or should Vietnam remain the example because the current packet uses Vietnam?
-3. Which customer should the first version speak to first: beginner exporter, experienced exporter, Canadian importer, broker/operator, or internal reviewer?
-4. What evidence should count as real buyer validation for this product: email reply, signed LOI, paid order, call note, or something else?
-5. What evidence should count as supplier verification: business registration, export license, product certificate, third-party inspection, prior shipment, or something else?
-6. What source freshness cadence should we promise in the product language: per packet, weekly, monthly, or only before paid review?
-7. Should the product generate outreach drafts for buyers/suppliers, or should it only generate questions until external messaging is approved?
-8. Should the product name used with reviewers be `Trade Readiness Copilot`, `Importer Source Readiness Copilot`, or a new simpler buyer-facing name?
+The local business logic is locked for the current implementation scope:
+
+- wedge: foreign exporters preparing to sell into Canada
+- first categories: food, seafood, agri, and general goods
+- first persona: beginner-to-intermediate exporter
+- country path: Canada destination, Vietnam demo origin, India strategic next origin, Generic fallback
+- buyer evidence: ladder only; no buyer-validated claim
+- supplier evidence: ladder only; no supplier-verified claim
+- source freshness: checked before packet generation or paid review; no continuous legal freshness claim
+- outreach: questions only; no automatic sending
+
+Remaining incomplete work is external evidence, not an unanswered local business-logic decision.

@@ -10,7 +10,7 @@
     "manifests": 8,
     "other": 974,
     "product_data": 10,
-    "product_generated_artifacts": 106,
+    "product_generated_artifacts": 107,
     "product_source": 22,
     "product_tests": 19,
     "root_docs": 28,
@@ -22,7 +22,7 @@
     "product_projects/importer-source-readiness-copilot/system_review_graph/*.json",
     "product_projects/importer-source-readiness-copilot/system_review_graph/*.sqlite"
   ],
-  "file_count": 1206,
+  "file_count": 1207,
   "flow_layers": [
     "prompt-to-product orchestration",
     "product project proof checks",
@@ -36,8 +36,8 @@
     "product_projects/importer-source-readiness-copilot/output/pdf/external_validation_reviewer_brief.pdf",
     "product_projects/importer-source-readiness-copilot/output/pdf/go_live_input_requests.pdf"
   ],
-  "generated_at": "2026-06-28T03:53:14+00:00",
-  "head": "407c10d6b57a3ffcd1989f3ca8cceeb0cffabdb5",
+  "generated_at": "2026-06-28T04:14:09+00:00",
+  "head": "e4e2e563515b0bd4f24db16e1bb57dfd093564e3",
   "proof_commands": [
     "python3 scripts/ai_dev_os_check.py",
     "python3 scripts/workflow_manifest_check.py",

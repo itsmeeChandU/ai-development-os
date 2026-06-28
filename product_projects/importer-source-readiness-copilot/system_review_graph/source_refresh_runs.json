@@ -2,13 +2,13 @@
   {
     "actor": "local_operator",
     "claim_boundary": "Refresh records close stale-source proof only when HTTP access succeeds. They do not approve external claims.",
-    "generated_at": "2026-06-28T03:52:47+00:00",
+    "generated_at": "2026-06-28T04:15:43+00:00",
     "packet_id": "packet-frozen-tuna-canada-001",
-    "refresh_run_id": "source-refresh-packet-frozen-tuna-canada-001-2026-06-28T035247Z0000",
+    "refresh_run_id": "source-refresh-packet-frozen-tuna-canada-001-2026-06-28T041543Z0000",
     "row_count": 3,
     "rows": [
       {
-        "content_hash": "9771a986e8008626a29ccff43df17f622a5fd40c14831dbccfc98655638ed721",
+        "content_hash": "5c9687703572b0528be0a09d533c620f2243b722bf8c17919c86629fc1a122a7",
         "error": "",
         "evidence_id": "evidence-frozen-tuna-cid-reference",
         "freshness_status": "source_fresh_reference_only",

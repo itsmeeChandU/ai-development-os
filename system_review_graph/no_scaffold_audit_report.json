@@ -1,5 +1,6 @@
 {
   "classification_counts": {
+    "external_input_gap_language": 1,
     "fixture_blocker_evidence": 30,
     "generated_audit_language": 7,
     "generator_template_only": 24,
@@ -10,9 +11,9 @@
   },
   "disallowed_count": 0,
   "disallowed_findings": [],
-  "finding_count": 513,
-  "generated_at": "2026-06-28T03:53:25+00:00",
-  "head": "407c10d6b57a3ffcd1989f3ca8cceeb0cffabdb5",
+  "finding_count": 514,
+  "generated_at": "2026-06-28T04:15:50+00:00",
+  "head": "e4e2e563515b0bd4f24db16e1bb57dfd093564e3",
   "policy": "docs/NO_SCAFFOLD_DELIVERY_POLICY.md",
   "policy_failures": [],
   "prior_delivery_audit": {

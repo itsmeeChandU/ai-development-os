@@ -975,13 +975,13 @@ def main() -> int:
         print("Product project check: FAIL")
         print("opportunity scanner artifact is missing signal rows")
         return 1
-    if business_logic.get("status") != "business_logic_phases_ready_with_evidence_gates":
+    if business_logic.get("status") != "business_logic_implemented_with_external_evidence_gates":
         print("Product project check: FAIL")
         print("business logic phase report is missing or stale")
         return 1
-    if business_logic.get("phase_count") != 5:
+    if business_logic.get("phase_count") != 8:
         print("Product project check: FAIL")
-        print("business logic report must include the five required phase contracts")
+        print("business logic report must include the eight executable phase surfaces")
         return 1
     if not business_logic.get("packet_rows"):
         print("Product project check: FAIL")
@@ -992,21 +992,33 @@ def main() -> int:
         print("Product project check: FAIL")
         print("business logic decision tree must include twelve decision questions")
         return 1
-    if first_business_row.get("business_scores", {}).get("score_count") != 5:
+    if first_business_row.get("business_scores", {}).get("score_count") != 6:
         print("Product project check: FAIL")
-        print("business logic report must expose five separate business scores")
+        print("business logic report must expose six separate business scores")
         return 1
     if first_business_row.get("canonical_packet_contract", {}).get("status") != "canonical_trade_packet_contract_ready":
         print("Product project check: FAIL")
         print("business logic report missing canonical trade packet contract")
         return 1
+    if first_business_row.get("business_gate_decision", {}).get("status") != "business_logic_executable_external_gates_blocked":
+        print("Product project check: FAIL")
+        print("business logic report missing executable allowed/blocked action matrix")
+        return 1
+    if first_business_row.get("buyer_supplier_evidence", {}).get("status") != "buyer_supplier_evidence_evaluated_claims_blocked":
+        print("Product project check: FAIL")
+        print("business logic report missing buyer/supplier evidence evaluation")
+        return 1
+    if first_business_row.get("source_freshness", {}).get("status") != "source_freshness_blocked_until_refresh_and_review":
+        print("Product project check: FAIL")
+        print("business logic report missing source freshness evaluation")
+        return 1
     if business_logic.get("operation_status") != "business_logic_operational_local_with_evidence_gates":
         print("Product project check: FAIL")
         print("business logic report missing local operation proof")
         return 1
-    if business_phase_completion.get("status") != "all_14_phase_contracts_ready_external_gates_preserved":
+    if business_phase_completion.get("status") != "local_business_logic_implemented_external_gates_preserved":
         print("Product project check: FAIL")
-        print("business phase completion report missing 14-phase contract status")
+        print("business phase completion report missing implemented-local-logic status")
         return 1
     if business_phase_completion.get("completion_phase_contracts", {}).get("phase_count") != 14:
         print("Product project check: FAIL")
@@ -1016,20 +1028,21 @@ def main() -> int:
         print("Product project check: FAIL")
         print("business phase completion report must keep public launch blocked")
         return 1
-    if business_phase_completion.get("operation_status") != "business_phase_completion_operational_local_external_gates_preserved":
+    if business_phase_completion.get("operation_status") != "business_phase_completion_operational_local_business_logic_external_gates_preserved":
         print("Product project check: FAIL")
         print("business phase completion report missing local operation proof")
         return 1
     for term in (
-        "business_logic_phases_ready_with_evidence_gates",
+        "business_logic_implemented_with_external_evidence_gates",
         "business_logic_operational_local_with_evidence_gates",
-        "all_14_phase_contracts_ready_external_gates_preserved",
+        "local_business_logic_implemented_external_gates_preserved",
         "market_signal_score",
         "evidence_completeness_score",
         "source_freshness_score",
+        "buyer_supplier_evidence_score",
         "responsibility_clarity_score",
         "decision_safety_score",
-        "Questions To Close Before We Lock This Logic",
+        "No Open Local Business-Logic Questions",
     ):
         if term not in business_core_doc:
             print("Product project check: FAIL")

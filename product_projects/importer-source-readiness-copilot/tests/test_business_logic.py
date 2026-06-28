@@ -40,17 +40,18 @@ class BusinessLogicTests(unittest.TestCase):
         workflow, official_sources = self._workflow()
         report = build_business_logic_phases(workflow, official_sources)
 
-        self.assertEqual(report["status"], "business_logic_phases_ready_with_evidence_gates")
-        self.assertEqual(report["phase_count"], 5)
+        self.assertEqual(report["status"], "business_logic_implemented_with_external_evidence_gates")
+        self.assertEqual(report["phase_count"], 8)
         self.assertEqual(report["phase_ids"], BUSINESS_PHASE_IDS)
         self.assertEqual(report["score_ids"], BUSINESS_SCORE_IDS)
         self.assertEqual(report["business_identity_lock"]["first_wedge"], "foreign_exporters_preparing_to_sell_into_canada")
         self.assertEqual(
             report["completion_phase_contracts"]["status"],
-            "all_14_phase_contracts_ready_external_gates_preserved",
+            "local_business_logic_implemented_external_gates_preserved",
         )
         self.assertEqual(report["completion_phase_contracts"]["phase_ids"], BUSINESS_COMPLETION_PHASE_IDS)
         self.assertEqual(report["completion_phase_contracts"]["phase_count"], 14)
+        self.assertGreaterEqual(report["completion_phase_contracts"]["local_executable_phase_count"], 8)
         self.assertFalse(report["completion_phase_contracts"]["public_launch_ready"])
         self.assertEqual(report["packet_count"], 1)
         row = report["packet_rows"][0]
@@ -74,11 +75,19 @@ class BusinessLogicTests(unittest.TestCase):
         self.assertEqual(canonical["field_provenance"]["responsibility_path"]["mode"], "system_derived")
         self.assertEqual(canonical["field_provenance"]["source_url"]["mode"], "official_source_reference")
 
+        beginner = row["beginner_flow"]
+        self.assertEqual(beginner["status"], "starter_flow_executable")
+        self.assertTrue(beginner["can_generate_starter_packet"])
+        self.assertTrue(beginner["can_generate_buyer_packet"])
+        self.assertFalse(beginner["can_send_outreach"])
+        self.assertEqual(beginner["missing_required_inputs"], [])
+
         scores = row["business_scores"]
         self.assertEqual(scores["status"], "five_business_scores_ready_no_approval_claims")
-        self.assertEqual(scores["score_count"], 5)
+        self.assertEqual(scores["score_count"], 6)
         self.assertEqual(set(scores["scores"]), set(BUSINESS_SCORE_IDS))
         self.assertEqual(scores["scores"]["decision_safety_score"]["color"], "red")
+        self.assertEqual(scores["scores"]["buyer_supplier_evidence_score"]["color"], "red")
         self.assertIn("cap_reason", scores["scores"]["decision_safety_score"])
         self.assertIn("cap at 39", scores["formula_contract"]["decision_safety_score"])
         self.assertIn("buyer_validated", scores["score_policy"]["forbidden_labels"])
@@ -89,6 +98,9 @@ class BusinessLogicTests(unittest.TestCase):
 
         market = row["market_intelligence"]
         self.assertEqual(market["status"], "market_intelligence_ready_as_research_plan")
+        self.assertEqual(market["market_signal_evaluation"]["status"], "local_signal_computed_external_evidence_required")
+        self.assertFalse(market["market_signal_evaluation"]["can_claim_market_demand"])
+        self.assertLessEqual(market["market_signal_evaluation"]["score"], market["market_signal_evaluation"]["score_cap"])
         self.assertEqual(market["buyer_importer_discovery"]["status"], "lead_discovery_only")
         self.assertEqual(market["import_dependency_signal"]["status"], "unknown_until_trade_and_production_data_attached")
         self.assertIn("tariff_advantage_confirmed", market["tariff_and_market_access_comparison"]["blocked_claims"])
@@ -103,6 +115,8 @@ class BusinessLogicTests(unittest.TestCase):
         self.assertEqual(countries["India"]["role"], "strategic_next_origin_pack")
         self.assertTrue(countries["Canada"]["import_sources"])
         self.assertTrue(countries["Canada"]["trade_data_sources"])
+        self.assertEqual(countries["Canada"]["coverage_check_status"], "reference_routes_complete_review_required")
+        self.assertEqual(countries["Canada"]["missing_required_routes"], [])
 
         source_monitor = row["source_monitoring_contract"]
         self.assertEqual(source_monitor["status"], "source_monitoring_contract_ready_no_live_fetch_claim")
@@ -118,10 +132,30 @@ class BusinessLogicTests(unittest.TestCase):
         self.assertIn("packet_impact_logic", first_source)
         self.assertIn("packet-frozen-tuna-canada-001", first_source["packet_tags"])
 
+        freshness = row["source_freshness"]
+        self.assertEqual(freshness["status"], "source_freshness_blocked_until_refresh_and_review")
+        self.assertEqual(freshness["attached_source_count"], 3)
+        self.assertEqual(freshness["stale_or_unproven_count"], 3)
+        self.assertFalse(freshness["can_claim_current_sources"])
+
         outputs = row["packet_outputs"]
         self.assertEqual(outputs["status"], "commercial_packet_outputs_ready_claims_blocked")
         self.assertTrue(outputs["supplier_document_request"]["requested_items"])
         self.assertIn("broker_or_expert", outputs["question_sets"])
+
+        buyer_supplier = row["buyer_supplier_evidence"]
+        self.assertEqual(buyer_supplier["status"], "buyer_supplier_evidence_evaluated_claims_blocked")
+        self.assertEqual(buyer_supplier["buyer"]["current_level"], -1)
+        self.assertEqual(buyer_supplier["supplier"]["current_level"], 0)
+        self.assertFalse(buyer_supplier["buyer"]["can_say_buyer_validated"])
+        self.assertFalse(buyer_supplier["supplier"]["can_say_supplier_verified"])
+
+        gate = row["business_gate_decision"]
+        self.assertEqual(gate["status"], "business_logic_executable_external_gates_blocked")
+        self.assertTrue(gate["local_actions_allowed"]["generate_starter_packet"])
+        self.assertFalse(gate["local_actions_allowed"]["send_outreach"])
+        self.assertFalse(gate["local_actions_allowed"]["take_payment"])
+        self.assertIn("source_freshness_missing", gate["hard_blocks"])
 
     def test_report_level_reviewer_and_beta_contracts_do_not_open_approvals(self) -> None:
         workflow, official_sources = self._workflow()

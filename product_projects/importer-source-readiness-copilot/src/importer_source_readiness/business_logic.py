@@ -13,10 +13,13 @@ from typing import Any
 
 BUSINESS_PHASE_IDS = [
     "decision_tree_before_features",
+    "beginner_flow_runtime",
     "market_intelligence_module",
     "country_pack_architecture",
-    "source_monitoring_contract",
+    "source_monitoring_runtime",
+    "buyer_supplier_evidence_runtime",
     "commercial_packet_outputs",
+    "business_gate_decision",
 ]
 
 BUSINESS_COMPLETION_PHASE_IDS = [f"phase_{index}" for index in range(14)]
@@ -25,6 +28,7 @@ BUSINESS_SCORE_IDS = [
     "market_signal_score",
     "evidence_completeness_score",
     "source_freshness_score",
+    "buyer_supplier_evidence_score",
     "responsibility_clarity_score",
     "decision_safety_score",
 ]
@@ -35,6 +39,24 @@ PROVENANCE_MODES = [
     "official_source_reference",
     "system_derived",
     "reviewer_verified",
+]
+
+BUYER_EVIDENCE_LADDER = [
+    {"level": 0, "label": "lead_found", "allowed_language": "buyer lead found"},
+    {"level": 1, "label": "contact_attempted", "allowed_language": "buyer contact attempted"},
+    {"level": 2, "label": "reply_received", "allowed_language": "buyer replied on a dated channel"},
+    {"level": 3, "label": "meeting_completed", "allowed_language": "buyer meeting completed and notes attached"},
+    {"level": 4, "label": "loi_received", "allowed_language": "letter of intent or equivalent evidence attached"},
+    {"level": 5, "label": "po_or_paid_order", "allowed_language": "purchase order or paid order evidence attached"},
+]
+
+SUPPLIER_EVIDENCE_LADDER = [
+    {"level": 0, "label": "supplier_named", "allowed_language": "supplier named by user"},
+    {"level": 1, "label": "business_registration_attached", "allowed_language": "registration evidence collected"},
+    {"level": 2, "label": "export_ability_evidence_attached", "allowed_language": "export ability evidence collected"},
+    {"level": 3, "label": "product_docs_attached", "allowed_language": "product documents collected"},
+    {"level": 4, "label": "inspection_or_certificate_attached", "allowed_language": "inspection or certificate evidence collected"},
+    {"level": 5, "label": "prior_shipment_evidence_attached", "allowed_language": "prior shipment evidence collected"},
 ]
 
 
@@ -156,6 +178,58 @@ def _answer(value: Any, missing_label: str = "unknown") -> str:
     return str(value).strip() if _known(value) else missing_label
 
 
+def _packet_evidence(packet: dict[str, Any]) -> list[dict[str, Any]]:
+    return [dict(row) for row in packet.get("evidence_items", []) if isinstance(row, dict)]
+
+
+def _text_blob(*values: Any) -> str:
+    parts: list[str] = []
+    for value in values:
+        if isinstance(value, dict):
+            parts.extend(str(item) for item in value.values())
+        elif isinstance(value, (list, tuple, set)):
+            parts.extend(str(item) for item in value)
+        elif value is not None:
+            parts.append(str(value))
+    return " ".join(parts).lower()
+
+
+def _status_value(value: Any) -> str:
+    return str(value or "missing").strip().lower()
+
+
+def _review_done(value: Any) -> bool:
+    return _status_value(value) in {"complete", "reviewed", "signed", "approved_for_scope", "validated"}
+
+
+def _source_category(source: dict[str, Any]) -> str:
+    return str(_normalized_source_registry_row(source, {})["source_type"])
+
+
+def _has_source_category(sources: list[dict[str, Any]], *categories: str) -> bool:
+    wanted = set(categories)
+    return any(_source_category(source) in wanted for source in sources)
+
+
+def _field_check(packet: dict[str, Any], field: str, label: str | None = None) -> dict[str, Any]:
+    known = _known(packet.get(field))
+    return {
+        "field": field,
+        "label": label or field.replace("_", " "),
+        "status": "provided" if known else "missing",
+        "has_value": known,
+        "value": packet.get(field) if known else "",
+    }
+
+
+def _best_level(ladder: list[dict[str, Any]], labels: set[str]) -> dict[str, Any]:
+    best = {"level": -1, "label": "no_evidence", "allowed_language": "no evidence collected"}
+    for row in ladder:
+        if str(row["label"]) in labels and int(row["level"]) > int(best["level"]):
+            best = dict(row)
+    return best
+
+
 def _decision_answer_state(status: str) -> str:
     if status == "answered":
         return "answered"
@@ -269,6 +343,62 @@ def build_decision_tree(packet: dict[str, Any], official_sources: list[dict[str,
         "blocked_or_review_step_count": len(blockers),
         "next_valid_move": questions[-1]["answer"],
         "proof_boundary": "The decision tree prepares the next safe move; it does not approve import, export, tariff, buyer, supplier, or shipment decisions.",
+    }
+
+
+def build_beginner_flow(packet: dict[str, Any], official_sources: list[dict[str, Any]]) -> dict[str, Any]:
+    """Evaluate the no-document starter flow from actual packet fields."""
+
+    minimum_checks = [
+        _field_check(packet, "product_name", "product"),
+        _field_check(packet, "origin_country", "origin country"),
+        _field_check(packet, "destination_country", "destination country"),
+        _field_check(packet, "trade_direction", "trade direction"),
+        _field_check(packet, "intended_use", "intended use"),
+    ]
+    buyer_known = _known(packet.get("buyer_name") or packet.get("importer_name"))
+    minimum_checks.append(
+        {
+            "field": "buyer_or_importer_status",
+            "label": "buyer or importer status",
+            "status": "provided" if buyer_known else "unknown_allowed_for_starter",
+            "has_value": buyer_known,
+            "value": packet.get("buyer_name") or packet.get("importer_name") or "",
+        }
+    )
+    missing = [row["field"] for row in minimum_checks if row["status"] == "missing"]
+    source_routes = [
+        _source_summary(source)
+        for source in official_sources
+        if _country(source.get("jurisdiction")) in {_country(packet.get("origin_country")), _country(packet.get("destination_country")), "Generic", "International"}
+    ]
+    starter_ready = not missing and bool(source_routes)
+    return {
+        "status": "starter_flow_executable" if starter_ready else "starter_flow_blocked_missing_inputs",
+        "entry_buttons": ["Explore a market", "Prepare buyer packet", "Check my documents"],
+        "minimum_input_checks": minimum_checks,
+        "missing_required_inputs": missing,
+        "source_route_count": len(source_routes),
+        "source_routes": source_routes[:10],
+        "can_generate_starter_packet": starter_ready,
+        "can_generate_buyer_packet": starter_ready,
+        "can_send_outreach": False,
+        "outreach_policy": "questions_only_no_automatic_sending",
+        "starter_outputs": [
+            "product assumptions",
+            "missing fields",
+            "official source routes",
+            "buyer/broker/supplier questions",
+            "document checklist",
+            "responsibility split warning",
+            "next safe action",
+        ],
+        "next_valid_move": (
+            "Generate a starter packet with blocked claims and questions."
+            if starter_ready
+            else "Collect missing starter inputs before packet generation."
+        ),
+        "proof_boundary": "Starter flow prepares a research packet only; it never proves market demand, source freshness, or trade readiness.",
     }
 
 
@@ -446,11 +576,47 @@ def build_country_packs(packet: dict[str, Any], official_sources: list[dict[str,
         if country in {row.get("country") for row in countries}:
             continue
         sources = _sources_for_country(official_sources, country)
+        required_checks = [
+            {
+                "id": "import_or_customs_route",
+                "required": role in {"destination_import_pack", "strategic_next_origin_pack"},
+                "satisfied": _has_source_category(sources, "official_reference", "tariff_or_market_access", "restricted_party_or_control"),
+                "next_valid_move": "Add official import/customs route source.",
+            },
+            {
+                "id": "tariff_or_market_access_route",
+                "required": role == "destination_import_pack",
+                "satisfied": _has_source_category(sources, "tariff_or_market_access"),
+                "next_valid_move": "Add official tariff or market-access route source.",
+            },
+            {
+                "id": "regulated_product_route",
+                "required": role == "destination_import_pack" and _is_regulated_category(packet),
+                "satisfied": _has_source_category(sources, "regulated_product_requirements"),
+                "next_valid_move": "Add regulated-product source route such as food/plant/animal/health reference.",
+            },
+            {
+                "id": "restricted_party_or_control_route",
+                "required": role == "destination_import_pack",
+                "satisfied": _has_source_category(sources, "restricted_party_or_control"),
+                "next_valid_move": "Add restricted-party, sanctions, import-control, or permit route source.",
+            },
+            {
+                "id": "market_or_buyer_research_route",
+                "required": role == "destination_import_pack",
+                "satisfied": _has_source_category(sources, "market_or_buyer_research"),
+                "next_valid_move": "Add market data or buyer/importer discovery route source.",
+            },
+        ]
+        required_missing = [row for row in required_checks if row["required"] and not row["satisfied"]]
         pack = {
             "country": country,
             "role": role,
             "status": "country_pack_ready_reference_only" if sources else "country_pack_required",
             "source_count": len(sources),
+            "coverage_check_status": "reference_routes_complete_review_required" if not required_missing and sources else "missing_required_source_routes",
+            "required_route_checks": required_checks,
+            "missing_required_routes": [row["id"] for row in required_missing],
             "import_sources": [_source_summary(source) for source in _sources_matching(sources, "import", "customs", "carm")],
             "export_sources": [_source_summary(source) for source in _sources_matching(sources, "export", "foreign trade", "dgft")],
             "tariff_sources": [_source_summary(source) for source in _sources_matching(sources, "tariff", "market access", "customs tariff")],
@@ -516,6 +682,23 @@ def build_market_intelligence(packet: dict[str, Any], official_sources: list[dic
         "possible importer or buyer lead source",
         "buyer/operator validation notes",
     ]
+    buyer_supplier = evaluate_buyer_supplier_evidence(packet)
+    components = {
+        "hs_or_product_specificity": 15 if hs_known else 5,
+        "trade_dataset_route": 15 if tdo_sources else 0,
+        "market_access_route": 15 if market_access_sources else 0,
+        "buyer_or_importer_route": 10 if importer_sources else 0,
+        "buyer_evidence_level": max(0, int(buyer_supplier["buyer"]["current_level"])) * 8,
+        "reviewer_verified_market_evidence": 20 if _review_done(packet.get("qualified_review_status")) else 0,
+    }
+    component_total = min(59, sum(components.values()))
+    confidence = (
+        "document_backed"
+        if int(buyer_supplier["buyer"]["current_level"]) >= 2 and _packet_evidence(packet)
+        else "source_backed"
+        if tdo_sources or market_access_sources or importer_sources
+        else "research_plan"
+    )
     return {
         "status": "market_intelligence_ready_as_research_plan",
         "packet_id": _packet_id(packet),
@@ -567,6 +750,21 @@ def build_market_intelligence(packet: dict[str, Any], official_sources: list[dic
             "required_on_every_signal": ["source", "date_or_accessed_at", "limitation", "next_validation_step"],
             "safe_statement_template": "This appears worth deeper research because a named source shows a signal, but buyer demand is not validated until direct buyer evidence exists.",
             "blocked_statement": "This is a profitable market.",
+        },
+        "market_signal_evaluation": {
+            "status": "local_signal_computed_external_evidence_required",
+            "score_cap": 59,
+            "score": component_total,
+            "confidence_level": confidence,
+            "components": components,
+            "can_claim_market_demand": False,
+            "can_claim_profitable_product": False,
+            "next_required_evidence": [
+                "dated trade dataset row",
+                "market-access comparison row",
+                "buyer reply or interview note",
+                "qualified reviewer note before external market claims",
+            ],
         },
         "data_requirements": data_requirements,
         "next_valid_move": "Attach dated trade dataset rows, market-access comparison, and buyer/operator validation before treating the signal as a decision.",
@@ -733,6 +931,216 @@ def build_packet_outputs(packet: dict[str, Any]) -> dict[str, Any]:
     }
 
 
+def evaluate_buyer_supplier_evidence(packet: dict[str, Any]) -> dict[str, Any]:
+    """Compute buyer and supplier evidence levels from packet and evidence rows."""
+
+    rows = _packet_evidence(packet)
+    non_reference_rows = [
+        row
+        for row in rows
+        if str(row.get("evidence_type") or "").lower() not in {"official_reference", "source_url", "reference"}
+    ]
+    direct_party_blob = _text_blob(
+        packet.get("buyer_name"),
+        packet.get("importer_name"),
+        packet.get("supplier_name"),
+        packet.get("manufacturer_name"),
+        *non_reference_rows,
+    )
+    document_blob = _text_blob(
+        packet.get("product_documents"),
+        packet.get("commercial_documents"),
+        packet.get("certificates"),
+        packet.get("proof_of_origin"),
+        packet.get("product_specs"),
+        packet.get("commercial_invoice"),
+        packet.get("packing_list"),
+        packet.get("contract_po"),
+        *non_reference_rows,
+    )
+    if "placeholder" in document_blob:
+        document_blob = ""
+    buyer_labels: set[str] = set()
+    supplier_labels: set[str] = set()
+
+    if _known(packet.get("buyer_name") or packet.get("importer_name")) or any(
+        word in direct_party_blob for word in ("buyer lead", "importer lead", "importer discovery")
+    ):
+        buyer_labels.add("lead_found")
+    if any(word in direct_party_blob for word in ("contact attempted", "outreach", "sent email", "called buyer", "buyer call")):
+        buyer_labels.add("contact_attempted")
+    if any(word in direct_party_blob for word in ("buyer replied", "email reply", "reply received", "received reply", "dated reply")):
+        buyer_labels.add("reply_received")
+    if any(word in direct_party_blob for word in ("meeting", "call notes", "meeting notes", "buyer interview")):
+        buyer_labels.add("meeting_completed")
+    if any(word in direct_party_blob for word in ("loi", "letter of intent", "intent letter")):
+        buyer_labels.add("loi_received")
+    if any(word in direct_party_blob for word in ("purchase order", "paid order", "po attached", "payment received")):
+        buyer_labels.add("po_or_paid_order")
+    if _review_done(packet.get("buyer_validation_status")) and buyer_labels:
+        buyer_labels.add("meeting_completed")
+
+    if _known(packet.get("supplier_name") or packet.get("manufacturer_name")):
+        supplier_labels.add("supplier_named")
+    if any(word in document_blob for word in ("business registration", "company registration", "registration certificate", "corporate registry")):
+        supplier_labels.add("business_registration_attached")
+    if any(word in document_blob for word in ("export license", "export registration", "iec", "dgft", "export ability", "export permit")):
+        supplier_labels.add("export_ability_evidence_attached")
+    if any(word in document_blob for word in ("product spec", "specification", "product document", "technical data sheet", "invoice", "packing list")):
+        supplier_labels.add("product_docs_attached")
+    if any(word in document_blob for word in ("inspection", "certificate", "lab report", "health certificate", "quality certificate")):
+        supplier_labels.add("inspection_or_certificate_attached")
+    if any(word in document_blob for word in ("prior shipment", "bill of lading", "shipment record", "export history")):
+        supplier_labels.add("prior_shipment_evidence_attached")
+
+    buyer_level = _best_level(BUYER_EVIDENCE_LADDER, buyer_labels)
+    supplier_level = _best_level(SUPPLIER_EVIDENCE_LADDER, supplier_labels)
+    buyer_missing = int(buyer_level["level"]) < 2
+    supplier_missing = int(supplier_level["level"]) < 3
+    return {
+        "status": "buyer_supplier_evidence_evaluated_claims_blocked",
+        "buyer": {
+            "current_level": buyer_level["level"],
+            "current_label": buyer_level["label"],
+            "allowed_language": buyer_level["allowed_language"],
+            "evidence_labels_found": sorted(buyer_labels),
+            "minimum_private_beta_level": 2,
+            "minimum_before_demand_claim": 4,
+            "minimum_before_commercial_commitment": 5,
+            "can_say_buyer_validated": False,
+            "next_valid_move": (
+                "Collect dated buyer reply, call notes, LOI, PO, or paid-order evidence."
+                if buyer_missing
+                else "Route buyer evidence to scoped review; keep validation claims blocked."
+            ),
+        },
+        "supplier": {
+            "current_level": supplier_level["level"],
+            "current_label": supplier_level["label"],
+            "allowed_language": supplier_level["allowed_language"],
+            "evidence_labels_found": sorted(supplier_labels),
+            "minimum_private_beta_level": 1,
+            "minimum_before_supplier_confidence_claim": 4,
+            "minimum_before_recommendation_claim": 5,
+            "can_say_supplier_verified": False,
+            "next_valid_move": (
+                "Collect registration, export ability, product documents, inspection/certificate, and prior-shipment evidence."
+                if supplier_missing
+                else "Route supplier evidence to scoped review; keep verification/recommendation claims blocked."
+            ),
+        },
+        "blocked_language": ["buyer_validated", "supplier_verified", "supplier_recommended", "market_demand_proven"],
+        "mvp_outreach_policy": "questions_only_no_automatic_sending",
+        "external_claims_opened": False,
+        "proof_boundary": "The product records evidence levels; it does not validate buyers or verify suppliers.",
+    }
+
+
+def evaluate_source_freshness(packet: dict[str, Any], source_monitor: dict[str, Any]) -> dict[str, Any]:
+    """Evaluate source freshness from attached evidence and registered sources."""
+
+    rows = _packet_evidence(packet)
+    source_rows = []
+    stale_count = 0
+    reviewed_count = 0
+    refreshed_count = 0
+    for row in rows:
+        freshness = _status_value(row.get("freshness_status"))
+        reviewed = _review_done(row.get("human_review_status"))
+        last_verified = row.get("last_verified_at") or ""
+        content_hash = row.get("content_hash") or row.get("hash") or ""
+        is_fresh = freshness in {"fresh", "source_fresh_reference_only", "fresh_reference_only"} and _known(last_verified)
+        is_stale = freshness in {"stale", "expired", "needs_current_refresh_before_claims", "missing", ""}
+        stale_count += 1 if is_stale else 0
+        refreshed_count += 1 if is_fresh else 0
+        reviewed_count += 1 if reviewed else 0
+        source_rows.append(
+            {
+                "evidence_id": row.get("evidence_id"),
+                "source_url": row.get("source_url") or row.get("url") or "",
+                "freshness_status": freshness or "missing",
+                "last_verified_at": last_verified,
+                "content_hash_present": _known(content_hash),
+                "human_review_status": row.get("human_review_status") or "not_reviewed",
+                "claim_boundary": row.get("claim_boundary") or "Reference only until refreshed and reviewed.",
+                "packet_impact": "blocks_current_source_claims" if is_stale or not reviewed else "reference_fresh_for_internal_review_only",
+            }
+        )
+    registered_count = int(source_monitor.get("source_count") or 0)
+    ready = bool(source_rows) and stale_count == 0 and reviewed_count == len(source_rows)
+    return {
+        "status": "source_freshness_ready_for_internal_review" if ready else "source_freshness_blocked_until_refresh_and_review",
+        "attached_source_count": len(source_rows),
+        "registered_source_count": registered_count,
+        "fresh_or_refreshed_count": refreshed_count,
+        "stale_or_unproven_count": stale_count,
+        "reviewed_source_count": reviewed_count,
+        "source_rows": source_rows,
+        "can_claim_current_sources": False,
+        "can_use_for_internal_review": ready,
+        "next_valid_move": (
+            "Use refreshed reviewed sources for internal review only; external claims stay blocked."
+            if ready
+            else "Run dated source refresh, store hash/status, and collect qualified review before current-source claims."
+        ),
+        "external_claims_opened": False,
+        "proof_boundary": "Freshness evaluation is local and packet-specific; it does not prove current law, tariff, permit, or compliance status.",
+    }
+
+
+def evaluate_business_gate_decision(
+    packet: dict[str, Any],
+    *,
+    beginner_flow: dict[str, Any],
+    canonical_packet: dict[str, Any],
+    decision_tree: dict[str, Any],
+    buyer_supplier: dict[str, Any],
+    source_freshness: dict[str, Any],
+) -> dict[str, Any]:
+    """Compute the product's local business decision without opening external gates."""
+
+    blocker_count = int(packet.get("blocker_count") or 0)
+    hard_blocks = [
+        "open_packet_blockers" if blocker_count else "",
+        "starter_inputs_missing" if not beginner_flow.get("can_generate_starter_packet") else "",
+        "source_freshness_missing" if source_freshness.get("stale_or_unproven_count") else "",
+        "buyer_evidence_missing" if int(buyer_supplier["buyer"]["current_level"]) < 2 else "",
+        "supplier_evidence_insufficient" if int(buyer_supplier["supplier"]["current_level"]) < 1 else "",
+        "reviewer_verification_missing" if canonical_packet.get("stage") != "beta_ready" else "",
+    ]
+    hard_blocks = [block for block in hard_blocks if block]
+    can_prepare_packet = bool(beginner_flow.get("can_generate_starter_packet"))
+    can_prepare_reviewer_packet = can_prepare_packet and canonical_packet.get("stage") in {"document", "decision", "reviewer_ready", "beta_ready"}
+    return {
+        "status": "business_logic_executable_external_gates_blocked",
+        "packet_id": _packet_id(packet),
+        "local_actions_allowed": {
+            "generate_starter_packet": can_prepare_packet,
+            "generate_missing_evidence_report": True,
+            "generate_buyer_packet_draft": can_prepare_packet,
+            "generate_broker_or_expert_packet": can_prepare_reviewer_packet,
+            "refresh_sources_record": True,
+            "send_outreach": False,
+            "take_payment": False,
+            "approve_trade_action": False,
+        },
+        "external_actions_blocked": [
+            "customs_or_tariff_advice",
+            "cfia_or_regulated_product_clearance",
+            "buyer_validation_claim",
+            "supplier_verification_or_recommendation",
+            "shipment_or_export_ready_claim",
+            "live_payment_checkout",
+            "public_launch_approval",
+        ],
+        "hard_blocks": hard_blocks,
+        "decision_tree_blocked_or_review_steps": decision_tree.get("blocked_or_review_step_count", 0),
+        "customer_visible_decision": "draft_packet_allowed_external_claims_blocked" if can_prepare_packet else "collect_minimum_inputs_first",
+        "next_valid_move": packet.get("next_valid_move") or decision_tree.get("next_valid_move"),
+        "external_claims_opened": False,
+    }
+
+
 def _score(color: str, value: int, status: str, meaning: str, next_valid_move: str, cap_reason: str) -> dict[str, Any]:
     return {
         "value": value,
@@ -749,11 +1157,13 @@ def build_business_scores(
     packet: dict[str, Any],
     market: dict[str, Any],
     source_monitor: dict[str, Any],
+    buyer_supplier: dict[str, Any],
+    source_freshness: dict[str, Any],
 ) -> dict[str, Any]:
     evidence = packet.get("evidence_summary", {})
     missing = int(evidence.get("missing") or 0)
     attached = int(evidence.get("attached") or packet.get("evidence_count") or 0)
-    stale = int(evidence.get("stale") or 0)
+    stale = int(source_freshness.get("stale_or_unproven_count") or evidence.get("stale") or 0)
     blocker_count = int(packet.get("blocker_count") or 0)
     responsibility = packet.get("responsibility_path", {})
     responsibility_level = str(responsibility.get("responsibility_level") or "unknown")
@@ -761,14 +1171,19 @@ def build_business_scores(
     source_value = 20 if stale else min(80, 30 + source_monitor.get("source_count", 0) * 5)
     responsibility_value = 30 if responsibility_level == "unknown" else 60 if "high" in responsibility_level else 75
     safety_value = 20 if blocker_count else 70
+    market_eval = market.get("market_signal_evaluation", {})
+    market_value = int(market_eval.get("score") or 0)
+    buyer_level = int(buyer_supplier["buyer"]["current_level"])
+    supplier_level = int(buyer_supplier["supplier"]["current_level"])
+    buyer_supplier_value = min(59, max(0, buyer_level) * 9 + max(0, supplier_level) * 7)
     scores = {
         "market_signal_score": _score(
-            "grey",
-            25,
+            "grey" if market_value < 40 else "yellow",
+            market_value,
             "research_required",
-            "Market signal cannot be scored until trade dataset, access-barrier, and buyer evidence are attached.",
+            f"Local market signal score is {market_value}/100 before external demand, dataset, and buyer proof.",
             market["next_valid_move"],
-            "Capped because official trade dataset rows, access comparison, and buyer evidence are not attached.",
+            "Capped at 59 because official trade dataset rows, access comparison, and direct buyer evidence are not all attached and reviewed.",
         ),
         "evidence_completeness_score": _score(
             "red" if missing else "yellow",
@@ -785,6 +1200,14 @@ def build_business_scores(
             "Official/reference sources are routed, but current-source proof and qualified review are still required.",
             "Run dated source refresh and record hash/change classification.",
             "Capped because routed official sources are not the same as current, reviewed source proof.",
+        ),
+        "buyer_supplier_evidence_score": _score(
+            "red" if buyer_level < 2 or supplier_level < 1 else "yellow",
+            buyer_supplier_value,
+            "buyer_supplier_evidence_missing" if buyer_level < 2 or supplier_level < 1 else "buyer_supplier_evidence_collected_review_required",
+            f"Buyer level {buyer_level} and supplier level {supplier_level} are recorded without validation/verification claims.",
+            "Collect dated buyer interaction and supplier evidence, then route to review.",
+            "Capped because evidence levels do not equal buyer validation, supplier verification, or market demand proof.",
         ),
         "responsibility_clarity_score": _score(
             "red" if responsibility_level == "unknown" else "yellow",
@@ -811,6 +1234,7 @@ def build_business_scores(
             "market_signal_score": "100*(0.25*demand_trend + 0.20*market_size + 0.20*import_dependency + 0.15*competitor_gap + 0.10*lead_signal + 0.10*access_factor); cap at 59 until official datasets are attached",
             "evidence_completeness_score": "weighted completion of identity, route, parties, docs, source evidence, and review statuses; cap at 49 if core fields or evidence are missing",
             "source_freshness_score": "weighted by source age, cadence, and diff review; zero if a critical source changed and review is pending",
+            "buyer_supplier_evidence_score": "weighted buyer ladder and supplier evidence ladder; cap at 59 until dated direct buyer evidence, supplier evidence, and reviewer checks exist",
             "responsibility_clarity_score": "weighted by importer of record, Incoterms, buyer/importer identity, role split, and broker path; cap at 39 if importer of record or Incoterms are unknown",
             "decision_safety_score": "minimum of blocker gate state and weighted composite of the other scores; cap at 39 while P0 shipment/compliance blockers are open",
         },
@@ -968,22 +1392,8 @@ def build_beginner_flow_contract() -> dict[str, Any]:
 def build_buyer_supplier_validation_contract() -> dict[str, Any]:
     return {
         "status": "buyer_supplier_validation_ladders_ready_claims_blocked",
-        "buyer_evidence_ladder": [
-            {"level": 0, "label": "lead_found", "allowed_language": "buyer lead found"},
-            {"level": 1, "label": "contact_attempted", "allowed_language": "buyer contact attempted"},
-            {"level": 2, "label": "reply_received", "allowed_language": "buyer replied on a dated channel"},
-            {"level": 3, "label": "meeting_completed", "allowed_language": "buyer meeting completed and notes attached"},
-            {"level": 4, "label": "loi_received", "allowed_language": "letter of intent or equivalent evidence attached"},
-            {"level": 5, "label": "po_or_paid_order", "allowed_language": "purchase order or paid order evidence attached"},
-        ],
-        "supplier_evidence_ladder": [
-            {"level": 0, "label": "supplier_named", "allowed_language": "supplier named by user"},
-            {"level": 1, "label": "business_registration_attached", "allowed_language": "registration evidence collected"},
-            {"level": 2, "label": "export_ability_evidence_attached", "allowed_language": "export ability evidence collected"},
-            {"level": 3, "label": "product_docs_attached", "allowed_language": "product documents collected"},
-            {"level": 4, "label": "inspection_or_certificate_attached", "allowed_language": "inspection or certificate evidence collected"},
-            {"level": 5, "label": "prior_shipment_evidence_attached", "allowed_language": "prior shipment evidence collected"},
-        ],
+        "buyer_evidence_ladder": BUYER_EVIDENCE_LADDER,
+        "supplier_evidence_ladder": SUPPLIER_EVIDENCE_LADDER,
         "blocked_language": ["buyer_validated", "supplier_verified"],
         "mvp_outreach_policy": "questions_only_no_automatic_sending",
         "proof_boundary": "The product records evidence levels; it does not validate buyers or verify suppliers.",
@@ -1080,55 +1490,55 @@ def build_completion_phase_contracts() -> dict[str, Any]:
         {
             "phase": 0,
             "name": "Business identity lock",
-            "status": "local_complete_claims_blocked",
+            "status": "implemented_executable_identity_rules_claims_blocked",
             "main_output": "wedge_persona_name_promise",
             "artifact": "business_identity_lock",
             "exit_criteria_status": "met_locally",
         },
         {
             "phase": 1,
-            "name": "Business logic contract",
-            "status": "local_complete_claims_blocked",
-            "main_output": "decision_tree_stages_scores_provenance",
+            "name": "Business logic runtime",
+            "status": "implemented_executable_packet_rules_claims_blocked",
+            "main_output": "decision_tree_stages_scores_provenance_gate_decision",
             "artifact": "packet_rows",
             "exit_criteria_status": "met_locally",
         },
         {
             "phase": 2,
             "name": "No-document beginner flow",
-            "status": "local_complete_claims_blocked",
-            "main_output": "starter_packet_contract",
-            "artifact": "beginner_flow_contract",
+            "status": "implemented_executable_starter_flow_claims_blocked",
+            "main_output": "starter_packet_input_checks_and_outputs",
+            "artifact": "packet_rows[].beginner_flow",
             "exit_criteria_status": "met_locally",
         },
         {
             "phase": 3,
             "name": "Market intelligence",
-            "status": "local_contract_complete_real_datasets_required",
-            "main_output": "source_backed_market_signal_contract",
+            "status": "implemented_local_signal_scoring_real_datasets_required",
+            "main_output": "bounded_market_signal_components",
             "artifact": "packet_rows[].market_intelligence",
-            "exit_criteria_status": "contract_met_data_evidence_required",
+            "exit_criteria_status": "met_locally_data_evidence_required_for_stronger_claims",
         },
         {
             "phase": 4,
             "name": "Country packs",
-            "status": "local_complete_reference_boundaries",
-            "main_output": "canada_india_vietnam_generic_country_packs",
+            "status": "implemented_executable_country_route_checks_reference_boundaries",
+            "main_output": "canada_india_vietnam_generic_country_pack_route_checks",
             "artifact": "packet_rows[].country_packs",
             "exit_criteria_status": "met_locally_reference_only",
         },
         {
             "phase": 5,
             "name": "Source monitoring",
-            "status": "local_complete_no_live_freshness_claim",
-            "main_output": "freshness_status_diff_classifier_packet_impact_logic",
-            "artifact": "packet_rows[].source_monitoring_contract",
+            "status": "implemented_executable_source_freshness_no_live_claim",
+            "main_output": "freshness_status_diff_classifier_packet_impact_logic_and_evidence_eval",
+            "artifact": "packet_rows[].source_freshness",
             "exit_criteria_status": "met_locally_live_refresh_evidence_required",
         },
         {
             "phase": 6,
             "name": "Packet outputs",
-            "status": "local_complete_claims_blocked",
+            "status": "implemented_executable_packet_outputs_claims_blocked",
             "main_output": "trade_readiness_packet_views",
             "artifact": "packet_rows[].packet_outputs",
             "exit_criteria_status": "met_locally",
@@ -1168,10 +1578,10 @@ def build_completion_phase_contracts() -> dict[str, Any]:
         {
             "phase": 11,
             "name": "Buyer/supplier evidence",
-            "status": "local_contract_complete_real_evidence_required",
-            "main_output": "buyer_supplier_evidence_ladders",
-            "artifact": "buyer_supplier_validation_contract",
-            "exit_criteria_status": "blocked_until_real_buyer_supplier_evidence",
+            "status": "implemented_executable_evidence_ladders_real_evidence_required",
+            "main_output": "buyer_supplier_evidence_levels_and_blocked_language",
+            "artifact": "packet_rows[].buyer_supplier_evidence",
+            "exit_criteria_status": "met_locally_blocked_until_real_buyer_supplier_evidence_for_claims",
         },
         {
             "phase": 12,
@@ -1191,11 +1601,12 @@ def build_completion_phase_contracts() -> dict[str, Any]:
         },
     ]
     externally_blocked = [phase for phase in phases if "blocked" in str(phase["exit_criteria_status"]) or "required" in phase["status"]]
+    locally_met = [phase for phase in phases if str(phase["exit_criteria_status"]).startswith("met_locally")]
     return {
-        "status": "all_14_phase_contracts_ready_external_gates_preserved",
+        "status": "local_business_logic_implemented_external_gates_preserved",
         "phase_ids": BUSINESS_COMPLETION_PHASE_IDS,
         "phase_count": len(phases),
-        "local_contract_phase_count": len(phases),
+        "local_executable_phase_count": len(locally_met),
         "externally_blocked_phase_count": len(externally_blocked),
         "controlled_private_beta_candidate_local": True,
         "controlled_private_beta_ready_with_real_users": False,
@@ -1218,11 +1629,22 @@ def build_business_logic_phases(
     for packet in workflow.get("packets", []):
         canonical_packet = build_canonical_packet_contract(packet)
         decision_tree = build_decision_tree(packet, official_sources)
+        beginner_flow = build_beginner_flow(packet, official_sources)
         country_packs = build_country_packs(packet, official_sources)
         market = build_market_intelligence(packet, official_sources)
         source_monitor = build_source_monitoring_contract(packet, official_sources)
+        source_freshness = evaluate_source_freshness(packet, source_monitor)
+        buyer_supplier = evaluate_buyer_supplier_evidence(packet)
         outputs = build_packet_outputs(packet)
-        scores = build_business_scores(packet, market, source_monitor)
+        scores = build_business_scores(packet, market, source_monitor, buyer_supplier, source_freshness)
+        gate_decision = evaluate_business_gate_decision(
+            packet,
+            beginner_flow=beginner_flow,
+            canonical_packet=canonical_packet,
+            decision_tree=decision_tree,
+            buyer_supplier=buyer_supplier,
+            source_freshness=source_freshness,
+        )
         packet_rows.append(
             {
                 "packet_id": _packet_id(packet),
@@ -1232,11 +1654,15 @@ def build_business_logic_phases(
                 "commercial_wedge_detail": "export-to-Canada readiness packets for food/agri/seafood/general goods exporters",
                 "canonical_packet_contract": canonical_packet,
                 "decision_tree": decision_tree,
+                "beginner_flow": beginner_flow,
                 "market_intelligence": market,
                 "country_packs": country_packs,
                 "source_monitoring_contract": source_monitor,
+                "source_freshness": source_freshness,
+                "buyer_supplier_evidence": buyer_supplier,
                 "packet_outputs": outputs,
                 "business_scores": scores,
+                "business_gate_decision": gate_decision,
                 "blocked_claims": [
                     "approved",
                     "compliant",
@@ -1260,32 +1686,50 @@ def build_business_logic_phases(
         },
         {
             "phase_id": "phase-2",
-            "name": "Market intelligence module",
-            "status": "implemented_as_research_plan_with_gates",
-            "artifact_section": "packet_rows[].market_intelligence",
+            "name": "No-document beginner flow",
+            "status": "implemented_executable_starter_flow",
+            "artifact_section": "packet_rows[].beginner_flow",
         },
         {
             "phase_id": "phase-3",
-            "name": "Country-pack architecture",
-            "status": "implemented_reference_country_packs",
-            "artifact_section": "packet_rows[].country_packs",
+            "name": "Market intelligence module",
+            "status": "implemented_local_signal_scoring_with_gates",
+            "artifact_section": "packet_rows[].market_intelligence",
         },
         {
             "phase_id": "phase-4",
-            "name": "Source monitor",
-            "status": "implemented_local_monitoring_contract_no_live_freshness_claim",
-            "artifact_section": "packet_rows[].source_monitoring_contract",
+            "name": "Country-pack architecture",
+            "status": "implemented_reference_country_packs_with_route_checks",
+            "artifact_section": "packet_rows[].country_packs",
         },
         {
             "phase_id": "phase-5",
+            "name": "Source monitor",
+            "status": "implemented_source_freshness_evaluation_no_live_claim",
+            "artifact_section": "packet_rows[].source_freshness",
+        },
+        {
+            "phase_id": "phase-6",
+            "name": "Buyer/supplier evidence",
+            "status": "implemented_evidence_ladders_claims_blocked",
+            "artifact_section": "packet_rows[].buyer_supplier_evidence",
+        },
+        {
+            "phase_id": "phase-7",
             "name": "Packet outputs",
             "status": "implemented_commercial_outputs_claims_blocked",
             "artifact_section": "packet_rows[].packet_outputs",
         },
+        {
+            "phase_id": "phase-8",
+            "name": "Business gate decision",
+            "status": "implemented_local_allowed_blocked_action_matrix",
+            "artifact_section": "packet_rows[].business_gate_decision",
+        },
     ]
     return {
         "generated_at": _now(),
-        "status": "business_logic_phases_ready_with_evidence_gates",
+        "status": "business_logic_implemented_with_external_evidence_gates",
         "phase_count": len(phases),
         "score_ids": BUSINESS_SCORE_IDS,
         "phase_ids": BUSINESS_PHASE_IDS,

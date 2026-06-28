@@ -845,7 +845,7 @@ def _apply_operation_proofs(repo_root: Path) -> None:
         (team_path, "team_workspace_operational_local_with_approval_gates"),
         (launch_path, "launch_operations_operational_local_with_human_approval_gates"),
         (business_path, "business_logic_operational_local_with_evidence_gates"),
-        (business_phase_completion_path, "business_phase_completion_operational_local_external_gates_preserved"),
+        (business_phase_completion_path, "business_phase_completion_operational_local_business_logic_external_gates_preserved"),
     ):
         if path.exists():
             payload = _load_json(path, {})

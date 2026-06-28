@@ -1,7 +1,7 @@
 [
   {
     "action": "assign_packet_owner",
-    "activity_id": "team-activity-packet-frozen-tuna-canada-001-2026-06-28T035253Z0000",
+    "activity_id": "team-activity-packet-frozen-tuna-canada-001-2026-06-28T041548Z0000",
     "external_claims_opened": false,
     "next_valid_move": "Generate a compliance review packet and request qualified review.",
     "owner_role": "operator",

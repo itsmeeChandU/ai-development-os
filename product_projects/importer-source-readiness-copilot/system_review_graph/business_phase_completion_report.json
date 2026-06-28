@@ -100,7 +100,7 @@
     "controlled_private_beta_candidate_local": true,
     "controlled_private_beta_ready_with_real_users": false,
     "externally_blocked_phase_count": 8,
-    "local_contract_phase_count": 14,
+    "local_executable_phase_count": 8,
     "phase_count": 14,
     "phase_ids": [
       "phase_0",
@@ -125,47 +125,47 @@
         "main_output": "wedge_persona_name_promise",
         "name": "Business identity lock",
         "phase": 0,
-        "status": "local_complete_claims_blocked"
+        "status": "implemented_executable_identity_rules_claims_blocked"
       },
       {
         "artifact": "packet_rows",
         "exit_criteria_status": "met_locally",
-        "main_output": "decision_tree_stages_scores_provenance",
-        "name": "Business logic contract",
+        "main_output": "decision_tree_stages_scores_provenance_gate_decision",
+        "name": "Business logic runtime",
         "phase": 1,
-        "status": "local_complete_claims_blocked"
+        "status": "implemented_executable_packet_rules_claims_blocked"
       },
       {
-        "artifact": "beginner_flow_contract",
+        "artifact": "packet_rows[].beginner_flow",
         "exit_criteria_status": "met_locally",
-        "main_output": "starter_packet_contract",
+        "main_output": "starter_packet_input_checks_and_outputs",
         "name": "No-document beginner flow",
         "phase": 2,
-        "status": "local_complete_claims_blocked"
+        "status": "implemented_executable_starter_flow_claims_blocked"
       },
       {
         "artifact": "packet_rows[].market_intelligence",
-        "exit_criteria_status": "contract_met_data_evidence_required",
-        "main_output": "source_backed_market_signal_contract",
+        "exit_criteria_status": "met_locally_data_evidence_required_for_stronger_claims",
+        "main_output": "bounded_market_signal_components",
         "name": "Market intelligence",
         "phase": 3,
-        "status": "local_contract_complete_real_datasets_required"
+        "status": "implemented_local_signal_scoring_real_datasets_required"
       },
       {
         "artifact": "packet_rows[].country_packs",
         "exit_criteria_status": "met_locally_reference_only",
-        "main_output": "canada_india_vietnam_generic_country_packs",
+        "main_output": "canada_india_vietnam_generic_country_pack_route_checks",
         "name": "Country packs",
         "phase": 4,
-        "status": "local_complete_reference_boundaries"
+        "status": "implemented_executable_country_route_checks_reference_boundaries"
       },
       {
-        "artifact": "packet_rows[].source_monitoring_contract",
+        "artifact": "packet_rows[].source_freshness",
         "exit_criteria_status": "met_locally_live_refresh_evidence_required",
-        "main_output": "freshness_status_diff_classifier_packet_impact_logic",
+        "main_output": "freshness_status_diff_classifier_packet_impact_logic_and_evidence_eval",
         "name": "Source monitoring",
         "phase": 5,
-        "status": "local_complete_no_live_freshness_claim"
+        "status": "implemented_executable_source_freshness_no_live_claim"
       },
       {
         "artifact": "packet_rows[].packet_outputs",
@@ -173,7 +173,7 @@
         "main_output": "trade_readiness_packet_views",
         "name": "Packet outputs",
         "phase": 6,
-        "status": "local_complete_claims_blocked"
+        "status": "implemented_executable_packet_outputs_claims_blocked"
       },
       {
         "artifact": "reviewer_signoff_framework",
@@ -208,12 +208,12 @@
         "status": "external_platform_and_consent_proof_required"
       },
       {
-        "artifact": "buyer_supplier_validation_contract",
-        "exit_criteria_status": "blocked_until_real_buyer_supplier_evidence",
-        "main_output": "buyer_supplier_evidence_ladders",
+        "artifact": "packet_rows[].buyer_supplier_evidence",
+        "exit_criteria_status": "met_locally_blocked_until_real_buyer_supplier_evidence_for_claims",
+        "main_output": "buyer_supplier_evidence_levels_and_blocked_language",
         "name": "Buyer/supplier evidence",
         "phase": 11,
-        "status": "local_contract_complete_real_evidence_required"
+        "status": "implemented_executable_evidence_ladders_real_evidence_required"
       },
       {
         "artifact": "payment_pricing_contract",
@@ -233,10 +233,10 @@
       }
     ],
     "public_launch_ready": false,
-    "status": "all_14_phase_contracts_ready_external_gates_preserved"
+    "status": "local_business_logic_implemented_external_gates_preserved"
   },
   "execution_report": "system_review_graph/product_operations_report.json",
-  "generated_at": "2026-06-28T03:52:53+00:00",
+  "generated_at": "2026-06-28T04:15:48+00:00",
   "hosted_beta_control_contract": {
     "controls": [
       {
@@ -291,7 +291,7 @@
     "status": "metadata_only_beta_contract_ready_real_users_required",
     "target_user_count": "5-10 exporter or intermediary users"
   },
-  "operation_status": "business_phase_completion_operational_local_external_gates_preserved",
+  "operation_status": "business_phase_completion_operational_local_business_logic_external_gates_preserved",
   "payment_pricing_contract": {
     "forbidden_paid_scope": [
       "customs approval",
@@ -355,5 +355,5 @@
     "starting_scope": "3-5 trusted users only after hosted upload/privacy/security controls pass",
     "status": "controlled_real_file_beta_blocked_until_hosted_review"
   },
-  "status": "all_14_phase_contracts_ready_external_gates_preserved"
+  "status": "local_business_logic_implemented_external_gates_preserved"
 }
