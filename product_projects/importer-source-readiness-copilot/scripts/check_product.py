@@ -752,8 +752,10 @@ def main() -> int:
         failures.append("opportunity scanner should include at least one signal row")
     if business_logic.get("status") != "business_logic_implemented_with_external_evidence_gates":
         failures.append("business logic report should expose implemented local rules with external evidence gates")
-    if business_logic.get("phase_count") != 8:
-        failures.append("business logic report should include eight executable phases")
+    if business_logic.get("phase_count") != 13:
+        failures.append("business logic report should include thirteen business phase surfaces")
+    if set(business_logic.get("phase_ids", [])) != {f"phase-{index}" for index in range(1, 14)}:
+        failures.append("business logic report should expose phases 1-13")
     if not business_logic.get("packet_rows"):
         failures.append("business logic phase report should include packet rows")
     else:
@@ -776,6 +778,8 @@ def main() -> int:
         failures.append("business phase completion report should preserve external gates after local business logic implementation")
     if business_phase_completion.get("completion_phase_contracts", {}).get("phase_count") != 14:
         failures.append("business phase completion report should include phases 0-13")
+    if business_phase_completion.get("completion_phase_contracts", {}).get("local_contract_ready_phase_count") != 14:
+        failures.append("business phase completion report should mark phases 0-13 locally contract-ready")
     if business_phase_completion.get("completion_phase_contracts", {}).get("public_launch_ready") is not False:
         failures.append("business phase completion must keep public launch blocked")
     if business_phase_completion.get("operation_status") != "business_phase_completion_operational_local_business_logic_external_gates_preserved":

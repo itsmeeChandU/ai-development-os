@@ -41,7 +41,7 @@
       "submit_government_form",
       "send_report_externally_without_confirmation"
     ],
-    "generated_at": "2026-06-28T04:15:48+00:00",
+    "generated_at": "2026-06-28T04:37:31+00:00",
     "proof_boundary": "The gateway executes local product operations with external effects disabled; it does not expose a live public API, credentials, payment integration, or claim-opening authority.",
     "status": "agent_api_gateway_ready_local_executor_no_external_effects",
     "tools": [
@@ -413,7 +413,7 @@
       "submit_government_form",
       "send_report_externally_without_confirmation"
     ],
-    "generated_at": "2026-06-28T04:15:48+00:00",
+    "generated_at": "2026-06-28T04:37:31+00:00",
     "proof_boundary": "This is a local API/MCP contract. It does not expose a live public API gateway or payment integration.",
     "safety_rules": [
       "Agents can create packets and reports only through backend claim/blocker rules.",
@@ -431,7 +431,7 @@
   },
   "all_stage_readiness": {
     "external_gate_count": 10,
-    "generated_at": "2026-06-28T04:15:48+00:00",
+    "generated_at": "2026-06-28T04:37:31+00:00",
     "go_live_state_count": 18,
     "implemented_stage_count": 19,
     "proof_boundary": "Stage 0 and Stages 1-18 are represented by local routes, APIs, generated artifacts, tests, and blocker rows. Real reviewers, private-beta users, production hosting, monitoring, legal/privacy/security approval, payment activation, qualified trade review, and public go-live owner approval remain external gates.",
@@ -1124,7 +1124,7 @@
         "requires_pre_authorization": true
       }
     ],
-    "generated_at": "2026-06-28T04:15:48+00:00",
+    "generated_at": "2026-06-28T04:37:31+00:00",
     "heavy_job_policy": {
       "external_charge_created": false,
       "free_plan_behavior": "block_before_worker_execution",
@@ -1190,7 +1190,7 @@
     "status": "billing_credit_controls_ready_local_no_live_checkout"
   },
   "billing_usage_ledger": {
-    "generated_at": "2026-06-28T04:15:48+00:00",
+    "generated_at": "2026-06-28T04:37:31+00:00",
     "proof_boundary": "The usage ledger estimates and blocks cost exposure locally; no payment, invoice, or live checkout is performed.",
     "status": "billing_usage_ledger_ready_local_no_charges",
     "usage_rows": [
@@ -1471,6 +1471,7 @@
       "controlled_private_beta_candidate_local": true,
       "controlled_private_beta_ready_with_real_users": false,
       "externally_blocked_phase_count": 8,
+      "local_contract_ready_phase_count": 14,
       "local_executable_phase_count": 8,
       "phase_count": 14,
       "phase_ids": [
@@ -1552,7 +1553,7 @@
           "main_output": "reviewer_signoff_records",
           "name": "Human review gates",
           "phase": 7,
-          "status": "external_evidence_required"
+          "status": "local_review_lane_contract_ready_external_evidence_required"
         },
         {
           "artifact": "metadata_only_beta_contract",
@@ -1560,7 +1561,7 @@
           "main_output": "real_user_workflow_evidence",
           "name": "Metadata-only beta",
           "phase": 8,
-          "status": "external_evidence_required"
+          "status": "metadata_only_beta_contract_ready_real_user_evidence_required"
         },
         {
           "artifact": "hosted_beta_control_contract",
@@ -1568,7 +1569,7 @@
           "main_output": "auth_db_storage_logs_ai_controls",
           "name": "Hosted beta infrastructure",
           "phase": 9,
-          "status": "external_platform_proof_required"
+          "status": "hosted_control_contract_ready_external_platform_proof_required"
         },
         {
           "artifact": "real_file_beta_contract",
@@ -1576,7 +1577,7 @@
           "main_output": "supervised_document_workflow",
           "name": "Controlled real-file beta",
           "phase": 10,
-          "status": "external_platform_and_consent_proof_required"
+          "status": "real_file_beta_contract_ready_platform_and_consent_proof_required"
         },
         {
           "artifact": "packet_rows[].buyer_supplier_evidence",
@@ -1606,7 +1607,7 @@
       "public_launch_ready": false,
       "status": "local_business_logic_implemented_external_gates_preserved"
     },
-    "generated_at": "2026-06-28T04:15:48+00:00",
+    "generated_at": "2026-06-28T04:37:31+00:00",
     "hosted_beta_control_contract": {
       "controls": [
         {
@@ -3099,10 +3100,10 @@
             ],
             "competitor_source_countries": [
               "Mexico",
-              "United States",
-              "China",
               "European Union",
-              "Vietnam"
+              "Vietnam",
+              "China",
+              "United States"
             ],
             "destination": "Canada",
             "exporter_origin": "Vietnam",
@@ -3277,7 +3278,7 @@
               "evidence_id": "evidence-frozen-tuna-cid-reference",
               "freshness_status": "source_fresh_reference_only",
               "human_review_status": "not_reviewed",
-              "last_verified_at": "2026-06-28T04:15:43+00:00",
+              "last_verified_at": "2026-06-28T04:37:26+00:00",
               "packet_impact": "blocks_current_source_claims",
               "source_url": "https://ised-isde.canada.ca/site/ised/en/research-and-business-intelligence/canadian-importers-database"
             },
@@ -3287,7 +3288,7 @@
               "evidence_id": "evidence-frozen-tuna-cbsa-import-workflow",
               "freshness_status": "source_fresh_reference_only",
               "human_review_status": "not_reviewed",
-              "last_verified_at": "2026-06-28T04:15:43+00:00",
+              "last_verified_at": "2026-06-28T04:37:26+00:00",
               "packet_impact": "blocks_current_source_claims",
               "source_url": "https://www.cbsa-asfc.gc.ca/import/menu-eng.html"
             },
@@ -3297,7 +3298,7 @@
               "evidence_id": "evidence-frozen-tuna-cfia-airs-reference",
               "freshness_status": "source_fresh_reference_only",
               "human_review_status": "not_reviewed",
-              "last_verified_at": "2026-06-28T04:15:43+00:00",
+              "last_verified_at": "2026-06-28T04:37:26+00:00",
               "packet_impact": "blocks_current_source_claims",
               "source_url": "https://inspection.canada.ca/en/importing-food-plants-animals/airs"
             }
@@ -3801,65 +3802,199 @@
       ],
       "status": "payment_pricing_contract_ready_live_checkout_disabled"
     },
-    "phase_count": 8,
+    "phase_count": 13,
     "phase_ids": [
-      "decision_tree_before_features",
-      "beginner_flow_runtime",
-      "market_intelligence_module",
-      "country_pack_architecture",
-      "source_monitoring_runtime",
-      "buyer_supplier_evidence_runtime",
-      "commercial_packet_outputs",
-      "business_gate_decision"
+      "phase-1",
+      "phase-2",
+      "phase-3",
+      "phase-4",
+      "phase-5",
+      "phase-6",
+      "phase-7",
+      "phase-8",
+      "phase-9",
+      "phase-10",
+      "phase-11",
+      "phase-12",
+      "phase-13"
     ],
+    "phase_zero_identity_contract": {
+      "artifact": "business_identity_lock",
+      "exit_criteria_status": "met_locally",
+      "main_output": "wedge_persona_name_promise",
+      "name": "Business identity lock",
+      "phase": 0,
+      "status": "implemented_executable_identity_rules_claims_blocked"
+    },
     "phases": [
       {
-        "artifact_section": "packet_rows[].decision_tree",
-        "name": "Decision tree before more features",
+        "artifact": "packet_rows",
+        "artifact_section": "packet_rows[].decision_tree + packet_rows[].business_scores + packet_rows[].business_gate_decision",
+        "completion_contract_id": "phase_1",
+        "exit_criteria_status": "met_locally",
+        "external_gate_status": "local_scope_complete_claims_still_limited",
+        "local_completion_surface": "12 decision questions, canonical packet stage, six scores, provenance, blocked claims, and allowed/blocked local actions",
+        "main_output": "decision_tree_stages_scores_provenance_gate_decision",
+        "name": "Business logic runtime",
+        "phase": 1,
         "phase_id": "phase-1",
-        "status": "implemented_from_packet_state"
+        "status": "implemented_executable_packet_rules_claims_blocked"
       },
       {
+        "artifact": "packet_rows[].beginner_flow",
         "artifact_section": "packet_rows[].beginner_flow",
+        "completion_contract_id": "phase_2",
+        "exit_criteria_status": "met_locally",
+        "external_gate_status": "local_scope_complete_claims_still_limited",
+        "local_completion_surface": "starter input checks, source-route prompts, starter packet output, buyer packet draft, and no-send outreach policy",
+        "main_output": "starter_packet_input_checks_and_outputs",
         "name": "No-document beginner flow",
+        "phase": 2,
         "phase_id": "phase-2",
-        "status": "implemented_executable_starter_flow"
+        "status": "implemented_executable_starter_flow_claims_blocked"
       },
       {
+        "artifact": "packet_rows[].market_intelligence",
         "artifact_section": "packet_rows[].market_intelligence",
-        "name": "Market intelligence module",
+        "completion_contract_id": "phase_3",
+        "exit_criteria_status": "met_locally_data_evidence_required_for_stronger_claims",
+        "external_gate_status": "closed_until_real_evidence",
+        "local_completion_surface": "bounded market signal, importer/buyer discovery routes, tariff/market-access comparison routes, and demand-claim blocks",
+        "main_output": "bounded_market_signal_components",
+        "name": "Market intelligence",
+        "phase": 3,
         "phase_id": "phase-3",
-        "status": "implemented_local_signal_scoring_with_gates"
+        "status": "implemented_local_signal_scoring_real_datasets_required"
       },
       {
+        "artifact": "packet_rows[].country_packs",
         "artifact_section": "packet_rows[].country_packs",
-        "name": "Country-pack architecture",
+        "completion_contract_id": "phase_4",
+        "exit_criteria_status": "met_locally_reference_only",
+        "external_gate_status": "local_scope_complete_claims_still_limited",
+        "local_completion_surface": "Canada, origin-country, India strategic, and Generic fallback route checks with country-specific claim gates",
+        "main_output": "canada_india_vietnam_generic_country_pack_route_checks",
+        "name": "Country packs",
+        "phase": 4,
         "phase_id": "phase-4",
-        "status": "implemented_reference_country_packs_with_route_checks"
+        "status": "implemented_executable_country_route_checks_reference_boundaries"
       },
       {
-        "artifact_section": "packet_rows[].source_freshness",
-        "name": "Source monitor",
+        "artifact": "packet_rows[].source_freshness",
+        "artifact_section": "packet_rows[].source_monitoring_contract + packet_rows[].source_freshness",
+        "completion_contract_id": "phase_5",
+        "exit_criteria_status": "met_locally_live_refresh_evidence_required",
+        "external_gate_status": "local_scope_complete_claims_still_limited",
+        "local_completion_surface": "registered source rows, refresh cadence, stale-source impact rules, evidence freshness evaluation, and current-source claim blocks",
+        "main_output": "freshness_status_diff_classifier_packet_impact_logic_and_evidence_eval",
+        "name": "Source monitoring",
+        "phase": 5,
         "phase_id": "phase-5",
-        "status": "implemented_source_freshness_evaluation_no_live_claim"
+        "status": "implemented_executable_source_freshness_no_live_claim"
       },
       {
-        "artifact_section": "packet_rows[].buyer_supplier_evidence",
-        "name": "Buyer/supplier evidence",
-        "phase_id": "phase-6",
-        "status": "implemented_evidence_ladders_claims_blocked"
-      },
-      {
+        "artifact": "packet_rows[].packet_outputs",
         "artifact_section": "packet_rows[].packet_outputs",
+        "completion_contract_id": "phase_6",
+        "exit_criteria_status": "met_locally",
+        "external_gate_status": "local_scope_complete_claims_still_limited",
+        "local_completion_surface": "starter, exporter, importer, operator, supplier, buyer/broker, expert, missing-evidence, and blocked-claim outputs",
+        "main_output": "trade_readiness_packet_views",
         "name": "Packet outputs",
-        "phase_id": "phase-7",
-        "status": "implemented_commercial_outputs_claims_blocked"
+        "phase": 6,
+        "phase_id": "phase-6",
+        "status": "implemented_executable_packet_outputs_claims_blocked"
       },
       {
-        "artifact_section": "packet_rows[].business_gate_decision",
-        "name": "Business gate decision",
+        "artifact": "reviewer_signoff_framework",
+        "artifact_section": "reviewer_signoff_framework",
+        "completion_contract_id": "phase_7",
+        "exit_criteria_status": "blocked_until_real_reviewer_records",
+        "external_gate_status": "closed_until_real_evidence",
+        "local_completion_surface": "review lanes, scope templates, decision values, required evidence fields, and no-reviewer-no-claim rule",
+        "main_output": "reviewer_signoff_records",
+        "name": "Human review gates",
+        "phase": 7,
+        "phase_id": "phase-7",
+        "status": "local_review_lane_contract_ready_external_evidence_required"
+      },
+      {
+        "artifact": "metadata_only_beta_contract",
+        "artifact_section": "metadata_only_beta_contract",
+        "completion_contract_id": "phase_8",
+        "exit_criteria_status": "blocked_until_real_user_outcomes",
+        "external_gate_status": "closed_until_real_evidence",
+        "local_completion_surface": "metadata-only beta scope, outcome capture requirements, and real-user evidence gate",
+        "main_output": "real_user_workflow_evidence",
+        "name": "Metadata-only beta",
+        "phase": 8,
         "phase_id": "phase-8",
-        "status": "implemented_local_allowed_blocked_action_matrix"
+        "status": "metadata_only_beta_contract_ready_real_user_evidence_required"
+      },
+      {
+        "artifact": "hosted_beta_control_contract",
+        "artifact_section": "hosted_beta_control_contract",
+        "completion_contract_id": "phase_9",
+        "exit_criteria_status": "blocked_until_hosted_proof",
+        "external_gate_status": "closed_until_real_evidence",
+        "local_completion_surface": "hosted auth, database, storage, audit, backup, AI routing, observability, and payment gate checklist",
+        "main_output": "auth_db_storage_logs_ai_controls",
+        "name": "Hosted beta infrastructure",
+        "phase": 9,
+        "phase_id": "phase-9",
+        "status": "hosted_control_contract_ready_external_platform_proof_required"
+      },
+      {
+        "artifact": "real_file_beta_contract",
+        "artifact_section": "real_file_beta_contract",
+        "completion_contract_id": "phase_10",
+        "exit_criteria_status": "blocked_until_real_file_beta_controls_pass",
+        "external_gate_status": "closed_until_real_evidence",
+        "local_completion_surface": "controlled real-file beta scope, upload consent, AI-use consent, redaction, deletion, and audit requirements",
+        "main_output": "supervised_document_workflow",
+        "name": "Controlled real-file beta",
+        "phase": 10,
+        "phase_id": "phase-10",
+        "status": "real_file_beta_contract_ready_platform_and_consent_proof_required"
+      },
+      {
+        "artifact": "packet_rows[].buyer_supplier_evidence",
+        "artifact_section": "packet_rows[].buyer_supplier_evidence + buyer_supplier_validation_contract",
+        "completion_contract_id": "phase_11",
+        "exit_criteria_status": "met_locally_blocked_until_real_buyer_supplier_evidence_for_claims",
+        "external_gate_status": "closed_until_real_evidence",
+        "local_completion_surface": "buyer and supplier evidence ladders, safe allowed language, and validation/verification claim blocks",
+        "main_output": "buyer_supplier_evidence_levels_and_blocked_language",
+        "name": "Buyer/supplier evidence",
+        "phase": 11,
+        "phase_id": "phase-11",
+        "status": "implemented_executable_evidence_ladders_real_evidence_required"
+      },
+      {
+        "artifact": "payment_pricing_contract",
+        "artifact_section": "payment_pricing_contract",
+        "completion_contract_id": "phase_12",
+        "exit_criteria_status": "blocked_until_payment_review_and_live_setup",
+        "external_gate_status": "closed_until_real_evidence",
+        "local_completion_surface": "paid scope, forbidden paid scope, pricing/review prerequisites, and live-checkout-disabled gate",
+        "main_output": "paid_packet_scope_and_payment_gates",
+        "name": "Payments",
+        "phase": 12,
+        "phase_id": "phase-12",
+        "status": "local_contract_complete_live_checkout_disabled"
+      },
+      {
+        "artifact": "public_launch_contract",
+        "artifact_section": "public_launch_contract",
+        "completion_contract_id": "phase_13",
+        "exit_criteria_status": "blocked_until_named_owner_go_no_go",
+        "external_gate_status": "closed_until_real_evidence",
+        "local_completion_surface": "safe initial public scope, blocked public scope, approval prerequisites, and public-launch-ready false",
+        "main_output": "narrow_reviewed_launch_scope",
+        "name": "Public launch",
+        "phase": 13,
+        "phase_id": "phase-13",
+        "status": "launch_contract_ready_public_launch_blocked"
       }
     ],
     "proof_boundary": "This business logic is generated from local packet/evidence/source state. External market datasets, buyer/supplier validation, source freshness, and qualified reviews remain evidence gates.",
@@ -4021,7 +4156,8 @@
       "responsibility_clarity_score",
       "decision_safety_score"
     ],
-    "status": "business_logic_implemented_with_external_evidence_gates"
+    "status": "business_logic_implemented_with_external_evidence_gates",
+    "top_level_phase_scope": "business_phases_1_to_13"
   },
   "country_coverage": {
     "countries": [
@@ -4307,7 +4443,7 @@
       "4": "category template support",
       "5": "expert-reviewed templates"
     },
-    "generated_at": "2026-06-28T04:15:48+00:00",
+    "generated_at": "2026-06-28T04:37:31+00:00",
     "packet_coverage": [
       {
         "blocked_country_specific_claims": [
@@ -4403,7 +4539,7 @@
         "scope": "credits, pricing, manual approval, and cost exposure"
       }
     ],
-    "generated_at": "2026-06-28T04:15:48+00:00",
+    "generated_at": "2026-06-28T04:37:31+00:00",
     "proof_boundary": "The product can prepare and route expert packets locally; real qualified review remains an external evidence gate.",
     "review_queue": [
       {
@@ -4454,7 +4590,7 @@
     ],
     "status": "expert_network_ready_local_with_human_review_gates"
   },
-  "generated_at": "2026-06-28T04:15:48+00:00",
+  "generated_at": "2026-06-28T04:37:31+00:00",
   "launch_operations": {
     "controls": [
       {
@@ -4488,7 +4624,7 @@
         "status": "local_contract_ready"
       }
     ],
-    "generated_at": "2026-06-28T04:15:48+00:00",
+    "generated_at": "2026-06-28T04:37:31+00:00",
     "packet_count": 1,
     "private_beta_entry": {
       "human_approval_required": true,
@@ -4522,7 +4658,7 @@
       "tool": "create_trade_packet"
     },
     "create_packet_route": "/packets/new",
-    "generated_at": "2026-06-28T04:15:48+00:00",
+    "generated_at": "2026-06-28T04:37:31+00:00",
     "proof_boundary": "Opportunity rows are signals and research prompts only, not recommendations, demand proof, margin proof, or buyer validation.",
     "signal_count": 1,
     "signals": [
@@ -4670,7 +4806,7 @@
   },
   "proof_boundary": "Stage 0 and go-live States 1-18 each have a route/API/artifact surface where locally implementable; production hosting, payment activation, live expert signoff, source freshness, buyer validation, legal/customs/compliance proof, private-beta outcomes, and public launch approval remain external gates.",
   "research_execution_plan": {
-    "generated_at": "2026-06-28T04:15:48+00:00",
+    "generated_at": "2026-06-28T04:37:31+00:00",
     "proof_boundary": "Research execution routes the work to model-prior, web, official-source, dataset, and expert/user evidence lanes; it does not itself prove the external facts.",
     "rows": [
       {
@@ -4712,7 +4848,7 @@
   },
   "status": "all_local_stages_implemented_with_external_gates",
   "team_workspace": {
-    "generated_at": "2026-06-28T04:15:48+00:00",
+    "generated_at": "2026-06-28T04:37:31+00:00",
     "proof_boundary": "Team workspace roles and approvals are local coordination surfaces; they do not prove real owner approval or external launch permission.",
     "status": "team_workspace_ready_local_with_approval_gates",
     "workspace_count": 1,
@@ -4780,7 +4916,7 @@
     ]
   },
   "traffic_pages_manifest": {
-    "generated_at": "2026-06-28T04:15:48+00:00",
+    "generated_at": "2026-06-28T04:37:31+00:00",
     "pages": [
       {
         "claim_boundary": "Traffic page educates and routes to the tool; it is not legal, customs, tariff, supplier, buyer, or shipment advice.",
@@ -4922,7 +5058,7 @@
       "freight_forwarder_selected",
       "shipment_ready"
     ],
-    "generated_at": "2026-06-28T04:15:48+00:00",
+    "generated_at": "2026-06-28T04:37:31+00:00",
     "packet_count": 1,
     "proof_boundary": "Transport readiness prepares questions only; it does not optimize routes, guarantee costs, or approve shipment.",
     "rows": [

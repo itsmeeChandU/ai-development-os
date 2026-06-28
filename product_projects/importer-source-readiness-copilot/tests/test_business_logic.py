@@ -41,8 +41,11 @@ class BusinessLogicTests(unittest.TestCase):
         report = build_business_logic_phases(workflow, official_sources)
 
         self.assertEqual(report["status"], "business_logic_implemented_with_external_evidence_gates")
-        self.assertEqual(report["phase_count"], 8)
+        self.assertEqual(report["phase_count"], 13)
         self.assertEqual(report["phase_ids"], BUSINESS_PHASE_IDS)
+        self.assertEqual(report["top_level_phase_scope"], "business_phases_1_to_13")
+        self.assertEqual(report["phase_zero_identity_contract"]["phase"], 0)
+        self.assertEqual({phase["phase_id"] for phase in report["phases"]}, {f"phase-{index}" for index in range(1, 14)})
         self.assertEqual(report["score_ids"], BUSINESS_SCORE_IDS)
         self.assertEqual(report["business_identity_lock"]["first_wedge"], "foreign_exporters_preparing_to_sell_into_canada")
         self.assertEqual(
@@ -52,7 +55,11 @@ class BusinessLogicTests(unittest.TestCase):
         self.assertEqual(report["completion_phase_contracts"]["phase_ids"], BUSINESS_COMPLETION_PHASE_IDS)
         self.assertEqual(report["completion_phase_contracts"]["phase_count"], 14)
         self.assertGreaterEqual(report["completion_phase_contracts"]["local_executable_phase_count"], 8)
+        self.assertEqual(report["completion_phase_contracts"]["local_contract_ready_phase_count"], 14)
         self.assertFalse(report["completion_phase_contracts"]["public_launch_ready"])
+        public_launch_phase = next(phase for phase in report["phases"] if phase["phase_id"] == "phase-13")
+        self.assertEqual(public_launch_phase["artifact_section"], "public_launch_contract")
+        self.assertEqual(public_launch_phase["external_gate_status"], "closed_until_real_evidence")
         self.assertEqual(report["packet_count"], 1)
         row = report["packet_rows"][0]
         self.assertEqual(row["business_positioning"], "trade_decision_preparation_not_compliance_approval")

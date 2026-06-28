@@ -979,9 +979,13 @@ def main() -> int:
         print("Product project check: FAIL")
         print("business logic phase report is missing or stale")
         return 1
-    if business_logic.get("phase_count") != 8:
+    if business_logic.get("phase_count") != 13:
         print("Product project check: FAIL")
-        print("business logic report must include the eight executable phase surfaces")
+        print("business logic report must include the thirteen business phase surfaces")
+        return 1
+    if set(business_logic.get("phase_ids", [])) != {f"phase-{index}" for index in range(1, 14)}:
+        print("Product project check: FAIL")
+        print("business logic report must expose phases 1-13")
         return 1
     if not business_logic.get("packet_rows"):
         print("Product project check: FAIL")
@@ -1023,6 +1027,10 @@ def main() -> int:
     if business_phase_completion.get("completion_phase_contracts", {}).get("phase_count") != 14:
         print("Product project check: FAIL")
         print("business phase completion report must include phases 0-13")
+        return 1
+    if business_phase_completion.get("completion_phase_contracts", {}).get("local_contract_ready_phase_count") != 14:
+        print("Product project check: FAIL")
+        print("business phase completion report must mark phases 0-13 locally contract-ready")
         return 1
     if business_phase_completion.get("completion_phase_contracts", {}).get("public_launch_ready") is not False:
         print("Product project check: FAIL")

@@ -11,16 +11,7 @@ from datetime import datetime, timezone
 from typing import Any
 
 
-BUSINESS_PHASE_IDS = [
-    "decision_tree_before_features",
-    "beginner_flow_runtime",
-    "market_intelligence_module",
-    "country_pack_architecture",
-    "source_monitoring_runtime",
-    "buyer_supplier_evidence_runtime",
-    "commercial_packet_outputs",
-    "business_gate_decision",
-]
+BUSINESS_PHASE_IDS = [f"phase-{index}" for index in range(1, 14)]
 
 BUSINESS_COMPLETION_PHASE_IDS = [f"phase_{index}" for index in range(14)]
 
@@ -1546,7 +1537,7 @@ def build_completion_phase_contracts() -> dict[str, Any]:
         {
             "phase": 7,
             "name": "Human review gates",
-            "status": "external_evidence_required",
+            "status": "local_review_lane_contract_ready_external_evidence_required",
             "main_output": "reviewer_signoff_records",
             "artifact": "reviewer_signoff_framework",
             "exit_criteria_status": "blocked_until_real_reviewer_records",
@@ -1554,7 +1545,7 @@ def build_completion_phase_contracts() -> dict[str, Any]:
         {
             "phase": 8,
             "name": "Metadata-only beta",
-            "status": "external_evidence_required",
+            "status": "metadata_only_beta_contract_ready_real_user_evidence_required",
             "main_output": "real_user_workflow_evidence",
             "artifact": "metadata_only_beta_contract",
             "exit_criteria_status": "blocked_until_real_user_outcomes",
@@ -1562,7 +1553,7 @@ def build_completion_phase_contracts() -> dict[str, Any]:
         {
             "phase": 9,
             "name": "Hosted beta infrastructure",
-            "status": "external_platform_proof_required",
+            "status": "hosted_control_contract_ready_external_platform_proof_required",
             "main_output": "auth_db_storage_logs_ai_controls",
             "artifact": "hosted_beta_control_contract",
             "exit_criteria_status": "blocked_until_hosted_proof",
@@ -1570,7 +1561,7 @@ def build_completion_phase_contracts() -> dict[str, Any]:
         {
             "phase": 10,
             "name": "Controlled real-file beta",
-            "status": "external_platform_and_consent_proof_required",
+            "status": "real_file_beta_contract_ready_platform_and_consent_proof_required",
             "main_output": "supervised_document_workflow",
             "artifact": "real_file_beta_contract",
             "exit_criteria_status": "blocked_until_real_file_beta_controls_pass",
@@ -1607,6 +1598,7 @@ def build_completion_phase_contracts() -> dict[str, Any]:
         "phase_ids": BUSINESS_COMPLETION_PHASE_IDS,
         "phase_count": len(phases),
         "local_executable_phase_count": len(locally_met),
+        "local_contract_ready_phase_count": len(phases),
         "externally_blocked_phase_count": len(externally_blocked),
         "controlled_private_beta_candidate_local": True,
         "controlled_private_beta_ready_with_real_users": False,
@@ -1619,6 +1611,105 @@ def build_completion_phase_contracts() -> dict[str, Any]:
             "Public launch requires locked logic, beta outcomes, hosted controls, expert reviews, reviewed public claims, and named launch-owner approval."
         ),
     }
+
+
+def build_business_phase_surfaces(completion_contracts: dict[str, Any]) -> list[dict[str, Any]]:
+    contracts_by_phase = {
+        int(row["phase"]): row
+        for row in completion_contracts.get("phases", [])
+        if isinstance(row, dict) and "phase" in row
+    }
+    surface_rows = [
+        {
+            "phase": 1,
+            "artifact_section": "packet_rows[].decision_tree + packet_rows[].business_scores + packet_rows[].business_gate_decision",
+            "local_completion_surface": "12 decision questions, canonical packet stage, six scores, provenance, blocked claims, and allowed/blocked local actions",
+        },
+        {
+            "phase": 2,
+            "artifact_section": "packet_rows[].beginner_flow",
+            "local_completion_surface": "starter input checks, source-route prompts, starter packet output, buyer packet draft, and no-send outreach policy",
+        },
+        {
+            "phase": 3,
+            "artifact_section": "packet_rows[].market_intelligence",
+            "local_completion_surface": "bounded market signal, importer/buyer discovery routes, tariff/market-access comparison routes, and demand-claim blocks",
+        },
+        {
+            "phase": 4,
+            "artifact_section": "packet_rows[].country_packs",
+            "local_completion_surface": "Canada, origin-country, India strategic, and Generic fallback route checks with country-specific claim gates",
+        },
+        {
+            "phase": 5,
+            "artifact_section": "packet_rows[].source_monitoring_contract + packet_rows[].source_freshness",
+            "local_completion_surface": "registered source rows, refresh cadence, stale-source impact rules, evidence freshness evaluation, and current-source claim blocks",
+        },
+        {
+            "phase": 6,
+            "artifact_section": "packet_rows[].packet_outputs",
+            "local_completion_surface": "starter, exporter, importer, operator, supplier, buyer/broker, expert, missing-evidence, and blocked-claim outputs",
+        },
+        {
+            "phase": 7,
+            "artifact_section": "reviewer_signoff_framework",
+            "local_completion_surface": "review lanes, scope templates, decision values, required evidence fields, and no-reviewer-no-claim rule",
+        },
+        {
+            "phase": 8,
+            "artifact_section": "metadata_only_beta_contract",
+            "local_completion_surface": "metadata-only beta scope, outcome capture requirements, and real-user evidence gate",
+        },
+        {
+            "phase": 9,
+            "artifact_section": "hosted_beta_control_contract",
+            "local_completion_surface": "hosted auth, database, storage, audit, backup, AI routing, observability, and payment gate checklist",
+        },
+        {
+            "phase": 10,
+            "artifact_section": "real_file_beta_contract",
+            "local_completion_surface": "controlled real-file beta scope, upload consent, AI-use consent, redaction, deletion, and audit requirements",
+        },
+        {
+            "phase": 11,
+            "artifact_section": "packet_rows[].buyer_supplier_evidence + buyer_supplier_validation_contract",
+            "local_completion_surface": "buyer and supplier evidence ladders, safe allowed language, and validation/verification claim blocks",
+        },
+        {
+            "phase": 12,
+            "artifact_section": "payment_pricing_contract",
+            "local_completion_surface": "paid scope, forbidden paid scope, pricing/review prerequisites, and live-checkout-disabled gate",
+        },
+        {
+            "phase": 13,
+            "artifact_section": "public_launch_contract",
+            "local_completion_surface": "safe initial public scope, blocked public scope, approval prerequisites, and public-launch-ready false",
+        },
+    ]
+    phases = []
+    for row in surface_rows:
+        contract = contracts_by_phase[row["phase"]]
+        exit_status = str(contract["exit_criteria_status"])
+        phases.append(
+            {
+                "phase": row["phase"],
+                "phase_id": f"phase-{row['phase']}",
+                "completion_contract_id": f"phase_{row['phase']}",
+                "name": contract["name"],
+                "status": contract["status"],
+                "main_output": contract["main_output"],
+                "artifact": contract["artifact"],
+                "artifact_section": row["artifact_section"],
+                "local_completion_surface": row["local_completion_surface"],
+                "exit_criteria_status": exit_status,
+                "external_gate_status": (
+                    "closed_until_real_evidence"
+                    if "blocked" in exit_status or "required" in str(contract["status"])
+                    else "local_scope_complete_claims_still_limited"
+                ),
+            }
+        )
+    return phases
 
 
 def build_business_logic_phases(
@@ -1677,62 +1768,16 @@ def build_business_logic_phases(
                 "next_valid_move": decision_tree["next_valid_move"],
             }
         )
-    phases = [
-        {
-            "phase_id": "phase-1",
-            "name": "Decision tree before more features",
-            "status": "implemented_from_packet_state",
-            "artifact_section": "packet_rows[].decision_tree",
-        },
-        {
-            "phase_id": "phase-2",
-            "name": "No-document beginner flow",
-            "status": "implemented_executable_starter_flow",
-            "artifact_section": "packet_rows[].beginner_flow",
-        },
-        {
-            "phase_id": "phase-3",
-            "name": "Market intelligence module",
-            "status": "implemented_local_signal_scoring_with_gates",
-            "artifact_section": "packet_rows[].market_intelligence",
-        },
-        {
-            "phase_id": "phase-4",
-            "name": "Country-pack architecture",
-            "status": "implemented_reference_country_packs_with_route_checks",
-            "artifact_section": "packet_rows[].country_packs",
-        },
-        {
-            "phase_id": "phase-5",
-            "name": "Source monitor",
-            "status": "implemented_source_freshness_evaluation_no_live_claim",
-            "artifact_section": "packet_rows[].source_freshness",
-        },
-        {
-            "phase_id": "phase-6",
-            "name": "Buyer/supplier evidence",
-            "status": "implemented_evidence_ladders_claims_blocked",
-            "artifact_section": "packet_rows[].buyer_supplier_evidence",
-        },
-        {
-            "phase_id": "phase-7",
-            "name": "Packet outputs",
-            "status": "implemented_commercial_outputs_claims_blocked",
-            "artifact_section": "packet_rows[].packet_outputs",
-        },
-        {
-            "phase_id": "phase-8",
-            "name": "Business gate decision",
-            "status": "implemented_local_allowed_blocked_action_matrix",
-            "artifact_section": "packet_rows[].business_gate_decision",
-        },
-    ]
+    completion_phase_contracts = build_completion_phase_contracts()
+    phases = build_business_phase_surfaces(completion_phase_contracts)
     return {
         "generated_at": _now(),
         "status": "business_logic_implemented_with_external_evidence_gates",
         "phase_count": len(phases),
         "score_ids": BUSINESS_SCORE_IDS,
         "phase_ids": BUSINESS_PHASE_IDS,
+        "top_level_phase_scope": "business_phases_1_to_13",
+        "phase_zero_identity_contract": completion_phase_contracts["phases"][0],
         "phases": phases,
         "business_identity_lock": build_business_identity_lock(),
         "beginner_flow_contract": build_beginner_flow_contract(),
@@ -1741,7 +1786,7 @@ def build_business_logic_phases(
         "real_file_beta_contract": build_real_file_beta_contract(),
         "payment_pricing_contract": build_payment_pricing_contract(),
         "public_launch_contract": build_public_launch_contract(),
-        "completion_phase_contracts": build_completion_phase_contracts(),
+        "completion_phase_contracts": completion_phase_contracts,
         "reviewer_signoff_framework": build_reviewer_signoff_framework(),
         "hosted_beta_control_contract": build_hosted_beta_control_contract(),
         "packet_count": len(packet_rows),

@@ -100,6 +100,7 @@
     "controlled_private_beta_candidate_local": true,
     "controlled_private_beta_ready_with_real_users": false,
     "externally_blocked_phase_count": 8,
+    "local_contract_ready_phase_count": 14,
     "local_executable_phase_count": 8,
     "phase_count": 14,
     "phase_ids": [
@@ -181,7 +182,7 @@
         "main_output": "reviewer_signoff_records",
         "name": "Human review gates",
         "phase": 7,
-        "status": "external_evidence_required"
+        "status": "local_review_lane_contract_ready_external_evidence_required"
       },
       {
         "artifact": "metadata_only_beta_contract",
@@ -189,7 +190,7 @@
         "main_output": "real_user_workflow_evidence",
         "name": "Metadata-only beta",
         "phase": 8,
-        "status": "external_evidence_required"
+        "status": "metadata_only_beta_contract_ready_real_user_evidence_required"
       },
       {
         "artifact": "hosted_beta_control_contract",
@@ -197,7 +198,7 @@
         "main_output": "auth_db_storage_logs_ai_controls",
         "name": "Hosted beta infrastructure",
         "phase": 9,
-        "status": "external_platform_proof_required"
+        "status": "hosted_control_contract_ready_external_platform_proof_required"
       },
       {
         "artifact": "real_file_beta_contract",
@@ -205,7 +206,7 @@
         "main_output": "supervised_document_workflow",
         "name": "Controlled real-file beta",
         "phase": 10,
-        "status": "external_platform_and_consent_proof_required"
+        "status": "real_file_beta_contract_ready_platform_and_consent_proof_required"
       },
       {
         "artifact": "packet_rows[].buyer_supplier_evidence",
@@ -236,7 +237,7 @@
     "status": "local_business_logic_implemented_external_gates_preserved"
   },
   "execution_report": "system_review_graph/product_operations_report.json",
-  "generated_at": "2026-06-28T04:15:48+00:00",
+  "generated_at": "2026-06-28T04:37:31+00:00",
   "hosted_beta_control_contract": {
     "controls": [
       {

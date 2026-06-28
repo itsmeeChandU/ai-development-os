@@ -1203,11 +1203,11 @@
         "market_access_approved"
       ],
       "competitor_source_countries": [
-        "United States",
+        "Vietnam",
         "Mexico",
+        "United States",
         "European Union",
-        "China",
-        "Vietnam"
+        "China"
       ],
       "destination": "Canada",
       "exporter_origin": "Vietnam",

@@ -61,13 +61,15 @@ class CompletionPlatformTests(unittest.TestCase):
 
         self.assertGreaterEqual(payload["opportunity_scanner"]["signal_count"], 1)
         business = payload["business_logic_phases"]
-        self.assertEqual(business["phase_count"], 8)
+        self.assertEqual(business["phase_count"], 13)
+        self.assertEqual({phase["phase_id"] for phase in business["phases"]}, {f"phase-{index}" for index in range(1, 14)})
         self.assertEqual(
             business["completion_phase_contracts"]["status"],
             "local_business_logic_implemented_external_gates_preserved",
         )
         self.assertEqual(business["completion_phase_contracts"]["phase_count"], 14)
         self.assertGreaterEqual(business["completion_phase_contracts"]["local_executable_phase_count"], 8)
+        self.assertEqual(business["completion_phase_contracts"]["local_contract_ready_phase_count"], 14)
         self.assertFalse(business["completion_phase_contracts"]["public_launch_ready"])
         self.assertEqual(business["packet_rows"][0]["decision_tree"]["question_count"], 12)
         self.assertEqual(business["packet_rows"][0]["business_scores"]["score_count"], 6)

@@ -88,14 +88,19 @@ The current example packet is at document stage because it has evidence, but imp
 
 | Phase | Current Implementation |
 | --- | --- |
-| Decision tree before more features | implemented as 12 packet questions with answered, research, review, and blocked states |
-| No-document beginner flow | implemented as executable starter input checks, source routes, starter outputs, and questions-only outreach policy |
-| Market intelligence module | implemented as bounded local signal scoring, not a demand claim |
-| Country-pack architecture | implemented for destination, origin, strategic India, and generic fallback packs with required route checks |
-| Source monitoring runtime | implemented as source registry rows plus packet evidence freshness evaluation |
-| Buyer/supplier evidence runtime | implemented as executable evidence ladders that block validation and verification claims |
-| Commercial packet outputs | implemented as beginner, exporter, importer, operator, supplier, buyer/broker, and expert-facing packet sections |
-| Business gate decision | implemented as allowed and blocked action matrix for each packet |
+| 1. Business logic runtime | implemented as 12 packet questions, canonical packet stage, provenance, six scores, blocked claims, and allowed/blocked local actions |
+| 2. No-document beginner flow | implemented as executable starter input checks, source routes, starter outputs, buyer packet draft, and questions-only outreach policy |
+| 3. Market intelligence | implemented as bounded local signal scoring, importer/buyer discovery routes, and demand-claim blocks |
+| 4. Country packs | implemented for destination, origin, strategic India, and generic fallback packs with required route checks |
+| 5. Source monitoring | implemented as source registry rows, refresh cadence, stale-source impact rules, and packet evidence freshness evaluation |
+| 6. Packet outputs | implemented as beginner, exporter, importer, operator, supplier, buyer/broker, expert, missing-evidence, and blocked-claim output sections |
+| 7. Human review gates | implemented as reviewer lanes, scope templates, decision values, required evidence fields, and no-reviewer-no-claim rule |
+| 8. Metadata-only beta | implemented as beta scope, outcome capture requirements, and real-user evidence gate |
+| 9. Hosted beta infrastructure | implemented as hosted control checklist for auth, database, storage, logs, backups, AI routing, observability, and payment gates |
+| 10. Controlled real-file beta | implemented as real-file beta scope, upload consent, AI-use consent, redaction, deletion, and audit requirements |
+| 11. Buyer/supplier evidence | implemented as executable buyer and supplier evidence ladders that block validation and verification claims |
+| 12. Payments | implemented as paid scope, forbidden paid scope, review prerequisites, and live-checkout-disabled gate |
+| 13. Public launch | implemented as safe initial public scope, blocked public scope, approval prerequisites, and public-launch-ready false |
 
 ## Decision Tree
 
@@ -265,10 +270,10 @@ Payments remain downstream. Live checkout stays disabled until scope, support, r
 | 4 | Country packs | local executable route checks, reference boundaries | Canada, India, Vietnam, Generic pack logic and required source route checks | current source refresh and qualified country review |
 | 5 | Source monitoring | local executable freshness evaluation, no live freshness claim | freshness status, diff classifier, packet impact logic, attached evidence freshness state | permitted refresh evidence and reviewer review |
 | 6 | Packet outputs | local complete, claims blocked | Trade Readiness Packet views and supporting reports | user value validation |
-| 7 | Human review gates | contract ready, external evidence required | reviewer lanes and decision templates | real reviewer records |
-| 8 | Metadata-only beta | contract ready, real users required | beta measurement plan | 5-10 real user outcomes |
-| 9 | Hosted beta infrastructure | contract ready, hosted proof required | hosted control checklist | auth, DB, storage, logs, backups, AI routing proof |
-| 10 | Controlled real-file beta | contract ready, hosted review required | consent, redaction, deletion, audit requirements | supervised real-file beta results |
+| 7 | Human review gates | local review-lane contract ready, external evidence required | reviewer lanes, decision templates, and required evidence fields | real reviewer records |
+| 8 | Metadata-only beta | metadata-only beta contract ready, real users required | beta scope and outcome capture requirements | 5-10 real user outcomes |
+| 9 | Hosted beta infrastructure | hosted control contract ready, hosted proof required | auth, DB, storage, logs, backups, AI routing, observability, and payment-gate checklist | hosted platform proof |
+| 10 | Controlled real-file beta | real-file beta contract ready, hosted review required | consent, redaction, deletion, audit, and AI-use requirements | supervised real-file beta results |
 | 11 | Buyer/supplier evidence | local executable ladders, real evidence required | buyer/supplier evidence levels and language boundaries | dated buyer and supplier evidence for stronger claims |
 | 12 | Payments | local contract complete, live checkout disabled | paid scope and required reviews | pricing, tax, support, webhook, payment review |
 | 13 | Public launch | launch contract ready, public launch blocked | safe initial launch scope and blocked launch scope | named launch owner approval and all external gates |
@@ -289,7 +294,7 @@ Payments remain downstream. Live checkout stays disabled until scope, support, r
 
 ## What Is Implemented Now
 
-- eight business phases
+- 13 business phase surfaces, plus phase 0 business identity lock
 - 12-question decision tree
 - canonical Trade Readiness Packet contract
 - field-level provenance
