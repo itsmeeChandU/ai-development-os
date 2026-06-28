@@ -81,6 +81,14 @@ The document engine is ready for local review and parser QA. It is not yet appro
 - API contracts require auth, tenant filtering, object-level authorization, claim-gate reuse, rate-limit proof, and closed external effects.
 - Live API keys, webhook delivery, unrestricted uploads, hosted auth, enterprise terms, and security review remain incomplete.
 
+## Payment Controls
+
+- Payment status: `production_payment_monetization_engine_ready_live_checkout_closed`.
+- Checkout controls: `4`.
+- Webhook controls: `6`.
+- Payment webhooks require signature verification, idempotency, duplicate handling, delayed handling, and out-of-order handling.
+- Live Stripe mode, checkout URLs, external charges, refund/support policy, tax/accounting review, payment security review, and claim-language review remain incomplete.
+
 ## Claim Safety
 
 - Evidence claim-gate status: `production_evidence_claim_gate_engine_ready_claims_fail_closed`.

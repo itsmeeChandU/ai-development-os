@@ -162,6 +162,7 @@ class OperatorAppTests(unittest.TestCase):
             "/api/country-coverage": "country_coverage_ready_with_claim_gates",
             "/api/billing/controls": "billing_credit_controls_ready_local_no_live_checkout",
             "/api/billing/usage": "billing_usage_ledger_ready_local_no_charges",
+            "/api/payments/monetization": "production_payment_monetization_engine_ready_live_checkout_closed",
             "/api/agent-api": "agent_api_manifest_ready_scoped_and_metered",
             "/api/agent-api/gateway": "agent_api_gateway_ready_local_executor_no_external_effects",
             "/api/traffic-pages": "traffic_pages_manifest_ready",
@@ -203,6 +204,25 @@ class OperatorAppTests(unittest.TestCase):
         self.assertEqual(upload_payload["status"], "document_upload_contract_ready_real_files_blocked")
         self.assertFalse(upload_payload["real_file_accepted"])
         self.assertFalse(upload_payload["unrestricted_uploads_enabled"])
+
+    def test_payment_contract_routes_do_not_create_live_charges(self) -> None:
+        checkout_body = urlencode({"tier": "starter_packet"}).encode("utf-8")
+        checkout_request = Request(f"{self.base_url}/api/payments/checkout-session", data=checkout_body, method="POST")
+        with urlopen(checkout_request, timeout=5) as response:
+            checkout_payload = json.loads(response.read().decode("utf-8"))
+        self.assertEqual(response.status, 200)
+        self.assertEqual(checkout_payload["status"], "checkout_session_contract_ready_live_mode_disabled")
+        self.assertIsNone(checkout_payload["checkout_url"])
+        self.assertFalse(checkout_payload["live_mode_enabled"])
+        self.assertFalse(checkout_payload["external_charge_created"])
+
+        webhook_request = Request(f"{self.base_url}/api/payments/webhook-test", data=b"", method="POST")
+        with urlopen(webhook_request, timeout=5) as response:
+            webhook_payload = json.loads(response.read().decode("utf-8"))
+        self.assertEqual(response.status, 200)
+        self.assertEqual(webhook_payload["status"], "payment_webhook_contract_ready_delivery_disabled")
+        self.assertFalse(webhook_payload["delivery_enabled"])
+        self.assertFalse(webhook_payload["external_effects_created"])
 
         with urlopen(f"{self.base_url}/api/agent-tools/generate_missing_evidence_report", timeout=5) as response:
             ready = json.loads(response.read().decode("utf-8"))

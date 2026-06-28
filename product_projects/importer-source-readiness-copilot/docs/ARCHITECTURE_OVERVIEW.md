@@ -33,6 +33,7 @@ src/importer_source_readiness/production_enterprise_api_platform.py
 src/importer_source_readiness/production_expert_review_network.py
 src/importer_source_readiness/production_market_intelligence_engine.py
 src/importer_source_readiness/production_packet_engine.py
+src/importer_source_readiness/production_payment_monetization_engine.py
 src/importer_source_readiness/production_portal_workflow_engine.py
 src/importer_source_readiness/production_redevelopment.py
 src/importer_source_readiness/production_reports_engine.py
@@ -93,6 +94,12 @@ system_review_graph/production_portal_workflow_manifest.json
 system_review_graph/production_portal_route_matrix.json
 system_review_graph/production_portal_ux_checks.json
 system_review_graph/production_portal_gate_controls.json
+system_review_graph/production_payment_monetization_manifest.json
+system_review_graph/production_pricing_tiers.json
+system_review_graph/production_paid_scope_policy.json
+system_review_graph/production_checkout_gate_controls.json
+system_review_graph/production_payment_webhook_controls.json
+system_review_graph/production_payment_research_references.json
 system_review_graph/production_enterprise_api_manifest.json
 system_review_graph/production_enterprise_api_contracts.json
 system_review_graph/production_enterprise_rbac_policy.json
@@ -153,6 +160,7 @@ board/*.md
 | `src/importer_source_readiness/production_expert_review_network.py` | production expert review network for reviewer lanes, credential requirements, scoped review requests, finding templates, gate impacts, and no completed signoff recorded |
 | `src/importer_source_readiness/production_market_intelligence_engine.py` | production market intelligence engine for metric records, source routes, dataset connector states, score caps, and blocked demand/profit claims |
 | `src/importer_source_readiness/production_packet_engine.py` | production packet engine for 12 packet states, packet event proof, eight packet views, six scores, blocked claims, and next valid moves |
+| `src/importer_source_readiness/production_payment_monetization_engine.py` | production payment monetization engine for pricing tiers, paid-scope boundaries, checkout controls, webhook controls, payment gates, and live-checkout closure |
 | `src/importer_source_readiness/production_portal_workflow_engine.py` | production portal workflow engine that maps six user portals and the default business-owner first screen to real local UI/API routes while keeping UX/accessibility/mobile/hosted/payment/public-launch gates closed |
 | `src/importer_source_readiness/production_redevelopment.py` | full-scale production redevelopment contract with 14 layers, phases 0-20, research/source/evidence/gate tracks, permanent research entities, and closed external gates |
 | `src/importer_source_readiness/production_reports_engine.py` | production reports engine for twelve cited report types, JSON/HTML/PDF exports, version/watermark/review metadata, and blocked-claim sections |
@@ -175,6 +183,7 @@ board/*.md
 | `scripts/run_production_expert_review_network.py` | production expert review profile, request, finding-template, gate-impact, and audit writer |
 | `scripts/run_production_market_intelligence_engine.py` | production market intelligence signal and dataset connector writer |
 | `scripts/run_production_packet_engine.py` | production packet engine manifest, event, and packet-view writer |
+| `scripts/run_production_payment_monetization_engine.py` | production payment pricing, paid-scope, checkout-gate, webhook-control, research, and review doc writer |
 | `scripts/run_production_portal_workflow_engine.py` | production portal workflow manifest, route matrix, UX check, gate-control, and review doc writer |
 | `scripts/run_production_redevelopment.py` | production redevelopment contract and research-anchor writer |
 | `scripts/run_production_reports_engine.py` | production reports manifest, catalog, export, citation, HTML, JSON, and PDF writer |
@@ -197,6 +206,7 @@ board/*.md
 | `tests/test_production_expert_review_network.py` | proof that reviewer lanes require real credentials and findings while keeping local requests draft-only and gates closed |
 | `tests/test_production_market_intelligence_engine.py` | proof that market metrics are source-routed without invented values, demand claims, profitability claims, or buyer validation |
 | `tests/test_production_portal_workflow_engine.py` | proof that public, exporter, importer, expert reviewer, operator/admin, and enterprise portals have route coverage, plain first-screen choices, UX review hooks, and closed gates |
+| `tests/test_production_payment_monetization_engine.py` | proof that monetization charges only for preparation and keeps live checkout, external charges, and payment claims closed |
 | `tests/test_production_redevelopment.py` | proof that every redevelopment phase has build, research, source, evidence, and gate tracks backed by known source IDs |
 | `system_review_graph/` | generated packets, reports, blockers, handoff evidence |
 
@@ -254,7 +264,10 @@ board/*.md
     RBAC permission matrix, workspace controls, API-key fingerprints, webhook
     contracts, audit export policy, usage limits, white-label report rules, and
     closed hosted/live enterprise gates.
-26. Generate the production redevelopment contract and research anchors for
+26. Generate the production payment monetization package: pricing tiers, paid
+    scope, forbidden paid claims, checkout gate controls, webhook controls,
+    Stripe/payment research references, and closed live-checkout gates.
+27. Generate the production redevelopment contract and research anchors for
     the full-scale build: 14 production layers, phases 0-20, permanent source
     registry links, evidence requirements, and launch gates that remain closed.
 
@@ -370,6 +383,14 @@ policy, and white-label report rules exist locally and follow the claim-gate
 engine. It does not mean hosted enterprise auth, live API keys, webhook
 delivery, unrestricted uploads, enterprise terms, security approval, or public
 launch approval has been recorded.
+
+The expected production payment monetization status is
+`production_payment_monetization_engine_ready_live_checkout_closed`. It means
+pricing tiers, paid-scope rules, forbidden paid claims, checkout controls,
+webhook controls, and payment gates exist locally. It does not mean live
+checkout, live Stripe objects, external charges, tax/accounting approval,
+refund/support approval, payment security approval, claim-language approval, or
+public launch approval has been recorded.
 
 ## Proof Boundary
 

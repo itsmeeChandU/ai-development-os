@@ -1,0 +1,216 @@
+{
+  "pricing_tiers": [
+    {
+      "allowed_scope": [
+        "safe quick check",
+        "sample report",
+        "source-routing preview"
+      ],
+      "can_charge_for_approval": false,
+      "claim_language_review_required": false,
+      "forbidden_scope": [
+        "customs approval",
+        "tariff confirmation",
+        "legal advice",
+        "CFIA approval",
+        "buyer validation",
+        "supplier verification",
+        "shipment approval",
+        "public launch approval"
+      ],
+      "label": "Free quick check",
+      "live_checkout_enabled": false,
+      "meter": "quick_check",
+      "paid": false,
+      "price_state": "free",
+      "tier_id": "free_quick_check"
+    },
+    {
+      "allowed_scope": [
+        "prepared trade readiness packet",
+        "market research brief",
+        "document organization",
+        "source monitoring",
+        "buyer-ready report",
+        "broker-review packet",
+        "expert review workflow",
+        "broker/advisor workspace",
+        "API usage contract"
+      ],
+      "can_charge_for_approval": false,
+      "claim_language_review_required": true,
+      "forbidden_scope": [
+        "customs approval",
+        "tariff confirmation",
+        "legal advice",
+        "CFIA approval",
+        "buyer validation",
+        "supplier verification",
+        "shipment approval",
+        "public launch approval"
+      ],
+      "label": "Starter packet",
+      "live_checkout_enabled": false,
+      "meter": "packet",
+      "paid": true,
+      "price_state": "requires_founder_pricing_decision",
+      "tier_id": "starter_packet"
+    },
+    {
+      "allowed_scope": [
+        "prepared trade readiness packet",
+        "market research brief",
+        "document organization",
+        "source monitoring",
+        "buyer-ready report",
+        "broker-review packet",
+        "expert review workflow",
+        "broker/advisor workspace",
+        "API usage contract"
+      ],
+      "can_charge_for_approval": false,
+      "claim_language_review_required": true,
+      "forbidden_scope": [
+        "customs approval",
+        "tariff confirmation",
+        "legal advice",
+        "CFIA approval",
+        "buyer validation",
+        "supplier verification",
+        "shipment approval",
+        "public launch approval"
+      ],
+      "label": "Pro packet workspace",
+      "live_checkout_enabled": false,
+      "meter": "workspace",
+      "paid": true,
+      "price_state": "requires_founder_pricing_decision",
+      "tier_id": "pro_packet_workspace"
+    },
+    {
+      "allowed_scope": [
+        "prepared trade readiness packet",
+        "market research brief",
+        "document organization",
+        "source monitoring",
+        "buyer-ready report",
+        "broker-review packet",
+        "expert review workflow",
+        "broker/advisor workspace",
+        "API usage contract"
+      ],
+      "can_charge_for_approval": false,
+      "claim_language_review_required": true,
+      "forbidden_scope": [
+        "customs approval",
+        "tariff confirmation",
+        "legal advice",
+        "CFIA approval",
+        "buyer validation",
+        "supplier verification",
+        "shipment approval",
+        "public launch approval"
+      ],
+      "label": "Expert review add-on",
+      "live_checkout_enabled": false,
+      "meter": "review_request",
+      "paid": true,
+      "price_state": "requires_reviewer_and_payment_scope_review",
+      "tier_id": "expert_review_add_on"
+    },
+    {
+      "allowed_scope": [
+        "prepared trade readiness packet",
+        "market research brief",
+        "document organization",
+        "source monitoring",
+        "buyer-ready report",
+        "broker-review packet",
+        "expert review workflow",
+        "broker/advisor workspace",
+        "API usage contract"
+      ],
+      "can_charge_for_approval": false,
+      "claim_language_review_required": true,
+      "forbidden_scope": [
+        "customs approval",
+        "tariff confirmation",
+        "legal advice",
+        "CFIA approval",
+        "buyer validation",
+        "supplier verification",
+        "shipment approval",
+        "public launch approval"
+      ],
+      "label": "Broker/advisor workspace",
+      "live_checkout_enabled": false,
+      "meter": "seat_or_workspace",
+      "paid": true,
+      "price_state": "requires_founder_pricing_decision",
+      "tier_id": "broker_advisor_workspace"
+    },
+    {
+      "allowed_scope": [
+        "prepared trade readiness packet",
+        "market research brief",
+        "document organization",
+        "source monitoring",
+        "buyer-ready report",
+        "broker-review packet",
+        "expert review workflow",
+        "broker/advisor workspace",
+        "API usage contract"
+      ],
+      "can_charge_for_approval": false,
+      "claim_language_review_required": true,
+      "forbidden_scope": [
+        "customs approval",
+        "tariff confirmation",
+        "legal advice",
+        "CFIA approval",
+        "buyer validation",
+        "supplier verification",
+        "shipment approval",
+        "public launch approval"
+      ],
+      "label": "Enterprise",
+      "live_checkout_enabled": false,
+      "meter": "contract",
+      "paid": true,
+      "price_state": "private_contract_required",
+      "tier_id": "enterprise"
+    },
+    {
+      "allowed_scope": [
+        "prepared trade readiness packet",
+        "market research brief",
+        "document organization",
+        "source monitoring",
+        "buyer-ready report",
+        "broker-review packet",
+        "expert review workflow",
+        "broker/advisor workspace",
+        "API usage contract"
+      ],
+      "can_charge_for_approval": false,
+      "claim_language_review_required": true,
+      "forbidden_scope": [
+        "customs approval",
+        "tariff confirmation",
+        "legal advice",
+        "CFIA approval",
+        "buyer validation",
+        "supplier verification",
+        "shipment approval",
+        "public launch approval"
+      ],
+      "label": "API/data access",
+      "live_checkout_enabled": false,
+      "meter": "api_usage",
+      "paid": true,
+      "price_state": "requires_security_and_usage_review",
+      "tier_id": "api_data_access"
+    }
+  ],
+  "status": "production_pricing_tiers_ready_review_required"
+}

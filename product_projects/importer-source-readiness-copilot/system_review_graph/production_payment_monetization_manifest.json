@@ -1,0 +1,446 @@
+{
+  "allowed_paid_scope": [
+    "prepared trade readiness packet",
+    "market research brief",
+    "document organization",
+    "source monitoring",
+    "buyer-ready report",
+    "broker-review packet",
+    "expert review workflow",
+    "broker/advisor workspace",
+    "API usage contract"
+  ],
+  "billing_action_count": 16,
+  "blocked_payment_gate_count": 10,
+  "checkout_control_count": 4,
+  "checkout_controls": [
+    {
+      "checkout_url_created": false,
+      "control_id": "checkout_live_mode",
+      "external_charge_created": false,
+      "live_mode_enabled": false,
+      "status": "blocked"
+    },
+    {
+      "control_id": "checkout_copy_boundary",
+      "must_not_say": "Users pay for customs approval, legal advice, buyer validation, supplier verification, tariff confirmation, or shipment approval.",
+      "must_say": "Users pay for preparation and evidence organization.",
+      "status": "ready_local_review_required"
+    },
+    {
+      "control_id": "checkout_refund_support",
+      "refund_policy_approved": false,
+      "status": "blocked",
+      "support_contact_approved": false
+    },
+    {
+      "control_id": "checkout_tax_accounting",
+      "invoice_policy_approved": false,
+      "status": "blocked",
+      "tax_review_completed": false
+    }
+  ],
+  "checkout_url_created": false,
+  "claim_language_review_completed": false,
+  "claims_opened": false,
+  "external_charge_created": false,
+  "forbidden_paid_scope": [
+    "customs approval",
+    "tariff confirmation",
+    "legal advice",
+    "CFIA approval",
+    "buyer validation",
+    "supplier verification",
+    "shipment approval",
+    "public launch approval"
+  ],
+  "generated_at": "2026-06-28T15:55:58+00:00",
+  "live_checkout_enabled": false,
+  "live_mode_objects_created": false,
+  "live_payment_ready": false,
+  "payment_contract_status": "payment_pricing_contract_ready_live_checkout_disabled",
+  "payment_gate_count": 10,
+  "payment_gates": [
+    {
+      "gate_id": "pricing_decision",
+      "owner": "founder",
+      "required_evidence": "approved price sheet",
+      "status": "blocked"
+    },
+    {
+      "gate_id": "refund_support_policy",
+      "owner": "billing_owner",
+      "required_evidence": "refund policy and support contact",
+      "status": "blocked"
+    },
+    {
+      "gate_id": "tax_accounting_review",
+      "owner": "accounting_reviewer",
+      "required_evidence": "tax and accounting decision",
+      "status": "blocked"
+    },
+    {
+      "gate_id": "stripe_live_mode_objects",
+      "owner": "billing_owner",
+      "required_evidence": "live products, prices, checkout, customer portal settings",
+      "status": "blocked"
+    },
+    {
+      "gate_id": "production_webhook_endpoint",
+      "owner": "billing_owner",
+      "required_evidence": "production webhook endpoint with signature verification",
+      "status": "blocked"
+    },
+    {
+      "gate_id": "webhook_idempotency_and_ordering",
+      "owner": "engineering_owner",
+      "required_evidence": "duplicate, delayed, and out-of-order webhook tests",
+      "status": "blocked"
+    },
+    {
+      "gate_id": "secure_api_keys",
+      "owner": "security_reviewer",
+      "required_evidence": "secret storage and restricted key review",
+      "status": "blocked"
+    },
+    {
+      "gate_id": "payment_security_review",
+      "owner": "security_reviewer",
+      "required_evidence": "payment security signoff",
+      "status": "blocked"
+    },
+    {
+      "gate_id": "claim_language_review",
+      "owner": "report_language_reviewer",
+      "required_evidence": "paid-scope wording approval",
+      "status": "blocked"
+    },
+    {
+      "gate_id": "activation_decision",
+      "owner": "founder",
+      "required_evidence": "dated live checkout approval",
+      "status": "blocked"
+    }
+  ],
+  "payment_security_review_completed": false,
+  "pricing_approved": false,
+  "pricing_tier_count": 7,
+  "pricing_tiers": [
+    {
+      "allowed_scope": [
+        "safe quick check",
+        "sample report",
+        "source-routing preview"
+      ],
+      "can_charge_for_approval": false,
+      "claim_language_review_required": false,
+      "forbidden_scope": [
+        "customs approval",
+        "tariff confirmation",
+        "legal advice",
+        "CFIA approval",
+        "buyer validation",
+        "supplier verification",
+        "shipment approval",
+        "public launch approval"
+      ],
+      "label": "Free quick check",
+      "live_checkout_enabled": false,
+      "meter": "quick_check",
+      "paid": false,
+      "price_state": "free",
+      "tier_id": "free_quick_check"
+    },
+    {
+      "allowed_scope": [
+        "prepared trade readiness packet",
+        "market research brief",
+        "document organization",
+        "source monitoring",
+        "buyer-ready report",
+        "broker-review packet",
+        "expert review workflow",
+        "broker/advisor workspace",
+        "API usage contract"
+      ],
+      "can_charge_for_approval": false,
+      "claim_language_review_required": true,
+      "forbidden_scope": [
+        "customs approval",
+        "tariff confirmation",
+        "legal advice",
+        "CFIA approval",
+        "buyer validation",
+        "supplier verification",
+        "shipment approval",
+        "public launch approval"
+      ],
+      "label": "Starter packet",
+      "live_checkout_enabled": false,
+      "meter": "packet",
+      "paid": true,
+      "price_state": "requires_founder_pricing_decision",
+      "tier_id": "starter_packet"
+    },
+    {
+      "allowed_scope": [
+        "prepared trade readiness packet",
+        "market research brief",
+        "document organization",
+        "source monitoring",
+        "buyer-ready report",
+        "broker-review packet",
+        "expert review workflow",
+        "broker/advisor workspace",
+        "API usage contract"
+      ],
+      "can_charge_for_approval": false,
+      "claim_language_review_required": true,
+      "forbidden_scope": [
+        "customs approval",
+        "tariff confirmation",
+        "legal advice",
+        "CFIA approval",
+        "buyer validation",
+        "supplier verification",
+        "shipment approval",
+        "public launch approval"
+      ],
+      "label": "Pro packet workspace",
+      "live_checkout_enabled": false,
+      "meter": "workspace",
+      "paid": true,
+      "price_state": "requires_founder_pricing_decision",
+      "tier_id": "pro_packet_workspace"
+    },
+    {
+      "allowed_scope": [
+        "prepared trade readiness packet",
+        "market research brief",
+        "document organization",
+        "source monitoring",
+        "buyer-ready report",
+        "broker-review packet",
+        "expert review workflow",
+        "broker/advisor workspace",
+        "API usage contract"
+      ],
+      "can_charge_for_approval": false,
+      "claim_language_review_required": true,
+      "forbidden_scope": [
+        "customs approval",
+        "tariff confirmation",
+        "legal advice",
+        "CFIA approval",
+        "buyer validation",
+        "supplier verification",
+        "shipment approval",
+        "public launch approval"
+      ],
+      "label": "Expert review add-on",
+      "live_checkout_enabled": false,
+      "meter": "review_request",
+      "paid": true,
+      "price_state": "requires_reviewer_and_payment_scope_review",
+      "tier_id": "expert_review_add_on"
+    },
+    {
+      "allowed_scope": [
+        "prepared trade readiness packet",
+        "market research brief",
+        "document organization",
+        "source monitoring",
+        "buyer-ready report",
+        "broker-review packet",
+        "expert review workflow",
+        "broker/advisor workspace",
+        "API usage contract"
+      ],
+      "can_charge_for_approval": false,
+      "claim_language_review_required": true,
+      "forbidden_scope": [
+        "customs approval",
+        "tariff confirmation",
+        "legal advice",
+        "CFIA approval",
+        "buyer validation",
+        "supplier verification",
+        "shipment approval",
+        "public launch approval"
+      ],
+      "label": "Broker/advisor workspace",
+      "live_checkout_enabled": false,
+      "meter": "seat_or_workspace",
+      "paid": true,
+      "price_state": "requires_founder_pricing_decision",
+      "tier_id": "broker_advisor_workspace"
+    },
+    {
+      "allowed_scope": [
+        "prepared trade readiness packet",
+        "market research brief",
+        "document organization",
+        "source monitoring",
+        "buyer-ready report",
+        "broker-review packet",
+        "expert review workflow",
+        "broker/advisor workspace",
+        "API usage contract"
+      ],
+      "can_charge_for_approval": false,
+      "claim_language_review_required": true,
+      "forbidden_scope": [
+        "customs approval",
+        "tariff confirmation",
+        "legal advice",
+        "CFIA approval",
+        "buyer validation",
+        "supplier verification",
+        "shipment approval",
+        "public launch approval"
+      ],
+      "label": "Enterprise",
+      "live_checkout_enabled": false,
+      "meter": "contract",
+      "paid": true,
+      "price_state": "private_contract_required",
+      "tier_id": "enterprise"
+    },
+    {
+      "allowed_scope": [
+        "prepared trade readiness packet",
+        "market research brief",
+        "document organization",
+        "source monitoring",
+        "buyer-ready report",
+        "broker-review packet",
+        "expert review workflow",
+        "broker/advisor workspace",
+        "API usage contract"
+      ],
+      "can_charge_for_approval": false,
+      "claim_language_review_required": true,
+      "forbidden_scope": [
+        "customs approval",
+        "tariff confirmation",
+        "legal advice",
+        "CFIA approval",
+        "buyer validation",
+        "supplier verification",
+        "shipment approval",
+        "public launch approval"
+      ],
+      "label": "API/data access",
+      "live_checkout_enabled": false,
+      "meter": "api_usage",
+      "paid": true,
+      "price_state": "requires_security_and_usage_review",
+      "tier_id": "api_data_access"
+    }
+  ],
+  "product": "Trade Readiness Copilot",
+  "proof_boundary": "Payments are preparation-scope monetization contracts only. This does not prove Stripe live mode, tax/accounting approval, refund/support approval, payment security review, claim-language approval, live checkout, or public launch.",
+  "public_launch_ready": false,
+  "refund_support_policy_approved": false,
+  "research_reference_count": 5,
+  "research_references": [
+    {
+      "product_use": "Live-mode readiness, API versions, logging, live objects, and production webhooks.",
+      "source_id": "stripe-go-live",
+      "source_name": "Stripe Go-live checklist",
+      "url": "https://docs.stripe.com/get-started/checklist/go-live"
+    },
+    {
+      "product_use": "Webhook endpoint, event handling, retries, and signature verification requirements.",
+      "source_id": "stripe-webhooks",
+      "source_name": "Stripe Webhooks",
+      "url": "https://docs.stripe.com/webhooks"
+    },
+    {
+      "product_use": "Duplicate and retry-safe payment request handling.",
+      "source_id": "stripe-idempotent-requests",
+      "source_name": "Stripe Idempotent requests",
+      "url": "https://docs.stripe.com/api/idempotent_requests"
+    },
+    {
+      "product_use": "Secret-key, restricted-key, and live-mode key handling boundary.",
+      "source_id": "stripe-api-keys",
+      "source_name": "Stripe API keys",
+      "url": "https://docs.stripe.com/keys"
+    },
+    {
+      "product_use": "Test-mode payment behavior is not live activation proof.",
+      "source_id": "stripe-testing",
+      "source_name": "Stripe Testing",
+      "url": "https://docs.stripe.com/testing"
+    }
+  ],
+  "status": "production_payment_monetization_engine_ready_live_checkout_closed",
+  "stripe_secret_key_configured": false,
+  "tax_accounting_review_completed": false,
+  "usage_row_count": 16,
+  "webhook_control_count": 6,
+  "webhook_controls": [
+    {
+      "delayed_event_handling_required": true,
+      "delivery_enabled": false,
+      "duplicate_event_handling_required": true,
+      "event_type": "checkout.session.completed",
+      "external_effects_created": false,
+      "idempotency_required": true,
+      "out_of_order_event_handling_required": true,
+      "signature_verification_required": true
+    },
+    {
+      "delayed_event_handling_required": true,
+      "delivery_enabled": false,
+      "duplicate_event_handling_required": true,
+      "event_type": "payment_intent.succeeded",
+      "external_effects_created": false,
+      "idempotency_required": true,
+      "out_of_order_event_handling_required": true,
+      "signature_verification_required": true
+    },
+    {
+      "delayed_event_handling_required": true,
+      "delivery_enabled": false,
+      "duplicate_event_handling_required": true,
+      "event_type": "payment_intent.payment_failed",
+      "external_effects_created": false,
+      "idempotency_required": true,
+      "out_of_order_event_handling_required": true,
+      "signature_verification_required": true
+    },
+    {
+      "delayed_event_handling_required": true,
+      "delivery_enabled": false,
+      "duplicate_event_handling_required": true,
+      "event_type": "invoice.paid",
+      "external_effects_created": false,
+      "idempotency_required": true,
+      "out_of_order_event_handling_required": true,
+      "signature_verification_required": true
+    },
+    {
+      "delayed_event_handling_required": true,
+      "delivery_enabled": false,
+      "duplicate_event_handling_required": true,
+      "event_type": "customer.subscription.updated",
+      "external_effects_created": false,
+      "idempotency_required": true,
+      "out_of_order_event_handling_required": true,
+      "signature_verification_required": true
+    },
+    {
+      "delayed_event_handling_required": true,
+      "delivery_enabled": false,
+      "duplicate_event_handling_required": true,
+      "event_type": "customer.subscription.deleted",
+      "external_effects_created": false,
+      "idempotency_required": true,
+      "out_of_order_event_handling_required": true,
+      "signature_verification_required": true
+    }
+  ],
+  "webhook_delivery_enabled": false
+}

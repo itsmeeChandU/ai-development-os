@@ -142,6 +142,7 @@ def main() -> int:
         [sys.executable, "scripts/run_production_reports_engine.py"],
         [sys.executable, "scripts/run_production_portal_workflow_engine.py"],
         [sys.executable, "scripts/run_production_enterprise_api_platform.py"],
+        [sys.executable, "scripts/run_production_payment_monetization_engine.py"],
         [sys.executable, "scripts/audit_external_package.py", "--root", "."],
     ]
     for command in commands:
@@ -216,6 +217,7 @@ def main() -> int:
     production_reports = _load_json(ROOT / "system_review_graph" / "production_reports_engine_manifest.json")
     production_portals = _load_json(ROOT / "system_review_graph" / "production_portal_workflow_manifest.json")
     production_enterprise = _load_json(ROOT / "system_review_graph" / "production_enterprise_api_manifest.json")
+    production_payments = _load_json(ROOT / "system_review_graph" / "production_payment_monetization_manifest.json")
     official_source_registry = _load_json(ROOT / "data" / "official_source_registry.json")
     business_core_doc = (ROOT / "docs" / "BUSINESS_CORE_LOGIC_CURRENT_STATE.md").read_text(encoding="utf-8")
     functional_doc = (ROOT / "docs" / "FUNCTIONAL_REQUIREMENTS_CURRENT_STATE.md").read_text(encoding="utf-8")
@@ -290,6 +292,7 @@ def main() -> int:
         "src/importer_source_readiness/production_expert_review_network.py",
         "src/importer_source_readiness/production_market_intelligence_engine.py",
         "src/importer_source_readiness/production_packet_engine.py",
+        "src/importer_source_readiness/production_payment_monetization_engine.py",
         "src/importer_source_readiness/production_portal_workflow_engine.py",
         "src/importer_source_readiness/production_reports_engine.py",
         "src/importer_source_readiness/production_redevelopment.py",
@@ -311,6 +314,7 @@ def main() -> int:
         "tests/test_production_expert_review_network.py",
         "tests/test_production_market_intelligence_engine.py",
         "tests/test_production_packet_engine.py",
+        "tests/test_production_payment_monetization_engine.py",
         "tests/test_production_portal_workflow_engine.py",
         "tests/test_production_reports_engine.py",
         "tests/test_production_redevelopment.py",
@@ -332,6 +336,7 @@ def main() -> int:
         "scripts/run_production_expert_review_network.py",
         "scripts/run_production_market_intelligence_engine.py",
         "scripts/run_production_packet_engine.py",
+        "scripts/run_production_payment_monetization_engine.py",
         "scripts/run_production_portal_workflow_engine.py",
         "scripts/run_production_reports_engine.py",
         "scripts/run_production_redevelopment.py",
@@ -364,6 +369,7 @@ def main() -> int:
         "docs/PRODUCTION_EXPERT_REVIEW_NETWORK.md",
         "docs/PRODUCTION_MARKET_INTELLIGENCE_ENGINE.md",
         "docs/PRODUCTION_PACKET_ENGINE.md",
+        "docs/PRODUCTION_PAYMENT_MONETIZATION_ENGINE.md",
         "docs/PRODUCTION_PORTAL_WORKFLOWS.md",
         "docs/PRODUCTION_REPORTS_ENGINE.md",
         "docs/PRODUCTION_REDEVELOPMENT.md",
@@ -461,6 +467,12 @@ def main() -> int:
         "system_review_graph/production_enterprise_webhook_policy.json",
         "system_review_graph/production_enterprise_audit_export_policy.json",
         "system_review_graph/production_enterprise_research_references.json",
+        "system_review_graph/production_payment_monetization_manifest.json",
+        "system_review_graph/production_pricing_tiers.json",
+        "system_review_graph/production_paid_scope_policy.json",
+        "system_review_graph/production_checkout_gate_controls.json",
+        "system_review_graph/production_payment_webhook_controls.json",
+        "system_review_graph/production_payment_research_references.json",
         "system_review_graph/production_claim_gate_decisions.json",
         "system_review_graph/production_evidence_claim_mappers.json",
         "data/official_sample_documents/canada/cbsa-ci1-canada-customs-invoice.pdf",
@@ -1312,6 +1324,53 @@ def main() -> int:
         failures.append("enterprise white-label policy must forbid removing blocked claims")
     if white_label.get("claims_opened") is not False:
         failures.append("enterprise white-label policy must not open claims")
+    if production_payments.get("status") != "production_payment_monetization_engine_ready_live_checkout_closed":
+        failures.append("production payment monetization status is incorrect")
+    if production_payments.get("pricing_tier_count") != 7:
+        failures.append("production payments should define seven pricing tiers")
+    if production_payments.get("research_reference_count") != 5:
+        failures.append("production payments should include five Stripe/payment research references")
+    if production_payments.get("blocked_payment_gate_count") != production_payments.get("payment_gate_count"):
+        failures.append("production payments should keep every payment gate blocked")
+    if "prepared trade readiness packet" not in production_payments.get("allowed_paid_scope", []):
+        failures.append("production payments should allow charging for preparation")
+    if "customs approval" not in production_payments.get("forbidden_paid_scope", []):
+        failures.append("production payments must forbid charging for customs approval")
+    for key in (
+        "external_charge_created",
+        "live_checkout_enabled",
+        "live_payment_ready",
+        "live_mode_objects_created",
+        "checkout_url_created",
+        "webhook_delivery_enabled",
+        "stripe_secret_key_configured",
+        "pricing_approved",
+        "refund_support_policy_approved",
+        "tax_accounting_review_completed",
+        "payment_security_review_completed",
+        "claim_language_review_completed",
+        "claims_opened",
+        "public_launch_ready",
+    ):
+        if production_payments.get(key) is not False:
+            failures.append(f"production payments expected {key}=false")
+    for tier in production_payments.get("pricing_tiers", []):
+        if tier.get("paid") and (
+            tier.get("can_charge_for_approval") is not False
+            or tier.get("live_checkout_enabled") is not False
+            or "tariff confirmation" not in tier.get("forbidden_scope", [])
+        ):
+            failures.append(f"paid tier {tier.get('tier_id')} must charge only for preparation")
+    for webhook in production_payments.get("webhook_controls", []):
+        if (
+            webhook.get("delivery_enabled") is not False
+            or webhook.get("external_effects_created") is not False
+            or webhook.get("signature_verification_required") is not True
+            or webhook.get("idempotency_required") is not True
+            or webhook.get("duplicate_event_handling_required") is not True
+            or webhook.get("out_of_order_event_handling_required") is not True
+        ):
+            failures.append(f"payment webhook {webhook.get('event_type')} should stay closed and robust")
     if not screenshot_manifest_path.exists():
         failures.append("operator screenshot manifest was not generated")
     if screenshot_manifest.get("status") != "screenshots_ready":
@@ -2145,6 +2204,9 @@ def main() -> int:
     print(f"production_enterprise_status={production_enterprise['status']}")
     print(f"production_enterprise_api_contracts={production_enterprise['api_contract_count']}")
     print(f"production_enterprise_routes_present={production_enterprise['all_required_api_routes_present']}")
+    print(f"production_payments_status={production_payments['status']}")
+    print(f"production_payment_tiers={production_payments['pricing_tier_count']}")
+    print(f"production_live_checkout_enabled={production_payments['live_checkout_enabled']}")
     print(f"external_validation_pdf={pdf_path.relative_to(ROOT)}")
     print(f"external_validation_reviewer_brief_pdf={brief_pdf_path.relative_to(ROOT)}")
     print(f"go_live_input_status={go_live_input_readiness['status']}")

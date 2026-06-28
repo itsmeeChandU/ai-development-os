@@ -79,6 +79,7 @@ python3 scripts/run_production_expert_review_network.py
 python3 scripts/run_production_reports_engine.py
 python3 scripts/run_production_portal_workflow_engine.py
 python3 scripts/run_production_enterprise_api_platform.py
+python3 scripts/run_production_payment_monetization_engine.py
 python3 scripts/audit_external_package.py --root .
 python3 scripts/check_product.py
 ```
@@ -173,6 +174,12 @@ system_review_graph/production_enterprise_workspace_controls.json
 system_review_graph/production_enterprise_webhook_policy.json
 system_review_graph/production_enterprise_audit_export_policy.json
 system_review_graph/production_enterprise_research_references.json
+system_review_graph/production_payment_monetization_manifest.json
+system_review_graph/production_pricing_tiers.json
+system_review_graph/production_paid_scope_policy.json
+system_review_graph/production_checkout_gate_controls.json
+system_review_graph/production_payment_webhook_controls.json
+system_review_graph/production_payment_research_references.json
 system_review_graph/production_redevelopment_plan.json
 system_review_graph/production_research_anchors.json
 data/official_sample_documents/canada/*.pdf
@@ -194,6 +201,7 @@ docs/PRODUCTION_EXPERT_REVIEW_NETWORK.md
 docs/PRODUCTION_REPORTS_ENGINE.md
 docs/PRODUCTION_PORTAL_WORKFLOWS.md
 docs/PRODUCTION_ENTERPRISE_API_PLATFORM.md
+docs/PRODUCTION_PAYMENT_MONETIZATION_ENGINE.md
 docs/PRODUCTION_MARKET_INTELLIGENCE_ENGINE.md
 docs/PRODUCTION_REDEVELOPMENT.md
 output/pdf/external_validation_reviewer_brief.pdf
@@ -256,6 +264,18 @@ fingerprints, webhook contracts, audit export policy, usage limits, and
 white-label report rules exist locally and follow the same claim gates. It does
 not mean hosted enterprise auth, live API keys, webhook delivery, unrestricted
 uploads, enterprise terms, security approval, or public launch are complete.
+
+The expected production payment status is:
+
+```text
+production_payment_monetization_engine_ready_live_checkout_closed
+```
+
+That means pricing tiers, paid-scope rules, forbidden paid claims, checkout
+controls, webhook controls, and payment review gates exist locally. It does not
+mean live checkout, live Stripe objects, external charges, tax/accounting
+approval, refund/support approval, payment security approval, or public launch
+are complete.
 
 That means reviewer-specific packets, blank findings templates, and external
 review blocker rows are ready. It does not mean external review is complete.

@@ -59,6 +59,7 @@ The product helps users prepare trade readiness packets, organize evidence, revi
 | FR-31 | Export cited packet reports | Implemented locally with 12 report types, JSON/HTML/PDF exports, source/evidence citations, and blocked-claim sections | `production_reports_engine_manifest.json`, `production_report_exports.json` |
 | FR-32 | Provide route-covered portal workflows for public, exporter, importer, reviewer, operator/admin, and enterprise users | Implemented locally with route coverage, UX review hooks, and closed external gates | `production_portal_workflow_manifest.json`, `production_portal_route_matrix.json` |
 | FR-33 | Provide enterprise SaaS/API contracts for broker, advisor, and team workflows | Implemented locally with API contracts, RBAC policy, workspace controls, API-key fingerprints, webhook contracts, audit export, usage limits, and white-label report rules | `production_enterprise_api_manifest.json`, `production_enterprise_api_contracts.json` |
+| FR-34 | Provide payment monetization contract without live checkout | Implemented locally with pricing tiers, paid-scope boundaries, checkout controls, webhook controls, and payment gates | `production_payment_monetization_manifest.json`, `production_checkout_gate_controls.json` |
 
 ## Current Main Workflows
 
@@ -180,6 +181,23 @@ blocked.
    draft watermark, or claim-gate language.
 7. Hosted enterprise auth, live keys, webhook delivery, unrestricted uploads,
    enterprise terms, security review, and public launch remain blocked.
+
+### Payment Monetization
+
+1. Product defines seven pricing tiers: free quick check, starter packet, pro
+   packet workspace, expert review add-on, broker/advisor workspace,
+   enterprise, and API/data access.
+2. Product can charge only for preparation, evidence organization, source
+   monitoring, reports, review workflow, workspace, and API usage.
+3. Product cannot charge for customs approval, tariff confirmation, legal
+   advice, CFIA approval, buyer validation, supplier verification, shipment
+   approval, or public launch approval.
+4. Checkout controls keep live mode, checkout URLs, external charges,
+   refund/support approval, and tax/accounting approval closed.
+5. Webhook controls require signature verification, idempotency, duplicate
+   event handling, delayed event handling, and out-of-order event handling.
+6. Live checkout remains disabled until pricing, refund/support, tax/accounting,
+   webhook, payment security, and claim-language reviews pass.
 
 ### Expert Review
 

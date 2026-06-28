@@ -51,6 +51,7 @@ This document describes the current non-functional requirements and boundaries f
 | NFR-23 | Keep report exports review-safe | Implemented locally; reports include citations, version, draft watermark, review status, and cannot hide blocked claims | `production_report_exports.json`, `production_report_citations.json` |
 | NFR-24 | Keep portal workflows plain, route-covered, and gate-closed | Implemented locally; UX/accessibility/mobile testing and public launch approval remain external gates | `production_portal_workflow_manifest.json`, `production_portal_ux_checks.json`, `production_portal_gate_controls.json` |
 | NFR-25 | Keep enterprise APIs tenant-scoped, rate-limit-ready, and live-effect closed | Implemented locally; hosted auth, live API keys, webhook delivery, enterprise terms, and security review remain external gates | `production_enterprise_api_manifest.json`, `production_enterprise_rbac_policy.json`, `production_enterprise_webhook_policy.json` |
+| NFR-26 | Keep payment monetization preparation-only and live-checkout closed | Implemented locally; live Stripe mode, external charges, webhook delivery, refund/support approval, tax review, and payment security signoff remain external gates | `production_payment_monetization_manifest.json`, `production_payment_webhook_controls.json` |
 
 ## Security
 
@@ -275,6 +276,13 @@ Implemented now:
 - local usage ledger
 - live checkout disabled
 - no charges created by local operations
+- production payment monetization contract with seven pricing tiers
+- paid-scope policy that allows preparation work only
+- forbidden paid-scope policy for approval/advice/validation/verification claims
+- checkout controls with live checkout, checkout URL creation, and external
+  charges disabled
+- webhook controls that require signature verification, idempotency, duplicate
+  event handling, delayed event handling, and out-of-order event handling
 
 Still required:
 
@@ -285,6 +293,7 @@ Still required:
 - webhook handling
 - payment security review
 - written approval to activate live checkout
+- claim-language review for all paid copy, checkout copy, invoices, and reports
 
 ## Non-Functional Acceptance Criteria
 

@@ -1,0 +1,24 @@
+{
+  "allowed_paid_scope": [
+    "prepared trade readiness packet",
+    "market research brief",
+    "document organization",
+    "source monitoring",
+    "buyer-ready report",
+    "broker-review packet",
+    "expert review workflow",
+    "broker/advisor workspace",
+    "API usage contract"
+  ],
+  "forbidden_paid_scope": [
+    "customs approval",
+    "tariff confirmation",
+    "legal advice",
+    "CFIA approval",
+    "buyer validation",
+    "supplier verification",
+    "shipment approval",
+    "public launch approval"
+  ],
+  "status": "production_paid_scope_policy_ready"
+}

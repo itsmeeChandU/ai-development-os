@@ -185,6 +185,7 @@ def _status_context() -> dict[str, Any]:
     production_reports = _load_json(GRAPH / "production_reports_engine_manifest.json")
     production_portals = _load_json(GRAPH / "production_portal_workflow_manifest.json")
     production_enterprise = _load_json(GRAPH / "production_enterprise_api_manifest.json")
+    production_payments = _load_json(GRAPH / "production_payment_monetization_manifest.json")
     row = business["packet_rows"][0]
     return {
         "today": date.today().isoformat(),
@@ -200,6 +201,7 @@ def _status_context() -> dict[str, Any]:
         "production_reports": production_reports,
         "production_portals": production_portals,
         "production_enterprise": production_enterprise,
+        "production_payments": production_payments,
         "packet": row,
     }
 
@@ -215,6 +217,7 @@ def _functional(ctx: dict[str, Any]) -> ReviewerDocument:
     reports = ctx["production_reports"]
     portals = ctx["production_portals"]
     enterprise = ctx["production_enterprise"]
+    payments = ctx["production_payments"]
     return ReviewerDocument(
         title="Functional Requirements For External Review",
         filename="functional_requirements_for_review.md",
@@ -353,6 +356,17 @@ def _functional(ctx: dict[str, Any]) -> ReviewerDocument:
                 ),
             ),
             Section(
+                "Payment Monetization Implemented",
+                bullets=(
+                    f"Payment status: `{payments['status']}`.",
+                    f"Pricing tiers: `{payments.get('pricing_tier_count')}`.",
+                    f"Payment gates: `{payments.get('payment_gate_count')}`.",
+                    "Paid scope is preparation, evidence organization, reports, source monitoring, review workflow, workspace, and API usage.",
+                    "Forbidden paid scope includes customs approval, tariff confirmation, legal advice, CFIA approval, buyer validation, supplier verification, shipment approval, and public launch approval.",
+                    "Live checkout, external charges, webhook delivery, tax/accounting approval, refund/support approval, payment security approval, and claim-language approval remain closed.",
+                ),
+            ),
+            Section(
                 "Enterprise And Advisor Use Cases",
                 bullets=(
                     "Broker or trade advisor can manage multiple client packets and export missing-evidence or broker-review packets.",
@@ -409,6 +423,7 @@ def _business_logic(ctx: dict[str, Any]) -> ReviewerDocument:
     reports = ctx["production_reports"]
     portals = ctx["production_portals"]
     enterprise = ctx["production_enterprise"]
+    payments = ctx["production_payments"]
     buyer_supplier = packet["buyer_supplier_evidence"]
     gate = packet["business_gate_decision"]
     market = packet["market_intelligence"]["market_signal_evaluation"]
@@ -564,6 +579,19 @@ def _business_logic(ctx: dict[str, Any]) -> ReviewerDocument:
                 ),
             ),
             Section(
+                "Payment Logic Implemented Now",
+                body=(
+                    "Payment logic is preparation-only. It defines monetization options without selling approvals or creating live charges.",
+                ),
+                bullets=(
+                    f"Pricing tiers generated: `{payments.get('pricing_tier_count')}`.",
+                    f"Blocked payment gates: `{payments.get('blocked_payment_gate_count')}`.",
+                    f"Webhook control records: `{payments.get('webhook_control_count')}`.",
+                    "Each paid tier forbids charging for customs approval, tariff confirmation, legal advice, CFIA approval, buyer validation, supplier verification, shipment approval, or public launch approval.",
+                    "Checkout URL creation, live mode, external charges, webhook delivery, and payment approval remain disabled.",
+                ),
+            ),
+            Section(
                 "Current Sample Packet Result",
                 bullets=(
                     f"Packet reviewed: `{packet['packet_id']}`.",
@@ -622,6 +650,7 @@ def _non_functional(ctx: dict[str, Any]) -> ReviewerDocument:
     reports = ctx["production_reports"]
     portals = ctx["production_portals"]
     enterprise = ctx["production_enterprise"]
+    payments = ctx["production_payments"]
     return ReviewerDocument(
         title="Non-Functional Requirements For External Review",
         filename="non_functional_requirements_for_review.md",
@@ -727,6 +756,16 @@ def _non_functional(ctx: dict[str, Any]) -> ReviewerDocument:
                     f"Usage-limit rows: `{enterprise.get('usage_limit_count')}`.",
                     "API contracts require auth, tenant filtering, object-level authorization, claim-gate reuse, rate-limit proof, and closed external effects.",
                     "Live API keys, webhook delivery, unrestricted uploads, hosted auth, enterprise terms, and security review remain incomplete.",
+                ),
+            ),
+            Section(
+                "Payment Controls",
+                bullets=(
+                    f"Payment status: `{payments['status']}`.",
+                    f"Checkout controls: `{payments.get('checkout_control_count')}`.",
+                    f"Webhook controls: `{payments.get('webhook_control_count')}`.",
+                    "Payment webhooks require signature verification, idempotency, duplicate handling, delayed handling, and out-of-order handling.",
+                    "Live Stripe mode, checkout URLs, external charges, refund/support policy, tax/accounting review, payment security review, and claim-language review remain incomplete.",
                 ),
             ),
             Section(

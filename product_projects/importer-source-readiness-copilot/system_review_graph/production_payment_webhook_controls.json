@@ -1,0 +1,65 @@
+{
+  "status": "production_payment_webhook_controls_ready_delivery_closed",
+  "webhook_controls": [
+    {
+      "delayed_event_handling_required": true,
+      "delivery_enabled": false,
+      "duplicate_event_handling_required": true,
+      "event_type": "checkout.session.completed",
+      "external_effects_created": false,
+      "idempotency_required": true,
+      "out_of_order_event_handling_required": true,
+      "signature_verification_required": true
+    },
+    {
+      "delayed_event_handling_required": true,
+      "delivery_enabled": false,
+      "duplicate_event_handling_required": true,
+      "event_type": "payment_intent.succeeded",
+      "external_effects_created": false,
+      "idempotency_required": true,
+      "out_of_order_event_handling_required": true,
+      "signature_verification_required": true
+    },
+    {
+      "delayed_event_handling_required": true,
+      "delivery_enabled": false,
+      "duplicate_event_handling_required": true,
+      "event_type": "payment_intent.payment_failed",
+      "external_effects_created": false,
+      "idempotency_required": true,
+      "out_of_order_event_handling_required": true,
+      "signature_verification_required": true
+    },
+    {
+      "delayed_event_handling_required": true,
+      "delivery_enabled": false,
+      "duplicate_event_handling_required": true,
+      "event_type": "invoice.paid",
+      "external_effects_created": false,
+      "idempotency_required": true,
+      "out_of_order_event_handling_required": true,
+      "signature_verification_required": true
+    },
+    {
+      "delayed_event_handling_required": true,
+      "delivery_enabled": false,
+      "duplicate_event_handling_required": true,
+      "event_type": "customer.subscription.updated",
+      "external_effects_created": false,
+      "idempotency_required": true,
+      "out_of_order_event_handling_required": true,
+      "signature_verification_required": true
+    },
+    {
+      "delayed_event_handling_required": true,
+      "delivery_enabled": false,
+      "duplicate_event_handling_required": true,
+      "event_type": "customer.subscription.deleted",
+      "external_effects_created": false,
+      "idempotency_required": true,
+      "out_of_order_event_handling_required": true,
+      "signature_verification_required": true
+    }
+  ]
+}

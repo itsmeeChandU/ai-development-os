@@ -126,6 +126,17 @@ organization, workspace, RBAC, packet, report, audit, portal, and claim-gate
 artifacts into 17 local enterprise API contracts with API-key fingerprints,
 webhook contracts, usage limits, audit export policy, and white-label report
 rules while hosted enterprise gates remain closed.
+The payment monetization slice writes
+`system_review_graph/production_payment_monetization_manifest.json`,
+`system_review_graph/production_pricing_tiers.json`,
+`system_review_graph/production_paid_scope_policy.json`,
+`system_review_graph/production_checkout_gate_controls.json`,
+`system_review_graph/production_payment_webhook_controls.json`,
+`system_review_graph/production_payment_research_references.json`, and
+`docs/PRODUCTION_PAYMENT_MONETIZATION_ENGINE.md`. It defines seven pricing
+tiers, allowed paid scope, forbidden paid claims, Stripe/payment research
+references, checkout controls, webhook controls, and blocked payment gates
+while keeping live checkout and external charges disabled.
 Those stages are backed by an executable local operations engine in
 `src/importer_source_readiness/product_operations.py` and
 `scripts/run_product_operations.py`. The engine creates/updates packet intake
@@ -239,6 +250,9 @@ security/privacy/human review gates are completed.
   permission matrix, workspace controls, API-key fingerprints, webhook
   contracts, audit export policy, usage limits, and white-label report rules
   with hosted/live gates closed
+- production payment monetization engine with seven pricing tiers, paid-scope
+  and forbidden-scope policy, checkout and webhook controls, and live checkout
+  disabled
 - production research anchor registry for CBSA, CFIA, Global Affairs Canada,
   ISED, DGFT, WITS, ITC, WCO, ICC, OPC/PIPEDA, OWASP, NIST, and Stripe source
   routing
@@ -314,6 +328,19 @@ activation, unrestricted upload approval, or public launch approval.
 This is a local enterprise/API contract state. It is not hosted enterprise
 approval, live API-key issuance, webhook delivery, unrestricted upload approval,
 enterprise terms approval, security signoff, or public launch approval.
+
+## Ready For Payment Review
+
+- payment status: `production_payment_monetization_engine_ready_live_checkout_closed`
+- proof command: `python3 scripts/run_production_payment_monetization_engine.py`
+- pricing tiers: `system_review_graph/production_pricing_tiers.json`
+- paid-scope policy: `system_review_graph/production_paid_scope_policy.json`
+- checkout gates: `system_review_graph/production_checkout_gate_controls.json`
+- webhook controls: `system_review_graph/production_payment_webhook_controls.json`
+
+This is a local monetization contract. It is not live checkout activation,
+live Stripe object proof, external charge proof, refund/support approval,
+tax/accounting approval, payment security signoff, or public launch approval.
 
 ## Ready For Board Go-Live Review
 

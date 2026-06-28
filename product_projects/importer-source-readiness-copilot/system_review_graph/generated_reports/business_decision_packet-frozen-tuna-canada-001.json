@@ -1287,10 +1287,10 @@
       ],
       "competitor_source_countries": [
         "China",
-        "Vietnam",
-        "United States",
         "European Union",
-        "Mexico"
+        "Vietnam",
+        "Mexico",
+        "United States"
       ],
       "destination": "Canada",
       "exporter_origin": "Vietnam",

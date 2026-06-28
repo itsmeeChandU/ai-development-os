@@ -72,6 +72,7 @@ API_ROUTES = {
     "/api/country-coverage": "system_review_graph/country_coverage_report.json",
     "/api/billing/controls": "system_review_graph/billing_credit_controls.json",
     "/api/billing/usage": "system_review_graph/billing_usage_ledger.json",
+    "/api/payments/monetization": "system_review_graph/production_payment_monetization_manifest.json",
     "/api/agent-api": "system_review_graph/agent_api_manifest.json",
     "/api/agent-api/gateway": "system_review_graph/agent_api_gateway_contract.json",
     "/api/enterprise-platform": "system_review_graph/production_enterprise_api_manifest.json",
@@ -3742,6 +3743,47 @@ def build_operator_app_handler(repo_root: Path) -> type[BaseHTTPRequestHandler]:
                 self.send_response(HTTPStatus.NO_CONTENT)
                 self.send_header("Set-Cookie", "isr_session=; Max-Age=0; HttpOnly; SameSite=Lax")
                 self.end_headers()
+                return
+            if path == "/api/payments/checkout-session":
+                self._send_json(
+                    {
+                        "status": "checkout_session_contract_ready_live_mode_disabled",
+                        "tier": fields.get("tier") or "starter_packet",
+                        "checkout_url": None,
+                        "live_mode_enabled": False,
+                        "external_charge_created": False,
+                        "claims_opened": False,
+                        "required_before_live_checkout": [
+                            "pricing decision",
+                            "refund/support policy",
+                            "tax/accounting review",
+                            "live-mode Stripe objects",
+                            "production webhook endpoint",
+                            "payment security review",
+                            "claim-language review",
+                        ],
+                    }
+                )
+                return
+            if path == "/api/payments/webhook-test":
+                self._send_json(
+                    {
+                        "status": "payment_webhook_contract_ready_delivery_disabled",
+                        "event_types": [
+                            "checkout.session.completed",
+                            "payment_intent.succeeded",
+                            "payment_intent.payment_failed",
+                            "invoice.paid",
+                            "customer.subscription.updated",
+                        ],
+                        "idempotency_required": True,
+                        "duplicate_event_handling_required": True,
+                        "delayed_event_handling_required": True,
+                        "out_of_order_event_handling_required": True,
+                        "delivery_enabled": False,
+                        "external_effects_created": False,
+                    }
+                )
                 return
             if path == "/api/documents/upload":
                 workflow = _customer_workflow(repo_root)

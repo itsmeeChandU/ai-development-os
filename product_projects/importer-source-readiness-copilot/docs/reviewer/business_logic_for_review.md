@@ -116,6 +116,16 @@ Enterprise API logic exposes the same packet and claim-gate rules through local 
 - Each API contract requires auth, tenant filtering, object-level authorization, claim-gate reuse, and rate-limit proof before hosting.
 - API outputs cannot hide blocked claims, issue live secrets, deliver webhooks, accept unrestricted files, approve white-label claims, or create external effects.
 
+## Payment Logic Implemented Now
+
+Payment logic is preparation-only. It defines monetization options without selling approvals or creating live charges.
+
+- Pricing tiers generated: `7`.
+- Blocked payment gates: `10`.
+- Webhook control records: `6`.
+- Each paid tier forbids charging for customs approval, tariff confirmation, legal advice, CFIA approval, buyer validation, supplier verification, shipment approval, or public launch approval.
+- Checkout URL creation, live mode, external charges, webhook delivery, and payment approval remain disabled.
+
 ## Current Sample Packet Result
 
 - Packet reviewed: `packet-frozen-tuna-canada-001`.

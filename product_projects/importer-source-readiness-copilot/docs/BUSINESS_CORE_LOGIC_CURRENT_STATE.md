@@ -327,6 +327,53 @@ This is a local enterprise/API contract. It does not record hosted enterprise
 auth, live API-key issuance, webhook delivery, enterprise customer terms,
 security approval, or public launch approval.
 
+## Payment Monetization Business Logic
+
+The production payment monetization engine now defines what the product may
+charge for and what it must never sell.
+
+Allowed paid scope:
+
+- prepared trade readiness packet
+- market research brief
+- document organization
+- source monitoring
+- buyer-ready report
+- broker-review packet
+- expert review workflow
+- broker/advisor workspace
+- API usage contract
+
+Forbidden paid scope:
+
+- customs approval
+- tariff confirmation
+- legal advice
+- CFIA approval
+- buyer validation
+- supplier verification
+- shipment approval
+- public launch approval
+
+The payment engine defines seven pricing tiers: free quick check, starter
+packet, pro packet workspace, expert review add-on, broker/advisor workspace,
+enterprise, and API/data access. Paid tiers require pricing, refund/support,
+tax/accounting, payment security, webhook, and claim-language review before
+live checkout can open.
+
+Payment proof is stored in:
+
+- `system_review_graph/production_payment_monetization_manifest.json`
+- `system_review_graph/production_pricing_tiers.json`
+- `system_review_graph/production_paid_scope_policy.json`
+- `system_review_graph/production_checkout_gate_controls.json`
+- `system_review_graph/production_payment_webhook_controls.json`
+- `system_review_graph/production_payment_research_references.json`
+
+This is a local monetization contract. It does not create live Stripe objects,
+checkout URLs, external charges, webhook delivery, payment approval, tax or
+accounting approval, or public launch approval.
+
 ## Reviewer Signoff Rule
 
 Final rule: `no reviewer lane, no claim lane`

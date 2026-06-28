@@ -108,6 +108,15 @@ The current product is usable for local review and controlled preparation. It do
 - The product exposes local contracts for packets, evidence, documents, source refresh, scores, blocked claims, reviews, reports, AI safe summaries, audit, API keys, and webhooks.
 - Live API secrets, webhook delivery, unrestricted uploads, hosted enterprise auth, enterprise terms, security approval, and public launch remain closed.
 
+## Payment Monetization Implemented
+
+- Payment status: `production_payment_monetization_engine_ready_live_checkout_closed`.
+- Pricing tiers: `7`.
+- Payment gates: `10`.
+- Paid scope is preparation, evidence organization, reports, source monitoring, review workflow, workspace, and API usage.
+- Forbidden paid scope includes customs approval, tariff confirmation, legal advice, CFIA approval, buyer validation, supplier verification, shipment approval, and public launch approval.
+- Live checkout, external charges, webhook delivery, tax/accounting approval, refund/support approval, payment security approval, and claim-language approval remain closed.
+
 ## Enterprise And Advisor Use Cases
 
 - Broker or trade advisor can manage multiple client packets and export missing-evidence or broker-review packets.

@@ -1,0 +1,35 @@
+{
+  "research_references": [
+    {
+      "product_use": "Live-mode readiness, API versions, logging, live objects, and production webhooks.",
+      "source_id": "stripe-go-live",
+      "source_name": "Stripe Go-live checklist",
+      "url": "https://docs.stripe.com/get-started/checklist/go-live"
+    },
+    {
+      "product_use": "Webhook endpoint, event handling, retries, and signature verification requirements.",
+      "source_id": "stripe-webhooks",
+      "source_name": "Stripe Webhooks",
+      "url": "https://docs.stripe.com/webhooks"
+    },
+    {
+      "product_use": "Duplicate and retry-safe payment request handling.",
+      "source_id": "stripe-idempotent-requests",
+      "source_name": "Stripe Idempotent requests",
+      "url": "https://docs.stripe.com/api/idempotent_requests"
+    },
+    {
+      "product_use": "Secret-key, restricted-key, and live-mode key handling boundary.",
+      "source_id": "stripe-api-keys",
+      "source_name": "Stripe API keys",
+      "url": "https://docs.stripe.com/keys"
+    },
+    {
+      "product_use": "Test-mode payment behavior is not live activation proof.",
+      "source_id": "stripe-testing",
+      "source_name": "Stripe Testing",
+      "url": "https://docs.stripe.com/testing"
+    }
+  ],
+  "status": "production_payment_research_references_ready"
+}

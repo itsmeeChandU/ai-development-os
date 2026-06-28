@@ -1,0 +1,92 @@
+{
+  "checkout_controls": [
+    {
+      "checkout_url_created": false,
+      "control_id": "checkout_live_mode",
+      "external_charge_created": false,
+      "live_mode_enabled": false,
+      "status": "blocked"
+    },
+    {
+      "control_id": "checkout_copy_boundary",
+      "must_not_say": "Users pay for customs approval, legal advice, buyer validation, supplier verification, tariff confirmation, or shipment approval.",
+      "must_say": "Users pay for preparation and evidence organization.",
+      "status": "ready_local_review_required"
+    },
+    {
+      "control_id": "checkout_refund_support",
+      "refund_policy_approved": false,
+      "status": "blocked",
+      "support_contact_approved": false
+    },
+    {
+      "control_id": "checkout_tax_accounting",
+      "invoice_policy_approved": false,
+      "status": "blocked",
+      "tax_review_completed": false
+    }
+  ],
+  "payment_gates": [
+    {
+      "gate_id": "pricing_decision",
+      "owner": "founder",
+      "required_evidence": "approved price sheet",
+      "status": "blocked"
+    },
+    {
+      "gate_id": "refund_support_policy",
+      "owner": "billing_owner",
+      "required_evidence": "refund policy and support contact",
+      "status": "blocked"
+    },
+    {
+      "gate_id": "tax_accounting_review",
+      "owner": "accounting_reviewer",
+      "required_evidence": "tax and accounting decision",
+      "status": "blocked"
+    },
+    {
+      "gate_id": "stripe_live_mode_objects",
+      "owner": "billing_owner",
+      "required_evidence": "live products, prices, checkout, customer portal settings",
+      "status": "blocked"
+    },
+    {
+      "gate_id": "production_webhook_endpoint",
+      "owner": "billing_owner",
+      "required_evidence": "production webhook endpoint with signature verification",
+      "status": "blocked"
+    },
+    {
+      "gate_id": "webhook_idempotency_and_ordering",
+      "owner": "engineering_owner",
+      "required_evidence": "duplicate, delayed, and out-of-order webhook tests",
+      "status": "blocked"
+    },
+    {
+      "gate_id": "secure_api_keys",
+      "owner": "security_reviewer",
+      "required_evidence": "secret storage and restricted key review",
+      "status": "blocked"
+    },
+    {
+      "gate_id": "payment_security_review",
+      "owner": "security_reviewer",
+      "required_evidence": "payment security signoff",
+      "status": "blocked"
+    },
+    {
+      "gate_id": "claim_language_review",
+      "owner": "report_language_reviewer",
+      "required_evidence": "paid-scope wording approval",
+      "status": "blocked"
+    },
+    {
+      "gate_id": "activation_decision",
+      "owner": "founder",
+      "required_evidence": "dated live checkout approval",
+      "status": "blocked"
+    }
+  ],
+  "status": "production_checkout_gate_controls_ready_live_checkout_closed"
+}
