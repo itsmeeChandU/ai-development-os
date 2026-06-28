@@ -48,6 +48,7 @@ This document describes the current non-functional requirements and boundaries f
 | NFR-20 | Avoid misleading readiness aggregation | Implemented locally; no single global readiness score is created | `production_decision_scoring_manifest.json`, `production_score_cap_policy.json` |
 | NFR-21 | Keep AI assistance fail closed | Implemented locally; live calls and gate opening remain blocked | `production_ai_copilot_manifest.json`, `production_ai_safety_checks.json` |
 | NFR-22 | Require real credentials and evidence before reviewer findings affect claims | Implemented locally; reviewer signoff and scope-limited approval remain blocked until real evidence is attached | `production_reviewer_profiles.json`, `production_review_finding_contracts.json` |
+| NFR-23 | Keep report exports review-safe | Implemented locally; reports include citations, version, draft watermark, review status, and cannot hide blocked claims | `production_report_exports.json`, `production_report_citations.json` |
 
 ## Security
 

@@ -220,6 +220,10 @@ Trade Readiness Copilot keeps the current business-rule engine and rebuilds the 
 - Claims still closed: reports_must_keep_blocked_claims_visible.
 - Next valid move: Build the production implementation for this phase and attach the listed evidence before any gated claim can open.
 
+- Implementation status: `local_reports_engine_ready_cited_exports_blocked_claims_visible`
+- Implementation artifacts: system_review_graph/production_reports_engine_manifest.json, system_review_graph/production_report_catalog.json, system_review_graph/production_report_exports.json, system_review_graph/production_report_citations.json, system_review_graph/production_reports/, output/pdf/production_reports/, docs/PRODUCTION_REPORTS_ENGINE.md.
+- Implementation proof: Twelve report types are exported as JSON, HTML, and PDF from packet, evidence, source, score, claim-gate, and review artifacts by scripts/run_production_reports_engine.py. Every report has citations, version, draft watermark, review status, and a blocked-claims section; no report opens external claims.
+
 ### Phase 16: User portals and workflows
 
 - Local status: `phase_research_build_source_evidence_gate_tracks_ready`

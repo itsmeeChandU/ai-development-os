@@ -81,6 +81,15 @@ The current product is usable for local review and controlled preparation. It do
 - The product records what a reviewer may review, which credentials are required, what evidence must be attached, and which claims remain out of scope.
 - No real reviewer signoff is recorded yet; review links are draft-only and no external claims are opened.
 
+## Reports And Deliverables Implemented
+
+- Reports status: `production_reports_engine_ready_cited_exports_blocked_claims_visible`.
+- Report types: `12`.
+- Report exports: `36`.
+- Citation records: `132`.
+- Each report is exported as JSON, HTML preview, and PDF.
+- Every report keeps blocked claims visible, includes evidence/source citations, has a draft watermark, and remains not reviewed locally.
+
 ## Enterprise And Advisor Use Cases
 
 - Broker or trade advisor can manage multiple client packets and export missing-evidence or broker-review packets.

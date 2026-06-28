@@ -342,6 +342,9 @@ Payments remain downstream. Live checkout stays disabled until scope, support, r
 | Reviewer profile requirements | `system_review_graph/production_reviewer_profiles.json` |
 | Scoped review requests | `system_review_graph/production_review_requests.json` |
 | Review finding contracts | `system_review_graph/production_review_finding_contracts.json` |
+| Production reports engine | `system_review_graph/production_reports_engine_manifest.json` |
+| Production report exports | `system_review_graph/production_report_exports.json` |
+| Production report citations | `system_review_graph/production_report_citations.json` |
 | Tests | `tests/test_business_logic.py`, `tests/test_completion_platform.py` |
 | Product proof | `python3 scripts/check_product.py` |
 | Root proof | `python3 scripts/product_project_check.py` |
@@ -361,6 +364,7 @@ Payments remain downstream. Live checkout stays disabled until scope, support, r
 - production decision scoring engine with six separate capped scores and no single readiness score
 - production AI copilot engine with label-bound outputs and no gate-opening authority
 - production expert review network with credential-required reviewer lanes, scoped requests, finding templates, and no completed signoff recorded
+- production reports engine with cited JSON/HTML/PDF packet views and blocked claims preserved
 - official sample document library and synthetic parser QA fixtures for local parser validation
 - Canada/Vietnam/India/Generic country-pack rows with route checks
 - source-monitor contract with source metadata and executable evidence freshness evaluation

@@ -33,6 +33,7 @@ src/importer_source_readiness/production_expert_review_network.py
 src/importer_source_readiness/production_market_intelligence_engine.py
 src/importer_source_readiness/production_packet_engine.py
 src/importer_source_readiness/production_redevelopment.py
+src/importer_source_readiness/production_reports_engine.py
         |
         v
 system_review_graph/readiness_report.json
@@ -82,6 +83,10 @@ system_review_graph/production_expert_review_network_manifest.json
 system_review_graph/production_reviewer_profiles.json
 system_review_graph/production_review_requests.json
 system_review_graph/production_review_finding_contracts.json
+system_review_graph/production_reports_engine_manifest.json
+system_review_graph/production_report_catalog.json
+system_review_graph/production_report_exports.json
+system_review_graph/production_report_citations.json
 system_review_graph/production_redevelopment_plan.json
 system_review_graph/production_research_anchors.json
 data/official_sample_documents/canada/*.pdf
@@ -132,6 +137,7 @@ board/*.md
 | `src/importer_source_readiness/production_market_intelligence_engine.py` | production market intelligence engine for metric records, source routes, dataset connector states, score caps, and blocked demand/profit claims |
 | `src/importer_source_readiness/production_packet_engine.py` | production packet engine for 12 packet states, packet event proof, eight packet views, six scores, blocked claims, and next valid moves |
 | `src/importer_source_readiness/production_redevelopment.py` | full-scale production redevelopment contract with 14 layers, phases 0-20, research/source/evidence/gate tracks, permanent research entities, and closed external gates |
+| `src/importer_source_readiness/production_reports_engine.py` | production reports engine for twelve cited report types, JSON/HTML/PDF exports, version/watermark/review metadata, and blocked-claim sections |
 | `scripts/run_readiness.py` | CLI entrypoint and report writer |
 | `scripts/run_external_gates.py` | external-gate report writer |
 | `scripts/export_operator_dashboard.py` | dashboard exporter |
@@ -151,6 +157,7 @@ board/*.md
 | `scripts/run_production_market_intelligence_engine.py` | production market intelligence signal and dataset connector writer |
 | `scripts/run_production_packet_engine.py` | production packet engine manifest, event, and packet-view writer |
 | `scripts/run_production_redevelopment.py` | production redevelopment contract and research-anchor writer |
+| `scripts/run_production_reports_engine.py` | production reports manifest, catalog, export, citation, HTML, JSON, and PDF writer |
 | `tests/test_readiness.py` | proof for blocked-safe behavior |
 | `tests/test_external_gates.py` | proof for external-gate and dashboard behavior |
 | `tests/test_continuation.py` | proof that externally gated status keeps work in progress |
@@ -162,6 +169,7 @@ board/*.md
 | `tests/test_production_data_model.py` | proof that the first rebuild package has production tables, relationships, RLS policies, domain events, and closed external gates |
 | `tests/test_production_packet_engine.py` | proof that the packet engine evaluates real local packet artifacts into states, views, scores, events, blockers, and closed external gates |
 | `tests/test_production_country_source_engine.py` | proof that country packs, source lifecycle rows, and packet source impacts are generated from the official source registry and refresh records |
+| `tests/test_production_reports_engine.py` | proof that all twelve report types keep citations, watermarks, review status, PDF/HTML/JSON exports, and blocked claims visible |
 | `tests/test_production_decision_scoring_engine.py` | proof that the six score records stay separate, capped, reasoned, and closed to approval language |
 | `tests/test_production_document_intelligence_engine.py` | proof that official samples, country source routes, parser QA fixtures, field provenance, and closed document/security gates are generated |
 | `tests/test_production_evidence_claim_gate_engine.py` | proof that can_show_claim separates safe preparation statements from blocked external claims with evidence mappers |
@@ -310,6 +318,12 @@ means reviewer lane contracts, credential requirements, scoped requests,
 finding templates, and gate-impact rows exist locally. It does not mean real
 reviewer credentials, signed findings, or scope-limited approval have been
 recorded.
+
+The expected production reports engine status is
+`production_reports_engine_ready_cited_exports_blocked_claims_visible`. It
+means the twelve required reports have JSON, HTML, and PDF exports with
+citations, version, watermark, review status, and blocked-claim sections. It
+does not mean any report approves trade action or public launch.
 
 ## Proof Boundary
 

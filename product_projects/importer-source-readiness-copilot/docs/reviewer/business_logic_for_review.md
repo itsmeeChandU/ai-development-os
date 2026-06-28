@@ -83,6 +83,17 @@ Human review is now a product workflow with reviewer lanes, credential requireme
 - A reviewer can approve only the exact scope they reviewed, and only after credential evidence, artifacts reviewed, evidence attachments, source checks, and a dated finding are stored.
 - The local product does not record completed reviews or treat review routing as approval.
 
+## Report Logic Implemented Now
+
+Reports are now generated as first-class packet views. They organize evidence for people, but they cannot remove uncertainty or blocked claims.
+
+- Report types generated: `12`.
+- Report records generated: `12`.
+- Exports generated: `36`.
+- Citation rows generated: `132`.
+- Starter, market, buyer-ready, supplier-request, broker-review, missing-evidence, blocked-claim, country-source, source-freshness, expert-summary, executive-decision, and audit reports are produced from the packet.
+- Reports carry version, draft watermark, review status, source citations, evidence citations, and the blocked-claims section.
+
 ## Current Sample Packet Result
 
 - Packet reviewed: `packet-frozen-tuna-canada-001`.

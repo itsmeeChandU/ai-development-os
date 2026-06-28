@@ -1,0 +1,230 @@
+{
+  "audience": "customer, operator, or reviewer",
+  "blocked_claim_count": 10,
+  "blocked_claim_section_included": true,
+  "blocked_claims": [
+    {
+      "claim_type": "incoterms_responsibility_path",
+      "label": "Responsibility path recorded",
+      "next_valid_move": "Ask buyer/importer who is importer of record and which Incoterm applies; route to freight/legal review if needed.",
+      "reason": "Do not treat missing or unreviewed Incoterms as a legal responsibility decision."
+    },
+    {
+      "claim_type": "origin_evidence_collected",
+      "label": "Origin evidence collected",
+      "next_valid_move": "Attach certificate of origin or origin-supporting documents and route to scoped review.",
+      "reason": "Do not say origin is confirmed from a country name or source route."
+    },
+    {
+      "claim_type": "document_field_extraction_draft",
+      "label": "Document fields extracted as draft",
+      "next_valid_move": "Ask the user to confirm extracted fields, then route the packet to the correct reviewer lane.",
+      "reason": "Do not treat parser output as authenticity, completeness, or compliance proof."
+    },
+    {
+      "claim_type": "supplier_evidence_collected",
+      "label": "Supplier evidence collected",
+      "next_valid_move": "Request supplier registration, export ability, product docs, certificates, inspection, and prior-shipment evidence.",
+      "reason": "Do not say supplier verified or recommended."
+    },
+    {
+      "claim_type": "tariff_confirmed",
+      "label": "Tariff confirmed",
+      "next_valid_move": "Obtain a qualified customs review or authoritative ruling evidence.",
+      "reason": "Tariff confirmed remains blocked until authoritative tariff/ruling evidence and qualified review exist."
+    },
+    {
+      "claim_type": "cfia_approved",
+      "label": "CFIA approved",
+      "next_valid_move": "Attach dated CFIA/AIRS result or permit evidence and qualified reviewer finding.",
+      "reason": "CFIA approved remains blocked until official permit/admissibility evidence and qualified review exist."
+    },
+    {
+      "claim_type": "buyer_validated",
+      "label": "Buyer validated",
+      "next_valid_move": "Collect dated buyer evidence; directory rows are lead sources only.",
+      "reason": "Buyer validated remains blocked until dated buyer response, meeting, LOI, PO, or paid-order evidence exists."
+    },
+    {
+      "claim_type": "supplier_verified",
+      "label": "Supplier verified",
+      "next_valid_move": "Collect supplier proof and route to a scoped reviewer.",
+      "reason": "Supplier verified remains blocked until registration, export ability, product evidence, certificates/inspection, and reviewer assessment exist."
+    },
+    {
+      "claim_type": "customs_ready",
+      "label": "Customs ready",
+      "next_valid_move": "Resolve importer of record, Incoterms, source freshness, and broker/customs review.",
+      "reason": "Customs ready remains blocked until broker/customs review and required import/export evidence exist."
+    },
+    {
+      "claim_type": "shipment_approved",
+      "label": "Shipment approved",
+      "next_valid_move": "Use the packet for preparation only; final shipment decisions require qualified professionals and owner approval.",
+      "reason": "Shipment approved is not supported by this product scope."
+    }
+  ],
+  "can_hide_blocked_claims": false,
+  "citation_count": 11,
+  "claims_opened": false,
+  "evidence_citations": [
+    {
+      "claim_boundary": "Reference-only source. It does not prove supplier suitability, tariff classification, CFIA clearance, buyer demand, or import approval.",
+      "evidence_id": "evidence-frozen-tuna-cid-reference",
+      "freshness": "unknown",
+      "provenance": "local_artifact",
+      "type": "official_reference"
+    },
+    {
+      "claim_boundary": "Reference-only source. It does not create customs, tariff, release, accounting, or compliance advice.",
+      "evidence_id": "evidence-frozen-tuna-cbsa-import-workflow",
+      "freshness": "unknown",
+      "provenance": "local_artifact",
+      "type": "official_reference"
+    },
+    {
+      "claim_boundary": "Reference-only source. It does not prove CFIA clearance or legal compliance.",
+      "evidence_id": "evidence-frozen-tuna-cfia-airs-reference",
+      "freshness": "unknown",
+      "provenance": "local_artifact",
+      "type": "official_reference"
+    }
+  ],
+  "external_effects_created": false,
+  "formats": [
+    "json",
+    "html",
+    "pdf"
+  ],
+  "html_preview_path": "system_review_graph/production_reports/packet-frozen-tuna-canada-001/missing_evidence_report.html",
+  "json_path": "system_review_graph/production_reports/packet-frozen-tuna-canada-001/missing_evidence_report.json",
+  "packet_id": "packet-frozen-tuna-canada-001",
+  "packet_view": "operator_packet",
+  "pdf_export_path": "output/pdf/production_reports/packet-frozen-tuna-canada-001/missing_evidence_report.pdf",
+  "proof_boundary": "Report exports organize packet evidence and review work; they do not approve trade action or remove blocked claims.",
+  "purpose": "Show missing documents, missing confirmations, stale source evidence, and next collection steps.",
+  "report_id": "production-report:packet-frozen-tuna-canada-001:missing_evidence_report:v1",
+  "report_type": "missing_evidence_report",
+  "review_request_refs": [
+    "production-review:packet-frozen-tuna-canada-001:customs_trade_reviewer",
+    "production-review:packet-frozen-tuna-canada-001:regulated_food_product_reviewer",
+    "production-review:packet-frozen-tuna-canada-001:freight_logistics_reviewer",
+    "production-review:packet-frozen-tuna-canada-001:market_trade_consultant_reviewer",
+    "production-review:packet-frozen-tuna-canada-001:supplier_evidence_reviewer",
+    "production-review:packet-frozen-tuna-canada-001:privacy_legal_reviewer",
+    "production-review:packet-frozen-tuna-canada-001:security_upload_reviewer",
+    "production-review:packet-frozen-tuna-canada-001:ai_safety_reviewer",
+    "production-review:packet-frozen-tuna-canada-001:report_language_reviewer",
+    "production-review:packet-frozen-tuna-canada-001:payment_billing_reviewer"
+  ],
+  "review_status": "not_reviewed",
+  "score_references": [
+    {
+      "label": "yellow",
+      "next_action": "Attach dated trade dataset rows, market-access comparison, and buyer/operator validation before treating the signal as a decision.",
+      "reason": "Local market signal score is 55/100 before external demand, dataset, and buyer proof.",
+      "score": "market_signal_score"
+    },
+    {
+      "label": "red",
+      "next_action": "Attach missing product, commercial, origin, review, buyer, and source evidence.",
+      "reason": "3 evidence rows attached and 10 required items missing.",
+      "score": "evidence_completeness_score"
+    },
+    {
+      "label": "red",
+      "next_action": "Run dated source refresh and record hash/change classification.",
+      "reason": "Official/reference sources are routed, but current-source proof and qualified review are still required.",
+      "score": "source_freshness_score"
+    },
+    {
+      "label": "red",
+      "next_action": "Collect dated buyer interaction and supplier evidence, then route to review.",
+      "reason": "Buyer level -1 and supplier level 0 are recorded without validation/verification claims.",
+      "score": "buyer_supplier_evidence_score"
+    },
+    {
+      "label": "red",
+      "next_action": "Confirm importer of record, Incoterms, buyer/importer role, and broker review path.",
+      "reason": "Confirm importer of record and Incoterms before shipment or buyer claims.",
+      "score": "responsibility_clarity_score"
+    },
+    {
+      "label": "red",
+      "next_action": "Generate a compliance review packet and request qualified review.",
+      "reason": "7 blocker rows keep external decisions closed.",
+      "score": "decision_safety_score"
+    }
+  ],
+  "source_citations": [
+    {
+      "checked_on": "2026-06-28",
+      "claim_boundary": "Supports research routing only; it does not validate buyer demand or profitability.",
+      "source_id": "ised-trade-data-online",
+      "source_name": "ISED Trade Data Online",
+      "url": "https://ised-isde.canada.ca/site/trade-data-online/en/overview"
+    },
+    {
+      "checked_on": "2026-06-28",
+      "claim_boundary": "Supports market-access comparison routing only; qualified review is required before tariff or market-access claims.",
+      "source_id": "itc-market-access-map",
+      "source_name": "International Trade Centre Market Access Map",
+      "url": "https://www.macmap.org/"
+    },
+    {
+      "checked_on": "2026-06-28",
+      "claim_boundary": "Routes users to official and qualified review paths; the product does not replace CBSA or a customs professional.",
+      "source_id": "cbsa-import-commercial-goods",
+      "source_name": "Canada Border Services Agency commercial import guidance",
+      "url": "https://www.cbsa-asfc.gc.ca/import/menu-eng.html"
+    },
+    {
+      "checked_on": "2026-06-28",
+      "claim_boundary": "Reference route only; importers and reviewers must confirm current requirements for the exact product and import time.",
+      "source_id": "cfia-airs",
+      "source_name": "CFIA Automated Import Reference System",
+      "url": "https://inspection.canada.ca/en/importing-food-plants-animals/airs"
+    },
+    {
+      "checked_on": "2026-06-28",
+      "claim_boundary": "Security implementation guidance; hosted readiness still requires product-specific security review.",
+      "source_id": "owasp-file-upload",
+      "source_name": "OWASP File Upload Cheat Sheet",
+      "url": "https://cheatsheetseries.owasp.org/cheatsheets/File_Upload_Cheat_Sheet.html"
+    },
+    {
+      "checked_on": "2026-06-28",
+      "claim_boundary": "Governance reference only; it does not certify the product or approve AI outputs.",
+      "source_id": "nist-ai-rmf",
+      "source_name": "NIST AI Risk Management Framework",
+      "url": "https://www.nist.gov/itl/ai-risk-management-framework"
+    },
+    {
+      "checked_on": "2026-06-28",
+      "claim_boundary": "Payment implementation reference only; live checkout remains disabled until payment review and production setup are complete.",
+      "source_id": "stripe-go-live",
+      "source_name": "Stripe go-live checklist",
+      "url": "https://docs.stripe.com/get-started/checklist/go-live"
+    },
+    {
+      "checked_on": "2026-06-28",
+      "claim_boundary": "Privacy design input only; legal/privacy approval requires qualified review for the product and data flows.",
+      "source_id": "opc-pipeda-principles",
+      "source_name": "Office of the Privacy Commissioner of Canada PIPEDA principles",
+      "url": "https://www.priv.gc.ca/en/privacy-topics/privacy-laws-in-canada/the-personal-information-protection-and-electronic-documents-act-pipeda/"
+    }
+  ],
+  "summary_points": [
+    "Packet: packet-frozen-tuna-canada-001",
+    "Audience: customer, operator, or reviewer",
+    "Purpose: Show missing documents, missing confirmations, stale source evidence, and next collection steps.",
+    "Watermark: DRAFT - NOT APPROVAL",
+    "Review status: not_reviewed",
+    "Red or blocked score lanes: evidence_completeness_score, source_freshness_score, buyer_supplier_evidence_score, responsibility_clarity_score, decision_safety_score",
+    "Scoped review requests attached: 10",
+    "Blocked claims remain visible in this report."
+  ],
+  "title": "Missing Evidence Report",
+  "version": "v1-local",
+  "watermark": "DRAFT - NOT APPROVAL"
+}

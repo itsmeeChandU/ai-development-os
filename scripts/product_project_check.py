@@ -95,6 +95,7 @@ def main() -> int:
         PROJECT / "src" / "importer_source_readiness" / "production_market_intelligence_engine.py",
         PROJECT / "src" / "importer_source_readiness" / "production_packet_engine.py",
         PROJECT / "src" / "importer_source_readiness" / "production_redevelopment.py",
+        PROJECT / "src" / "importer_source_readiness" / "production_reports_engine.py",
         PROJECT / "tests" / "test_readiness.py",
         PROJECT / "tests" / "test_external_gates.py",
         PROJECT / "tests" / "test_continuation.py",
@@ -122,6 +123,7 @@ def main() -> int:
         PROJECT / "tests" / "test_production_market_intelligence_engine.py",
         PROJECT / "tests" / "test_production_packet_engine.py",
         PROJECT / "tests" / "test_production_redevelopment.py",
+        PROJECT / "tests" / "test_production_reports_engine.py",
         PROJECT / "scripts" / "run_readiness.py",
         PROJECT / "scripts" / "run_external_gates.py",
         PROJECT / "scripts" / "export_operator_dashboard.py",
@@ -148,6 +150,7 @@ def main() -> int:
         PROJECT / "scripts" / "run_production_market_intelligence_engine.py",
         PROJECT / "scripts" / "run_production_packet_engine.py",
         PROJECT / "scripts" / "run_production_redevelopment.py",
+        PROJECT / "scripts" / "run_production_reports_engine.py",
         PROJECT / "scripts" / "package_external_review.py",
         PROJECT / "scripts" / "check_product.py",
         PROJECT / "docs" / "PRODUCT_AUTOMATION_RUNBOOK.md",
@@ -177,6 +180,7 @@ def main() -> int:
         PROJECT / "docs" / "PRODUCTION_MARKET_INTELLIGENCE_ENGINE.md",
         PROJECT / "docs" / "PRODUCTION_PACKET_ENGINE.md",
         PROJECT / "docs" / "PRODUCTION_REDEVELOPMENT.md",
+        PROJECT / "docs" / "PRODUCTION_REPORTS_ENGINE.md",
         PROJECT / "docs" / "BUSINESS_CORE_LOGIC_CURRENT_STATE.md",
         PROJECT / "docs" / "FUNCTIONAL_REQUIREMENTS_CURRENT_STATE.md",
         PROJECT / "docs" / "NON_FUNCTIONAL_REQUIREMENTS_CURRENT_STATE.md",
@@ -292,6 +296,10 @@ def main() -> int:
         PROJECT / "system_review_graph" / "production_packet_views" / "packet-frozen-tuna-canada-001" / "blocked_claims_packet.json",
         PROJECT / "system_review_graph" / "production_redevelopment_plan.json",
         PROJECT / "system_review_graph" / "production_research_anchors.json",
+        PROJECT / "system_review_graph" / "production_reports_engine_manifest.json",
+        PROJECT / "system_review_graph" / "production_report_catalog.json",
+        PROJECT / "system_review_graph" / "production_report_exports.json",
+        PROJECT / "system_review_graph" / "production_report_citations.json",
         PROJECT / "system_review_graph" / "reviewer_wave_execution_plan.json",
         PROJECT / "system_review_graph" / "private_beta_smoke_test_plan.json",
         PROJECT / "system_review_graph" / "external_review_findings_report.json",
@@ -405,6 +413,7 @@ def main() -> int:
         ["python3", "scripts/run_production_decision_scoring_engine.py"],
         ["python3", "scripts/run_production_ai_copilot_engine.py"],
         ["python3", "scripts/run_production_expert_review_network.py"],
+        ["python3", "scripts/run_production_reports_engine.py"],
         ["python3", "scripts/build_external_review_packet.py"],
         ["python3", "scripts/export_operator_dashboard.py"],
         ["python3", "scripts/audit_external_package.py", "--root", "."],
@@ -635,6 +644,9 @@ def main() -> int:
         (PROJECT / "system_review_graph" / "production_expert_review_network_manifest.json").read_text(
             encoding="utf-8"
         )
+    )
+    production_reports = json.loads(
+        (PROJECT / "system_review_graph" / "production_reports_engine_manifest.json").read_text(encoding="utf-8")
     )
     official_source_registry = json.loads(
         (PROJECT / "data" / "official_source_registry.json").read_text(encoding="utf-8")
@@ -1965,6 +1977,82 @@ def main() -> int:
             print("Product project check: FAIL")
             print(f"gate impact {impact.get('gate_impact_id')} should not open claims")
             return 1
+    if (
+        production_reports.get("status") != "production_reports_engine_ready_cited_exports_blocked_claims_visible"
+        or production_reports.get("report_type_count") != 12
+        or production_reports.get("report_record_count", 0) < 12
+        or production_reports.get("export_record_count", 0) < 36
+        or production_reports.get("citation_record_count", 0) < 24
+        or production_reports.get("blocked_claim_sections_required") is not True
+        or production_reports.get("html_preview_supported") is not True
+        or production_reports.get("pdf_export_supported") is not True
+        or production_reports.get("json_export_supported") is not True
+        or production_reports.get("version_history_supported") is not True
+        or production_reports.get("can_hide_blocked_claims") is not False
+        or production_reports.get("claims_opened") is not False
+        or production_reports.get("external_effects_created") is not False
+        or production_reports.get("public_launch_ready") is not False
+        or production_reports.get("live_payment_ready") is not False
+    ):
+        print("Product project check: FAIL")
+        print("production reports should export cited report views while keeping blocked claims and gates closed")
+        return 1
+    expected_report_types = {
+        "starter_trade_readiness_packet",
+        "market_opportunity_brief",
+        "buyer_ready_packet",
+        "supplier_document_request",
+        "broker_review_packet",
+        "missing_evidence_report",
+        "blocked_claims_report",
+        "country_source_map",
+        "source_freshness_report",
+        "expert_review_summary",
+        "executive_decision_report",
+        "audit_export",
+    }
+    report_types = {row.get("report_type") for row in production_reports.get("report_records", [])}
+    if report_types != expected_report_types:
+        print("Product project check: FAIL")
+        print("production reports are missing required report types")
+        return 1
+    citation_types = {row.get("citation_type") for row in production_reports.get("citation_records", [])}
+    if not {"source", "evidence"}.issubset(citation_types):
+        print("Product project check: FAIL")
+        print("production reports should include source and evidence citations")
+        return 1
+    for record in production_reports.get("report_records", []):
+        if (
+            record.get("watermark") != "DRAFT - NOT APPROVAL"
+            or record.get("review_status") != "not_reviewed"
+            or record.get("blocked_claim_section_included") is not True
+            or record.get("can_hide_blocked_claims") is not False
+            or record.get("blocked_claim_count", 0) < 1
+            or record.get("citation_count", 0) < 1
+            or record.get("claims_opened") is not False
+            or record.get("external_effects_created") is not False
+        ):
+            print("Product project check: FAIL")
+            print(f"production report {record.get('report_id')} should keep citations, watermark, and blocked claims")
+            return 1
+    for export in production_reports.get("export_records", []):
+        export_path = PROJECT / str(export.get("path", ""))
+        if not export_path.exists():
+            print("Product project check: FAIL")
+            print(f"production report export missing: {export.get('path')}")
+            return 1
+        if export.get("format") == "pdf" and not export_path.read_bytes().startswith(b"%PDF"):
+            print("Product project check: FAIL")
+            print(f"production report PDF is invalid: {export.get('path')}")
+            return 1
+        if (
+            export.get("blocked_claim_section_included") is not True
+            or export.get("claims_opened") is not False
+            or export.get("external_effects_created") is not False
+        ):
+            print("Product project check: FAIL")
+            print(f"production report export {export.get('path')} should keep blocked claims and gates closed")
+            return 1
     external_validation_pdf = PROJECT / "output" / "pdf" / "external_validation_requirements.pdf"
     if not external_validation_pdf.exists() or not external_validation_pdf.read_bytes().startswith(b"%PDF"):
         print("Product project check: FAIL")
@@ -2255,6 +2343,9 @@ def main() -> int:
     print(f"production_expert_review_status={production_expert_review['status']}")
     print(f"production_expert_reviewer_lanes={production_expert_review['reviewer_lane_count']}")
     print(f"production_expert_real_signoff_recorded={production_expert_review['real_reviewer_signoff_recorded']}")
+    print(f"production_reports_status={production_reports['status']}")
+    print(f"production_report_types={production_reports['report_type_count']}")
+    print(f"production_report_exports={production_reports['export_record_count']}")
     print(f"external_validation_pdf={external_validation_pdf.relative_to(PROJECT)}")
     print(f"external_validation_reviewer_brief_pdf={external_validation_reviewer_brief_pdf.relative_to(PROJECT)}")
     print(f"go_live_input_status={go_live_input_readiness['status']}")

@@ -54,6 +54,15 @@ The document engine is ready for local review and parser QA. It is not yet appro
 - All reviewer profiles require real credentials, identity, conflict, scope, source, and evidence attachments before a finding can be used.
 - Draft review requests do not contact reviewers, do not record approval, and do not open claims.
 
+## Report Export Controls
+
+- Reports status: `production_reports_engine_ready_cited_exports_blocked_claims_visible`.
+- Report records: `12`.
+- Export records: `36`.
+- JSON, HTML, and PDF exports are generated locally from packet/evidence/source/review artifacts.
+- Reports include blocked claims, citations, version, watermark, and review status.
+- Reports cannot hide blocked claims, open external claims, create external effects, enable live payment, or approve public launch.
+
 ## Claim Safety
 
 - Evidence claim-gate status: `production_evidence_claim_gate_engine_ready_claims_fail_closed`.

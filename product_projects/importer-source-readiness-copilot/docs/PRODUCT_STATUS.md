@@ -94,6 +94,16 @@ The expert review network slice writes
 credential requirements, scoped review requests, finding templates, gate-impact
 rows, and audit events while keeping real reviewer signoff and external claims
 closed.
+The reports engine slice writes
+`system_review_graph/production_reports_engine_manifest.json`,
+`system_review_graph/production_report_catalog.json`,
+`system_review_graph/production_report_exports.json`,
+`system_review_graph/production_report_citations.json`,
+`system_review_graph/production_reports/`,
+`output/pdf/production_reports/`, and
+`docs/PRODUCTION_REPORTS_ENGINE.md`. It exports the twelve required report
+types as JSON, HTML preview, and PDF, with citations, version, draft watermark,
+review status, and visible blocked claims.
 Those stages are backed by an executable local operations engine in
 `src/importer_source_readiness/product_operations.py` and
 `scripts/run_product_operations.py`. The engine creates/updates packet intake
@@ -193,8 +203,10 @@ security/privacy/human review gates are completed.
   QA samples, extracted-field provenance, redaction previews, and closed
   upload/security/document claims
 - production expert review network with credential-required reviewer profiles,
-scoped review requests, finding templates, gate-impact rows, and no completed
-reviewer approvals recorded
+  scoped review requests, finding templates, gate-impact rows, and no completed
+  reviewer approvals recorded
+- production reports engine with 12 cited report types, JSON/HTML/PDF exports,
+  version/watermark/review-status metadata, and blocked claims kept visible
 - production research anchor registry for CBSA, CFIA, Global Affairs Canada,
   ISED, DGFT, WITS, ITC, WCO, ICC, OPC/PIPEDA, OWASP, NIST, and Stripe source
   routing
@@ -431,6 +443,23 @@ regulated goods, freight, market/buyer evidence, supplier evidence, privacy,
 security, AI safety, report language, and payment/billing lanes. It does not
 record real approval until a qualified reviewer, credential basis, evidence
 attachments, sources checked, and dated scope-limited finding exist.
+
+## Ready For Production Reports Review
+
+- reports status: `production_reports_engine_ready_cited_exports_blocked_claims_visible`
+- machine manifest: `system_review_graph/production_reports_engine_manifest.json`
+- report catalog: `system_review_graph/production_report_catalog.json`
+- report exports: `system_review_graph/production_report_exports.json`
+- report citations: `system_review_graph/production_report_citations.json`
+- report files: `system_review_graph/production_reports/`
+- report PDFs: `output/pdf/production_reports/`
+- reviewer-readable doc: `docs/PRODUCTION_REPORTS_ENGINE.md`
+- proof command: `python3 scripts/run_production_reports_engine.py`
+
+This means the product can produce starter, market, buyer, supplier, broker,
+missing-evidence, blocked-claim, country-source, source-freshness,
+expert-summary, executive, and audit reports from the packet. Every report
+keeps citations and blocked claims visible.
 
 ## Ready For Internal Source-Packet Review
 

@@ -139,6 +139,7 @@ def main() -> int:
         [sys.executable, "scripts/run_production_decision_scoring_engine.py"],
         [sys.executable, "scripts/run_production_ai_copilot_engine.py"],
         [sys.executable, "scripts/run_production_expert_review_network.py"],
+        [sys.executable, "scripts/run_production_reports_engine.py"],
         [sys.executable, "scripts/audit_external_package.py", "--root", "."],
     ]
     for command in commands:
@@ -210,6 +211,7 @@ def main() -> int:
     production_decision_scoring = _load_json(ROOT / "system_review_graph" / "production_decision_scoring_manifest.json")
     production_ai_copilot = _load_json(ROOT / "system_review_graph" / "production_ai_copilot_manifest.json")
     production_expert_review = _load_json(ROOT / "system_review_graph" / "production_expert_review_network_manifest.json")
+    production_reports = _load_json(ROOT / "system_review_graph" / "production_reports_engine_manifest.json")
     official_source_registry = _load_json(ROOT / "data" / "official_source_registry.json")
     business_core_doc = (ROOT / "docs" / "BUSINESS_CORE_LOGIC_CURRENT_STATE.md").read_text(encoding="utf-8")
     functional_doc = (ROOT / "docs" / "FUNCTIONAL_REQUIREMENTS_CURRENT_STATE.md").read_text(encoding="utf-8")
@@ -283,6 +285,7 @@ def main() -> int:
         "src/importer_source_readiness/production_expert_review_network.py",
         "src/importer_source_readiness/production_market_intelligence_engine.py",
         "src/importer_source_readiness/production_packet_engine.py",
+        "src/importer_source_readiness/production_reports_engine.py",
         "src/importer_source_readiness/production_redevelopment.py",
         "tests/test_operator_app.py",
         "tests/test_source_packet_workflow.py",
@@ -301,6 +304,7 @@ def main() -> int:
         "tests/test_production_expert_review_network.py",
         "tests/test_production_market_intelligence_engine.py",
         "tests/test_production_packet_engine.py",
+        "tests/test_production_reports_engine.py",
         "tests/test_production_redevelopment.py",
         "scripts/run_customer_workflow.py",
         "scripts/run_policy_intelligence.py",
@@ -319,6 +323,7 @@ def main() -> int:
         "scripts/run_production_expert_review_network.py",
         "scripts/run_production_market_intelligence_engine.py",
         "scripts/run_production_packet_engine.py",
+        "scripts/run_production_reports_engine.py",
         "scripts/run_production_redevelopment.py",
         "scripts/package_external_review.py",
         "data/customer_source_packets.json",
@@ -348,6 +353,7 @@ def main() -> int:
         "docs/PRODUCTION_EXPERT_REVIEW_NETWORK.md",
         "docs/PRODUCTION_MARKET_INTELLIGENCE_ENGINE.md",
         "docs/PRODUCTION_PACKET_ENGINE.md",
+        "docs/PRODUCTION_REPORTS_ENGINE.md",
         "docs/PRODUCTION_REDEVELOPMENT.md",
         "docs/BUSINESS_CORE_LOGIC_CURRENT_STATE.md",
         "docs/FUNCTIONAL_REQUIREMENTS_CURRENT_STATE.md",
@@ -428,6 +434,10 @@ def main() -> int:
         "system_review_graph/production_reviewer_profiles.json",
         "system_review_graph/production_review_requests.json",
         "system_review_graph/production_review_finding_contracts.json",
+        "system_review_graph/production_reports_engine_manifest.json",
+        "system_review_graph/production_report_catalog.json",
+        "system_review_graph/production_report_exports.json",
+        "system_review_graph/production_report_citations.json",
         "system_review_graph/production_claim_gate_decisions.json",
         "system_review_graph/production_evidence_claim_mappers.json",
         "data/official_sample_documents/canada/cbsa-ci1-canada-customs-invoice.pdf",
@@ -1091,6 +1101,78 @@ def main() -> int:
             failures.append(f"gate impact {impact.get('gate_impact_id')} must not show claims after a local request only")
         if impact.get("can_open_external_claim_gate") is not False:
             failures.append(f"gate impact {impact.get('gate_impact_id')} must not open external gates")
+    if production_reports.get("status") != "production_reports_engine_ready_cited_exports_blocked_claims_visible":
+        failures.append(
+            "production reports status expected production_reports_engine_ready_cited_exports_blocked_claims_visible, "
+            f"got {production_reports.get('status')!r}"
+        )
+    if production_reports.get("report_type_count") != 12:
+        failures.append("production reports should register twelve report types")
+    if production_reports.get("report_record_count", 0) < 12:
+        failures.append("production reports should create report records for the current packet")
+    if production_reports.get("export_record_count", 0) < 36:
+        failures.append("production reports should create JSON, HTML, and PDF exports")
+    if production_reports.get("citation_record_count", 0) < 24:
+        failures.append("production reports should create source and evidence citation rows")
+    for key in (
+        "blocked_claim_sections_required",
+        "html_preview_supported",
+        "pdf_export_supported",
+        "json_export_supported",
+        "version_history_supported",
+    ):
+        if production_reports.get(key) is not True:
+            failures.append(f"production reports expected {key}=true")
+    for key in ("can_hide_blocked_claims", "claims_opened", "external_effects_created", "public_launch_ready", "live_payment_ready"):
+        if production_reports.get(key) is not False:
+            failures.append(f"production reports expected {key}=false")
+    expected_report_types = {
+        "starter_trade_readiness_packet",
+        "market_opportunity_brief",
+        "buyer_ready_packet",
+        "supplier_document_request",
+        "broker_review_packet",
+        "missing_evidence_report",
+        "blocked_claims_report",
+        "country_source_map",
+        "source_freshness_report",
+        "expert_review_summary",
+        "executive_decision_report",
+        "audit_export",
+    }
+    report_types = {row.get("report_type") for row in production_reports.get("report_records", [])}
+    if report_types != expected_report_types:
+        failures.append("production reports are missing required report types")
+    citation_types = {row.get("citation_type") for row in production_reports.get("citation_records", [])}
+    if not {"source", "evidence"}.issubset(citation_types):
+        failures.append("production reports should include both source and evidence citations")
+    for record in production_reports.get("report_records", []):
+        report_id = record.get("report_id")
+        if record.get("watermark") != "DRAFT - NOT APPROVAL":
+            failures.append(f"production report {report_id} missing draft watermark")
+        if record.get("review_status") != "not_reviewed":
+            failures.append(f"production report {report_id} should be not reviewed locally")
+        if record.get("blocked_claim_section_included") is not True:
+            failures.append(f"production report {report_id} must keep blocked claims visible")
+        if record.get("can_hide_blocked_claims") is not False:
+            failures.append(f"production report {report_id} must not hide blocked claims")
+        if record.get("blocked_claim_count", 0) < 1:
+            failures.append(f"production report {report_id} missing blocked claims")
+        if record.get("citation_count", 0) < 1:
+            failures.append(f"production report {report_id} missing citations")
+        if record.get("claims_opened") is not False or record.get("external_effects_created") is not False:
+            failures.append(f"production report {report_id} must keep claims/effects closed")
+    for export in production_reports.get("export_records", []):
+        export_path = ROOT / str(export.get("path", ""))
+        if not export_path.exists():
+            failures.append(f"production report export missing: {export.get('path')}")
+            continue
+        if export.get("format") == "pdf" and not export_path.read_bytes().startswith(b"%PDF"):
+            failures.append(f"production report PDF is invalid: {export.get('path')}")
+        if export.get("blocked_claim_section_included") is not True:
+            failures.append(f"production report export {export.get('path')} missing blocked claim section flag")
+        if export.get("claims_opened") is not False or export.get("external_effects_created") is not False:
+            failures.append(f"production report export {export.get('path')} must keep gates closed")
     if not screenshot_manifest_path.exists():
         failures.append("operator screenshot manifest was not generated")
     if screenshot_manifest.get("status") != "screenshots_ready":
@@ -1915,6 +1997,9 @@ def main() -> int:
     print(f"production_expert_review_status={production_expert_review['status']}")
     print(f"production_expert_reviewer_lanes={production_expert_review['reviewer_lane_count']}")
     print(f"production_expert_real_signoff_recorded={production_expert_review['real_reviewer_signoff_recorded']}")
+    print(f"production_reports_status={production_reports['status']}")
+    print(f"production_report_types={production_reports['report_type_count']}")
+    print(f"production_report_exports={production_reports['export_record_count']}")
     print(f"external_validation_pdf={pdf_path.relative_to(ROOT)}")
     print(f"external_validation_reviewer_brief_pdf={brief_pdf_path.relative_to(ROOT)}")
     print(f"go_live_input_status={go_live_input_readiness['status']}")

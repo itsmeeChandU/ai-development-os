@@ -76,6 +76,7 @@ python3 scripts/run_production_evidence_claim_gate_engine.py
 python3 scripts/run_production_decision_scoring_engine.py
 python3 scripts/run_production_ai_copilot_engine.py
 python3 scripts/run_production_expert_review_network.py
+python3 scripts/run_production_reports_engine.py
 python3 scripts/audit_external_package.py --root .
 python3 scripts/check_product.py
 ```
@@ -152,6 +153,13 @@ system_review_graph/production_expert_review_network_manifest.json
 system_review_graph/production_reviewer_profiles.json
 system_review_graph/production_review_requests.json
 system_review_graph/production_review_finding_contracts.json
+system_review_graph/production_reports_engine_manifest.json
+system_review_graph/production_report_catalog.json
+system_review_graph/production_report_exports.json
+system_review_graph/production_report_citations.json
+system_review_graph/production_reports/packet-frozen-tuna-canada-001/*.json
+system_review_graph/production_reports/packet-frozen-tuna-canada-001/*.html
+output/pdf/production_reports/packet-frozen-tuna-canada-001/*.pdf
 system_review_graph/production_redevelopment_plan.json
 system_review_graph/production_research_anchors.json
 data/official_sample_documents/canada/*.pdf
@@ -170,6 +178,7 @@ docs/PRODUCTION_EVIDENCE_CLAIM_GATE_ENGINE.md
 docs/PRODUCTION_DECISION_SCORING_ENGINE.md
 docs/PRODUCTION_AI_COPILOT_ENGINE.md
 docs/PRODUCTION_EXPERT_REVIEW_NETWORK.md
+docs/PRODUCTION_REPORTS_ENGINE.md
 docs/PRODUCTION_MARKET_INTELLIGENCE_ENGINE.md
 docs/PRODUCTION_REDEVELOPMENT.md
 output/pdf/external_validation_reviewer_brief.pdf
@@ -376,6 +385,17 @@ finding templates, gate-impact rows, and audit records are generated locally.
 The product does not record completed reviews, does not send review links, and
 does not open external claims without real reviewer credentials and dated
 scope-limited findings.
+
+The expected production reports status is:
+
+```text
+production_reports_engine_ready_cited_exports_blocked_claims_visible
+```
+
+That means the 12 required report types are exported as JSON, HTML preview,
+and PDF. Each report includes source/evidence citations, version, draft
+watermark, review status, and the blocked-claims section. Reports cannot hide
+blocked claims or open external gates.
 
 The expected customer source-packet status is:
 

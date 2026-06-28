@@ -1,0 +1,89 @@
+{
+  "report_types": [
+    {
+      "audience": "beginner exporter or importer",
+      "packet_view": "starter_packet",
+      "purpose": "Show the known product/lane context, missing fields, official source routes, and next safe move.",
+      "report_type": "starter_trade_readiness_packet",
+      "title": "Starter Trade Readiness Packet"
+    },
+    {
+      "audience": "exporter, operator, or advisor",
+      "packet_view": "market_research_packet",
+      "purpose": "Summarize source-routed market signals without demand, profitability, or buyer-validation claims.",
+      "report_type": "market_opportunity_brief",
+      "title": "Market Opportunity Brief"
+    },
+    {
+      "audience": "possible buyer, importer, or sales reviewer",
+      "packet_view": "buyer_ready_packet",
+      "purpose": "Prepare buyer-facing context, questions, evidence level, and blocked buyer-validation language.",
+      "report_type": "buyer_ready_packet",
+      "title": "Buyer-Ready Packet"
+    },
+    {
+      "audience": "supplier, sourcing operator, or supplier reviewer",
+      "packet_view": "supplier_request_packet",
+      "purpose": "List supplier evidence requested and separate collected evidence from supplier verification.",
+      "report_type": "supplier_document_request",
+      "title": "Supplier Document Request"
+    },
+    {
+      "audience": "customs broker, trade reviewer, or freight reviewer",
+      "packet_view": "broker_review_packet",
+      "purpose": "Package customs, tariff, CFIA, responsibility, and unresolved review questions for scoped human review.",
+      "report_type": "broker_review_packet",
+      "title": "Broker Review Packet"
+    },
+    {
+      "audience": "customer, operator, or reviewer",
+      "packet_view": "operator_packet",
+      "purpose": "Show missing documents, missing confirmations, stale source evidence, and next collection steps.",
+      "report_type": "missing_evidence_report",
+      "title": "Missing Evidence Report"
+    },
+    {
+      "audience": "compliance reviewer, operator, or launch owner",
+      "packet_view": "blocked_claims_packet",
+      "purpose": "List each blocked claim, why it is blocked, and what evidence or review is required.",
+      "report_type": "blocked_claims_report",
+      "title": "Blocked Claims Report"
+    },
+    {
+      "audience": "operator, advisor, or reviewer",
+      "packet_view": "operator_packet",
+      "purpose": "Show country-pack coverage, source routes, refresh state, and claim boundaries.",
+      "report_type": "country_source_map",
+      "title": "Country Source Map"
+    },
+    {
+      "audience": "operator, source reviewer, or expert reviewer",
+      "packet_view": "operator_packet",
+      "purpose": "Show source snapshot freshness, source lifecycle state, and packet stale-review needs.",
+      "report_type": "source_freshness_report",
+      "title": "Source Freshness Report"
+    },
+    {
+      "audience": "reviewer, operator, or launch owner",
+      "packet_view": "broker_review_packet",
+      "purpose": "Summarize scoped reviewer lanes, pending findings, credential needs, and review gate impacts.",
+      "report_type": "expert_review_summary",
+      "title": "Expert Review Summary"
+    },
+    {
+      "audience": "founder, manager, advisor, or launch owner",
+      "packet_view": "executive_decision_packet",
+      "purpose": "Summarize scores, blockers, source/evidence state, external gates, and the next safe decision.",
+      "report_type": "executive_decision_report",
+      "title": "Executive Decision Report"
+    },
+    {
+      "audience": "operator, compliance reviewer, or enterprise admin",
+      "packet_view": "operator_packet",
+      "purpose": "Export report generation inputs, evidence citations, source citations, review status, and audit rows.",
+      "report_type": "audit_export",
+      "title": "Audit Export"
+    }
+  ],
+  "status": "production_report_catalog_ready"
+}

@@ -543,6 +543,17 @@ def build_redevelopment_phases() -> list[dict[str, Any]]:
             "source_track": ["official_source_registry"],
             "evidence_track": ["HTML preview", "PDF export", "JSON export", "citations", "version history", "watermark", "review status"],
             "gate_track": ["reports_must_keep_blocked_claims_visible"],
+            "implementation_status": "local_reports_engine_ready_cited_exports_blocked_claims_visible",
+            "artifacts": [
+                "system_review_graph/production_reports_engine_manifest.json",
+                "system_review_graph/production_report_catalog.json",
+                "system_review_graph/production_report_exports.json",
+                "system_review_graph/production_report_citations.json",
+                "system_review_graph/production_reports/",
+                "output/pdf/production_reports/",
+                "docs/PRODUCTION_REPORTS_ENGINE.md",
+            ],
+            "proof": "Twelve report types are exported as JSON, HTML, and PDF from packet, evidence, source, score, claim-gate, and review artifacts by scripts/run_production_reports_engine.py. Every report has citations, version, draft watermark, review status, and a blocked-claims section; no report opens external claims.",
         },
         {
             "phase": 16,

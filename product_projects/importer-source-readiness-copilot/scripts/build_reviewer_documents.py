@@ -182,6 +182,7 @@ def _status_context() -> dict[str, Any]:
     production_scoring = _load_json(GRAPH / "production_decision_scoring_manifest.json")
     production_ai = _load_json(GRAPH / "production_ai_copilot_manifest.json")
     production_expert = _load_json(GRAPH / "production_expert_review_network_manifest.json")
+    production_reports = _load_json(GRAPH / "production_reports_engine_manifest.json")
     row = business["packet_rows"][0]
     return {
         "today": date.today().isoformat(),
@@ -194,6 +195,7 @@ def _status_context() -> dict[str, Any]:
         "production_scoring": production_scoring,
         "production_ai": production_ai,
         "production_expert": production_expert,
+        "production_reports": production_reports,
         "packet": row,
     }
 
@@ -206,6 +208,7 @@ def _functional(ctx: dict[str, Any]) -> ReviewerDocument:
     scoring = ctx["production_scoring"]
     ai_copilot = ctx["production_ai"]
     expert_review = ctx["production_expert"]
+    reports = ctx["production_reports"]
     return ReviewerDocument(
         title="Functional Requirements For External Review",
         filename="functional_requirements_for_review.md",
@@ -311,6 +314,17 @@ def _functional(ctx: dict[str, Any]) -> ReviewerDocument:
                 ),
             ),
             Section(
+                "Reports And Deliverables Implemented",
+                bullets=(
+                    f"Reports status: `{reports['status']}`.",
+                    f"Report types: `{reports.get('report_type_count')}`.",
+                    f"Report exports: `{reports.get('export_record_count')}`.",
+                    f"Citation records: `{reports.get('citation_record_count')}`.",
+                    "Each report is exported as JSON, HTML preview, and PDF.",
+                    "Every report keeps blocked claims visible, includes evidence/source citations, has a draft watermark, and remains not reviewed locally.",
+                ),
+            ),
+            Section(
                 "Enterprise And Advisor Use Cases",
                 bullets=(
                     "Broker or trade advisor can manage multiple client packets and export missing-evidence or broker-review packets.",
@@ -364,6 +378,7 @@ def _business_logic(ctx: dict[str, Any]) -> ReviewerDocument:
     scoring = ctx["production_scoring"]
     ai_copilot = ctx["production_ai"]
     expert_review = ctx["production_expert"]
+    reports = ctx["production_reports"]
     buyer_supplier = packet["buyer_supplier_evidence"]
     gate = packet["business_gate_decision"]
     market = packet["market_intelligence"]["market_signal_evaluation"]
@@ -477,6 +492,20 @@ def _business_logic(ctx: dict[str, Any]) -> ReviewerDocument:
                 ),
             ),
             Section(
+                "Report Logic Implemented Now",
+                body=(
+                    "Reports are now generated as first-class packet views. They organize evidence for people, but they cannot remove uncertainty or blocked claims.",
+                ),
+                bullets=(
+                    f"Report types generated: `{reports.get('report_type_count')}`.",
+                    f"Report records generated: `{reports.get('report_record_count')}`.",
+                    f"Exports generated: `{reports.get('export_record_count')}`.",
+                    f"Citation rows generated: `{reports.get('citation_record_count')}`.",
+                    "Starter, market, buyer-ready, supplier-request, broker-review, missing-evidence, blocked-claim, country-source, source-freshness, expert-summary, executive-decision, and audit reports are produced from the packet.",
+                    "Reports carry version, draft watermark, review status, source citations, evidence citations, and the blocked-claims section.",
+                ),
+            ),
+            Section(
                 "Current Sample Packet Result",
                 bullets=(
                     f"Packet reviewed: `{packet['packet_id']}`.",
@@ -532,6 +561,7 @@ def _non_functional(ctx: dict[str, Any]) -> ReviewerDocument:
     scoring = ctx["production_scoring"]
     ai_copilot = ctx["production_ai"]
     expert_review = ctx["production_expert"]
+    reports = ctx["production_reports"]
     return ReviewerDocument(
         title="Non-Functional Requirements For External Review",
         filename="non_functional_requirements_for_review.md",
@@ -604,6 +634,17 @@ def _non_functional(ctx: dict[str, Any]) -> ReviewerDocument:
                     f"Pending findings: `{expert_review.get('pending_finding_count')}`.",
                     "All reviewer profiles require real credentials, identity, conflict, scope, source, and evidence attachments before a finding can be used.",
                     "Draft review requests do not contact reviewers, do not record approval, and do not open claims.",
+                ),
+            ),
+            Section(
+                "Report Export Controls",
+                bullets=(
+                    f"Reports status: `{reports['status']}`.",
+                    f"Report records: `{reports.get('report_record_count')}`.",
+                    f"Export records: `{reports.get('export_record_count')}`.",
+                    "JSON, HTML, and PDF exports are generated locally from packet/evidence/source/review artifacts.",
+                    "Reports include blocked claims, citations, version, watermark, and review status.",
+                    "Reports cannot hide blocked claims, open external claims, create external effects, enable live payment, or approve public launch.",
                 ),
             ),
             Section(

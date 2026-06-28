@@ -1,0 +1,1193 @@
+{
+  "citation_records": [
+    {
+      "checked_on": "2026-06-28",
+      "citation_type": "source",
+      "claim_boundary": "Supports research routing only; it does not validate buyer demand or profitability.",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:starter_trade_readiness_packet:v1",
+      "source_id": "ised-trade-data-online",
+      "source_name": "ISED Trade Data Online",
+      "url": "https://ised-isde.canada.ca/site/trade-data-online/en/overview"
+    },
+    {
+      "checked_on": "2026-06-28",
+      "citation_type": "source",
+      "claim_boundary": "Supports market-access comparison routing only; qualified review is required before tariff or market-access claims.",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:starter_trade_readiness_packet:v1",
+      "source_id": "itc-market-access-map",
+      "source_name": "International Trade Centre Market Access Map",
+      "url": "https://www.macmap.org/"
+    },
+    {
+      "checked_on": "2026-06-28",
+      "citation_type": "source",
+      "claim_boundary": "Routes users to official and qualified review paths; the product does not replace CBSA or a customs professional.",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:starter_trade_readiness_packet:v1",
+      "source_id": "cbsa-import-commercial-goods",
+      "source_name": "Canada Border Services Agency commercial import guidance",
+      "url": "https://www.cbsa-asfc.gc.ca/import/menu-eng.html"
+    },
+    {
+      "checked_on": "2026-06-28",
+      "citation_type": "source",
+      "claim_boundary": "Reference route only; importers and reviewers must confirm current requirements for the exact product and import time.",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:starter_trade_readiness_packet:v1",
+      "source_id": "cfia-airs",
+      "source_name": "CFIA Automated Import Reference System",
+      "url": "https://inspection.canada.ca/en/importing-food-plants-animals/airs"
+    },
+    {
+      "checked_on": "2026-06-28",
+      "citation_type": "source",
+      "claim_boundary": "Security implementation guidance; hosted readiness still requires product-specific security review.",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:starter_trade_readiness_packet:v1",
+      "source_id": "owasp-file-upload",
+      "source_name": "OWASP File Upload Cheat Sheet",
+      "url": "https://cheatsheetseries.owasp.org/cheatsheets/File_Upload_Cheat_Sheet.html"
+    },
+    {
+      "checked_on": "2026-06-28",
+      "citation_type": "source",
+      "claim_boundary": "Governance reference only; it does not certify the product or approve AI outputs.",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:starter_trade_readiness_packet:v1",
+      "source_id": "nist-ai-rmf",
+      "source_name": "NIST AI Risk Management Framework",
+      "url": "https://www.nist.gov/itl/ai-risk-management-framework"
+    },
+    {
+      "checked_on": "2026-06-28",
+      "citation_type": "source",
+      "claim_boundary": "Payment implementation reference only; live checkout remains disabled until payment review and production setup are complete.",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:starter_trade_readiness_packet:v1",
+      "source_id": "stripe-go-live",
+      "source_name": "Stripe go-live checklist",
+      "url": "https://docs.stripe.com/get-started/checklist/go-live"
+    },
+    {
+      "checked_on": "2026-06-28",
+      "citation_type": "source",
+      "claim_boundary": "Privacy design input only; legal/privacy approval requires qualified review for the product and data flows.",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:starter_trade_readiness_packet:v1",
+      "source_id": "opc-pipeda-principles",
+      "source_name": "Office of the Privacy Commissioner of Canada PIPEDA principles",
+      "url": "https://www.priv.gc.ca/en/privacy-topics/privacy-laws-in-canada/the-personal-information-protection-and-electronic-documents-act-pipeda/"
+    },
+    {
+      "citation_type": "evidence",
+      "claim_boundary": "Reference-only source. It does not prove supplier suitability, tariff classification, CFIA clearance, buyer demand, or import approval.",
+      "evidence_id": "evidence-frozen-tuna-cid-reference",
+      "freshness": "unknown",
+      "provenance": "local_artifact",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:starter_trade_readiness_packet:v1",
+      "type": "official_reference"
+    },
+    {
+      "citation_type": "evidence",
+      "claim_boundary": "Reference-only source. It does not create customs, tariff, release, accounting, or compliance advice.",
+      "evidence_id": "evidence-frozen-tuna-cbsa-import-workflow",
+      "freshness": "unknown",
+      "provenance": "local_artifact",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:starter_trade_readiness_packet:v1",
+      "type": "official_reference"
+    },
+    {
+      "citation_type": "evidence",
+      "claim_boundary": "Reference-only source. It does not prove CFIA clearance or legal compliance.",
+      "evidence_id": "evidence-frozen-tuna-cfia-airs-reference",
+      "freshness": "unknown",
+      "provenance": "local_artifact",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:starter_trade_readiness_packet:v1",
+      "type": "official_reference"
+    },
+    {
+      "checked_on": "2026-06-28",
+      "citation_type": "source",
+      "claim_boundary": "Supports research routing only; it does not validate buyer demand or profitability.",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:market_opportunity_brief:v1",
+      "source_id": "ised-trade-data-online",
+      "source_name": "ISED Trade Data Online",
+      "url": "https://ised-isde.canada.ca/site/trade-data-online/en/overview"
+    },
+    {
+      "checked_on": "2026-06-28",
+      "citation_type": "source",
+      "claim_boundary": "Supports market-access comparison routing only; qualified review is required before tariff or market-access claims.",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:market_opportunity_brief:v1",
+      "source_id": "itc-market-access-map",
+      "source_name": "International Trade Centre Market Access Map",
+      "url": "https://www.macmap.org/"
+    },
+    {
+      "checked_on": "2026-06-28",
+      "citation_type": "source",
+      "claim_boundary": "Routes users to official and qualified review paths; the product does not replace CBSA or a customs professional.",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:market_opportunity_brief:v1",
+      "source_id": "cbsa-import-commercial-goods",
+      "source_name": "Canada Border Services Agency commercial import guidance",
+      "url": "https://www.cbsa-asfc.gc.ca/import/menu-eng.html"
+    },
+    {
+      "checked_on": "2026-06-28",
+      "citation_type": "source",
+      "claim_boundary": "Reference route only; importers and reviewers must confirm current requirements for the exact product and import time.",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:market_opportunity_brief:v1",
+      "source_id": "cfia-airs",
+      "source_name": "CFIA Automated Import Reference System",
+      "url": "https://inspection.canada.ca/en/importing-food-plants-animals/airs"
+    },
+    {
+      "checked_on": "2026-06-28",
+      "citation_type": "source",
+      "claim_boundary": "Security implementation guidance; hosted readiness still requires product-specific security review.",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:market_opportunity_brief:v1",
+      "source_id": "owasp-file-upload",
+      "source_name": "OWASP File Upload Cheat Sheet",
+      "url": "https://cheatsheetseries.owasp.org/cheatsheets/File_Upload_Cheat_Sheet.html"
+    },
+    {
+      "checked_on": "2026-06-28",
+      "citation_type": "source",
+      "claim_boundary": "Governance reference only; it does not certify the product or approve AI outputs.",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:market_opportunity_brief:v1",
+      "source_id": "nist-ai-rmf",
+      "source_name": "NIST AI Risk Management Framework",
+      "url": "https://www.nist.gov/itl/ai-risk-management-framework"
+    },
+    {
+      "checked_on": "2026-06-28",
+      "citation_type": "source",
+      "claim_boundary": "Payment implementation reference only; live checkout remains disabled until payment review and production setup are complete.",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:market_opportunity_brief:v1",
+      "source_id": "stripe-go-live",
+      "source_name": "Stripe go-live checklist",
+      "url": "https://docs.stripe.com/get-started/checklist/go-live"
+    },
+    {
+      "checked_on": "2026-06-28",
+      "citation_type": "source",
+      "claim_boundary": "Privacy design input only; legal/privacy approval requires qualified review for the product and data flows.",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:market_opportunity_brief:v1",
+      "source_id": "opc-pipeda-principles",
+      "source_name": "Office of the Privacy Commissioner of Canada PIPEDA principles",
+      "url": "https://www.priv.gc.ca/en/privacy-topics/privacy-laws-in-canada/the-personal-information-protection-and-electronic-documents-act-pipeda/"
+    },
+    {
+      "citation_type": "evidence",
+      "claim_boundary": "Reference-only source. It does not prove supplier suitability, tariff classification, CFIA clearance, buyer demand, or import approval.",
+      "evidence_id": "evidence-frozen-tuna-cid-reference",
+      "freshness": "unknown",
+      "provenance": "local_artifact",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:market_opportunity_brief:v1",
+      "type": "official_reference"
+    },
+    {
+      "citation_type": "evidence",
+      "claim_boundary": "Reference-only source. It does not create customs, tariff, release, accounting, or compliance advice.",
+      "evidence_id": "evidence-frozen-tuna-cbsa-import-workflow",
+      "freshness": "unknown",
+      "provenance": "local_artifact",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:market_opportunity_brief:v1",
+      "type": "official_reference"
+    },
+    {
+      "citation_type": "evidence",
+      "claim_boundary": "Reference-only source. It does not prove CFIA clearance or legal compliance.",
+      "evidence_id": "evidence-frozen-tuna-cfia-airs-reference",
+      "freshness": "unknown",
+      "provenance": "local_artifact",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:market_opportunity_brief:v1",
+      "type": "official_reference"
+    },
+    {
+      "checked_on": "2026-06-28",
+      "citation_type": "source",
+      "claim_boundary": "Supports research routing only; it does not validate buyer demand or profitability.",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:buyer_ready_packet:v1",
+      "source_id": "ised-trade-data-online",
+      "source_name": "ISED Trade Data Online",
+      "url": "https://ised-isde.canada.ca/site/trade-data-online/en/overview"
+    },
+    {
+      "checked_on": "2026-06-28",
+      "citation_type": "source",
+      "claim_boundary": "Supports market-access comparison routing only; qualified review is required before tariff or market-access claims.",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:buyer_ready_packet:v1",
+      "source_id": "itc-market-access-map",
+      "source_name": "International Trade Centre Market Access Map",
+      "url": "https://www.macmap.org/"
+    },
+    {
+      "checked_on": "2026-06-28",
+      "citation_type": "source",
+      "claim_boundary": "Routes users to official and qualified review paths; the product does not replace CBSA or a customs professional.",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:buyer_ready_packet:v1",
+      "source_id": "cbsa-import-commercial-goods",
+      "source_name": "Canada Border Services Agency commercial import guidance",
+      "url": "https://www.cbsa-asfc.gc.ca/import/menu-eng.html"
+    },
+    {
+      "checked_on": "2026-06-28",
+      "citation_type": "source",
+      "claim_boundary": "Reference route only; importers and reviewers must confirm current requirements for the exact product and import time.",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:buyer_ready_packet:v1",
+      "source_id": "cfia-airs",
+      "source_name": "CFIA Automated Import Reference System",
+      "url": "https://inspection.canada.ca/en/importing-food-plants-animals/airs"
+    },
+    {
+      "checked_on": "2026-06-28",
+      "citation_type": "source",
+      "claim_boundary": "Security implementation guidance; hosted readiness still requires product-specific security review.",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:buyer_ready_packet:v1",
+      "source_id": "owasp-file-upload",
+      "source_name": "OWASP File Upload Cheat Sheet",
+      "url": "https://cheatsheetseries.owasp.org/cheatsheets/File_Upload_Cheat_Sheet.html"
+    },
+    {
+      "checked_on": "2026-06-28",
+      "citation_type": "source",
+      "claim_boundary": "Governance reference only; it does not certify the product or approve AI outputs.",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:buyer_ready_packet:v1",
+      "source_id": "nist-ai-rmf",
+      "source_name": "NIST AI Risk Management Framework",
+      "url": "https://www.nist.gov/itl/ai-risk-management-framework"
+    },
+    {
+      "checked_on": "2026-06-28",
+      "citation_type": "source",
+      "claim_boundary": "Payment implementation reference only; live checkout remains disabled until payment review and production setup are complete.",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:buyer_ready_packet:v1",
+      "source_id": "stripe-go-live",
+      "source_name": "Stripe go-live checklist",
+      "url": "https://docs.stripe.com/get-started/checklist/go-live"
+    },
+    {
+      "checked_on": "2026-06-28",
+      "citation_type": "source",
+      "claim_boundary": "Privacy design input only; legal/privacy approval requires qualified review for the product and data flows.",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:buyer_ready_packet:v1",
+      "source_id": "opc-pipeda-principles",
+      "source_name": "Office of the Privacy Commissioner of Canada PIPEDA principles",
+      "url": "https://www.priv.gc.ca/en/privacy-topics/privacy-laws-in-canada/the-personal-information-protection-and-electronic-documents-act-pipeda/"
+    },
+    {
+      "citation_type": "evidence",
+      "claim_boundary": "Reference-only source. It does not prove supplier suitability, tariff classification, CFIA clearance, buyer demand, or import approval.",
+      "evidence_id": "evidence-frozen-tuna-cid-reference",
+      "freshness": "unknown",
+      "provenance": "local_artifact",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:buyer_ready_packet:v1",
+      "type": "official_reference"
+    },
+    {
+      "citation_type": "evidence",
+      "claim_boundary": "Reference-only source. It does not create customs, tariff, release, accounting, or compliance advice.",
+      "evidence_id": "evidence-frozen-tuna-cbsa-import-workflow",
+      "freshness": "unknown",
+      "provenance": "local_artifact",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:buyer_ready_packet:v1",
+      "type": "official_reference"
+    },
+    {
+      "citation_type": "evidence",
+      "claim_boundary": "Reference-only source. It does not prove CFIA clearance or legal compliance.",
+      "evidence_id": "evidence-frozen-tuna-cfia-airs-reference",
+      "freshness": "unknown",
+      "provenance": "local_artifact",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:buyer_ready_packet:v1",
+      "type": "official_reference"
+    },
+    {
+      "checked_on": "2026-06-28",
+      "citation_type": "source",
+      "claim_boundary": "Supports research routing only; it does not validate buyer demand or profitability.",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:supplier_document_request:v1",
+      "source_id": "ised-trade-data-online",
+      "source_name": "ISED Trade Data Online",
+      "url": "https://ised-isde.canada.ca/site/trade-data-online/en/overview"
+    },
+    {
+      "checked_on": "2026-06-28",
+      "citation_type": "source",
+      "claim_boundary": "Supports market-access comparison routing only; qualified review is required before tariff or market-access claims.",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:supplier_document_request:v1",
+      "source_id": "itc-market-access-map",
+      "source_name": "International Trade Centre Market Access Map",
+      "url": "https://www.macmap.org/"
+    },
+    {
+      "checked_on": "2026-06-28",
+      "citation_type": "source",
+      "claim_boundary": "Routes users to official and qualified review paths; the product does not replace CBSA or a customs professional.",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:supplier_document_request:v1",
+      "source_id": "cbsa-import-commercial-goods",
+      "source_name": "Canada Border Services Agency commercial import guidance",
+      "url": "https://www.cbsa-asfc.gc.ca/import/menu-eng.html"
+    },
+    {
+      "checked_on": "2026-06-28",
+      "citation_type": "source",
+      "claim_boundary": "Reference route only; importers and reviewers must confirm current requirements for the exact product and import time.",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:supplier_document_request:v1",
+      "source_id": "cfia-airs",
+      "source_name": "CFIA Automated Import Reference System",
+      "url": "https://inspection.canada.ca/en/importing-food-plants-animals/airs"
+    },
+    {
+      "checked_on": "2026-06-28",
+      "citation_type": "source",
+      "claim_boundary": "Security implementation guidance; hosted readiness still requires product-specific security review.",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:supplier_document_request:v1",
+      "source_id": "owasp-file-upload",
+      "source_name": "OWASP File Upload Cheat Sheet",
+      "url": "https://cheatsheetseries.owasp.org/cheatsheets/File_Upload_Cheat_Sheet.html"
+    },
+    {
+      "checked_on": "2026-06-28",
+      "citation_type": "source",
+      "claim_boundary": "Governance reference only; it does not certify the product or approve AI outputs.",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:supplier_document_request:v1",
+      "source_id": "nist-ai-rmf",
+      "source_name": "NIST AI Risk Management Framework",
+      "url": "https://www.nist.gov/itl/ai-risk-management-framework"
+    },
+    {
+      "checked_on": "2026-06-28",
+      "citation_type": "source",
+      "claim_boundary": "Payment implementation reference only; live checkout remains disabled until payment review and production setup are complete.",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:supplier_document_request:v1",
+      "source_id": "stripe-go-live",
+      "source_name": "Stripe go-live checklist",
+      "url": "https://docs.stripe.com/get-started/checklist/go-live"
+    },
+    {
+      "checked_on": "2026-06-28",
+      "citation_type": "source",
+      "claim_boundary": "Privacy design input only; legal/privacy approval requires qualified review for the product and data flows.",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:supplier_document_request:v1",
+      "source_id": "opc-pipeda-principles",
+      "source_name": "Office of the Privacy Commissioner of Canada PIPEDA principles",
+      "url": "https://www.priv.gc.ca/en/privacy-topics/privacy-laws-in-canada/the-personal-information-protection-and-electronic-documents-act-pipeda/"
+    },
+    {
+      "citation_type": "evidence",
+      "claim_boundary": "Reference-only source. It does not prove supplier suitability, tariff classification, CFIA clearance, buyer demand, or import approval.",
+      "evidence_id": "evidence-frozen-tuna-cid-reference",
+      "freshness": "unknown",
+      "provenance": "local_artifact",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:supplier_document_request:v1",
+      "type": "official_reference"
+    },
+    {
+      "citation_type": "evidence",
+      "claim_boundary": "Reference-only source. It does not create customs, tariff, release, accounting, or compliance advice.",
+      "evidence_id": "evidence-frozen-tuna-cbsa-import-workflow",
+      "freshness": "unknown",
+      "provenance": "local_artifact",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:supplier_document_request:v1",
+      "type": "official_reference"
+    },
+    {
+      "citation_type": "evidence",
+      "claim_boundary": "Reference-only source. It does not prove CFIA clearance or legal compliance.",
+      "evidence_id": "evidence-frozen-tuna-cfia-airs-reference",
+      "freshness": "unknown",
+      "provenance": "local_artifact",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:supplier_document_request:v1",
+      "type": "official_reference"
+    },
+    {
+      "checked_on": "2026-06-28",
+      "citation_type": "source",
+      "claim_boundary": "Supports research routing only; it does not validate buyer demand or profitability.",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:broker_review_packet:v1",
+      "source_id": "ised-trade-data-online",
+      "source_name": "ISED Trade Data Online",
+      "url": "https://ised-isde.canada.ca/site/trade-data-online/en/overview"
+    },
+    {
+      "checked_on": "2026-06-28",
+      "citation_type": "source",
+      "claim_boundary": "Supports market-access comparison routing only; qualified review is required before tariff or market-access claims.",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:broker_review_packet:v1",
+      "source_id": "itc-market-access-map",
+      "source_name": "International Trade Centre Market Access Map",
+      "url": "https://www.macmap.org/"
+    },
+    {
+      "checked_on": "2026-06-28",
+      "citation_type": "source",
+      "claim_boundary": "Routes users to official and qualified review paths; the product does not replace CBSA or a customs professional.",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:broker_review_packet:v1",
+      "source_id": "cbsa-import-commercial-goods",
+      "source_name": "Canada Border Services Agency commercial import guidance",
+      "url": "https://www.cbsa-asfc.gc.ca/import/menu-eng.html"
+    },
+    {
+      "checked_on": "2026-06-28",
+      "citation_type": "source",
+      "claim_boundary": "Reference route only; importers and reviewers must confirm current requirements for the exact product and import time.",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:broker_review_packet:v1",
+      "source_id": "cfia-airs",
+      "source_name": "CFIA Automated Import Reference System",
+      "url": "https://inspection.canada.ca/en/importing-food-plants-animals/airs"
+    },
+    {
+      "checked_on": "2026-06-28",
+      "citation_type": "source",
+      "claim_boundary": "Security implementation guidance; hosted readiness still requires product-specific security review.",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:broker_review_packet:v1",
+      "source_id": "owasp-file-upload",
+      "source_name": "OWASP File Upload Cheat Sheet",
+      "url": "https://cheatsheetseries.owasp.org/cheatsheets/File_Upload_Cheat_Sheet.html"
+    },
+    {
+      "checked_on": "2026-06-28",
+      "citation_type": "source",
+      "claim_boundary": "Governance reference only; it does not certify the product or approve AI outputs.",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:broker_review_packet:v1",
+      "source_id": "nist-ai-rmf",
+      "source_name": "NIST AI Risk Management Framework",
+      "url": "https://www.nist.gov/itl/ai-risk-management-framework"
+    },
+    {
+      "checked_on": "2026-06-28",
+      "citation_type": "source",
+      "claim_boundary": "Payment implementation reference only; live checkout remains disabled until payment review and production setup are complete.",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:broker_review_packet:v1",
+      "source_id": "stripe-go-live",
+      "source_name": "Stripe go-live checklist",
+      "url": "https://docs.stripe.com/get-started/checklist/go-live"
+    },
+    {
+      "checked_on": "2026-06-28",
+      "citation_type": "source",
+      "claim_boundary": "Privacy design input only; legal/privacy approval requires qualified review for the product and data flows.",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:broker_review_packet:v1",
+      "source_id": "opc-pipeda-principles",
+      "source_name": "Office of the Privacy Commissioner of Canada PIPEDA principles",
+      "url": "https://www.priv.gc.ca/en/privacy-topics/privacy-laws-in-canada/the-personal-information-protection-and-electronic-documents-act-pipeda/"
+    },
+    {
+      "citation_type": "evidence",
+      "claim_boundary": "Reference-only source. It does not prove supplier suitability, tariff classification, CFIA clearance, buyer demand, or import approval.",
+      "evidence_id": "evidence-frozen-tuna-cid-reference",
+      "freshness": "unknown",
+      "provenance": "local_artifact",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:broker_review_packet:v1",
+      "type": "official_reference"
+    },
+    {
+      "citation_type": "evidence",
+      "claim_boundary": "Reference-only source. It does not create customs, tariff, release, accounting, or compliance advice.",
+      "evidence_id": "evidence-frozen-tuna-cbsa-import-workflow",
+      "freshness": "unknown",
+      "provenance": "local_artifact",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:broker_review_packet:v1",
+      "type": "official_reference"
+    },
+    {
+      "citation_type": "evidence",
+      "claim_boundary": "Reference-only source. It does not prove CFIA clearance or legal compliance.",
+      "evidence_id": "evidence-frozen-tuna-cfia-airs-reference",
+      "freshness": "unknown",
+      "provenance": "local_artifact",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:broker_review_packet:v1",
+      "type": "official_reference"
+    },
+    {
+      "checked_on": "2026-06-28",
+      "citation_type": "source",
+      "claim_boundary": "Supports research routing only; it does not validate buyer demand or profitability.",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:missing_evidence_report:v1",
+      "source_id": "ised-trade-data-online",
+      "source_name": "ISED Trade Data Online",
+      "url": "https://ised-isde.canada.ca/site/trade-data-online/en/overview"
+    },
+    {
+      "checked_on": "2026-06-28",
+      "citation_type": "source",
+      "claim_boundary": "Supports market-access comparison routing only; qualified review is required before tariff or market-access claims.",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:missing_evidence_report:v1",
+      "source_id": "itc-market-access-map",
+      "source_name": "International Trade Centre Market Access Map",
+      "url": "https://www.macmap.org/"
+    },
+    {
+      "checked_on": "2026-06-28",
+      "citation_type": "source",
+      "claim_boundary": "Routes users to official and qualified review paths; the product does not replace CBSA or a customs professional.",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:missing_evidence_report:v1",
+      "source_id": "cbsa-import-commercial-goods",
+      "source_name": "Canada Border Services Agency commercial import guidance",
+      "url": "https://www.cbsa-asfc.gc.ca/import/menu-eng.html"
+    },
+    {
+      "checked_on": "2026-06-28",
+      "citation_type": "source",
+      "claim_boundary": "Reference route only; importers and reviewers must confirm current requirements for the exact product and import time.",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:missing_evidence_report:v1",
+      "source_id": "cfia-airs",
+      "source_name": "CFIA Automated Import Reference System",
+      "url": "https://inspection.canada.ca/en/importing-food-plants-animals/airs"
+    },
+    {
+      "checked_on": "2026-06-28",
+      "citation_type": "source",
+      "claim_boundary": "Security implementation guidance; hosted readiness still requires product-specific security review.",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:missing_evidence_report:v1",
+      "source_id": "owasp-file-upload",
+      "source_name": "OWASP File Upload Cheat Sheet",
+      "url": "https://cheatsheetseries.owasp.org/cheatsheets/File_Upload_Cheat_Sheet.html"
+    },
+    {
+      "checked_on": "2026-06-28",
+      "citation_type": "source",
+      "claim_boundary": "Governance reference only; it does not certify the product or approve AI outputs.",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:missing_evidence_report:v1",
+      "source_id": "nist-ai-rmf",
+      "source_name": "NIST AI Risk Management Framework",
+      "url": "https://www.nist.gov/itl/ai-risk-management-framework"
+    },
+    {
+      "checked_on": "2026-06-28",
+      "citation_type": "source",
+      "claim_boundary": "Payment implementation reference only; live checkout remains disabled until payment review and production setup are complete.",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:missing_evidence_report:v1",
+      "source_id": "stripe-go-live",
+      "source_name": "Stripe go-live checklist",
+      "url": "https://docs.stripe.com/get-started/checklist/go-live"
+    },
+    {
+      "checked_on": "2026-06-28",
+      "citation_type": "source",
+      "claim_boundary": "Privacy design input only; legal/privacy approval requires qualified review for the product and data flows.",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:missing_evidence_report:v1",
+      "source_id": "opc-pipeda-principles",
+      "source_name": "Office of the Privacy Commissioner of Canada PIPEDA principles",
+      "url": "https://www.priv.gc.ca/en/privacy-topics/privacy-laws-in-canada/the-personal-information-protection-and-electronic-documents-act-pipeda/"
+    },
+    {
+      "citation_type": "evidence",
+      "claim_boundary": "Reference-only source. It does not prove supplier suitability, tariff classification, CFIA clearance, buyer demand, or import approval.",
+      "evidence_id": "evidence-frozen-tuna-cid-reference",
+      "freshness": "unknown",
+      "provenance": "local_artifact",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:missing_evidence_report:v1",
+      "type": "official_reference"
+    },
+    {
+      "citation_type": "evidence",
+      "claim_boundary": "Reference-only source. It does not create customs, tariff, release, accounting, or compliance advice.",
+      "evidence_id": "evidence-frozen-tuna-cbsa-import-workflow",
+      "freshness": "unknown",
+      "provenance": "local_artifact",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:missing_evidence_report:v1",
+      "type": "official_reference"
+    },
+    {
+      "citation_type": "evidence",
+      "claim_boundary": "Reference-only source. It does not prove CFIA clearance or legal compliance.",
+      "evidence_id": "evidence-frozen-tuna-cfia-airs-reference",
+      "freshness": "unknown",
+      "provenance": "local_artifact",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:missing_evidence_report:v1",
+      "type": "official_reference"
+    },
+    {
+      "checked_on": "2026-06-28",
+      "citation_type": "source",
+      "claim_boundary": "Supports research routing only; it does not validate buyer demand or profitability.",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:blocked_claims_report:v1",
+      "source_id": "ised-trade-data-online",
+      "source_name": "ISED Trade Data Online",
+      "url": "https://ised-isde.canada.ca/site/trade-data-online/en/overview"
+    },
+    {
+      "checked_on": "2026-06-28",
+      "citation_type": "source",
+      "claim_boundary": "Supports market-access comparison routing only; qualified review is required before tariff or market-access claims.",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:blocked_claims_report:v1",
+      "source_id": "itc-market-access-map",
+      "source_name": "International Trade Centre Market Access Map",
+      "url": "https://www.macmap.org/"
+    },
+    {
+      "checked_on": "2026-06-28",
+      "citation_type": "source",
+      "claim_boundary": "Routes users to official and qualified review paths; the product does not replace CBSA or a customs professional.",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:blocked_claims_report:v1",
+      "source_id": "cbsa-import-commercial-goods",
+      "source_name": "Canada Border Services Agency commercial import guidance",
+      "url": "https://www.cbsa-asfc.gc.ca/import/menu-eng.html"
+    },
+    {
+      "checked_on": "2026-06-28",
+      "citation_type": "source",
+      "claim_boundary": "Reference route only; importers and reviewers must confirm current requirements for the exact product and import time.",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:blocked_claims_report:v1",
+      "source_id": "cfia-airs",
+      "source_name": "CFIA Automated Import Reference System",
+      "url": "https://inspection.canada.ca/en/importing-food-plants-animals/airs"
+    },
+    {
+      "checked_on": "2026-06-28",
+      "citation_type": "source",
+      "claim_boundary": "Security implementation guidance; hosted readiness still requires product-specific security review.",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:blocked_claims_report:v1",
+      "source_id": "owasp-file-upload",
+      "source_name": "OWASP File Upload Cheat Sheet",
+      "url": "https://cheatsheetseries.owasp.org/cheatsheets/File_Upload_Cheat_Sheet.html"
+    },
+    {
+      "checked_on": "2026-06-28",
+      "citation_type": "source",
+      "claim_boundary": "Governance reference only; it does not certify the product or approve AI outputs.",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:blocked_claims_report:v1",
+      "source_id": "nist-ai-rmf",
+      "source_name": "NIST AI Risk Management Framework",
+      "url": "https://www.nist.gov/itl/ai-risk-management-framework"
+    },
+    {
+      "checked_on": "2026-06-28",
+      "citation_type": "source",
+      "claim_boundary": "Payment implementation reference only; live checkout remains disabled until payment review and production setup are complete.",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:blocked_claims_report:v1",
+      "source_id": "stripe-go-live",
+      "source_name": "Stripe go-live checklist",
+      "url": "https://docs.stripe.com/get-started/checklist/go-live"
+    },
+    {
+      "checked_on": "2026-06-28",
+      "citation_type": "source",
+      "claim_boundary": "Privacy design input only; legal/privacy approval requires qualified review for the product and data flows.",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:blocked_claims_report:v1",
+      "source_id": "opc-pipeda-principles",
+      "source_name": "Office of the Privacy Commissioner of Canada PIPEDA principles",
+      "url": "https://www.priv.gc.ca/en/privacy-topics/privacy-laws-in-canada/the-personal-information-protection-and-electronic-documents-act-pipeda/"
+    },
+    {
+      "citation_type": "evidence",
+      "claim_boundary": "Reference-only source. It does not prove supplier suitability, tariff classification, CFIA clearance, buyer demand, or import approval.",
+      "evidence_id": "evidence-frozen-tuna-cid-reference",
+      "freshness": "unknown",
+      "provenance": "local_artifact",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:blocked_claims_report:v1",
+      "type": "official_reference"
+    },
+    {
+      "citation_type": "evidence",
+      "claim_boundary": "Reference-only source. It does not create customs, tariff, release, accounting, or compliance advice.",
+      "evidence_id": "evidence-frozen-tuna-cbsa-import-workflow",
+      "freshness": "unknown",
+      "provenance": "local_artifact",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:blocked_claims_report:v1",
+      "type": "official_reference"
+    },
+    {
+      "citation_type": "evidence",
+      "claim_boundary": "Reference-only source. It does not prove CFIA clearance or legal compliance.",
+      "evidence_id": "evidence-frozen-tuna-cfia-airs-reference",
+      "freshness": "unknown",
+      "provenance": "local_artifact",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:blocked_claims_report:v1",
+      "type": "official_reference"
+    },
+    {
+      "checked_on": "2026-06-28",
+      "citation_type": "source",
+      "claim_boundary": "Supports research routing only; it does not validate buyer demand or profitability.",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:country_source_map:v1",
+      "source_id": "ised-trade-data-online",
+      "source_name": "ISED Trade Data Online",
+      "url": "https://ised-isde.canada.ca/site/trade-data-online/en/overview"
+    },
+    {
+      "checked_on": "2026-06-28",
+      "citation_type": "source",
+      "claim_boundary": "Supports market-access comparison routing only; qualified review is required before tariff or market-access claims.",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:country_source_map:v1",
+      "source_id": "itc-market-access-map",
+      "source_name": "International Trade Centre Market Access Map",
+      "url": "https://www.macmap.org/"
+    },
+    {
+      "checked_on": "2026-06-28",
+      "citation_type": "source",
+      "claim_boundary": "Routes users to official and qualified review paths; the product does not replace CBSA or a customs professional.",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:country_source_map:v1",
+      "source_id": "cbsa-import-commercial-goods",
+      "source_name": "Canada Border Services Agency commercial import guidance",
+      "url": "https://www.cbsa-asfc.gc.ca/import/menu-eng.html"
+    },
+    {
+      "checked_on": "2026-06-28",
+      "citation_type": "source",
+      "claim_boundary": "Reference route only; importers and reviewers must confirm current requirements for the exact product and import time.",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:country_source_map:v1",
+      "source_id": "cfia-airs",
+      "source_name": "CFIA Automated Import Reference System",
+      "url": "https://inspection.canada.ca/en/importing-food-plants-animals/airs"
+    },
+    {
+      "checked_on": "2026-06-28",
+      "citation_type": "source",
+      "claim_boundary": "Security implementation guidance; hosted readiness still requires product-specific security review.",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:country_source_map:v1",
+      "source_id": "owasp-file-upload",
+      "source_name": "OWASP File Upload Cheat Sheet",
+      "url": "https://cheatsheetseries.owasp.org/cheatsheets/File_Upload_Cheat_Sheet.html"
+    },
+    {
+      "checked_on": "2026-06-28",
+      "citation_type": "source",
+      "claim_boundary": "Governance reference only; it does not certify the product or approve AI outputs.",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:country_source_map:v1",
+      "source_id": "nist-ai-rmf",
+      "source_name": "NIST AI Risk Management Framework",
+      "url": "https://www.nist.gov/itl/ai-risk-management-framework"
+    },
+    {
+      "checked_on": "2026-06-28",
+      "citation_type": "source",
+      "claim_boundary": "Payment implementation reference only; live checkout remains disabled until payment review and production setup are complete.",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:country_source_map:v1",
+      "source_id": "stripe-go-live",
+      "source_name": "Stripe go-live checklist",
+      "url": "https://docs.stripe.com/get-started/checklist/go-live"
+    },
+    {
+      "checked_on": "2026-06-28",
+      "citation_type": "source",
+      "claim_boundary": "Privacy design input only; legal/privacy approval requires qualified review for the product and data flows.",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:country_source_map:v1",
+      "source_id": "opc-pipeda-principles",
+      "source_name": "Office of the Privacy Commissioner of Canada PIPEDA principles",
+      "url": "https://www.priv.gc.ca/en/privacy-topics/privacy-laws-in-canada/the-personal-information-protection-and-electronic-documents-act-pipeda/"
+    },
+    {
+      "citation_type": "evidence",
+      "claim_boundary": "Reference-only source. It does not prove supplier suitability, tariff classification, CFIA clearance, buyer demand, or import approval.",
+      "evidence_id": "evidence-frozen-tuna-cid-reference",
+      "freshness": "unknown",
+      "provenance": "local_artifact",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:country_source_map:v1",
+      "type": "official_reference"
+    },
+    {
+      "citation_type": "evidence",
+      "claim_boundary": "Reference-only source. It does not create customs, tariff, release, accounting, or compliance advice.",
+      "evidence_id": "evidence-frozen-tuna-cbsa-import-workflow",
+      "freshness": "unknown",
+      "provenance": "local_artifact",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:country_source_map:v1",
+      "type": "official_reference"
+    },
+    {
+      "citation_type": "evidence",
+      "claim_boundary": "Reference-only source. It does not prove CFIA clearance or legal compliance.",
+      "evidence_id": "evidence-frozen-tuna-cfia-airs-reference",
+      "freshness": "unknown",
+      "provenance": "local_artifact",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:country_source_map:v1",
+      "type": "official_reference"
+    },
+    {
+      "checked_on": "2026-06-28",
+      "citation_type": "source",
+      "claim_boundary": "Supports research routing only; it does not validate buyer demand or profitability.",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:source_freshness_report:v1",
+      "source_id": "ised-trade-data-online",
+      "source_name": "ISED Trade Data Online",
+      "url": "https://ised-isde.canada.ca/site/trade-data-online/en/overview"
+    },
+    {
+      "checked_on": "2026-06-28",
+      "citation_type": "source",
+      "claim_boundary": "Supports market-access comparison routing only; qualified review is required before tariff or market-access claims.",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:source_freshness_report:v1",
+      "source_id": "itc-market-access-map",
+      "source_name": "International Trade Centre Market Access Map",
+      "url": "https://www.macmap.org/"
+    },
+    {
+      "checked_on": "2026-06-28",
+      "citation_type": "source",
+      "claim_boundary": "Routes users to official and qualified review paths; the product does not replace CBSA or a customs professional.",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:source_freshness_report:v1",
+      "source_id": "cbsa-import-commercial-goods",
+      "source_name": "Canada Border Services Agency commercial import guidance",
+      "url": "https://www.cbsa-asfc.gc.ca/import/menu-eng.html"
+    },
+    {
+      "checked_on": "2026-06-28",
+      "citation_type": "source",
+      "claim_boundary": "Reference route only; importers and reviewers must confirm current requirements for the exact product and import time.",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:source_freshness_report:v1",
+      "source_id": "cfia-airs",
+      "source_name": "CFIA Automated Import Reference System",
+      "url": "https://inspection.canada.ca/en/importing-food-plants-animals/airs"
+    },
+    {
+      "checked_on": "2026-06-28",
+      "citation_type": "source",
+      "claim_boundary": "Security implementation guidance; hosted readiness still requires product-specific security review.",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:source_freshness_report:v1",
+      "source_id": "owasp-file-upload",
+      "source_name": "OWASP File Upload Cheat Sheet",
+      "url": "https://cheatsheetseries.owasp.org/cheatsheets/File_Upload_Cheat_Sheet.html"
+    },
+    {
+      "checked_on": "2026-06-28",
+      "citation_type": "source",
+      "claim_boundary": "Governance reference only; it does not certify the product or approve AI outputs.",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:source_freshness_report:v1",
+      "source_id": "nist-ai-rmf",
+      "source_name": "NIST AI Risk Management Framework",
+      "url": "https://www.nist.gov/itl/ai-risk-management-framework"
+    },
+    {
+      "checked_on": "2026-06-28",
+      "citation_type": "source",
+      "claim_boundary": "Payment implementation reference only; live checkout remains disabled until payment review and production setup are complete.",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:source_freshness_report:v1",
+      "source_id": "stripe-go-live",
+      "source_name": "Stripe go-live checklist",
+      "url": "https://docs.stripe.com/get-started/checklist/go-live"
+    },
+    {
+      "checked_on": "2026-06-28",
+      "citation_type": "source",
+      "claim_boundary": "Privacy design input only; legal/privacy approval requires qualified review for the product and data flows.",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:source_freshness_report:v1",
+      "source_id": "opc-pipeda-principles",
+      "source_name": "Office of the Privacy Commissioner of Canada PIPEDA principles",
+      "url": "https://www.priv.gc.ca/en/privacy-topics/privacy-laws-in-canada/the-personal-information-protection-and-electronic-documents-act-pipeda/"
+    },
+    {
+      "citation_type": "evidence",
+      "claim_boundary": "Reference-only source. It does not prove supplier suitability, tariff classification, CFIA clearance, buyer demand, or import approval.",
+      "evidence_id": "evidence-frozen-tuna-cid-reference",
+      "freshness": "unknown",
+      "provenance": "local_artifact",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:source_freshness_report:v1",
+      "type": "official_reference"
+    },
+    {
+      "citation_type": "evidence",
+      "claim_boundary": "Reference-only source. It does not create customs, tariff, release, accounting, or compliance advice.",
+      "evidence_id": "evidence-frozen-tuna-cbsa-import-workflow",
+      "freshness": "unknown",
+      "provenance": "local_artifact",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:source_freshness_report:v1",
+      "type": "official_reference"
+    },
+    {
+      "citation_type": "evidence",
+      "claim_boundary": "Reference-only source. It does not prove CFIA clearance or legal compliance.",
+      "evidence_id": "evidence-frozen-tuna-cfia-airs-reference",
+      "freshness": "unknown",
+      "provenance": "local_artifact",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:source_freshness_report:v1",
+      "type": "official_reference"
+    },
+    {
+      "checked_on": "2026-06-28",
+      "citation_type": "source",
+      "claim_boundary": "Supports research routing only; it does not validate buyer demand or profitability.",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:expert_review_summary:v1",
+      "source_id": "ised-trade-data-online",
+      "source_name": "ISED Trade Data Online",
+      "url": "https://ised-isde.canada.ca/site/trade-data-online/en/overview"
+    },
+    {
+      "checked_on": "2026-06-28",
+      "citation_type": "source",
+      "claim_boundary": "Supports market-access comparison routing only; qualified review is required before tariff or market-access claims.",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:expert_review_summary:v1",
+      "source_id": "itc-market-access-map",
+      "source_name": "International Trade Centre Market Access Map",
+      "url": "https://www.macmap.org/"
+    },
+    {
+      "checked_on": "2026-06-28",
+      "citation_type": "source",
+      "claim_boundary": "Routes users to official and qualified review paths; the product does not replace CBSA or a customs professional.",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:expert_review_summary:v1",
+      "source_id": "cbsa-import-commercial-goods",
+      "source_name": "Canada Border Services Agency commercial import guidance",
+      "url": "https://www.cbsa-asfc.gc.ca/import/menu-eng.html"
+    },
+    {
+      "checked_on": "2026-06-28",
+      "citation_type": "source",
+      "claim_boundary": "Reference route only; importers and reviewers must confirm current requirements for the exact product and import time.",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:expert_review_summary:v1",
+      "source_id": "cfia-airs",
+      "source_name": "CFIA Automated Import Reference System",
+      "url": "https://inspection.canada.ca/en/importing-food-plants-animals/airs"
+    },
+    {
+      "checked_on": "2026-06-28",
+      "citation_type": "source",
+      "claim_boundary": "Security implementation guidance; hosted readiness still requires product-specific security review.",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:expert_review_summary:v1",
+      "source_id": "owasp-file-upload",
+      "source_name": "OWASP File Upload Cheat Sheet",
+      "url": "https://cheatsheetseries.owasp.org/cheatsheets/File_Upload_Cheat_Sheet.html"
+    },
+    {
+      "checked_on": "2026-06-28",
+      "citation_type": "source",
+      "claim_boundary": "Governance reference only; it does not certify the product or approve AI outputs.",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:expert_review_summary:v1",
+      "source_id": "nist-ai-rmf",
+      "source_name": "NIST AI Risk Management Framework",
+      "url": "https://www.nist.gov/itl/ai-risk-management-framework"
+    },
+    {
+      "checked_on": "2026-06-28",
+      "citation_type": "source",
+      "claim_boundary": "Payment implementation reference only; live checkout remains disabled until payment review and production setup are complete.",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:expert_review_summary:v1",
+      "source_id": "stripe-go-live",
+      "source_name": "Stripe go-live checklist",
+      "url": "https://docs.stripe.com/get-started/checklist/go-live"
+    },
+    {
+      "checked_on": "2026-06-28",
+      "citation_type": "source",
+      "claim_boundary": "Privacy design input only; legal/privacy approval requires qualified review for the product and data flows.",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:expert_review_summary:v1",
+      "source_id": "opc-pipeda-principles",
+      "source_name": "Office of the Privacy Commissioner of Canada PIPEDA principles",
+      "url": "https://www.priv.gc.ca/en/privacy-topics/privacy-laws-in-canada/the-personal-information-protection-and-electronic-documents-act-pipeda/"
+    },
+    {
+      "citation_type": "evidence",
+      "claim_boundary": "Reference-only source. It does not prove supplier suitability, tariff classification, CFIA clearance, buyer demand, or import approval.",
+      "evidence_id": "evidence-frozen-tuna-cid-reference",
+      "freshness": "unknown",
+      "provenance": "local_artifact",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:expert_review_summary:v1",
+      "type": "official_reference"
+    },
+    {
+      "citation_type": "evidence",
+      "claim_boundary": "Reference-only source. It does not create customs, tariff, release, accounting, or compliance advice.",
+      "evidence_id": "evidence-frozen-tuna-cbsa-import-workflow",
+      "freshness": "unknown",
+      "provenance": "local_artifact",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:expert_review_summary:v1",
+      "type": "official_reference"
+    },
+    {
+      "citation_type": "evidence",
+      "claim_boundary": "Reference-only source. It does not prove CFIA clearance or legal compliance.",
+      "evidence_id": "evidence-frozen-tuna-cfia-airs-reference",
+      "freshness": "unknown",
+      "provenance": "local_artifact",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:expert_review_summary:v1",
+      "type": "official_reference"
+    },
+    {
+      "checked_on": "2026-06-28",
+      "citation_type": "source",
+      "claim_boundary": "Supports research routing only; it does not validate buyer demand or profitability.",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:executive_decision_report:v1",
+      "source_id": "ised-trade-data-online",
+      "source_name": "ISED Trade Data Online",
+      "url": "https://ised-isde.canada.ca/site/trade-data-online/en/overview"
+    },
+    {
+      "checked_on": "2026-06-28",
+      "citation_type": "source",
+      "claim_boundary": "Supports market-access comparison routing only; qualified review is required before tariff or market-access claims.",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:executive_decision_report:v1",
+      "source_id": "itc-market-access-map",
+      "source_name": "International Trade Centre Market Access Map",
+      "url": "https://www.macmap.org/"
+    },
+    {
+      "checked_on": "2026-06-28",
+      "citation_type": "source",
+      "claim_boundary": "Routes users to official and qualified review paths; the product does not replace CBSA or a customs professional.",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:executive_decision_report:v1",
+      "source_id": "cbsa-import-commercial-goods",
+      "source_name": "Canada Border Services Agency commercial import guidance",
+      "url": "https://www.cbsa-asfc.gc.ca/import/menu-eng.html"
+    },
+    {
+      "checked_on": "2026-06-28",
+      "citation_type": "source",
+      "claim_boundary": "Reference route only; importers and reviewers must confirm current requirements for the exact product and import time.",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:executive_decision_report:v1",
+      "source_id": "cfia-airs",
+      "source_name": "CFIA Automated Import Reference System",
+      "url": "https://inspection.canada.ca/en/importing-food-plants-animals/airs"
+    },
+    {
+      "checked_on": "2026-06-28",
+      "citation_type": "source",
+      "claim_boundary": "Security implementation guidance; hosted readiness still requires product-specific security review.",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:executive_decision_report:v1",
+      "source_id": "owasp-file-upload",
+      "source_name": "OWASP File Upload Cheat Sheet",
+      "url": "https://cheatsheetseries.owasp.org/cheatsheets/File_Upload_Cheat_Sheet.html"
+    },
+    {
+      "checked_on": "2026-06-28",
+      "citation_type": "source",
+      "claim_boundary": "Governance reference only; it does not certify the product or approve AI outputs.",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:executive_decision_report:v1",
+      "source_id": "nist-ai-rmf",
+      "source_name": "NIST AI Risk Management Framework",
+      "url": "https://www.nist.gov/itl/ai-risk-management-framework"
+    },
+    {
+      "checked_on": "2026-06-28",
+      "citation_type": "source",
+      "claim_boundary": "Payment implementation reference only; live checkout remains disabled until payment review and production setup are complete.",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:executive_decision_report:v1",
+      "source_id": "stripe-go-live",
+      "source_name": "Stripe go-live checklist",
+      "url": "https://docs.stripe.com/get-started/checklist/go-live"
+    },
+    {
+      "checked_on": "2026-06-28",
+      "citation_type": "source",
+      "claim_boundary": "Privacy design input only; legal/privacy approval requires qualified review for the product and data flows.",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:executive_decision_report:v1",
+      "source_id": "opc-pipeda-principles",
+      "source_name": "Office of the Privacy Commissioner of Canada PIPEDA principles",
+      "url": "https://www.priv.gc.ca/en/privacy-topics/privacy-laws-in-canada/the-personal-information-protection-and-electronic-documents-act-pipeda/"
+    },
+    {
+      "citation_type": "evidence",
+      "claim_boundary": "Reference-only source. It does not prove supplier suitability, tariff classification, CFIA clearance, buyer demand, or import approval.",
+      "evidence_id": "evidence-frozen-tuna-cid-reference",
+      "freshness": "unknown",
+      "provenance": "local_artifact",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:executive_decision_report:v1",
+      "type": "official_reference"
+    },
+    {
+      "citation_type": "evidence",
+      "claim_boundary": "Reference-only source. It does not create customs, tariff, release, accounting, or compliance advice.",
+      "evidence_id": "evidence-frozen-tuna-cbsa-import-workflow",
+      "freshness": "unknown",
+      "provenance": "local_artifact",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:executive_decision_report:v1",
+      "type": "official_reference"
+    },
+    {
+      "citation_type": "evidence",
+      "claim_boundary": "Reference-only source. It does not prove CFIA clearance or legal compliance.",
+      "evidence_id": "evidence-frozen-tuna-cfia-airs-reference",
+      "freshness": "unknown",
+      "provenance": "local_artifact",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:executive_decision_report:v1",
+      "type": "official_reference"
+    },
+    {
+      "checked_on": "2026-06-28",
+      "citation_type": "source",
+      "claim_boundary": "Supports research routing only; it does not validate buyer demand or profitability.",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:audit_export:v1",
+      "source_id": "ised-trade-data-online",
+      "source_name": "ISED Trade Data Online",
+      "url": "https://ised-isde.canada.ca/site/trade-data-online/en/overview"
+    },
+    {
+      "checked_on": "2026-06-28",
+      "citation_type": "source",
+      "claim_boundary": "Supports market-access comparison routing only; qualified review is required before tariff or market-access claims.",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:audit_export:v1",
+      "source_id": "itc-market-access-map",
+      "source_name": "International Trade Centre Market Access Map",
+      "url": "https://www.macmap.org/"
+    },
+    {
+      "checked_on": "2026-06-28",
+      "citation_type": "source",
+      "claim_boundary": "Routes users to official and qualified review paths; the product does not replace CBSA or a customs professional.",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:audit_export:v1",
+      "source_id": "cbsa-import-commercial-goods",
+      "source_name": "Canada Border Services Agency commercial import guidance",
+      "url": "https://www.cbsa-asfc.gc.ca/import/menu-eng.html"
+    },
+    {
+      "checked_on": "2026-06-28",
+      "citation_type": "source",
+      "claim_boundary": "Reference route only; importers and reviewers must confirm current requirements for the exact product and import time.",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:audit_export:v1",
+      "source_id": "cfia-airs",
+      "source_name": "CFIA Automated Import Reference System",
+      "url": "https://inspection.canada.ca/en/importing-food-plants-animals/airs"
+    },
+    {
+      "checked_on": "2026-06-28",
+      "citation_type": "source",
+      "claim_boundary": "Security implementation guidance; hosted readiness still requires product-specific security review.",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:audit_export:v1",
+      "source_id": "owasp-file-upload",
+      "source_name": "OWASP File Upload Cheat Sheet",
+      "url": "https://cheatsheetseries.owasp.org/cheatsheets/File_Upload_Cheat_Sheet.html"
+    },
+    {
+      "checked_on": "2026-06-28",
+      "citation_type": "source",
+      "claim_boundary": "Governance reference only; it does not certify the product or approve AI outputs.",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:audit_export:v1",
+      "source_id": "nist-ai-rmf",
+      "source_name": "NIST AI Risk Management Framework",
+      "url": "https://www.nist.gov/itl/ai-risk-management-framework"
+    },
+    {
+      "checked_on": "2026-06-28",
+      "citation_type": "source",
+      "claim_boundary": "Payment implementation reference only; live checkout remains disabled until payment review and production setup are complete.",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:audit_export:v1",
+      "source_id": "stripe-go-live",
+      "source_name": "Stripe go-live checklist",
+      "url": "https://docs.stripe.com/get-started/checklist/go-live"
+    },
+    {
+      "checked_on": "2026-06-28",
+      "citation_type": "source",
+      "claim_boundary": "Privacy design input only; legal/privacy approval requires qualified review for the product and data flows.",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:audit_export:v1",
+      "source_id": "opc-pipeda-principles",
+      "source_name": "Office of the Privacy Commissioner of Canada PIPEDA principles",
+      "url": "https://www.priv.gc.ca/en/privacy-topics/privacy-laws-in-canada/the-personal-information-protection-and-electronic-documents-act-pipeda/"
+    },
+    {
+      "citation_type": "evidence",
+      "claim_boundary": "Reference-only source. It does not prove supplier suitability, tariff classification, CFIA clearance, buyer demand, or import approval.",
+      "evidence_id": "evidence-frozen-tuna-cid-reference",
+      "freshness": "unknown",
+      "provenance": "local_artifact",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:audit_export:v1",
+      "type": "official_reference"
+    },
+    {
+      "citation_type": "evidence",
+      "claim_boundary": "Reference-only source. It does not create customs, tariff, release, accounting, or compliance advice.",
+      "evidence_id": "evidence-frozen-tuna-cbsa-import-workflow",
+      "freshness": "unknown",
+      "provenance": "local_artifact",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:audit_export:v1",
+      "type": "official_reference"
+    },
+    {
+      "citation_type": "evidence",
+      "claim_boundary": "Reference-only source. It does not prove CFIA clearance or legal compliance.",
+      "evidence_id": "evidence-frozen-tuna-cfia-airs-reference",
+      "freshness": "unknown",
+      "provenance": "local_artifact",
+      "report_id": "production-report:packet-frozen-tuna-canada-001:audit_export:v1",
+      "type": "official_reference"
+    }
+  ],
+  "status": "production_report_citations_ready"
+}

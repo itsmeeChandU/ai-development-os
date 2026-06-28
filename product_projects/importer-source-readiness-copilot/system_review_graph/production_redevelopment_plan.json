@@ -703,7 +703,7 @@
     }
   ],
   "first_rebuild_package_count": 5,
-  "generated_at": "2026-06-28T14:50:21+00:00",
+  "generated_at": "2026-06-28T15:02:50+00:00",
   "hosted_production_ready": false,
   "launch_control_plane": {
     "gate_count": 12,
@@ -1970,6 +1970,15 @@
       ]
     },
     {
+      "artifacts": [
+        "system_review_graph/production_reports_engine_manifest.json",
+        "system_review_graph/production_report_catalog.json",
+        "system_review_graph/production_report_exports.json",
+        "system_review_graph/production_report_citations.json",
+        "system_review_graph/production_reports/",
+        "output/pdf/production_reports/",
+        "docs/PRODUCTION_REPORTS_ENGINE.md"
+      ],
       "build_track": [
         "starter packet",
         "market brief",
@@ -2014,6 +2023,7 @@
       "gate_track": [
         "reports_must_keep_blocked_claims_visible"
       ],
+      "implementation_status": "local_reports_engine_ready_cited_exports_blocked_claims_visible",
       "layers": [
         9,
         12,
@@ -2023,6 +2033,7 @@
       "name": "Reports and deliverables engine",
       "next_valid_move": "Build the production implementation for this phase and attach the listed evidence before any gated claim can open.",
       "phase": 15,
+      "proof": "Twelve report types are exported as JSON, HTML, and PDF from packet, evidence, source, score, claim-gate, and review artifacts by scripts/run_production_reports_engine.py. Every report has citations, version, draft watermark, review status, and a blocked-claims section; no report opens external claims.",
       "research_track": [
         "beginner exporter needs",
         "experienced exporter needs",
