@@ -47,7 +47,7 @@ machine-readable readiness report with blocker rows.
 Current product loop:
 
 - local fixture source cards
-- official-source URL placeholders
+- missing official-source URL fields
 
 Production later:
 

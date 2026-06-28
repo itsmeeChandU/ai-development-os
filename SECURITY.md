@@ -5,7 +5,7 @@
 This repository is a process/tooling kit. Security reports should focus on:
 
 - scripts in this repo
-- generated scaffold behavior
+- generated project-starter behavior
 - documentation that could cause secret leakage
 - agent instructions that encourage unsafe external actions
 - workflows that mishandle credentials, private data, or licensing claims
@@ -40,4 +40,3 @@ If an agent finds a likely secret, it must:
 3. recommend rotation if exposure is possible
 4. avoid committing the secret
 5. add a blocker row with `next_valid_move`
-

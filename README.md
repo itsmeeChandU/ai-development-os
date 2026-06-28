@@ -32,6 +32,7 @@ delivery path, and then execute proof loops.
 
 ```bash
 python3 scripts/ai_dev_os_check.py
+python3 scripts/no_scaffold_audit.py --check
 python3 scripts/scaffold_project.py --name my-startup --idea "One sentence idea"
 ```
 
@@ -82,6 +83,7 @@ AILM means AI Lifecycle Management:
 - `docs/VC_PITCH_READINESS.md`: investor packet, evidence, diligence, and claim-boundary standard.
 - `docs/BOARD_GO_LIVE_READINESS.md`: board/private-beta readiness, expert-agent review, launch controls, and human approval gates.
 - `docs/SYSTEM_REVIEW_GRAPH.md`: the audit graph pattern that worked.
+- `docs/NO_SCAFFOLD_DELIVERY_POLICY.md`: hard ban on counting scaffolds, placeholders, mocks, simulated reviews, PDFs, or input templates as completion.
 - `docs/STATE_RECONSTRUCTION.md`: how to recover actual product state from a prompt and repo truth.
 - `docs/AI_LIFECYCLE.md`: AI-native lifecycle, different from human SDLC.
 - `docs/BIDIRECTIONAL_PRODUCT_LOOP.md`: top-down, bottom-up, and product-to-idea loops.
@@ -100,6 +102,8 @@ AILM means AI Lifecycle Management:
 - `templates/*`: prompts/specs/handoffs for agents.
 - `templates/PRODUCT_AUTOMATION_RUNBOOK.md`: fill-in runbook for product teams integrating the automation flow.
 - `scripts/ai_dev_os_check.py`: validates this operating kit.
+- `scripts/no_scaffold_audit.py`: fails delivery checks when scaffold-like artifacts are treated as completion proof.
+- `scripts/product_readiness_scorecard.py`: summarizes current product truth without promoting external-gate blockers into readiness.
 - `scripts/agentic_workflow_orchestrator.py`: validates and emits multi-repo execution plans.
 - `scripts/scaffold_project.py`: creates a new AI-native project skeleton.
 - `.github/*`: issue, PR, and CI community health files.
@@ -130,6 +134,11 @@ data, deployments, compliance, and outcomes. See `DISCLAIMER.md`.
 
 If the agent cannot prove a claim from code, data, tests, generated artifacts,
 or cited research, it must call it a blocker and write the next valid move.
+
+Scaffolds, placeholders, mock or simulated evidence, generated packets, PDFs,
+input templates, and review briefs are not completion proof. They can help start
+or collect work, but `python3 scripts/no_scaffold_audit.py --check` must pass
+before any completion or go-live claim.
 
 For complex products, local software completion is not enough. Hardware,
 firmware/OS, simulation, bench validation, procurement, compliance, and field

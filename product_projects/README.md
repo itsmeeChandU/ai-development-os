@@ -11,7 +11,7 @@ Private repo: `https://github.com/itsmeeChandU/importer-source-readiness-copilot
 
 This project uses an Intelligence Hub import/export source-proof idea to build:
 
-- scaffolded product repo instructions
+- product repo instructions
 - product automation runbook
 - repo intake, research/data, and strategy packets
 - local product implementation

@@ -126,6 +126,13 @@ def validate_manifest(manifest: dict[str, Any]) -> list[str]:
     if "public_launch_ready" not in board_rule.get("closed_claims_without_approval", []):
         errors.append("board_go_live_readiness_rule must close public_launch_ready claims without approval")
 
+    proof_boundaries = manifest.get("proof_boundaries") or {}
+    no_scaffold_boundary = str(proof_boundaries.get("no_scaffold_delivery") or "")
+    if "scripts/no_scaffold_audit.py --check" not in no_scaffold_boundary:
+        errors.append("proof_boundaries.no_scaffold_delivery must require scripts/no_scaffold_audit.py --check")
+    if "completion" not in no_scaffold_boundary.lower() or "go-live" not in no_scaffold_boundary.lower():
+        errors.append("proof_boundaries.no_scaffold_delivery must block scaffold completion and go-live claims")
+
     harness_rule = manifest.get("external_harness_integration") or {}
     if harness_rule.get("required_doc") != "docs/EXTERNAL_AGENT_HARNESS_INTEGRATION.md":
         errors.append("external_harness_integration.required_doc must be docs/EXTERNAL_AGENT_HARNESS_INTEGRATION.md")

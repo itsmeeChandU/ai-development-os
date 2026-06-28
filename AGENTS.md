@@ -21,13 +21,14 @@ Before meaningful work, read:
 12. `docs/VC_PITCH_READINESS.md`
 13. `docs/BOARD_GO_LIVE_READINESS.md`
 14. `docs/EXTERNAL_AGENT_HARNESS_INTEGRATION.md`
-15. `manifests/tool_registry.yaml`
-16. `manifests/agentic_workflow_manifest.json`
-17. `manifests/agentic_execution_manifest.json`
-18. `manifests/internal_repo_registry.json`
-19. `manifests/research_data_router.json`
-20. `manifests/development_strategy_router.json`
-21. the relevant template in `templates/`
+15. `docs/NO_SCAFFOLD_DELIVERY_POLICY.md`
+16. `manifests/tool_registry.yaml`
+17. `manifests/agentic_workflow_manifest.json`
+18. `manifests/agentic_execution_manifest.json`
+19. `manifests/internal_repo_registry.json`
+20. `manifests/research_data_router.json`
+21. `manifests/development_strategy_router.json`
+22. the relevant template in `templates/`
 
 ## Operating Rules
 
@@ -43,6 +44,7 @@ Before meaningful work, read:
 - Split parallel work by owned files and modules.
 - Every worker needs: goal, allowed files, forbidden files, tests, artifacts, blocker schema, handoff.
 - Do not claim completion unless the generated artifact and focused verification prove it.
+- Do not count scaffolds, templates, placeholders, mock/simulated evidence, review packets, PDFs, or input-request forms as completion. They are allowed only as starter or intake surfaces with explicit blockers.
 - If blocked by external state or missing data, create a blocker artifact with `next_valid_move`.
 - Keep safety gates simple and binary: no fake proof, no fake fills, no hidden execution, no unsupported claims.
 - Do not remove attribution, imply official association, or create proprietary exceptions without a written commercial/association license.
@@ -72,6 +74,7 @@ A task is done only when all of these are true:
 - VC-pitch work has investor sources, claim boundaries, diligence lanes, and closed premature claims
 - board/go-live work has jurisdiction-specific tools, expert-review simulation, launch controls, human approval gates, and closed public-launch/legal/financial/compliance claims
 - unsafe or effectful actions remain closed unless explicitly proven and intended
+- no scaffold-like artifact is being counted as completion, and `python3 scripts/no_scaffold_audit.py --check` passes
 - handoff file names changed files, commands run, results, blockers, and next move
 
 ## AI-Native Defaults

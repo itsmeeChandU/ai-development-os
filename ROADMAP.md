@@ -3,8 +3,8 @@
 ## Near Term
 
 - [x] state reconstruction CLI that emits `STATE_RECONSTRUCTION_REPORT.md`
-- [x] system review graph generator scaffold
-- [x] richer project scaffold for web apps, data apps, and agent services
+- [x] system review graph generator with repo-count and proof-boundary output
+- [x] richer project starter for web apps, data apps, and agent services
 - [x] example prompt-to-product case study
 - [x] agent lane runner examples for Codex worktrees and MCP tools
 - [x] license/commercial-policy review by qualified counsel
@@ -24,4 +24,3 @@
 - claiming responsibility for derivative products
 - becoming a generic list of AI tools
 - accepting unverified readiness claims
-

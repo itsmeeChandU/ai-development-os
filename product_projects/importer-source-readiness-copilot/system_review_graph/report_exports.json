@@ -35,7 +35,7 @@
     "packet_id": "packet-frozen-tuna-canada-001",
     "proof_boundary": "Trade Readiness Copilot organizes import/export evidence and blockers. It does not provide legal, customs, tariff, tax, CFIA, supplier, buyer, compliance, shipment, or launch advice.",
     "report_type": "customer_readiness_report",
-    "source_snapshot_hash": "ca4f6ab7ceab9bc38298b78849b21f4320d064e3544d0a5d3106a09597903be4",
+    "source_snapshot_hash": "c7a40afb2ec11a49fa37e6ca020a6115fe70cc8f4893bbd06871970933ded6d7",
     "status": "draft_internal_export_ready"
   },
   {
@@ -74,7 +74,7 @@
     "packet_id": "packet-frozen-tuna-canada-001",
     "proof_boundary": "Trade Readiness Copilot organizes import/export evidence and blockers. It does not provide legal, customs, tariff, tax, CFIA, supplier, buyer, compliance, shipment, or launch advice.",
     "report_type": "customer_readiness_report",
-    "source_snapshot_hash": "ca4f6ab7ceab9bc38298b78849b21f4320d064e3544d0a5d3106a09597903be4",
+    "source_snapshot_hash": "c7a40afb2ec11a49fa37e6ca020a6115fe70cc8f4893bbd06871970933ded6d7",
     "status": "draft_internal_export_ready"
   },
   {
@@ -113,7 +113,7 @@
     "packet_id": "packet-frozen-tuna-canada-001",
     "proof_boundary": "Trade Readiness Copilot organizes import/export evidence and blockers. It does not provide legal, customs, tariff, tax, CFIA, supplier, buyer, compliance, shipment, or launch advice.",
     "report_type": "expert_review_packet",
-    "source_snapshot_hash": "ca4f6ab7ceab9bc38298b78849b21f4320d064e3544d0a5d3106a09597903be4",
+    "source_snapshot_hash": "c7a40afb2ec11a49fa37e6ca020a6115fe70cc8f4893bbd06871970933ded6d7",
     "status": "draft_internal_export_ready"
   },
   {
@@ -152,7 +152,7 @@
     "packet_id": "packet-frozen-tuna-canada-001",
     "proof_boundary": "Trade Readiness Copilot organizes import/export evidence and blockers. It does not provide legal, customs, tariff, tax, CFIA, supplier, buyer, compliance, shipment, or launch advice.",
     "report_type": "operator_blocker_report",
-    "source_snapshot_hash": "ca4f6ab7ceab9bc38298b78849b21f4320d064e3544d0a5d3106a09597903be4",
+    "source_snapshot_hash": "c7a40afb2ec11a49fa37e6ca020a6115fe70cc8f4893bbd06871970933ded6d7",
     "status": "draft_internal_export_ready"
   },
   {
@@ -191,7 +191,7 @@
     "packet_id": "packet-frozen-tuna-canada-001",
     "proof_boundary": "Trade Readiness Copilot organizes import/export evidence and blockers. It does not provide legal, customs, tariff, tax, CFIA, supplier, buyer, compliance, shipment, or launch advice.",
     "report_type": "private_beta_gate_report",
-    "source_snapshot_hash": "ca4f6ab7ceab9bc38298b78849b21f4320d064e3544d0a5d3106a09597903be4",
+    "source_snapshot_hash": "c7a40afb2ec11a49fa37e6ca020a6115fe70cc8f4893bbd06871970933ded6d7",
     "status": "draft_internal_export_ready"
   },
   {
@@ -230,7 +230,7 @@
     "packet_id": "packet-frozen-tuna-canada-001",
     "proof_boundary": "Trade Readiness Copilot organizes import/export evidence and blockers. It does not provide legal, customs, tariff, tax, CFIA, supplier, buyer, compliance, shipment, or launch advice.",
     "report_type": "customer_readiness_report",
-    "source_snapshot_hash": "ca4f6ab7ceab9bc38298b78849b21f4320d064e3544d0a5d3106a09597903be4",
+    "source_snapshot_hash": "c7a40afb2ec11a49fa37e6ca020a6115fe70cc8f4893bbd06871970933ded6d7",
     "status": "pdf_renderer_ready_basic"
   },
   {
@@ -269,7 +269,7 @@
     "packet_id": "packet-frozen-tuna-canada-001",
     "proof_boundary": "Trade Readiness Copilot organizes import/export evidence and blockers. It does not provide legal, customs, tariff, tax, CFIA, supplier, buyer, compliance, shipment, or launch advice.",
     "report_type": "draft_trade_readiness_report",
-    "source_snapshot_hash": "ca4f6ab7ceab9bc38298b78849b21f4320d064e3544d0a5d3106a09597903be4",
+    "source_snapshot_hash": "c7a40afb2ec11a49fa37e6ca020a6115fe70cc8f4893bbd06871970933ded6d7",
     "status": "pdf_renderer_ready_basic"
   },
   {
@@ -308,7 +308,7 @@
     "packet_id": "packet-frozen-tuna-canada-001",
     "proof_boundary": "Trade Readiness Copilot organizes import/export evidence and blockers. It does not provide legal, customs, tariff, tax, CFIA, supplier, buyer, compliance, shipment, or launch advice.",
     "report_type": "buyer_ready_packet",
-    "source_snapshot_hash": "ca4f6ab7ceab9bc38298b78849b21f4320d064e3544d0a5d3106a09597903be4",
+    "source_snapshot_hash": "c7a40afb2ec11a49fa37e6ca020a6115fe70cc8f4893bbd06871970933ded6d7",
     "status": "pdf_renderer_ready_basic"
   },
   {
@@ -347,7 +347,7 @@
     "packet_id": "packet-frozen-tuna-canada-001",
     "proof_boundary": "Trade Readiness Copilot organizes import/export evidence and blockers. It does not provide legal, customs, tariff, tax, CFIA, supplier, buyer, compliance, shipment, or launch advice.",
     "report_type": "broker_review_packet",
-    "source_snapshot_hash": "ca4f6ab7ceab9bc38298b78849b21f4320d064e3544d0a5d3106a09597903be4",
+    "source_snapshot_hash": "c7a40afb2ec11a49fa37e6ca020a6115fe70cc8f4893bbd06871970933ded6d7",
     "status": "pdf_renderer_ready_basic"
   },
   {
@@ -386,7 +386,7 @@
     "packet_id": "packet-frozen-tuna-canada-001",
     "proof_boundary": "Trade Readiness Copilot organizes import/export evidence and blockers. It does not provide legal, customs, tariff, tax, CFIA, supplier, buyer, compliance, shipment, or launch advice.",
     "report_type": "missing_evidence_checklist",
-    "source_snapshot_hash": "ca4f6ab7ceab9bc38298b78849b21f4320d064e3544d0a5d3106a09597903be4",
+    "source_snapshot_hash": "c7a40afb2ec11a49fa37e6ca020a6115fe70cc8f4893bbd06871970933ded6d7",
     "status": "pdf_renderer_ready_basic"
   },
   {
@@ -425,7 +425,7 @@
     "packet_id": "packet-frozen-tuna-canada-001",
     "proof_boundary": "Trade Readiness Copilot organizes import/export evidence and blockers. It does not provide legal, customs, tariff, tax, CFIA, supplier, buyer, compliance, shipment, or launch advice.",
     "report_type": "operator_review_report",
-    "source_snapshot_hash": "ca4f6ab7ceab9bc38298b78849b21f4320d064e3544d0a5d3106a09597903be4",
+    "source_snapshot_hash": "c7a40afb2ec11a49fa37e6ca020a6115fe70cc8f4893bbd06871970933ded6d7",
     "status": "pdf_renderer_ready_basic"
   },
   {
@@ -464,7 +464,7 @@
     "packet_id": "packet-frozen-tuna-canada-001",
     "proof_boundary": "Trade Readiness Copilot organizes import/export evidence and blockers. It does not provide legal, customs, tariff, tax, CFIA, supplier, buyer, compliance, shipment, or launch advice.",
     "report_type": "expert_review_packet",
-    "source_snapshot_hash": "ca4f6ab7ceab9bc38298b78849b21f4320d064e3544d0a5d3106a09597903be4",
+    "source_snapshot_hash": "c7a40afb2ec11a49fa37e6ca020a6115fe70cc8f4893bbd06871970933ded6d7",
     "status": "pdf_renderer_ready_basic"
   }
 ]

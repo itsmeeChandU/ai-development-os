@@ -1,74 +1,316 @@
 %PDF-1.4
-%“Œ‹ž ReportLab Generated PDF document (opensource)
 1 0 obj
-<<
-/F1 2 0 R /F2 3 0 R
->>
+<< /Type /Catalog /Pages 2 0 R >>
 endobj
 2 0 obj
-<<
-/BaseFont /Helvetica /Encoding /WinAnsiEncoding /Name /F1 /Subtype /Type1 /Type /Font
->>
+<< /Type /Pages /Kids [4 0 R 6 0 R 8 0 R] /Count 3 >>
 endobj
 3 0 obj
-<<
-/BaseFont /Helvetica-Bold /Encoding /WinAnsiEncoding /Name /F2 /Subtype /Type1 /Type /Font
->>
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
 endobj
 4 0 obj
-<<
-/Contents 8 0 R /MediaBox [ 0 0 612 792 ] /Parent 7 0 R /Resources <<
-/Font 1 0 R /ProcSet [ /PDF /Text /ImageB /ImageC /ImageI ]
->> /Rotate 0 /Trans <<
-
->> 
-  /Type /Page
->>
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R >> >> /Contents 5 0 R >>
 endobj
 5 0 obj
-<<
-/PageMode /UseNone /Pages 7 0 R /Type /Catalog
->>
+<< /Length 2261 >>
+stream
+BT
+/F1 9 Tf
+54 744 Td
+12 TL
+(Trade Readiness Copilot - Go Live Input Requests) Tj
+T*
+(Status: waiting_for_real_inputs_not_ready_yet) Tj
+T*
+() Tj
+T*
+(What this is) Tj
+T*
+(This is the short collection list for real people. Once these answers are received and) Tj
+T*
+(saved, the same script can say whether go live is ready for the exact approved scope.) Tj
+T*
+() Tj
+T*
+(Current state) Tj
+T*
+(- Public launch ready: False) Tj
+T*
+(- Ready inputs received: 0 of 8) Tj
+T*
+(- Missing inputs: 8) Tj
+T*
+() Tj
+T*
+(How to use this) Tj
+T*
+(1. Send the reviewer brief PDF first.) Tj
+T*
+(2. Ask each person to answer only their area.) Tj
+T*
+(3. Save each response in external_inputs/ using the matching JSON template.) Tj
+T*
+(4. Rerun scripts/run_external_validation_requirements.py --input-dir external_inputs.) Tj
+T*
+(5. Use the go-live readiness report to see whether launch is ready or what is still missing.) Tj
+T*
+() Tj
+T*
+(Inputs to collect) Tj
+T*
+() Tj
+T*
+(Outside Expert Review) Tj
+T*
+(Who to ask: Product, security, privacy/legal, AI safety, operations, trade, and payment) Tj
+T*
+(reviewers as relevant.) Tj
+T*
+(Question: Have the right outside reviewers checked the right scope?) Tj
+T*
+(Ready answer: Ready for my area) Tj
+T*
+(Minimum input needed:) Tj
+T*
+(- reviewer name) Tj
+T*
+(- reviewed scope) Tj
+T*
+(- decision) Tj
+T*
+(- top issues) Tj
+T*
+(- missing evidence) Tj
+T*
+(- signed date) Tj
+T*
+() Tj
+T*
+(Legal, Privacy, And Security) Tj
+T*
+(Who to ask: Privacy/legal reviewer plus application security reviewer.) Tj
+T*
+(Question: Is customer data handling, security, AI use, retention, deletion, and incident) Tj
+T*
+(handling acceptable for the launch scope?) Tj
+T*
+(Ready answer: Ready for my area) Tj
+T*
+(Minimum input needed:) Tj
+T*
+(- reviewer name) Tj
+T*
+(- data/privacy scope) Tj
+T*
+(- security scope) Tj
+T*
+(- decision) Tj
+T*
+(- missing evidence) Tj
+T*
+(- signed date) Tj
+T*
+() Tj
+T*
+(Customs And Trade Language) Tj
+T*
+(Who to ask: Licensed customs broker or qualified trade/compliance reviewer.) Tj
+T*
+(Question: Does the product avoid unsupported customs, tariff, CFIA, sanctions, and trade-) Tj
+T*
+(readiness claims?) Tj
+T*
+(Ready answer: Ready for my area or not applicable for this launch) Tj
+T*
+(Minimum input needed:) Tj
+T*
+(- reviewer name) Tj
+T*
+ET
+endstream
 endobj
 6 0 obj
-<<
-/Author (\(anonymous\)) /CreationDate (D:20260627053933+05'00') /Creator (\(unspecified\)) /Keywords () /ModDate (D:20260627053933+05'00') /Producer (ReportLab PDF Library - \(opensource\)) 
-  /Subject (\(unspecified\)) /Title (Go Live Input Requests) /Trapped /False
->>
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R >> >> /Contents 7 0 R >>
 endobj
 7 0 obj
-<<
-/Count 1 /Kids [ 4 0 R ] /Type /Pages
->>
+<< /Length 1915 >>
+stream
+BT
+/F1 9 Tf
+54 744 Td
+12 TL
+(- country/product scope) Tj
+T*
+(- approved wording) Tj
+T*
+(- wording to avoid) Tj
+T*
+(- decision) Tj
+T*
+(- signed date) Tj
+T*
+() Tj
+T*
+(Hosted Staging Or Production) Tj
+T*
+(Who to ask: DevOps, SRE, or operations owner.) Tj
+T*
+(Question: Is there real hosted evidence for the launch scope, not only localhost?) Tj
+T*
+(Ready answer: Ready for my area) Tj
+T*
+(Minimum input needed:) Tj
+T*
+(- environment URL) Tj
+T*
+(- commit/build) Tj
+T*
+(- smoke result) Tj
+T*
+(- monitoring) Tj
+T*
+(- rollback owner) Tj
+T*
+(- decision) Tj
+T*
+(- signed date) Tj
+T*
+() Tj
+T*
+(Payments) Tj
+T*
+(Who to ask: Billing/payment owner, tax/accounting advisor if needed, and support owner.) Tj
+T*
+(Question: Are live checkout, webhook, tax/refund/support, and billing wording ready, or is) Tj
+T*
+(payment intentionally off for launch?) Tj
+T*
+(Ready answer: Ready for my area or not applicable for this launch) Tj
+T*
+(Minimum input needed:) Tj
+T*
+(- payment scope) Tj
+T*
+(- Stripe mode) Tj
+T*
+(- webhook evidence) Tj
+T*
+(- refund/support owner) Tj
+T*
+(- decision) Tj
+T*
+(- signed date) Tj
+T*
+() Tj
+T*
+(Real User Feedback) Tj
+T*
+(Who to ask: Product/UX owner or user research owner.) Tj
+T*
+(Question: Have real target users used the product and understood what is and is not) Tj
+T*
+(approved?) Tj
+T*
+(Ready answer: Ready for my area) Tj
+T*
+(Minimum input needed:) Tj
+T*
+(- participant count) Tj
+T*
+(- segments) Tj
+T*
+(- task results) Tj
+T*
+(- top issues) Tj
+T*
+(- what changed) Tj
+T*
+(- decision) Tj
+T*
+(- signed date) Tj
+T*
+() Tj
+T*
+(Buyer Or Supplier Validation) Tj
+T*
+(Who to ask: Founder or commercial validation owner.) Tj
+T*
+(Question: Have real buyers, suppliers, importers, exporters, or advisors validated the) Tj
+T*
+(problem and workflow?) Tj
+T*
+(Ready answer: Ready for my area or not applicable for this launch) Tj
+T*
+(Minimum input needed:) Tj
+T*
+(- counterparty type) Tj
+T*
+(- problem validated) Tj
+T*
+ET
+endstream
 endobj
 8 0 obj
-<<
-/Filter [ /ASCII85Decode /FlateDecode ] /Length 2346
->>
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R >> >> /Contents 9 0 R >>
+endobj
+9 0 obj
+<< /Length 543 >>
 stream
-Gat=,=``=W&q9SYkXY*+9^rZ)mE:`8GfE[MfWd<GqrWK%84#u^$p[G9^Y`quPV#b<iee*J)sH>J$giJ(5E>O[Y5gc2@!q!bj2,UBcGZ0ell1>C?2V:4^P)5&CA0;ul8jA"f#41SD&4aQinMofe:J/ip$EF=El%E")iq,ZEi)sUiIS='A6`pF/9?rr!j:Gl$/`[i_ek^+"]G7J\M!Nh@.k7G^Ce6;V>_aE![m?jHd<HIS0%>6Pe32hMDBi;W>)OTh_tADEnXnR)W/'_7&6dIP+I[U=Dg+;ca*a,LLn-P+Z;*gP9QA8Oi$W=0cZQ!*/kSuf:\I.'bJPFj`)GS#-#rQbb]o#a['p4!m>X2f.>IfZ39r+,WpuFA=P#0JS1"]*#9/_Y.4^[oF9,]NoYN('cp:q;p=cY1'5_OL1&QqG=gC9Y0+uX'ZLFKP/f6,NoAkG*P%H`r@aiPrmYeD@6*OE_%\FJYet,U(B#*SA=a4OV[-'0TnUn-36Zli>Nht?*aogeDJ-+XB*f]>XN5Y.k>Eb#'jtuJ,OY:Y-QnB%6eB==4jlN5"OnR_^ojlO0:u/T6d!P&?4pYf(,EGrI7T+dn-u,7pJV8MEGMQZF/cuE[m1GZhk%2@@V?imJ<<cmr@PAlfqN(5FE;fii2&_6n=@<0TF7>%)PR8:npf\LX'-A2rMpq:(PAFpXQR2lAdMOh4LiO9qG\&c8'q!ATg?^kj@.sea]&5Vs$&0<E(Wk3<oj)E'R_cp>gN0&iK"AiojQ<okfWZK/lHpNHd1.0Nnogs+5`X,d&?YWdHp[mH4Lh:Seon'\7kRi6E31R<-sX$3LeZ#X.%FsI?Eg`Mq%$Mn",t3-RK`UPIPK\B:MPlTf\Vj:fl6Tg3eGD`3&?_BDscf_"3TJ!lmJENZM41'@c5'#9;%!DF=0UV1_/:dkCTth2(?#6iH%n??r"kh?_`tO'spULCEP:.h$W8?-Mp0obA^%9%$o4bs<:M]"+Ln`5`>]0tLFA.H:IsMoVY,`HDBp&o/8$a!kB"F9L4)D5#<mcA=l^:lGg7+^%Y'2f[H4j_VQ'FKCGNV?0WO9)4oe`Sm7`g"_SbO4VcDlb!3i/=$I\g3T:iVOVd#o<P.A0l$=W6(o]"%[qOT5i4'Gh,gIA,PK@Q=BkV=SEKCTmpju7%s_@DY2&2#<\/l1MgA$B'HYTr\<G_m!2V=/$:RNg_-i,fP%'UC]A<-3Pa[Y:0bl@gM,;8*,j7>?MUK,X@VUIOp6JI[39GM&Sl=Kh:j$&-Nj:gHf7%Lb2G.[M(JG(h9(IsQM\:Bg@i1iSoua^Z&-(K/(D674@hT^2JikRZJi6*SJ!DQ"F4%P2D,-I3*QN2S0#4Da4;E&fRXQ7N09U+'6=+4@?u%2(XPLJ3F6n7#!Ej2gq1L1OT9%q%c0[A'r%+ua9g?N426KpUgk\lU<dG$Y`ugQG5['<&^a/DOYQ].pGAXhAUs7_aYRb.i*(5$io)HSYG<'F9q!`Do=E`pEj<cqhX)iBr2+X_Cc*=?,D]]q1iRASF$EFd4]9mZGF:5(,=\<<3TpU5_,kk;1dDr?U%$oWG?M[6hPXWSdfePJRnkd//a-]t>M9-$oJ0f!)d2HJ#^VDm&8kud,T*UZE=R.BXpUh@U,C8WT2%<47#WDU+.HSaUb_j`O8KQIb<N5T#;AD)f-2kbrSh7t6Y\.k?+L4$/ZP9*uo/V(^H_g4c+e5<g[lk8_HiIbQ@5hlSB,86%!B`K>=f>hSr6PBmPXt2)GUe(t1Y$R8P<_6#"OjQA5f7]Qi.^-nl$'G&07,_*]Qc,%aojUq<Y/0+)JTq7eW>;/6\%kUORuJ^7EaI8GV#h2kT7s7s1nc#YS0pm3G`VEotWq.YZP>k&.:>GqAmc.+S*fkN&uieaTV82X=\rqYqkDKQ`VD.[FlatlR\_KOZQgQ3SBt9?nB%9e(oksqs*k5:q@5U\*`hT$]g!*Tiul7cZcfajm"bi1c3LFPKhL\J9_DG'rbd\6A$k@?(oWqC]@+OC1<p>?Mp)-1mB\=*,GpG0HHfVC].6,Nm@qkRf7i1J'rD,&HT#&>rQS5C";X_bt*@ch4,U$#6hg*J`#nl]j88/7]W437Ajb8hf3=iAu6)NeS3us+bEBpW`AY%mpO#?K*-`4-Oe9<9`-=u1mPipJrf&g<#Hm.qf]'K8!%J?nknS"Ua3dE)>r_=)`1;c?(#^-lgaC)bXG,6qJJuLA?P2kln`0t.'nCj^+GX+oBNlQ*ih&CC:SQQo1AIZV,5t><*$_eX",FK<?g9/eW.`9*gn,;+)g3[hk"'=0iq0$$fl#q=M>b.j:h2E($hd+_8d:%=6h4C"5c6.Oug!NEW+IqE:JEHol44~>endstream
+BT
+/F1 9 Tf
+54 744 Td
+12 TL
+(- evidence summary) Tj
+T*
+(- permission scope) Tj
+T*
+(- decision) Tj
+T*
+(- signed date) Tj
+T*
+() Tj
+T*
+(Final Go Live Decision) Tj
+T*
+(Who to ask: Named launch owner.) Tj
+T*
+(Question: After all other inputs are in, is this launch approved for the exact stated scope?) Tj
+T*
+(Ready answer: Go for public launch) Tj
+T*
+(Minimum input needed:) Tj
+T*
+(- launch scope) Tj
+T*
+(- production URL) Tj
+T*
+(- remaining risks) Tj
+T*
+(- support owner) Tj
+T*
+(- rollback owner) Tj
+T*
+(- decision) Tj
+T*
+(- signed date) Tj
+T*
+ET
+endstream
 endobj
 xref
-0 9
+0 10
 0000000000 65535 f 
-0000000061 00000 n 
-0000000102 00000 n 
-0000000209 00000 n 
-0000000321 00000 n 
-0000000514 00000 n 
-0000000582 00000 n 
-0000000871 00000 n 
-0000000930 00000 n 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000127 00000 n 
+0000000197 00000 n 
+0000000323 00000 n 
+0000002636 00000 n 
+0000002762 00000 n 
+0000004729 00000 n 
+0000004855 00000 n 
 trailer
-<<
-/ID 
-[<b602d5976a1e9aefe78caade5198380c><b602d5976a1e9aefe78caade5198380c>]
-% ReportLab generated PDF document -- digest (opensource)
-
-/Info 6 0 R
-/Root 5 0 R
-/Size 9
->>
+<< /Size 10 /Root 1 0 R >>
 startxref
-3367
+5449
 %%EOF

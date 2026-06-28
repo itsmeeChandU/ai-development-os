@@ -1,93 +1,161 @@
 %PDF-1.4
-%“Œ‹ž ReportLab Generated PDF document (opensource)
 1 0 obj
-<<
-/F1 2 0 R /F2 3 0 R
->>
+<< /Type /Catalog /Pages 2 0 R >>
 endobj
 2 0 obj
-<<
-/BaseFont /Helvetica /Encoding /WinAnsiEncoding /Name /F1 /Subtype /Type1 /Type /Font
->>
+<< /Type /Pages /Kids [4 0 R 6 0 R] /Count 2 >>
 endobj
 3 0 obj
-<<
-/BaseFont /Helvetica-Bold /Encoding /WinAnsiEncoding /Name /F2 /Subtype /Type1 /Type /Font
->>
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
 endobj
 4 0 obj
-<<
-/Contents 9 0 R /MediaBox [ 0 0 612 792 ] /Parent 8 0 R /Resources <<
-/Font 1 0 R /ProcSet [ /PDF /Text /ImageB /ImageC /ImageI ]
->> /Rotate 0 /Trans <<
-
->> 
-  /Type /Page
->>
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R >> >> /Contents 5 0 R >>
 endobj
 5 0 obj
-<<
-/Contents 10 0 R /MediaBox [ 0 0 612 792 ] /Parent 8 0 R /Resources <<
-/Font 1 0 R /ProcSet [ /PDF /Text /ImageB /ImageC /ImageI ]
->> /Rotate 0 /Trans <<
-
->> 
-  /Type /Page
->>
+<< /Length 2777 >>
+stream
+BT
+/F1 9 Tf
+54 744 Td
+12 TL
+(Trade Readiness Copilot - Reviewer Brief) Tj
+T*
+(Status: built for review, not approved for public launch) Tj
+T*
+() Tj
+T*
+(Short version) Tj
+T*
+(The local product is built enough to review, but it is not approved for public launch,) Tj
+T*
+(hosted private beta, live payments, customs/trade claims, or buyer/supplier validation.) Tj
+T*
+() Tj
+T*
+(What I need from you) Tj
+T*
+(Please review only your area. You do not need to audit the whole repo.) Tj
+T*
+(Reply with one decision: looks okay for my area, not ready yet, I need more evidence, not my) Tj
+T*
+(area, or send to a different reviewer.) Tj
+T*
+(If it is not ready, list the top issues, what evidence is missing, and what would make it) Tj
+T*
+(safe to approve.) Tj
+T*
+(Please also say what the product must not claim in your area.) Tj
+T*
+() Tj
+T*
+(What is not approved yet) Tj
+T*
+(- Public launch) Tj
+T*
+(- Hosted private beta with real customer data) Tj
+T*
+(- Legal/privacy/security approval) Tj
+T*
+(- Customs, tariff, CFIA, sanctions, or trade-readiness claims) Tj
+T*
+(- Live payment activation) Tj
+T*
+(- Real user/private beta outcome claims) Tj
+T*
+(- Buyer or supplier validation claims) Tj
+T*
+(- Final public go/no-go approval) Tj
+T*
+() Tj
+T*
+(Best review match) Tj
+T*
+(- Product/UX: Can target users understand the flow and the claims that are not approved yet?) Tj
+T*
+(- Security: Are uploads, auth, AI, storage, logs, and deployment controls safe enough for) Tj
+T*
+(hosted beta?) Tj
+T*
+(- Privacy/legal: Do notices, terms, data handling, retention, deletion, and incident steps) Tj
+T*
+(match real flows?) Tj
+T*
+(- Customs/trade: Does any language imply tariff/customs/CFIA/import/export advice that needs) Tj
+T*
+(a broker or specialist?) Tj
+T*
+(- DevOps: Is there enough hosted staging/production evidence, monitoring, backup, rollback,) Tj
+T*
+(and support ownership?) Tj
+T*
+(- Payments: Is live checkout, webhook, tax/refund/support, and billing language ready?) Tj
+T*
+(- Buyer/supplier/commercial: Is there real counterpart evidence, not just a plausible idea?) Tj
+T*
+(- Launch owner: Are all review areas evidenced enough to make a public go/no-go decision?) Tj
+T*
+() Tj
+T*
+(Fast response template) Tj
+T*
+(Decision:) Tj
+T*
+(Scope reviewed:) Tj
+T*
+(Top issues:) Tj
+T*
+(Evidence missing:) Tj
+T*
+(Claims the product must not make:) Tj
+T*
+(What would make this ready for my approval:) Tj
+T*
+() Tj
+T*
+(Detailed appendix) Tj
+T*
+(Use external_validation_requirements.pdf for the full evidence checklist, source links, data) Tj
+T*
+(fields, and collection templates.) Tj
+T*
+() Tj
+T*
+(Important note) Tj
+T*
+(This brief lists what is still needed. It does not prove outside approval,) Tj
+T*
+(legal/privacy/security signoff, customs/trade review, hosted production proof, live payment) Tj
+T*
+ET
+endstream
 endobj
 6 0 obj
-<<
-/PageMode /UseNone /Pages 8 0 R /Type /Catalog
->>
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R >> >> /Contents 7 0 R >>
 endobj
 7 0 obj
-<<
-/Author (\(anonymous\)) /CreationDate (D:20260627053933+05'00') /Creator (\(unspecified\)) /Keywords () /ModDate (D:20260627053933+05'00') /Producer (ReportLab PDF Library - \(opensource\)) 
-  /Subject (\(unspecified\)) /Title (External Validation Reviewer Brief) /Trapped /False
->>
-endobj
-8 0 obj
-<<
-/Count 2 /Kids [ 4 0 R 5 0 R ] /Type /Pages
->>
-endobj
-9 0 obj
-<<
-/Filter [ /ASCII85Decode /FlateDecode ] /Length 2270
->>
+<< /Length 119 >>
 stream
-Gatm<gN)%<%"7kOi%`Kt'^qC&FDSumgrZ@8X>\PJ'tKJEP?`i8>1VRIfHhugQGeGo4Gc"D")o#8!,-q?5F2.)c2fP10YOa,Z=10Ab;EOlI>7(@foNI_-(osrT/W:][_)SKf5i1c#/bLF1CBgZdK-D^h/s,FCr\7"=:Xe3'h^N6jX`t2/gXbZ1<i2rk;`4#nhmW/Z:arP2jf#KfmAmgF.)4fL2R5WpYE)##A[uH4mLeFN_jn,P::L3o;7u6f?XSBdIbE_.jP46S*[I4dg4_?QY-W;]7-o.<Nlo2@9K&'3YfUGIF%Wt.XbW=A9t.2EXYb0A3iUNHk(prH?TC1-)u7mA]E0Xr46!BWEd901k::Y@,As6<39c\JD#fI_J>HL4Fqarj$u4.6RkCQBpJdH_Bh+d3%tXrDN7.lZ@_FQA]]iUI>5?E2oZoSY70tH>8sr]'%l,2JIuT`%1@U'O2.uI1C.8?keEfeVAHa*Em[Y6%hV$J+:a>(GRsb[l[drsdn&p]U;07M"!\.IoL8Tsg5adUn]b,_p?m$n?bb&"oEkHoi^OY-2MR!90=q[VSTj`MFHk,.2dDLR*VOJ'U53Nm?8Ya%M],\@nNh@/oT$6]g]u^sj]/bJFC#\#3lk%D(B*NU(&7Xh'lsjr1XFK/gH`cI!aR.(6EL33i;bGS]X2j_N4*3&6=7YSJZn%g[GI`]*,g=16d6Z4AEabZ^c"440&L(6)q5a8]jne$p)"YnLQ!mKjcE#J`RDm/Q$C06nM#pQCCCK71E,k'.u#/h(-R"2,2Qf'.6T6:#`gF/o84`%)2f-fY@R/JV)_R%+H_k=kqmq7*iG12]$)'!Gq*B//3A"3iB7K#@Xa-Gs2;\0c\rtj2?kCJ4?Gl-<a=h'f8jR!mD4*Ac+0Q329auEc("*r\Mn$dDUQ]5c71m,o4lq&qqZ.>H`NlT4fa=n4ArDT`IXVe_>pj:/+fbVH%.5VH"!24?E\U%g)?t.>kN3teq7l!$caX,WC.6rMWT$;oUPEXTVI4V?,i;nXfm=)OKLO:WIS!=)'i<GD[cka;[Zu-63N'=[9e]K:6o?3X*^^n>!&!-&$#AhQ`/:mX]MG?n,;m&aFnf&+<K3*Pq2Z"Bfo7miZLNC30lM4>45^(P3q%,DsC-VBb_"d)^OZW_'r7TcJM(\J;nI)Nj\D#6+!'&XmQj!`>*r/M\;@%-Me#MNdfAY5mQ+/SZ%'>X)$*nBJ-,']Ml*>=*?%djT\t#;W-n2DoV[$1N>e1`!B"gJk6PKj(YdY%Kd!H!sfliFt,&He)dTIlX74f;=^Y6/-]sMWj_1]Z%h'm%?C;6eQ5db*A7QM"CRY<.kJjSom:g<8dHE9ZNA>&4`I;klAQJ$L<0)/lQU0^+4Vg.`tORo2XOpgPX42F>X+Rfl7bC3DemO0TqBsN;$&%iQ=JiiF.he9LdLUE/+qaK.D8E4qal$[(B.##`rth1oSLO(:_srl%m4a0[,/Se>E''-@#rUH[qIHbP/so1_`!Rl$:?XKYprs0:o@N2,goQ/CLeE,OU2Y*`q>-S3\=eJp0BG:V'qG/=WI%=VLIhVJEHXTn\2gLFck[A>q&.:K!=RPku@u8Mu9j<I1TX-(]W\VQri:0=&WBsFtV=M>0gd,E>T=Y<;7ba;3)`[)QoUI.u6[4oh!4C21;FV&mndMFf3c`Z3l@r0n@jpK\req]4rR/V,`X]Q"dd/@m:'E-`YK\bVD5!$CB/rf4SiLmW8g>(T>7cHU3@@O;KPZ;hseP'\S9H$\1+,YGbEf?r-JYXn\V>P,W9?;LSKd-^gkM"X`kpX]"X;38W#D.8p.L&g;!++[e:pEhnN+RQ<pT(aA-%8Dg^oc)N(nM118L7:%2*[,em@`*-/GL`\I-WZeUn5hp<sNJJ`[VpH=;Vd22"N+tf2pc_i<s4MiI)kuVKi&O4b>?'a\JQ2&'ioN#Aa\QTgTA'r?Bq75+:[/Vu)"MW@cIA'&>#^Ocj@Q"6icM*4X2%4[r?BNOMP&.*A&Wk*7)h9YMfjTSdP<KXOCd0mP[Z(C]mfjpVm"Y^Jaa%qUFtYMMl+N^S`B.@h:?TG[,l3F69Xa<go_s!;*SjjpXi],Ojj!"cMuU`>5jP&rOh6=plqd7<MQZb#?t-]%:4N[eLO\iZQHMtX7[DYWJGAkO;URJ^ed#H(g'WpngjBgY2($.J>mU[J-RPiH[d(Lj-q:4bk`Z(8;(c<'QMr_@G;G*$*rr\K!)%*P^E((h_S0f3@*7!7LK.gU;'^#R<>RfI0"#<n>-J2p)e^ZR"b~>endstream
-endobj
-10 0 obj
-<<
-/Filter [ /ASCII85Decode /FlateDecode ] /Length 640
->>
-stream
-Gat='?'!Gg&:D6"0olQSP9s#=?4To4&jh*m+Wap%P8]s-YaqB.Y@m5a:3V5eKH`k1Y'4K%AlE(\:QaMF#OZ?fqZ93C\j]J-($^!f>MjhCH-C)6@f$kcQFjG)D3.buC:>URXfBo\[tX-W61Kb;/[H)O10[:PO5&BfL@C%!@g;KFDg4+)"6L4X)nIDP4(kL?L&*=bf9,56fW&+flXKGomt9m2jg3\`V;EZgST&MifWsok^.@d\r@O+]npMrCVocDf^>$s]'i6[rh8#%W&H"i!hQ?fP;67+S"&"2N4:9=gd<smZ%:]qU#,2<QiK=b>#"M\tM.pj@#.=t1V8(!#J!eVV`.?4p0'HskQ`_eS9WN9VY\-+En:5I%34:[<,AGUFSPUa4)X1939tI.&1-LX[%?2"I<o>Vn3Pcu+>nLIm7=`-gI-=(D5n*k`3F($X=oGPDouVFuj&Wu7+$Atd[hA;K=IXE1-Gq!_'BG>nUZ4.]Vr3Q9WuC$-Z85VJPg)^2c:VGa:O7%.>i:TX8__N5RKr8/*n$KA3&u=`qSYRd,[elmK+W1caAQW0Y`7qrP@u-5$%,FmOI-*oNtbQ07rp>aE1AQAE^,PY2=eXUB;Tr*&C\Y`BZ9(no7?'Fs)&ipIKF3b*<c~>endstream
+BT
+/F1 9 Tf
+54 744 Td
+12 TL
+(activation, private-beta outcome, buyer/supplier validation, or public go/no-go.) Tj
+T*
+ET
+endstream
 endobj
 xref
-0 11
+0 8
 0000000000 65535 f 
-0000000061 00000 n 
-0000000102 00000 n 
-0000000209 00000 n 
-0000000321 00000 n 
-0000000514 00000 n 
-0000000708 00000 n 
-0000000776 00000 n 
-0000001077 00000 n 
-0000001142 00000 n 
-0000003503 00000 n 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000121 00000 n 
+0000000191 00000 n 
+0000000317 00000 n 
+0000003146 00000 n 
+0000003272 00000 n 
 trailer
-<<
-/ID 
-[<0fc1b3c129b7bf3af75d5d7c671595bd><0fc1b3c129b7bf3af75d5d7c671595bd>]
-% ReportLab generated PDF document -- digest (opensource)
-
-/Info 7 0 R
-/Root 6 0 R
-/Size 11
->>
+<< /Size 8 /Root 1 0 R >>
 startxref
-4234
+3442
 %%EOF

@@ -700,7 +700,7 @@ def execute_agent_tool(
         "request_billing_quote": lambda: authorize_billing_usage(repo_root, packet_id, action="request_billing_quote"),
     }
     if tool_name not in tool_map:
-        raise KeyError(f"agent tool not implemented: {tool_name}")
+        raise KeyError(f"unsupported agent tool: {tool_name}")
     result = tool_map[tool_name]()
     _apply_operation_proofs(repo_root)
     return {

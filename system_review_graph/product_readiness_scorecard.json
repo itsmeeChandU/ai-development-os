@@ -1,0 +1,55 @@
+{
+  "checks": [
+    {
+      "evidence": "readiness_report.json",
+      "id": "local_software_loop",
+      "meaning": "Local software loop can be reviewed internally.",
+      "passed": true
+    },
+    {
+      "evidence": "continuation_plan.json",
+      "id": "continuation_required",
+      "meaning": "The product is still startup_in_progress and cannot be called complete.",
+      "passed": true
+    },
+    {
+      "evidence": "final_go_live_decision_report.json",
+      "id": "public_launch_closed",
+      "meaning": "Public launch is not approved.",
+      "passed": true
+    },
+    {
+      "evidence": "external_review_findings_report.json",
+      "id": "real_external_review_pending",
+      "meaning": "External review has not been completed by real reviewers.",
+      "passed": true
+    },
+    {
+      "evidence": "go_live_input_readiness_report.json",
+      "id": "go_live_inputs_pending",
+      "meaning": "Eight real go-live inputs are still required.",
+      "passed": true
+    },
+    {
+      "evidence": "no_scaffold_audit_report.json",
+      "id": "no_scaffold_completion_claims",
+      "meaning": "No scaffold-like artifact is allowed to count as completion.",
+      "passed": true
+    }
+  ],
+  "final_truth": {
+    "complete_development_ready": false,
+    "external_review_completed": false,
+    "go_live_missing_inputs": 8,
+    "next_valid_move": "Collect real reviewer, hosted, payment, beta/user, buyer/supplier, and launch-owner inputs.",
+    "public_launch_ready": false
+  },
+  "generated_at": "2026-06-28T01:55:59+00:00",
+  "project": "product_projects/importer-source-readiness-copilot",
+  "score": {
+    "passed": 6,
+    "percent": 100.0,
+    "total": 6
+  },
+  "status": "internal_review_ready_external_completion_not_ready"
+}

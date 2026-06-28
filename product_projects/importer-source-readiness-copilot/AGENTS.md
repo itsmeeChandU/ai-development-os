@@ -35,6 +35,7 @@ Before meaningful work, read:
 - Write missing data, API, expert, legal, procurement, or compliance inputs as blocker rows with `next_valid_move`.
 - Every implementation lane needs allowed files, forbidden files, proof commands, generated artifacts, and a handoff.
 - Do not claim completion without code/data changes where required, tests or smoke checks, generated artifacts, blockers, and next valid move.
+- Do not count project starters, placeholders, fixture data, simulated reviews, review packets, PDFs, or go-live input forms as completion. They must stay labeled as intake or blocker evidence until real returned evidence closes the gate.
 
 ## Proof Defaults
 

@@ -25,6 +25,7 @@ REQUIRED_FOR_FLOW = [
     "docs/VC_PITCH_READINESS.md",
     "docs/BOARD_GO_LIVE_READINESS.md",
     "docs/EXTERNAL_AGENT_HARNESS_INTEGRATION.md",
+    "docs/NO_SCAFFOLD_DELIVERY_POLICY.md",
     "manifests/agentic_execution_manifest.json",
     "manifests/internal_repo_registry.json",
     "manifests/research_data_router.json",
@@ -205,6 +206,19 @@ REQUIRED_FOR_FLOW = [
     "system_review_graph/research_data_plan.json",
     "system_review_graph/development_strategy_plan.json",
     "system_review_graph/external_harness_integration_packet.json",
+    "scripts/no_scaffold_audit.py",
+    "scripts/product_readiness_scorecard.py",
+    "scripts/system_review_graph.py",
+    "system_review_graph/no_scaffold_audit_report.json",
+    "system_review_graph/no_scaffold_audit_report.md",
+    "system_review_graph/product_readiness_scorecard.json",
+    "system_review_graph/system_review_graph_summary.json",
+    "system_review_graph/code_graph.md",
+    "system_review_graph/data_graph.md",
+    "system_review_graph/flow_graph.md",
+    "system_review_graph/proof_graph.md",
+    "system_review_graph/task_graph.md",
+    "system_review_graph/resource_graph.md",
 ]
 
 REQUIRED_TOOL_TERMS = [

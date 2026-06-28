@@ -1,0 +1,84 @@
+{
+  "classification_counts": {
+    "fixture_blocker_evidence": 30,
+    "generated_audit_language": 7,
+    "generator_template_only": 24,
+    "policy_enforcement_code": 55,
+    "policy_language": 60,
+    "simulated_review_approval_closed": 231,
+    "template_reference": 102
+  },
+  "disallowed_count": 0,
+  "disallowed_findings": [],
+  "finding_count": 509,
+  "generated_at": "2026-06-28T01:55:54+00:00",
+  "head": "d5a80d8a3178d9e1248944df9ac839d6f897a7a8",
+  "policy": "docs/NO_SCAFFOLD_DELIVERY_POLICY.md",
+  "policy_failures": [],
+  "prior_delivery_audit": {
+    "changed_validation_files": [
+      "product_projects/importer-source-readiness-copilot/output/pdf/external_validation_requirements.pdf",
+      "product_projects/importer-source-readiness-copilot/output/pdf/external_validation_reviewer_brief.pdf",
+      "product_projects/importer-source-readiness-copilot/output/pdf/go_live_input_requests.pdf",
+      "product_projects/importer-source-readiness-copilot/scripts/run_external_validation_requirements.py",
+      "product_projects/importer-source-readiness-copilot/src/importer_source_readiness/external_validation_research.py",
+      "product_projects/importer-source-readiness-copilot/system_review_graph/external_validation_evidence_requirements.json",
+      "product_projects/importer-source-readiness-copilot/system_review_graph/external_validation_requirements_report.json",
+      "product_projects/importer-source-readiness-copilot/system_review_graph/go_live_input_readiness_report.json",
+      "product_projects/importer-source-readiness-copilot/system_review_graph/go_live_input_templates.json",
+      "product_projects/importer-source-readiness-copilot/tests/test_external_validation_research.py"
+    ],
+    "commit": "d5a80d8a3178d9e1248944df9ac839d6f897a7a8",
+    "commit_found": true,
+    "scaffold_like_outputs": [
+      {
+        "audit_verdict": "This is an input form for real people. It is not evidence that go live is approved.",
+        "classification": "review_input_template_only",
+        "complete_development_claim_allowed": false,
+        "path": "product_projects/importer-source-readiness-copilot/system_review_graph/go_live_input_templates.json"
+      },
+      {
+        "audit_verdict": "This tells reviewers what to provide. It is not a replacement for reviewer decisions.",
+        "classification": "review_intake_only",
+        "complete_development_claim_allowed": false,
+        "path": "product_projects/importer-source-readiness-copilot/docs/GO_LIVE_INPUT_REQUESTS.md"
+      },
+      {
+        "audit_verdict": "This PDF is email-ready packaging. It is not hosted proof, payment proof, user proof, or approval.",
+        "classification": "shareable_review_packet_only",
+        "complete_development_claim_allowed": false,
+        "path": "product_projects/importer-source-readiness-copilot/output/pdf/go_live_input_requests.pdf"
+      },
+      {
+        "audit_verdict": "The evaluator can flip readiness only after real returned input records exist.",
+        "classification": "evaluator_and_report_generator",
+        "complete_development_claim_allowed": false,
+        "path": "product_projects/importer-source-readiness-copilot/src/importer_source_readiness/external_validation_research.py"
+      }
+    ],
+    "verdict": "Prior delivery produced a real audit/evaluator package and shareable review inputs, not complete go-live development."
+  },
+  "repo": "/Users/chandu/Documents/intelligance os",
+  "runtime_claim_checks": {
+    "blocker_ledger_exists": true,
+    "external_validation_hosted_private_beta_ready": false,
+    "external_validation_live_payment_ready": false,
+    "external_validation_public_launch_ready": false,
+    "external_validation_report_exists": true,
+    "external_validation_status": "external_validation_requirements_ready_all_real_world_gates_blocked",
+    "go_live_hosted_private_beta_ready": false,
+    "go_live_input_readiness_exists": true,
+    "go_live_input_status": "waiting_for_real_inputs_not_ready_yet",
+    "go_live_input_templates_open_launch": false,
+    "go_live_live_payment_ready": false,
+    "go_live_missing_input_count": 8,
+    "go_live_public_launch_ready": false,
+    "simulated_ai_review_can_open_gate": false
+  },
+  "scanned_file_count": 2528,
+  "skipped_contexts": [
+    "external_review_packages",
+    "binary files"
+  ],
+  "status": "pass_no_scaffold_completion_claims"
+}

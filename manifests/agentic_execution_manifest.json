@@ -310,6 +310,8 @@
         "python3 scripts/workflow_manifest_check.py",
         "python3 scripts/agentic_workflow_orchestrator.py validate",
         "python3 scripts/agentic_workflow_orchestrator.py plan --goal \"smoke\" --repo ai-development-os",
+        "python3 scripts/no_scaffold_audit.py --check",
+        "python3 scripts/product_readiness_scorecard.py",
         "python3 scripts/ai_dev_os_check.py",
         "python3 scripts/self_test_flow.py"
       ],
@@ -392,6 +394,8 @@
       "trigger": "push and pull_request",
       "commands": [
         "python scripts/ai_dev_os_check.py",
+        "python scripts/no_scaffold_audit.py --check",
+        "python scripts/product_readiness_scorecard.py",
         "python scripts/workflow_manifest_check.py",
         "python scripts/agentic_workflow_orchestrator.py validate",
         "python scripts/agentic_workflow_orchestrator.py automation-check",
@@ -399,7 +403,7 @@
         "python scripts/blocker_ledger.py validate --input system_review_graph/blockers.jsonl --allow-missing --out system_review_graph/blocker_ledger_report.ci.json",
         "python scripts/self_test_flow.py"
       ],
-      "gates": ["manifest_valid", "execution_manifest_valid", "automation_runtime_valid", "eval_suite_passed", "blocker_ledger_valid", "self_test_passed"]
+      "gates": ["manifest_valid", "no_scaffold_audit_passed", "product_readiness_scorecard_passed", "execution_manifest_valid", "automation_runtime_valid", "eval_suite_passed", "blocker_ledger_valid", "self_test_passed"]
     },
     {
       "id": "srg_context_bundle_ci",
@@ -490,6 +494,13 @@
       "failure_output": "external harness blocker with next_valid_move to write or repair external_harness_integration_packet.json"
     },
     {
+      "id": "no_scaffold_delivery",
+      "predicate": "No lane, product, review packet, PDF, input template, simulated review, or generated skeleton is counted as completion or go-live proof.",
+      "measurement": "scripts/no_scaffold_audit.py --check",
+      "pass_condition": "No disallowed scaffold-like markers exist and runtime launch/payment/private-beta gates remain closed until real evidence exists.",
+      "failure_output": "scaffold policy blocker with artifact path, reason, and next_valid_move"
+    },
+    {
       "id": "main_push_readiness",
       "predicate": "Main receives only verified slices requested by the user.",
       "measurement": "post-merge checks and git status",
@@ -576,6 +587,7 @@
     "ready_with_external_gates requires system_review_graph/continuation_plan.json and cannot be reported as fully operational or launch ready while must_continue is true.",
     "VC pitch readiness requires system_review_graph/vc_pitch_readiness_report.json and cannot be used as legal, securities, revenue, PMF, launch, compliance, buyer, supplier, customs, or tariff proof.",
     "Board go-live readiness requires system_review_graph/board_go_live_readiness_report.json and cannot be used as public launch, production deployment, legal, financial, compliance, buyer, revenue, PMF, supplier, customs, tariff, or regulated proof without qualified human approval.",
+    "Scaffolds, templates, placeholders, mocks, simulated reviews, PDFs, packets, and input forms are starter or intake surfaces only; scripts/no_scaffold_audit.py --check must pass before completion or go-live claims.",
     "Unsafe, paid, live, legal, or external actions stay closed without explicit user intent and repo proof."
   ]
 }

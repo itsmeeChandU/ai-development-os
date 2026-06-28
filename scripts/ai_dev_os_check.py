@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import subprocess
+import tempfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -45,6 +47,7 @@ REQUIRED = [
     "docs/OPEN_SOURCE_RESOURCES.md",
     "docs/RESEARCH_INTAKE.md",
     "docs/CODEX_USAGE.md",
+    "docs/NO_SCAFFOLD_DELIVERY_POLICY.md",
     "manifests/tool_registry.yaml",
     "manifests/agent_lanes.yaml",
     "manifests/agentic_workflow_manifest.json",
@@ -324,8 +327,11 @@ REQUIRED = [
     "templates/WORKFLOW_AUTOMATION.md",
     "templates/AGENTIC_EXECUTION_PLAN.md",
     ".agents/skills/ai-native-delivery/SKILL.md",
+    "scripts/no_scaffold_audit.py",
     "scripts/self_test_flow.py",
     "scripts/product_project_check.py",
+    "scripts/product_readiness_scorecard.py",
+    "scripts/system_review_graph.py",
     "scripts/workflow_manifest_check.py",
     "scripts/agentic_workflow_orchestrator.py",
     "system_review_graph/prompt_to_product_packet.json",
@@ -334,6 +340,16 @@ REQUIRED = [
     "system_review_graph/development_strategy_plan.json",
     "system_review_graph/external_harness_integration_packet.json",
     "system_review_graph/slash_command_specs.json",
+    "system_review_graph/no_scaffold_audit_report.json",
+    "system_review_graph/no_scaffold_audit_report.md",
+    "system_review_graph/product_readiness_scorecard.json",
+    "system_review_graph/system_review_graph_summary.json",
+    "system_review_graph/code_graph.md",
+    "system_review_graph/data_graph.md",
+    "system_review_graph/flow_graph.md",
+    "system_review_graph/proof_graph.md",
+    "system_review_graph/task_graph.md",
+    "system_review_graph/resource_graph.md",
     "system_review_graph/lane_packet_workflow-coordinator.json",
     "system_review_graph/automation_runtime_report.json",
     "system_review_graph/scheduler_plan.json",
@@ -371,6 +387,45 @@ def main() -> int:
         for pattern in missing_patterns:
             print(f"missing_pattern: {pattern}")
         return 1
+    with tempfile.TemporaryDirectory() as tmp_dir:
+        tmp = Path(tmp_dir)
+        audit_result = subprocess.run(
+            [
+                "python3",
+                "scripts/no_scaffold_audit.py",
+                "--check",
+                "--out",
+                str(tmp / "no_scaffold_audit_report.json"),
+                "--md-out",
+                str(tmp / "no_scaffold_audit_report.md"),
+            ],
+            cwd=ROOT,
+            text=True,
+            capture_output=True,
+            check=False,
+        )
+        if audit_result.returncode != 0:
+            print("AI Dev OS check: FAIL")
+            print(audit_result.stdout)
+            print(audit_result.stderr)
+            return audit_result.returncode
+        scorecard_result = subprocess.run(
+            [
+                "python3",
+                "scripts/product_readiness_scorecard.py",
+                "--out",
+                str(tmp / "product_readiness_scorecard.json"),
+            ],
+            cwd=ROOT,
+            text=True,
+            capture_output=True,
+            check=False,
+        )
+        if scorecard_result.returncode != 0:
+            print("AI Dev OS check: FAIL")
+            print(scorecard_result.stdout)
+            print(scorecard_result.stderr)
+            return scorecard_result.returncode
     print("AI Dev OS check: PASS")
     print(f"required_files={len(REQUIRED)}")
     print(f"required_globs={len(REQUIRED_GLOBS)}")

@@ -12,13 +12,14 @@
   "canonical_truth": {
     "version_control": "GitHub",
     "repo_truth": [
-      "source files",
-      "tests",
-      "generated artifacts",
-      "system review graph reports",
-      "code-review graph contracts",
-      "handoff files"
-    ],
+        "source files",
+        "tests",
+        "generated artifacts",
+        "system review graph reports",
+        "code-review graph contracts",
+        "no-scaffold audit reports",
+        "handoff files"
+      ],
     "coordination_memory": "Ruflo may record memory, hooks, swarms, and route decisions, but it never overrides repo files, tests, generated artifacts, or GitHub history."
   },
   "startup_lifecycle_development_rule": {
@@ -476,6 +477,7 @@
     "startup_continuation": "ready_with_external_gates is useful internal software, not startup completion; continuation lanes stay open until external evidence closes them",
     "vc_pitch_readiness": "private investor pitch readiness needs sourced claims and diligence lanes; it is not revenue, PMF, launch, legal, compliance, or financing proof",
     "board_go_live_readiness": "board readiness means controlled private beta candidate with human approval gates; it is not public launch, production deployment, legal, financial, compliance, buyer, revenue, PMF, supplier, customs, or tariff proof",
+    "no_scaffold_delivery": "scaffolds, templates, placeholders, mocks, simulated reviews, PDFs, packets, and input forms are starter or intake surfaces only; scripts/no_scaffold_audit.py --check must pass before completion or go-live claims",
     "unsafe_actions": "closed unless explicit repo gates and user intent prove readiness"
   },
   "code_review_graph_contract": {

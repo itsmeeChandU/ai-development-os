@@ -1,398 +1,1594 @@
 %PDF-1.4
-%“Œ‹ž ReportLab Generated PDF document (opensource)
 1 0 obj
-<<
-/F1 2 0 R /F2 3 0 R
->>
+<< /Type /Catalog /Pages 2 0 R >>
 endobj
 2 0 obj
-<<
-/BaseFont /Helvetica /Encoding /WinAnsiEncoding /Name /F1 /Subtype /Type1 /Type /Font
->>
+<< /Type /Pages /Kids [4 0 R 6 0 R 8 0 R 10 0 R 12 0 R 14 0 R 16 0 R 18 0 R 20 0 R 22 0 R 24 0 R 26 0 R 28 0 R] /Count 13 >>
 endobj
 3 0 obj
-<<
-/BaseFont /Helvetica-Bold /Encoding /WinAnsiEncoding /Name /F2 /Subtype /Type1 /Type /Font
->>
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
 endobj
 4 0 obj
-<<
-/Contents 25 0 R /MediaBox [ 0 0 612 792 ] /Parent 24 0 R /Resources <<
-/Font 1 0 R /ProcSet [ /PDF /Text /ImageB /ImageC /ImageI ]
->> /Rotate 0 /Trans <<
-
->> 
-  /Type /Page
->>
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R >> >> /Contents 5 0 R >>
 endobj
 5 0 obj
-<<
-/Contents 26 0 R /MediaBox [ 0 0 612 792 ] /Parent 24 0 R /Resources <<
-/Font 1 0 R /ProcSet [ /PDF /Text /ImageB /ImageC /ImageI ]
->> /Rotate 0 /Trans <<
-
->> 
-  /Type /Page
->>
+<< /Length 2874 >>
+stream
+BT
+/F1 9 Tf
+54 744 Td
+12 TL
+(External Validation Requirements) Tj
+T*
+(Status: external_validation_requirements_ready_all_real_world_gates_blocked) Tj
+T*
+(Generated: 2026-06-28T01:54:02Z) Tj
+T*
+(Checked source date: 2026-06-27) Tj
+T*
+() Tj
+T*
+(Current decision) Tj
+T*
+(- Public launch ready: False) Tj
+T*
+(- Hosted private beta ready: False) Tj
+T*
+(- Live payment ready: False) Tj
+T*
+(- Qualified trade claims ready: False) Tj
+T*
+(- Buyer/supplier validation ready: False) Tj
+T*
+(- AI-simulated review can open gates: False) Tj
+T*
+() Tj
+T*
+(Gate summary) Tj
+T*
+() Tj
+T*
+(Real External Expert Reviews \(real_external_expert_reviews\)) Tj
+T*
+(Status: blocked_waiting_for_real_named_reviewers) Tj
+T*
+(Owner: founder) Tj
+T*
+(Why needed: AI-assisted reviews can reduce defects, but only real named reviewers can) Tj
+T*
+(provide scoped approval evidence.) Tj
+T*
+(Required reviewers/owners:) Tj
+T*
+(- UX/product usability reviewer) Tj
+T*
+(- application security reviewer) Tj
+T*
+(- privacy/legal reviewer) Tj
+T*
+(- AI safety/prompt-injection reviewer) Tj
+T*
+(- DevOps/production readiness reviewer) Tj
+T*
+(- trade/customs language reviewer) Tj
+T*
+(- freight/logistics reviewer when logistics claims are shown) Tj
+T*
+(- billing/payment reviewer before monetization) Tj
+T*
+(Required evidence:) Tj
+T*
+(- reviewer identity, role, qualifications, and contact/channel record) Tj
+T*
+(- review scope tied to exact commit, package hash, URL, environment, and artifacts reviewed) Tj
+T*
+(- structured findings with severity, owner, required fix, retest command, and launch impact) Tj
+T*
+(- explicit decision value: approve_within_scope, block, needs_more_evidence, out_of_scope,) Tj
+T*
+(or wrong_reviewer_type) Tj
+T*
+(- dated signoff or blocker record for each wave and role) Tj
+T*
+(- resolution evidence for every P0/P1 or explicit decision to keep the gate blocked) Tj
+T*
+(Required data fields:) Tj
+T*
+(- reviewer_name, reviewer_role, qualification_basis, review_scope, commit_sha,) Tj
+T*
+(package_sha256, environment_url_or_local_path, findings, decision, signed_at,) Tj
+T*
+(expires_or_refresh_rule) Tj
+T*
+(Minimum acceptance: All required roles have dated scoped decisions; all P0/P1 findings are) Tj
+T*
+(fixed, retested, or explicitly blocking.) Tj
+T*
+(Blocking conditions:) Tj
+T*
+(- AI-only review is the only evidence) Tj
+T*
+(- reviewer identity or scope is missing) Tj
+T*
+(- reviewed commit/package differs from production candidate) Tj
+T*
+(- P0/P1 findings remain unresolved) Tj
+T*
+(Cannot claim until: External review complete, scoped approvals attached, and blocker ledger) Tj
+T*
+(has no unresolved launch-blocking rows.) Tj
+T*
+(Next valid move: Send executive and technical packages to Wave 1 reviewers, record) Tj
+T*
+(decisions, and convert every finding into a blocker row.) Tj
+T*
+(Source IDs: owasp-llm01-prompt-injection, owasp-asvs, govuk-service-assessments) Tj
+T*
+() Tj
+T*
+ET
+endstream
 endobj
 6 0 obj
-<<
-/Contents 27 0 R /MediaBox [ 0 0 612 792 ] /Parent 24 0 R /Resources <<
-/Font 1 0 R /ProcSet [ /PDF /Text /ImageB /ImageC /ImageI ]
->> /Rotate 0 /Trans <<
-
->> 
-  /Type /Page
->>
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R >> >> /Contents 7 0 R >>
 endobj
 7 0 obj
-<<
-/Contents 28 0 R /MediaBox [ 0 0 612 792 ] /Parent 24 0 R /Resources <<
-/Font 1 0 R /ProcSet [ /PDF /Text /ImageB /ImageC /ImageI ]
->> /Rotate 0 /Trans <<
-
->> 
-  /Type /Page
->>
+<< /Length 3546 >>
+stream
+BT
+/F1 9 Tf
+54 744 Td
+12 TL
+(Legal, Privacy, And Security Approval \(legal_privacy_security_approval\)) Tj
+T*
+(Status: blocked_waiting_for_qualified_approval) Tj
+T*
+(Owner: privacy_security_owner) Tj
+T*
+(Why needed: The product processes customer trade documents and optional AI outputs, so data) Tj
+T*
+(handling, claims, security, and incident duties need qualified review before hosted use.) Tj
+T*
+(Required reviewers/owners:) Tj
+T*
+(- privacy/legal reviewer familiar with Canada and target customer jurisdictions) Tj
+T*
+(- application security reviewer) Tj
+T*
+(- security operations owner) Tj
+T*
+(- AI/data-processing owner) Tj
+T*
+(Required evidence:) Tj
+T*
+(- privacy notice, terms/review-use terms, data retention/deletion policy, and AI data policy) Tj
+T*
+(reviewed against actual flows) Tj
+T*
+(- data inventory with personal, commercial, customs, supplier, buyer, file-upload, AI, log,) Tj
+T*
+(and payment metadata fields) Tj
+T*
+(- processor/subprocessor and vendor inventory with contracts or acceptance notes) Tj
+T*
+(- threat model covering PDF upload, prompt injection, data leakage, auth/RBAC, API routes,) Tj
+T*
+(file storage, logs, and payment boundaries) Tj
+T*
+(- security scan results for dependencies, secrets, SAST/DAST/API checks, file upload) Tj
+T*
+(controls, and auth/RBAC) Tj
+T*
+(- incident response, breach triage, notification, backup/restore, and deletion request) Tj
+T*
+(evidence) Tj
+T*
+(- accessibility and safe-claims review for public pages and generated reports) Tj
+T*
+(Required data fields:) Tj
+T*
+(- reviewer_name, law_or_standard_scope, data_inventory_version, privacy_notice_version,) Tj
+T*
+(terms_version, processor_inventory, security_test_results, incident_response_owner,) Tj
+T*
+(approval_decision, approval_limits, signed_at) Tj
+T*
+(Minimum acceptance: Qualified reviewers approve scoped hosted beta data handling and) Tj
+T*
+(security controls, with unresolved findings either fixed or blocking.) Tj
+T*
+(Blocking conditions:) Tj
+T*
+(- privacy notice does not match actual data flows) Tj
+T*
+(- public upload malware/isolation/rate-limit proof missing) Tj
+T*
+(- AI provider or retention behavior is unreviewed) Tj
+T*
+(- incident/breach/deletion process has no owner) Tj
+T*
+(- secrets, auth, or storage proof is missing) Tj
+T*
+(Cannot claim until: Qualified privacy/legal/security approvals are attached with exact scope) Tj
+T*
+(and effective dates.) Tj
+T*
+(Next valid move: Assemble the data map, threat model, upload controls proof, incident) Tj
+T*
+(process, privacy notice, and AI processor inventory for qualified review.) Tj
+T*
+(Source IDs: opc-pipeda-principles, opc-breach-reporting, cccs-baseline-controls, nist-csf-2,) Tj
+T*
+(cisa-secure-by-design, owasp-file-upload, owasp-asvs, owasp-llm01-prompt-injection,) Tj
+T*
+(w3c-wcag-22, california-ccpa) Tj
+T*
+() Tj
+T*
+(Qualified Customs And Trade Review \(qualified_customs_trade_review\)) Tj
+T*
+(Status: blocked_waiting_for_broker_or_trade_specialist) Tj
+T*
+(Owner: trade_compliance_owner) Tj
+T*
+(Why needed: The product can route evidence, but it must not imply tariff, CFIA, sanctions,) Tj
+T*
+(permit, or import/export readiness without qualified review.) Tj
+T*
+(Required reviewers/owners:) Tj
+T*
+(- licensed customs broker or qualified customs/trade compliance specialist) Tj
+T*
+(- CFIA/commodity specialist for regulated food, plant, animal, or similar categories) Tj
+T*
+(- sanctions/export-controls reviewer for restricted destinations or parties) Tj
+T*
+(- freight/logistics reviewer for shipment or carrier claims) Tj
+T*
+(Required evidence:) Tj
+T*
+ET
+endstream
 endobj
 8 0 obj
-<<
-/Contents 29 0 R /MediaBox [ 0 0 612 792 ] /Parent 24 0 R /Resources <<
-/Font 1 0 R /ProcSet [ /PDF /Text /ImageB /ImageC /ImageI ]
->> /Rotate 0 /Trans <<
-
->> 
-  /Type /Page
->>
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R >> >> /Contents 9 0 R >>
 endobj
 9 0 obj
-<<
-/Contents 30 0 R /MediaBox [ 0 0 612 792 ] /Parent 24 0 R /Resources <<
-/Font 1 0 R /ProcSet [ /PDF /Text /ImageB /ImageC /ImageI ]
->> /Rotate 0 /Trans <<
-
->> 
-  /Type /Page
->>
+<< /Length 3432 >>
+stream
+BT
+/F1 9 Tf
+54 744 Td
+12 TL
+(- product identity, composition, use, origin, seller/supplier, buyer, Incoterms, value, and) Tj
+T*
+(documents reviewed) Tj
+T*
+(- HS/tariff classification basis with source links, assumptions, and confidence limits) Tj
+T*
+(- CBSA, CFIA AIRS, food licence, permit, quota, inspection, labelling, and country) Tj
+T*
+(requirement checks where applicable) Tj
+T*
+(- restricted-party/sanctions screening source, timestamp, exact party names, jurisdictions,) Tj
+T*
+(and result) Tj
+T*
+(- broker or qualified specialist decision on what the app may and may not say) Tj
+T*
+(- claim-language approval for generated reports, buyer packets, broker packets, and public) Tj
+T*
+(pages) Tj
+T*
+(Required data fields:) Tj
+T*
+(- reviewer_name, credential_or_company, product_category, hs_code_candidate, origin_country,) Tj
+T*
+(destination_country, official_sources_checked, party_screening_record, assumptions,) Tj
+T*
+(approved_claim_language, blocked_claim_language, signed_at) Tj
+T*
+(Minimum acceptance: Qualified reviewer approves only scoped source-routing language; no) Tj
+T*
+(tariff/import/export advice claims open without explicit dated signoff.) Tj
+T*
+(Blocking conditions:) Tj
+T*
+(- HS or tariff confidence is inferred by the app only) Tj
+T*
+(- AIRS/CFIA/source refresh is stale or absent) Tj
+T*
+(- restricted-party screening is missing) Tj
+T*
+(- reviewer is not qualified for commodity or jurisdiction) Tj
+T*
+(- report language implies customs advice or clearance) Tj
+T*
+(Cannot claim until: Broker/trade specialist approval exists for the exact product category,) Tj
+T*
+(jurisdiction, and claim text.) Tj
+T*
+(Next valid move: Prepare one dated broker packet per sample packet and request scoped) Tj
+T*
+(language approval from a qualified customs/trade reviewer.) Tj
+T*
+(Source IDs: cbsa-commercial-import, cbsa-customs-tariff, cbsa-advance-rulings, cfia-) Tj
+T*
+(importing-food-plants-animals, cfia-airs, cfia-food-licences, gac-sanctions, gac-) Tj
+T*
+(consolidated-sanctions-list, gac-trade-controls) Tj
+T*
+() Tj
+T*
+(Hosted Staging And Production Proof \(hosted_staging_production_proof\)) Tj
+T*
+(Status: blocked_waiting_for_real_hosted_environment) Tj
+T*
+(Owner: devops_owner) Tj
+T*
+(Why needed: Localhost proves local logic only. Real users require deployed environment proof) Tj
+T*
+(for TLS, secrets, storage, logs, monitoring, rollback, backups, access, and abuse controls.) Tj
+T*
+(Required reviewers/owners:) Tj
+T*
+(- DevOps/SRE reviewer) Tj
+T*
+(- application security reviewer) Tj
+T*
+(- privacy/security owner) Tj
+T*
+(- support/incident owner) Tj
+T*
+(Required evidence:) Tj
+T*
+(- staging URL, commit SHA, image/build digest, deploy timestamp, environment variables) Tj
+T*
+(inventory, and secret-source proof) Tj
+T*
+(- TLS/domain proof, security headers, CORS/CSRF/session cookie settings, and route exposure) Tj
+T*
+(map) Tj
+T*
+(- database/storage isolation, upload quarantine, malware scanning, retention/deletion jobs,) Tj
+T*
+(backup and restore drill) Tj
+T*
+(- health checks, structured logs, audit logs, monitoring alerts, error tracking, and) Tj
+T*
+(uptime/rollback runbook) Tj
+T*
+(- load/rate-limit and abuse-path smoke tests for upload, public APIs, auth, reports, and) Tj
+T*
+(deletion) Tj
+T*
+(- production promotion checklist with human approver and rollback owner) Tj
+T*
+(Required data fields:) Tj
+T*
+(- environment_name, public_url, commit_sha, build_digest, deployed_at, secrets_store,) Tj
+T*
+ET
+endstream
 endobj
 10 0 obj
-<<
-/Contents 31 0 R /MediaBox [ 0 0 612 792 ] /Parent 24 0 R /Resources <<
-/Font 1 0 R /ProcSet [ /PDF /Text /ImageB /ImageC /ImageI ]
->> /Rotate 0 /Trans <<
-
->> 
-  /Type /Page
->>
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R >> >> /Contents 11 0 R >>
 endobj
 11 0 obj
-<<
-/Contents 32 0 R /MediaBox [ 0 0 612 792 ] /Parent 24 0 R /Resources <<
-/Font 1 0 R /ProcSet [ /PDF /Text /ImageB /ImageC /ImageI ]
->> /Rotate 0 /Trans <<
-
->> 
-  /Type /Page
->>
+<< /Length 3340 >>
+stream
+BT
+/F1 9 Tf
+54 744 Td
+12 TL
+(tls_evidence, storage_evidence, monitoring_links, backup_restore_result, rollback_result,) Tj
+T*
+(approver) Tj
+T*
+(Minimum acceptance: A reachable staging environment passes smoke, security, privacy,) Tj
+T*
+(backup/restore, observability, and rollback proof without real customer data leakage.) Tj
+T*
+(Blocking conditions:) Tj
+T*
+(- only localhost proof exists) Tj
+T*
+(- production secrets or storage isolation are unverified) Tj
+T*
+(- uploads are publicly reachable or not quarantined) Tj
+T*
+(- logs contain sensitive document content) Tj
+T*
+(- backup/restore or rollback is untested) Tj
+T*
+(Cannot claim until: Staging and production-candidate proof exists with named human promotion) Tj
+T*
+(and rollback approval.) Tj
+T*
+(Next valid move: Provision staging, deploy exact commit, run) Tj
+T*
+(smoke/security/upload/privacy/backup/rollback checks, and attach evidence.) Tj
+T*
+(Source IDs: cccs-baseline-controls, nist-csf-2, cisa-secure-by-design, owasp-file-upload,) Tj
+T*
+(owasp-asvs, stripe-webhooks) Tj
+T*
+() Tj
+T*
+(Live Payment Activation \(live_payment_activation\)) Tj
+T*
+(Status: blocked_waiting_for_payment_account_and_policy_proof) Tj
+T*
+(Owner: billing_owner) Tj
+T*
+(Why needed: Pricing pages and billing ledgers are local-only; live charges need payment) Tj
+T*
+(account configuration, tax/refund/support decisions, security, and webhook proof.) Tj
+T*
+(Required reviewers/owners:) Tj
+T*
+(- billing/payment owner) Tj
+T*
+(- privacy/security owner) Tj
+T*
+(- tax/accounting reviewer where applicable) Tj
+T*
+(- support/refund owner) Tj
+T*
+(Required evidence:) Tj
+T*
+(- Stripe live-mode account, business profile, domain, payment methods, product/price IDs,) Tj
+T*
+(and checkout links reviewed) Tj
+T*
+(- webhook endpoint, signing secret, event delivery, idempotency, retry, failure, refund,) Tj
+T*
+(dispute, and cancellation tests) Tj
+T*
+(- tax/VAT/GST/sales-tax decision record and invoice/receipt language) Tj
+T*
+(- terms, refund policy, support contact, complaint handling, chargeback, and account access) Tj
+T*
+(controls) Tj
+T*
+(- test-mode proof followed by live penny/low-risk transaction or Stripe-approved live proof) Tj
+T*
+(if appropriate) Tj
+T*
+(- explicit monetization go/no-go decision that does not imply trade/customs/legal advice) Tj
+T*
+(Required data fields:) Tj
+T*
+(- stripe_account_mode, product_ids, price_ids, checkout_urls, webhook_endpoint,) Tj
+T*
+(webhook_event_log, tax_decision_record, refund_policy_version, support_contact,) Tj
+T*
+(test_results, live_activation_approver, activated_at) Tj
+T*
+(Minimum acceptance: Live payment remains disabled until checkout, webhook, tax, refund,) Tj
+T*
+(support, security, and account controls are approved in scope.) Tj
+T*
+(Blocking conditions:) Tj
+T*
+(- test-mode only proof exists) Tj
+T*
+(- webhook signing/retry/idempotency proof is missing) Tj
+T*
+(- tax/refund/support terms are undecided) Tj
+T*
+(- pricing implies legal/customs/trade outcome guarantees) Tj
+T*
+(- payment account access controls are unreviewed) Tj
+T*
+(Cannot claim until: Live checkout, billing policy, tax/refund/support, and webhook proof are) Tj
+T*
+(attached with a named activation approver.) Tj
+T*
+(Next valid move: Keep live checkout disabled; complete Stripe live-mode configuration and) Tj
+T*
+(payment policy proof after staged security/privacy approval.) Tj
+T*
+ET
+endstream
 endobj
 12 0 obj
-<<
-/Contents 33 0 R /MediaBox [ 0 0 612 792 ] /Parent 24 0 R /Resources <<
-/Font 1 0 R /ProcSet [ /PDF /Text /ImageB /ImageC /ImageI ]
->> /Rotate 0 /Trans <<
-
->> 
-  /Type /Page
->>
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R >> >> /Contents 13 0 R >>
 endobj
 13 0 obj
-<<
-/Contents 34 0 R /MediaBox [ 0 0 612 792 ] /Parent 24 0 R /Resources <<
-/Font 1 0 R /ProcSet [ /PDF /Text /ImageB /ImageC /ImageI ]
->> /Rotate 0 /Trans <<
-
->> 
-  /Type /Page
->>
+<< /Length 3412 >>
+stream
+BT
+/F1 9 Tf
+54 744 Td
+12 TL
+(Source IDs: stripe-go-live, stripe-webhooks, stripe-testing, stripe-security) Tj
+T*
+() Tj
+T*
+(Real Users And Private Beta Outcomes \(real_users_private_beta_outcomes\)) Tj
+T*
+(Status: blocked_waiting_for_real_user_sessions) Tj
+T*
+(Owner: product_research_owner) Tj
+T*
+(Why needed: The product needs evidence that target users can complete the flow and) Tj
+T*
+(understand blocked claims before public launch.) Tj
+T*
+(Required reviewers/owners:) Tj
+T*
+(- product/UX research owner) Tj
+T*
+(- support owner) Tj
+T*
+(- privacy/security owner for beta data handling) Tj
+T*
+(- founder or beta program owner) Tj
+T*
+(Required evidence:) Tj
+T*
+(- recruiting criteria, consent, participant segment, date, session notes, and task) Tj
+T*
+(recordings/observations where permitted) Tj
+T*
+(- at least five target-user task attempts covering no-document starter flow, PDF quick) Tj
+T*
+(check, report download, blocked-claims comprehension, and deletion) Tj
+T*
+(- critical issue list with severity, owner, fix, retest result, and launch impact) Tj
+T*
+(- support/contact outcomes, misunderstood claims, privacy concerns, and trust objections) Tj
+T*
+(- measured outcomes: task completion, time to first result, unsafe misunderstanding count,) Tj
+T*
+(deletion success, report usefulness, and willingness-to-continue) Tj
+T*
+(- private beta summary with go/no-go recommendation and unresolved blockers) Tj
+T*
+(Required data fields:) Tj
+T*
+(- participant_id, segment, consent_record, tasks_attempted, task_completion,) Tj
+T*
+(misunderstood_claims, issues_found, support_events, privacy_or_security_concerns,) Tj
+T*
+(willingness_signal, retest_result, beta_decision) Tj
+T*
+(Minimum acceptance: Five or more representative users complete core tasks without unsafe) Tj
+T*
+(claim misunderstanding, unresolved P0/P1 issues, or privacy/security incidents.) Tj
+T*
+(Blocking conditions:) Tj
+T*
+(- no real users have used hosted staging/private beta) Tj
+T*
+(- participants are not target users) Tj
+T*
+(- user confusion causes customs/legal/payment overclaiming) Tj
+T*
+(- P0/P1 product or trust issues remain unresolved) Tj
+T*
+(- privacy/security consent and deletion proof is missing) Tj
+T*
+(Cannot claim until: Real user session evidence proves target users can complete the flow and) Tj
+T*
+(understand its blocked-safe boundaries.) Tj
+T*
+(Next valid move: After Wave 1 and staging proof, run five structured private-beta sessions) Tj
+T*
+(and convert every issue into a blocker or fixed proof row.) Tj
+T*
+(Source IDs: govuk-user-research, govuk-service-standard, nng-five-users, yc-talk-to-users,) Tj
+T*
+(w3c-wcag-22) Tj
+T*
+() Tj
+T*
+(Buyer And Supplier Validation \(buyer_supplier_validation\)) Tj
+T*
+(Status: blocked_waiting_for_real_market_counterparties) Tj
+T*
+(Owner: commercial_validation_owner) Tj
+T*
+(Why needed: A readiness checker is not commercially validated until real buyers, suppliers,) Tj
+T*
+(importers/exporters, or advisors show the workflow solves a real decision problem.) Tj
+T*
+(Required reviewers/owners:) Tj
+T*
+(- founder or commercial validation owner) Tj
+T*
+(- target importer/exporter buyer persona) Tj
+T*
+(- supplier or broker/forwarder persona) Tj
+T*
+(- trade compliance reviewer for claims made during validation) Tj
+T*
+(Required evidence:) Tj
+T*
+(- customer/buyer/supplier interview notes tied to a segment, use case, urgency, current) Tj
+T*
+(workaround, and willingness signal) Tj
+T*
+ET
+endstream
 endobj
 14 0 obj
-<<
-/Contents 35 0 R /MediaBox [ 0 0 612 792 ] /Parent 24 0 R /Resources <<
-/Font 1 0 R /ProcSet [ /PDF /Text /ImageB /ImageC /ImageI ]
->> /Rotate 0 /Trans <<
-
->> 
-  /Type /Page
->>
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R >> >> /Contents 15 0 R >>
 endobj
 15 0 obj
-<<
-/Contents 36 0 R /MediaBox [ 0 0 612 792 ] /Parent 24 0 R /Resources <<
-/Font 1 0 R /ProcSet [ /PDF /Text /ImageB /ImageC /ImageI ]
->> /Rotate 0 /Trans <<
-
->> 
-  /Type /Page
->>
+<< /Length 3216 >>
+stream
+BT
+/F1 9 Tf
+54 744 Td
+12 TL
+(- named design partners or beta candidates with permission to store contact and validation) Tj
+T*
+(outcome) Tj
+T*
+(- source packet or document sample supplied by a real counterparty or explicitly anonymized) Tj
+T*
+(with permission) Tj
+T*
+(- buyer/supplier pain ranking, requested workflow, price/value signal, and objections) Tj
+T*
+(- counterparty legitimacy and sanctions/restricted-party screening where any) Tj
+T*
+(transaction/recommendation could be implied) Tj
+T*
+(- clear separation between validation, recommendation, referral, and commercial matchmaking) Tj
+T*
+(claims) Tj
+T*
+(Required data fields:) Tj
+T*
+(- counterparty_id, role, company_or_context, permission_scope, problem_statement,) Tj
+T*
+(current_workaround, documents_shared, willingness_signal, price_signal, objections,) Tj
+T*
+(screening_result, followup_commitment) Tj
+T*
+(Minimum acceptance: Multiple target counterparties validate a real workflow and no generated) Tj
+T*
+(content implies supplier recommendation, buyer validation, or transaction readiness.) Tj
+T*
+(Blocking conditions:) Tj
+T*
+(- validation is hypothetical or AI-generated) Tj
+T*
+(- no named target segment or counterparty exists) Tj
+T*
+(- documents were used without permission) Tj
+T*
+(- supplier or buyer is implied as verified without screening/review) Tj
+T*
+(- no willingness, urgency, or follow-up signal is recorded) Tj
+T*
+(Cannot claim until: Real counterparties and design partners provide dated validation, with) Tj
+T*
+(screening and claim boundaries attached.) Tj
+T*
+(Next valid move: Run structured interviews with target importers/exporters/brokers and) Tj
+T*
+(record the evidence without opening recommendation claims.) Tj
+T*
+(Source IDs: yc-talk-to-users, gac-sanctions, gac-consolidated-sanctions-list, govuk-user-) Tj
+T*
+(research) Tj
+T*
+() Tj
+T*
+(Public Go/No-Go Approval \(public_go_no_go_approval\)) Tj
+T*
+(Status: blocked_waiting_for_named_decision_owner) Tj
+T*
+(Owner: launch_decision_owner) Tj
+T*
+(Why needed: Public launch should be a controlled decision using actual evidence,) Tj
+T*
+(rollback/support plans, and explicit unresolved-risk acceptance.) Tj
+T*
+(Required reviewers/owners:) Tj
+T*
+(- founder or accountable launch owner) Tj
+T*
+(- privacy/legal approver) Tj
+T*
+(- security/operations approver) Tj
+T*
+(- product/beta approver) Tj
+T*
+(- trade-claims approver) Tj
+T*
+(- billing/support approver when monetization is enabled) Tj
+T*
+(Required evidence:) Tj
+T*
+(- release candidate commit, deployment URL, package hashes, environment proof, and smoke) Tj
+T*
+(results) Tj
+T*
+(- all gate statuses with evidence links, unresolved blockers, accepted risks, and explicit) Tj
+T*
+(no-go conditions) Tj
+T*
+(- support runbook, incident response, refund/payment support, abuse handling, deletion) Tj
+T*
+(request process, and owner rota) Tj
+T*
+(- claims matrix proving public pages, reports, AI summaries, pricing, and packets do not) Tj
+T*
+(overclaim) Tj
+T*
+(- rollback plan, communications plan, monitoring dashboard, analytics/privacy setting, and) Tj
+T*
+(launch freeze window) Tj
+T*
+(- signed public go/no-go record with date, scope, owner, decision, caveats, and next review) Tj
+T*
+(date) Tj
+T*
+(Required data fields:) Tj
+T*
+ET
+endstream
 endobj
 16 0 obj
-<<
-/Contents 37 0 R /MediaBox [ 0 0 612 792 ] /Parent 24 0 R /Resources <<
-/Font 1 0 R /ProcSet [ /PDF /Text /ImageB /ImageC /ImageI ]
->> /Rotate 0 /Trans <<
-
->> 
-  /Type /Page
->>
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R >> >> /Contents 17 0 R >>
 endobj
 17 0 obj
-<<
-/Contents 38 0 R /MediaBox [ 0 0 612 792 ] /Parent 24 0 R /Resources <<
-/Font 1 0 R /ProcSet [ /PDF /Text /ImageB /ImageC /ImageI ]
->> /Rotate 0 /Trans <<
-
->> 
-  /Type /Page
->>
+<< /Length 3469 >>
+stream
+BT
+/F1 9 Tf
+54 744 Td
+12 TL
+(- release_candidate_commit, production_url, package_hashes, gate_statuses,) Tj
+T*
+(unresolved_blockers, accepted_risks, rollback_owner, support_owner, launch_scope, decision,) Tj
+T*
+(approver, decided_at) Tj
+T*
+(Minimum acceptance: Named owner approves a specific public scope after all required external) Tj
+T*
+(gates are approved or explicitly no-go.) Tj
+T*
+(Blocking conditions:) Tj
+T*
+(- any required gate has missing or simulated-only evidence) Tj
+T*
+(- launch owner is unnamed) Tj
+T*
+(- support, rollback, incident, or deletion process is unstaffed) Tj
+T*
+(- public pages or reports still imply blocked claims) Tj
+T*
+(- payment, trade, privacy, or security approval scope is unclear) Tj
+T*
+(Cannot claim until: A named launch owner signs a dated go decision after reviewing all) Tj
+T*
+(evidence and unresolved risks.) Tj
+T*
+(Next valid move: Do not hold public go/no-go until the other seven gates have real evidence;) Tj
+T*
+(keep launch state blocked-safe.) Tj
+T*
+(Source IDs: govuk-service-standard, govuk-service-assessments, nist-csf-2, w3c-wcag-22) Tj
+T*
+() Tj
+T*
+(Required project data) Tj
+T*
+() Tj
+T*
+(business_identity_and_contacts - owner: founder) Tj
+T*
+(Artifact target: system_review_graph/external_validation_requirements_report.json) Tj
+T*
+(Blocks: public_go_no_go_approval, live_payment_activation, legal_privacy_security_approval) Tj
+T*
+(Minimum fields: legal_entity_or_solo_operator_label, domain, support_contact,) Tj
+T*
+(privacy_contact, security_contact, billing_contact) Tj
+T*
+(Refresh rule: Refresh before public launch, payment activation, or support-policy change.) Tj
+T*
+() Tj
+T*
+(product_scope_and_claim_boundaries - owner: product_owner) Tj
+T*
+(Artifact target: system_review_graph/claims_gate_matrix.json) Tj
+T*
+(Blocks: qualified_customs_trade_review, public_go_no_go_approval) Tj
+T*
+(Minimum fields: public_product_name, internal_engine_name, allowed_claims, blocked_claims,) Tj
+T*
+(target_users, target_jurisdictions) Tj
+T*
+(Refresh rule: Refresh for any feature, report, page, or claim-language change.) Tj
+T*
+() Tj
+T*
+(official_source_registry - owner: research_owner) Tj
+T*
+(Artifact target: data/official_source_registry.json) Tj
+T*
+(Blocks: qualified_customs_trade_review, buyer_supplier_validation, public_go_no_go_approval) Tj
+T*
+(Minimum fields: source_id, publisher, url, checked_at, jurisdiction, claim_boundary,) Tj
+T*
+(refresh_due_at) Tj
+T*
+(Refresh rule: Refresh before external review, before launch, and after detected source) Tj
+T*
+(changes.) Tj
+T*
+() Tj
+T*
+(customer_document_and_upload_data - owner: privacy_security_owner) Tj
+T*
+(Artifact target: system_review_graph/public_upload_manifest.json) Tj
+T*
+(Blocks: legal_privacy_security_approval, hosted_staging_production_proof) Tj
+T*
+(Minimum fields: file_id, filename, mime_type, size, storage_path, quarantine_state,) Tj
+T*
+(malware_scan_state, retention_until, delete_status) Tj
+T*
+(Refresh rule: Refresh whenever upload, storage, scanning, or deletion flow changes.) Tj
+T*
+() Tj
+T*
+(ai_data_processing_and_redaction - owner: ai_data_owner) Tj
+T*
+(Artifact target: system_review_graph/ai_data_policy.json) Tj
+T*
+(Blocks: legal_privacy_security_approval, real_external_expert_reviews) Tj
+T*
+(Minimum fields: model_route, input_categories, redaction_result, user_permission,) Tj
+T*
+(retention_mode, provider, manual_fallback) Tj
+T*
+(Refresh rule: Refresh when model provider, prompt, redaction, data permission, or retention) Tj
+T*
+ET
+endstream
 endobj
 18 0 obj
-<<
-/Contents 39 0 R /MediaBox [ 0 0 612 792 ] /Parent 24 0 R /Resources <<
-/Font 1 0 R /ProcSet [ /PDF /Text /ImageB /ImageC /ImageI ]
->> /Rotate 0 /Trans <<
-
->> 
-  /Type /Page
->>
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R >> >> /Contents 19 0 R >>
 endobj
 19 0 obj
-<<
-/Contents 40 0 R /MediaBox [ 0 0 612 792 ] /Parent 24 0 R /Resources <<
-/Font 1 0 R /ProcSet [ /PDF /Text /ImageB /ImageC /ImageI ]
->> /Rotate 0 /Trans <<
-
->> 
-  /Type /Page
->>
+<< /Length 3377 >>
+stream
+BT
+/F1 9 Tf
+54 744 Td
+12 TL
+(mode changes.) Tj
+T*
+() Tj
+T*
+(privacy_legal_records - owner: privacy_legal_owner) Tj
+T*
+(Artifact target: docs/SECURITY_PRIVACY.md) Tj
+T*
+(Blocks: legal_privacy_security_approval, public_go_no_go_approval) Tj
+T*
+(Minimum fields: privacy_notice_version, terms_version, consent_record, retention_policy,) Tj
+T*
+(deletion_request, processor_inventory, breach_process) Tj
+T*
+(Refresh rule: Refresh before real user data collection, jurisdiction expansion, and public) Tj
+T*
+(launch.) Tj
+T*
+() Tj
+T*
+(security_operational_records - owner: security_owner) Tj
+T*
+(Artifact target: system_review_graph/deployment_readiness_report.json) Tj
+T*
+(Blocks: legal_privacy_security_approval, hosted_staging_production_proof,) Tj
+T*
+(public_go_no_go_approval) Tj
+T*
+(Minimum fields: threat_model, scan_results, auth_rbac, secrets_inventory, audit_logs,) Tj
+T*
+(backup_restore, incident_response, vulnerability_process) Tj
+T*
+(Refresh rule: Refresh for every hosted deploy, security-impacting change, and incident.) Tj
+T*
+() Tj
+T*
+(hosted_environment_records - owner: devops_owner) Tj
+T*
+(Artifact target: system_review_graph/deployment_readiness_report.json) Tj
+T*
+(Blocks: hosted_staging_production_proof, real_users_private_beta_outcomes,) Tj
+T*
+(public_go_no_go_approval) Tj
+T*
+(Minimum fields: environment, url, commit_sha, build_digest, tls, secrets_store, database,) Tj
+T*
+(storage, logs, monitoring, rollback) Tj
+T*
+(Refresh rule: Refresh for every staging/production deploy and infrastructure change.) Tj
+T*
+() Tj
+T*
+(trade_customs_records - owner: trade_compliance_owner) Tj
+T*
+(Artifact target: system_review_graph/country_coverage_report.json) Tj
+T*
+(Blocks: qualified_customs_trade_review, buyer_supplier_validation, public_go_no_go_approval) Tj
+T*
+(Minimum fields: product_category, hs_code_candidate, origin, destination, official_sources,) Tj
+T*
+(broker_review, cfia_airs_result, permit_result, claim_language) Tj
+T*
+(Refresh rule: Refresh per commodity, country pair, policy/source update, and report-language) Tj
+T*
+(change.) Tj
+T*
+() Tj
+T*
+(sanctions_and_party_screening - owner: trade_compliance_owner) Tj
+T*
+(Artifact target: system_review_graph/external_validation_evidence_requirements.json) Tj
+T*
+(Blocks: qualified_customs_trade_review, buyer_supplier_validation) Tj
+T*
+(Minimum fields: party_name, party_role, jurisdiction, screening_source, screened_at, result,) Tj
+T*
+(reviewer, followup_required) Tj
+T*
+(Refresh rule: Refresh before any buyer/supplier validation that could imply transaction) Tj
+T*
+(readiness.) Tj
+T*
+() Tj
+T*
+(payment_billing_records - owner: billing_owner) Tj
+T*
+(Artifact target: system_review_graph/billing_credit_controls.json) Tj
+T*
+(Blocks: live_payment_activation, public_go_no_go_approval) Tj
+T*
+(Minimum fields: account_mode, product_ids, price_ids, checkout_url, webhook_events,) Tj
+T*
+(tax_decision, refund_policy, support_contact, activation_decision) Tj
+T*
+(Refresh rule: Refresh for every pricing, plan, tax, refund, support, or Stripe configuration) Tj
+T*
+(change.) Tj
+T*
+() Tj
+T*
+(private_beta_user_outcomes - owner: product_research_owner) Tj
+T*
+(Artifact target: system_review_graph/private_beta_smoke_test_plan.json) Tj
+T*
+(Blocks: real_users_private_beta_outcomes, public_go_no_go_approval) Tj
+T*
+(Minimum fields: participant_segment, consent, tasks, completion, issues, trust_objections,) Tj
+T*
+ET
+endstream
 endobj
 20 0 obj
-<<
-/Contents 41 0 R /MediaBox [ 0 0 612 792 ] /Parent 24 0 R /Resources <<
-/Font 1 0 R /ProcSet [ /PDF /Text /ImageB /ImageC /ImageI ]
->> /Rotate 0 /Trans <<
-
->> 
-  /Type /Page
->>
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R >> >> /Contents 21 0 R >>
 endobj
 21 0 obj
-<<
-/Contents 42 0 R /MediaBox [ 0 0 612 792 ] /Parent 24 0 R /Resources <<
-/Font 1 0 R /ProcSet [ /PDF /Text /ImageB /ImageC /ImageI ]
->> /Rotate 0 /Trans <<
-
->> 
-  /Type /Page
->>
+<< /Length 3344 >>
+stream
+BT
+/F1 9 Tf
+54 744 Td
+12 TL
+(misunderstood_claims, support_events, decision) Tj
+T*
+(Refresh rule: Refresh after major UX, claims, data-flow, or pricing changes.) Tj
+T*
+() Tj
+T*
+(buyer_supplier_validation_records - owner: commercial_validation_owner) Tj
+T*
+(Artifact target: system_review_graph/team_workspace_report.json) Tj
+T*
+(Blocks: buyer_supplier_validation, qualified_customs_trade_review, public_go_no_go_approval) Tj
+T*
+(Minimum fields: counterparty_role, permission_scope, problem, current_workaround,) Tj
+T*
+(documents_shared, willingness_signal, objections, screening_result) Tj
+T*
+(Refresh rule: Refresh for every new segment, commodity, market, pricing tier, or) Tj
+T*
+(recommendation-like feature.) Tj
+T*
+() Tj
+T*
+(support_incident_and_deletion_records - owner: support_owner) Tj
+T*
+(Artifact target: system_review_graph/launch_operations_report.json) Tj
+T*
+(Blocks: hosted_staging_production_proof, legal_privacy_security_approval,) Tj
+T*
+(public_go_no_go_approval) Tj
+T*
+(Minimum fields: support_contact, triage_sla, incident_owner, breach_process,) Tj
+T*
+(deletion_request, refund_process, abuse_process, escalation_path) Tj
+T*
+(Refresh rule: Refresh before hosted beta, payment activation, and public launch.) Tj
+T*
+() Tj
+T*
+(accessibility_and_content_quality - owner: product_owner) Tj
+T*
+(Artifact target: system_review_graph/external_validation_requirements_report.json) Tj
+T*
+(Blocks: real_users_private_beta_outcomes, public_go_no_go_approval) Tj
+T*
+(Minimum fields: keyboard_check, screen_reader_check, contrast_check, form_error_check,) Tj
+T*
+(plain_language_review, blocked_claims_comprehension) Tj
+T*
+(Refresh rule: Refresh before public launch and after UI/report changes.) Tj
+T*
+() Tj
+T*
+(public_launch_decision_records - owner: launch_decision_owner) Tj
+T*
+(Artifact target: system_review_graph/final_go_live_decision_report.json) Tj
+T*
+(Blocks: public_go_no_go_approval) Tj
+T*
+(Minimum fields: release_commit, production_url, gate_statuses, unresolved_blockers,) Tj
+T*
+(accepted_risks, rollback_plan, support_plan, decision, approver) Tj
+T*
+(Refresh rule: Required for every public release, material feature change, market expansion,) Tj
+T*
+(or claim expansion.) Tj
+T*
+() Tj
+T*
+(Collection templates) Tj
+T*
+() Tj
+T*
+(external_review_decision_record) Tj
+T*
+(Required fields: reviewer_name, role, qualification_basis, scope, commit_sha,) Tj
+T*
+(package_sha256, findings, decision, signed_at) Tj
+T*
+(Valid decisions: approve_within_scope, block, needs_more_evidence, out_of_scope,) Tj
+T*
+(wrong_reviewer_type) Tj
+T*
+() Tj
+T*
+(legal_privacy_security_approval_record) Tj
+T*
+(Required fields: approver, scope, privacy_notice_version, data_map_version, security_tests,) Tj
+T*
+(approved_controls, unresolved_findings, decision, signed_at) Tj
+T*
+(Valid decisions: approve_hosted_beta, approve_public_launch, block, needs_more_evidence) Tj
+T*
+() Tj
+T*
+(customs_trade_review_record) Tj
+T*
+(Required fields: reviewer, credential, product_category, hs_code_candidate, origin,) Tj
+T*
+(destination, official_sources, assumptions, approved_claims, blocked_claims, decision) Tj
+T*
+(Valid decisions: approve_language_only, approve_specific_packet, block, needs_more_evidence) Tj
+T*
+() Tj
+T*
+(hosted_environment_proof_record) Tj
+T*
+(Required fields: environment, url, commit_sha, build_digest, tls, secrets, storage, logs,) Tj
+T*
+ET
+endstream
 endobj
 22 0 obj
-<<
-/PageMode /UseNone /Pages 24 0 R /Type /Catalog
->>
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R >> >> /Contents 23 0 R >>
 endobj
 23 0 obj
-<<
-/Author (\(anonymous\)) /CreationDate (D:20260627053933+05'00') /Creator (\(unspecified\)) /Keywords () /ModDate (D:20260627053933+05'00') /Producer (ReportLab PDF Library - \(opensource\)) 
-  /Subject (\(unspecified\)) /Title (External Validation Requirements) /Trapped /False
->>
+<< /Length 2962 >>
+stream
+BT
+/F1 9 Tf
+54 744 Td
+12 TL
+(monitoring, backup_restore, rollback, smoke_result, approver) Tj
+T*
+(Valid decisions: approve_staging_beta, approve_production_candidate, block,) Tj
+T*
+(needs_more_evidence) Tj
+T*
+() Tj
+T*
+(payment_activation_record) Tj
+T*
+(Required fields: stripe_mode, product_ids, price_ids, checkout_url, webhook_events,) Tj
+T*
+(tax_decision, refund_policy, support_contact, test_result, activation_decision) Tj
+T*
+(Valid decisions: activate_live_checkout, keep_disabled, block, needs_more_evidence) Tj
+T*
+() Tj
+T*
+(private_beta_outcome_record) Tj
+T*
+(Required fields: participant_id, segment, consent, tasks, completion, issues,) Tj
+T*
+(misunderstood_claims, support_events, privacy_concerns, decision) Tj
+T*
+(Valid decisions: continue_beta, expand_beta, block_public_launch, needs_more_evidence) Tj
+T*
+() Tj
+T*
+(buyer_supplier_validation_record) Tj
+T*
+(Required fields: counterparty_id, role, permission_scope, problem, current_workaround,) Tj
+T*
+(documents_shared, willingness_signal, price_signal, objections, screening_result) Tj
+T*
+(Valid decisions: validated_problem, validated_design_partner, not_validated,) Tj
+T*
+(needs_more_evidence) Tj
+T*
+() Tj
+T*
+(public_go_no_go_record) Tj
+T*
+(Required fields: release_commit, production_url, gate_statuses, unresolved_blockers,) Tj
+T*
+(accepted_risks, support_owner, rollback_owner, decision, approver, decided_at) Tj
+T*
+(Valid decisions: go_with_scope, no_go, go_after_blockers, needs_more_evidence) Tj
+T*
+() Tj
+T*
+(Source anchors) Tj
+T*
+() Tj
+T*
+(cbsa-commercial-import - Canada Border Services Agency) Tj
+T*
+(Import commercial goods into Canada) Tj
+T*
+(https://www.cbsa-asfc.gc.ca/import/menu-eng.html) Tj
+T*
+(Project use: Import readiness language, importer obligations, accounting/release boundaries,) Tj
+T*
+(and broker handoff scope.) Tj
+T*
+() Tj
+T*
+(cbsa-customs-tariff - Canada Border Services Agency) Tj
+T*
+(Customs Tariff) Tj
+T*
+(https://www.cbsa-asfc.gc.ca/trade-commerce/tariff-tarif/menu-eng.html) Tj
+T*
+(Project use: HS/tariff source refresh, classification evidence, and tariff-claim blocker) Tj
+T*
+(boundaries.) Tj
+T*
+() Tj
+T*
+(cbsa-advance-rulings - Canada Border Services Agency) Tj
+T*
+(Advance rulings for tariff classification) Tj
+T*
+(https://www.cbsa-asfc.gc.ca/import/ar-da/menu-eng.html) Tj
+T*
+(Project use: Evidence boundary for products that need binding or qualified classification) Tj
+T*
+(confirmation.) Tj
+T*
+() Tj
+T*
+(cfia-importing-food-plants-animals - Canadian Food Inspection Agency) Tj
+T*
+(Importing food, plants or animals) Tj
+T*
+(https://inspection.canada.ca/en/importing-food-plants-animals) Tj
+T*
+(Project use: Food, plant, animal, and commodity-specific import requirement boundaries.) Tj
+T*
+() Tj
+T*
+(cfia-airs - Canadian Food Inspection Agency) Tj
+T*
+(Automated Import Reference System) Tj
+T*
+(https://inspection.canada.ca/en/importing-food-plants-animals/airs) Tj
+T*
+(Project use: Current commodity requirement source for CFIA-regulated imports.) Tj
+T*
+ET
+endstream
 endobj
 24 0 obj
-<<
-/Count 18 /Kids [ 4 0 R 5 0 R 6 0 R 7 0 R 8 0 R 9 0 R 10 0 R 11 0 R 12 0 R 13 0 R 
-  14 0 R 15 0 R 16 0 R 17 0 R 18 0 R 19 0 R 20 0 R 21 0 R ] /Type /Pages
->>
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R >> >> /Contents 25 0 R >>
 endobj
 25 0 obj
-<<
-/Filter [ /ASCII85Decode /FlateDecode ] /Length 2740
->>
+<< /Length 2963 >>
 stream
-Gatm>>F2*C&q6H[;3/CNh3a,:3-iXne(NR$fpth6,j4M%7h)au"qW"F?iL")$%['M`bdW_B6lh0\k&I-WY4?CMa*g4SX'8*hn\7."4)bI(;-KMKZtn>\G>X]KBZN97m+.?_:nY#'faBU\TWC?_I_r6@urd@i#1dqg53TU*#GN<E3kZXj7%c//?cQ]n<9gB68WWd+(#p=.osISXN33KjJ'M2hqD?+P#mY>)f5M,c$,t/,X)WBa7iUZ%A2=6K/X_I)g]jA?\W7=asZB#'&-^JIV>to>0u9c#;7EjI@iXq]Z>rI20Nmn\9Y9cG6cU(2+R@.Ys3)d+*@eHk.#_YZp?V]HR:b"/3$3"Pk/N?iUbCiYS@er/@,GJIBHtuRQZuEn2F*2-ZFCOX-DKOP12(V=6p\jbq$l#C:UqCS[r60"r2W%5W-2TprG7__';J#*,:m+Z%h9hc*,mB,#=n?D3aPZQ+cJU\V3MBQkh5+na3T0j`7'K\h8$qj(VUqZp5NQKDM-@<8qdCS:b*2?ItIqkAa93@8H(r#]Mm/EO5qjMqh=F"G^=DM"[L9#nb$_'g"/<,W9\qIYXZ]V]W-J*Y!)>.j*(?3:#596ULgmILlufr:kk;gu'\oY+o]nnZa#L,Y#h'*CsEV4)mPqE9u,KgClba$M$KT7lgdFhXEd`)mRuWs$#U7G+'sE4S\G#&5R2e7fuPX4VSh<HLsSBRe@0sd>9u$O\o_fF2JfN7<TkFI"<q%HVIU>cr6&h$X%!H*`T;*a$QS/H1k;5oP,KrP29Pj`?e,:RXNk0,JeU&kg#1Ur7/f0^N\;e#Jknn1WB$oTV(qJg]/X(R<##<I_ATJQ8RqW;rY#c'V_L)ZrM1T!CfD'Q.i/=gdC6a6R!68H70X[rcPfi%Y#Q0_h1&j;Vto7&[kqOAO=`El16kIJB%K:"rL53XADFFRC'g!E:XTk&M#pK;)9dY!jB)/"43tDM>+i*V?PpM"";Ur$ig5%_-*lhUk'0aTteUgVTCfJ0>DmRr",HTpf8<eV<7n$FLuBQCi`+AqYjFb.4btrpcPonll4[KH"b6[2mhUdhi;]YDoTi327?+eX#%%2,HGfu'eZW&^o@dD2D5t/@p2%!pTf/2^&77saq;34;@_Nh>eN5`>j?`uFcNB!lCfe&-=>)24$'9B%8!@JOk2NPH(b0G&U9Ne`+MF'apDpFH$#;2d'4QO'kQdR;j"C.lN\#*D9)Y=)8k"hTn,_WBSZSVnkU9#TbL;c!kGI<hKUk\31p@.Ypj#+C"(,MM"1,WkU8S^FoG9[fd'ks4QNL,m#IJkR]G4S"N`ICS%RH$R!3ag_k=SM-2%l&r)lD2#"6r5a#Q5i(dkW^%6Kelp+5^1U^,j=nIHW*%0",m[NW5XWh\P;^<0BU=_a7O`DUVnmA:Kb#K(!,\;680'f(E#Vn'[7lV.hPMWtNB%I5)g?X]F*=>&t`Y>>pcDNP1eDPVM@?Z;[)m``p,p^VLCLSXQ";<Y.+)b^G$g?KFZoLiS\X8`m$^9r3i#4:.b]?-X91CTN1RW5\7f(h8#E!g*(4;23h.`G&\TrAm+Or$_k@s,B'o@+nhAA#.6C$S)>%@]hE6=CoY`:arIP>ZSSd!LZ3p+YINFYJeE7F-U9:l-Ns8t5>Ej$3Di=QJV#77<a/Gur=eEaEYhm=Ko_'Ft)PUbX>idT/6"</E6TO[KERa6[sRL9oF&K&NI=?O,[t-J6i$UhW$=BWc)&^i?eCSXrfFFcg1RDV$"V(EDU9hIjrGL4NK,?%nLDXT=cWmPlD,6qE3/EP1``4Ag.F<<F]c[4V2l$<HOt\eaVX0PmR6OlD*I+,65d?Z`b54crM!D=2u4lWcPL%GT9ZULdStlG@eM7\?kWJGUjBmkBP9$[ME092SQdIL0lJ]JuAM-W-pg+j4*eP:Dm]OX6T@$j<or[hojBcX&?CZEunq/'GT1>UN_q=X*PT4X2U@qHFd`><F,!>.[iDUr7l=+Jh\;FVMlbL1.XEh_7eKa]jJ*<j0="+>L9'K!%peLONRFNAo)jk83\'DG^57&B5-,^Q@@d,dkG!fCgT@W:#a(G:am-U*-5f"f:<+Pg5KBYFO30X5<6NBH,$575rWI&"kA8gYr5)J!nnnO2%H79&Xi\monE#Rc=`X%%2^W>Hofn!o%1IX[,&.W<&32=RE))&n'2/o0Tb?.a0:SF*3SkeNkB1r#>9t?V:*+)fV4Ga?%P9Pg4;&JSVD+L8.VRi_66Hl[n+QF%rHD)?;+n-VcB!eu)ln<862oJ2aKjBOr^]:!]BEl04Pt!-<oQJH"!eV?3DD&DR+oKY@q`(CGc)-^_W$,lO'kd=(NgCe^78rsuJ/-8E>-1neoGkt.(7+MEE[>\b_pECm]HkIE1rFCt"`R*B3M0,3n,EcQ2ddN8Y=H*`9\aW2H9J=F3QKu=R<J[N7<l;BKN;DBX`/NmKadDnL(O%>JKXl5GtONY'/Q2.$(I2e[$ok-Rlqj`u=6rF?fIBg0F5FhXo#ch'A'Dj?FlgkK'D!5Z3*SnuHeTFlC3A4ON!mlp.IN7TMmUni9+7)FYp"r48:RQ`G.kbuV.d5pZ@1B/sS1;lmK4%J;Gjs8W#Pa/WH'I^^$[*de]&E).r_B`cakZ3>X5[N/(E8;cA'\KsgJMmmMT>=@Q+`lfB7!'/C*-^rqkN]\BY6PJmuOZ<j0cSN`TNpX(psUWI5H=.H8Kj`qt=dWHK>Aa!gS)C-ef<EoH,9UVgI]U]'Eo%n3>!oLfX~>endstream
+BT
+/F1 9 Tf
+54 744 Td
+12 TL
+() Tj
+T*
+(cfia-food-licences - Canadian Food Inspection Agency) Tj
+T*
+(Food licences) Tj
+T*
+(https://inspection.canada.ca/en/food-licences) Tj
+T*
+(Project use: Safe Food for Canadians licence and regulated-food readiness boundaries.) Tj
+T*
+() Tj
+T*
+(gac-sanctions - Global Affairs Canada) Tj
+T*
+(Canadian sanctions) Tj
+T*
+(https://www.international.gc.ca/world-monde/international_relations-) Tj
+T*
+(relations_internationales/sanctions/index.aspx?lang=eng) Tj
+T*
+(Project use: Sanctions/restricted-party screening blocker and export/import control) Tj
+T*
+(boundary.) Tj
+T*
+() Tj
+T*
+(gac-consolidated-sanctions-list - Global Affairs Canada) Tj
+T*
+(Consolidated Canadian Autonomous Sanctions List) Tj
+T*
+(https://www.international.gc.ca/world-monde/international_relations-) Tj
+T*
+(relations_internationales/sanctions/consolidated-consolide.aspx?lang=eng) Tj
+T*
+(Project use: Named-party screening evidence and refresh rule source.) Tj
+T*
+() Tj
+T*
+(gac-trade-controls - Global Affairs Canada) Tj
+T*
+(Export and import controls) Tj
+T*
+(https://www.international.gc.ca/controls-controles/index.aspx?lang=eng) Tj
+T*
+(Project use: Permit/control boundary for controlled goods or destination-specific claims.) Tj
+T*
+() Tj
+T*
+(opc-pipeda-principles - Office of the Privacy Commissioner of Canada) Tj
+T*
+(PIPEDA fair information principles) Tj
+T*
+(https://www.priv.gc.ca/en/privacy-topics/privacy-laws-in-canada/the-personal-information-) Tj
+T*
+(protection-and-electronic-documents-act-pipeda/p_principle/) Tj
+T*
+(Project use: Privacy notice, consent, limiting collection/use/disclosure, safeguards,) Tj
+T*
+(access, and accountability requirements.) Tj
+T*
+() Tj
+T*
+(opc-breach-reporting - Office of the Privacy Commissioner of Canada) Tj
+T*
+(Privacy breaches at your business) Tj
+T*
+(https://www.priv.gc.ca/en/privacy-topics/business-privacy/breaches-and-safeguards/privacy-) Tj
+T*
+(breaches-at-your-business/gd_pb_201810/) Tj
+T*
+(Project use: Breach response, notification, safeguard, and recordkeeping evidence) Tj
+T*
+(requirements.) Tj
+T*
+() Tj
+T*
+(cccs-baseline-controls - Canadian Centre for Cyber Security) Tj
+T*
+(Baseline cyber security controls for small and medium organizations) Tj
+T*
+(https://www.cyber.gc.ca/en/guidance/baseline-cyber-security-controls-small-and-medium-) Tj
+T*
+(organizations) Tj
+T*
+(Project use: Baseline security control, access, monitoring, backup, incident, and operations) Tj
+T*
+(evidence requirements.) Tj
+T*
+() Tj
+T*
+(nist-csf-2 - National Institute of Standards and Technology) Tj
+T*
+(Cybersecurity Framework) Tj
+T*
+(https://www.nist.gov/cyberframework) Tj
+T*
+(Project use: Govern, identify, protect, detect, respond, and recover evidence structure.) Tj
+T*
+() Tj
+T*
+(cisa-secure-by-design - Cybersecurity and Infrastructure Security Agency) Tj
+T*
+(Secure by Design) Tj
+T*
+(https://www.cisa.gov/securebydesign) Tj
+T*
+(Project use: Secure-by-default product and manufacturer accountability evidence.) Tj
+T*
+ET
+endstream
 endobj
 26 0 obj
-<<
-/Filter [ /ASCII85Decode /FlateDecode ] /Length 1545
->>
-stream
-Gatm<gMYb*&:Ml+b[\5g/PEO"a]l@B!X7"h2Kd_+:dAD68n&uA$;&q@If0bU9+kcD)U'BjOH>XORGjPi6i/RV+5d!V97W(-n36[+#I$q=T24UR]n4N&m.%13=mD!sYWeJW"$^&-A00%Jdf:`R4IiQU+>WnIhgP?;4]t$(RnW@['$dt<,SY,E8Jn@'_XCLLMFt]%2G]2;:($bk$C27B.ZVh<2GDJ\E[<rcp)^ZWC#g'P+,869i%JF[>a(+5nD`]I0S9;oH&-:&JIWkVEIDTQ?Se:*q&o-)J6=S:=QtXfO`^-;Eq<7/Toe5ndCk3?k5r+;g25jlH92c,p9,"1pq1/p>o[K6)]8D<knlnI'N'k&J@hP5+(u;S#ucdq;-Jgtd,Ce=jd$#ani2KFC42U?0F:r%5,o_^4FG',l^h$p!GU*RKF/+012oYWOWT*PRaC*s/jGDRPY<Qq5aPu:$-0fE-DlmOPf?=Ui3#pRn_sO0*FR:r6TWF1[A\6W,q7lS`_B@s"alX$<?BVG,okF,_o[&<IR1uSF:rF\1n-KPD[a*>4U_eKUS*b1NYP5.#'^NWDis2p=A3DEijP@'N>ljuCq+X'j;<rCm7;Wo$C]p^SqsjrQ0&ne$'M)`*H[If>)aE77g\IZ:BY$XcJX3!h:Gj(a4k(s#(%QjggZ+1d$;%]05dSc8dP[[=edSD7,XL%%%I[IZ<VZDQ(\kqpc2I/kENmUH<_#9gk`a,c`thJS4rNqj+MPTTET["3U!X=bik(].oRiH:)3ZHeAH8Ao<h#H(2)k@b_!-BQe`4B##\RT,7mj@8+>/=$W"C77i*L7J[j]s`6+!Z_E$-m)-8#eO:0lEfog,f*>HDEW!_`%;Eu^Caj^T2&jL'+k!\>V\@oEk!TcBi.^"i8V+lVP.D@WPb=6dFY%O^:Q>`N/04c-h2j:IY.S&CO;.9$2RKTLu5NJ%ll2MH_D-0?>j^!t&a#U@:K2`W/J\0]WbX$Gc$9N.LUimgGSIN9rqC%=[J&W^S%&7uB)4<*0UCul9l;`_82(GWSrlGL_(_7f0L6kFOC7CNe9BSQZi5B_0QLQG!20q>_M,'s.gBaGT1V+qqC,2leI[n`#D4(inb#_V4A%]HM;9K!*E.I8RGO913DtB#>J"X.QPuGaXW.$_5:gI0Qc!iSu5([7>7:MZmAtaR"$rYGnS-<NeY3>uLKG4(8(&,irUH=(VX9EG:*]`JPg>Y/R'!0kYbgol@R1ftJ_L8$B9O!,PiPL1&G97r7FFpG'7>+_l/0ql,eO8L7fU;UVfc.[0_0>A%]i,n@nCR*1=1]ke4,Kg&pa^P=5i4rdOcd3<iZ'B<82Rbiog=WWrnHKtC'2F2d3D?%bXc6[RD7o+1%+J1Ape%8(qEd1D4pKQs)F^\/Z,)3O@[L_`m$:Ir:IZI)bi@8nbW&4@;2aFlRC\li5HuIYO@>IVT=p_[CaZ:5!'0_JsM(0BXm<P4'PWh36CQnrrupL4Y=,XGHhV7<d!f'&(KA3ghq$/]Y',>2W$`;IRN(2^O3T)q0R-8htRDGr<l`O.sV~>endstream
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R >> >> /Contents 27 0 R >>
 endobj
 27 0 obj
-<<
-/Filter [ /ASCII85Decode /FlateDecode ] /Length 1892
->>
+<< /Length 2392 >>
 stream
-Gau0D?#S^^'RcT\E?@7m!X&eUmSi:AWjJho[V5DHUrYM"gcBGpG$t+>HgE#bo<A`sG?(UFa5iihER)6m9On">iBPYFhQ:J`.Ah>VWt!%SiJ^gPdDse,05m:@$\)Z3=s$Km-ZQGbi@LC&N[HYWB$'gg8S7:<&3!CW?4Q-TR1@:4=\]b`__ON%Jn;5!f$\nN8u3Oso^SsqVI5;\@S17V8R5`]QV&0YMo+/V[!JCq0Ac9+a!\uR3/JHt/DRP5T]rf=J&6h]q^_c:`AE,Z4NI:XXFH.Q9TroE+6@oWqFcJdp.es_A<5;u4>gS$`?F%U<piGO6/Jb^A-)/-(>hc%h!i/FiYt!E,)V`e/#'H"r)&h\M/4\9!2MXeNT6UdI[>c4X.1$iU3*Kpiejn(,#dY[,GUO.Zt"GK82D#4f-NU9_50TOmB=I4s)pN9NN%m`0dH2LX2kKiOq[=&=5&c2=t7Xj;b%1$@e9)#fB17Z:Y4I0U-Pi$`FM_DiM=&2.bd#6`-#B9!$&@`Z*H34cP0W'Nq&[\c&.IKS5>ai`5>KHnPga7<dXa@Z)Z`oW:^L;44l1;k)5h6h2)RLn&SH8q.d[L%@j15=Y^UBEh1%M;Bt,?JPR>F2G,%q[+!S,,4;_2-Ypds#ZIO$Z)p,7q$pK#df]*MT*P,%10i2N#CAo9^hal;Q&jr2dEbH%al5U*0.MV:0!fmdTWR'PO-(/h0=eleKd_@&2a;pTD$^%!ST+n"B/TSn,W;<&#5#Ze/Q2b_20.#jE3E+^pOZI9\g(K>,t+@YPi%gnosW@.44:RY5/2L`GI!aRN,Er.(Y<MsNicfo6<riFc-c]X52YToS+K>W^"u;][NIURbV+<Tpl@ccbSC*7]_:Y37V<`^(/OtTlJK2u'gcFT];!hN^q@rBmeeFK^0ZUsf'+/BEM9pSRTH29!mPlPM[m;0^*-dmZ>um)Wrm]6qBAjh3.WX[:?,<U&[L=M_kUDu0!`Vk=S-k%'_k^TecPXYJW*^4XQ\SG&pImGkJ_Ca'(TF2(cr'Bkb(U)T(MGj:!,u"qG29K_fD_%1N\^r7o3iaYn/k7bZ;6O`&o0>2Nr^l*AD-LrkeaB!,8N)QSssRZlNcAYF#;n;s6.e=LWAV-Y>s-(*B6;7m[+n');0BNlB-+$4`1$)n>+9'#2$)d"re>_19o-E]^:"(kGQW6J_OU*)cQNO"u9Pn$CmE7ULfkI+VK'[<7"N@*<(h*<mbo#*\MK*AojjlsGqWJh6U\Wm.e\$Hg;59cEe@"oR:6>R.]^%B=dr$T"GuFn?apWC0^N8i+[Df/Ee0H<^:!oR"`7A&/fM87c)p/GdtE;fLHLCpcHT$!?+pL<K%5jgosnF/ZA$G+)!NL.)p(H%1FUSIl9M_8PEtVEG,3E9-`1-Yh[DcR&4"/dVPXJj!RJ6?k#i)r83>IZKTJhI-2\!4^;X+]0S&66bd*R98dTaI&*\cHZ2\_9W8)E`Sj;D5@eN1`ss2-*dN28l7N'E!.!OfCu>n#QN,^Jf0q?[]\-=W7.PBj35X>%Nd$Ga5,t/>!;crMMY`DOYXX<(RH;R?3<*FSDtsVO&ZK8n?EcebS0CBf`jC\'W>a$GK,V/"[d4[k^/-##@Z:T7.p?%%K\g-A[R9ZTI_d<LOEB(q!J^i[Qg($eAl+Q6.-7F5$JICMuG8CHYZfh]HcX(Ujp'.G"=@P=ssWSQ)3GMf3rRN^GLB&dZ]WdcjkOVm]\Y7?W6>W>rTGQm>\%B[F+`qo?>-YkEU*l`D\<LN:fB&4@s#I?VR>U,^,PJqTgUmHDR`iST>'o?h*!R4klh#>FH%#YBZa`18SM64+l2_4V_ua[tR&T\sH,BH4@"Fg=J7HCmdEGi%b88VH+[%r=Mmgs5F7]XI1k[62o!18T4S/1C<?f~>endstream
+BT
+/F1 9 Tf
+54 744 Td
+12 TL
+() Tj
+T*
+(owasp-file-upload - OWASP) Tj
+T*
+(File Upload Cheat Sheet) Tj
+T*
+(https://cheatsheetseries.owasp.org/cheatsheets/File_Upload_Cheat_Sheet.html) Tj
+T*
+(Project use: Public upload allowlists, storage isolation, malware scanning, handler-mediated) Tj
+T*
+(access, and size/rate-limit proof.) Tj
+T*
+() Tj
+T*
+(owasp-asvs - OWASP) Tj
+T*
+(Application Security Verification Standard) Tj
+T*
+(https://owasp.org/www-project-application-security-verification-standard/) Tj
+T*
+(Project use: Application security review depth, authentication, authorization, validation,) Tj
+T*
+(API, and deployment checks.) Tj
+T*
+() Tj
+T*
+(owasp-llm01-prompt-injection - OWASP GenAI Security Project) Tj
+T*
+(LLM01: Prompt Injection) Tj
+T*
+(https://genai.owasp.org/llmrisk/llm01-prompt-injection/) Tj
+T*
+(Project use: Prompt-injection threat model, AI red-team evidence, and fail-closed AI output) Tj
+T*
+(constraints.) Tj
+T*
+() Tj
+T*
+(stripe-go-live - Stripe) Tj
+T*
+(Go-live checklist) Tj
+T*
+(https://docs.stripe.com/get-started/checklist/go-live) Tj
+T*
+(Project use: Live mode, account, domain, webhook, payment method, tax, support, and) Tj
+T*
+(operational payment evidence.) Tj
+T*
+() Tj
+T*
+(stripe-webhooks - Stripe) Tj
+T*
+(Webhooks) Tj
+T*
+(https://docs.stripe.com/webhooks) Tj
+T*
+(Project use: Webhook endpoint, signing secret, retry, idempotency, and event log proof.) Tj
+T*
+() Tj
+T*
+(stripe-testing - Stripe) Tj
+T*
+(Testing) Tj
+T*
+(https://docs.stripe.com/testing) Tj
+T*
+(Project use: Pre-live card, webhook, refund, dispute, and failure-path payment proof.) Tj
+T*
+() Tj
+T*
+(stripe-security - Stripe) Tj
+T*
+(Security at Stripe) Tj
+T*
+(https://docs.stripe.com/security) Tj
+T*
+(Project use: Payment security, PCI boundary, account access, and credential handling) Tj
+T*
+(evidence.) Tj
+T*
+() Tj
+T*
+(govuk-user-research - GOV.UK Service Manual) Tj
+T*
+(User research) Tj
+T*
+(https://www.gov.uk/service-manual/user-research) Tj
+T*
+(Project use: Structured participant research, task evidence, and learning capture for) Tj
+T*
+(private beta.) Tj
+T*
+() Tj
+T*
+(govuk-service-standard - GOV.UK Service Manual) Tj
+T*
+(Service Standard) Tj
+T*
+(https://www.gov.uk/service-manual/service-standard) Tj
+T*
+(Project use: User need, accessibility, security, operation, and improvement criteria for) Tj
+T*
+(service readiness.) Tj
+T*
+() Tj
+T*
+(govuk-service-assessments - GOV.UK Service Manual) Tj
+T*
+ET
+endstream
 endobj
 28 0 obj
-<<
-/Filter [ /ASCII85Decode /FlateDecode ] /Length 2129
->>
-stream
-Gatm<?#SIU'RfGR\<#HR=dHh^oZ^#bbeUZqM76p/!.h!qR4T^7,SeB"IYX0SUg4pNg<cMl&?U;(n%%U&.\R1J-/j>[')f&2prA&N.;a,uk2SI=J#;Q!X1MHhPm`(MFoHhP]::4+$Q@>-o?57?`f'Y%Ek*Amp`Cd;h.N)7,u&%4$%>q'l`FT`TGt^&=UAm.9%QsT7hK#k3+4;6k]`n7`gkNnf%i43Lf.3tIRi.R[/JiOIWG>)@PXN%(Jc6fB8*#SPLUbZK@BDe!ba2u$Z(E]pjNjiruCQ^VW3BFQ/D2U^I:0r^Zj>^e]gi\:/.iIbG\t:^l4)GeLD]%%<E^kZBUAaUNK>.ZrU5HB6aE4-s7!K[,1RKpG*D:ZlpY6ZK7:Z'74mUnWgK2<(>Y9E=c7`O@_2ELo`R$<%d#F_>$4>KG":ki,N,i4gS+%dYCG^k@#oCo>*,^i5gHi&Sp0NjATNY2P(V"6'.'BeRZ4\5*'.',++,3^1.4pFmZ41)DgDacM2%jrE>TaE&)$og\CL=lF38-p<WC0c0"cneXtm-VoHpEE3b1RlV75!]j7Q)hu1358\ARnVf&ZpY-5:'GJC"6fC.VQCjUdd0)l#pNn0%BD*'$q%'0+WP:<kpV6reI+3,J*Y'L(Q>l:c*>/<d7_>+m$QBV>-%qqiilkiMkk)=\4$%uGW"!t9l@JE8lZ><-BS;Z++MMjFcTtt!TV9#U!11Q/pAeS^cY&RmR!Bc#(3C^_t:n0"6k]F\B(P]q#G9j=AB=*7Y*2M<oD1mAqj-R<X0UE,>!Z)nHl?+^$E"u9V;jr3QMK-tnPG(^!`Ms:*O=MYN+ELFDh0Eku4laRbM1V`%]HPj?%ME4R1$9[o=<2Q4*hYf9JjL5@SdXs3P(jAOgU!%<j\W(h&NS:N-dsIXn+:<AEXdh1TeIine6!,3?`h^i\16'/*7A-!US%Hl!Utj63hh\fZ-=O)K1.oPXKpf3e:puDE1\O[qEQ%.01=^k/pb+igD%?ONT#IIDs\Ll232JY#-nLL_AKA>!5&0\m4=3TW&<^'<K)`TDPJ5Y!lPf#,8VkE?,US$9sI/k(5;=:BQoCj@:eCVH!n(@EiDIVlG;].d.S*Yp\(sfWH+.%O"P2aam,YZD$CM,*Z[3jU8\[aRAEV(=i>U1HEssBaRIM+I3W<PSsAo/_c=e:,I+Ej%-c3g)@Sc37,R(tfB^&tU6N-F;Wej<o(:OX4d[V?+]J<i1"W)(U#-IY^ne/?MHlu>UH]'Ki`ur1eq-P&[-i2fZdn0Q?@(cTdi3&>E>2ADYDMKOSCDB.1OQs^n3?V:WeAG]p4g$Q@%X_/>/FE27Q4)(n?*Ei7^QqN_=Enj&:+5;^j%-FN6Ll*?2_99O2qC/V]Zg[$Nl/(\eZgD))5;404#7%K7Ogl"?@.nmL/jZl0R*)-eVk1H["Cm11T=*j;nsnS+_fPB;R6p:K/)Q4*jiK0;"`S4a5N;5QQ2,!54bIPMnFKQS1hP;J1I44GKXo*&rf[LEA`D[E_TQ`@@+<@=g;cqJR@/'Jgkl'88>BoON$S)K&Bt,jQ:i(>*[s44"`qL3qD]=1!,f0@lo#]lELpGVS"&@M6gmmp`+$jA>D#T\7#[_q<F%@g;0QXW?VX2#hKQ5;dLXPWi%?gtB4OODmepP=C,Eg<+Rm_$G:sa?nkg`hO.n[S74.$f_uak[-4_f+.'H&V8nT`$guk*(uaiOFUY\baf7;B+b)a)n3E@X+GD'/p[>u!]+,j\ja%b#FP"Qr'Aid#",nc4qAI"bhHZ,GZ<$gfjq;n6gt"n]5@e>esi/`;/"BYF1cC_K_V^thLN_j2g8I9`HJ1GYUhA<\5@<8K$TKgi3<FbKIt(k$ZA@O>IIHn$qaR<>N`8.,N#B=ptY:V\42:sHi5ku,BC*.E`Ubdc3/op:rQ%FcCPrrXt7)0UO%#==UmZ'ISJIeLhVTfhTQW3%X[=D7hD:m.bQQ7o<3VQ>'B653?N\S%8mj*_i)N!1H?I-Ji"2DUQDn/h2A?$g(Kg-9*ucq/Y51RfU](HEP"E/:OCg$8&E-2%r#$H?_GO1N]N#>lA>.\R*4G^#Fg?<1?FLmf1?s#HCiq%B4e'cBfD`4!\K/5CN$HoDdl!@s,cuu"Oa?c!H.?PEW~>endstream
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R >> >> /Contents 29 0 R >>
 endobj
 29 0 obj
-<<
-/Filter [ /ASCII85Decode /FlateDecode ] /Length 1966
->>
+<< /Length 2068 >>
 stream
-GatU4bAQ&o']&L6mP5eb[cL"qB3&a#U'3;c)gc0T"U(9gCo.iEP*?XSlfX@mSRe0YWIb,16rCV#F7)CM%Ik6i?X=;W=jc/U9_!p>)9%g=KN=H3DY<;lX6.OJ5F<PEqr>XDT$F9!R8+O8&bW&cl#8@)Zgf]ec0=7Ws--"5rXc7JFL!YQ'm(a(.[@6(/p&O`m3n]Q[n[dZEr(RQ11a3qKmhi/Bga,/Z`e(c9rgLkjEnpCVo/K^T&#V"R;E($n*U)U$P(o=;eRs+:LOAZYW`K]%lGEVW'BrFH(4!r'(1Rhd3fN?,<&LH>Z](9r<"K5bDGDQjeTaSWIbqX.;TiF2_)urQRkq6Xpc+)iEO.5M=bM=Vt3JmM'XrqT3,ua:f;-C,IfXKnkNhgjY:POU@d<L/OFucc9f\%kab6XShjLp3E)CS?u-E7*d8C0cF"23n&^J`43OsNUEGT-VaX8q/\i4T!_2-ZT52=>DnIq-"*(G@q2AEMBAEUY@0nEI@n('u(RW<D-n\%oOt%-bLm6J;Ea.M?8m:=.r0s:$#L<.cX6&:!rQ"Lq9gCHX1W"%C2V,-<G[9"V+q:t/1$K/p#]rOV-djEIPE,#%C)#*">dfG1FiTd[4"5'#n\PtI_Y4CK+Hm'u#336H$4Thu]dKs5,Adcf!Ke.OL5Qir<,1IW^abL9R7gtF=4ZWQ&kdG3LWJsi0Z/F4Vj3[o>N#?;/^?^a6!ZlTAB),p@Dud.*JelWSLBX^(<OS#E]`1oaIlc^ReiOjQkS+]@5Qm8YAIJT-I_CUHrQfN*25"PKL'.33`=;OAGh&7pP:.+;7BjiQCEWk2jB02A+MEd2F>5#TPpTW*NY8"-;7;m'FEChM__&W#SjmBZ%t3T;AK_h3je37?F2O+nb<n-8&P<[?4:JV\Y55%Uln/H&E@#[cI:p7^)Y7D9ES!D[3>2e([2Q.lgu#3>reOD%c$sq)5G=8"4.b%&&`<mDaVrL+E:@0'\u<h`VTmMLI!A*cd;eS9"bHsTgMc.Dt1oMCBJ[pPg=>8/HVAPIR\6BZok54+PTfhL.ke&3!0!o\%&gh*W!&eDNP;4cdE1#3V;0AZgU&uN]gi$D8\CF\BU[\f7J>!'J*2E#j:0lX"$B_4XkAlQc"/E(Ho:[jS#%p;Q17a4n1+5.sc>aL&01O&(aV2//bjWl^)!B=k7nHHu%&aY:WiX]nQ"8Lh^o%Re=6'6oFJ&70(V#3eAT,:lEjtZK=;$7%)W)Y;!uLLk,g_5O;h,f\XHEPHY`Z_]?HI_6sg5Oi?RY26(TB\QBll-'[fWZcE6Hh@SW+[lL5TQHCqBS+-IMACOYk-HFOl$*Kd'=+8NIZYA[V`maT#=SuFaeIQl6e/<ZtfnNdhX`l)QEJM<Yg"4hOCHX^qRH>PDX&-r=#k=UD^1#Fp-imq.2U@RV/YR@9BN;G5?DC*DC%'L[1A;YU^7?lnUA\AUW)63Es#%Cfh0Li6<2=/KWB&/8RFJ%dgb7T0,C)hlI6X[n<*<W\138i%Tk9_Y4i2Nk1DD#JpqF=EK$+5/UB=!%&7;/Yr_VAc>"Pg2cZ_nb0(Ur8;igip<FVFN%G'+PMle.o%KLC?ICs6M_;eX24u:to+$0a*B]2THmlkd,'t[8<*A"DN*JLp-47,4KUP'bJe=T\O)AEH6da&UhkrrUB7d_,N%uqj+!UY.0K'p#r6g^4tqe=>=9A]/LLk-5Wi:s[D[as[lURL9>pXNh.PYa1cb7Ec!bTe7]?sUl:V,V>cchK@VaiOUnX=/E+8@h0^@d@:o&U0"acn9R'eT?c\("dT<j^V55/0[:e;I(uUC-fNp6uLC?K608fpuLVsjje]C#@f,XbI.<rd2!&OlE]^*p2-JkK1]u2,c60YD;P`4Iu\$!XdKoV-D=j?eToWR<:Dn@rP4;1!9t`^Trd-*W+=:aq['h=[Q/RPqpG&s+u&OjYO*Lteb08u3\me!H2^$,kgb0)1tTG~>endstream
-endobj
-30 0 obj
-<<
-/Filter [ /ASCII85Decode /FlateDecode ] /Length 1741
->>
-stream
-GatU4D/\/e&H:NnE?EZGZ7T;O9D0fO1S@"FB!&=H5QQG5c8HW!<(Y5hs8@t@m+>uT"rm]_1*uI^45N-pS5U9R?eYMB'u6:RN;c?kS\StBBf=1Co`8r3YJ.d:n'(`i`G'`[>u&gq%`9jDQK&8[o.1t:(LX]NKs]`c\fB"'1*)D>[0j';L6W%:Od/8,[I@5K6>?`3gcdbUMFmT48Pq5j[%c`t2o8sVb1YCNq?F"X]]HKeo6`ZjV"6AMGAN0k4+$fWo&0:fQ4o__1aaYq7I/uWr=\W;-H"VWjaCJ19+"2SS\@^(LJ59"n/_(H3rnS?_d-cV"KAl;^m\02rjpNM3,O?&!g@:;/YOoQJ2</AdkX(h8n_re.NB<XjdOc:1hs/crIkJ@qN*>(I?9n_,JtKJ;H/>#K4+#b@T##QbuXZ^_4bue2MAN<r<i_+S$`qMDXQAjI_+>8%+`#_bAU7P7"8qPi8ZX4G\qOoiV&[*Q^)Hlg7sbH3d;3hIb.Om!NYI94dm/=.C/e9U%pRYfmNU2Ggd/XUdaD2UrCn4.KtA`"ri-!ZiNP#8TYqKm=is1QURTMK`OhLI(FN7?8P+UCeWj;Om@n1Ycp2)Y`Zq<cFOUn/5!1DXT#VmI$mE-.?R6aJ7ZP`7cs;U,8RgUB+%A^&if]72NB]UUb-O=8lRo`-(Dn96V\2"^XU\B(2`;mN!h)aI@rX#Oi?K%;,'t*#29g^T8a9?6ahq$K-S"Abg8JD$]^_qY`K*qiHYKQ,B_`RM%(/A:a5VK$"_T\>gQ(aW!dVmGFJ@4\YV68O46N`7aq.>3,;iK#m3':^&UE#/N_4p$pp^;c@Xb@)8J%gc^V)>gX]\$o+VmkN:5D&U;s-%Q[Ne>@EO^7$UC+4i\Sd$-%GEE#p1-u.09,JV<3d+EU>@S$il[6\"Km77t&L*hbT\,=?6mEL4THI!X\[Minq+C7C&6t-T6p=;K+[R:I,>d*PK(uqs`k-O10VAL/l<k1d8V>JO3BL.I@:&'O/K?h5KY#X_]`4$)$K=jRAWJ.EBOc5/WsZdhcO\HJ8gHC8`D7?\2c/T4lR2&::]fXO4;I(#O_k\"]0^]`_(OB_(E[B6ZTI-*!gD`];V1;?+=aRkkPILho4%TBT(KRC-_?+^s;sX>.R4BKGWhE4WQ\V#fef7C-WB+ku04"F82'8,'1!Ib0SN!$q&ghQKJd[u+?5]-j$e#!t&(<?c@Lnnc>m':#bF+g9itn%D6h7,A6Jms[I>Mn[RJ+'snmr<VsNTj5+OqK`[_P/ar>ca]\$mq@ZEFI^BiIZQp3.L12J6D+a.FJBb):`I;I_sF&b:kN8)3mN(?eD#.a4jJ_fCX'H8"L03uF?bsD'g/U?)9ZPtFCR;Iqfh`P39N2&1Q/'o0_(]c6;8,mU/OXnh'A0bE+)ntVCEqY6W0Wn>=IHlR&uR3OI2R9BpY4CGI+u]0mUS-NlLSh/Z4M5dJnG=%qtq.e/,FAa$o=S#N#RNqUjY$lKu41I_CndVs'm^Yg]/HY6,%t^Nr$"T;W*%6ZHFZJOZEZ"/G!P,+A)b$j>1As&<Q,CJke#ihE`.!\!mmN)+n_-V-Qr&*3t)rA'fds4JDX+dQ5:_jqCp1I=e^@GA*U+V6l'>;Vn<C5$6Y2<OAcccT=AnLsZS:?BpEb\N]-fJ[$o%)B,<U<ZK.b)pOUh\f5^=<ck3(WPXFlTt.\g@8%5kX$IBnFK-$\B*,r)t_JkofiZS0!M*\\=PclGkE-os)jY~>endstream
-endobj
-31 0 obj
-<<
-/Filter [ /ASCII85Decode /FlateDecode ] /Length 1720
->>
-stream
-GatU4gMYb8&:Ml+bbJ*-i^KXqH*bu,.$10;XQCr3Yp)]f`oJbY]9KFHI:pZuCc@C*TO8lPf-G"S>gAjJ"<m_3h7n4EE3k,R[g8]F2EQ_X=TY(Rn6tqNq]#9rV>\<sF?Z1tj!\3M/4l%J(rIn!dVul$<S@[%p\+E/[X`Td$gFo7Xu;.P#bR4o>bK[;?8fHZ#,^nK_4VFBJhO4b"Z'Bj]'k!h("OdlILDW`Ykc7AIe*=l%;0[fHt)%J.hS(Cmf&[e%(@T5H*a$="<t&64RC@cHQ5@79C8c2k*>luKd3mrYGTYpIUMt+d$V;"Rj6"$Ja/Z2+72LtdImuq#[!\A<Z!G]:jCoCNsb=LW"<([<'4gJ$9]G`d:a&4gGDfr5iJj\`G=rqQL".nk.Rn,1Lb.%1Zad*!+@ETj;q!Q76DL;X\l_sW;$Ck[A8Cr+eHKXeU:ja9($qX'.@D9\<oP!Nj]Fk7^JG8T%H,^2E(Z%7#pcWYB7]25kuJm44tNu]=?<W`X36DA:-u*j*!*;*M=f!aXmeC94=lTMGta)j2!c_TZ*sl';4jGNAM>Z\tD.OfoGU&<G8RQSd@@-9l&+,@[)qRlFYK;Ib'N4iJB3<q(L?hi:ku#TNQtp8gi\JcF('_0UJg']].on.J?`03V%nKc:$>`qg3^K`]!us<3:om5pNB+.!Da^+IBsLS-#;*\uDWC%.))3.YNu1p.Ua]AbfUR;HIo4\#hUdXHJhrY3A!X^isYlC8]4>44qZTP#RjR4a*@r%17(`k\R9/^&t-tcihAn>q4G^;kb6X&+ij$8G=IFKC5*fJJh8Ue)bU,!dq4oa/K<?5f<WhbH[:_OOI)kQAF3M.X-^f"H=0l\N!bL"U97QNN@8!@7cZ;'aO0%R5FSYVMEB/OtkU/X9r<LkMoc9GIbh#8S'g%*b4a8*cScYEA+&*I'Ijjl8Oj,``LVSe6/i"D3lfk9BeGUkh0GpSR69VdX>0<dUR%+\:gW`U#!#GOZg].O!ZhrXCp:hBA8A7R'l36(QK::Nm0B#k3!2u=5sOp-"I@SDCaU(SM/!(KB;@AdeKN2bKLR.8&NU#nH@g0@?E9Oo\r_?nYVKFSJ=,KU4QTK^A(.WbMdGW8jRNoT6U.H]c&;*?`rX`Opa=5(-Ku]_rT?EF%qhJe*HPp1-O3t?n_kW:'L`o%>7K5"q%!:N>Ir*)k-SeCcfZtc1GmsT-ehBf7@V*1`$585>j';d?g?`K$iWpJY*3-(RE\;r]'Tck0"3Qh=\!P0Zrl*opZJ035-+";&cUC*`#fdf'J#@YH4\IBYC)<b6I1:Dq[_*dHUduF2jDEPO?aH/4rmFEFX:16MuES3N;s\B-jfh<\mW`&$Kssn]^iCr\H5,jFZ!#h:5hAluMe05'DP5'rOC1[;*=mg!9a(fFJ8<8b5U[L7-]fIU)_SK25nM^@?SPH!951[]@kH^]iq,2E:<DNlUFFpIn[ThZ^UsjA8(XEqOBTc$gqA*mm6W4cS0]AVR)\Sm^>pZNg\deQBWIi.PNXqV[';Q-O$tOW)l)C+Dp>E4)Isb>I1#BWDh"ALBH)mbC<le#/.'L?SkIaJQk(Cj/`RU@o^4Nua[uZ;piNO`t\#U%N5:Kudf7G0]@$JK;';7!Cd.i-?,?:7&`"H^sgn3Upk43PKMO+AVl*PJVug.[!T-dkPfo[);jmNu/=5Y8#e^N'k'c9n,gEV->]6L%O!+s77/cr!246UUC~>endstream
-endobj
-32 0 obj
-<<
-/Filter [ /ASCII85Decode /FlateDecode ] /Length 1622
->>
-stream
-GatUt95iiK&BF88'Q`%FIRpd*7rI.+F"5PDFWWPnTuIi]8^rof^&I^e,c.TuHHe]@J09tbc0IU/)*3M.IU`&@f)Qo%0Rnm%:11\d31ZnMr=qM5mloY%G?4FWqXs]$Yt<qk"g^$Y2c0X_/Bsp6)V!Vm+R\.$fZ]YC/7oKBXG.6i`<q8_O;4KUXl3pGMFneS_P]$k<Pp<]RoQ1j7`^=UqqML32)[r(!8D/=rb*mU]fsW6=V@p`/3L4$_YWW`h^O09nMDJ/<f;W_i&+f$h"==$,?WS7bo[RSA"O,JnV9=<1S)78Vb6Lr/Fk#!7Pt!i-WR=2<I(K>jdMnffCah"s*#X3DS)"S1@IV)):+fhZ1Hta@tX%f=s])e)`"LW.:2/b?GC?!\QOtMqG2Bg#-ku'*k!@)f%i1mGRt$:*5Rl`J732R#&H%OE7P#UF^(QE[h3eK49B:*kaI)E0_WgVTti0*C(3s0)'p6X;^FD&XD<&@$UhF,Ni?\FY6#DlJ4K0Cma;q#hD3iEbi<fdh#+@*@43//V0$E:Z8YJBY&1!jD_dN8Q)0I6*#Lob2=aKKF7T$TC.T-t%&g!?PZ7+/RO6r^1fgPRZKIGUK3:hA?Es>Yd:_e>WG(LJJ<f5@odJn$F4:4c3CY=IK_has"NUnV9GtZ8b8LI$pU.V(Bu^PP<.[RXe.^GaL?TNO6E(70HW'hVFmQqa=2V:2gOcA=@13p&Lsl'A7.K:6+V?FYAD4go*3b4=eAB*baN/bb)Bt##:q.3a,H$7VSW+,8+3I]J&QL1Ipr`b9.JO;?')B_(U3"1)W:lKe`FL+9e<=L#l@UCI_@dfW,G1M.$!Hn-+S$cu>t\Be_.ha4XZM2.:_&N&PZ0.PWB!\cAg`h20/aTGS?^H).cYsLBEV2AN15?mdH\FCR$5f()$8J/8skl@/Td%n.0k5r"qXmBEgl3Egf-f3bGT"6-9NC!<M2p$8ZF+#Fg`Fu:[bu_qEa1WCd_!4PE]9oQIW.cCklYCOlrn##V*9LH;RL232_d_<>atCf2[gB6m$[hekoD4G4rr*aJmFWBY"0ddcG`)]A1l6Fm.:[>r-WoWnPWVFj==)QER97qA%3"@S20P%QM\lcid%kkZt!+ZX>/b.RJl'Y8a$jD`Gs0!+BRU5l[tcn>O$;@'LbKr>tI=LNUDXC:ne-PN]Y,D@$)sD#C;@%HZKY0jnZLIMoWq<.7F;moW3aZg<E(#BHBI%4#=-)F$0,*9T.)/l+o;lm1oef^CPd97*Q+.pY=]4^`CITYh5>B>i$%f[G+"?n30,#X;4.&-%0J`HXRK(?YjATn?NEid`YaF7l;^[\$JTYMLs>j3;gS1j4Q!g>WWf-)7T%r[a_,R\4(jZ9>`R5G(=EB@c,)ElN>5N)it_E%atZ!Ro6^l>\m8-%+=Tc'gH"5\hid3O76-$MUWj\*W2L<4fb'q?2jCEB7E>O4!k[IQa1L!Qa_7*_TJ>RYg0Ced!0dhK-d:cV^p=?l,<?F]@eM4%j9.:/#>R^"sYl[:JDbEj\6edJ=bX`+HXtonaT[cM_qn3?:08Ep/,10gO@]"`q_S[URMJ=bh7+)DBEPhKX%7qmsq"s-ENcp'n08moY[S\AC9.<BnC(=bjVm(TLn:~>endstream
-endobj
-33 0 obj
-<<
-/Filter [ /ASCII85Decode /FlateDecode ] /Length 1867
->>
-stream
-GatU4gQ(#H&:Ml+bi>S)CeMLEpFSrM+@(j^anG9:5i>OMRotSI8]kB6lT7I*?70I2KbhK/Z7'I*B?hJHKdlsn_uI"DG^Ts`G:B=*ghn7*O6:KZ$bX0$n^!,2A]5&/Vu,N-3_L8>(sa#ioe_<k@_S54YJG+%6e]5%[N7(FRuO>QXb*TX.ggrj-jlfu3I#%K<>lAS]RB9_[4(!0;5us-AMcRE:STIAW4dNa[pS(e-anErqSco)cI172Kb%XNYWdF1GD`&CI(g_A<Z),i/%RqSpV6Ehrat0o^Pd`Yk"Eieb#)OEWjJdp$A=XGH_DbB^cSqo0GZ-J&M2KK*Vi>/d-\iHFWaCYQfsPakRfK']n:t.44AFfZkFB^.>=dp;QeCND4t$0K!ln-VUq5VNs0ou:-PJ%>Z](Y#2P(Ef2h9m4AHm=`[ZH@V55Y$BB-2Dn9lLXX36@@I[#UH6>NT)lZJu9.W;hqAI'+m<L1g`HZhb#H"cp8-uupgh^:kVa2I`n_PT-pTX`r8"e`M\]@+cI/<Z*m4%$'c.ZD?T>YbUEp(96Jo,ZJ\7#n;G,rPm%W5KKEp`G!HK"%L5!D+a4[NX:_\.g^JN;tMm*JI=ET<tR,5&n)D3.n$GD*3^+Cg[sL9OfOCmsfL>YVl=?52ijr$r16mDUdL<H[@%n$0`56(kL8mA4+uYcP+*S1@_*O:V>r\*+grd8?kmp/E6U`D8#suAX6Y_CYhOG&J9_iY!Z$hRj/[,'`m>n;qIk?+(oE[q<F!lF4[PUqpX9^QP!#klc]:O:B%%@4gmqZ2K("[*CTLO:nHsCDiDpm[6n7,H]L@WKN`t'/Z^>\??Tnbc3BU4[t@.s_bF.)Q&<dM-6P7[(pU^nb_pu<Nh?sl/8jA\O^LuREefkr$d(cnMj%r<&N]*ZBF0?9Pn5E9)!bs.Q`@'FV<k`!5'0l"TgZ.ec4H2L*>&N2aGCiH`ngqY$-_X![-oVDWk_7q7s?7[Oks<d,DGoB9QW(k+Id_3#PL7?5$%An0sL!NCeUKq:<I($iN`1IPi>KB#M\]l]e@m7:2Mk^VVmFLQgN,N&Os9<^BY,oi6E5Bgk7`X5]l^1l`1<`01?s.9c.H!'u?m=<#=:a#Y0N"Sge>8lg7h`,#0_]#Jbfd7]agg"&Ci#)oC>T'RFf"K4;:L,]MB,i)f!"2q3Z>p`$ID+:6t>Ai9c5/WV_^)f'^UEr-3eQlZDoE)7iVd6K*TD+PsA,"dVX=c8/B/Wf?"o/1`0^_M13R\^:[e`o*5(.ksM.23fa_D2Znr(.tm5B"BX'1?<;Qp.8Og4<T=,$`G8(Ig;KC,j$ZX7)2QmZ'FTT$=)VDkY0&8\fR[B;(;K<pF$C^('aU#d`jUSb*AKC8!IdU$mVeZ34rb4>(r+Drha0.*E'CaCl/qm_5@TZq!Z2[N$cIPHT%/ig(p@74LFPGJjU"r.O^.-R[%'Uj^Z_Ml<$J%QbrG#^p4fTi45/5oTlZlOGg`V5/tlP:IG&'$k$ckbWMr&r+o.jCW1r&:Yg(cTo]C3;8G_Dp[3%m:X>7&mjuU_56HG0]I?nl.H?oZ/14p_Qnt88r'n.H-(+BWC=6:h?_\s&Z3WMcTuGK'C9`PWD$@fi$5[r_bp(t)nD00N^YfIHJD)<;4#a'`eQ2O&Q@BR).P<.Wr-j57;Tq<(Dgo\/FIPf'/i;[l/9HHE^"+,Vi9;N2-`*DidR>]`UI=8e1m'1T.tM95,SLTCWZqJdb(IqM^lK;U"@dSe#`+[Lo8]fqXHEbAclrj;EIZFht:q.S-^H%,4:K!TlZ`*OsUIVO]UubP(mZGO;L!m5==t/:@r\,R/R1^3)#m&G^N?5`t!+,EHLJe33XqVH!HlR&cPUR_2J<nW2J6N~>endstream
-endobj
-34 0 obj
-<<
-/Filter [ /ASCII85Decode /FlateDecode ] /Length 1929
->>
-stream
-Gatm<9lo&I&A@7.lnRa\Osj25ls#pUREQpnR^h`21E6[*8VfW^!C4cLYO=)0a`c["%b's,8)adI/b\Sd#Gj,O^U3ei97UBQ@J"mRkle.jOClB=Y2@%<lR/<s[!+.t`o;)g35(iXZO7U^Zg;]pJ`//LN@u++f).kgY!0N=c=&IKNp3qaSmFKU+M:3A."gBo$X5&s"!mC,-D3.]_`pJg63Lj/4nlKf%SJXp5D/8tE;^/7^9d_gRh)E\fprE;`#9d>hg,,Q9&]Pm2Bt0tdhu^?9=d<)Y2>!sL<4DSCN7c1r^cpKEn4#"n9%`FKat2:AUU3^b(D2>=olLX%\6enkIh3A>6jZG+W=qC,DS@7qg6,mKpF?;6Sk$[C/(CHCBm\J2&^`W0[uB<g?t09!jC1fbCnTC['%4(4JMZ5r&g]f`%u+X0QS-lc`>4A*<d'.W0NJ=$M[GbMp))W3V\,9*qqU#4&Kia[]6D:[8GnEHRXn>7h>*si?rP<#FP>JIg+lZUMt7;isj/"WL[*oR)^>kIY+R1+:0I=HuIil=$kmWlpuGB*_/9i*g!kRW3S$A8;U=X7cG/qX`[I*7L4T:)F3$1;#=<f(8N:7&qD*\Ur4D\]H[?,0EopqG`@aO(\AobB0t@(rjFtXga*7s<0G'P];MoHG:/Aa\g'1C4E6TC`uVR%fWc[]ER2e?+?#DD8M*mJPdf(BXGH`=?/T6$jF.9H6n*K@VGa4_7?d]+1g"[6`MRo@7Te*=KlG:o+UGWpU*I)!@bNWGpUDEMDnsmA3N;dj79aSI%j'>^PRh6#%#I37V(GY[^/Rj!69g:S3]^8^Kd,$,T:i#Q&`ff'gSh)%FH6*UF7$!\Cu1jshbEHiXdqk)rL:QRK1pmDgEbFIp/I7WXG'>10q0]@IO/HL)d-G$hFk6HJKD&-HJ?*&*2T>2pah?=^V)GFcDQntj>h#H=Z#reX-[!]G\'Bpf]8<OP?`Tb=uEe[[EX]ms.[4"nQ?+:EJJ3k4=EAr.P:&Q;Hp]N,2WdfJm%8)RbW^^XqW:LB?df1l@JOLZ:/-6r0%r3!\J.S6N'8+B>(_Chp$^5")/$J6!KKX!'HYS?,2U\O@@IB!(YUmL^RtTFL_f;'b+:Z86?,4O"H(@2Q]?p%QnB[Ot6i_6d6lV+O)(\=hQ%l3p!guD7im4N]tUs%+N1kDXC[0E?nEIN10/$YQicVGbPq2?Z^(J*NP3&db&7mq(]i/VnI_HRdGbjN&7]j#W7%['lU\Iki[!hT?N!6_aERAa!1u;A#%=2."!pG>LYEeQ5IPM_p/&'c@fhQJOu+'a+g)WSS&6[USC$GdkN'52e\kk#(uab:FftTd4i6p*;)/UTN"GU*4u/sPf[Kd,!".$49G?@+rW2-dY]AQJX*YKT&T86q_p@98Se+:[1Rl*iu-*:3GY&gBVXoD8rkXm(26oI^9=<d-Pu`\.(#l195o;8<64SdY3<B(5aC-q_<@\EmF:)4*lX2ZM'VV,`ABJU>Lm4@.b%K>.Eq\<qoCQpS#*OI!@T01IGiq^-o?iEY"7)4Q&(--?QmK`b*bk1$Jh)JK$)_lg<VYQVBW<+)KKkXpsHk_U*H//J+p<e8rh/qRqQ,BC.3nDgfZFEiYdD54F^))Pbi?nXWV+bRUP\^=CCI=%G35fJUGntmNnbsg'l?l;X#ka>?-Y!WV]]"N`.E`s%=kI_0CYt"==#FeUQ$/&5K43UPG?oIR2tk.;[%C!gE.M*0'4T5b)_9Hu2B9amnR:]7^!-5UQdT)M:S<_9$:ciaPF7];:J&S'VZ6k-afjdmZbSGN^#8&?o'2MiN6Z0DbEI.s:YZlLH?G*>)r_H_R'tCbBM$45rs21Ur_44A'ZbS?tN"=E*l,i-'e<3[1(#F">u?;7+XSl[9C::9u']AjOK+!<(1,;.CYgaI)Y0U$[5P0FBr<&$%JRMZ~>endstream
-endobj
-35 0 obj
-<<
-/Filter [ /ASCII85Decode /FlateDecode ] /Length 1095
->>
-stream
-GatU2?#SLV&:F5UfZ,6saniX\^EmS$'PNEE4nM`VPE_(kMH!.3cM-e>PYQth)H!QNJ72A#G@rlkWtZ3C8Vc3)"o,H[gRhD81YC<@(3'BP?fB3-k1e/RaX0.&5-N$&/ka@s`'mhqOpp?U.$NI&C_J_&f@0=s]S7tu'AD$S]=gWci*IOm=uZbZ9dc4r&Aa\\0<@VHJ"`#F]el27qpnCj>+rWV&,SlLIgD<H*+'KI37#_`(&l!<5aoE3r@:1$hChK9B9S[8K!htW%-t*$:*>J<E)ltP%=]!4BgDVL!en="LWV@#M,uS6>p\;ZY/1@+NYn._OJIdb@+SP&'))2;f%]2>0Q=iYoJ8AUg%T:C@te_Y3_4<?n4=L@Pe$m-1m^K\DPg16r74_P^lDmbd%D1o5R4E5/p(JP38+"_ep1f5\puaPFNnD3ZHeadACMciZPF=PK3i>0"eR62/f0K4]?XNn!c+$H5^$C`eDZ->XUtY?-o%*TFN&j>LSgT^\t3]<gauT1f0:\*THi(#d"W:/9*`a8V*MI0h8VgD$=+WM.,,W)Pafqg?LZAQFSLr<.q1i:OBi':S7'$qrc0k;jkLCj,>1]:S8i"@cD^JSQ[G='U%P]\k3([cb9cC*cAT-:,^sa9)N3G1[[%Wl<F[L):SO:eXVu+,IWTWC=(X[ifJiZ;`]#VjLCrSG7k;]%Q+kekW5^<_8_'QEo'&@q;/DTBo>.*]'*FJfSt'&jK4%1qSWDMCQPQ'$@Hl[FVKcnX)&&Q2b/HI;4f$Uc^94f`!J9W.,'>U3kj-VA=SqS+)>Z@H`Up\PpnOB\9ZQX12t>DFG3R-Ig-gpWB<[Zs6>W8kC\iJt/sDf!WH/:d@E@H[)=:t0"%"'+">o7d`a@,Qg'H^ai1'uW9cd'M>2bDId&_=Z2[:[:0*H>LC8u@UgFKk0qhaW"&5(geQg%O??n5p\OWG,#]P#1!!Hgc7Vo>'qfV@rFO-FpM9,=Tej<5HBdf1[7f4b3**ShRt^rIG+FLMh;T;K*9kV#0246$:i+!W0"8MUn*PgZ)GZ22L%3_,BMq"uC>A<MbZ3m(KBc<57$fL/k#dqs-uldm)cq&>P8"`4~>endstream
-endobj
-36 0 obj
-<<
-/Filter [ /ASCII85Decode /FlateDecode ] /Length 1791
->>
-stream
-Gau1/>Ar7S'Z],..JVO)Y%-;S3,`Zb!X1K`bIdn),%ujsR8Tj'Mc9)nmuY-!8Wus^3Wr8)>10tNs5Q+=Jl_B-KHk=FHFH6X*tjg6BNLlQ?fl%r4*nYgp$GcZbJsR$3K>c!D42.X[*4GU]1UJVaG\UB''\+7OS!J;[`^O#ZfMN8CXDC<-7)#<N0IR&A'hVu\PO'T61;QmVBli<1D.8FQ7E:9I</Z"L.Q006+^@.qpen7H[V$[QW[L^=nkC"#!nd8rYL5Agn,D@c6i3]cj%Kk@JlhB.hpi^nKETCKOe?aOC.b=Pj"<3[u=M_)mKNO_a16tJ\<-WY1>71bXRL^Qi:B4mn?7cjs?gRgCkp>`)K<$k_"gV@<-e,IG&/B/39O49PP0@-Geu>GEV2@<%01fVB],"ktEUG[H/-VJLo2+ZWG5<N+EILm)[j#Xu0o((T\DV5)u@f)t$,q(Tl,/H#&Y'3*I"P*IT:LrG&K3lh5p/>Uq@j5E`J*$N+'M_2f#6jQ'U`&/%23:Z2OZKC>ps!IDV;;5_;Wp.n.?c6=`df&K!)jGdqO`L/-jo?N>%5tYX^KYja#RTR'4ABuBS;Dj,[cc3@VV1Zo+BQ/G@(ulH'p07kUlX:nK=.7?ll\8E.R01l4YU_P8m9-8Bl_asoiZp[;fA1PAoBB(tM!e!<i8t]I#9mrlI+dIf)^4H[G[ZV*7kHV5;VcmS#]K4hF%%ou&V,e_\S1X9%h:";)6pT@9?/<:6f81#`%p*ZX82Jr`"r/Rr=?hqF0KBZ"H[nAX9&p600d-gMe@m,pm'+SmpdtsqnkNfd]`o7Z=!0iXC:Yf7u7fBNqF#?5b&ATm(1A(G)#8YX'<BhPam'ma2A`#rm-30O@2L.:rS65)?T+<C<pJ9!f=bb2Zibq^1'k^1#GH^Ga_$#<Le)#WDQDh5Q<T"<hCSU2KP;Mq1D'hU?Q(nJ9`kNlotIUAWg:\(\.^snpIUSVfK7j-O*QVQ=@\hjM&(K75@[%WqS62ICa[V]4)7D09FXZ+R+F\j9V^ZS?)m?YcaV2ecQ&bFKk1'WaWWqr#aI.BUmG:o58q(O&1iJWSegs1(1cHFL>E<4btFO@WiW?j(T,f4i!SSMRorrK"C/LTh($RE$JE8F"%u"ihKOj!h*7HQ\S/?Yuc=FK8)p'0f,Z$c*FmS+#o7eV[ITCi,=I3-+.[[qEj;5E&^it`4oicZ6)G:ER>ro:V(l)n:k@uC>m\3J,Ks_=f<RlL0K`uX?`4>^C0]JS@AIu,4:8A91n8!VEt&6K]D!_mt$mWU%#CH'[1C$qPi9,*LLA-i3<s4(_E3f`tHfBWb1bIDiH:2#:?aFDBdRmbpq\'83bW=p7P^l*`gnnPG!J_dIgaZH;k.@'*q>(\KjimFA,*T1JAoI:$4!U17=U,%WU,AZgY,dZb=s&iMO_%iBG8e;4pC[Q*[0$D&mF2JZDuM]o@6@(CKqKS:IX(]2K-02B:f=$g0['r`suRWK+X`'c5FeBHhC!IIEcSY:kZqCpTbZ@Mdjg7r[%dp+3:6kd8]^494R^;L$#G6Bb+HQKNFYSN]*BBL\7>,I=!VF&@3^5s(PLi(UGe0`9SV.V^U8IXh=Bc,\WVr9<A(kI9&MQ;&6:+It%XaY_</>%=%i,b)H/ls5gtEp-i'N-'B!jT1h=nWLaId.^e9;U4guQF=b7?G]2jBL@C<rT^RCk4/e%.qimWY[6d,)1qf]Io#,=khP"DMg_a8#K+.$_+9h&XJb[&7u)Q'-*k^GDg`^T/;elTM(C8TZ[(G:L@8qdq,p,5X8`1_99I^~>endstream
-endobj
-37 0 obj
-<<
-/Filter [ /ASCII85Decode /FlateDecode ] /Length 1790
->>
-stream
-Gb!$G8TWWE(l%MT'f`'2=V`qfcE6?,VfoYNS_c%3#Z@lmJcS+sqY,ES9m3;!$rqL4RaFCYJo?"M70-QM'/\UZ+QWK]h#7kH+=+RX"S"5o]-#.Mh4'ID\gn_L@6<g/UUr3N2Im[Qn_GZ?b9Th`G?\Nss$4rE4h=k#8Jj$\GcW$+GD;rGr$GMq949FJ?<:$=7rHD':JR:?.Inib11a5G')-gUV%JD0Sc+<0m`Fm$J+AfT-h2L#KuoMlIUTc061j73?_Kf9J"/co9p@mN?=895lou;37D`WqhrU-[qBbJ?Gcfm&r)a<tN`a,5,Me2ks81JHT-"hbB--c;EAD%Z&][Qt*0*0b-OOV,;2Rl4)cdts;c+ulneT)kB2u#_D;=^=l>f;&<A7@]pIb#^qi3(e1IWf=O,T^p?l2pE7N\%%OFr;7.CG2tZHR<d:2B:2l^'Y:OK..fa_@nlWVq&@kf]-m2pog3#LSl+s%/N^W!eb[Ti.iI%^;IuKh_g4[@EL9TWOKc$c6Y&TOuOF_E6QZB;mGCYdQG;Il3LO.\5Tph"+?Dr^g?.$R/4re(-+Zd\R\:?D4jK=s7_7?7KkCBZoAA&Ts<19Lo%.1.Z@,VH2[sl$m9u&9/EHeG4m,EO6QLqaM>9@Lk(9r4pGp)R2%<Zs&KG)oXIg)n!P;NKcW_1pV;0,0HZ;]'P$;CQjc]-eMZ/F=N<^Z;Y^KY?([1S<N=G'VdXKdL)rfXfX:cL#*-I(QM?u40As"kOP.Ek6C]GEIJN`$W7od%D`BjC(C`?el&>$PrUg0&?"k4ljd:M*k#_>Q1tgN,JPP;d&"YjliJtVV*+8m9#Z"X6uD+[gTuMnJicR\_lPZ(;B+!a4G%A^N\GPm=m$/RjY^jSfP.]>_-DXS>.ZS5;(9UZ/uES,hp"T"'";,tV)'J)"ns-OVDB00jp$:\m)L"b';@]3gs?t<(!qa68Jl4.$Kf4b3:p9n=cMI(Q=bI1mGaIQ,a,g>W<WeUHM8VF]pukKbTYV)-CC'0-b@SYaX*+4e[=@"na)6aJ:>2c4Hk^ZBl$kqTrg"4%s1$kEm,8^"]\s+L?D$*O6/>oQ\gGf9mY6$,YgO%2.8m&a:3DPS9)8Y'dRqP>/LI!7b:?fo/+>EeOVU09Xk78hW1!^A6L^?T#Dm`M@p6ZjV'?lr:d!WS%7AR,go+?V``poi]<MPmZBRA//-ZsP.@p8ea/>&(=*H]cN%nCV.9`R[p>bN@XX:ie#&;;0G!^'dG41U0BRZ2d/r*<-%JI>qPt^-I_2k03hfD0dZ8i'[X3R'/:c`Z[IA$O@</e1jpL65d0^$p!IXIc>[#]Zl_1p0JMp\k+ESLTMR?/(AdmeG3iOfggFMIHrj2urL?hn]MgJ#,7=IYb)JN3P.85K<eK_=]$JISW]DHhQ[11$'D:3"..59#F],5:d9RYN1,k>$Cj9NLCd*L1<H%$J)K@URSEB^@qAS.QJ._)jF8k*@!Y6n"#!k#fDKrM=91dBUEZPeLQ8$lU9f"gT/D0ksajg3@4=(@?L[iFIQB4Q_EWln)u[:u&#<+ppOXQfK44QT)7@Ak))DLLX=gBRcg-(*YH.JsClX3SQ-Cgd].G1<5_UY]Vs+:b,]#N=:'F+`"6Nr=jl)<DR+>VQe,7G\Neh#Gpc(QR/RgW[Bs&oIW1f%+/J%#-I4hVX7"Z,:6*/`Ikp3j$e%pkIFmC$s=i@%KjWG&DoH$o#lOGEIL5"3j(0Jmt:4IU'Y0cjVbXG&VYqNYU0Nru<Y4qSf%@>*YZWT0PoI*uBTE7\;%u?UC'kq&:i3_L)~>endstream
-endobj
-38 0 obj
-<<
-/Filter [ /ASCII85Decode /FlateDecode ] /Length 1381
->>
-stream
-Gau1.gMZ%0&;KZF'Q]ZX>0!oo+*,sb[QoBZD&7).$&TYEN%%UA;U5.+4-V&38^kcMmNR0idZc_Hs-oFp0]g'Zqc"<Ga#2ZN&jnd6o`jDtP/@&Spp@b\]]joKKHHMXrCO;``Rt;>BpPp!1RM]e2I.ncb4%[O^HG^ojtKFT;gtg"gGR(SiA8VCfB=4PC`@5mLC`n=MaseDJUaKCL%O*MI."8iKGE(pr;c-g=T94U5'q^Dc6p^b41jHI=X'>bG5O":@5slkCsF6HfF(^Lrj:F0C%;sMP:X?s35#`-3?E20qXu<-H6\[[0<%?h&+8@<<e>:onO\rjS*cb:=c"M!44d#Wr**[Q:EH%.?PrHCZf:)3AplL:mG'kcm/]eg[V:]_0DeZn,C"$MZ-cYZeN.V!-[\HRDg;I[RiAItBglmVVed9Wr.=Z;T!,$[RiEgUBCkT'el>oTgLLZ"?.lYu"Z2D?6'*tF2Bc)S3OW9SAXfnk2E+`,TNWO?72KQ-r+H[.@9)&R7C]HFjIIZ8N3:?s1uWPulAEC>&#_fg>Vu5!lP(MnI$2D+>2r,C?6iV7kqd5PJh9f7n/d>7`Y.2Nkl<S)J\s6&_(OHAZA&"-#V&D-oYGsXfLkY'?1rr%0V$#VR,niJmgqB*I7lO;E?^=uG9T&Y0^ENc"ekN1BT(ClFKKWs&g6L,'PK2U07l2`\<38EoZH\%nPg_fF1i#@/4],c(Z1Eu,MQC="\Y&j"LuW`T2.tu)23KSfq:Yk0?^"n7\aWY@>D%0'7mtt)IDX@<!VBDR:.tDaM*u9CbbffbR^+@[e:^,#WufRhng6K_+A*ASg2;_,mTo6<6R/YriE]O(*,V6\D]dDHpZtt_pe0E4$"[I4@Vs>m>/7)[CtR:fQ1TYYtlFE4F>f'6U2\P"IuN&]k4GDr4l0@,<TV\85X]&B;n46FKS=c%?=c97>Q9A0`5A?ep.1:/GH0XK]R<`qOT6J5C]2Gbt_EZr,FaNl#Hog;7'Kj7^.'X*V&eNJl78=4kG%&f:pHPg:'CmLPOYW@_HSTm34Nu:_"*K'f9_2/Wk.(=L7WMJOK3RU+oQt_T9<)"8MgOE^DVo!=:Oi+6/K;SSneC=GN;P`7<r&b5X*'09GNCPoJ9`r;Gs;;'2I>ljUH;>gmqnXLsO.TD$"f'WACN\F1cFCWFVie^q9:^hg:rR52L:fo6KWZM]^=j*<U:,W1us4,OHB?H6K;N0MT13@+$EP.Otd"*HOHT#Q;H\Asr0Gjp[M\X[WpBPUYT21&s#a;0Ina\AE7ZNP!Oj#'Wi-C8HpQqhNf6^R4A-T$TloAcCfUJcoO/`3a_ltUQ\2E(;+p7VcP1*`do?cda2m[5'WBYZ9\XH0g]41a/:]_<=L\G6qc8lK1~>endstream
-endobj
-39 0 obj
-<<
-/Filter [ /ASCII85Decode /FlateDecode ] /Length 1965
->>
-stream
-Gatm<?'!]!'RfGRn7-[]!"!1Dk,fZ3g6MB*]1)U3)92jra%gJa.0"aWSI_+UbQR,8#pjbbqfV>;pEh%^r0$j$90thFaQ.D/P*E%+,aj_VAG$c7[!MKF?+[EK)p<\Y4M+7MCdH)4Cjn<;aZ,c&e%6p276$C9DkGjFDb2u/:N<H]moPh:K)?iq0"#YY4IA_jj2hc+oYV';R3MYd-$/4Fd<P)+/ZgFTp?jlFqF4N##K\?scfV^s=dkmPpqdA(P3h9"^L9J'r&fTmM_nPP9<:qLqGWZW,ee!`3JAEH1R>l<pCB_B_4tHi;-&R"iLYl$^S'iYl[i`^TVV+('I6j`:b*T`f[F)Eko^c9gt;OIRCCAOf4Ci>XHAqoQrt,m7'Wl'F0^opjmJ]sie=4tQ"!._;>C/t,<d'g@ta'73U'#OEDp;,S$J9M\h+k`MX_]R&T6%`G(c2s`4Wn'SN/YV$S?DAr.%@soLb;kQ?n*9M,ffuO+Qerhb$UI^":Erh2#_fE^rc4"bl'Kcl@D0p=*oi-hl3UK(b5pLIr!=SkZD>J.`%F?Wm3GpjkKBCFf@72X3eCS:Q?8^hq3[CacZ>Z[Jc6e[4k0$];&5UrZe193*'7HKC8A*oV$EPuDS-#H"_)CFboP@BkSZBA<=,iA/[7)D57S4=%+aB>">QWn0j`W`ZD!p,*DpY&:\<?%W\p4)[_]I:1Qb.F*K5Q4:@e!a'Q$JCMUpBNd/+Y[R*kHO>cEKs?CFffDM?C3#'m![8ekX=Rl^$rA*iA.pM3^as^8Ff)TP"LL-iQW;[$J]&-eMTO;S^-B0s69*n[fg$Rf*%6^/U(4PCZoT2#i[R%tdqE,XiI:kZa]0(P`NRXL&d0!8.Cd?If$4<?Ho^,^(BJS5*D_m2jUt5`B@(^o%QM8(VZgU:99mt2(')F3pqRQ9&h=$=!;[I;*YDsM74F4^=93?u(d)&)0J#?8<%Sj9E2YV*O=@>5^;nYYWn,SPJ0PiO>N<\JL+Fa%AsOcp6@h;AQtnE4T+?#HcXWh]LBnRu737q5Ihl59!@M/<0@!d)$.t]),HJo@`U\Y]'/0/^n6N!@&OCcKhAW_QCI6JUgoqmm=@'%@e2jLm!HB>I?!UIMqH/S^k)j%<WToR3:)n3oYKWp92oA33)oNqOMpBfafa1M!2]Q$PO^AWYflE`SGQA_k;(A6)66E#*3"$_4CqqhCJ>6QhXbX!F%[[O_:c(jtBY&HIRG58C.[:W@JWV?.TraL,!=3@9]J7I4dG^c$:Y4[cN>ru71JPuA\[07Z!?j^-l<:Pg+b%5pXs&YLs1'/\*"0kR?gp/nf(B''E:BB\\9RA<\$H's/dFL\!?enO2$Tt/MaKm#1U'iq,2.$cl?cTbZmgQbg=ef3HXh9Di]%G0L=^G'$rtB'jP!8'^sQRsV4e&]Mpp^ZiLtF[R.[q#5`?qM'gg)'/Hd+4nAA^C9K4+CD$3]'HTR9]kdI-7%6i46D+"1qqqWbfPKjDZK,4fh_.mC45D9'CTTTepkb>dk$0FLOZ/=b\9>F*","5lue7N&LnT6s/3_^PS;pIfHHtm5gR>sDR5'j['450RE`gPj\("Vq3-C]*<0IiTR&i`%u^g0RN0T<jugE;8Hbe+c*a^RNWkJ+0IN?(7Z!:hmgi4DUE%J1JjN(e$-DF2Eu%7A-p/474o%=)?Mjc"Qi#)+@1Kmc?i47](q[>+c_B%PW159&iWIGfO;4!M'kX[`%ql[@m_-^4LX5E>"b\)HA!O#`[dl;'ZGoo7>;GjA![TPSXc4o/V^TJhCL\0nE@[f;6:9g,GYE=5MEo>lNk>_l>cg^Gs.[$aG8JSgg?EQ6Hf=^*`GQ>CQ#+gCdb0RhiH];t3s"+k-0^@BPMdXDK'Mee*hLIMTUMFtN&lT"!MfG0T>mmd7K!-!;P!:qK8Isc)J+O-8pg1h0ERLV/PW3kC46#um\(.-e+*Lj0S@^d^Epc7'hh1#h<K&Q~>endstream
-endobj
-40 0 obj
-<<
-/Filter [ /ASCII85Decode /FlateDecode ] /Length 2005
->>
-stream
-Gatm<gMZ%0&:NH>i8_7"-0s\dJ>,T_A.bKeVN'!TJ>O`K)i<(-<"erk4/=L;Z<8]Y2$1]S7;:&k*6ssLJEH>;\Grp(k[K2BlMq)3g12Uf]bkVc6s#ig?U(o!QM/1q?h^:;(aMc8`C[_6LWE-JAA2@nQ.m70p?BuY>G*\@k&=O]5&M'+)>],NPRF?G\s*p_Ud5i']bmUL.F>i*i$gBc$J>*\k),Et)#XirHpO6/XlY2U-h5'3_W8ML/]ek;('iUo"rFlLE<:*F;$^LT'%Z5`I0b+Y,5WYc3^c9\"N.hKO`!%m,^gkg19BbmMd-AR9-Qo!d"PFJ;s97@-Vg(!k;a2t2h:EMO<?On,kR6(8cXE<*1"BK3H&;u%Rqc[1.:X`6aRt>o8HTa__^pm9Vp'_s7uKDCL#4(olB=piq'I=b4nB`PkYgP)DdM&&#Ln<"(/-2'7o$jq1V[uC<b&NeIt`HF^lq;OV5'CIT/q:2)Q;?#@`d&/4EbqJ1s!8X']Z#8&etWkU<0'A6bDfLGo9a\X5d8N"b!"%)CdpaqRn\!HMWnGY*da%\*fH%@>J%ckX'+n\'\hMe"t*Xu@@PA7<_ZK?FJ#Ksi?1mkFhH/9`ZZR.-/_2M+"33Do8*_t>)IXMo$@+k<kLA]i7->Ne!.W'Q?k^-m&oi_5Ep5FbNp5N1njdl`\gT)754TK'0j8N;sUN%&t*mWR<gngDoQ>PF/1:KA]qkC'nTXHg(_lVfl9V3\LjT56Nt]Y6DHMWK!>r,1GRAN3i2P;DRB;Etg1[Z:AuWfqZf0j;k+#@flu"4SQ_U(R7:08"Ho@nfX%RbB1S%^S7,IGS4.iFaP9mlmeoHph`+c=BZuef^)5:c=0&$FtlQi]PE>!H(=&\E.rm&uHfJ?CZ>aoFT;/>9=CKQj_O<fH$c$2>LCT,/pAm.J!ermhIA.=,m)qpOaJ[qn5;*2e=W`dFHG/E5_A*5hS[*>th@mY@u<,:eVhIWQfl\'V',:'k>+<e@(J2OX\<_p>VO&[\/83)^UEV,oE=G*!]F,!LC*7]d<aGis'-eRu)e)7KRgf0F(_R"ijYj+\Pu(I8nUdJ8a)jSWH9'9>@1L+BmS3p*9KmegD&ic_Pr@:onFYS#VYQpE"-pbZZG5Ti&1eU_f=d`f;mcV<u3!'.$RWilW8_kOn<El#D`*4$2qJ6ICVKPA&&i;^FC%lbi1UV-PY1AE4jWY,P-h[.))+I7jhJ!ADLc,RPm_M6&,.Gf<R4/&_\R<T0C!^G<%;ON_*9@H^b^-UN#2es7V;iC"$OEH(;.*!k/[jlZ:!p?I][AGLtiJ=&2m&DA?LOoa.+=q3g\:c4oNJQ\N.rb"Ng2<Fs!?%rmXiJK($q1B3:5WGQR)A6^-qtcFa<kt_uJlA13>.Yq!'5H5TqUL!)cQA"fng)*%,tCK..@XIHBkA`PJcka`&YYM%c4qGhn5HK(+a'npZ\E'>YDGk/9I(<U/DWuHn/]#RaHdXGHIsqrL<1_&Z:*J7+%79EIWmU*8U2.J<jBqdK+H64bjRVA^M$hefClo6"WaFLG:RR_rU/X[2CmNf>5J-if+#1.EVBT#:[b@OI5ha<_0h2^o93k<Ku3tnd$5p3b]0h5@rXc6=Y!]UWq;FYC7o6)^o:^!D=!rqj"8Z[J3Y,I=l5'@JoT>dA%SjicUDUQN$#m"N.g`u>e4V-+R8=Xem:"J%Z?(0[;`C'Sq,E=84*lNm!n(ecg@=5Vd!Ip:BP&!p\rnV\22cm"$:"QFcA+<0K'Q"B^1MH+eQ?=]FMur-pc%sNJ,HCcd8!)a1@]_>@pgb]MqIbKJMClT#S$CUfVi2@fk@b9Qc(Wi77#!&[BfliMJN9EnqUB<?Dq3_V?jA+ClYe0ojMVFs)geI3c!21mZKH57Y*Liq@Egj?$OUh595"<[SK\:\"g<2FsIb*RAmbe8"@ZqOcoVW@S;I"7FfS'umGG)UP[mpL08MLiQ4YA&@_YLS6$S\ZeM4&692*7R5aT0R`>5qZR?'n37l^&/k~>endstream
-endobj
-41 0 obj
-<<
-/Filter [ /ASCII85Decode /FlateDecode ] /Length 1989
->>
-stream
-Gatm<?$"^Z'RfGR\<#GdCbXKBns7P/g!'.7]:nWaW?^a;<fnt8P+h<Ih^d@aOu>&\@5:28Q?A71m`2jF?poKqqi!=]58Gr#*C)<5`<q4D%q4u4?7fK2HdOsDg'=t_\3HCBK4kU@(kqS/)#Pe@7e7Lr[='33<hIV7$Q)\;&\XLHbCsC3_S=/)StjkU/IO2,!=rLb2lLaDi$/mt@>;sqk'\bj_@1L\ItP^A=T!%g+"\Rg(]Iqb*Efm^CP6)A2#SNM69@Dj#gRN)d4XF;`^aqE+lj5orQ)-Q2a+KSkr]$Zl^.>_QO7/(_4R\%3kp?tQpP-iLV)BfO1Am%>&K,L9j:YTS+H^'cX;?-:G?ubI`9r)WUUU9ADXW_&mV\>(atVB8p\_P">Z:0.i'(mU4C4f/9A^p>]<UBDL$hZN;iE.0BO(sj.+UI`t"^6+9tg4QnH#d([.-<O=VQThg`5K^[&*^SbG73f454Pe>BBIA-VI#6uu`c[Y*:oBiH([mi_I)XcFP5m5eV>FhYA.^:8=`e7>9Uqo/=MN8Bgm_...RN<pbPJnq+dTT)q%bINqU"j2?$(->!WWFM7W4C8UA-/JeT0>iH!K8HFq,&Z?:61Z0X<&EqJSoNpDEn07OiMaKn0YQ!a1/FV!n+<c?Je"m-*%i54GCLlu=8Pi^RqF3235^;o$=L'9cei5fPs!m(jDBrYnoV4dY[]JaNhADW'omLhiW2K!M`XJ60Ia81RZu621TUL,(&u\Zh!UBk!3Ya-CG2>^Krf*6"nMS9UH:R\RYC]'5_s4jfFuO;j71oBc>KQM$+RhLlLmJIZi(@r(XntRqrZ/X;/g6O&/r&qd2`'nNB-#hR=W^8XuF7*n"R]-U8T;W:.tqScd&?/k-n#2.#?GYEf%^jaKg4hYBaG/0"b:W9j*!YajLkL;(cp,']W.s]6GEAPc.s\:93sf]sXX]ZUJ@"h@4SZ$A+j^Fjnu_Y&#oUJ^$U&g99K1Z-8#0@j>)Q=rct.%i_1fisY#j0lS%tD_+dZgn67>"%ZrlC^a^,b>cX/!")a3B8.,DaT)bH:<C7%$E6_DX=R2YW$^?Mc9AM)LXV85odm'O7XZJ]@FS@uI;00R9kFd0"2X%L195s.Qm[UKQ8P`4W8QCBXH7n[LT1PD*+Xa[6pt$RKj.31OR&*fD&DnC>7EXu[BZ)o,A/e#X0i_NSYs#4J99G9SOY=^C_?`ujeF5%\12P<8@YP(GE``B?7qU:pQ9M(0p@N%.]=M&?bB0F-L@dep4_#]?YAV;P$1[&=N5!913^uG[mgUAGC9ilb((b8WdQdQTN3MG'!#jtaZ3@:?2MPk2];:O/C_V')ijtL:SC7Tifkk'H2l:ln2H1<[H0-[>AC0?7kZQfop$pIa>gQH+82+Uc7_,pS&=2r%`e&>g(%*2ZNq1aXO?d+$&+HbmE#`*e?p-0_:"fC>"$^^QS2iLfN2K-'a5Z9;DSAI1ou>VES*pBe:b7XeuJJ9S5/oQPh+"'IE9mE5/uB//NAYNER'mq-A*WVH$rgL3/ZJ(p8Ei0)5YY2f%gJRTPfTHEgmN">;V[1*=N2E?GbbH_b=jOj=ZJhOW7'lh\"C>NZe6ASr[4D5T$%\d9Q)+Oc*3@@4d8F,h5YC`R7f82Lm6tA#cF5`a%9l6geto9iSGSV\C#TX_gUNRhrZ'T(EXUH+ruQ<9RV:[e.;o-oC)U:+A:u\5BO_3\1Ma--rKrK$U`UpUR6\*CU5N$!%;INg#]`>j+9oS,cbaY1U<J.8UP!C#r@#oHZ$Lfhh:!FMc;/$[GU_]8k/l(nF)V^#_9#ap`C3K^^hA$M&gI[l8t$P8eW"VG<sY-r!WFPCpbN8X<2M3$E4dHHE$6p'_TRHSd>-TA`sc9:dpa<QF2o?h*cTgc8EWZMje27]Ucp_6GKb;NZ>EY.o=_gc6^B@<ZD`ZO!Vt;B)$d"<a6S;^,6W:k)r<MS1:00j]r\_PS,`,5SeT;o<(:*H$`U1C>f7"(3p_)?~>endstream
-endobj
-42 0 obj
-<<
-/Filter [ /ASCII85Decode /FlateDecode ] /Length 1124
->>
-stream
-Gat=*bAu?,&A7<Zk,>']J9^UXS7KTZ3L,5+_9mP=(k?B(=D/e0q=g:_5"%E>i'O]+7IC634k%jh`%\)bm([fRn?.<*5))%JU4P?41FW6WpVk\SeT#6d2HK#60O6&G^4\2`Zh6G30[K=cH3L<l2oNbcdri0N,RrpY>79&:@O8l=A>SKdCUfSABV^1ZhL@>[3nD*]X:Za76?[J,ZP<gOm#:oQMD%g(mZ9)^ca-'--M[h^"03$ne]$YM:^O&cZ^g51dtFaZ/Zm@tqJ45p8DQkbI0+D9BSJ&5H:W<8E)m386@>ER]2ojL7u?iH;3EUti5F-qg]PM:kQs2tR*JO]E6C978Sgd>bT8rM;.AQh7s?=>YVi<02c2C?6TCm8<-;/fMOs6R59rhm2SI(U23HaJP$a:iYSqGoj/6iDE1"ICgi"H:AYck'liKV-UB8.ur`.9p;fR\/1P8<"(/QHZBUNuhS^:#@^tledLXMS:Fr\D^JsM<DWcB":@aPJtE8EBKp?oQpIq$`gEUsF@K"nBFK&[,rHp+a<(V$9T[OlXg6&?WBHYTm4;-U=ej=ICo0'WuEOeY+W.iTB&?dno/)QOE55=QH2Bh-"%$K/CbFkYO#bM<G@rd^"kc@B,q>VB7;/%Hn.CV-:+)J_g]NCVW6B5o_'IH@GXmPLsU*k*t)g_rnDi_%&XD7"[Re[be:ILI&265'W<dFs>c?O('@e*#FT(bDSr1OqsC9Q-ac,`/>%,uF>s=O@)rEZ_E4CP9SLT$60@.+'7V,SmMXa<qU[fHKm'n*S&L`m1L[#`1+%9VTN:Q/F>mSn_enD`nQ2=`ZK]7N+lkR>@';Ac'[I,g4<:.VUu2L)QO2n/W]R'R7m=8%\BaDhLG>T1i['pOjgU&YkB]LQrZl(kgR7CS:=kHcf`gdC`n^KoIU8.=q>4T%Rk3kDubBi+Mf?!G"CrOcHt`EU#qSpDAb-.(4^1=%6.GN_hO<7HL=iH0[H>H]0O.Xn"(%PUAMFO451AO(&oCDJ7gkbJ3(qb\<5P-h>kR*^,C;\s$,OK4jL*<M5!:dhiu&^3"\&rkug_T3:I`fjbp/2J<qhXB`1n4,=qlg\6\PV>^lK"hNMHjITOESIB9/I6tj%In8bKCB~>endstream
+BT
+/F1 9 Tf
+54 744 Td
+12 TL
+(Service assessments) Tj
+T*
+(https://www.gov.uk/service-manual/service-assessments) Tj
+T*
+(Project use: Assessment-style go/no-go record, evidence pack, decision owner, and launch) Tj
+T*
+(caveat structure.) Tj
+T*
+() Tj
+T*
+(nng-five-users - Nielsen Norman Group) Tj
+T*
+(Why You Only Need to Test with 5 Users) Tj
+T*
+(https://www.nngroup.com/articles/why-you-only-need-to-test-with-5-users/) Tj
+T*
+(Project use: Minimum small-sample usability smoke threshold before a broader beta.) Tj
+T*
+() Tj
+T*
+(yc-talk-to-users - Y Combinator) Tj
+T*
+(How to Talk to Users) Tj
+T*
+(https://www.ycombinator.com/library/gx-how-to-talk-to-users) Tj
+T*
+(Project use: Customer-discovery interview discipline and evidence capture for demand) Tj
+T*
+(validation.) Tj
+T*
+() Tj
+T*
+(w3c-wcag-22 - W3C) Tj
+T*
+(Web Content Accessibility Guidelines 2.2) Tj
+T*
+(https://www.w3.org/TR/WCAG22/) Tj
+T*
+(Project use: Accessibility review, keyboard/screen-reader checks, contrast, form errors, and) Tj
+T*
+(report readability evidence.) Tj
+T*
+() Tj
+T*
+(california-ccpa - California Department of Justice) Tj
+T*
+(California Consumer Privacy Act) Tj
+T*
+(https://oag.ca.gov/privacy/ccpa) Tj
+T*
+(Project use: Future US/California user privacy expansion checklist; not a current approval) Tj
+T*
+(substitute.) Tj
+T*
+() Tj
+T*
+(Unsafe shortcuts rejected) Tj
+T*
+(- AI-assisted simulated review as approval) Tj
+T*
+(- localhost proof as hosted production proof) Tj
+T*
+(- Stripe test mode as live payment activation) Tj
+T*
+(- generic web search as legal/privacy/security/customs approval) Tj
+T*
+(- founder self-test as real user validation) Tj
+T*
+(- buyer interest as buyer validation without dated evidence and claim boundaries) Tj
+T*
+() Tj
+T*
+(Proof boundary) Tj
+T*
+(This artifact gathers requirements and current source anchors. It does not prove any) Tj
+T*
+(external approval, legal/privacy/security signoff, qualified customs/trade review, hosted) Tj
+T*
+(production proof, live payment activation, private-beta outcome, buyer/supplier validation,) Tj
+T*
+(or public go/no-go.) Tj
+T*
+ET
+endstream
 endobj
 xref
-0 43
+0 30
 0000000000 65535 f 
-0000000061 00000 n 
-0000000102 00000 n 
-0000000209 00000 n 
-0000000321 00000 n 
-0000000516 00000 n 
-0000000711 00000 n 
-0000000906 00000 n 
-0000001101 00000 n 
-0000001296 00000 n 
-0000001491 00000 n 
-0000001687 00000 n 
-0000001883 00000 n 
-0000002079 00000 n 
-0000002275 00000 n 
-0000002471 00000 n 
-0000002667 00000 n 
-0000002863 00000 n 
-0000003059 00000 n 
-0000003255 00000 n 
-0000003451 00000 n 
-0000003647 00000 n 
-0000003843 00000 n 
-0000003913 00000 n 
-0000004213 00000 n 
-0000004391 00000 n 
-0000007223 00000 n 
-0000008860 00000 n 
-0000010844 00000 n 
-0000013065 00000 n 
-0000015123 00000 n 
-0000016956 00000 n 
-0000018768 00000 n 
-0000020482 00000 n 
-0000022441 00000 n 
-0000024462 00000 n 
-0000025649 00000 n 
-0000027532 00000 n 
-0000029414 00000 n 
-0000030887 00000 n 
-0000032944 00000 n 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000198 00000 n 
+0000000268 00000 n 
+0000000394 00000 n 
+0000003320 00000 n 
+0000003446 00000 n 
+0000007044 00000 n 
+0000007170 00000 n 
+0000010654 00000 n 
+0000010782 00000 n 
+0000014175 00000 n 
+0000014303 00000 n 
+0000017768 00000 n 
+0000017896 00000 n 
+0000021165 00000 n 
+0000021293 00000 n 
+0000024815 00000 n 
+0000024943 00000 n 
+0000028373 00000 n 
+0000028501 00000 n 
+0000031898 00000 n 
+0000032026 00000 n 
 0000035041 00000 n 
-0000037122 00000 n 
+0000035169 00000 n 
+0000038185 00000 n 
+0000038313 00000 n 
+0000040758 00000 n 
+0000040886 00000 n 
 trailer
-<<
-/ID 
-[<96c7e2e6bec5c2eb35cb17a27f763aa8><96c7e2e6bec5c2eb35cb17a27f763aa8>]
-% ReportLab generated PDF document -- digest (opensource)
-
-/Info 23 0 R
-/Root 22 0 R
-/Size 43
->>
+<< /Size 30 /Root 1 0 R >>
 startxref
-38338
+43007
 %%EOF

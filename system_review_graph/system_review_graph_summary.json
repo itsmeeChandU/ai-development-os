@@ -1,0 +1,53 @@
+{
+  "code_layers": [
+    "root scripts",
+    "product source",
+    "product tests",
+    "manifests",
+    "generated system_review_graph artifacts"
+  ],
+  "counts": {
+    "manifests": 8,
+    "other": 971,
+    "product_data": 10,
+    "product_generated_artifacts": 104,
+    "product_source": 21,
+    "product_tests": 18,
+    "root_docs": 28,
+    "root_scripts": 12,
+    "templates": 27
+  },
+  "data_layers": [
+    "product_projects/importer-source-readiness-copilot/data",
+    "product_projects/importer-source-readiness-copilot/system_review_graph/*.json",
+    "product_projects/importer-source-readiness-copilot/system_review_graph/*.sqlite"
+  ],
+  "file_count": 1199,
+  "flow_layers": [
+    "prompt-to-product orchestration",
+    "product project proof checks",
+    "external validation intake and evaluator",
+    "no-scaffold audit"
+  ],
+  "generated_artifacts": [
+    "system_review_graph/no_scaffold_audit_report.json",
+    "product_projects/importer-source-readiness-copilot/system_review_graph/external_validation_requirements_report.json",
+    "product_projects/importer-source-readiness-copilot/system_review_graph/go_live_input_readiness_report.json",
+    "product_projects/importer-source-readiness-copilot/output/pdf/external_validation_reviewer_brief.pdf",
+    "product_projects/importer-source-readiness-copilot/output/pdf/go_live_input_requests.pdf"
+  ],
+  "generated_at": "2026-06-28T01:55:47+00:00",
+  "head": "d5a80d8a3178d9e1248944df9ac839d6f897a7a8",
+  "proof_commands": [
+    "python3 scripts/ai_dev_os_check.py",
+    "python3 scripts/workflow_manifest_check.py",
+    "python3 scripts/product_project_check.py",
+    "python3 scripts/no_scaffold_audit.py --check"
+  ],
+  "task_boundaries": [
+    "templates and scaffolds cannot satisfy completion",
+    "fixture placeholders must remain blocker evidence",
+    "simulated reviews cannot open launch or approval",
+    "go-live inputs must be real returned records before readiness flips"
+  ]
+}

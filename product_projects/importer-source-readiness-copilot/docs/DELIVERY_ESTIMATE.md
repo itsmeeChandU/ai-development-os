@@ -8,7 +8,7 @@ Complete a local blocked-safe importer/exporter source readiness copilot.
 
 | Slice | Estimate |
 |---|---:|
-| scaffold and project contract | 30 minutes |
+| project contract and starter structure | 30 minutes |
 | fixture data and evaluator | 45 minutes |
 | tests and CLI smoke | 30 minutes |
 | generated packets and handoff | 30 minutes |
@@ -23,7 +23,7 @@ external reviewers.
 
 ## Accelerated By AI
 
-- scaffold
+- project starter structure
 - fixture evaluator
 - unit tests
 - generated artifacts
