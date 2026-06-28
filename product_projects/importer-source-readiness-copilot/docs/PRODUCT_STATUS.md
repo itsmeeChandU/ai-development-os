@@ -71,6 +71,13 @@ source routes, market signals, document evidence, and review status into
 explicit `can_show_claim` decisions so safe preparation language is separated
 from blocked customs, tariff, CFIA, buyer, supplier, shipment, payment, legal,
 and launch claims.
+The decision scoring slice writes
+`system_review_graph/production_decision_scoring_manifest.json`,
+`system_review_graph/production_decision_score_records.json`,
+`system_review_graph/production_score_cap_policy.json`, and
+`docs/PRODUCTION_DECISION_SCORING_ENGINE.md`. It keeps the six scores separate,
+applies cap rules from packet stage, evidence strength, source freshness, and
+claim-gate state, and refuses a single global readiness score.
 Those stages are backed by an executable local operations engine in
 `src/importer_source_readiness/product_operations.py` and
 `scripts/run_product_operations.py`. The engine creates/updates packet intake
@@ -358,6 +365,23 @@ type, reviewer lane, reason, and next valid move. The engine allows safe
 preparation/source-routing language only. It still blocks tariff confirmed,
 CFIA approved, buyer validated, supplier verified, customs ready, shipment
 approved, payment, legal, and launch claims.
+
+## Ready For Production Decision Scoring Review
+
+- decision scoring status:
+  `production_decision_scoring_engine_ready_no_global_readiness_score`
+- machine manifest:
+  `system_review_graph/production_decision_scoring_manifest.json`
+- score records: `system_review_graph/production_decision_score_records.json`
+- cap policy: `system_review_graph/production_score_cap_policy.json`
+- reviewer-readable doc: `docs/PRODUCTION_DECISION_SCORING_ENGINE.md`
+- proof command: `python3 scripts/run_production_decision_scoring_engine.py`
+
+This means each packet has six separate score records: market signal, evidence
+completeness, source freshness, buyer/supplier evidence, responsibility
+clarity, and decision safety. Each score has a value, cap, reason, blocker
+fields, evidence references, claim-gate dependencies, and next action. It does
+not combine them into one readiness score or approval label.
 
 ## Ready For Internal Source-Packet Review
 

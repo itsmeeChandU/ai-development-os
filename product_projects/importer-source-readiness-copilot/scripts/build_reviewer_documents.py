@@ -179,6 +179,7 @@ def _status_context() -> dict[str, Any]:
     external_validation = _load_json(GRAPH / "external_validation_requirements_report.json")
     production_document = _load_json(GRAPH / "production_document_intelligence_manifest.json")
     production_claim_gate = _load_json(GRAPH / "production_evidence_claim_gate_manifest.json")
+    production_scoring = _load_json(GRAPH / "production_decision_scoring_manifest.json")
     row = business["packet_rows"][0]
     return {
         "today": date.today().isoformat(),
@@ -188,6 +189,7 @@ def _status_context() -> dict[str, Any]:
         "external_validation": external_validation,
         "production_document": production_document,
         "production_claim_gate": production_claim_gate,
+        "production_scoring": production_scoring,
         "packet": row,
     }
 
@@ -197,6 +199,7 @@ def _functional(ctx: dict[str, Any]) -> ReviewerDocument:
     ops = ctx["product_ops"]
     document = ctx["production_document"]
     claim_gate = ctx["production_claim_gate"]
+    scoring = ctx["production_scoring"]
     return ReviewerDocument(
         title="Functional Requirements For External Review",
         filename="functional_requirements_for_review.md",
@@ -271,6 +274,16 @@ def _functional(ctx: dict[str, Any]) -> ReviewerDocument:
                 ),
             ),
             Section(
+                "Decision Scoring Implemented",
+                bullets=(
+                    f"Scoring status: `{scoring['status']}`.",
+                    f"Separate score records: `{scoring.get('decision_score_record_count')}`.",
+                    "Scores remain separate for market signal, evidence completeness, source freshness, buyer/supplier evidence, responsibility clarity, and decision safety.",
+                    "The product does not create one combined readiness score or approval label.",
+                    "Every score includes a reason, cap, blocker fields, claim-gate dependency, and next action.",
+                ),
+            ),
+            Section(
                 "Enterprise And Advisor Use Cases",
                 bullets=(
                     "Broker or trade advisor can manage multiple client packets and export missing-evidence or broker-review packets.",
@@ -321,6 +334,7 @@ def _business_logic(ctx: dict[str, Any]) -> ReviewerDocument:
     packet = ctx["packet"]
     document = ctx["production_document"]
     claim_gate = ctx["production_claim_gate"]
+    scoring = ctx["production_scoring"]
     buyer_supplier = packet["buyer_supplier_evidence"]
     gate = packet["business_gate_decision"]
     market = packet["market_intelligence"]["market_signal_evaluation"]
@@ -393,6 +407,20 @@ def _business_logic(ctx: dict[str, Any]) -> ReviewerDocument:
                 ),
             ),
             Section(
+                "Decision Scoring Logic Implemented Now",
+                body=(
+                    "The product explains decisions with six separate capped scores. It does not collapse the packet into a single readiness score, because that would hide risk.",
+                ),
+                bullets=(
+                    f"Score records generated: `{scoring.get('decision_score_record_count')}`.",
+                    "Market signal score shows whether deeper validation is worth doing, not whether demand is proven.",
+                    "Evidence completeness score shows what is missing, not whether the packet is approved.",
+                    "Source freshness score is capped when official/reference evidence is stale, reference-only, or unreviewed.",
+                    "Buyer/supplier evidence score cannot say buyer validated or supplier verified.",
+                    "Decision safety score remains red while forbidden external claims are blocked.",
+                ),
+            ),
+            Section(
                 "Current Sample Packet Result",
                 bullets=(
                     f"Packet reviewed: `{packet['packet_id']}`.",
@@ -445,6 +473,7 @@ def _business_logic(ctx: dict[str, Any]) -> ReviewerDocument:
 def _non_functional(ctx: dict[str, Any]) -> ReviewerDocument:
     document = ctx["production_document"]
     claim_gate = ctx["production_claim_gate"]
+    scoring = ctx["production_scoring"]
     return ReviewerDocument(
         title="Non-Functional Requirements For External Review",
         filename="non_functional_requirements_for_review.md",
@@ -505,6 +534,16 @@ def _non_functional(ctx: dict[str, Any]) -> ReviewerDocument:
                     f"Claim mapper rows: `{claim_gate.get('claim_gate_mapper_count')}`.",
                     "Missing, stale, reference-only, parser-draft, or unreviewed evidence cannot open external claims.",
                     "AI, source routes, uploaded documents, and generated reports cannot approve customs, tariff, CFIA, buyer, supplier, payment, shipment, legal, or launch claims.",
+                ),
+            ),
+            Section(
+                "Scoring Safety",
+                bullets=(
+                    f"Decision scoring status: `{scoring['status']}`.",
+                    f"Score policy count: `{scoring.get('score_count')}`.",
+                    "No single global readiness score is created.",
+                    "No combined readiness label is created.",
+                    "Approval language remains blocked even when a score is yellow or blue.",
                 ),
             ),
             Section(

@@ -136,6 +136,7 @@ def main() -> int:
         [sys.executable, "scripts/run_production_market_intelligence_engine.py"],
         [sys.executable, "scripts/run_production_document_intelligence_engine.py"],
         [sys.executable, "scripts/run_production_evidence_claim_gate_engine.py"],
+        [sys.executable, "scripts/run_production_decision_scoring_engine.py"],
         [sys.executable, "scripts/audit_external_package.py", "--root", "."],
     ]
     for command in commands:
@@ -204,6 +205,7 @@ def main() -> int:
     production_market_intelligence = _load_json(ROOT / "system_review_graph" / "production_market_intelligence_manifest.json")
     production_document_intelligence = _load_json(ROOT / "system_review_graph" / "production_document_intelligence_manifest.json")
     production_evidence_claim_gate = _load_json(ROOT / "system_review_graph" / "production_evidence_claim_gate_manifest.json")
+    production_decision_scoring = _load_json(ROOT / "system_review_graph" / "production_decision_scoring_manifest.json")
     official_source_registry = _load_json(ROOT / "data" / "official_source_registry.json")
     business_core_doc = (ROOT / "docs" / "BUSINESS_CORE_LOGIC_CURRENT_STATE.md").read_text(encoding="utf-8")
     functional_doc = (ROOT / "docs" / "FUNCTIONAL_REQUIREMENTS_CURRENT_STATE.md").read_text(encoding="utf-8")
@@ -270,6 +272,7 @@ def main() -> int:
         "src/importer_source_readiness/external_validation_research.py",
         "src/importer_source_readiness/production_country_source_engine.py",
         "src/importer_source_readiness/production_data_model.py",
+        "src/importer_source_readiness/production_decision_scoring_engine.py",
         "src/importer_source_readiness/production_document_intelligence_engine.py",
         "src/importer_source_readiness/production_evidence_claim_gate_engine.py",
         "src/importer_source_readiness/production_market_intelligence_engine.py",
@@ -285,6 +288,7 @@ def main() -> int:
         "tests/test_external_validation_research.py",
         "tests/test_production_country_source_engine.py",
         "tests/test_production_data_model.py",
+        "tests/test_production_decision_scoring_engine.py",
         "tests/test_production_document_intelligence_engine.py",
         "tests/test_production_evidence_claim_gate_engine.py",
         "tests/test_production_market_intelligence_engine.py",
@@ -300,6 +304,7 @@ def main() -> int:
         "scripts/run_external_validation_requirements.py",
         "scripts/run_production_country_source_engine.py",
         "scripts/run_production_data_model.py",
+        "scripts/run_production_decision_scoring_engine.py",
         "scripts/run_production_document_intelligence_engine.py",
         "scripts/run_production_evidence_claim_gate_engine.py",
         "scripts/run_production_market_intelligence_engine.py",
@@ -326,6 +331,7 @@ def main() -> int:
         "docs/GO_LIVE_INPUT_REQUESTS.md",
         "docs/PRODUCTION_COUNTRY_SOURCE_ENGINE.md",
         "docs/PRODUCTION_DATA_MODEL.md",
+        "docs/PRODUCTION_DECISION_SCORING_ENGINE.md",
         "docs/PRODUCTION_DOCUMENT_INTELLIGENCE_ENGINE.md",
         "docs/PRODUCTION_EVIDENCE_CLAIM_GATE_ENGINE.md",
         "docs/PRODUCTION_MARKET_INTELLIGENCE_ENGINE.md",
@@ -393,6 +399,9 @@ def main() -> int:
         "system_review_graph/production_source_lifecycle.json",
         "system_review_graph/production_data_model_manifest.json",
         "system_review_graph/production_data_model_seed.json",
+        "system_review_graph/production_decision_scoring_manifest.json",
+        "system_review_graph/production_decision_score_records.json",
+        "system_review_graph/production_score_cap_policy.json",
         "system_review_graph/production_market_intelligence_manifest.json",
         "system_review_graph/production_market_signals.json",
         "system_review_graph/production_market_dataset_connectors.json",
@@ -882,6 +891,54 @@ def main() -> int:
         failures.append("tariff source evidence should support only source-routed HS preparation")
     if "tariff_confirmed" not in tariff_source_mapper.get("blocks_claims", []):
         failures.append("tariff source evidence should block tariff-confirmed wording without qualified review")
+    if production_decision_scoring.get("status") != "production_decision_scoring_engine_ready_no_global_readiness_score":
+        failures.append(
+            "production decision scoring status expected production_decision_scoring_engine_ready_no_global_readiness_score, "
+            f"got {production_decision_scoring.get('status')!r}"
+        )
+    if production_decision_scoring.get("score_count") != 6:
+        failures.append("production decision scoring should keep the six canonical scores separate")
+    if production_decision_scoring.get("decision_score_record_count", 0) < 6:
+        failures.append("production decision scoring should emit score records")
+    for key in ("single_global_readiness_score_created", "combined_readiness_label_created", "approval_language_allowed", "external_effects_created", "claims_opened", "public_launch_ready", "live_payment_ready"):
+        if production_decision_scoring.get(key) is not False:
+            failures.append(f"production decision scoring expected {key}=false")
+    expected_score_ids = {
+        "market_signal_score",
+        "evidence_completeness_score",
+        "source_freshness_score",
+        "buyer_supplier_evidence_score",
+        "responsibility_clarity_score",
+        "decision_safety_score",
+    }
+    if set(production_decision_scoring.get("score_ids", [])) != expected_score_ids:
+        failures.append("production decision scoring must expose the six canonical score IDs")
+    score_records = {
+        row.get("score"): row
+        for row in production_decision_scoring.get("decision_score_records", [])
+        if row.get("packet_id") == "packet-frozen-tuna-canada-001"
+    }
+    if set(score_records) != expected_score_ids:
+        failures.append("production decision scoring missing current packet score records")
+    for score_id, record in score_records.items():
+        for field in ("score_value", "score_cap", "label", "reason", "cap_reason", "blocking_fields", "next_action"):
+            if field not in record:
+                failures.append(f"production decision score {score_id} missing {field}")
+                break
+        if record.get("single_global_readiness_score_used") is not False:
+            failures.append(f"production decision score {score_id} must not use a global readiness score")
+        if record.get("approval_language_blocked") is not True:
+            failures.append(f"production decision score {score_id} must block approval language")
+        if record.get("score_value", 0) > record.get("score_cap", 100):
+            failures.append(f"production decision score {score_id} exceeds its cap")
+    for score_id in ("source_freshness_score", "responsibility_clarity_score", "decision_safety_score"):
+        if score_records.get(score_id, {}).get("label") != "red":
+            failures.append(f"production decision score {score_id} should stay red for the current packet")
+    if "tariff_confirmed" not in score_records.get("decision_safety_score", {}).get("blocked_claim_dependencies", []):
+        failures.append("decision safety score should depend on blocked tariff confirmation")
+    summaries = production_decision_scoring.get("packet_score_summaries", [])
+    if not summaries or summaries[0].get("single_global_readiness_score_created") is not False:
+        failures.append("packet score summary must refuse a single global readiness score")
     if not screenshot_manifest_path.exists():
         failures.append("operator screenshot manifest was not generated")
     if screenshot_manifest.get("status") != "screenshots_ready":
@@ -1697,6 +1754,9 @@ def main() -> int:
     print(f"production_evidence_claim_gate_status={production_evidence_claim_gate['status']}")
     print(f"production_evidence_claim_gate_decisions={production_evidence_claim_gate['claim_gate_decision_count']}")
     print(f"production_evidence_claim_gate_safe_claims={production_evidence_claim_gate['safe_research_claim_count']}")
+    print(f"production_decision_scoring_status={production_decision_scoring['status']}")
+    print(f"production_decision_score_records={production_decision_scoring['decision_score_record_count']}")
+    print(f"production_decision_single_global_score={production_decision_scoring['single_global_readiness_score_created']}")
     print(f"external_validation_pdf={pdf_path.relative_to(ROOT)}")
     print(f"external_validation_reviewer_brief_pdf={brief_pdf_path.relative_to(ROOT)}")
     print(f"go_live_input_status={go_live_input_readiness['status']}")

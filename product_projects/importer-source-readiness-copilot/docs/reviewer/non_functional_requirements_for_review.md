@@ -44,6 +44,14 @@ The document engine is ready for local review and parser QA. It is not yet appro
 - Missing, stale, reference-only, parser-draft, or unreviewed evidence cannot open external claims.
 - AI, source routes, uploaded documents, and generated reports cannot approve customs, tariff, CFIA, buyer, supplier, payment, shipment, legal, or launch claims.
 
+## Scoring Safety
+
+- Decision scoring status: `production_decision_scoring_engine_ready_no_global_readiness_score`.
+- Score policy count: `6`.
+- No single global readiness score is created.
+- No combined readiness label is created.
+- Approval language remains blocked even when a score is yellow or blue.
+
 ## Reliability And Operations
 
 - Implemented locally: repeatable report generation, SQLite workflow store, generated state files, operation log, proof commands, and deployment-readiness artifacts.

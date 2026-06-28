@@ -25,6 +25,7 @@ src/importer_source_readiness/policy_intelligence.py
 src/importer_source_readiness/completion_platform.py
 src/importer_source_readiness/production_country_source_engine.py
 src/importer_source_readiness/production_data_model.py
+src/importer_source_readiness/production_decision_scoring_engine.py
 src/importer_source_readiness/production_document_intelligence_engine.py
 src/importer_source_readiness/production_evidence_claim_gate_engine.py
 src/importer_source_readiness/production_market_intelligence_engine.py
@@ -69,6 +70,9 @@ system_review_graph/production_document_extracted_fields.json
 system_review_graph/production_evidence_claim_gate_manifest.json
 system_review_graph/production_claim_gate_decisions.json
 system_review_graph/production_evidence_claim_mappers.json
+system_review_graph/production_decision_scoring_manifest.json
+system_review_graph/production_decision_score_records.json
+system_review_graph/production_score_cap_policy.json
 system_review_graph/production_redevelopment_plan.json
 system_review_graph/production_research_anchors.json
 data/official_sample_documents/canada/*.pdf
@@ -78,6 +82,7 @@ docs/PRODUCTION_PACKET_ENGINE.md
 docs/PRODUCTION_COUNTRY_SOURCE_ENGINE.md
 docs/PRODUCTION_DOCUMENT_INTELLIGENCE_ENGINE.md
 docs/PRODUCTION_EVIDENCE_CLAIM_GATE_ENGINE.md
+docs/PRODUCTION_DECISION_SCORING_ENGINE.md
 docs/PRODUCTION_MARKET_INTELLIGENCE_ENGINE.md
 docs/PRODUCTION_REDEVELOPMENT.md
 migrations/0002_production_domain_model.sql
@@ -109,6 +114,7 @@ board/*.md
 | `src/importer_source_readiness/completion_platform.py` | completion-stage contracts for opportunities, country coverage, transport readiness, billing, agent/API, and traffic pages |
 | `src/importer_source_readiness/production_country_source_engine.py` | production country/source engine for country packs, source lifecycle states, source refresh evidence, packet impacts, and closed claim gates |
 | `src/importer_source_readiness/production_data_model.py` | first production rebuild package: PostgreSQL migration, domain-event list, tenant RLS contract, seed fixture, and JSON-to-table migration map |
+| `src/importer_source_readiness/production_decision_scoring_engine.py` | production decision scoring engine for six separate capped scores, reasons, blocker fields, evidence references, and no global readiness score |
 | `src/importer_source_readiness/production_document_intelligence_engine.py` | production document intelligence engine for official sample forms, synthetic parser QA samples, document records, extracted-field provenance, evidence mapping, redaction previews, and closed upload/security/document gates |
 | `src/importer_source_readiness/production_evidence_claim_gate_engine.py` | production evidence claim-gate engine for `can_show_claim`, required evidence types, evidence trails, mapper rows, and closed external claims |
 | `src/importer_source_readiness/production_market_intelligence_engine.py` | production market intelligence engine for metric records, source routes, dataset connector states, score caps, and blocked demand/profit claims |
@@ -125,6 +131,7 @@ board/*.md
 | `scripts/run_completion_platform.py` | completion-stage artifact writer |
 | `scripts/run_production_country_source_engine.py` | production country/source engine manifest and source lifecycle writer |
 | `scripts/run_production_data_model.py` | production data model migration and manifest writer |
+| `scripts/run_production_decision_scoring_engine.py` | production decision score records and cap-policy writer |
 | `scripts/run_production_document_intelligence_engine.py` | production document intelligence sample library, pipeline, and extracted-field writer |
 | `scripts/run_production_evidence_claim_gate_engine.py` | production evidence claim-gate decision, mapper, and review doc writer |
 | `scripts/run_production_market_intelligence_engine.py` | production market intelligence signal and dataset connector writer |
@@ -140,6 +147,7 @@ board/*.md
 | `tests/test_production_data_model.py` | proof that the first rebuild package has production tables, relationships, RLS policies, domain events, and closed external gates |
 | `tests/test_production_packet_engine.py` | proof that the packet engine evaluates real local packet artifacts into states, views, scores, events, blockers, and closed external gates |
 | `tests/test_production_country_source_engine.py` | proof that country packs, source lifecycle rows, and packet source impacts are generated from the official source registry and refresh records |
+| `tests/test_production_decision_scoring_engine.py` | proof that the six score records stay separate, capped, reasoned, and closed to approval language |
 | `tests/test_production_document_intelligence_engine.py` | proof that official samples, country source routes, parser QA fixtures, field provenance, and closed document/security gates are generated |
 | `tests/test_production_evidence_claim_gate_engine.py` | proof that can_show_claim separates safe preparation statements from blocked external claims with evidence mappers |
 | `tests/test_production_market_intelligence_engine.py` | proof that market metrics are source-routed without invented values, demand claims, profitability claims, or buyer validation |
@@ -267,6 +275,12 @@ The expected production evidence claim-gate status is
 `can_show_claim` decisions, evidence trails, claim-gate mappers, and
 evidence mappers exist locally. It does not mean tariff, CFIA, customs, buyer,
 supplier, shipment, payment, legal, or launch gates are approved.
+
+The expected production decision scoring status is
+`production_decision_scoring_engine_ready_no_global_readiness_score`. It means
+six separate capped score records and cap policies exist locally. It does not
+mean the packet is approved, globally ready, commercially ready, or safe for
+shipment.
 
 ## Proof Boundary
 

@@ -56,6 +56,14 @@ The current product is usable for local review and controlled preparation. It do
 - The product can show source-routing and preparation language with an evidence trail.
 - It still blocks tariff confirmed, CFIA approved, buyer validated, supplier verified, customs ready, and shipment approved.
 
+## Decision Scoring Implemented
+
+- Scoring status: `production_decision_scoring_engine_ready_no_global_readiness_score`.
+- Separate score records: `6`.
+- Scores remain separate for market signal, evidence completeness, source freshness, buyer/supplier evidence, responsibility clarity, and decision safety.
+- The product does not create one combined readiness score or approval label.
+- Every score includes a reason, cap, blocker fields, claim-gate dependency, and next action.
+
 ## Enterprise And Advisor Use Cases
 
 - Broker or trade advisor can manage multiple client packets and export missing-evidence or broker-review packets.

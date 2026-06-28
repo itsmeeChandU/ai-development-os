@@ -51,6 +51,17 @@ The product now checks packet statements through a claim gate before showing the
 - Origin evidence, supplier evidence, Incoterms responsibility, and document extraction stay blocked when the required proof is missing.
 - Tariff confirmed, CFIA approved, buyer validated, supplier verified, customs ready, and shipment approved remain forbidden external claims.
 
+## Decision Scoring Logic Implemented Now
+
+The product explains decisions with six separate capped scores. It does not collapse the packet into a single readiness score, because that would hide risk.
+
+- Score records generated: `6`.
+- Market signal score shows whether deeper validation is worth doing, not whether demand is proven.
+- Evidence completeness score shows what is missing, not whether the packet is approved.
+- Source freshness score is capped when official/reference evidence is stale, reference-only, or unreviewed.
+- Buyer/supplier evidence score cannot say buyer validated or supplier verified.
+- Decision safety score remains red while forbidden external claims are blocked.
+
 ## Current Sample Packet Result
 
 - Packet reviewed: `packet-frozen-tuna-canada-001`.

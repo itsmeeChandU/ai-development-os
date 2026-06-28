@@ -73,6 +73,7 @@ python3 scripts/run_production_country_source_engine.py
 python3 scripts/run_production_market_intelligence_engine.py
 python3 scripts/run_production_document_intelligence_engine.py
 python3 scripts/run_production_evidence_claim_gate_engine.py
+python3 scripts/run_production_decision_scoring_engine.py
 python3 scripts/audit_external_package.py --root .
 python3 scripts/check_product.py
 ```
@@ -139,6 +140,9 @@ system_review_graph/production_document_extracted_fields.json
 system_review_graph/production_evidence_claim_gate_manifest.json
 system_review_graph/production_claim_gate_decisions.json
 system_review_graph/production_evidence_claim_mappers.json
+system_review_graph/production_decision_scoring_manifest.json
+system_review_graph/production_decision_score_records.json
+system_review_graph/production_score_cap_policy.json
 system_review_graph/production_redevelopment_plan.json
 system_review_graph/production_research_anchors.json
 data/official_sample_documents/canada/*.pdf
@@ -154,6 +158,7 @@ docs/PRODUCTION_PACKET_ENGINE.md
 docs/PRODUCTION_COUNTRY_SOURCE_ENGINE.md
 docs/PRODUCTION_DOCUMENT_INTELLIGENCE_ENGINE.md
 docs/PRODUCTION_EVIDENCE_CLAIM_GATE_ENGINE.md
+docs/PRODUCTION_DECISION_SCORING_ENGINE.md
 docs/PRODUCTION_MARKET_INTELLIGENCE_ENGINE.md
 docs/PRODUCTION_REDEVELOPMENT.md
 output/pdf/external_validation_reviewer_brief.pdf
@@ -325,6 +330,17 @@ statements can be shown with evidence trails, while tariff confirmation, CFIA
 approval, buyer validation, supplier verification, customs readiness, and
 shipment approval remain blocked until real official or qualified-review
 evidence exists.
+
+The expected production decision scoring status is:
+
+```text
+production_decision_scoring_engine_ready_no_global_readiness_score
+```
+
+That means the product now writes six separate capped score records with
+reasons, blockers, evidence references, claim-gate dependencies, and next
+actions. It deliberately does not create one combined readiness score or
+approval label.
 
 The expected customer source-packet status is:
 

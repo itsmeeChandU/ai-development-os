@@ -1,0 +1,92 @@
+{
+  "approval_language_allowed": false,
+  "generated_at": "2026-06-28T14:22:06+00:00",
+  "score_policies": [
+    {
+      "cap_before_external_evidence": 59,
+      "cap_rule": "Cap below 60 until dated trade dataset rows, market-access comparison, buyer evidence, and review exist.",
+      "claim_dependencies": [
+        "market_signal_source_routed",
+        "buyer_lead_route_identified",
+        "buyer_validated"
+      ],
+      "next_action": "Attach dated trade dataset rows and buyer evidence before any market conclusion.",
+      "purpose": "Shows whether a product-country lane deserves deeper validation.",
+      "score": "market_signal_score"
+    },
+    {
+      "cap_before_external_evidence": 49,
+      "cap_rule": "Cap below 50 while required packet fields, documents, confirmation, or reviewer evidence are missing.",
+      "claim_dependencies": [
+        "product_context_recorded",
+        "document_field_extraction_draft",
+        "origin_evidence_collected",
+        "supplier_evidence_collected"
+      ],
+      "next_action": "Collect missing packet fields, confirmed customer documents, and reviewer evidence.",
+      "purpose": "Shows whether packet evidence is complete enough for the current internal stage.",
+      "score": "evidence_completeness_score"
+    },
+    {
+      "cap_before_external_evidence": 39,
+      "cap_rule": "Cap below 40 when critical source evidence is stale, reference-only, not checked, or unreviewed.",
+      "claim_dependencies": [
+        "hs_candidate_research_route",
+        "tariff_route_identified",
+        "cfia_relevance_route",
+        "tariff_confirmed",
+        "cfia_approved"
+      ],
+      "next_action": "Refresh official sources, store snapshots, classify changes, and route material changes to review.",
+      "purpose": "Shows whether official/reference source evidence is fresh enough for internal use.",
+      "score": "source_freshness_score"
+    },
+    {
+      "cap_before_external_evidence": 59,
+      "cap_rule": "Cap below 60 until dated buyer interaction evidence, supplier documents, inspection/certificate evidence, and review exist.",
+      "claim_dependencies": [
+        "buyer_lead_route_identified",
+        "supplier_evidence_collected",
+        "buyer_validated",
+        "supplier_verified"
+      ],
+      "next_action": "Collect buyer reply/meeting/LOI/PO evidence and supplier registration/product/certificate evidence.",
+      "purpose": "Shows buyer and supplier evidence strength without validation or verification claims.",
+      "score": "buyer_supplier_evidence_score"
+    },
+    {
+      "cap_before_external_evidence": 39,
+      "cap_rule": "Cap below 40 while importer of record, Incoterms, broker path, or responsibility split are missing.",
+      "claim_dependencies": [
+        "incoterms_responsibility_path",
+        "customs_ready"
+      ],
+      "next_action": "Confirm importer of record, Incoterms, broker path, freight responsibility, duties, and delivery risk.",
+      "purpose": "Shows whether importer of record, Incoterms, and role split are clear.",
+      "score": "responsibility_clarity_score"
+    },
+    {
+      "cap_before_external_evidence": 39,
+      "cap_rule": "Cap below 40 while any forbidden external claim, launch gate, payment gate, or qualified-review lane remains blocked.",
+      "claim_dependencies": [
+        "tariff_confirmed",
+        "cfia_approved",
+        "buyer_validated",
+        "supplier_verified",
+        "customs_ready",
+        "shipment_approved"
+      ],
+      "next_action": "Resolve claim-gate blockers and reviewer lanes before any stronger customer-visible decision.",
+      "purpose": "Shows whether it is safe to move beyond internal preparation.",
+      "score": "decision_safety_score"
+    }
+  ],
+  "single_global_readiness_score_created": false,
+  "status": "production_score_cap_policy_ready",
+  "threshold_contract": {
+    "0-39": "blocked_or_unknown",
+    "40-59": "research_or_evidence_needed",
+    "60-79": "internal_review_ready_only",
+    "80-100": "expert_review_ready_for_scope_only"
+  }
+}

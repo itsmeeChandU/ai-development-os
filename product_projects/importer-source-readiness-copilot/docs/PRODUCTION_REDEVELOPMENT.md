@@ -178,6 +178,10 @@ Trade Readiness Copilot keeps the current business-rule engine and rebuilds the 
 - Claims still closed: no_single_global_readiness_score, no_approval_language.
 - Next valid move: Build the production implementation for this phase and attach the listed evidence before any gated claim can open.
 
+- Implementation status: `local_decision_scoring_engine_ready_no_global_readiness_score`
+- Implementation artifacts: system_review_graph/production_decision_scoring_manifest.json, system_review_graph/production_decision_score_records.json, system_review_graph/production_score_cap_policy.json, docs/PRODUCTION_DECISION_SCORING_ENGINE.md.
+- Implementation proof: Six separate score records, threshold bands, cap policies, claim-gate dependencies, evidence references, blocker fields, reasons, and next actions are generated from local packet, business, market, document, and claim-gate artifacts by scripts/run_production_decision_scoring_engine.py without creating a single readiness score or approval language.
+
 ### Phase 13: AI copilot layer
 
 - Local status: `phase_research_build_source_evidence_gate_tracks_ready`

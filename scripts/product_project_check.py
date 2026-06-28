@@ -87,6 +87,7 @@ def main() -> int:
         PROJECT / "src" / "importer_source_readiness" / "external_validation_research.py",
         PROJECT / "src" / "importer_source_readiness" / "production_country_source_engine.py",
         PROJECT / "src" / "importer_source_readiness" / "production_data_model.py",
+        PROJECT / "src" / "importer_source_readiness" / "production_decision_scoring_engine.py",
         PROJECT / "src" / "importer_source_readiness" / "production_document_intelligence_engine.py",
         PROJECT / "src" / "importer_source_readiness" / "production_evidence_claim_gate_engine.py",
         PROJECT / "src" / "importer_source_readiness" / "production_market_intelligence_engine.py",
@@ -111,6 +112,7 @@ def main() -> int:
         PROJECT / "tests" / "test_external_validation_research.py",
         PROJECT / "tests" / "test_production_country_source_engine.py",
         PROJECT / "tests" / "test_production_data_model.py",
+        PROJECT / "tests" / "test_production_decision_scoring_engine.py",
         PROJECT / "tests" / "test_production_document_intelligence_engine.py",
         PROJECT / "tests" / "test_production_evidence_claim_gate_engine.py",
         PROJECT / "tests" / "test_production_market_intelligence_engine.py",
@@ -134,6 +136,7 @@ def main() -> int:
         PROJECT / "scripts" / "run_external_validation_requirements.py",
         PROJECT / "scripts" / "run_production_country_source_engine.py",
         PROJECT / "scripts" / "run_production_data_model.py",
+        PROJECT / "scripts" / "run_production_decision_scoring_engine.py",
         PROJECT / "scripts" / "run_production_document_intelligence_engine.py",
         PROJECT / "scripts" / "run_production_evidence_claim_gate_engine.py",
         PROJECT / "scripts" / "run_production_market_intelligence_engine.py",
@@ -160,6 +163,7 @@ def main() -> int:
         PROJECT / "docs" / "GO_LIVE_INPUT_REQUESTS.md",
         PROJECT / "docs" / "PRODUCTION_COUNTRY_SOURCE_ENGINE.md",
         PROJECT / "docs" / "PRODUCTION_DATA_MODEL.md",
+        PROJECT / "docs" / "PRODUCTION_DECISION_SCORING_ENGINE.md",
         PROJECT / "docs" / "PRODUCTION_DOCUMENT_INTELLIGENCE_ENGINE.md",
         PROJECT / "docs" / "PRODUCTION_EVIDENCE_CLAIM_GATE_ENGINE.md",
         PROJECT / "docs" / "PRODUCTION_MARKET_INTELLIGENCE_ENGINE.md",
@@ -235,6 +239,9 @@ def main() -> int:
         PROJECT / "system_review_graph" / "production_source_lifecycle.json",
         PROJECT / "system_review_graph" / "production_data_model_manifest.json",
         PROJECT / "system_review_graph" / "production_data_model_seed.json",
+        PROJECT / "system_review_graph" / "production_decision_scoring_manifest.json",
+        PROJECT / "system_review_graph" / "production_decision_score_records.json",
+        PROJECT / "system_review_graph" / "production_score_cap_policy.json",
         PROJECT / "system_review_graph" / "production_market_intelligence_manifest.json",
         PROJECT / "system_review_graph" / "production_market_signals.json",
         PROJECT / "system_review_graph" / "production_market_dataset_connectors.json",
@@ -380,6 +387,7 @@ def main() -> int:
         ["python3", "scripts/run_production_market_intelligence_engine.py"],
         ["python3", "scripts/run_production_document_intelligence_engine.py"],
         ["python3", "scripts/run_production_evidence_claim_gate_engine.py"],
+        ["python3", "scripts/run_production_decision_scoring_engine.py"],
         ["python3", "scripts/build_external_review_packet.py"],
         ["python3", "scripts/export_operator_dashboard.py"],
         ["python3", "scripts/audit_external_package.py", "--root", "."],
@@ -599,6 +607,9 @@ def main() -> int:
     )
     production_evidence_claim_gate = json.loads(
         (PROJECT / "system_review_graph" / "production_evidence_claim_gate_manifest.json").read_text(encoding="utf-8")
+    )
+    production_decision_scoring = json.loads(
+        (PROJECT / "system_review_graph" / "production_decision_scoring_manifest.json").read_text(encoding="utf-8")
     )
     official_source_registry = json.loads(
         (PROJECT / "data" / "official_source_registry.json").read_text(encoding="utf-8")
@@ -1727,6 +1738,74 @@ def main() -> int:
         print("Product project check: FAIL")
         print("tariff source evidence should block tariff-confirmed wording without qualified review")
         return 1
+    if (
+        production_decision_scoring.get("status") != "production_decision_scoring_engine_ready_no_global_readiness_score"
+        or production_decision_scoring.get("score_count") != 6
+        or production_decision_scoring.get("decision_score_record_count", 0) < 6
+        or production_decision_scoring.get("single_global_readiness_score_created") is not False
+        or production_decision_scoring.get("combined_readiness_label_created") is not False
+        or production_decision_scoring.get("approval_language_allowed") is not False
+        or production_decision_scoring.get("external_effects_created") is not False
+        or production_decision_scoring.get("claims_opened") is not False
+        or production_decision_scoring.get("public_launch_ready") is not False
+        or production_decision_scoring.get("live_payment_ready") is not False
+    ):
+        print("Product project check: FAIL")
+        print("production decision scoring should keep six capped scores separate with closed gates")
+        return 1
+    expected_score_ids = {
+        "market_signal_score",
+        "evidence_completeness_score",
+        "source_freshness_score",
+        "buyer_supplier_evidence_score",
+        "responsibility_clarity_score",
+        "decision_safety_score",
+    }
+    if set(production_decision_scoring.get("score_ids", [])) != expected_score_ids:
+        print("Product project check: FAIL")
+        print("production decision scoring must expose the six canonical score IDs")
+        return 1
+    score_records = {
+        row.get("score"): row
+        for row in production_decision_scoring.get("decision_score_records", [])
+        if row.get("packet_id") == "packet-frozen-tuna-canada-001"
+    }
+    if set(score_records) != expected_score_ids:
+        print("Product project check: FAIL")
+        print("production decision scoring missing current packet score records")
+        return 1
+    for score_id, record in score_records.items():
+        for field in ("score_value", "score_cap", "label", "reason", "cap_reason", "blocking_fields", "next_action"):
+            if field not in record:
+                print("Product project check: FAIL")
+                print(f"production decision score {score_id} missing {field}")
+                return 1
+        if record.get("single_global_readiness_score_used") is not False:
+            print("Product project check: FAIL")
+            print(f"production decision score {score_id} must not use a global readiness score")
+            return 1
+        if record.get("approval_language_blocked") is not True:
+            print("Product project check: FAIL")
+            print(f"production decision score {score_id} must block approval language")
+            return 1
+        if record.get("score_value", 0) > record.get("score_cap", 100):
+            print("Product project check: FAIL")
+            print(f"production decision score {score_id} exceeds its cap")
+            return 1
+    for score_id in ("source_freshness_score", "responsibility_clarity_score", "decision_safety_score"):
+        if score_records.get(score_id, {}).get("label") != "red":
+            print("Product project check: FAIL")
+            print(f"production decision score {score_id} should stay red for the current packet")
+            return 1
+    if "tariff_confirmed" not in score_records.get("decision_safety_score", {}).get("blocked_claim_dependencies", []):
+        print("Product project check: FAIL")
+        print("decision safety score should depend on blocked tariff confirmation")
+        return 1
+    summaries = production_decision_scoring.get("packet_score_summaries", [])
+    if not summaries or summaries[0].get("single_global_readiness_score_created") is not False:
+        print("Product project check: FAIL")
+        print("packet score summary must refuse a single global readiness score")
+        return 1
     external_validation_pdf = PROJECT / "output" / "pdf" / "external_validation_requirements.pdf"
     if not external_validation_pdf.exists() or not external_validation_pdf.read_bytes().startswith(b"%PDF"):
         print("Product project check: FAIL")
@@ -2008,6 +2087,9 @@ def main() -> int:
     print(f"production_evidence_claim_gate_status={production_evidence_claim_gate['status']}")
     print(f"production_evidence_claim_gate_decisions={production_evidence_claim_gate['claim_gate_decision_count']}")
     print(f"production_evidence_claim_gate_safe_claims={production_evidence_claim_gate['safe_research_claim_count']}")
+    print(f"production_decision_scoring_status={production_decision_scoring['status']}")
+    print(f"production_decision_score_records={production_decision_scoring['decision_score_record_count']}")
+    print(f"production_decision_single_global_score={production_decision_scoring['single_global_readiness_score_created']}")
     print(f"external_validation_pdf={external_validation_pdf.relative_to(PROJECT)}")
     print(f"external_validation_reviewer_brief_pdf={external_validation_reviewer_brief_pdf.relative_to(PROJECT)}")
     print(f"go_live_input_status={go_live_input_readiness['status']}")

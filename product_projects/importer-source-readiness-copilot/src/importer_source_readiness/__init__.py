@@ -18,6 +18,10 @@ from .production_country_source_engine import (
     write_production_country_source_engine_artifacts,
 )
 from .production_data_model import build_production_data_model, write_production_data_model_artifacts
+from .production_decision_scoring_engine import (
+    build_production_decision_scoring_engine,
+    write_production_decision_scoring_engine_artifacts,
+)
 from .production_document_intelligence_engine import (
     build_production_document_intelligence_engine,
     ensure_parser_qa_documents,
@@ -46,6 +50,7 @@ __all__ = [
     "build_operator_workflow",
     "build_production_country_source_engine",
     "build_production_data_model",
+    "build_production_decision_scoring_engine",
     "build_production_document_intelligence_engine",
     "build_production_evidence_claim_gate_engine",
     "build_production_market_intelligence_engine",
@@ -68,6 +73,7 @@ __all__ = [
     "write_operator_workflow",
     "write_production_country_source_engine_artifacts",
     "write_production_data_model_artifacts",
+    "write_production_decision_scoring_engine_artifacts",
     "write_production_document_intelligence_engine_artifacts",
     "write_production_evidence_claim_gate_engine_artifacts",
     "write_production_market_intelligence_engine_artifacts",

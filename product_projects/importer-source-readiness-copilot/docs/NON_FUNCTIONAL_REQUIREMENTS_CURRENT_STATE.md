@@ -45,6 +45,7 @@ This document describes the current non-functional requirements and boundaries f
 | NFR-17 | Keep production document intelligence gated | Implemented locally; real-file production use blocked | `production_document_intelligence_manifest.json`, `production_document_pipeline.json` |
 | NFR-18 | Separate official samples, synthetic QA fixtures, and customer evidence | Implemented locally | `official_sample_documents/`, `parser_qa_documents/` |
 | NFR-19 | Keep evidence-based claims fail closed | Implemented locally; unsupported external claims remain blocked | `production_evidence_claim_gate_manifest.json`, `production_evidence_claim_mappers.json` |
+| NFR-20 | Avoid misleading readiness aggregation | Implemented locally; no single global readiness score is created | `production_decision_scoring_manifest.json`, `production_score_cap_policy.json` |
 
 ## Security
 

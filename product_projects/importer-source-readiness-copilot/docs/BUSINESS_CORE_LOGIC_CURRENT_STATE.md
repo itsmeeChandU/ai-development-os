@@ -332,6 +332,9 @@ Payments remain downstream. Live checkout stays disabled until scope, support, r
 | Production evidence claim gate | `system_review_graph/production_evidence_claim_gate_manifest.json` |
 | Claim decision proof | `system_review_graph/production_claim_gate_decisions.json` |
 | Evidence/claim mapper proof | `system_review_graph/production_evidence_claim_mappers.json` |
+| Production decision scoring | `system_review_graph/production_decision_scoring_manifest.json` |
+| Decision score records | `system_review_graph/production_decision_score_records.json` |
+| Score cap policy | `system_review_graph/production_score_cap_policy.json` |
 | Tests | `tests/test_business_logic.py`, `tests/test_completion_platform.py` |
 | Product proof | `python3 scripts/check_product.py` |
 | Root proof | `python3 scripts/product_project_check.py` |
@@ -348,6 +351,7 @@ Payments remain downstream. Live checkout stays disabled until scope, support, r
 - production document-intelligence pipeline for expected trade document classes
 - production evidence claim-gate engine for `can_show_claim` decisions
 - explicit separation between safe preparation/source-routing statements and blocked external claims
+- production decision scoring engine with six separate capped scores and no single readiness score
 - official sample document library and synthetic parser QA fixtures for local parser validation
 - Canada/Vietnam/India/Generic country-pack rows with route checks
 - source-monitor contract with source metadata and executable evidence freshness evaluation

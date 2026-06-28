@@ -488,6 +488,14 @@ def build_redevelopment_phases() -> list[dict[str, Any]]:
             "source_track": ["official_source_registry"],
             "evidence_track": ["score output record", "cap reason", "next action"],
             "gate_track": ["no_single_global_readiness_score", "no_approval_language"],
+            "implementation_status": "local_decision_scoring_engine_ready_no_global_readiness_score",
+            "artifacts": [
+                "system_review_graph/production_decision_scoring_manifest.json",
+                "system_review_graph/production_decision_score_records.json",
+                "system_review_graph/production_score_cap_policy.json",
+                "docs/PRODUCTION_DECISION_SCORING_ENGINE.md",
+            ],
+            "proof": "Six separate score records, threshold bands, cap policies, claim-gate dependencies, evidence references, blocker fields, reasons, and next actions are generated from local packet, business, market, document, and claim-gate artifacts by scripts/run_production_decision_scoring_engine.py without creating a single readiness score or approval language.",
         },
         {
             "phase": 13,
