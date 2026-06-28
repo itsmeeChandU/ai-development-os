@@ -140,6 +140,7 @@ def main() -> int:
         [sys.executable, "scripts/run_production_ai_copilot_engine.py"],
         [sys.executable, "scripts/run_production_expert_review_network.py"],
         [sys.executable, "scripts/run_production_reports_engine.py"],
+        [sys.executable, "scripts/run_production_portal_workflow_engine.py"],
         [sys.executable, "scripts/audit_external_package.py", "--root", "."],
     ]
     for command in commands:
@@ -212,6 +213,7 @@ def main() -> int:
     production_ai_copilot = _load_json(ROOT / "system_review_graph" / "production_ai_copilot_manifest.json")
     production_expert_review = _load_json(ROOT / "system_review_graph" / "production_expert_review_network_manifest.json")
     production_reports = _load_json(ROOT / "system_review_graph" / "production_reports_engine_manifest.json")
+    production_portals = _load_json(ROOT / "system_review_graph" / "production_portal_workflow_manifest.json")
     official_source_registry = _load_json(ROOT / "data" / "official_source_registry.json")
     business_core_doc = (ROOT / "docs" / "BUSINESS_CORE_LOGIC_CURRENT_STATE.md").read_text(encoding="utf-8")
     functional_doc = (ROOT / "docs" / "FUNCTIONAL_REQUIREMENTS_CURRENT_STATE.md").read_text(encoding="utf-8")
@@ -285,6 +287,7 @@ def main() -> int:
         "src/importer_source_readiness/production_expert_review_network.py",
         "src/importer_source_readiness/production_market_intelligence_engine.py",
         "src/importer_source_readiness/production_packet_engine.py",
+        "src/importer_source_readiness/production_portal_workflow_engine.py",
         "src/importer_source_readiness/production_reports_engine.py",
         "src/importer_source_readiness/production_redevelopment.py",
         "tests/test_operator_app.py",
@@ -304,6 +307,7 @@ def main() -> int:
         "tests/test_production_expert_review_network.py",
         "tests/test_production_market_intelligence_engine.py",
         "tests/test_production_packet_engine.py",
+        "tests/test_production_portal_workflow_engine.py",
         "tests/test_production_reports_engine.py",
         "tests/test_production_redevelopment.py",
         "scripts/run_customer_workflow.py",
@@ -323,6 +327,7 @@ def main() -> int:
         "scripts/run_production_expert_review_network.py",
         "scripts/run_production_market_intelligence_engine.py",
         "scripts/run_production_packet_engine.py",
+        "scripts/run_production_portal_workflow_engine.py",
         "scripts/run_production_reports_engine.py",
         "scripts/run_production_redevelopment.py",
         "scripts/package_external_review.py",
@@ -353,6 +358,7 @@ def main() -> int:
         "docs/PRODUCTION_EXPERT_REVIEW_NETWORK.md",
         "docs/PRODUCTION_MARKET_INTELLIGENCE_ENGINE.md",
         "docs/PRODUCTION_PACKET_ENGINE.md",
+        "docs/PRODUCTION_PORTAL_WORKFLOWS.md",
         "docs/PRODUCTION_REPORTS_ENGINE.md",
         "docs/PRODUCTION_REDEVELOPMENT.md",
         "docs/BUSINESS_CORE_LOGIC_CURRENT_STATE.md",
@@ -438,6 +444,10 @@ def main() -> int:
         "system_review_graph/production_report_catalog.json",
         "system_review_graph/production_report_exports.json",
         "system_review_graph/production_report_citations.json",
+        "system_review_graph/production_portal_workflow_manifest.json",
+        "system_review_graph/production_portal_route_matrix.json",
+        "system_review_graph/production_portal_ux_checks.json",
+        "system_review_graph/production_portal_gate_controls.json",
         "system_review_graph/production_claim_gate_decisions.json",
         "system_review_graph/production_evidence_claim_mappers.json",
         "data/official_sample_documents/canada/cbsa-ci1-canada-customs-invoice.pdf",
@@ -1173,6 +1183,68 @@ def main() -> int:
             failures.append(f"production report export {export.get('path')} missing blocked claim section flag")
         if export.get("claims_opened") is not False or export.get("external_effects_created") is not False:
             failures.append(f"production report export {export.get('path')} must keep gates closed")
+    if production_portals.get("status") != "production_portal_workflow_engine_ready_routes_gated_business_owner_ux":
+        failures.append(
+            "production portal workflow status expected production_portal_workflow_engine_ready_routes_gated_business_owner_ux, "
+            f"got {production_portals.get('status')!r}"
+        )
+    if production_portals.get("portal_count") != 6:
+        failures.append("production portals should define six portals")
+    if production_portals.get("workflow_count") != 6:
+        failures.append("production portals should define six workflows")
+    if production_portals.get("first_screen_option_count") != 4:
+        failures.append("production portals should keep the four default first-screen options")
+    for key in (
+        "all_required_routes_present",
+        "first_screen_routes_present",
+        "plain_language_required",
+        "accessibility_review_required",
+        "mobile_review_required",
+        "confusion_testing_required",
+    ):
+        if production_portals.get(key) is not True:
+            failures.append(f"production portals expected {key}=true")
+    for key in (
+        "claims_opened",
+        "external_effects_created",
+        "public_launch_ready",
+        "live_payment_ready",
+        "unrestricted_uploads_enabled",
+    ):
+        if production_portals.get(key) is not False:
+            failures.append(f"production portals expected {key}=false")
+    expected_portals = {
+        "public_portal",
+        "exporter_portal",
+        "importer_portal",
+        "expert_reviewer_portal",
+        "operator_admin_portal",
+        "enterprise_portal",
+    }
+    portal_ids = {row.get("portal_id") for row in production_portals.get("portal_records", [])}
+    if portal_ids != expected_portals:
+        failures.append("production portals are missing required personas")
+    for portal in production_portals.get("portal_records", []):
+        if portal.get("route_coverage_status") != "covered":
+            failures.append(f"portal {portal.get('portal_id')} has missing routes")
+        if portal.get("can_open_approval_payment_or_launch_gate") is not False:
+            failures.append(f"portal {portal.get('portal_id')} must keep approval/payment/launch gates closed")
+    first_labels = {row.get("label") for row in production_portals.get("first_screen_options", [])}
+    if first_labels != {"Explore a market", "Prepare a buyer packet", "Check my documents", "Prepare for broker/expert review"}:
+        failures.append("production portals first screen options are incorrect")
+    for check in production_portals.get("ux_checks", []):
+        if check.get("passed") is not True:
+            failures.append(f"production portal UX check failed: {check.get('check_id')}")
+    for control in production_portals.get("gate_controls", []):
+        if (
+            control.get("public_launch_ready") is not False
+            or control.get("unrestricted_uploads_enabled") is not False
+            or control.get("live_payment_enabled") is not False
+            or control.get("approval_claims_enabled") is not False
+            or control.get("claims_opened") is not False
+            or control.get("external_effects_created") is not False
+        ):
+            failures.append(f"portal gate control {control.get('gate_control_id')} must stay closed")
     if not screenshot_manifest_path.exists():
         failures.append("operator screenshot manifest was not generated")
     if screenshot_manifest.get("status") != "screenshots_ready":
@@ -2000,6 +2072,9 @@ def main() -> int:
     print(f"production_reports_status={production_reports['status']}")
     print(f"production_report_types={production_reports['report_type_count']}")
     print(f"production_report_exports={production_reports['export_record_count']}")
+    print(f"production_portals_status={production_portals['status']}")
+    print(f"production_portal_count={production_portals['portal_count']}")
+    print(f"production_portal_routes_present={production_portals['all_required_routes_present']}")
     print(f"external_validation_pdf={pdf_path.relative_to(ROOT)}")
     print(f"external_validation_reviewer_brief_pdf={brief_pdf_path.relative_to(ROOT)}")
     print(f"go_live_input_status={go_live_input_readiness['status']}")

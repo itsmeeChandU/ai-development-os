@@ -183,6 +183,7 @@ def _status_context() -> dict[str, Any]:
     production_ai = _load_json(GRAPH / "production_ai_copilot_manifest.json")
     production_expert = _load_json(GRAPH / "production_expert_review_network_manifest.json")
     production_reports = _load_json(GRAPH / "production_reports_engine_manifest.json")
+    production_portals = _load_json(GRAPH / "production_portal_workflow_manifest.json")
     row = business["packet_rows"][0]
     return {
         "today": date.today().isoformat(),
@@ -196,6 +197,7 @@ def _status_context() -> dict[str, Any]:
         "production_ai": production_ai,
         "production_expert": production_expert,
         "production_reports": production_reports,
+        "production_portals": production_portals,
         "packet": row,
     }
 
@@ -209,6 +211,7 @@ def _functional(ctx: dict[str, Any]) -> ReviewerDocument:
     ai_copilot = ctx["production_ai"]
     expert_review = ctx["production_expert"]
     reports = ctx["production_reports"]
+    portals = ctx["production_portals"]
     return ReviewerDocument(
         title="Functional Requirements For External Review",
         filename="functional_requirements_for_review.md",
@@ -325,6 +328,17 @@ def _functional(ctx: dict[str, Any]) -> ReviewerDocument:
                 ),
             ),
             Section(
+                "Portal Workflows Implemented",
+                bullets=(
+                    f"Portal workflow status: `{portals['status']}`.",
+                    f"Portal workflows: `{portals.get('portal_count')}`.",
+                    f"Default first-screen choices: `{portals.get('first_screen_option_count')}`.",
+                    f"All required local routes present: `{portals.get('all_required_routes_present')}`.",
+                    "Public, exporter, importer, expert reviewer, operator/admin, and enterprise workflows are mapped to existing local UI/API routes.",
+                    "UX testing, accessibility signoff, mobile review, hosted proof, unrestricted uploads, live payments, and public launch approval remain external gates.",
+                ),
+            ),
+            Section(
                 "Enterprise And Advisor Use Cases",
                 bullets=(
                     "Broker or trade advisor can manage multiple client packets and export missing-evidence or broker-review packets.",
@@ -379,6 +393,7 @@ def _business_logic(ctx: dict[str, Any]) -> ReviewerDocument:
     ai_copilot = ctx["production_ai"]
     expert_review = ctx["production_expert"]
     reports = ctx["production_reports"]
+    portals = ctx["production_portals"]
     buyer_supplier = packet["buyer_supplier_evidence"]
     gate = packet["business_gate_decision"]
     market = packet["market_intelligence"]["market_signal_evaluation"]
@@ -506,6 +521,20 @@ def _business_logic(ctx: dict[str, Any]) -> ReviewerDocument:
                 ),
             ),
             Section(
+                "Portal Workflow Logic Implemented Now",
+                body=(
+                    "Portal workflow logic turns the packet, evidence, review, report, and gate rules into complete user paths for business owners and reviewers.",
+                ),
+                bullets=(
+                    f"Portal records generated: `{portals.get('portal_count')}`.",
+                    f"Workflow records generated: `{portals.get('workflow_count')}`.",
+                    f"First-screen choices generated: `{portals.get('first_screen_option_count')}`.",
+                    "The first screen gives four non-technical choices: Explore a market, Prepare a buyer packet, Check my documents, and Prepare for broker/expert review.",
+                    "Each portal is checked against the real local route map before the workflow is marked covered.",
+                    "Unsafe labels and actions such as approve, ready to ship, confirm tariff, validate buyer, verify supplier, live payment, and public launch remain blocked.",
+                ),
+            ),
+            Section(
                 "Current Sample Packet Result",
                 bullets=(
                     f"Packet reviewed: `{packet['packet_id']}`.",
@@ -562,6 +591,7 @@ def _non_functional(ctx: dict[str, Any]) -> ReviewerDocument:
     ai_copilot = ctx["production_ai"]
     expert_review = ctx["production_expert"]
     reports = ctx["production_reports"]
+    portals = ctx["production_portals"]
     return ReviewerDocument(
         title="Non-Functional Requirements For External Review",
         filename="non_functional_requirements_for_review.md",
@@ -645,6 +675,17 @@ def _non_functional(ctx: dict[str, Any]) -> ReviewerDocument:
                     "JSON, HTML, and PDF exports are generated locally from packet/evidence/source/review artifacts.",
                     "Reports include blocked claims, citations, version, watermark, and review status.",
                     "Reports cannot hide blocked claims, open external claims, create external effects, enable live payment, or approve public launch.",
+                ),
+            ),
+            Section(
+                "Portal Workflow Controls",
+                bullets=(
+                    f"Portal workflow status: `{portals['status']}`.",
+                    f"UX checks: `{portals.get('ux_check_count')}`.",
+                    f"Gate controls: `{portals.get('gate_control_count')}`.",
+                    "Portal workflows require plain business language, route coverage, mobile review, accessibility review, and blocked-versus-approved confusion testing.",
+                    "Portal gate controls keep approval claims, unrestricted uploads, live payments, external effects, and public launch closed.",
+                    "Real UX testing, accessibility signoff, mobile approval, hosted proof, and public launch owner approval remain incomplete.",
                 ),
             ),
             Section(

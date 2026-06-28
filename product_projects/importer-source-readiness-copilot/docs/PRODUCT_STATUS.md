@@ -104,6 +104,15 @@ The reports engine slice writes
 `docs/PRODUCTION_REPORTS_ENGINE.md`. It exports the twelve required report
 types as JSON, HTML preview, and PDF, with citations, version, draft watermark,
 review status, and visible blocked claims.
+The portal workflow slice writes
+`system_review_graph/production_portal_workflow_manifest.json`,
+`system_review_graph/production_portal_route_matrix.json`,
+`system_review_graph/production_portal_ux_checks.json`,
+`system_review_graph/production_portal_gate_controls.json`, and
+`docs/PRODUCTION_PORTAL_WORKFLOWS.md`. It maps the public, exporter, importer,
+expert reviewer, operator/admin, and enterprise portals to existing local
+UI/API routes, keeps the four-choice business-owner first screen explicit, and
+keeps UX/accessibility/mobile/hosted/payment/public-launch gates closed.
 Those stages are backed by an executable local operations engine in
 `src/importer_source_readiness/product_operations.py` and
 `scripts/run_product_operations.py`. The engine creates/updates packet intake
@@ -135,7 +144,10 @@ downloads, `/workspace`, `/dashboard`,
 `/reports/sample`, `/pricing`, `/billing`, `/ai-data-policy`, `/security`, and
 `/tools/document-check`. The all-stage routes are `/stages`, `/country-coverage`,
 `/transport-readiness`, `/billing/usage`, `/agent-api`, `/research-plan`,
-`/expert-network`, `/team-workspace`, and `/launch-operations`. It is hostable after real infrastructure and qualified
+`/expert-network`, `/team-workspace`, and `/launch-operations`. The production
+portal workflow engine proves those routes cover six user portals and the
+default first-screen choices: Explore a market, Prepare a buyer packet, Check
+my documents, and Prepare for broker/expert review. It is hostable after real infrastructure and qualified
 security/privacy/human review gates are completed.
 
 ## Ready Now
@@ -207,6 +219,9 @@ security/privacy/human review gates are completed.
   reviewer approvals recorded
 - production reports engine with 12 cited report types, JSON/HTML/PDF exports,
   version/watermark/review-status metadata, and blocked claims kept visible
+- production portal workflow engine with six route-covered portals, four
+  business-owner first-screen choices, UX/accessibility/mobile review hooks,
+  and closed upload/payment/approval/public-launch gates
 - production research anchor registry for CBSA, CFIA, Global Affairs Canada,
   ISED, DGFT, WITS, ITC, WCO, ICC, OPC/PIPEDA, OWASP, NIST, and Stripe source
   routing
@@ -257,6 +272,18 @@ security/privacy/human review gates are completed.
 - diligence index: `investor/diligence_room_index.md`
 
 This is a private investor conversation state, not a public launch state.
+
+## Ready For Production Portal Workflow Review
+
+- portal workflow status: `production_portal_workflow_engine_ready_routes_gated_business_owner_ux`
+- proof command: `python3 scripts/run_production_portal_workflow_engine.py`
+- route matrix: `system_review_graph/production_portal_route_matrix.json`
+- UX checks: `system_review_graph/production_portal_ux_checks.json`
+- gate controls: `system_review_graph/production_portal_gate_controls.json`
+
+This is a local workflow and route-coverage state. It is not UX signoff,
+accessibility approval, mobile approval, hosted production proof, live payment
+activation, unrestricted upload approval, or public launch approval.
 
 ## Ready For Board Go-Live Review
 

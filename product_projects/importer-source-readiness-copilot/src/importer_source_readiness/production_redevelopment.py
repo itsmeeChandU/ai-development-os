@@ -564,6 +564,15 @@ def build_redevelopment_phases() -> list[dict[str, Any]]:
             "source_track": ["user_research_required"],
             "evidence_track": ["workflow smoke result", "terminology feedback", "accessibility result"],
             "gate_track": ["public_no_unrestricted_uploads", "public_no_live_payment", "public_no_strong_claims"],
+            "implementation_status": "local_portal_workflow_engine_ready_routes_gated_business_owner_ux",
+            "artifacts": [
+                "system_review_graph/production_portal_workflow_manifest.json",
+                "system_review_graph/production_portal_route_matrix.json",
+                "system_review_graph/production_portal_ux_checks.json",
+                "system_review_graph/production_portal_gate_controls.json",
+                "docs/PRODUCTION_PORTAL_WORKFLOWS.md",
+            ],
+            "proof": "Six portal workflow records, four default first-screen options, route coverage, UX checks, and closed portal gate controls are generated from the real runtime UI/API route map by scripts/run_production_portal_workflow_engine.py. Real UX test results, accessibility signoff, hosted proof, unrestricted uploads, live payment, and public launch remain closed.",
         },
         {
             "phase": 17,

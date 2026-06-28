@@ -49,6 +49,7 @@ This document describes the current non-functional requirements and boundaries f
 | NFR-21 | Keep AI assistance fail closed | Implemented locally; live calls and gate opening remain blocked | `production_ai_copilot_manifest.json`, `production_ai_safety_checks.json` |
 | NFR-22 | Require real credentials and evidence before reviewer findings affect claims | Implemented locally; reviewer signoff and scope-limited approval remain blocked until real evidence is attached | `production_reviewer_profiles.json`, `production_review_finding_contracts.json` |
 | NFR-23 | Keep report exports review-safe | Implemented locally; reports include citations, version, draft watermark, review status, and cannot hide blocked claims | `production_report_exports.json`, `production_report_citations.json` |
+| NFR-24 | Keep portal workflows plain, route-covered, and gate-closed | Implemented locally; UX/accessibility/mobile testing and public launch approval remain external gates | `production_portal_workflow_manifest.json`, `production_portal_ux_checks.json`, `production_portal_gate_controls.json` |
 
 ## Security
 
@@ -189,6 +190,10 @@ Implemented now:
 - polished public landing and document-intake screens with clear next actions
 - separate no-document and uploaded-document result actions
 - plain-language blockers and next valid moves
+- production portal workflow route matrix for public, exporter, importer,
+  expert reviewer, operator/admin, and enterprise users
+- four plain first-screen choices: Explore a market, Prepare a buyer packet,
+  Check my documents, and Prepare for broker/expert review
 
 Still required:
 
@@ -197,6 +202,8 @@ Still required:
 - mobile review
 - copy review for non-expert users
 - confirmation that users understand "blocked" versus "approved"
+- confirmation that portal buttons, labels, reports, and next actions are
+  clear enough for non-technical business owners
 
 ## Compliance And Professional Boundaries
 

@@ -1,0 +1,95 @@
+{
+  "gate_controls": [
+    {
+      "approval_claims_enabled": false,
+      "blocked_actions": [
+        "unrestricted real uploads",
+        "live payment",
+        "approval claims"
+      ],
+      "claims_opened": false,
+      "external_effects_created": false,
+      "gate_control_id": "portal-gate:public_portal",
+      "live_payment_enabled": false,
+      "portal_id": "public_portal",
+      "public_launch_ready": false,
+      "unrestricted_uploads_enabled": false
+    },
+    {
+      "approval_claims_enabled": false,
+      "blocked_actions": [
+        "buyer validated",
+        "supplier verified",
+        "shipment approved"
+      ],
+      "claims_opened": false,
+      "external_effects_created": false,
+      "gate_control_id": "portal-gate:exporter_portal",
+      "live_payment_enabled": false,
+      "portal_id": "exporter_portal",
+      "public_launch_ready": false,
+      "unrestricted_uploads_enabled": false
+    },
+    {
+      "approval_claims_enabled": false,
+      "blocked_actions": [
+        "tariff confirmed",
+        "CFIA approved",
+        "customs ready"
+      ],
+      "claims_opened": false,
+      "external_effects_created": false,
+      "gate_control_id": "portal-gate:importer_portal",
+      "live_payment_enabled": false,
+      "portal_id": "importer_portal",
+      "public_launch_ready": false,
+      "unrestricted_uploads_enabled": false
+    },
+    {
+      "approval_claims_enabled": false,
+      "blocked_actions": [
+        "blanket approval",
+        "out-of-scope claim approval",
+        "unscoped file access"
+      ],
+      "claims_opened": false,
+      "external_effects_created": false,
+      "gate_control_id": "portal-gate:expert_reviewer_portal",
+      "live_payment_enabled": false,
+      "portal_id": "expert_reviewer_portal",
+      "public_launch_ready": false,
+      "unrestricted_uploads_enabled": false
+    },
+    {
+      "approval_claims_enabled": false,
+      "blocked_actions": [
+        "public launch approval",
+        "live payment activation",
+        "unsupported claim override"
+      ],
+      "claims_opened": false,
+      "external_effects_created": false,
+      "gate_control_id": "portal-gate:operator_admin_portal",
+      "live_payment_enabled": false,
+      "portal_id": "operator_admin_portal",
+      "public_launch_ready": false,
+      "unrestricted_uploads_enabled": false
+    },
+    {
+      "approval_claims_enabled": false,
+      "blocked_actions": [
+        "unreviewed white-label claims",
+        "external webhooks",
+        "live charges"
+      ],
+      "claims_opened": false,
+      "external_effects_created": false,
+      "gate_control_id": "portal-gate:enterprise_portal",
+      "live_payment_enabled": false,
+      "portal_id": "enterprise_portal",
+      "public_launch_ready": false,
+      "unrestricted_uploads_enabled": false
+    }
+  ],
+  "status": "production_portal_gate_controls_ready_closed"
+}

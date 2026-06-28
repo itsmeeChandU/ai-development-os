@@ -1,0 +1,848 @@
+{
+  "accessibility_review_required": true,
+  "all_required_routes_present": true,
+  "api_route_count": 55,
+  "claims_opened": false,
+  "confusion_testing_required": true,
+  "external_effects_created": false,
+  "first_screen_option_count": 4,
+  "first_screen_options": [
+    {
+      "can_open_external_gate": false,
+      "copy_style": "plain_business_owner_language",
+      "label": "Explore a market",
+      "next_action": "Open route and generate a packet or report without approval claims.",
+      "option_id": "explore_market",
+      "route": "/opportunities",
+      "route_exists": true
+    },
+    {
+      "can_open_external_gate": false,
+      "copy_style": "plain_business_owner_language",
+      "label": "Prepare a buyer packet",
+      "next_action": "Open route and generate a packet or report without approval claims.",
+      "option_id": "prepare_buyer_packet",
+      "route": "/tools/buyer-broker-packet",
+      "route_exists": true
+    },
+    {
+      "can_open_external_gate": false,
+      "copy_style": "plain_business_owner_language",
+      "label": "Check my documents",
+      "next_action": "Open route and generate a packet or report without approval claims.",
+      "option_id": "check_documents",
+      "route": "/tools/document-check",
+      "route_exists": true
+    },
+    {
+      "can_open_external_gate": false,
+      "copy_style": "plain_business_owner_language",
+      "label": "Prepare for broker/expert review",
+      "next_action": "Open route and generate a packet or report without approval claims.",
+      "option_id": "prepare_expert_review",
+      "route": "/expert-network",
+      "route_exists": true
+    }
+  ],
+  "first_screen_routes_present": true,
+  "gate_control_count": 6,
+  "gate_controls": [
+    {
+      "approval_claims_enabled": false,
+      "blocked_actions": [
+        "unrestricted real uploads",
+        "live payment",
+        "approval claims"
+      ],
+      "claims_opened": false,
+      "external_effects_created": false,
+      "gate_control_id": "portal-gate:public_portal",
+      "live_payment_enabled": false,
+      "portal_id": "public_portal",
+      "public_launch_ready": false,
+      "unrestricted_uploads_enabled": false
+    },
+    {
+      "approval_claims_enabled": false,
+      "blocked_actions": [
+        "buyer validated",
+        "supplier verified",
+        "shipment approved"
+      ],
+      "claims_opened": false,
+      "external_effects_created": false,
+      "gate_control_id": "portal-gate:exporter_portal",
+      "live_payment_enabled": false,
+      "portal_id": "exporter_portal",
+      "public_launch_ready": false,
+      "unrestricted_uploads_enabled": false
+    },
+    {
+      "approval_claims_enabled": false,
+      "blocked_actions": [
+        "tariff confirmed",
+        "CFIA approved",
+        "customs ready"
+      ],
+      "claims_opened": false,
+      "external_effects_created": false,
+      "gate_control_id": "portal-gate:importer_portal",
+      "live_payment_enabled": false,
+      "portal_id": "importer_portal",
+      "public_launch_ready": false,
+      "unrestricted_uploads_enabled": false
+    },
+    {
+      "approval_claims_enabled": false,
+      "blocked_actions": [
+        "blanket approval",
+        "out-of-scope claim approval",
+        "unscoped file access"
+      ],
+      "claims_opened": false,
+      "external_effects_created": false,
+      "gate_control_id": "portal-gate:expert_reviewer_portal",
+      "live_payment_enabled": false,
+      "portal_id": "expert_reviewer_portal",
+      "public_launch_ready": false,
+      "unrestricted_uploads_enabled": false
+    },
+    {
+      "approval_claims_enabled": false,
+      "blocked_actions": [
+        "public launch approval",
+        "live payment activation",
+        "unsupported claim override"
+      ],
+      "claims_opened": false,
+      "external_effects_created": false,
+      "gate_control_id": "portal-gate:operator_admin_portal",
+      "live_payment_enabled": false,
+      "portal_id": "operator_admin_portal",
+      "public_launch_ready": false,
+      "unrestricted_uploads_enabled": false
+    },
+    {
+      "approval_claims_enabled": false,
+      "blocked_actions": [
+        "unreviewed white-label claims",
+        "external webhooks",
+        "live charges"
+      ],
+      "claims_opened": false,
+      "external_effects_created": false,
+      "gate_control_id": "portal-gate:enterprise_portal",
+      "live_payment_enabled": false,
+      "portal_id": "enterprise_portal",
+      "public_launch_ready": false,
+      "unrestricted_uploads_enabled": false
+    }
+  ],
+  "generated_at": "2026-06-28T15:20:05+00:00",
+  "live_payment_ready": false,
+  "mobile_review_required": true,
+  "plain_language_required": true,
+  "portal_count": 6,
+  "portal_records": [
+    {
+      "accessibility_review_required": true,
+      "allowed_actions": [
+        "start quick check",
+        "view sample report",
+        "read security and AI-use boundaries"
+      ],
+      "api_routes": [
+        {
+          "exists": true,
+          "route": "/api/public/starter",
+          "status": "route_present"
+        },
+        {
+          "exists": true,
+          "route": "/api/public/quick-check",
+          "status": "route_present"
+        }
+      ],
+      "blocked_actions": [
+        "unrestricted real uploads",
+        "live payment",
+        "approval claims"
+      ],
+      "business_owner_language": true,
+      "can_open_approval_payment_or_launch_gate": false,
+      "confusion_testing_required": true,
+      "label": "Public portal",
+      "missing_routes": [],
+      "mobile_review_required": true,
+      "persona": "business owner exploring a trade lane",
+      "portal_id": "public_portal",
+      "route_coverage_status": "covered",
+      "ui_routes": [
+        {
+          "exists": true,
+          "route": "/",
+          "status": "route_present"
+        },
+        {
+          "exists": true,
+          "route": "/start",
+          "status": "route_present"
+        },
+        {
+          "exists": true,
+          "route": "/tools",
+          "status": "route_present"
+        },
+        {
+          "exists": true,
+          "route": "/trade-check",
+          "status": "route_present"
+        },
+        {
+          "exists": true,
+          "route": "/tools/document-check",
+          "status": "route_present"
+        },
+        {
+          "exists": true,
+          "route": "/reports/sample",
+          "status": "route_present"
+        },
+        {
+          "exists": true,
+          "route": "/security",
+          "status": "route_present"
+        }
+      ]
+    },
+    {
+      "accessibility_review_required": true,
+      "allowed_actions": [
+        "create packet",
+        "attach evidence",
+        "download cited reports",
+        "prepare buyer or broker questions"
+      ],
+      "api_routes": [
+        {
+          "exists": true,
+          "route": "/api/packets",
+          "status": "route_present"
+        },
+        {
+          "exists": true,
+          "route": "/api/packets/:id/evidence",
+          "status": "route_present"
+        },
+        {
+          "exists": true,
+          "route": "/api/reports/:id/download",
+          "status": "route_present"
+        }
+      ],
+      "blocked_actions": [
+        "buyer validated",
+        "supplier verified",
+        "shipment approved"
+      ],
+      "business_owner_language": true,
+      "can_open_approval_payment_or_launch_gate": false,
+      "confusion_testing_required": true,
+      "label": "Exporter portal",
+      "missing_routes": [],
+      "mobile_review_required": true,
+      "persona": "foreign exporter preparing a Canada-facing packet",
+      "portal_id": "exporter_portal",
+      "route_coverage_status": "covered",
+      "ui_routes": [
+        {
+          "exists": true,
+          "route": "/workspace",
+          "status": "route_present"
+        },
+        {
+          "exists": true,
+          "route": "/packets/new",
+          "status": "route_present"
+        },
+        {
+          "exists": true,
+          "route": "/packets/:packetId/evidence",
+          "status": "route_present"
+        },
+        {
+          "exists": true,
+          "route": "/packets/:packetId/reports",
+          "status": "route_present"
+        },
+        {
+          "exists": true,
+          "route": "/tools/export-readiness",
+          "status": "route_present"
+        }
+      ]
+    },
+    {
+      "accessibility_review_required": true,
+      "allowed_actions": [
+        "review missing import evidence",
+        "refresh source routes",
+        "prepare broker review packet"
+      ],
+      "api_routes": [
+        {
+          "exists": true,
+          "route": "/api/public/packets/:id/refresh-official-sources",
+          "status": "route_present"
+        },
+        {
+          "exists": true,
+          "route": "/api/country-coverage",
+          "status": "route_present"
+        }
+      ],
+      "blocked_actions": [
+        "tariff confirmed",
+        "CFIA approved",
+        "customs ready"
+      ],
+      "business_owner_language": true,
+      "can_open_approval_payment_or_launch_gate": false,
+      "confusion_testing_required": true,
+      "label": "Importer portal",
+      "missing_routes": [],
+      "mobile_review_required": true,
+      "persona": "Canadian importer checking source, supplier, and responsibility questions",
+      "portal_id": "importer_portal",
+      "route_coverage_status": "covered",
+      "ui_routes": [
+        {
+          "exists": true,
+          "route": "/tools/import-readiness",
+          "status": "route_present"
+        },
+        {
+          "exists": true,
+          "route": "/packets/:packetId/readiness",
+          "status": "route_present"
+        },
+        {
+          "exists": true,
+          "route": "/packets/:packetId/source-monitoring",
+          "status": "route_present"
+        },
+        {
+          "exists": true,
+          "route": "/country-coverage",
+          "status": "route_present"
+        }
+      ]
+    },
+    {
+      "accessibility_review_required": true,
+      "allowed_actions": [
+        "review scoped evidence",
+        "answer scoped questions",
+        "submit finding for exact scope"
+      ],
+      "api_routes": [
+        {
+          "exists": true,
+          "route": "/api/external-review/:token/findings",
+          "status": "route_present"
+        }
+      ],
+      "blocked_actions": [
+        "blanket approval",
+        "out-of-scope claim approval",
+        "unscoped file access"
+      ],
+      "business_owner_language": true,
+      "can_open_approval_payment_or_launch_gate": false,
+      "confusion_testing_required": true,
+      "label": "Expert reviewer portal",
+      "missing_routes": [],
+      "mobile_review_required": true,
+      "persona": "scoped external reviewer",
+      "portal_id": "expert_reviewer_portal",
+      "route_coverage_status": "covered",
+      "ui_routes": [
+        {
+          "exists": true,
+          "route": "/review/:reviewToken",
+          "status": "route_present"
+        },
+        {
+          "exists": true,
+          "route": "/review/:reviewToken/evidence",
+          "status": "route_present"
+        },
+        {
+          "exists": true,
+          "route": "/review/:reviewToken/questions",
+          "status": "route_present"
+        },
+        {
+          "exists": true,
+          "route": "/review/:reviewToken/submit",
+          "status": "route_present"
+        }
+      ]
+    },
+    {
+      "accessibility_review_required": true,
+      "allowed_actions": [
+        "inspect blockers",
+        "refresh artifacts",
+        "route reviews",
+        "check health and audit"
+      ],
+      "api_routes": [
+        {
+          "exists": true,
+          "route": "/api/audit",
+          "status": "route_present"
+        },
+        {
+          "exists": true,
+          "route": "/api/system-health",
+          "status": "route_present"
+        },
+        {
+          "exists": true,
+          "route": "/api/packets/:id/audit",
+          "status": "route_present"
+        }
+      ],
+      "blocked_actions": [
+        "public launch approval",
+        "live payment activation",
+        "unsupported claim override"
+      ],
+      "business_owner_language": true,
+      "can_open_approval_payment_or_launch_gate": false,
+      "confusion_testing_required": true,
+      "label": "Operator and admin portal",
+      "missing_routes": [],
+      "mobile_review_required": true,
+      "persona": "internal operator or admin",
+      "portal_id": "operator_admin_portal",
+      "route_coverage_status": "covered",
+      "ui_routes": [
+        {
+          "exists": true,
+          "route": "/operator/queue",
+          "status": "route_present"
+        },
+        {
+          "exists": true,
+          "route": "/operator/packets/:packetId",
+          "status": "route_present"
+        },
+        {
+          "exists": true,
+          "route": "/operator/reviews",
+          "status": "route_present"
+        },
+        {
+          "exists": true,
+          "route": "/admin/sources",
+          "status": "route_present"
+        },
+        {
+          "exists": true,
+          "route": "/admin/audit",
+          "status": "route_present"
+        },
+        {
+          "exists": true,
+          "route": "/admin/system-health",
+          "status": "route_present"
+        }
+      ]
+    },
+    {
+      "accessibility_review_required": true,
+      "allowed_actions": [
+        "manage workspaces",
+        "review usage",
+        "use scoped local API contracts",
+        "export audit-ready reports"
+      ],
+      "api_routes": [
+        {
+          "exists": true,
+          "route": "/api/team-workspace",
+          "status": "route_present"
+        },
+        {
+          "exists": true,
+          "route": "/api/agent-api",
+          "status": "route_present"
+        },
+        {
+          "exists": true,
+          "route": "/api/billing/usage",
+          "status": "route_present"
+        }
+      ],
+      "blocked_actions": [
+        "unreviewed white-label claims",
+        "external webhooks",
+        "live charges"
+      ],
+      "business_owner_language": true,
+      "can_open_approval_payment_or_launch_gate": false,
+      "confusion_testing_required": true,
+      "label": "Enterprise portal",
+      "missing_routes": [],
+      "mobile_review_required": true,
+      "persona": "broker, advisor, or team managing multiple packets",
+      "portal_id": "enterprise_portal",
+      "route_coverage_status": "covered",
+      "ui_routes": [
+        {
+          "exists": true,
+          "route": "/team-workspace",
+          "status": "route_present"
+        },
+        {
+          "exists": true,
+          "route": "/agent-api",
+          "status": "route_present"
+        },
+        {
+          "exists": true,
+          "route": "/billing/usage",
+          "status": "route_present"
+        },
+        {
+          "exists": true,
+          "route": "/research-plan",
+          "status": "route_present"
+        },
+        {
+          "exists": true,
+          "route": "/launch-operations",
+          "status": "route_present"
+        }
+      ]
+    }
+  ],
+  "product": "Trade Readiness Copilot",
+  "proof_boundary": "Portal workflow records prove local route and gate coverage; real UX test results, accessibility signoff, mobile review, and public launch approval remain external gates.",
+  "public_launch_ready": false,
+  "status": "production_portal_workflow_engine_ready_routes_gated_business_owner_ux",
+  "ui_route_count": 70,
+  "ui_routes_by_role": {
+    "admin": [
+      "/admin",
+      "/admin/users",
+      "/admin/organizations",
+      "/admin/sources",
+      "/admin/claim-rules",
+      "/admin/review-templates",
+      "/admin/audit",
+      "/admin/system-health"
+    ],
+    "customer": [
+      "/",
+      "/start",
+      "/tools",
+      "/trade-check",
+      "/tools/import-readiness",
+      "/tools/export-readiness",
+      "/tools/buyer-broker-packet",
+      "/tools/document-check",
+      "/tools/canadian-references",
+      "/opportunities",
+      "/country-coverage",
+      "/transport-readiness",
+      "/reports/sample",
+      "/pricing",
+      "/billing",
+      "/billing/usage",
+      "/agent-api",
+      "/stages",
+      "/research-plan",
+      "/expert-network",
+      "/team-workspace",
+      "/launch-operations",
+      "/ai-data-policy",
+      "/security",
+      "/public/packets/:packetId/result",
+      "/public/packets/:packetId/confirm",
+      "/workspace",
+      "/login",
+      "/signup",
+      "/onboarding",
+      "/dashboard",
+      "/packets",
+      "/packets/new",
+      "/packets/:packetId",
+      "/packets/:packetId/evidence",
+      "/packets/:packetId/blockers",
+      "/packets/:packetId/readiness",
+      "/packets/:packetId/reviews",
+      "/packets/:packetId/reports",
+      "/packets/:packetId/source-monitoring",
+      "/packets/:packetId/safe-summary",
+      "/packets/:packetId/settings",
+      "/settings/ai-data-policy",
+      "/account",
+      "/support",
+      "/privacy",
+      "/terms",
+      "/ai-use",
+      "/data-retention"
+    ],
+    "expert": [
+      "/review/:reviewToken",
+      "/review/:reviewToken/evidence",
+      "/review/:reviewToken/questions",
+      "/review/:reviewToken/submit"
+    ],
+    "operator": [
+      "/operator",
+      "/operator/queue",
+      "/operator/packets",
+      "/operator/packets/:packetId",
+      "/operator/blockers",
+      "/operator/reviews",
+      "/operator/reports",
+      "/operator/sources",
+      "/operator/gates"
+    ]
+  },
+  "unrestricted_uploads_enabled": false,
+  "ux_check_count": 7,
+  "ux_checks": [
+    {
+      "check_id": "first_screen_has_four_default_choices",
+      "external_review_required": false,
+      "passed": true,
+      "status": "passed"
+    },
+    {
+      "check_id": "first_screen_routes_exist",
+      "external_review_required": false,
+      "passed": true,
+      "status": "passed"
+    },
+    {
+      "check_id": "all_portal_routes_covered",
+      "external_review_required": false,
+      "passed": true,
+      "status": "passed"
+    },
+    {
+      "check_id": "plain_business_language_required",
+      "external_review_required": true,
+      "passed": true,
+      "status": "passed"
+    },
+    {
+      "check_id": "mobile_review_required",
+      "external_review_required": true,
+      "passed": true,
+      "status": "passed"
+    },
+    {
+      "check_id": "accessibility_review_required",
+      "external_review_required": true,
+      "passed": true,
+      "status": "passed"
+    },
+    {
+      "check_id": "blocked_vs_approved_confusion_testing_required",
+      "external_review_required": true,
+      "passed": true,
+      "status": "passed"
+    }
+  ],
+  "ux_research_references": [
+    {
+      "source_id": "w3c-wcag-22",
+      "source_name": "W3C Web Content Accessibility Guidelines 2.2",
+      "url": "https://www.w3.org/TR/WCAG22/",
+      "use": "accessibility review criteria for perceivable, operable, understandable, and robust UI behavior"
+    },
+    {
+      "source_id": "canada-design-system",
+      "source_name": "Government of Canada Design System",
+      "url": "https://design.canada.ca/",
+      "use": "plain-language and service-design reference for public-facing Canada-oriented workflows"
+    }
+  ],
+  "workflow_count": 6,
+  "workflow_records": [
+    {
+      "blocked_state": "external_claims_or_real_world_actions_need_evidence",
+      "buttons_expected": [
+        "start",
+        "review evidence",
+        "download report",
+        "request scoped review"
+      ],
+      "plain_language_label": "Public portal",
+      "portal_id": "public_portal",
+      "route_coverage_status": "covered",
+      "steps": [
+        "choose goal",
+        "enter product and lane context",
+        "review missing evidence",
+        "generate cited packet/report",
+        "route to scoped review when needed"
+      ],
+      "success_state": "useful_preparation_output_ready",
+      "unsafe_button_labels_blocked": [
+        "approve",
+        "ready to ship",
+        "confirm tariff",
+        "validate buyer",
+        "verify supplier"
+      ],
+      "workflow_id": "workflow:public_portal"
+    },
+    {
+      "blocked_state": "external_claims_or_real_world_actions_need_evidence",
+      "buttons_expected": [
+        "start",
+        "review evidence",
+        "download report",
+        "request scoped review"
+      ],
+      "plain_language_label": "Exporter portal",
+      "portal_id": "exporter_portal",
+      "route_coverage_status": "covered",
+      "steps": [
+        "choose goal",
+        "enter product and lane context",
+        "review missing evidence",
+        "generate cited packet/report",
+        "route to scoped review when needed"
+      ],
+      "success_state": "useful_preparation_output_ready",
+      "unsafe_button_labels_blocked": [
+        "approve",
+        "ready to ship",
+        "confirm tariff",
+        "validate buyer",
+        "verify supplier"
+      ],
+      "workflow_id": "workflow:exporter_portal"
+    },
+    {
+      "blocked_state": "external_claims_or_real_world_actions_need_evidence",
+      "buttons_expected": [
+        "start",
+        "review evidence",
+        "download report",
+        "request scoped review"
+      ],
+      "plain_language_label": "Importer portal",
+      "portal_id": "importer_portal",
+      "route_coverage_status": "covered",
+      "steps": [
+        "choose goal",
+        "enter product and lane context",
+        "review missing evidence",
+        "generate cited packet/report",
+        "route to scoped review when needed"
+      ],
+      "success_state": "useful_preparation_output_ready",
+      "unsafe_button_labels_blocked": [
+        "approve",
+        "ready to ship",
+        "confirm tariff",
+        "validate buyer",
+        "verify supplier"
+      ],
+      "workflow_id": "workflow:importer_portal"
+    },
+    {
+      "blocked_state": "external_claims_or_real_world_actions_need_evidence",
+      "buttons_expected": [
+        "start",
+        "review evidence",
+        "download report",
+        "request scoped review"
+      ],
+      "plain_language_label": "Expert reviewer portal",
+      "portal_id": "expert_reviewer_portal",
+      "route_coverage_status": "covered",
+      "steps": [
+        "choose goal",
+        "enter product and lane context",
+        "review missing evidence",
+        "generate cited packet/report",
+        "route to scoped review when needed"
+      ],
+      "success_state": "useful_preparation_output_ready",
+      "unsafe_button_labels_blocked": [
+        "approve",
+        "ready to ship",
+        "confirm tariff",
+        "validate buyer",
+        "verify supplier"
+      ],
+      "workflow_id": "workflow:expert_reviewer_portal"
+    },
+    {
+      "blocked_state": "external_claims_or_real_world_actions_need_evidence",
+      "buttons_expected": [
+        "start",
+        "review evidence",
+        "download report",
+        "request scoped review"
+      ],
+      "plain_language_label": "Operator and admin portal",
+      "portal_id": "operator_admin_portal",
+      "route_coverage_status": "covered",
+      "steps": [
+        "choose goal",
+        "enter product and lane context",
+        "review missing evidence",
+        "generate cited packet/report",
+        "route to scoped review when needed"
+      ],
+      "success_state": "useful_preparation_output_ready",
+      "unsafe_button_labels_blocked": [
+        "approve",
+        "ready to ship",
+        "confirm tariff",
+        "validate buyer",
+        "verify supplier"
+      ],
+      "workflow_id": "workflow:operator_admin_portal"
+    },
+    {
+      "blocked_state": "external_claims_or_real_world_actions_need_evidence",
+      "buttons_expected": [
+        "start",
+        "review evidence",
+        "download report",
+        "request scoped review"
+      ],
+      "plain_language_label": "Enterprise portal",
+      "portal_id": "enterprise_portal",
+      "route_coverage_status": "covered",
+      "steps": [
+        "choose goal",
+        "enter product and lane context",
+        "review missing evidence",
+        "generate cited packet/report",
+        "route to scoped review when needed"
+      ],
+      "success_state": "useful_preparation_output_ready",
+      "unsafe_button_labels_blocked": [
+        "approve",
+        "ready to ship",
+        "confirm tariff",
+        "validate buyer",
+        "verify supplier"
+      ],
+      "workflow_id": "workflow:enterprise_portal"
+    }
+  ]
+}

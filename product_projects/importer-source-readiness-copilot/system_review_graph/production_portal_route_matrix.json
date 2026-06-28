@@ -1,0 +1,427 @@
+{
+  "first_screen_options": [
+    {
+      "can_open_external_gate": false,
+      "copy_style": "plain_business_owner_language",
+      "label": "Explore a market",
+      "next_action": "Open route and generate a packet or report without approval claims.",
+      "option_id": "explore_market",
+      "route": "/opportunities",
+      "route_exists": true
+    },
+    {
+      "can_open_external_gate": false,
+      "copy_style": "plain_business_owner_language",
+      "label": "Prepare a buyer packet",
+      "next_action": "Open route and generate a packet or report without approval claims.",
+      "option_id": "prepare_buyer_packet",
+      "route": "/tools/buyer-broker-packet",
+      "route_exists": true
+    },
+    {
+      "can_open_external_gate": false,
+      "copy_style": "plain_business_owner_language",
+      "label": "Check my documents",
+      "next_action": "Open route and generate a packet or report without approval claims.",
+      "option_id": "check_documents",
+      "route": "/tools/document-check",
+      "route_exists": true
+    },
+    {
+      "can_open_external_gate": false,
+      "copy_style": "plain_business_owner_language",
+      "label": "Prepare for broker/expert review",
+      "next_action": "Open route and generate a packet or report without approval claims.",
+      "option_id": "prepare_expert_review",
+      "route": "/expert-network",
+      "route_exists": true
+    }
+  ],
+  "portal_records": [
+    {
+      "accessibility_review_required": true,
+      "allowed_actions": [
+        "start quick check",
+        "view sample report",
+        "read security and AI-use boundaries"
+      ],
+      "api_routes": [
+        {
+          "exists": true,
+          "route": "/api/public/starter",
+          "status": "route_present"
+        },
+        {
+          "exists": true,
+          "route": "/api/public/quick-check",
+          "status": "route_present"
+        }
+      ],
+      "blocked_actions": [
+        "unrestricted real uploads",
+        "live payment",
+        "approval claims"
+      ],
+      "business_owner_language": true,
+      "can_open_approval_payment_or_launch_gate": false,
+      "confusion_testing_required": true,
+      "label": "Public portal",
+      "missing_routes": [],
+      "mobile_review_required": true,
+      "persona": "business owner exploring a trade lane",
+      "portal_id": "public_portal",
+      "route_coverage_status": "covered",
+      "ui_routes": [
+        {
+          "exists": true,
+          "route": "/",
+          "status": "route_present"
+        },
+        {
+          "exists": true,
+          "route": "/start",
+          "status": "route_present"
+        },
+        {
+          "exists": true,
+          "route": "/tools",
+          "status": "route_present"
+        },
+        {
+          "exists": true,
+          "route": "/trade-check",
+          "status": "route_present"
+        },
+        {
+          "exists": true,
+          "route": "/tools/document-check",
+          "status": "route_present"
+        },
+        {
+          "exists": true,
+          "route": "/reports/sample",
+          "status": "route_present"
+        },
+        {
+          "exists": true,
+          "route": "/security",
+          "status": "route_present"
+        }
+      ]
+    },
+    {
+      "accessibility_review_required": true,
+      "allowed_actions": [
+        "create packet",
+        "attach evidence",
+        "download cited reports",
+        "prepare buyer or broker questions"
+      ],
+      "api_routes": [
+        {
+          "exists": true,
+          "route": "/api/packets",
+          "status": "route_present"
+        },
+        {
+          "exists": true,
+          "route": "/api/packets/:id/evidence",
+          "status": "route_present"
+        },
+        {
+          "exists": true,
+          "route": "/api/reports/:id/download",
+          "status": "route_present"
+        }
+      ],
+      "blocked_actions": [
+        "buyer validated",
+        "supplier verified",
+        "shipment approved"
+      ],
+      "business_owner_language": true,
+      "can_open_approval_payment_or_launch_gate": false,
+      "confusion_testing_required": true,
+      "label": "Exporter portal",
+      "missing_routes": [],
+      "mobile_review_required": true,
+      "persona": "foreign exporter preparing a Canada-facing packet",
+      "portal_id": "exporter_portal",
+      "route_coverage_status": "covered",
+      "ui_routes": [
+        {
+          "exists": true,
+          "route": "/workspace",
+          "status": "route_present"
+        },
+        {
+          "exists": true,
+          "route": "/packets/new",
+          "status": "route_present"
+        },
+        {
+          "exists": true,
+          "route": "/packets/:packetId/evidence",
+          "status": "route_present"
+        },
+        {
+          "exists": true,
+          "route": "/packets/:packetId/reports",
+          "status": "route_present"
+        },
+        {
+          "exists": true,
+          "route": "/tools/export-readiness",
+          "status": "route_present"
+        }
+      ]
+    },
+    {
+      "accessibility_review_required": true,
+      "allowed_actions": [
+        "review missing import evidence",
+        "refresh source routes",
+        "prepare broker review packet"
+      ],
+      "api_routes": [
+        {
+          "exists": true,
+          "route": "/api/public/packets/:id/refresh-official-sources",
+          "status": "route_present"
+        },
+        {
+          "exists": true,
+          "route": "/api/country-coverage",
+          "status": "route_present"
+        }
+      ],
+      "blocked_actions": [
+        "tariff confirmed",
+        "CFIA approved",
+        "customs ready"
+      ],
+      "business_owner_language": true,
+      "can_open_approval_payment_or_launch_gate": false,
+      "confusion_testing_required": true,
+      "label": "Importer portal",
+      "missing_routes": [],
+      "mobile_review_required": true,
+      "persona": "Canadian importer checking source, supplier, and responsibility questions",
+      "portal_id": "importer_portal",
+      "route_coverage_status": "covered",
+      "ui_routes": [
+        {
+          "exists": true,
+          "route": "/tools/import-readiness",
+          "status": "route_present"
+        },
+        {
+          "exists": true,
+          "route": "/packets/:packetId/readiness",
+          "status": "route_present"
+        },
+        {
+          "exists": true,
+          "route": "/packets/:packetId/source-monitoring",
+          "status": "route_present"
+        },
+        {
+          "exists": true,
+          "route": "/country-coverage",
+          "status": "route_present"
+        }
+      ]
+    },
+    {
+      "accessibility_review_required": true,
+      "allowed_actions": [
+        "review scoped evidence",
+        "answer scoped questions",
+        "submit finding for exact scope"
+      ],
+      "api_routes": [
+        {
+          "exists": true,
+          "route": "/api/external-review/:token/findings",
+          "status": "route_present"
+        }
+      ],
+      "blocked_actions": [
+        "blanket approval",
+        "out-of-scope claim approval",
+        "unscoped file access"
+      ],
+      "business_owner_language": true,
+      "can_open_approval_payment_or_launch_gate": false,
+      "confusion_testing_required": true,
+      "label": "Expert reviewer portal",
+      "missing_routes": [],
+      "mobile_review_required": true,
+      "persona": "scoped external reviewer",
+      "portal_id": "expert_reviewer_portal",
+      "route_coverage_status": "covered",
+      "ui_routes": [
+        {
+          "exists": true,
+          "route": "/review/:reviewToken",
+          "status": "route_present"
+        },
+        {
+          "exists": true,
+          "route": "/review/:reviewToken/evidence",
+          "status": "route_present"
+        },
+        {
+          "exists": true,
+          "route": "/review/:reviewToken/questions",
+          "status": "route_present"
+        },
+        {
+          "exists": true,
+          "route": "/review/:reviewToken/submit",
+          "status": "route_present"
+        }
+      ]
+    },
+    {
+      "accessibility_review_required": true,
+      "allowed_actions": [
+        "inspect blockers",
+        "refresh artifacts",
+        "route reviews",
+        "check health and audit"
+      ],
+      "api_routes": [
+        {
+          "exists": true,
+          "route": "/api/audit",
+          "status": "route_present"
+        },
+        {
+          "exists": true,
+          "route": "/api/system-health",
+          "status": "route_present"
+        },
+        {
+          "exists": true,
+          "route": "/api/packets/:id/audit",
+          "status": "route_present"
+        }
+      ],
+      "blocked_actions": [
+        "public launch approval",
+        "live payment activation",
+        "unsupported claim override"
+      ],
+      "business_owner_language": true,
+      "can_open_approval_payment_or_launch_gate": false,
+      "confusion_testing_required": true,
+      "label": "Operator and admin portal",
+      "missing_routes": [],
+      "mobile_review_required": true,
+      "persona": "internal operator or admin",
+      "portal_id": "operator_admin_portal",
+      "route_coverage_status": "covered",
+      "ui_routes": [
+        {
+          "exists": true,
+          "route": "/operator/queue",
+          "status": "route_present"
+        },
+        {
+          "exists": true,
+          "route": "/operator/packets/:packetId",
+          "status": "route_present"
+        },
+        {
+          "exists": true,
+          "route": "/operator/reviews",
+          "status": "route_present"
+        },
+        {
+          "exists": true,
+          "route": "/admin/sources",
+          "status": "route_present"
+        },
+        {
+          "exists": true,
+          "route": "/admin/audit",
+          "status": "route_present"
+        },
+        {
+          "exists": true,
+          "route": "/admin/system-health",
+          "status": "route_present"
+        }
+      ]
+    },
+    {
+      "accessibility_review_required": true,
+      "allowed_actions": [
+        "manage workspaces",
+        "review usage",
+        "use scoped local API contracts",
+        "export audit-ready reports"
+      ],
+      "api_routes": [
+        {
+          "exists": true,
+          "route": "/api/team-workspace",
+          "status": "route_present"
+        },
+        {
+          "exists": true,
+          "route": "/api/agent-api",
+          "status": "route_present"
+        },
+        {
+          "exists": true,
+          "route": "/api/billing/usage",
+          "status": "route_present"
+        }
+      ],
+      "blocked_actions": [
+        "unreviewed white-label claims",
+        "external webhooks",
+        "live charges"
+      ],
+      "business_owner_language": true,
+      "can_open_approval_payment_or_launch_gate": false,
+      "confusion_testing_required": true,
+      "label": "Enterprise portal",
+      "missing_routes": [],
+      "mobile_review_required": true,
+      "persona": "broker, advisor, or team managing multiple packets",
+      "portal_id": "enterprise_portal",
+      "route_coverage_status": "covered",
+      "ui_routes": [
+        {
+          "exists": true,
+          "route": "/team-workspace",
+          "status": "route_present"
+        },
+        {
+          "exists": true,
+          "route": "/agent-api",
+          "status": "route_present"
+        },
+        {
+          "exists": true,
+          "route": "/billing/usage",
+          "status": "route_present"
+        },
+        {
+          "exists": true,
+          "route": "/research-plan",
+          "status": "route_present"
+        },
+        {
+          "exists": true,
+          "route": "/launch-operations",
+          "status": "route_present"
+        }
+      ]
+    }
+  ],
+  "status": "production_portal_route_matrix_ready"
+}

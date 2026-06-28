@@ -2,9 +2,9 @@
   {
     "actor": "local_operator",
     "claim_boundary": "Refresh records close stale-source proof only when HTTP access succeeds. They do not approve external claims.",
-    "generated_at": "2026-06-28T15:02:44+00:00",
+    "generated_at": "2026-06-28T15:19:58+00:00",
     "packet_id": "packet-frozen-tuna-canada-001",
-    "refresh_run_id": "source-refresh-packet-frozen-tuna-canada-001-2026-06-28T150244Z0000",
+    "refresh_run_id": "source-refresh-packet-frozen-tuna-canada-001-2026-06-28T151958Z0000",
     "row_count": 3,
     "rows": [
       {

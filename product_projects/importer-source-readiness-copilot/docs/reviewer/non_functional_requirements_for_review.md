@@ -63,6 +63,15 @@ The document engine is ready for local review and parser QA. It is not yet appro
 - Reports include blocked claims, citations, version, watermark, and review status.
 - Reports cannot hide blocked claims, open external claims, create external effects, enable live payment, or approve public launch.
 
+## Portal Workflow Controls
+
+- Portal workflow status: `production_portal_workflow_engine_ready_routes_gated_business_owner_ux`.
+- UX checks: `7`.
+- Gate controls: `6`.
+- Portal workflows require plain business language, route coverage, mobile review, accessibility review, and blocked-versus-approved confusion testing.
+- Portal gate controls keep approval claims, unrestricted uploads, live payments, external effects, and public launch closed.
+- Real UX testing, accessibility signoff, mobile approval, hosted proof, and public launch owner approval remain incomplete.
+
 ## Claim Safety
 
 - Evidence claim-gate status: `production_evidence_claim_gate_engine_ready_claims_fail_closed`.

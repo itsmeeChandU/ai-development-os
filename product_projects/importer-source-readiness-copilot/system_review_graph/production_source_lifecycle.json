@@ -1,7 +1,7 @@
 {
   "claims_opened": false,
   "external_effects_created": false,
-  "generated_at": "2026-06-28T15:02:50+00:00",
+  "generated_at": "2026-06-28T15:20:04+00:00",
   "packet_source_impacts": [
     {
       "blocked_claims": [
@@ -176,7 +176,7 @@
       "country_code": "CA",
       "http_status": 200,
       "jurisdiction": "Canada",
-      "last_checked_at": "2026-06-28T15:02:44+00:00",
+      "last_checked_at": "2026-06-28T15:19:58+00:00",
       "name": "CBSA Import Commercial Goods Into Canada",
       "packet_impact_rule": "If source changes or is not checked for the packet date, affected packet claims stay blocked.",
       "parser_method": "metadata_hash_then_source_specific_parser_when_allowed",
@@ -292,7 +292,7 @@
       "country_code": "CA",
       "http_status": 200,
       "jurisdiction": "Canada",
-      "last_checked_at": "2026-06-28T15:02:44+00:00",
+      "last_checked_at": "2026-06-28T15:19:58+00:00",
       "name": "CFIA Automated Import Reference System (AIRS)",
       "packet_impact_rule": "If source changes or is not checked for the packet date, affected packet claims stay blocked.",
       "parser_method": "metadata_hash_then_source_specific_parser_when_allowed",
@@ -756,7 +756,7 @@
       "country_code": "CA",
       "http_status": 200,
       "jurisdiction": "Canada",
-      "last_checked_at": "2026-06-28T15:02:44+00:00",
+      "last_checked_at": "2026-06-28T15:19:58+00:00",
       "name": "Canadian Importers Database",
       "packet_impact_rule": "If source changes or is not checked for the packet date, affected packet claims stay blocked.",
       "parser_method": "metadata_hash_then_source_specific_parser_when_allowed",

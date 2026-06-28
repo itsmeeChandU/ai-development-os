@@ -57,6 +57,7 @@ The product helps users prepare trade readiness packets, organize evidence, revi
 | FR-29 | Provide AI assistance without authority | Implemented locally with role/output contracts and safety checks | `production_ai_copilot_manifest.json`, `production_ai_output_contracts.json` |
 | FR-30 | Route scoped expert reviews without recorded approval | Implemented locally with reviewer lanes, credential requirements, draft requests, finding templates, and gate impacts | `production_expert_review_network_manifest.json`, `production_review_requests.json` |
 | FR-31 | Export cited packet reports | Implemented locally with 12 report types, JSON/HTML/PDF exports, source/evidence citations, and blocked-claim sections | `production_reports_engine_manifest.json`, `production_report_exports.json` |
+| FR-32 | Provide route-covered portal workflows for public, exporter, importer, reviewer, operator/admin, and enterprise users | Implemented locally with route coverage, UX review hooks, and closed external gates | `production_portal_workflow_manifest.json`, `production_portal_route_matrix.json` |
 
 ## Current Main Workflows
 
@@ -142,6 +143,26 @@ qualified reviewer checks the relevant scope.
    retention controls before real-user data is accepted.
 5. Finance or billing reviewer can confirm that paid scope is preparation only
    and live checkout remains disabled until payment gates pass.
+
+### Production Portal Workflows
+
+1. Public portal: business owner can start safe exploration, quick check, sample
+   report review, and security/AI boundary review.
+2. Exporter portal: foreign exporter can create a packet, attach evidence,
+   download cited reports, and prepare buyer or broker questions.
+3. Importer portal: Canadian importer can review missing import evidence,
+   refresh source routes, and prepare a broker review packet.
+4. Expert reviewer portal: scoped reviewer can inspect assigned evidence,
+   answer scoped questions, and submit a finding for the exact scope.
+5. Operator/admin portal: internal user can inspect blockers, refresh
+   artifacts, route reviews, and check audit/health state.
+6. Enterprise portal: broker, advisor, or team can manage workspaces, inspect
+   usage, use scoped local API contracts, and export audit-ready reports.
+
+Every portal workflow maps to existing local UI/API routes. The workflow engine
+keeps approval, ready-to-ship, tariff-confirmed, buyer-validated,
+supplier-verified, public-launch, unrestricted-upload, and live-payment actions
+blocked.
 
 ### Expert Review
 

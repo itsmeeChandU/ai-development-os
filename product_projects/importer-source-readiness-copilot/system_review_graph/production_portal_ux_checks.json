@@ -1,0 +1,61 @@
+{
+  "status": "production_portal_ux_checks_ready_external_review_required",
+  "ux_checks": [
+    {
+      "check_id": "first_screen_has_four_default_choices",
+      "external_review_required": false,
+      "passed": true,
+      "status": "passed"
+    },
+    {
+      "check_id": "first_screen_routes_exist",
+      "external_review_required": false,
+      "passed": true,
+      "status": "passed"
+    },
+    {
+      "check_id": "all_portal_routes_covered",
+      "external_review_required": false,
+      "passed": true,
+      "status": "passed"
+    },
+    {
+      "check_id": "plain_business_language_required",
+      "external_review_required": true,
+      "passed": true,
+      "status": "passed"
+    },
+    {
+      "check_id": "mobile_review_required",
+      "external_review_required": true,
+      "passed": true,
+      "status": "passed"
+    },
+    {
+      "check_id": "accessibility_review_required",
+      "external_review_required": true,
+      "passed": true,
+      "status": "passed"
+    },
+    {
+      "check_id": "blocked_vs_approved_confusion_testing_required",
+      "external_review_required": true,
+      "passed": true,
+      "status": "passed"
+    }
+  ],
+  "ux_research_references": [
+    {
+      "source_id": "w3c-wcag-22",
+      "source_name": "W3C Web Content Accessibility Guidelines 2.2",
+      "url": "https://www.w3.org/TR/WCAG22/",
+      "use": "accessibility review criteria for perceivable, operable, understandable, and robust UI behavior"
+    },
+    {
+      "source_id": "canada-design-system",
+      "source_name": "Government of Canada Design System",
+      "url": "https://design.canada.ca/",
+      "use": "plain-language and service-design reference for public-facing Canada-oriented workflows"
+    }
+  ]
+}

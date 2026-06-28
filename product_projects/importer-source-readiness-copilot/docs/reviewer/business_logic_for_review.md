@@ -94,6 +94,17 @@ Reports are now generated as first-class packet views. They organize evidence fo
 - Starter, market, buyer-ready, supplier-request, broker-review, missing-evidence, blocked-claim, country-source, source-freshness, expert-summary, executive-decision, and audit reports are produced from the packet.
 - Reports carry version, draft watermark, review status, source citations, evidence citations, and the blocked-claims section.
 
+## Portal Workflow Logic Implemented Now
+
+Portal workflow logic turns the packet, evidence, review, report, and gate rules into complete user paths for business owners and reviewers.
+
+- Portal records generated: `6`.
+- Workflow records generated: `6`.
+- First-screen choices generated: `4`.
+- The first screen gives four non-technical choices: Explore a market, Prepare a buyer packet, Check my documents, and Prepare for broker/expert review.
+- Each portal is checked against the real local route map before the workflow is marked covered.
+- Unsafe labels and actions such as approve, ready to ship, confirm tariff, validate buyer, verify supplier, live payment, and public launch remain blocked.
+
 ## Current Sample Packet Result
 
 - Packet reviewed: `packet-frozen-tuna-canada-001`.

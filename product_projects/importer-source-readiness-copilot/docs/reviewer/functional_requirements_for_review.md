@@ -90,6 +90,15 @@ The current product is usable for local review and controlled preparation. It do
 - Each report is exported as JSON, HTML preview, and PDF.
 - Every report keeps blocked claims visible, includes evidence/source citations, has a draft watermark, and remains not reviewed locally.
 
+## Portal Workflows Implemented
+
+- Portal workflow status: `production_portal_workflow_engine_ready_routes_gated_business_owner_ux`.
+- Portal workflows: `6`.
+- Default first-screen choices: `4`.
+- All required local routes present: `True`.
+- Public, exporter, importer, expert reviewer, operator/admin, and enterprise workflows are mapped to existing local UI/API routes.
+- UX testing, accessibility signoff, mobile review, hosted proof, unrestricted uploads, live payments, and public launch approval remain external gates.
+
 ## Enterprise And Advisor Use Cases
 
 - Broker or trade advisor can manage multiple client packets and export missing-evidence or broker-review packets.

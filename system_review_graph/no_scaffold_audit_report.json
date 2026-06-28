@@ -12,8 +12,8 @@
   "disallowed_count": 0,
   "disallowed_findings": [],
   "finding_count": 598,
-  "generated_at": "2026-06-28T15:03:01+00:00",
-  "head": "d94bd036a6ecef22add53f383f58c9246d76b95f",
+  "generated_at": "2026-06-28T15:20:13+00:00",
+  "head": "2cb97b58a6356f96171733a241d1467a015306b2",
   "policy": "docs/NO_SCAFFOLD_DELIVERY_POLICY.md",
   "policy_failures": [],
   "prior_delivery_audit": {
@@ -76,7 +76,7 @@
     "go_live_public_launch_ready": false,
     "simulated_ai_review_can_open_gate": false
   },
-  "scanned_file_count": 2689,
+  "scanned_file_count": 2700,
   "skipped_contexts": [
     "external_review_packages",
     "binary files"

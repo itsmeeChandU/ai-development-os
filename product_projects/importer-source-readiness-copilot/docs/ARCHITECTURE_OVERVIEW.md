@@ -32,6 +32,7 @@ src/importer_source_readiness/production_evidence_claim_gate_engine.py
 src/importer_source_readiness/production_expert_review_network.py
 src/importer_source_readiness/production_market_intelligence_engine.py
 src/importer_source_readiness/production_packet_engine.py
+src/importer_source_readiness/production_portal_workflow_engine.py
 src/importer_source_readiness/production_redevelopment.py
 src/importer_source_readiness/production_reports_engine.py
         |
@@ -87,6 +88,10 @@ system_review_graph/production_reports_engine_manifest.json
 system_review_graph/production_report_catalog.json
 system_review_graph/production_report_exports.json
 system_review_graph/production_report_citations.json
+system_review_graph/production_portal_workflow_manifest.json
+system_review_graph/production_portal_route_matrix.json
+system_review_graph/production_portal_ux_checks.json
+system_review_graph/production_portal_gate_controls.json
 system_review_graph/production_redevelopment_plan.json
 system_review_graph/production_research_anchors.json
 data/official_sample_documents/canada/*.pdf
@@ -99,7 +104,9 @@ docs/PRODUCTION_EVIDENCE_CLAIM_GATE_ENGINE.md
 docs/PRODUCTION_DECISION_SCORING_ENGINE.md
 docs/PRODUCTION_AI_COPILOT_ENGINE.md
 docs/PRODUCTION_MARKET_INTELLIGENCE_ENGINE.md
+docs/PRODUCTION_PORTAL_WORKFLOWS.md
 docs/PRODUCTION_REDEVELOPMENT.md
+docs/PRODUCTION_REPORTS_ENGINE.md
 migrations/0002_production_domain_model.sql
 investor/*.md
 board/*.md
@@ -136,6 +143,7 @@ board/*.md
 | `src/importer_source_readiness/production_expert_review_network.py` | production expert review network for reviewer lanes, credential requirements, scoped review requests, finding templates, gate impacts, and no completed signoff recorded |
 | `src/importer_source_readiness/production_market_intelligence_engine.py` | production market intelligence engine for metric records, source routes, dataset connector states, score caps, and blocked demand/profit claims |
 | `src/importer_source_readiness/production_packet_engine.py` | production packet engine for 12 packet states, packet event proof, eight packet views, six scores, blocked claims, and next valid moves |
+| `src/importer_source_readiness/production_portal_workflow_engine.py` | production portal workflow engine that maps six user portals and the default business-owner first screen to real local UI/API routes while keeping UX/accessibility/mobile/hosted/payment/public-launch gates closed |
 | `src/importer_source_readiness/production_redevelopment.py` | full-scale production redevelopment contract with 14 layers, phases 0-20, research/source/evidence/gate tracks, permanent research entities, and closed external gates |
 | `src/importer_source_readiness/production_reports_engine.py` | production reports engine for twelve cited report types, JSON/HTML/PDF exports, version/watermark/review metadata, and blocked-claim sections |
 | `scripts/run_readiness.py` | CLI entrypoint and report writer |
@@ -156,6 +164,7 @@ board/*.md
 | `scripts/run_production_expert_review_network.py` | production expert review profile, request, finding-template, gate-impact, and audit writer |
 | `scripts/run_production_market_intelligence_engine.py` | production market intelligence signal and dataset connector writer |
 | `scripts/run_production_packet_engine.py` | production packet engine manifest, event, and packet-view writer |
+| `scripts/run_production_portal_workflow_engine.py` | production portal workflow manifest, route matrix, UX check, gate-control, and review doc writer |
 | `scripts/run_production_redevelopment.py` | production redevelopment contract and research-anchor writer |
 | `scripts/run_production_reports_engine.py` | production reports manifest, catalog, export, citation, HTML, JSON, and PDF writer |
 | `tests/test_readiness.py` | proof for blocked-safe behavior |
@@ -175,6 +184,7 @@ board/*.md
 | `tests/test_production_evidence_claim_gate_engine.py` | proof that can_show_claim separates safe preparation statements from blocked external claims with evidence mappers |
 | `tests/test_production_expert_review_network.py` | proof that reviewer lanes require real credentials and findings while keeping local requests draft-only and gates closed |
 | `tests/test_production_market_intelligence_engine.py` | proof that market metrics are source-routed without invented values, demand claims, profitability claims, or buyer validation |
+| `tests/test_production_portal_workflow_engine.py` | proof that public, exporter, importer, expert reviewer, operator/admin, and enterprise portals have route coverage, plain first-screen choices, UX review hooks, and closed gates |
 | `tests/test_production_redevelopment.py` | proof that every redevelopment phase has build, research, source, evidence, and gate tracks backed by known source IDs |
 | `system_review_graph/` | generated packets, reports, blockers, handoff evidence |
 
@@ -225,7 +235,10 @@ board/*.md
     sample forms, India/Vietnam source-route rows, synthetic filled parser QA
     samples, upload pipeline controls, document/evidence records, extracted
     fields, redaction previews, and closed upload/security/document claims.
-24. Generate the production redevelopment contract and research anchors for
+24. Generate the production portal workflow package: six portal records, four
+    default first-screen choices, route coverage checks, UX/accessibility/mobile
+    review hooks, and closed upload/payment/approval/public-launch gates.
+25. Generate the production redevelopment contract and research anchors for
     the full-scale build: 14 production layers, phases 0-20, permanent source
     registry links, evidence requirements, and launch gates that remain closed.
 
@@ -324,6 +337,14 @@ The expected production reports engine status is
 means the twelve required reports have JSON, HTML, and PDF exports with
 citations, version, watermark, review status, and blocked-claim sections. It
 does not mean any report approves trade action or public launch.
+
+The expected production portal workflow status is
+`production_portal_workflow_engine_ready_routes_gated_business_owner_ux`. It
+means public, exporter, importer, expert reviewer, operator/admin, and
+enterprise workflows are mapped to existing local routes with a plain
+four-choice first screen. It does not mean UX testing, accessibility signoff,
+mobile review, hosted production proof, live payment activation, unrestricted
+upload approval, or public launch approval has been recorded.
 
 ## Proof Boundary
 

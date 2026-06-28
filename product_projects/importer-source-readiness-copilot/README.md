@@ -77,6 +77,7 @@ python3 scripts/run_production_decision_scoring_engine.py
 python3 scripts/run_production_ai_copilot_engine.py
 python3 scripts/run_production_expert_review_network.py
 python3 scripts/run_production_reports_engine.py
+python3 scripts/run_production_portal_workflow_engine.py
 python3 scripts/audit_external_package.py --root .
 python3 scripts/check_product.py
 ```
@@ -160,6 +161,10 @@ system_review_graph/production_report_citations.json
 system_review_graph/production_reports/packet-frozen-tuna-canada-001/*.json
 system_review_graph/production_reports/packet-frozen-tuna-canada-001/*.html
 output/pdf/production_reports/packet-frozen-tuna-canada-001/*.pdf
+system_review_graph/production_portal_workflow_manifest.json
+system_review_graph/production_portal_route_matrix.json
+system_review_graph/production_portal_ux_checks.json
+system_review_graph/production_portal_gate_controls.json
 system_review_graph/production_redevelopment_plan.json
 system_review_graph/production_research_anchors.json
 data/official_sample_documents/canada/*.pdf
@@ -179,6 +184,7 @@ docs/PRODUCTION_DECISION_SCORING_ENGINE.md
 docs/PRODUCTION_AI_COPILOT_ENGINE.md
 docs/PRODUCTION_EXPERT_REVIEW_NETWORK.md
 docs/PRODUCTION_REPORTS_ENGINE.md
+docs/PRODUCTION_PORTAL_WORKFLOWS.md
 docs/PRODUCTION_MARKET_INTELLIGENCE_ENGINE.md
 docs/PRODUCTION_REDEVELOPMENT.md
 output/pdf/external_validation_reviewer_brief.pdf
@@ -217,6 +223,18 @@ The expected external-review status is:
 ```text
 external_review_ready_findings_pending
 ```
+
+The expected production portal workflow status is:
+
+```text
+production_portal_workflow_engine_ready_routes_gated_business_owner_ux
+```
+
+That means public, exporter, importer, expert reviewer, operator/admin, and
+enterprise portal workflows are mapped to real local UI/API routes with a
+four-choice business-owner first screen. It does not mean UX testing,
+accessibility signoff, mobile review, hosted proof, public launch approval,
+unrestricted uploads, or live payments are complete.
 
 That means reviewer-specific packets, blank findings templates, and external
 review blocker rows are ready. It does not mean external review is complete.

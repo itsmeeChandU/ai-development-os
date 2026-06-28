@@ -251,6 +251,42 @@ The business logic prepares these output groups:
 
 These outputs are for review preparation only. They do not send messages, create external effects, approve a packet, or open claim gates.
 
+## Portal Workflow Business Logic
+
+The production portal workflow engine now maps the business logic to six
+user-facing workflow contracts:
+
+- public portal for business owners exploring a trade lane
+- exporter portal for foreign exporters preparing a Canada-facing packet
+- importer portal for Canadian importers checking source, supplier, and
+  responsibility questions
+- expert reviewer portal for scoped external reviewers
+- operator and admin portal for internal queue, source, audit, and health work
+- enterprise portal for brokers, advisors, and teams managing multiple packets
+
+The default first screen is intentionally plain:
+
+1. Explore a market
+2. Prepare a buyer packet
+3. Check my documents
+4. Prepare for broker/expert review
+
+The engine verifies that each workflow maps to existing local UI/API routes in
+`system_review_graph/product_runtime_state.json`. It also blocks unsafe button
+labels such as approve, ready to ship, confirm tariff, validate buyer, and
+verify supplier.
+
+Portal workflow proof is stored in:
+
+- `system_review_graph/production_portal_workflow_manifest.json`
+- `system_review_graph/production_portal_route_matrix.json`
+- `system_review_graph/production_portal_ux_checks.json`
+- `system_review_graph/production_portal_gate_controls.json`
+
+Portal workflow completion is local route and gate coverage only. It does not
+record real UX testing, accessibility signoff, mobile review, hosted proof,
+unrestricted uploads, live payment activation, or public launch approval.
+
 ## Reviewer Signoff Rule
 
 Final rule: `no reviewer lane, no claim lane`
