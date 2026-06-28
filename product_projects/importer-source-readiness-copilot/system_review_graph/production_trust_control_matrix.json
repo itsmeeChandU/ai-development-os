@@ -89,7 +89,7 @@
         },
         {
           "artifact": "product_runtime_state.json",
-          "bytes": 98447,
+          "bytes": 98480,
           "exists": true
         }
       ],
@@ -310,12 +310,12 @@
         },
         {
           "artifact": "product_runtime_state.json",
-          "bytes": 98447,
+          "bytes": 98480,
           "exists": true
         },
         {
           "artifact": "production_redevelopment_plan.json",
-          "bytes": 87614,
+          "bytes": 88584,
           "exists": true
         }
       ],
@@ -342,7 +342,7 @@
       "basis_artifacts": [
         {
           "artifact": "product_runtime_state.json",
-          "bytes": 98447,
+          "bytes": 98480,
           "exists": true
         },
         {

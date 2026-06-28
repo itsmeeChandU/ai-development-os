@@ -61,6 +61,7 @@ The product helps users prepare trade readiness packets, organize evidence, revi
 | FR-33 | Provide enterprise SaaS/API contracts for broker, advisor, and team workflows | Implemented locally with API contracts, RBAC policy, workspace controls, API-key fingerprints, webhook contracts, audit export, usage limits, and white-label report rules | `production_enterprise_api_manifest.json`, `production_enterprise_api_contracts.json` |
 | FR-34 | Provide payment monetization contract without live checkout | Implemented locally with pricing tiers, paid-scope boundaries, checkout controls, webhook controls, and payment gates | `production_payment_monetization_manifest.json`, `production_checkout_gate_controls.json` |
 | FR-35 | Provide production trust control plane without accepting real files | Implemented locally with trust controls, vendor register, incident runbooks, local backup/restore hash drill, and closed hosted/real-file gates | `production_security_privacy_reliability_manifest.json`, `production_trust_control_matrix.json` |
+| FR-36 | Provide exact-scope launch control plane without activation | Implemented locally with 13 launch gates, candidate public scope, blocked public scope, and public launch approval false | `production_launch_control_plane_manifest.json`, `production_launch_scope_matrix.json` |
 
 ## Current Main Workflows
 
@@ -214,6 +215,21 @@ blocked.
    qualified privacy/security review exist.
 5. Product does not allow unrestricted real files, hosted private beta, or
    public launch from local trust artifacts alone.
+
+### Launch Control Plane
+
+1. Product defines 13 launch gates: business logic, country pack, source
+   freshness, market data, security, privacy, AI safety, trade language, expert
+   review, payment, real-user evidence, production infrastructure, and final
+   owner approval.
+2. Product defines the candidate public scope as landing page, public quick
+   check, no-document starter packet, source routing, sample reports, and
+   waitlist/demo booking.
+3. Product keeps unrestricted real uploads, live payments, automated outreach,
+   approval language, buyer validated, supplier verified, shipment approval,
+   and public legal/compliance advice out of scope.
+4. Product keeps activation, exact public-scope approval, and public launch
+   approval false until real evidence and owner approval exist.
 
 ### Expert Review
 

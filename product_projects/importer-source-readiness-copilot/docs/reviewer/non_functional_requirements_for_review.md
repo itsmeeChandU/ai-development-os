@@ -99,6 +99,16 @@ The document engine is ready for local review and parser QA. It is not yet appro
 - The local backup/restore drill hash-matches existing critical artifacts, but production backup/restore remains unproven.
 - Real uploads, hosted customer use, production monitoring, incident response approval, vendor approval, and privacy/security signoff remain incomplete.
 
+## Launch Control Plane
+
+- Launch control status: `production_launch_control_plane_ready_exact_scope_public_launch_blocked`.
+- Launch gates: `13`.
+- Blocked launch gates: `8`.
+- Public launch approved: `False`.
+- Activation allowed: `False`.
+- The exact public scope is candidate-only and has not been approved.
+- The final owner approval record is not present.
+
 ## Claim Safety
 
 - Evidence claim-gate status: `production_evidence_claim_gate_engine_ready_claims_fail_closed`.

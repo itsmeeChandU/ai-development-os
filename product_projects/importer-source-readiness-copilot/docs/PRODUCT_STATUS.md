@@ -256,6 +256,8 @@ security/privacy/human review gates are completed.
 - production security/privacy/reliability engine with 15 trust controls,
   vendor review records, incident runbooks, official trust research references,
   local backup/restore hash proof, and real-file/hosted/public gates closed
+- production launch control plane with 13 launch gates, candidate limited
+  public scope, blocked public-scope list, and public launch approval false
 - production research anchor registry for CBSA, CFIA, Global Affairs Canada,
   ISED, DGFT, WITS, ITC, WCO, ICC, OPC/PIPEDA, OWASP, NIST, and Stripe source
   routing
@@ -359,6 +361,18 @@ admin MFA proof, private object storage proof, malware-scanning proof,
 vendor/privacy/security approval, production backup restore proof, incident
 rehearsal proof, real-file upload approval, hosted private-beta approval, or
 public launch approval.
+
+## Ready For Launch Control Review
+
+- launch control status: `production_launch_control_plane_ready_exact_scope_public_launch_blocked`
+- proof command: `python3 scripts/run_production_launch_control_plane.py`
+- launch gates: `system_review_graph/production_launch_gate_states.json`
+- exact scope matrix: `system_review_graph/production_launch_scope_matrix.json`
+- public launch decision: `system_review_graph/production_public_launch_decision.json`
+
+This is a local exact-scope control plane. It is not activation approval,
+hosted private-beta approval, final owner approval, live-payment approval,
+real-upload approval, external-claim approval, or public launch approval.
 
 ## Ready For Board Go-Live Review
 

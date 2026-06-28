@@ -1,0 +1,343 @@
+{
+  "launch_gates": [
+    {
+      "approved_scope": "local_review_only",
+      "artifacts": [
+        {
+          "artifact": "business_logic_phase_report.json",
+          "bytes": 165075,
+          "exists": true
+        },
+        {
+          "artifact": "business_phase_completion_report.json",
+          "bytes": 13947,
+          "exists": true
+        }
+      ],
+      "evidence_artifacts": [
+        "business_logic_phase_report.json",
+        "business_phase_completion_report.json"
+      ],
+      "gate_id": "business_logic_gate",
+      "label": "Business logic gate",
+      "local_evidence_present": true,
+      "public_launch_contribution": false,
+      "required_external_evidence": "No external evidence required for local review scope; public launch still needs final owner approval.",
+      "source_status": "business_logic_implemented_with_external_evidence_gates",
+      "state": "approved_for_scope"
+    },
+    {
+      "approved_scope": "local_review_only",
+      "artifacts": [
+        {
+          "artifact": "production_country_source_engine_manifest.json",
+          "bytes": 72506,
+          "exists": true
+        },
+        {
+          "artifact": "production_country_packs.json",
+          "bytes": 5903,
+          "exists": true
+        }
+      ],
+      "evidence_artifacts": [
+        "production_country_source_engine_manifest.json",
+        "production_country_packs.json"
+      ],
+      "gate_id": "country_pack_gate",
+      "label": "Country-pack gate",
+      "local_evidence_present": true,
+      "public_launch_contribution": false,
+      "required_external_evidence": "Country-pack reviewer approval for the exact supported country/product scope.",
+      "source_status": "production_country_source_engine_ready_reference_packs_claim_gates_closed",
+      "state": "approved_for_scope"
+    },
+    {
+      "approved_scope": "",
+      "artifacts": [
+        {
+          "artifact": "production_source_lifecycle.json",
+          "bytes": 65700,
+          "exists": true
+        },
+        {
+          "artifact": "source_refresh_runs.json",
+          "bytes": 1688,
+          "exists": true
+        }
+      ],
+      "evidence_artifacts": [
+        "production_source_lifecycle.json",
+        "source_refresh_runs.json"
+      ],
+      "gate_id": "source_freshness_gate",
+      "label": "Source freshness gate",
+      "local_evidence_present": true,
+      "public_launch_contribution": false,
+      "required_external_evidence": "Dated source refresh proof immediately before launch-scope approval.",
+      "source_status": "blocked_until_launch_refresh",
+      "state": "blocked"
+    },
+    {
+      "approved_scope": "local_review_only",
+      "artifacts": [
+        {
+          "artifact": "production_market_intelligence_manifest.json",
+          "bytes": 58777,
+          "exists": true
+        },
+        {
+          "artifact": "production_market_signals.json",
+          "bytes": 24553,
+          "exists": true
+        }
+      ],
+      "evidence_artifacts": [
+        "production_market_intelligence_manifest.json",
+        "production_market_signals.json"
+      ],
+      "gate_id": "market_data_gate",
+      "label": "Market-data gate",
+      "local_evidence_present": true,
+      "public_launch_contribution": false,
+      "required_external_evidence": "Dataset freshness, licensing/terms review, and no demand/profitability overclaim.",
+      "source_status": "production_market_intelligence_engine_ready_source_routed_no_demand_claims",
+      "state": "approved_for_scope"
+    },
+    {
+      "approved_scope": "",
+      "artifacts": [
+        {
+          "artifact": "production_security_privacy_reliability_manifest.json",
+          "bytes": 34680,
+          "exists": true
+        },
+        {
+          "artifact": "production_trust_control_matrix.json",
+          "bytes": 19495,
+          "exists": true
+        }
+      ],
+      "evidence_artifacts": [
+        "production_security_privacy_reliability_manifest.json",
+        "production_trust_control_matrix.json"
+      ],
+      "gate_id": "security_gate",
+      "label": "Security gate",
+      "local_evidence_present": true,
+      "public_launch_contribution": false,
+      "required_external_evidence": "Hosted auth, MFA, storage, malware scanning, monitoring, incident, secrets, and security signoff.",
+      "source_status": "production_security_privacy_reliability_engine_ready_local_controls_external_trust_gates_closed",
+      "state": "blocked"
+    },
+    {
+      "approved_scope": "",
+      "artifacts": [
+        {
+          "artifact": "production_vendor_register.json",
+          "bytes": 4004,
+          "exists": true
+        },
+        {
+          "artifact": "go_live_input_readiness_report.json",
+          "bytes": 4612,
+          "exists": true
+        }
+      ],
+      "evidence_artifacts": [
+        "production_vendor_register.json",
+        "go_live_input_readiness_report.json"
+      ],
+      "gate_id": "privacy_gate",
+      "label": "Privacy gate",
+      "local_evidence_present": true,
+      "public_launch_contribution": false,
+      "required_external_evidence": "Privacy notice, retention/deletion, vendor/data-residency approval, and qualified privacy/legal review.",
+      "source_status": "waiting_for_real_inputs_not_ready_yet",
+      "state": "blocked"
+    },
+    {
+      "approved_scope": "local_review_only",
+      "artifacts": [
+        {
+          "artifact": "production_ai_copilot_manifest.json",
+          "bytes": 21966,
+          "exists": true
+        },
+        {
+          "artifact": "production_ai_safety_checks.json",
+          "bytes": 1941,
+          "exists": true
+        }
+      ],
+      "evidence_artifacts": [
+        "production_ai_copilot_manifest.json",
+        "production_ai_safety_checks.json"
+      ],
+      "gate_id": "ai_safety_gate",
+      "label": "AI safety gate",
+      "local_evidence_present": true,
+      "public_launch_contribution": false,
+      "required_external_evidence": "Provider terms, redaction, prompt-injection, model-routing, incident, and human-review approval.",
+      "source_status": "production_ai_copilot_engine_ready_no_gate_opening",
+      "state": "approved_for_scope"
+    },
+    {
+      "approved_scope": "local_review_only",
+      "artifacts": [
+        {
+          "artifact": "production_evidence_claim_gate_manifest.json",
+          "bytes": 64413,
+          "exists": true
+        },
+        {
+          "artifact": "production_claim_gate_decisions.json",
+          "bytes": 38400,
+          "exists": true
+        }
+      ],
+      "evidence_artifacts": [
+        "production_evidence_claim_gate_manifest.json",
+        "production_claim_gate_decisions.json"
+      ],
+      "gate_id": "trade_language_gate",
+      "label": "Trade-language gate",
+      "local_evidence_present": true,
+      "public_launch_contribution": false,
+      "required_external_evidence": "Qualified customs/trade/report-language review for public copy and generated reports.",
+      "source_status": "production_evidence_claim_gate_engine_ready_claims_fail_closed",
+      "state": "approved_for_scope"
+    },
+    {
+      "approved_scope": "",
+      "artifacts": [
+        {
+          "artifact": "production_expert_review_network_manifest.json",
+          "bytes": 117802,
+          "exists": true
+        },
+        {
+          "artifact": "external_review_findings_report.json",
+          "bytes": 16741,
+          "exists": true
+        }
+      ],
+      "evidence_artifacts": [
+        "production_expert_review_network_manifest.json",
+        "external_review_findings_report.json"
+      ],
+      "gate_id": "expert_review_gate",
+      "label": "Expert-review gate",
+      "local_evidence_present": true,
+      "public_launch_contribution": false,
+      "required_external_evidence": "Real scoped reviewer findings with no unresolved public-launch blocker.",
+      "source_status": "production_expert_review_network_ready_scope_limited_no_external_claims",
+      "state": "blocked"
+    },
+    {
+      "approved_scope": "",
+      "artifacts": [
+        {
+          "artifact": "production_payment_monetization_manifest.json",
+          "bytes": 14205,
+          "exists": true
+        },
+        {
+          "artifact": "production_payment_webhook_controls.json",
+          "bytes": 2299,
+          "exists": true
+        }
+      ],
+      "evidence_artifacts": [
+        "production_payment_monetization_manifest.json",
+        "production_payment_webhook_controls.json"
+      ],
+      "gate_id": "payment_gate",
+      "label": "Payment gate",
+      "local_evidence_present": true,
+      "public_launch_contribution": false,
+      "required_external_evidence": "Live-mode objects, webhook proof, refund/support, tax/accounting, payment security, and paid-copy approval.",
+      "source_status": "production_payment_monetization_engine_ready_live_checkout_closed",
+      "state": "blocked"
+    },
+    {
+      "approved_scope": "",
+      "artifacts": [
+        {
+          "artifact": "private_beta_smoke_test_plan.json",
+          "bytes": 1605,
+          "exists": true
+        },
+        {
+          "artifact": "go_live_input_readiness_report.json",
+          "bytes": 4612,
+          "exists": true
+        }
+      ],
+      "evidence_artifacts": [
+        "private_beta_smoke_test_plan.json",
+        "go_live_input_readiness_report.json"
+      ],
+      "gate_id": "real_user_evidence_gate",
+      "label": "Real-user evidence gate",
+      "local_evidence_present": true,
+      "public_launch_contribution": false,
+      "required_external_evidence": "Private-beta outcomes, five-user smoke evidence, confusion testing, and P0/P1 closure.",
+      "source_status": "waiting_for_real_inputs_not_ready_yet",
+      "state": "blocked"
+    },
+    {
+      "approved_scope": "",
+      "artifacts": [
+        {
+          "artifact": "deployment_readiness_report.json",
+          "bytes": 1362,
+          "exists": true
+        },
+        {
+          "artifact": "launch_operations_report.json",
+          "bytes": 1568,
+          "exists": true
+        }
+      ],
+      "evidence_artifacts": [
+        "deployment_readiness_report.json",
+        "launch_operations_report.json"
+      ],
+      "gate_id": "production_infrastructure_gate",
+      "label": "Production infrastructure gate",
+      "local_evidence_present": true,
+      "public_launch_contribution": false,
+      "required_external_evidence": "Hosted staging/production proof with TLS, storage, secrets, logs, backups, monitoring, rollback, and support owner.",
+      "source_status": "deployable_local_stack_ready_with_external_hosting_gates",
+      "state": "blocked"
+    },
+    {
+      "approved_scope": "",
+      "artifacts": [
+        {
+          "artifact": "final_go_live_decision_report.json",
+          "bytes": 3121,
+          "exists": true
+        },
+        {
+          "artifact": "board_go_live_readiness_report.json",
+          "bytes": 26688,
+          "exists": true
+        }
+      ],
+      "evidence_artifacts": [
+        "final_go_live_decision_report.json",
+        "board_go_live_readiness_report.json"
+      ],
+      "gate_id": "final_owner_gate",
+      "label": "Final owner gate",
+      "local_evidence_present": true,
+      "public_launch_contribution": false,
+      "required_external_evidence": "Dated public go/no-go approval for the exact approved scope and expiry.",
+      "source_status": "local_go_live_contract_complete_public_launch_blocked",
+      "state": "blocked"
+    }
+  ],
+  "status": "production_launch_gate_states_ready_public_launch_blocked"
+}

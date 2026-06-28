@@ -81,6 +81,7 @@ python3 scripts/run_production_portal_workflow_engine.py
 python3 scripts/run_production_enterprise_api_platform.py
 python3 scripts/run_production_payment_monetization_engine.py
 python3 scripts/run_production_security_privacy_reliability_engine.py
+python3 scripts/run_production_launch_control_plane.py
 python3 scripts/audit_external_package.py --root .
 python3 scripts/check_product.py
 ```
@@ -187,6 +188,10 @@ system_review_graph/production_vendor_register.json
 system_review_graph/production_backup_restore_drill.json
 system_review_graph/production_incident_runbooks.json
 system_review_graph/production_trust_research_references.json
+system_review_graph/production_launch_control_plane_manifest.json
+system_review_graph/production_launch_gate_states.json
+system_review_graph/production_launch_scope_matrix.json
+system_review_graph/production_public_launch_decision.json
 system_review_graph/production_redevelopment_plan.json
 system_review_graph/production_research_anchors.json
 data/official_sample_documents/canada/*.pdf
@@ -296,6 +301,17 @@ data-residency controls are mapped locally, and a local backup/restore hash
 drill has passed. It does not mean real file uploads, hosted private beta,
 vendor approval, privacy/security approval, production backup restore,
 monitoring approval, incident rehearsal, or public launch are complete.
+
+The expected production launch-control status is:
+
+```text
+production_launch_control_plane_ready_exact_scope_public_launch_blocked
+```
+
+That means the product has 13 launch gates, a candidate limited public scope,
+and a blocked public-scope list. It does not mean activation, hosted private
+beta, live payments, real uploads, external claims, final owner approval, or
+public launch are complete.
 
 That means reviewer-specific packets, blank findings templates, and external
 review blocker rows are ready. It does not mean external review is complete.

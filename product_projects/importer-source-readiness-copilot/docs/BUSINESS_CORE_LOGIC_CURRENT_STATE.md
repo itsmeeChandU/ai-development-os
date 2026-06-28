@@ -400,6 +400,33 @@ Still blocked:
 - vendor approval, privacy/security signoff, data-residency approval, real file
   uploads, hosted private beta, and public launch
 
+## Launch Control Business Logic
+
+The launch control plane is the final local decision layer. It does not approve
+launch; it records the exact candidate scope and every reason activation is
+still blocked.
+
+Candidate public scope after future approval:
+
+- landing page
+- public quick check
+- no-document starter packet
+- source routing
+- sample reports
+- waitlist/demo booking
+
+Blocked public scope now:
+
+- unrestricted real uploads
+- live payments
+- automated outreach
+- tariff, CFIA, customs, legal, or compliance approval language
+- buyer validated or supplier verified language
+- shipment approval
+
+The final owner gate remains blocked. Public launch approved, activation
+allowed, exact public scope approved, and external claims opened are all false.
+
 ## Reviewer Signoff Rule
 
 Final rule: `no reviewer lane, no claim lane`
@@ -498,6 +525,10 @@ Payments remain downstream. Live checkout stays disabled until scope, support, r
 | Production trust controls | `system_review_graph/production_trust_control_matrix.json` |
 | Vendor register | `system_review_graph/production_vendor_register.json` |
 | Backup/restore drill | `system_review_graph/production_backup_restore_drill.json` |
+| Production launch control plane | `system_review_graph/production_launch_control_plane_manifest.json` |
+| Launch gate states | `system_review_graph/production_launch_gate_states.json` |
+| Launch scope matrix | `system_review_graph/production_launch_scope_matrix.json` |
+| Public launch decision | `system_review_graph/production_public_launch_decision.json` |
 | Tests | `tests/test_business_logic.py`, `tests/test_completion_platform.py` |
 | Product proof | `python3 scripts/check_product.py` |
 | Root proof | `python3 scripts/product_project_check.py` |
@@ -520,6 +551,8 @@ Payments remain downstream. Live checkout stays disabled until scope, support, r
 - production reports engine with cited JSON/HTML/PDF packet views and blocked claims preserved
 - production security/privacy/reliability engine with trust controls, vendor
   records, incident runbooks, and a local backup/restore hash drill
+- production launch control plane with 13 launch gates, candidate exact scope,
+  blocked public scope, and public launch decision false
 - official sample document library and synthetic parser QA fixtures for local parser validation
 - Canada/Vietnam/India/Generic country-pack rows with route checks
 - source-monitor contract with source metadata and executable evidence freshness evaluation

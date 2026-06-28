@@ -144,6 +144,7 @@ def main() -> int:
         [sys.executable, "scripts/run_production_enterprise_api_platform.py"],
         [sys.executable, "scripts/run_production_payment_monetization_engine.py"],
         [sys.executable, "scripts/run_production_security_privacy_reliability_engine.py"],
+        [sys.executable, "scripts/run_production_launch_control_plane.py"],
         [sys.executable, "scripts/audit_external_package.py", "--root", "."],
     ]
     for command in commands:
@@ -220,6 +221,7 @@ def main() -> int:
     production_enterprise = _load_json(ROOT / "system_review_graph" / "production_enterprise_api_manifest.json")
     production_payments = _load_json(ROOT / "system_review_graph" / "production_payment_monetization_manifest.json")
     production_trust = _load_json(ROOT / "system_review_graph" / "production_security_privacy_reliability_manifest.json")
+    production_launch = _load_json(ROOT / "system_review_graph" / "production_launch_control_plane_manifest.json")
     official_source_registry = _load_json(ROOT / "data" / "official_source_registry.json")
     business_core_doc = (ROOT / "docs" / "BUSINESS_CORE_LOGIC_CURRENT_STATE.md").read_text(encoding="utf-8")
     functional_doc = (ROOT / "docs" / "FUNCTIONAL_REQUIREMENTS_CURRENT_STATE.md").read_text(encoding="utf-8")
@@ -293,6 +295,7 @@ def main() -> int:
         "src/importer_source_readiness/production_enterprise_api_platform.py",
         "src/importer_source_readiness/production_expert_review_network.py",
         "src/importer_source_readiness/production_market_intelligence_engine.py",
+        "src/importer_source_readiness/production_launch_control_plane.py",
         "src/importer_source_readiness/production_packet_engine.py",
         "src/importer_source_readiness/production_payment_monetization_engine.py",
         "src/importer_source_readiness/production_portal_workflow_engine.py",
@@ -316,6 +319,7 @@ def main() -> int:
         "tests/test_production_enterprise_api_platform.py",
         "tests/test_production_expert_review_network.py",
         "tests/test_production_market_intelligence_engine.py",
+        "tests/test_production_launch_control_plane.py",
         "tests/test_production_packet_engine.py",
         "tests/test_production_payment_monetization_engine.py",
         "tests/test_production_portal_workflow_engine.py",
@@ -339,6 +343,7 @@ def main() -> int:
         "scripts/run_production_enterprise_api_platform.py",
         "scripts/run_production_expert_review_network.py",
         "scripts/run_production_market_intelligence_engine.py",
+        "scripts/run_production_launch_control_plane.py",
         "scripts/run_production_packet_engine.py",
         "scripts/run_production_payment_monetization_engine.py",
         "scripts/run_production_portal_workflow_engine.py",
@@ -373,6 +378,7 @@ def main() -> int:
         "docs/PRODUCTION_ENTERPRISE_API_PLATFORM.md",
         "docs/PRODUCTION_EXPERT_REVIEW_NETWORK.md",
         "docs/PRODUCTION_MARKET_INTELLIGENCE_ENGINE.md",
+        "docs/PRODUCTION_LAUNCH_CONTROL_PLANE.md",
         "docs/PRODUCTION_PACKET_ENGINE.md",
         "docs/PRODUCTION_PAYMENT_MONETIZATION_ENGINE.md",
         "docs/PRODUCTION_PORTAL_WORKFLOWS.md",
@@ -485,6 +491,10 @@ def main() -> int:
         "system_review_graph/production_backup_restore_drill.json",
         "system_review_graph/production_incident_runbooks.json",
         "system_review_graph/production_trust_research_references.json",
+        "system_review_graph/production_launch_control_plane_manifest.json",
+        "system_review_graph/production_launch_gate_states.json",
+        "system_review_graph/production_launch_scope_matrix.json",
+        "system_review_graph/production_public_launch_decision.json",
         "system_review_graph/production_claim_gate_decisions.json",
         "system_review_graph/production_evidence_claim_mappers.json",
         "data/official_sample_documents/canada/cbsa-ci1-canada-customs-invoice.pdf",
@@ -1429,6 +1439,39 @@ def main() -> int:
     for gate in production_trust.get("trust_gates", []):
         if gate.get("state") != "blocked" or gate.get("opened_by_local_artifact") is not False:
             failures.append(f"trust gate {gate.get('gate_id')} should stay blocked")
+    if production_launch.get("status") != "production_launch_control_plane_ready_exact_scope_public_launch_blocked":
+        failures.append("production launch control plane status is incorrect")
+    if production_launch.get("launch_gate_count") != 13:
+        failures.append("production launch control plane should define thirteen launch gates")
+    if production_launch.get("blocked_launch_gate_count", 0) < 8:
+        failures.append("production launch control plane should keep public-critical gates blocked")
+    if production_launch.get("public_scope_candidate_count") != 6:
+        failures.append("production launch control plane should define six candidate public-scope items")
+    if production_launch.get("blocked_public_scope_count") != 8:
+        failures.append("production launch control plane should define eight blocked public-scope items")
+    for key in (
+        "exact_public_scope_approved",
+        "public_launch_approved",
+        "hosted_private_beta_ready",
+        "production_infrastructure_ready",
+        "real_user_evidence_ready",
+        "payment_activation_ready",
+        "external_claims_opened",
+        "activation_allowed",
+        "final_owner_approval_recorded",
+    ):
+        if production_launch.get(key) is not False:
+            failures.append(f"production launch control expected {key}=false")
+    blocked_scope_ids = {row.get("scope_id") for row in production_launch.get("blocked_public_scope", [])}
+    for required in ("unrestricted_real_uploads", "live_payments", "automated_outreach", "buyer_validated_language", "supplier_verified_language"):
+        if required not in blocked_scope_ids:
+            failures.append(f"production launch blocked scope missing {required}")
+    for row in production_launch.get("public_scope_candidates", []):
+        if row.get("activation_allowed") is not False:
+            failures.append(f"public scope candidate {row.get('scope_id')} should remain activation-blocked")
+    final_owner = next((row for row in production_launch.get("launch_gates", []) if row.get("gate_id") == "final_owner_gate"), {})
+    if final_owner.get("state") != "blocked":
+        failures.append("final owner gate should remain blocked")
     if not screenshot_manifest_path.exists():
         failures.append("operator screenshot manifest was not generated")
     if screenshot_manifest.get("status") != "screenshots_ready":
@@ -2268,6 +2311,9 @@ def main() -> int:
     print(f"production_trust_status={production_trust['status']}")
     print(f"production_trust_controls={production_trust['trust_control_count']}")
     print(f"production_real_file_uploads_allowed={production_trust['real_file_uploads_allowed']}")
+    print(f"production_launch_status={production_launch['status']}")
+    print(f"production_launch_gates={production_launch['launch_gate_count']}")
+    print(f"production_public_launch_approved={production_launch['public_launch_approved']}")
     print(f"external_validation_pdf={pdf_path.relative_to(ROOT)}")
     print(f"external_validation_reviewer_brief_pdf={brief_pdf_path.relative_to(ROOT)}")
     print(f"go_live_input_status={go_live_input_readiness['status']}")

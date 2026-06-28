@@ -31,6 +31,7 @@ src/importer_source_readiness/production_document_intelligence_engine.py
 src/importer_source_readiness/production_evidence_claim_gate_engine.py
 src/importer_source_readiness/production_enterprise_api_platform.py
 src/importer_source_readiness/production_expert_review_network.py
+src/importer_source_readiness/production_launch_control_plane.py
 src/importer_source_readiness/production_market_intelligence_engine.py
 src/importer_source_readiness/production_packet_engine.py
 src/importer_source_readiness/production_payment_monetization_engine.py
@@ -159,6 +160,7 @@ board/*.md
 | `src/importer_source_readiness/production_evidence_claim_gate_engine.py` | production evidence claim-gate engine for `can_show_claim`, required evidence types, evidence trails, mapper rows, and closed external claims |
 | `src/importer_source_readiness/production_enterprise_api_platform.py` | production enterprise SaaS/API engine for route-covered API contracts, RBAC policy, workspace controls, API-key fingerprints, webhook contracts, audit export policy, usage limits, white-label report rules, and closed hosted/live gates |
 | `src/importer_source_readiness/production_expert_review_network.py` | production expert review network for reviewer lanes, credential requirements, scoped review requests, finding templates, gate impacts, and no completed signoff recorded |
+| `src/importer_source_readiness/production_launch_control_plane.py` | production launch control plane for 13 launch gates, exact candidate public scope, blocked public scope, and public-launch false decision |
 | `src/importer_source_readiness/production_market_intelligence_engine.py` | production market intelligence engine for metric records, source routes, dataset connector states, score caps, and blocked demand/profit claims |
 | `src/importer_source_readiness/production_packet_engine.py` | production packet engine for 12 packet states, packet event proof, eight packet views, six scores, blocked claims, and next valid moves |
 | `src/importer_source_readiness/production_payment_monetization_engine.py` | production payment monetization engine for pricing tiers, paid-scope boundaries, checkout controls, webhook controls, payment gates, and live-checkout closure |
@@ -183,6 +185,7 @@ board/*.md
 | `scripts/run_production_evidence_claim_gate_engine.py` | production evidence claim-gate decision, mapper, and review doc writer |
 | `scripts/run_production_enterprise_api_platform.py` | production enterprise API manifest, contracts, RBAC, workspace, webhook, audit export, research, and review doc writer |
 | `scripts/run_production_expert_review_network.py` | production expert review profile, request, finding-template, gate-impact, and audit writer |
+| `scripts/run_production_launch_control_plane.py` | production launch-control manifest, gate-state, exact-scope, and public decision writer |
 | `scripts/run_production_market_intelligence_engine.py` | production market intelligence signal and dataset connector writer |
 | `scripts/run_production_packet_engine.py` | production packet engine manifest, event, and packet-view writer |
 | `scripts/run_production_payment_monetization_engine.py` | production payment pricing, paid-scope, checkout-gate, webhook-control, research, and review doc writer |
@@ -207,6 +210,7 @@ board/*.md
 | `tests/test_production_evidence_claim_gate_engine.py` | proof that can_show_claim separates safe preparation statements from blocked external claims with evidence mappers |
 | `tests/test_production_enterprise_api_platform.py` | proof that enterprise APIs are route-covered, RBAC/tenant/claim gated, and closed to live API keys, webhooks, uploads, and white-label claim changes |
 | `tests/test_production_expert_review_network.py` | proof that reviewer lanes require real credentials and findings while keeping local requests draft-only and gates closed |
+| `tests/test_production_launch_control_plane.py` | proof that 13 launch gates, candidate public scope, blocked public scope, and final owner gate keep public launch blocked |
 | `tests/test_production_market_intelligence_engine.py` | proof that market metrics are source-routed without invented values, demand claims, profitability claims, or buyer validation |
 | `tests/test_production_portal_workflow_engine.py` | proof that public, exporter, importer, expert reviewer, operator/admin, and enterprise portals have route coverage, plain first-screen choices, UX review hooks, and closed gates |
 | `tests/test_production_payment_monetization_engine.py` | proof that monetization charges only for preparation and keeps live checkout, external charges, and payment claims closed |
@@ -274,7 +278,10 @@ board/*.md
 27. Generate the production security/privacy/reliability package: trust
     controls, vendor review records, incident runbooks, local backup/restore
     hash proof, and closed real-file/hosted/public gates.
-28. Generate the production redevelopment contract and research anchors for
+28. Generate the production launch control plane: 13 launch gates, candidate
+    public scope, blocked public scope, exact-scope decision, and public-launch
+    false record.
+29. Generate the production redevelopment contract and research anchors for
     the full-scale build: 14 production layers, phases 0-20, permanent source
     registry links, evidence requirements, and launch gates that remain closed.
 
@@ -406,6 +413,13 @@ exist locally and a local backup/restore hash drill has passed. It does not
 mean hosted auth, admin MFA, private object storage, malware scanning,
 production monitoring, vendor approval, privacy/security signoff, real file
 uploads, hosted private beta, or public launch approval has been recorded.
+
+The expected production launch-control status is
+`production_launch_control_plane_ready_exact_scope_public_launch_blocked`. It
+means the exact scope decision, launch gates, candidate public scope, and
+blocked public scope exist locally. It does not mean activation, hosted private
+beta, final owner approval, live payments, real uploads, external claims, or
+public launch approval has been recorded.
 
 ## Proof Boundary
 

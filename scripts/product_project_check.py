@@ -93,6 +93,7 @@ def main() -> int:
         PROJECT / "src" / "importer_source_readiness" / "production_evidence_claim_gate_engine.py",
         PROJECT / "src" / "importer_source_readiness" / "production_enterprise_api_platform.py",
         PROJECT / "src" / "importer_source_readiness" / "production_expert_review_network.py",
+        PROJECT / "src" / "importer_source_readiness" / "production_launch_control_plane.py",
         PROJECT / "src" / "importer_source_readiness" / "production_market_intelligence_engine.py",
         PROJECT / "src" / "importer_source_readiness" / "production_packet_engine.py",
         PROJECT / "src" / "importer_source_readiness" / "production_payment_monetization_engine.py",
@@ -125,6 +126,7 @@ def main() -> int:
         PROJECT / "tests" / "test_production_evidence_claim_gate_engine.py",
         PROJECT / "tests" / "test_production_enterprise_api_platform.py",
         PROJECT / "tests" / "test_production_expert_review_network.py",
+        PROJECT / "tests" / "test_production_launch_control_plane.py",
         PROJECT / "tests" / "test_production_market_intelligence_engine.py",
         PROJECT / "tests" / "test_production_packet_engine.py",
         PROJECT / "tests" / "test_production_payment_monetization_engine.py",
@@ -156,6 +158,7 @@ def main() -> int:
         PROJECT / "scripts" / "run_production_evidence_claim_gate_engine.py",
         PROJECT / "scripts" / "run_production_enterprise_api_platform.py",
         PROJECT / "scripts" / "run_production_expert_review_network.py",
+        PROJECT / "scripts" / "run_production_launch_control_plane.py",
         PROJECT / "scripts" / "run_production_market_intelligence_engine.py",
         PROJECT / "scripts" / "run_production_packet_engine.py",
         PROJECT / "scripts" / "run_production_payment_monetization_engine.py",
@@ -190,6 +193,7 @@ def main() -> int:
         PROJECT / "docs" / "PRODUCTION_EVIDENCE_CLAIM_GATE_ENGINE.md",
         PROJECT / "docs" / "PRODUCTION_ENTERPRISE_API_PLATFORM.md",
         PROJECT / "docs" / "PRODUCTION_EXPERT_REVIEW_NETWORK.md",
+        PROJECT / "docs" / "PRODUCTION_LAUNCH_CONTROL_PLANE.md",
         PROJECT / "docs" / "PRODUCTION_MARKET_INTELLIGENCE_ENGINE.md",
         PROJECT / "docs" / "PRODUCTION_PACKET_ENGINE.md",
         PROJECT / "docs" / "PRODUCTION_PAYMENT_MONETIZATION_ENGINE.md",
@@ -339,6 +343,10 @@ def main() -> int:
         PROJECT / "system_review_graph" / "production_backup_restore_drill.json",
         PROJECT / "system_review_graph" / "production_incident_runbooks.json",
         PROJECT / "system_review_graph" / "production_trust_research_references.json",
+        PROJECT / "system_review_graph" / "production_launch_control_plane_manifest.json",
+        PROJECT / "system_review_graph" / "production_launch_gate_states.json",
+        PROJECT / "system_review_graph" / "production_launch_scope_matrix.json",
+        PROJECT / "system_review_graph" / "production_public_launch_decision.json",
         PROJECT / "system_review_graph" / "reviewer_wave_execution_plan.json",
         PROJECT / "system_review_graph" / "private_beta_smoke_test_plan.json",
         PROJECT / "system_review_graph" / "external_review_findings_report.json",
@@ -457,6 +465,7 @@ def main() -> int:
         ["python3", "scripts/run_production_enterprise_api_platform.py"],
         ["python3", "scripts/run_production_payment_monetization_engine.py"],
         ["python3", "scripts/run_production_security_privacy_reliability_engine.py"],
+        ["python3", "scripts/run_production_launch_control_plane.py"],
         ["python3", "scripts/build_external_review_packet.py"],
         ["python3", "scripts/export_operator_dashboard.py"],
         ["python3", "scripts/audit_external_package.py", "--root", "."],
@@ -702,6 +711,9 @@ def main() -> int:
     )
     production_trust = json.loads(
         (PROJECT / "system_review_graph" / "production_security_privacy_reliability_manifest.json").read_text(encoding="utf-8")
+    )
+    production_launch = json.loads(
+        (PROJECT / "system_review_graph" / "production_launch_control_plane_manifest.json").read_text(encoding="utf-8")
     )
     official_source_registry = json.loads(
         (PROJECT / "data" / "official_source_registry.json").read_text(encoding="utf-8")
@@ -2307,6 +2319,47 @@ def main() -> int:
             print("Product project check: FAIL")
             print(f"trust gate {gate.get('gate_id')} should stay blocked")
             return 1
+    if (
+        production_launch.get("status") != "production_launch_control_plane_ready_exact_scope_public_launch_blocked"
+        or production_launch.get("launch_gate_count") != 13
+        or production_launch.get("blocked_launch_gate_count", 0) < 8
+        or production_launch.get("public_scope_candidate_count") != 6
+        or production_launch.get("blocked_public_scope_count") != 8
+        or production_launch.get("exact_public_scope_approved") is not False
+        or production_launch.get("public_launch_approved") is not False
+        or production_launch.get("activation_allowed") is not False
+        or production_launch.get("external_claims_opened") is not False
+    ):
+        print("Product project check: FAIL")
+        print("production launch control plane should keep exact public scope and activation blocked")
+        return 1
+    for key in (
+        "hosted_private_beta_ready",
+        "production_infrastructure_ready",
+        "real_user_evidence_ready",
+        "payment_activation_ready",
+        "final_owner_approval_recorded",
+    ):
+        if production_launch.get(key) is not False:
+            print("Product project check: FAIL")
+            print(f"production launch expected {key}=false")
+            return 1
+    blocked_scope_ids = {row.get("scope_id") for row in production_launch.get("blocked_public_scope", [])}
+    for required in ("unrestricted_real_uploads", "live_payments", "automated_outreach", "buyer_validated_language", "supplier_verified_language"):
+        if required not in blocked_scope_ids:
+            print("Product project check: FAIL")
+            print(f"production launch blocked scope missing {required}")
+            return 1
+    for row in production_launch.get("public_scope_candidates", []):
+        if row.get("activation_allowed") is not False:
+            print("Product project check: FAIL")
+            print(f"public scope candidate {row.get('scope_id')} should remain activation-blocked")
+            return 1
+    final_owner = next((row for row in production_launch.get("launch_gates", []) if row.get("gate_id") == "final_owner_gate"), {})
+    if final_owner.get("state") != "blocked":
+        print("Product project check: FAIL")
+        print("final owner gate should remain blocked")
+        return 1
     external_validation_pdf = PROJECT / "output" / "pdf" / "external_validation_requirements.pdf"
     if not external_validation_pdf.exists() or not external_validation_pdf.read_bytes().startswith(b"%PDF"):
         print("Product project check: FAIL")
@@ -2612,6 +2665,9 @@ def main() -> int:
     print(f"production_trust_status={production_trust['status']}")
     print(f"production_trust_controls={production_trust['trust_control_count']}")
     print(f"production_real_file_uploads_allowed={production_trust['real_file_uploads_allowed']}")
+    print(f"production_launch_status={production_launch['status']}")
+    print(f"production_launch_gates={production_launch['launch_gate_count']}")
+    print(f"production_public_launch_approved={production_launch['public_launch_approved']}")
     print(f"external_validation_pdf={external_validation_pdf.relative_to(PROJECT)}")
     print(f"external_validation_reviewer_brief_pdf={external_validation_reviewer_brief_pdf.relative_to(PROJECT)}")
     print(f"go_live_input_status={go_live_input_readiness['status']}")

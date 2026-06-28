@@ -187,6 +187,7 @@ def _status_context() -> dict[str, Any]:
     production_enterprise = _load_json(GRAPH / "production_enterprise_api_manifest.json")
     production_payments = _load_json(GRAPH / "production_payment_monetization_manifest.json")
     production_trust = _load_json(GRAPH / "production_security_privacy_reliability_manifest.json")
+    production_launch = _load_json(GRAPH / "production_launch_control_plane_manifest.json")
     row = business["packet_rows"][0]
     return {
         "today": date.today().isoformat(),
@@ -204,6 +205,7 @@ def _status_context() -> dict[str, Any]:
         "production_enterprise": production_enterprise,
         "production_payments": production_payments,
         "production_trust": production_trust,
+        "production_launch": production_launch,
         "packet": row,
     }
 
@@ -221,6 +223,7 @@ def _functional(ctx: dict[str, Any]) -> ReviewerDocument:
     enterprise = ctx["production_enterprise"]
     payments = ctx["production_payments"]
     trust = ctx["production_trust"]
+    launch = ctx["production_launch"]
     return ReviewerDocument(
         title="Functional Requirements For External Review",
         filename="functional_requirements_for_review.md",
@@ -382,6 +385,18 @@ def _functional(ctx: dict[str, Any]) -> ReviewerDocument:
                 ),
             ),
             Section(
+                "Launch Control Plane Implemented",
+                bullets=(
+                    f"Launch control status: `{launch['status']}`.",
+                    f"Launch gates: `{launch.get('launch_gate_count')}`.",
+                    f"Candidate public-scope items: `{launch.get('public_scope_candidate_count')}`.",
+                    f"Blocked public-scope items: `{launch.get('blocked_public_scope_count')}`.",
+                    "Candidate public scope is landing page, quick check, no-document starter packet, source routing, sample reports, and waitlist/demo booking.",
+                    "Unrestricted real uploads, live payments, automated outreach, approval language, buyer validation, supplier verification, shipment approval, and legal/compliance advice remain blocked.",
+                    "Activation and public launch approval are false.",
+                ),
+            ),
+            Section(
                 "Enterprise And Advisor Use Cases",
                 bullets=(
                     "Broker or trade advisor can manage multiple client packets and export missing-evidence or broker-review packets.",
@@ -440,6 +455,7 @@ def _business_logic(ctx: dict[str, Any]) -> ReviewerDocument:
     enterprise = ctx["production_enterprise"]
     payments = ctx["production_payments"]
     trust = ctx["production_trust"]
+    launch = ctx["production_launch"]
     buyer_supplier = packet["buyer_supplier_evidence"]
     gate = packet["business_gate_decision"]
     market = packet["market_intelligence"]["market_signal_evaluation"]
@@ -622,6 +638,20 @@ def _business_logic(ctx: dict[str, Any]) -> ReviewerDocument:
                 ),
             ),
             Section(
+                "Launch Control Logic Implemented Now",
+                body=(
+                    "Launch control logic turns the product into an exact-scope decision system. It can describe a candidate public scope, but every activation path remains blocked until real proof and owner approval exist.",
+                ),
+                bullets=(
+                    f"Launch gates generated: `{launch.get('launch_gate_count')}`.",
+                    f"Public-scope candidates generated: `{launch.get('public_scope_candidate_count')}`.",
+                    f"Blocked public-scope items generated: `{launch.get('blocked_public_scope_count')}`.",
+                    f"Public launch approved: `{launch.get('public_launch_approved')}`.",
+                    "Every launch gate records required evidence, source artifact status, and whether it contributes to public launch.",
+                    "The final owner gate remains blocked.",
+                ),
+            ),
+            Section(
                 "Current Sample Packet Result",
                 bullets=(
                     f"Packet reviewed: `{packet['packet_id']}`.",
@@ -682,6 +712,7 @@ def _non_functional(ctx: dict[str, Any]) -> ReviewerDocument:
     enterprise = ctx["production_enterprise"]
     payments = ctx["production_payments"]
     trust = ctx["production_trust"]
+    launch = ctx["production_launch"]
     return ReviewerDocument(
         title="Non-Functional Requirements For External Review",
         filename="non_functional_requirements_for_review.md",
@@ -809,6 +840,18 @@ def _non_functional(ctx: dict[str, Any]) -> ReviewerDocument:
                     f"Local backup/restore drill: `{trust.get('backup_restore_drill', {}).get('status')}`.",
                     "The local backup/restore drill hash-matches existing critical artifacts, but production backup/restore remains unproven.",
                     "Real uploads, hosted customer use, production monitoring, incident response approval, vendor approval, and privacy/security signoff remain incomplete.",
+                ),
+            ),
+            Section(
+                "Launch Control Plane",
+                bullets=(
+                    f"Launch control status: `{launch['status']}`.",
+                    f"Launch gates: `{launch.get('launch_gate_count')}`.",
+                    f"Blocked launch gates: `{launch.get('blocked_launch_gate_count')}`.",
+                    f"Public launch approved: `{launch.get('public_launch_approved')}`.",
+                    f"Activation allowed: `{launch.get('activation_allowed')}`.",
+                    "The exact public scope is candidate-only and has not been approved.",
+                    "The final owner approval record is not present.",
                 ),
             ),
             Section(

@@ -173,6 +173,7 @@ class OperatorAppTests(unittest.TestCase):
             "/api/expert-network": "expert_network_ready_local_with_human_review_gates",
             "/api/team-workspace": "team_workspace_ready_local_with_approval_gates",
             "/api/launch-operations": "launch_operations_ready_for_private_beta_review",
+            "/api/launch-control-plane": "production_launch_control_plane_ready_exact_scope_public_launch_blocked",
         }
         for path, expected_status in api_routes.items():
             with self.subTest(path=path):

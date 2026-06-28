@@ -53,6 +53,7 @@ This document describes the current non-functional requirements and boundaries f
 | NFR-25 | Keep enterprise APIs tenant-scoped, rate-limit-ready, and live-effect closed | Implemented locally; hosted auth, live API keys, webhook delivery, enterprise terms, and security review remain external gates | `production_enterprise_api_manifest.json`, `production_enterprise_rbac_policy.json`, `production_enterprise_webhook_policy.json` |
 | NFR-26 | Keep payment monetization preparation-only and live-checkout closed | Implemented locally; live Stripe mode, external charges, webhook delivery, refund/support approval, tax review, and payment security signoff remain external gates | `production_payment_monetization_manifest.json`, `production_payment_webhook_controls.json` |
 | NFR-27 | Keep production trust controls evidence-based and real-file gates closed | Implemented locally; managed auth, MFA, private storage, malware scanning, vendor approval, monitoring, incident rehearsal, and production backup restore remain external gates | `production_security_privacy_reliability_manifest.json`, `production_backup_restore_drill.json` |
+| NFR-28 | Keep launch activation exact-scope and owner-gated | Implemented locally; public launch, activation, hosted private beta, real-user evidence, payment activation, and final owner approval remain false | `production_launch_control_plane_manifest.json`, `production_public_launch_decision.json` |
 
 ## Security
 
@@ -319,6 +320,26 @@ Still required:
 - vendor DPA/security/privacy review and data-residency decision
 - production backup/restore test, monitoring alerts, incident rehearsal, and
   secrets manager proof
+
+## Launch Control
+
+Implemented now:
+
+- 13 launch gates with evidence artifacts and required external evidence
+- candidate public scope matrix for landing page, quick check, no-document
+  starter packet, source routing, sample reports, and waitlist/demo booking
+- blocked public-scope list for real uploads, live payments, automated
+  outreach, approval language, buyer validation, supplier verification,
+  shipment approval, and public legal/compliance advice
+- public launch decision record with activation false
+
+Still required:
+
+- real external review and source refresh proof
+- hosted infrastructure proof, privacy/security approval, and private-beta
+  user evidence
+- payment proof if monetized
+- dated final owner approval for the exact public scope
 
 ## Non-Functional Acceptance Criteria
 

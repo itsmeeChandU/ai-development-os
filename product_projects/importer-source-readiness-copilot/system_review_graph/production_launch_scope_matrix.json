@@ -1,0 +1,133 @@
+{
+  "blocked_public_scope": [
+    {
+      "activation_allowed": false,
+      "label": "Unrestricted real uploads",
+      "reason": "Not in approved public launch scope; requires explicit future workflow and reviewer approval.",
+      "scope_id": "unrestricted_real_uploads"
+    },
+    {
+      "activation_allowed": false,
+      "label": "Live payments",
+      "reason": "Not in approved public launch scope; requires explicit future workflow and reviewer approval.",
+      "scope_id": "live_payments"
+    },
+    {
+      "activation_allowed": false,
+      "label": "Automated outreach",
+      "reason": "Not in approved public launch scope; requires explicit future workflow and reviewer approval.",
+      "scope_id": "automated_outreach"
+    },
+    {
+      "activation_allowed": false,
+      "label": "Tariff/CFIA/customs approval language",
+      "reason": "Not in approved public launch scope; requires explicit future workflow and reviewer approval.",
+      "scope_id": "tariff_cfia_customs_approval_language"
+    },
+    {
+      "activation_allowed": false,
+      "label": "Buyer validated language",
+      "reason": "Not in approved public launch scope; requires explicit future workflow and reviewer approval.",
+      "scope_id": "buyer_validated_language"
+    },
+    {
+      "activation_allowed": false,
+      "label": "Supplier verified language",
+      "reason": "Not in approved public launch scope; requires explicit future workflow and reviewer approval.",
+      "scope_id": "supplier_verified_language"
+    },
+    {
+      "activation_allowed": false,
+      "label": "Shipment approval",
+      "reason": "Not in approved public launch scope; requires explicit future workflow and reviewer approval.",
+      "scope_id": "shipment_approval"
+    },
+    {
+      "activation_allowed": false,
+      "label": "Public compliance/legal advice",
+      "reason": "Not in approved public launch scope; requires explicit future workflow and reviewer approval.",
+      "scope_id": "public_compliance_or_legal_advice"
+    }
+  ],
+  "public_scope_candidates": [
+    {
+      "activation_allowed": false,
+      "blocked_until": [
+        "final_owner_gate",
+        "security_gate",
+        "privacy_gate",
+        "production_infrastructure_gate",
+        "real_user_evidence_gate"
+      ],
+      "label": "Landing page",
+      "scope_id": "landing_page",
+      "scope_type": "candidate_allowed_after_final_gate"
+    },
+    {
+      "activation_allowed": false,
+      "blocked_until": [
+        "final_owner_gate",
+        "security_gate",
+        "privacy_gate",
+        "production_infrastructure_gate",
+        "real_user_evidence_gate"
+      ],
+      "label": "Public quick check",
+      "scope_id": "public_quick_check",
+      "scope_type": "candidate_allowed_after_final_gate"
+    },
+    {
+      "activation_allowed": false,
+      "blocked_until": [
+        "final_owner_gate",
+        "security_gate",
+        "privacy_gate",
+        "production_infrastructure_gate",
+        "real_user_evidence_gate"
+      ],
+      "label": "No-document starter packet",
+      "scope_id": "no_document_starter_packet",
+      "scope_type": "candidate_allowed_after_final_gate"
+    },
+    {
+      "activation_allowed": false,
+      "blocked_until": [
+        "final_owner_gate",
+        "security_gate",
+        "privacy_gate",
+        "production_infrastructure_gate",
+        "real_user_evidence_gate"
+      ],
+      "label": "Source routing",
+      "scope_id": "source_routing",
+      "scope_type": "candidate_allowed_after_final_gate"
+    },
+    {
+      "activation_allowed": false,
+      "blocked_until": [
+        "final_owner_gate",
+        "security_gate",
+        "privacy_gate",
+        "production_infrastructure_gate",
+        "real_user_evidence_gate"
+      ],
+      "label": "Sample reports",
+      "scope_id": "sample_reports",
+      "scope_type": "candidate_allowed_after_final_gate"
+    },
+    {
+      "activation_allowed": false,
+      "blocked_until": [
+        "final_owner_gate",
+        "security_gate",
+        "privacy_gate",
+        "production_infrastructure_gate",
+        "real_user_evidence_gate"
+      ],
+      "label": "Waitlist/demo booking",
+      "scope_id": "waitlist_demo_booking",
+      "scope_type": "candidate_allowed_after_final_gate"
+    }
+  ],
+  "status": "production_launch_scope_matrix_ready_activation_blocked"
+}

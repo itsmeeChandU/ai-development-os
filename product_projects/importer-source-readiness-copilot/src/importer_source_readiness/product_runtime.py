@@ -1421,6 +1421,7 @@ def build_runtime_state(workflow: dict[str, Any], *, extra_audit_events: list[di
             "/api/expert-network",
             "/api/team-workspace",
             "/api/launch-operations",
+            "/api/launch-control-plane",
             "/api/product-operations/report",
             "/api/product-operations/run",
             "/api/agent-tools/:tool",

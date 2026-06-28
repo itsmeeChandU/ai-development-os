@@ -127,6 +127,16 @@ The current product is usable for local review and controlled preparation. It do
 - The product maps managed auth, admin MFA, RBAC, sessions, CSRF, rate limits, private storage, malware scanning, audit logs, deletion, retention, vendors, backups, monitoring, incidents, secrets, and data residency.
 - Real file uploads, hosted private beta, production trust approval, and public launch remain closed until hosted proof and qualified privacy/security review exist.
 
+## Launch Control Plane Implemented
+
+- Launch control status: `production_launch_control_plane_ready_exact_scope_public_launch_blocked`.
+- Launch gates: `13`.
+- Candidate public-scope items: `6`.
+- Blocked public-scope items: `8`.
+- Candidate public scope is landing page, quick check, no-document starter packet, source routing, sample reports, and waitlist/demo booking.
+- Unrestricted real uploads, live payments, automated outreach, approval language, buyer validation, supplier verification, shipment approval, and legal/compliance advice remain blocked.
+- Activation and public launch approval are false.
+
 ## Enterprise And Advisor Use Cases
 
 - Broker or trade advisor can manage multiple client packets and export missing-evidence or broker-review packets.

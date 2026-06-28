@@ -84,6 +84,7 @@ API_ROUTES = {
     "/api/expert-network": "system_review_graph/expert_network_report.json",
     "/api/team-workspace": "system_review_graph/team_workspace_report.json",
     "/api/launch-operations": "system_review_graph/launch_operations_report.json",
+    "/api/launch-control-plane": "system_review_graph/production_launch_control_plane_manifest.json",
     "/api/product-operations/report": "system_review_graph/product_operations_report.json",
 }
 
