@@ -1,0 +1,1223 @@
+{
+  "blocked_claims": [
+    "profitable_market",
+    "guaranteed_demand",
+    "buyer_validated",
+    "confirmed_market_size",
+    "tariff_advantage_confirmed",
+    "market_entry_approved",
+    "price_or_margin_confirmed"
+  ],
+  "claims_opened": false,
+  "dataset_connector_count": 9,
+  "dataset_connectors": [
+    {
+      "access_mode": "manual_download_or_api_after_terms_review",
+      "canonical_url": "https://ised-isde.canada.ca/site/ised/en/research-and-business-intelligence/canadian-importers-database",
+      "credential_status": "not_configured",
+      "dataset_connector_id": "market-dataset:canada-cid",
+      "ingestion_ready": false,
+      "license_status": "not_checked_for_production_ingestion",
+      "live_fetch_allowed": false,
+      "next_valid_move": "Confirm terms/license, configure connector or manual import, then attach dated dataset rows.",
+      "required_before_value_claim": true,
+      "source_id": "canada-cid",
+      "source_name": "Canadian Importers Database"
+    },
+    {
+      "access_mode": "manual_download_or_api_after_terms_review",
+      "canonical_url": "https://www.cbsa-asfc.gc.ca/trade-commerce/tariff-tarif/2026/menu-eng.html",
+      "credential_status": "not_configured",
+      "dataset_connector_id": "market-dataset:cbsa-customs-tariff-2026",
+      "ingestion_ready": false,
+      "license_status": "not_checked_for_production_ingestion",
+      "live_fetch_allowed": false,
+      "next_valid_move": "Confirm terms/license, configure connector or manual import, then attach dated dataset rows.",
+      "required_before_value_claim": true,
+      "source_id": "cbsa-customs-tariff-2026",
+      "source_name": "CBSA Customs Tariff 2026"
+    },
+    {
+      "access_mode": "manual_download_or_api_after_terms_review",
+      "canonical_url": "https://inspection.canada.ca/en/importing-food-plants-animals/airs",
+      "credential_status": "not_configured",
+      "dataset_connector_id": "market-dataset:cfia-airs",
+      "ingestion_ready": false,
+      "license_status": "not_checked_for_production_ingestion",
+      "live_fetch_allowed": false,
+      "next_valid_move": "Confirm terms/license, configure connector or manual import, then attach dated dataset rows.",
+      "required_before_value_claim": true,
+      "source_id": "cfia-airs",
+      "source_name": "CFIA Automated Import Reference System (AIRS)"
+    },
+    {
+      "access_mode": "manual_download_or_api_after_terms_review",
+      "canonical_url": "https://www.international.gc.ca/controls-controles/about-a_propos/impor/permits-licences.aspx?lang=eng",
+      "credential_status": "not_configured",
+      "dataset_connector_id": "market-dataset:gac-import-controls",
+      "ingestion_ready": false,
+      "license_status": "not_checked_for_production_ingestion",
+      "live_fetch_allowed": false,
+      "next_valid_move": "Confirm terms/license, configure connector or manual import, then attach dated dataset rows.",
+      "required_before_value_claim": true,
+      "source_id": "gac-import-controls",
+      "source_name": "Global Affairs Canada Import Controls and Import Permits"
+    },
+    {
+      "access_mode": "manual_download_or_api_after_terms_review",
+      "canonical_url": "https://ised-isde.canada.ca/site/trade-data-online/en/overview",
+      "credential_status": "not_configured",
+      "dataset_connector_id": "market-dataset:ised-trade-data-online",
+      "ingestion_ready": false,
+      "license_status": "not_checked_for_production_ingestion",
+      "live_fetch_allowed": false,
+      "next_valid_move": "Confirm terms/license, configure connector or manual import, then attach dated dataset rows.",
+      "required_before_value_claim": true,
+      "source_id": "ised-trade-data-online",
+      "source_name": "ISED Trade Data Online"
+    },
+    {
+      "access_mode": "manual_download_or_api_after_terms_review",
+      "canonical_url": "https://www.macmap.org/",
+      "credential_status": "not_configured",
+      "dataset_connector_id": "market-dataset:itc-market-access-map",
+      "ingestion_ready": false,
+      "license_status": "not_checked_for_production_ingestion",
+      "live_fetch_allowed": false,
+      "next_valid_move": "Confirm terms/license, configure connector or manual import, then attach dated dataset rows.",
+      "required_before_value_claim": true,
+      "source_id": "itc-market-access-map",
+      "source_name": "ITC Market Access Map"
+    },
+    {
+      "access_mode": "manual_download_or_api_after_terms_review",
+      "canonical_url": "https://www.trademap.org/",
+      "credential_status": "not_configured",
+      "dataset_connector_id": "market-dataset:itc-trade-map",
+      "ingestion_ready": false,
+      "license_status": "not_checked_for_production_ingestion",
+      "live_fetch_allowed": false,
+      "next_valid_move": "Confirm terms/license, configure connector or manual import, then attach dated dataset rows.",
+      "required_before_value_claim": true,
+      "source_id": "itc-trade-map",
+      "source_name": "International Trade Centre Trade Map"
+    },
+    {
+      "access_mode": "manual_download_or_api_after_terms_review",
+      "canonical_url": "https://www.wcoomd.org/en/topics/nomenclature/overview/what-is-the-harmonized-system.aspx",
+      "credential_status": "not_configured",
+      "dataset_connector_id": "market-dataset:wco-harmonized-system",
+      "ingestion_ready": false,
+      "license_status": "not_checked_for_production_ingestion",
+      "live_fetch_allowed": false,
+      "next_valid_move": "Confirm terms/license, configure connector or manual import, then attach dated dataset rows.",
+      "required_before_value_claim": true,
+      "source_id": "wco-harmonized-system",
+      "source_name": "World Customs Organization Harmonized System"
+    },
+    {
+      "access_mode": "manual_download_or_api_after_terms_review",
+      "canonical_url": "https://wits.worldbank.org/",
+      "credential_status": "not_configured",
+      "dataset_connector_id": "market-dataset:world-bank-wits",
+      "ingestion_ready": false,
+      "license_status": "not_checked_for_production_ingestion",
+      "live_fetch_allowed": false,
+      "next_valid_move": "Confirm terms/license, configure connector or manual import, then attach dated dataset rows.",
+      "required_before_value_claim": true,
+      "source_id": "world-bank-wits",
+      "source_name": "World Bank World Integrated Trade Solution"
+    }
+  ],
+  "external_effects_created": false,
+  "generated_at": "2026-06-28T12:36:45+00:00",
+  "live_payment_ready": false,
+  "market_metrics": [
+    "hs_candidate_route",
+    "destination_import_value",
+    "three_to_five_year_trend",
+    "top_origin_countries",
+    "unit_value_range",
+    "market_concentration",
+    "import_replacement_signal",
+    "market_access_barriers",
+    "buyer_importer_lead_routes"
+  ],
+  "market_signal_count": 9,
+  "metric_count": 9,
+  "packet_count": 1,
+  "packet_runs": [
+    {
+      "market_packet": {
+        "blocked_claims": [
+          "profitable_market",
+          "guaranteed_demand",
+          "buyer_validated",
+          "confirmed_market_size",
+          "tariff_advantage_confirmed",
+          "market_entry_approved",
+          "price_or_margin_confirmed"
+        ],
+        "can_claim_buyer_validation": false,
+        "can_claim_market_demand": false,
+        "can_claim_profitability": false,
+        "market_signal_score": 45,
+        "market_signal_score_cap": 59,
+        "next_valid_move": "Ingest dated market dataset rows and attach buyer evidence before any market conclusion.",
+        "packet_id": "packet-frozen-tuna-canada-001",
+        "score_label": "yellow",
+        "score_reason": "Score is capped because no dated trade dataset rows, buyer evidence, or reviewer findings are attached.",
+        "signal_count": 9,
+        "source_routed_metric_count": 9,
+        "status": "market_packet_ready_research_only"
+      },
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "signals": [
+        {
+          "blocked_claims": [
+            "profitable_market",
+            "guaranteed_demand",
+            "buyer_validated",
+            "confirmed_market_size",
+            "tariff_advantage_confirmed",
+            "market_entry_approved",
+            "price_or_margin_confirmed"
+          ],
+          "claims_opened": false,
+          "confidence": "research_plan",
+          "destination_country": "Canada",
+          "external_effects_created": false,
+          "hs_candidate": "0304870000",
+          "limitation": "HS routing supports candidate research only; classification is not confirmed.",
+          "market_signal_id": "market-signal:packet-frozen-tuna-canada-001:hs_candidate_route",
+          "metric": "hs_candidate_route",
+          "next_validation": "Attach dated dataset rows, buyer evidence, and reviewer findings before stronger claims.",
+          "origin_country": "Vietnam",
+          "packet_id": "packet-frozen-tuna-canada-001",
+          "period": "",
+          "product_name": "Frozen tuna fillet",
+          "signal_level": "weak_research_signal",
+          "source_route_count": 2,
+          "source_routes": [
+            {
+              "access_mode": "manual_dataset_or_source_specific_connector_required",
+              "claim_boundary": "Reference source only; HS candidates are not tariff classification confirmation.",
+              "jurisdiction": "International",
+              "license_status": "not_checked_for_automated_ingestion",
+              "name": "World Customs Organization Harmonized System",
+              "source_id": "wco-harmonized-system",
+              "status": "source_route_ready_reference_only",
+              "url": "https://www.wcoomd.org/en/topics/nomenclature/overview/what-is-the-harmonized-system.aspx"
+            },
+            {
+              "access_mode": "manual_dataset_or_source_specific_connector_required",
+              "claim_boundary": "Reference source only; classification and tariff treatment require qualified review.",
+              "jurisdiction": "Canada",
+              "license_status": "not_checked_for_automated_ingestion",
+              "name": "CBSA Customs Tariff 2026",
+              "source_id": "cbsa-customs-tariff-2026",
+              "status": "source_route_ready_reference_only",
+              "url": "https://www.cbsa-asfc.gc.ca/trade-commerce/tariff-tarif/2026/menu-eng.html"
+            }
+          ],
+          "supports_claims": [],
+          "value": "",
+          "value_status": "not_ingested_dataset_required"
+        },
+        {
+          "blocked_claims": [
+            "profitable_market",
+            "guaranteed_demand",
+            "buyer_validated",
+            "confirmed_market_size",
+            "tariff_advantage_confirmed",
+            "market_entry_approved",
+            "price_or_margin_confirmed"
+          ],
+          "claims_opened": false,
+          "confidence": "research_plan",
+          "destination_country": "Canada",
+          "external_effects_created": false,
+          "hs_candidate": "0304870000",
+          "limitation": "Import value requires a dated dataset row before any value can be shown.",
+          "market_signal_id": "market-signal:packet-frozen-tuna-canada-001:destination_import_value",
+          "metric": "destination_import_value",
+          "next_validation": "Attach dated dataset rows, buyer evidence, and reviewer findings before stronger claims.",
+          "origin_country": "Vietnam",
+          "packet_id": "packet-frozen-tuna-canada-001",
+          "period": "",
+          "product_name": "Frozen tuna fillet",
+          "signal_level": "weak_research_signal",
+          "source_route_count": 3,
+          "source_routes": [
+            {
+              "access_mode": "manual_dataset_or_source_specific_connector_required",
+              "claim_boundary": "Reference source only; does not prove market size, buyer demand, or revenue.",
+              "jurisdiction": "Canada",
+              "license_status": "not_checked_for_automated_ingestion",
+              "name": "ISED Trade Data Online",
+              "source_id": "ised-trade-data-online",
+              "status": "source_route_ready_reference_only",
+              "url": "https://ised-isde.canada.ca/site/trade-data-online/en/overview"
+            },
+            {
+              "access_mode": "manual_dataset_or_source_specific_connector_required",
+              "claim_boundary": "Reference source only; does not prove buyer demand, profitability, market entry approval, or compliance.",
+              "jurisdiction": "International",
+              "license_status": "not_checked_for_automated_ingestion",
+              "name": "World Bank World Integrated Trade Solution",
+              "source_id": "world-bank-wits",
+              "status": "source_route_ready_reference_only",
+              "url": "https://wits.worldbank.org/"
+            },
+            {
+              "access_mode": "manual_dataset_or_source_specific_connector_required",
+              "claim_boundary": "Reference source only; company or market rows are research signals and lead routes, not buyer validation or demand proof.",
+              "jurisdiction": "International",
+              "license_status": "not_checked_for_automated_ingestion",
+              "name": "International Trade Centre Trade Map",
+              "source_id": "itc-trade-map",
+              "status": "source_route_ready_reference_only",
+              "url": "https://www.trademap.org/"
+            }
+          ],
+          "supports_claims": [],
+          "value": "",
+          "value_status": "not_ingested_dataset_required"
+        },
+        {
+          "blocked_claims": [
+            "profitable_market",
+            "guaranteed_demand",
+            "buyer_validated",
+            "confirmed_market_size",
+            "tariff_advantage_confirmed",
+            "market_entry_approved",
+            "price_or_margin_confirmed"
+          ],
+          "claims_opened": false,
+          "confidence": "research_plan",
+          "destination_country": "Canada",
+          "external_effects_created": false,
+          "hs_candidate": "0304870000",
+          "limitation": "Trend requires multi-year dataset rows; growth is not demand proof.",
+          "market_signal_id": "market-signal:packet-frozen-tuna-canada-001:three_to_five_year_trend",
+          "metric": "three_to_five_year_trend",
+          "next_validation": "Attach dated dataset rows, buyer evidence, and reviewer findings before stronger claims.",
+          "origin_country": "Vietnam",
+          "packet_id": "packet-frozen-tuna-canada-001",
+          "period": "",
+          "product_name": "Frozen tuna fillet",
+          "signal_level": "weak_research_signal",
+          "source_route_count": 3,
+          "source_routes": [
+            {
+              "access_mode": "manual_dataset_or_source_specific_connector_required",
+              "claim_boundary": "Reference source only; does not prove market size, buyer demand, or revenue.",
+              "jurisdiction": "Canada",
+              "license_status": "not_checked_for_automated_ingestion",
+              "name": "ISED Trade Data Online",
+              "source_id": "ised-trade-data-online",
+              "status": "source_route_ready_reference_only",
+              "url": "https://ised-isde.canada.ca/site/trade-data-online/en/overview"
+            },
+            {
+              "access_mode": "manual_dataset_or_source_specific_connector_required",
+              "claim_boundary": "Reference source only; does not prove buyer demand, profitability, market entry approval, or compliance.",
+              "jurisdiction": "International",
+              "license_status": "not_checked_for_automated_ingestion",
+              "name": "World Bank World Integrated Trade Solution",
+              "source_id": "world-bank-wits",
+              "status": "source_route_ready_reference_only",
+              "url": "https://wits.worldbank.org/"
+            },
+            {
+              "access_mode": "manual_dataset_or_source_specific_connector_required",
+              "claim_boundary": "Reference source only; company or market rows are research signals and lead routes, not buyer validation or demand proof.",
+              "jurisdiction": "International",
+              "license_status": "not_checked_for_automated_ingestion",
+              "name": "International Trade Centre Trade Map",
+              "source_id": "itc-trade-map",
+              "status": "source_route_ready_reference_only",
+              "url": "https://www.trademap.org/"
+            }
+          ],
+          "supports_claims": [],
+          "value": "",
+          "value_status": "not_ingested_dataset_required"
+        },
+        {
+          "blocked_claims": [
+            "profitable_market",
+            "guaranteed_demand",
+            "buyer_validated",
+            "confirmed_market_size",
+            "tariff_advantage_confirmed",
+            "market_entry_approved",
+            "price_or_margin_confirmed"
+          ],
+          "claims_opened": false,
+          "confidence": "research_plan",
+          "destination_country": "Canada",
+          "external_effects_created": false,
+          "hs_candidate": "0304870000",
+          "limitation": "Competitor-country rows are market context, not buyer demand.",
+          "market_signal_id": "market-signal:packet-frozen-tuna-canada-001:top_origin_countries",
+          "metric": "top_origin_countries",
+          "next_validation": "Attach dated dataset rows, buyer evidence, and reviewer findings before stronger claims.",
+          "origin_country": "Vietnam",
+          "packet_id": "packet-frozen-tuna-canada-001",
+          "period": "",
+          "product_name": "Frozen tuna fillet",
+          "signal_level": "weak_research_signal",
+          "source_route_count": 3,
+          "source_routes": [
+            {
+              "access_mode": "manual_dataset_or_source_specific_connector_required",
+              "claim_boundary": "Reference source only; does not prove market size, buyer demand, or revenue.",
+              "jurisdiction": "Canada",
+              "license_status": "not_checked_for_automated_ingestion",
+              "name": "ISED Trade Data Online",
+              "source_id": "ised-trade-data-online",
+              "status": "source_route_ready_reference_only",
+              "url": "https://ised-isde.canada.ca/site/trade-data-online/en/overview"
+            },
+            {
+              "access_mode": "manual_dataset_or_source_specific_connector_required",
+              "claim_boundary": "Reference source only; does not prove buyer demand, profitability, market entry approval, or compliance.",
+              "jurisdiction": "International",
+              "license_status": "not_checked_for_automated_ingestion",
+              "name": "World Bank World Integrated Trade Solution",
+              "source_id": "world-bank-wits",
+              "status": "source_route_ready_reference_only",
+              "url": "https://wits.worldbank.org/"
+            },
+            {
+              "access_mode": "manual_dataset_or_source_specific_connector_required",
+              "claim_boundary": "Reference source only; company or market rows are research signals and lead routes, not buyer validation or demand proof.",
+              "jurisdiction": "International",
+              "license_status": "not_checked_for_automated_ingestion",
+              "name": "International Trade Centre Trade Map",
+              "source_id": "itc-trade-map",
+              "status": "source_route_ready_reference_only",
+              "url": "https://www.trademap.org/"
+            }
+          ],
+          "supports_claims": [],
+          "value": "",
+          "value_status": "not_ingested_dataset_required"
+        },
+        {
+          "blocked_claims": [
+            "profitable_market",
+            "guaranteed_demand",
+            "buyer_validated",
+            "confirmed_market_size",
+            "tariff_advantage_confirmed",
+            "market_entry_approved",
+            "price_or_margin_confirmed"
+          ],
+          "claims_opened": false,
+          "confidence": "research_plan",
+          "destination_country": "Canada",
+          "external_effects_created": false,
+          "hs_candidate": "0304870000",
+          "limitation": "Unit values are rough trade-data signals, not pricing or margin guarantees.",
+          "market_signal_id": "market-signal:packet-frozen-tuna-canada-001:unit_value_range",
+          "metric": "unit_value_range",
+          "next_validation": "Attach dated dataset rows, buyer evidence, and reviewer findings before stronger claims.",
+          "origin_country": "Vietnam",
+          "packet_id": "packet-frozen-tuna-canada-001",
+          "period": "",
+          "product_name": "Frozen tuna fillet",
+          "signal_level": "weak_research_signal",
+          "source_route_count": 2,
+          "source_routes": [
+            {
+              "access_mode": "manual_dataset_or_source_specific_connector_required",
+              "claim_boundary": "Reference source only; does not prove buyer demand, profitability, market entry approval, or compliance.",
+              "jurisdiction": "International",
+              "license_status": "not_checked_for_automated_ingestion",
+              "name": "World Bank World Integrated Trade Solution",
+              "source_id": "world-bank-wits",
+              "status": "source_route_ready_reference_only",
+              "url": "https://wits.worldbank.org/"
+            },
+            {
+              "access_mode": "manual_dataset_or_source_specific_connector_required",
+              "claim_boundary": "Reference source only; company or market rows are research signals and lead routes, not buyer validation or demand proof.",
+              "jurisdiction": "International",
+              "license_status": "not_checked_for_automated_ingestion",
+              "name": "International Trade Centre Trade Map",
+              "source_id": "itc-trade-map",
+              "status": "source_route_ready_reference_only",
+              "url": "https://www.trademap.org/"
+            }
+          ],
+          "supports_claims": [],
+          "value": "",
+          "value_status": "not_ingested_dataset_required"
+        },
+        {
+          "blocked_claims": [
+            "profitable_market",
+            "guaranteed_demand",
+            "buyer_validated",
+            "confirmed_market_size",
+            "tariff_advantage_confirmed",
+            "market_entry_approved",
+            "price_or_margin_confirmed"
+          ],
+          "claims_opened": false,
+          "confidence": "research_plan",
+          "destination_country": "Canada",
+          "external_effects_created": false,
+          "hs_candidate": "0304870000",
+          "limitation": "Concentration is a research signal only and needs dataset rows.",
+          "market_signal_id": "market-signal:packet-frozen-tuna-canada-001:market_concentration",
+          "metric": "market_concentration",
+          "next_validation": "Attach dated dataset rows, buyer evidence, and reviewer findings before stronger claims.",
+          "origin_country": "Vietnam",
+          "packet_id": "packet-frozen-tuna-canada-001",
+          "period": "",
+          "product_name": "Frozen tuna fillet",
+          "signal_level": "weak_research_signal",
+          "source_route_count": 3,
+          "source_routes": [
+            {
+              "access_mode": "manual_dataset_or_source_specific_connector_required",
+              "claim_boundary": "Reference source only; does not prove market size, buyer demand, or revenue.",
+              "jurisdiction": "Canada",
+              "license_status": "not_checked_for_automated_ingestion",
+              "name": "ISED Trade Data Online",
+              "source_id": "ised-trade-data-online",
+              "status": "source_route_ready_reference_only",
+              "url": "https://ised-isde.canada.ca/site/trade-data-online/en/overview"
+            },
+            {
+              "access_mode": "manual_dataset_or_source_specific_connector_required",
+              "claim_boundary": "Reference source only; does not prove buyer demand, profitability, market entry approval, or compliance.",
+              "jurisdiction": "International",
+              "license_status": "not_checked_for_automated_ingestion",
+              "name": "World Bank World Integrated Trade Solution",
+              "source_id": "world-bank-wits",
+              "status": "source_route_ready_reference_only",
+              "url": "https://wits.worldbank.org/"
+            },
+            {
+              "access_mode": "manual_dataset_or_source_specific_connector_required",
+              "claim_boundary": "Reference source only; company or market rows are research signals and lead routes, not buyer validation or demand proof.",
+              "jurisdiction": "International",
+              "license_status": "not_checked_for_automated_ingestion",
+              "name": "International Trade Centre Trade Map",
+              "source_id": "itc-trade-map",
+              "status": "source_route_ready_reference_only",
+              "url": "https://www.trademap.org/"
+            }
+          ],
+          "supports_claims": [],
+          "value": "",
+          "value_status": "not_ingested_dataset_required"
+        },
+        {
+          "blocked_claims": [
+            "profitable_market",
+            "guaranteed_demand",
+            "buyer_validated",
+            "confirmed_market_size",
+            "tariff_advantage_confirmed",
+            "market_entry_approved",
+            "price_or_margin_confirmed"
+          ],
+          "claims_opened": false,
+          "confidence": "research_plan",
+          "destination_country": "Canada",
+          "external_effects_created": false,
+          "hs_candidate": "0304870000",
+          "limitation": "Import replacement is a hypothesis until local production and buyer evidence exist.",
+          "market_signal_id": "market-signal:packet-frozen-tuna-canada-001:import_replacement_signal",
+          "metric": "import_replacement_signal",
+          "next_validation": "Attach dated dataset rows, buyer evidence, and reviewer findings before stronger claims.",
+          "origin_country": "Vietnam",
+          "packet_id": "packet-frozen-tuna-canada-001",
+          "period": "",
+          "product_name": "Frozen tuna fillet",
+          "signal_level": "weak_research_signal",
+          "source_route_count": 3,
+          "source_routes": [
+            {
+              "access_mode": "manual_dataset_or_source_specific_connector_required",
+              "claim_boundary": "Reference source only; does not prove market size, buyer demand, or revenue.",
+              "jurisdiction": "Canada",
+              "license_status": "not_checked_for_automated_ingestion",
+              "name": "ISED Trade Data Online",
+              "source_id": "ised-trade-data-online",
+              "status": "source_route_ready_reference_only",
+              "url": "https://ised-isde.canada.ca/site/trade-data-online/en/overview"
+            },
+            {
+              "access_mode": "manual_dataset_or_source_specific_connector_required",
+              "claim_boundary": "Reference source only; does not prove buyer demand, profitability, market entry approval, or compliance.",
+              "jurisdiction": "International",
+              "license_status": "not_checked_for_automated_ingestion",
+              "name": "World Bank World Integrated Trade Solution",
+              "source_id": "world-bank-wits",
+              "status": "source_route_ready_reference_only",
+              "url": "https://wits.worldbank.org/"
+            },
+            {
+              "access_mode": "manual_dataset_or_source_specific_connector_required",
+              "claim_boundary": "Reference source only; company or market rows are research signals and lead routes, not buyer validation or demand proof.",
+              "jurisdiction": "International",
+              "license_status": "not_checked_for_automated_ingestion",
+              "name": "International Trade Centre Trade Map",
+              "source_id": "itc-trade-map",
+              "status": "source_route_ready_reference_only",
+              "url": "https://www.trademap.org/"
+            }
+          ],
+          "supports_claims": [],
+          "value": "",
+          "value_status": "not_ingested_dataset_required"
+        },
+        {
+          "blocked_claims": [
+            "profitable_market",
+            "guaranteed_demand",
+            "buyer_validated",
+            "confirmed_market_size",
+            "tariff_advantage_confirmed",
+            "market_entry_approved",
+            "price_or_margin_confirmed"
+          ],
+          "claims_opened": false,
+          "confidence": "research_plan",
+          "destination_country": "Canada",
+          "external_effects_created": false,
+          "hs_candidate": "0304870000",
+          "limitation": "Tariff/access/regulatory routes require qualified review before external claims.",
+          "market_signal_id": "market-signal:packet-frozen-tuna-canada-001:market_access_barriers",
+          "metric": "market_access_barriers",
+          "next_validation": "Attach dated dataset rows, buyer evidence, and reviewer findings before stronger claims.",
+          "origin_country": "Vietnam",
+          "packet_id": "packet-frozen-tuna-canada-001",
+          "period": "",
+          "product_name": "Frozen tuna fillet",
+          "signal_level": "weak_research_signal",
+          "source_route_count": 4,
+          "source_routes": [
+            {
+              "access_mode": "manual_dataset_or_source_specific_connector_required",
+              "claim_boundary": "Reference source only; does not prove tariff treatment, preference qualification, regulatory requirements, or market-access approval.",
+              "jurisdiction": "International",
+              "license_status": "not_checked_for_automated_ingestion",
+              "name": "ITC Market Access Map",
+              "source_id": "itc-market-access-map",
+              "status": "source_route_ready_reference_only",
+              "url": "https://www.macmap.org/"
+            },
+            {
+              "access_mode": "manual_dataset_or_source_specific_connector_required",
+              "claim_boundary": "Reference source only; classification and tariff treatment require qualified review.",
+              "jurisdiction": "Canada",
+              "license_status": "not_checked_for_automated_ingestion",
+              "name": "CBSA Customs Tariff 2026",
+              "source_id": "cbsa-customs-tariff-2026",
+              "status": "source_route_ready_reference_only",
+              "url": "https://www.cbsa-asfc.gc.ca/trade-commerce/tariff-tarif/2026/menu-eng.html"
+            },
+            {
+              "access_mode": "manual_dataset_or_source_specific_connector_required",
+              "claim_boundary": "Reference source only; product-specific food import compliance requires qualified review and source verification.",
+              "jurisdiction": "Canada",
+              "license_status": "not_checked_for_automated_ingestion",
+              "name": "CFIA Automated Import Reference System (AIRS)",
+              "source_id": "cfia-airs",
+              "status": "source_route_ready_reference_only",
+              "url": "https://inspection.canada.ca/en/importing-food-plants-animals/airs"
+            },
+            {
+              "access_mode": "manual_dataset_or_source_specific_connector_required",
+              "claim_boundary": "Reference source only; does not prove whether a specific product requires an import permit.",
+              "jurisdiction": "Canada",
+              "license_status": "not_checked_for_automated_ingestion",
+              "name": "Global Affairs Canada Import Controls and Import Permits",
+              "source_id": "gac-import-controls",
+              "status": "source_route_ready_reference_only",
+              "url": "https://www.international.gc.ca/controls-controles/about-a_propos/impor/permits-licences.aspx?lang=eng"
+            }
+          ],
+          "supports_claims": [],
+          "value": "",
+          "value_status": "not_ingested_dataset_required"
+        },
+        {
+          "blocked_claims": [
+            "profitable_market",
+            "guaranteed_demand",
+            "buyer_validated",
+            "confirmed_market_size",
+            "tariff_advantage_confirmed",
+            "market_entry_approved",
+            "price_or_margin_confirmed"
+          ],
+          "claims_opened": false,
+          "confidence": "research_plan",
+          "destination_country": "Canada",
+          "external_effects_created": false,
+          "hs_candidate": "0304870000",
+          "limitation": "Importer directories are lead sources only and never buyer validation.",
+          "market_signal_id": "market-signal:packet-frozen-tuna-canada-001:buyer_importer_lead_routes",
+          "metric": "buyer_importer_lead_routes",
+          "next_validation": "Attach dated dataset rows, buyer evidence, and reviewer findings before stronger claims.",
+          "origin_country": "Vietnam",
+          "packet_id": "packet-frozen-tuna-canada-001",
+          "period": "",
+          "product_name": "Frozen tuna fillet",
+          "signal_level": "weak_research_signal",
+          "source_route_count": 1,
+          "source_routes": [
+            {
+              "access_mode": "manual_dataset_or_source_specific_connector_required",
+              "claim_boundary": "Reference source only; does not prove buyer validation, supplier fit, customs advice, or freshness of a specific product row.",
+              "jurisdiction": "Canada",
+              "license_status": "not_checked_for_automated_ingestion",
+              "name": "Canadian Importers Database",
+              "source_id": "canada-cid",
+              "status": "source_route_ready_reference_only",
+              "url": "https://ised-isde.canada.ca/site/ised/en/research-and-business-intelligence/canadian-importers-database"
+            }
+          ],
+          "supports_claims": [],
+          "value": "",
+          "value_status": "not_ingested_dataset_required"
+        }
+      ]
+    }
+  ],
+  "product": "Trade Readiness Copilot",
+  "proof_boundary": "Market intelligence is source-routed research logic only. It does not prove demand, market size, profitability, buyer validation, tariff advantage, or market-entry approval without real dataset rows, buyer evidence, and qualified review.",
+  "public_launch_ready": false,
+  "signals": [
+    {
+      "blocked_claims": [
+        "profitable_market",
+        "guaranteed_demand",
+        "buyer_validated",
+        "confirmed_market_size",
+        "tariff_advantage_confirmed",
+        "market_entry_approved",
+        "price_or_margin_confirmed"
+      ],
+      "claims_opened": false,
+      "confidence": "research_plan",
+      "destination_country": "Canada",
+      "external_effects_created": false,
+      "hs_candidate": "0304870000",
+      "limitation": "HS routing supports candidate research only; classification is not confirmed.",
+      "market_signal_id": "market-signal:packet-frozen-tuna-canada-001:hs_candidate_route",
+      "metric": "hs_candidate_route",
+      "next_validation": "Attach dated dataset rows, buyer evidence, and reviewer findings before stronger claims.",
+      "origin_country": "Vietnam",
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "period": "",
+      "product_name": "Frozen tuna fillet",
+      "signal_level": "weak_research_signal",
+      "source_route_count": 2,
+      "source_routes": [
+        {
+          "access_mode": "manual_dataset_or_source_specific_connector_required",
+          "claim_boundary": "Reference source only; HS candidates are not tariff classification confirmation.",
+          "jurisdiction": "International",
+          "license_status": "not_checked_for_automated_ingestion",
+          "name": "World Customs Organization Harmonized System",
+          "source_id": "wco-harmonized-system",
+          "status": "source_route_ready_reference_only",
+          "url": "https://www.wcoomd.org/en/topics/nomenclature/overview/what-is-the-harmonized-system.aspx"
+        },
+        {
+          "access_mode": "manual_dataset_or_source_specific_connector_required",
+          "claim_boundary": "Reference source only; classification and tariff treatment require qualified review.",
+          "jurisdiction": "Canada",
+          "license_status": "not_checked_for_automated_ingestion",
+          "name": "CBSA Customs Tariff 2026",
+          "source_id": "cbsa-customs-tariff-2026",
+          "status": "source_route_ready_reference_only",
+          "url": "https://www.cbsa-asfc.gc.ca/trade-commerce/tariff-tarif/2026/menu-eng.html"
+        }
+      ],
+      "supports_claims": [],
+      "value": "",
+      "value_status": "not_ingested_dataset_required"
+    },
+    {
+      "blocked_claims": [
+        "profitable_market",
+        "guaranteed_demand",
+        "buyer_validated",
+        "confirmed_market_size",
+        "tariff_advantage_confirmed",
+        "market_entry_approved",
+        "price_or_margin_confirmed"
+      ],
+      "claims_opened": false,
+      "confidence": "research_plan",
+      "destination_country": "Canada",
+      "external_effects_created": false,
+      "hs_candidate": "0304870000",
+      "limitation": "Import value requires a dated dataset row before any value can be shown.",
+      "market_signal_id": "market-signal:packet-frozen-tuna-canada-001:destination_import_value",
+      "metric": "destination_import_value",
+      "next_validation": "Attach dated dataset rows, buyer evidence, and reviewer findings before stronger claims.",
+      "origin_country": "Vietnam",
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "period": "",
+      "product_name": "Frozen tuna fillet",
+      "signal_level": "weak_research_signal",
+      "source_route_count": 3,
+      "source_routes": [
+        {
+          "access_mode": "manual_dataset_or_source_specific_connector_required",
+          "claim_boundary": "Reference source only; does not prove market size, buyer demand, or revenue.",
+          "jurisdiction": "Canada",
+          "license_status": "not_checked_for_automated_ingestion",
+          "name": "ISED Trade Data Online",
+          "source_id": "ised-trade-data-online",
+          "status": "source_route_ready_reference_only",
+          "url": "https://ised-isde.canada.ca/site/trade-data-online/en/overview"
+        },
+        {
+          "access_mode": "manual_dataset_or_source_specific_connector_required",
+          "claim_boundary": "Reference source only; does not prove buyer demand, profitability, market entry approval, or compliance.",
+          "jurisdiction": "International",
+          "license_status": "not_checked_for_automated_ingestion",
+          "name": "World Bank World Integrated Trade Solution",
+          "source_id": "world-bank-wits",
+          "status": "source_route_ready_reference_only",
+          "url": "https://wits.worldbank.org/"
+        },
+        {
+          "access_mode": "manual_dataset_or_source_specific_connector_required",
+          "claim_boundary": "Reference source only; company or market rows are research signals and lead routes, not buyer validation or demand proof.",
+          "jurisdiction": "International",
+          "license_status": "not_checked_for_automated_ingestion",
+          "name": "International Trade Centre Trade Map",
+          "source_id": "itc-trade-map",
+          "status": "source_route_ready_reference_only",
+          "url": "https://www.trademap.org/"
+        }
+      ],
+      "supports_claims": [],
+      "value": "",
+      "value_status": "not_ingested_dataset_required"
+    },
+    {
+      "blocked_claims": [
+        "profitable_market",
+        "guaranteed_demand",
+        "buyer_validated",
+        "confirmed_market_size",
+        "tariff_advantage_confirmed",
+        "market_entry_approved",
+        "price_or_margin_confirmed"
+      ],
+      "claims_opened": false,
+      "confidence": "research_plan",
+      "destination_country": "Canada",
+      "external_effects_created": false,
+      "hs_candidate": "0304870000",
+      "limitation": "Trend requires multi-year dataset rows; growth is not demand proof.",
+      "market_signal_id": "market-signal:packet-frozen-tuna-canada-001:three_to_five_year_trend",
+      "metric": "three_to_five_year_trend",
+      "next_validation": "Attach dated dataset rows, buyer evidence, and reviewer findings before stronger claims.",
+      "origin_country": "Vietnam",
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "period": "",
+      "product_name": "Frozen tuna fillet",
+      "signal_level": "weak_research_signal",
+      "source_route_count": 3,
+      "source_routes": [
+        {
+          "access_mode": "manual_dataset_or_source_specific_connector_required",
+          "claim_boundary": "Reference source only; does not prove market size, buyer demand, or revenue.",
+          "jurisdiction": "Canada",
+          "license_status": "not_checked_for_automated_ingestion",
+          "name": "ISED Trade Data Online",
+          "source_id": "ised-trade-data-online",
+          "status": "source_route_ready_reference_only",
+          "url": "https://ised-isde.canada.ca/site/trade-data-online/en/overview"
+        },
+        {
+          "access_mode": "manual_dataset_or_source_specific_connector_required",
+          "claim_boundary": "Reference source only; does not prove buyer demand, profitability, market entry approval, or compliance.",
+          "jurisdiction": "International",
+          "license_status": "not_checked_for_automated_ingestion",
+          "name": "World Bank World Integrated Trade Solution",
+          "source_id": "world-bank-wits",
+          "status": "source_route_ready_reference_only",
+          "url": "https://wits.worldbank.org/"
+        },
+        {
+          "access_mode": "manual_dataset_or_source_specific_connector_required",
+          "claim_boundary": "Reference source only; company or market rows are research signals and lead routes, not buyer validation or demand proof.",
+          "jurisdiction": "International",
+          "license_status": "not_checked_for_automated_ingestion",
+          "name": "International Trade Centre Trade Map",
+          "source_id": "itc-trade-map",
+          "status": "source_route_ready_reference_only",
+          "url": "https://www.trademap.org/"
+        }
+      ],
+      "supports_claims": [],
+      "value": "",
+      "value_status": "not_ingested_dataset_required"
+    },
+    {
+      "blocked_claims": [
+        "profitable_market",
+        "guaranteed_demand",
+        "buyer_validated",
+        "confirmed_market_size",
+        "tariff_advantage_confirmed",
+        "market_entry_approved",
+        "price_or_margin_confirmed"
+      ],
+      "claims_opened": false,
+      "confidence": "research_plan",
+      "destination_country": "Canada",
+      "external_effects_created": false,
+      "hs_candidate": "0304870000",
+      "limitation": "Competitor-country rows are market context, not buyer demand.",
+      "market_signal_id": "market-signal:packet-frozen-tuna-canada-001:top_origin_countries",
+      "metric": "top_origin_countries",
+      "next_validation": "Attach dated dataset rows, buyer evidence, and reviewer findings before stronger claims.",
+      "origin_country": "Vietnam",
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "period": "",
+      "product_name": "Frozen tuna fillet",
+      "signal_level": "weak_research_signal",
+      "source_route_count": 3,
+      "source_routes": [
+        {
+          "access_mode": "manual_dataset_or_source_specific_connector_required",
+          "claim_boundary": "Reference source only; does not prove market size, buyer demand, or revenue.",
+          "jurisdiction": "Canada",
+          "license_status": "not_checked_for_automated_ingestion",
+          "name": "ISED Trade Data Online",
+          "source_id": "ised-trade-data-online",
+          "status": "source_route_ready_reference_only",
+          "url": "https://ised-isde.canada.ca/site/trade-data-online/en/overview"
+        },
+        {
+          "access_mode": "manual_dataset_or_source_specific_connector_required",
+          "claim_boundary": "Reference source only; does not prove buyer demand, profitability, market entry approval, or compliance.",
+          "jurisdiction": "International",
+          "license_status": "not_checked_for_automated_ingestion",
+          "name": "World Bank World Integrated Trade Solution",
+          "source_id": "world-bank-wits",
+          "status": "source_route_ready_reference_only",
+          "url": "https://wits.worldbank.org/"
+        },
+        {
+          "access_mode": "manual_dataset_or_source_specific_connector_required",
+          "claim_boundary": "Reference source only; company or market rows are research signals and lead routes, not buyer validation or demand proof.",
+          "jurisdiction": "International",
+          "license_status": "not_checked_for_automated_ingestion",
+          "name": "International Trade Centre Trade Map",
+          "source_id": "itc-trade-map",
+          "status": "source_route_ready_reference_only",
+          "url": "https://www.trademap.org/"
+        }
+      ],
+      "supports_claims": [],
+      "value": "",
+      "value_status": "not_ingested_dataset_required"
+    },
+    {
+      "blocked_claims": [
+        "profitable_market",
+        "guaranteed_demand",
+        "buyer_validated",
+        "confirmed_market_size",
+        "tariff_advantage_confirmed",
+        "market_entry_approved",
+        "price_or_margin_confirmed"
+      ],
+      "claims_opened": false,
+      "confidence": "research_plan",
+      "destination_country": "Canada",
+      "external_effects_created": false,
+      "hs_candidate": "0304870000",
+      "limitation": "Unit values are rough trade-data signals, not pricing or margin guarantees.",
+      "market_signal_id": "market-signal:packet-frozen-tuna-canada-001:unit_value_range",
+      "metric": "unit_value_range",
+      "next_validation": "Attach dated dataset rows, buyer evidence, and reviewer findings before stronger claims.",
+      "origin_country": "Vietnam",
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "period": "",
+      "product_name": "Frozen tuna fillet",
+      "signal_level": "weak_research_signal",
+      "source_route_count": 2,
+      "source_routes": [
+        {
+          "access_mode": "manual_dataset_or_source_specific_connector_required",
+          "claim_boundary": "Reference source only; does not prove buyer demand, profitability, market entry approval, or compliance.",
+          "jurisdiction": "International",
+          "license_status": "not_checked_for_automated_ingestion",
+          "name": "World Bank World Integrated Trade Solution",
+          "source_id": "world-bank-wits",
+          "status": "source_route_ready_reference_only",
+          "url": "https://wits.worldbank.org/"
+        },
+        {
+          "access_mode": "manual_dataset_or_source_specific_connector_required",
+          "claim_boundary": "Reference source only; company or market rows are research signals and lead routes, not buyer validation or demand proof.",
+          "jurisdiction": "International",
+          "license_status": "not_checked_for_automated_ingestion",
+          "name": "International Trade Centre Trade Map",
+          "source_id": "itc-trade-map",
+          "status": "source_route_ready_reference_only",
+          "url": "https://www.trademap.org/"
+        }
+      ],
+      "supports_claims": [],
+      "value": "",
+      "value_status": "not_ingested_dataset_required"
+    },
+    {
+      "blocked_claims": [
+        "profitable_market",
+        "guaranteed_demand",
+        "buyer_validated",
+        "confirmed_market_size",
+        "tariff_advantage_confirmed",
+        "market_entry_approved",
+        "price_or_margin_confirmed"
+      ],
+      "claims_opened": false,
+      "confidence": "research_plan",
+      "destination_country": "Canada",
+      "external_effects_created": false,
+      "hs_candidate": "0304870000",
+      "limitation": "Concentration is a research signal only and needs dataset rows.",
+      "market_signal_id": "market-signal:packet-frozen-tuna-canada-001:market_concentration",
+      "metric": "market_concentration",
+      "next_validation": "Attach dated dataset rows, buyer evidence, and reviewer findings before stronger claims.",
+      "origin_country": "Vietnam",
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "period": "",
+      "product_name": "Frozen tuna fillet",
+      "signal_level": "weak_research_signal",
+      "source_route_count": 3,
+      "source_routes": [
+        {
+          "access_mode": "manual_dataset_or_source_specific_connector_required",
+          "claim_boundary": "Reference source only; does not prove market size, buyer demand, or revenue.",
+          "jurisdiction": "Canada",
+          "license_status": "not_checked_for_automated_ingestion",
+          "name": "ISED Trade Data Online",
+          "source_id": "ised-trade-data-online",
+          "status": "source_route_ready_reference_only",
+          "url": "https://ised-isde.canada.ca/site/trade-data-online/en/overview"
+        },
+        {
+          "access_mode": "manual_dataset_or_source_specific_connector_required",
+          "claim_boundary": "Reference source only; does not prove buyer demand, profitability, market entry approval, or compliance.",
+          "jurisdiction": "International",
+          "license_status": "not_checked_for_automated_ingestion",
+          "name": "World Bank World Integrated Trade Solution",
+          "source_id": "world-bank-wits",
+          "status": "source_route_ready_reference_only",
+          "url": "https://wits.worldbank.org/"
+        },
+        {
+          "access_mode": "manual_dataset_or_source_specific_connector_required",
+          "claim_boundary": "Reference source only; company or market rows are research signals and lead routes, not buyer validation or demand proof.",
+          "jurisdiction": "International",
+          "license_status": "not_checked_for_automated_ingestion",
+          "name": "International Trade Centre Trade Map",
+          "source_id": "itc-trade-map",
+          "status": "source_route_ready_reference_only",
+          "url": "https://www.trademap.org/"
+        }
+      ],
+      "supports_claims": [],
+      "value": "",
+      "value_status": "not_ingested_dataset_required"
+    },
+    {
+      "blocked_claims": [
+        "profitable_market",
+        "guaranteed_demand",
+        "buyer_validated",
+        "confirmed_market_size",
+        "tariff_advantage_confirmed",
+        "market_entry_approved",
+        "price_or_margin_confirmed"
+      ],
+      "claims_opened": false,
+      "confidence": "research_plan",
+      "destination_country": "Canada",
+      "external_effects_created": false,
+      "hs_candidate": "0304870000",
+      "limitation": "Import replacement is a hypothesis until local production and buyer evidence exist.",
+      "market_signal_id": "market-signal:packet-frozen-tuna-canada-001:import_replacement_signal",
+      "metric": "import_replacement_signal",
+      "next_validation": "Attach dated dataset rows, buyer evidence, and reviewer findings before stronger claims.",
+      "origin_country": "Vietnam",
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "period": "",
+      "product_name": "Frozen tuna fillet",
+      "signal_level": "weak_research_signal",
+      "source_route_count": 3,
+      "source_routes": [
+        {
+          "access_mode": "manual_dataset_or_source_specific_connector_required",
+          "claim_boundary": "Reference source only; does not prove market size, buyer demand, or revenue.",
+          "jurisdiction": "Canada",
+          "license_status": "not_checked_for_automated_ingestion",
+          "name": "ISED Trade Data Online",
+          "source_id": "ised-trade-data-online",
+          "status": "source_route_ready_reference_only",
+          "url": "https://ised-isde.canada.ca/site/trade-data-online/en/overview"
+        },
+        {
+          "access_mode": "manual_dataset_or_source_specific_connector_required",
+          "claim_boundary": "Reference source only; does not prove buyer demand, profitability, market entry approval, or compliance.",
+          "jurisdiction": "International",
+          "license_status": "not_checked_for_automated_ingestion",
+          "name": "World Bank World Integrated Trade Solution",
+          "source_id": "world-bank-wits",
+          "status": "source_route_ready_reference_only",
+          "url": "https://wits.worldbank.org/"
+        },
+        {
+          "access_mode": "manual_dataset_or_source_specific_connector_required",
+          "claim_boundary": "Reference source only; company or market rows are research signals and lead routes, not buyer validation or demand proof.",
+          "jurisdiction": "International",
+          "license_status": "not_checked_for_automated_ingestion",
+          "name": "International Trade Centre Trade Map",
+          "source_id": "itc-trade-map",
+          "status": "source_route_ready_reference_only",
+          "url": "https://www.trademap.org/"
+        }
+      ],
+      "supports_claims": [],
+      "value": "",
+      "value_status": "not_ingested_dataset_required"
+    },
+    {
+      "blocked_claims": [
+        "profitable_market",
+        "guaranteed_demand",
+        "buyer_validated",
+        "confirmed_market_size",
+        "tariff_advantage_confirmed",
+        "market_entry_approved",
+        "price_or_margin_confirmed"
+      ],
+      "claims_opened": false,
+      "confidence": "research_plan",
+      "destination_country": "Canada",
+      "external_effects_created": false,
+      "hs_candidate": "0304870000",
+      "limitation": "Tariff/access/regulatory routes require qualified review before external claims.",
+      "market_signal_id": "market-signal:packet-frozen-tuna-canada-001:market_access_barriers",
+      "metric": "market_access_barriers",
+      "next_validation": "Attach dated dataset rows, buyer evidence, and reviewer findings before stronger claims.",
+      "origin_country": "Vietnam",
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "period": "",
+      "product_name": "Frozen tuna fillet",
+      "signal_level": "weak_research_signal",
+      "source_route_count": 4,
+      "source_routes": [
+        {
+          "access_mode": "manual_dataset_or_source_specific_connector_required",
+          "claim_boundary": "Reference source only; does not prove tariff treatment, preference qualification, regulatory requirements, or market-access approval.",
+          "jurisdiction": "International",
+          "license_status": "not_checked_for_automated_ingestion",
+          "name": "ITC Market Access Map",
+          "source_id": "itc-market-access-map",
+          "status": "source_route_ready_reference_only",
+          "url": "https://www.macmap.org/"
+        },
+        {
+          "access_mode": "manual_dataset_or_source_specific_connector_required",
+          "claim_boundary": "Reference source only; classification and tariff treatment require qualified review.",
+          "jurisdiction": "Canada",
+          "license_status": "not_checked_for_automated_ingestion",
+          "name": "CBSA Customs Tariff 2026",
+          "source_id": "cbsa-customs-tariff-2026",
+          "status": "source_route_ready_reference_only",
+          "url": "https://www.cbsa-asfc.gc.ca/trade-commerce/tariff-tarif/2026/menu-eng.html"
+        },
+        {
+          "access_mode": "manual_dataset_or_source_specific_connector_required",
+          "claim_boundary": "Reference source only; product-specific food import compliance requires qualified review and source verification.",
+          "jurisdiction": "Canada",
+          "license_status": "not_checked_for_automated_ingestion",
+          "name": "CFIA Automated Import Reference System (AIRS)",
+          "source_id": "cfia-airs",
+          "status": "source_route_ready_reference_only",
+          "url": "https://inspection.canada.ca/en/importing-food-plants-animals/airs"
+        },
+        {
+          "access_mode": "manual_dataset_or_source_specific_connector_required",
+          "claim_boundary": "Reference source only; does not prove whether a specific product requires an import permit.",
+          "jurisdiction": "Canada",
+          "license_status": "not_checked_for_automated_ingestion",
+          "name": "Global Affairs Canada Import Controls and Import Permits",
+          "source_id": "gac-import-controls",
+          "status": "source_route_ready_reference_only",
+          "url": "https://www.international.gc.ca/controls-controles/about-a_propos/impor/permits-licences.aspx?lang=eng"
+        }
+      ],
+      "supports_claims": [],
+      "value": "",
+      "value_status": "not_ingested_dataset_required"
+    },
+    {
+      "blocked_claims": [
+        "profitable_market",
+        "guaranteed_demand",
+        "buyer_validated",
+        "confirmed_market_size",
+        "tariff_advantage_confirmed",
+        "market_entry_approved",
+        "price_or_margin_confirmed"
+      ],
+      "claims_opened": false,
+      "confidence": "research_plan",
+      "destination_country": "Canada",
+      "external_effects_created": false,
+      "hs_candidate": "0304870000",
+      "limitation": "Importer directories are lead sources only and never buyer validation.",
+      "market_signal_id": "market-signal:packet-frozen-tuna-canada-001:buyer_importer_lead_routes",
+      "metric": "buyer_importer_lead_routes",
+      "next_validation": "Attach dated dataset rows, buyer evidence, and reviewer findings before stronger claims.",
+      "origin_country": "Vietnam",
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "period": "",
+      "product_name": "Frozen tuna fillet",
+      "signal_level": "weak_research_signal",
+      "source_route_count": 1,
+      "source_routes": [
+        {
+          "access_mode": "manual_dataset_or_source_specific_connector_required",
+          "claim_boundary": "Reference source only; does not prove buyer validation, supplier fit, customs advice, or freshness of a specific product row.",
+          "jurisdiction": "Canada",
+          "license_status": "not_checked_for_automated_ingestion",
+          "name": "Canadian Importers Database",
+          "source_id": "canada-cid",
+          "status": "source_route_ready_reference_only",
+          "url": "https://ised-isde.canada.ca/site/ised/en/research-and-business-intelligence/canadian-importers-database"
+        }
+      ],
+      "supports_claims": [],
+      "value": "",
+      "value_status": "not_ingested_dataset_required"
+    }
+  ],
+  "status": "production_market_intelligence_engine_ready_source_routed_no_demand_claims"
+}

@@ -46,10 +46,15 @@ The next production slices now write the packet and country/source engines:
 `system_review_graph/production_country_source_engine_manifest.json`,
 `system_review_graph/production_country_packs.json`,
 `system_review_graph/production_source_lifecycle.json`, and
-`docs/PRODUCTION_COUNTRY_SOURCE_ENGINE.md`. These engines evaluate the real
-local fixture packet into production packet states/views/scores and turn the
+`docs/PRODUCTION_COUNTRY_SOURCE_ENGINE.md`. The market slice writes
+`system_review_graph/production_market_intelligence_manifest.json`,
+`system_review_graph/production_market_signals.json`,
+`system_review_graph/production_market_dataset_connectors.json`, and
+`docs/PRODUCTION_MARKET_INTELLIGENCE_ENGINE.md`. These engines evaluate the
+real local fixture packet into production packet states/views/scores, turn the
 official source registry plus source-refresh records into reference-only
-country packs, source lifecycle rows, and packet source impacts.
+country packs, and create source-routed market signal records without demand
+or profitability claims.
 Those stages are backed by an executable local operations engine in
 `src/importer_source_readiness/product_operations.py` and
 `scripts/run_product_operations.py`. The engine creates/updates packet intake
@@ -141,6 +146,9 @@ security/privacy/human review gates are completed.
 - production country/source engine with Canada import, India export, Vietnam
   demo-origin, and generic fallback packs, plus source lifecycle and packet
   impact rows
+- production market intelligence engine with source-routed metric records,
+  dataset connector states, capped market score, and blocked demand/profit
+  claims
 - production research anchor registry for CBSA, CFIA, Global Affairs Canada,
   ISED, DGFT, WITS, ITC, WCO, ICC, OPC/PIPEDA, OWASP, NIST, and Stripe source
   routing
@@ -273,6 +281,24 @@ fallback packs are generated from the official source registry and dated source
 refresh records. It still does not prove current law, tariff treatment, CFIA
 approval, sanctions clearance, buyer validation, supplier verification, hosted
 readiness, or launch approval.
+
+## Ready For Production Market Intelligence Review
+
+- market intelligence status:
+  `production_market_intelligence_engine_ready_source_routed_no_demand_claims`
+- machine manifest:
+  `system_review_graph/production_market_intelligence_manifest.json`
+- market signals: `system_review_graph/production_market_signals.json`
+- dataset connectors:
+  `system_review_graph/production_market_dataset_connectors.json`
+- reviewer-readable doc: `docs/PRODUCTION_MARKET_INTELLIGENCE_ENGINE.md`
+- proof command: `python3 scripts/run_production_market_intelligence_engine.py`
+
+This means the market intelligence layer creates source-routed metric records
+for HS candidate routing, import value, trend, top origins, unit value, market
+concentration, import replacement hypothesis, access barriers, and importer
+lead routes. It still does not prove market size, demand, profitability, buyer
+validation, tariff advantage, or market-entry approval.
 
 ## Ready For Internal Source-Packet Review
 

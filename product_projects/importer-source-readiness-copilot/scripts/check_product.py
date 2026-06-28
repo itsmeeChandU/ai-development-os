@@ -133,6 +133,7 @@ def main() -> int:
         [sys.executable, "scripts/run_production_data_model.py"],
         [sys.executable, "scripts/run_production_packet_engine.py"],
         [sys.executable, "scripts/run_production_country_source_engine.py"],
+        [sys.executable, "scripts/run_production_market_intelligence_engine.py"],
         [sys.executable, "scripts/audit_external_package.py", "--root", "."],
     ]
     for command in commands:
@@ -198,6 +199,7 @@ def main() -> int:
     production_data_model = _load_json(ROOT / "system_review_graph" / "production_data_model_manifest.json")
     production_packet_engine = _load_json(ROOT / "system_review_graph" / "production_packet_engine_manifest.json")
     production_country_source_engine = _load_json(ROOT / "system_review_graph" / "production_country_source_engine_manifest.json")
+    production_market_intelligence = _load_json(ROOT / "system_review_graph" / "production_market_intelligence_manifest.json")
     official_source_registry = _load_json(ROOT / "data" / "official_source_registry.json")
     business_core_doc = (ROOT / "docs" / "BUSINESS_CORE_LOGIC_CURRENT_STATE.md").read_text(encoding="utf-8")
     functional_doc = (ROOT / "docs" / "FUNCTIONAL_REQUIREMENTS_CURRENT_STATE.md").read_text(encoding="utf-8")
@@ -264,6 +266,7 @@ def main() -> int:
         "src/importer_source_readiness/external_validation_research.py",
         "src/importer_source_readiness/production_country_source_engine.py",
         "src/importer_source_readiness/production_data_model.py",
+        "src/importer_source_readiness/production_market_intelligence_engine.py",
         "src/importer_source_readiness/production_packet_engine.py",
         "src/importer_source_readiness/production_redevelopment.py",
         "tests/test_operator_app.py",
@@ -276,6 +279,7 @@ def main() -> int:
         "tests/test_external_validation_research.py",
         "tests/test_production_country_source_engine.py",
         "tests/test_production_data_model.py",
+        "tests/test_production_market_intelligence_engine.py",
         "tests/test_production_packet_engine.py",
         "tests/test_production_redevelopment.py",
         "scripts/run_customer_workflow.py",
@@ -288,6 +292,7 @@ def main() -> int:
         "scripts/run_external_validation_requirements.py",
         "scripts/run_production_country_source_engine.py",
         "scripts/run_production_data_model.py",
+        "scripts/run_production_market_intelligence_engine.py",
         "scripts/run_production_packet_engine.py",
         "scripts/run_production_redevelopment.py",
         "scripts/package_external_review.py",
@@ -311,6 +316,7 @@ def main() -> int:
         "docs/GO_LIVE_INPUT_REQUESTS.md",
         "docs/PRODUCTION_COUNTRY_SOURCE_ENGINE.md",
         "docs/PRODUCTION_DATA_MODEL.md",
+        "docs/PRODUCTION_MARKET_INTELLIGENCE_ENGINE.md",
         "docs/PRODUCTION_PACKET_ENGINE.md",
         "docs/PRODUCTION_REDEVELOPMENT.md",
         "docs/BUSINESS_CORE_LOGIC_CURRENT_STATE.md",
@@ -375,6 +381,9 @@ def main() -> int:
         "system_review_graph/production_source_lifecycle.json",
         "system_review_graph/production_data_model_manifest.json",
         "system_review_graph/production_data_model_seed.json",
+        "system_review_graph/production_market_intelligence_manifest.json",
+        "system_review_graph/production_market_signals.json",
+        "system_review_graph/production_market_dataset_connectors.json",
         "system_review_graph/production_packet_engine_manifest.json",
         "system_review_graph/production_packet_events.json",
         "system_review_graph/production_packet_views/packet-frozen-tuna-canada-001/starter_packet.json",
@@ -686,6 +695,50 @@ def main() -> int:
             failures.append("packet source impact should block CFIA approval")
         if impact.get("external_claims_opened") is not False:
             failures.append("packet source impact must keep external claims closed")
+    if production_market_intelligence.get("status") != "production_market_intelligence_engine_ready_source_routed_no_demand_claims":
+        failures.append(
+            "production market intelligence status expected production_market_intelligence_engine_ready_source_routed_no_demand_claims, "
+            f"got {production_market_intelligence.get('status')!r}"
+        )
+    if production_market_intelligence.get("metric_count") != 9:
+        failures.append("production market intelligence should expose 9 metric records")
+    if production_market_intelligence.get("market_signal_count", 0) < 9:
+        failures.append("production market intelligence should generate market signal rows")
+    if production_market_intelligence.get("dataset_connector_count", 0) < 7:
+        failures.append("production market intelligence should register dataset connectors")
+    if production_market_intelligence.get("external_effects_created") is not False:
+        failures.append("production market intelligence must not create external effects")
+    if production_market_intelligence.get("claims_opened") is not False:
+        failures.append("production market intelligence must not open claims")
+    for blocked_claim in ("profitable_market", "guaranteed_demand", "buyer_validated"):
+        if blocked_claim not in production_market_intelligence.get("blocked_claims", []):
+            failures.append(f"production market intelligence should block {blocked_claim}")
+    metric_names = {row.get("metric") for row in production_market_intelligence.get("signals", [])}
+    for metric in (
+        "destination_import_value",
+        "three_to_five_year_trend",
+        "top_origin_countries",
+        "unit_value_range",
+        "market_access_barriers",
+        "buyer_importer_lead_routes",
+    ):
+        if metric not in metric_names:
+            failures.append(f"production market intelligence missing metric {metric}")
+    if any(row.get("value_status") != "not_ingested_dataset_required" for row in production_market_intelligence.get("signals", [])):
+        failures.append("market signals should not contain invented values before dataset ingestion")
+    if any(row.get("claims_opened") is not False for row in production_market_intelligence.get("signals", [])):
+        failures.append("market signals must keep claims closed")
+    market_packet_runs = production_market_intelligence.get("packet_runs", [])
+    if not market_packet_runs:
+        failures.append("production market intelligence missing packet run evidence")
+    else:
+        market_packet = market_packet_runs[0].get("market_packet", {})
+        if market_packet.get("can_claim_market_demand") is not False:
+            failures.append("market packet must not claim market demand")
+        if market_packet.get("can_claim_profitability") is not False:
+            failures.append("market packet must not claim profitability")
+        if market_packet.get("can_claim_buyer_validation") is not False:
+            failures.append("market packet must not claim buyer validation")
     if not screenshot_manifest_path.exists():
         failures.append("operator screenshot manifest was not generated")
     if screenshot_manifest.get("status") != "screenshots_ready":
@@ -1495,6 +1548,9 @@ def main() -> int:
     print(f"production_country_source_engine_status={production_country_source_engine['status']}")
     print(f"production_country_packs={production_country_source_engine['country_pack_count']}")
     print(f"production_source_lifecycle_rows={production_country_source_engine['source_lifecycle_count']}")
+    print(f"production_market_intelligence_status={production_market_intelligence['status']}")
+    print(f"production_market_signals={production_market_intelligence['market_signal_count']}")
+    print(f"production_market_dataset_connectors={production_market_intelligence['dataset_connector_count']}")
     print(f"external_validation_pdf={pdf_path.relative_to(ROOT)}")
     print(f"external_validation_reviewer_brief_pdf={brief_pdf_path.relative_to(ROOT)}")
     print(f"go_live_input_status={go_live_input_readiness['status']}")

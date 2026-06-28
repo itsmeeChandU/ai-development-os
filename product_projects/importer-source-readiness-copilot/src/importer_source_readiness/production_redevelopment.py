@@ -618,7 +618,14 @@ def build_first_five_work_packages() -> list[dict[str, Any]]:
             "phase": 4,
             "must_build": ["product/HS discovery", "trade data signal", "competitor countries", "market access comparison", "buyer/importer lead routes", "confidence labels"],
             "current_repo_basis": ["opportunity_scanner_report.json", "business_logic.py"],
-            "proof": "market signal remains research-only and source-backed",
+            "implementation_status": "local_source_routed_market_signal_engine_ready_no_demand_claims",
+            "artifacts": [
+                "system_review_graph/production_market_intelligence_manifest.json",
+                "system_review_graph/production_market_signals.json",
+                "system_review_graph/production_market_dataset_connectors.json",
+                "docs/PRODUCTION_MARKET_INTELLIGENCE_ENGINE.md",
+            ],
+            "proof": "Market metrics, source routes, dataset connector states, capped market score, blocked demand/profit/buyer claims, and next validation moves are generated from the packet and official source registry by scripts/run_production_market_intelligence_engine.py",
         },
         {
             "id": "report_engine",

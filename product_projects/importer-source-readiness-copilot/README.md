@@ -70,6 +70,7 @@ python3 scripts/run_production_redevelopment.py
 python3 scripts/run_production_data_model.py
 python3 scripts/run_production_packet_engine.py
 python3 scripts/run_production_country_source_engine.py
+python3 scripts/run_production_market_intelligence_engine.py
 python3 scripts/audit_external_package.py --root .
 python3 scripts/check_product.py
 ```
@@ -127,6 +128,9 @@ system_review_graph/production_packet_views/packet-frozen-tuna-canada-001/*.json
 system_review_graph/production_country_source_engine_manifest.json
 system_review_graph/production_country_packs.json
 system_review_graph/production_source_lifecycle.json
+system_review_graph/production_market_intelligence_manifest.json
+system_review_graph/production_market_signals.json
+system_review_graph/production_market_dataset_connectors.json
 system_review_graph/production_redevelopment_plan.json
 system_review_graph/production_research_anchors.json
 external_review_findings/EXTERNAL_REVIEW_SUMMARY.json
@@ -138,6 +142,7 @@ docs/GO_LIVE_INPUT_REQUESTS.md
 docs/PRODUCTION_DATA_MODEL.md
 docs/PRODUCTION_PACKET_ENGINE.md
 docs/PRODUCTION_COUNTRY_SOURCE_ENGINE.md
+docs/PRODUCTION_MARKET_INTELLIGENCE_ENGINE.md
 docs/PRODUCTION_REDEVELOPMENT.md
 output/pdf/external_validation_reviewer_brief.pdf
 output/pdf/external_validation_requirements.pdf
@@ -271,6 +276,17 @@ That means Canada import, India export, Vietnam demo-origin, and generic
 fallback country packs are generated from the official source registry and
 dated source-refresh records. Sources remain reference-only until freshness,
 terms/automation, and qualified reviewer gates are proven.
+
+The expected production market intelligence status is:
+
+```text
+production_market_intelligence_engine_ready_source_routed_no_demand_claims
+```
+
+That means market metrics, source routes, dataset connector states, capped
+market signal score, limitations, and blocked demand/profit/buyer claims are
+generated from the packet and official source registry. It still does not prove
+market size, buyer demand, profitability, or market-entry approval.
 
 The expected customer source-packet status is:
 

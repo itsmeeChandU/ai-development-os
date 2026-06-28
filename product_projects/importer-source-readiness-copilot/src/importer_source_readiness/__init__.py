@@ -18,6 +18,10 @@ from .production_country_source_engine import (
     write_production_country_source_engine_artifacts,
 )
 from .production_data_model import build_production_data_model, write_production_data_model_artifacts
+from .production_market_intelligence_engine import (
+    build_production_market_intelligence_engine,
+    write_production_market_intelligence_engine_artifacts,
+)
 from .production_packet_engine import build_production_packet_engine, write_production_packet_engine_artifacts
 from .production_redevelopment import build_production_redevelopment_plan, write_production_redevelopment_artifacts
 
@@ -32,6 +36,7 @@ __all__ = [
     "build_operator_workflow",
     "build_production_country_source_engine",
     "build_production_data_model",
+    "build_production_market_intelligence_engine",
     "build_production_packet_engine",
     "build_production_redevelopment_plan",
     "build_runtime_state",
@@ -49,6 +54,7 @@ __all__ = [
     "write_operator_workflow",
     "write_production_country_source_engine_artifacts",
     "write_production_data_model_artifacts",
+    "write_production_market_intelligence_engine_artifacts",
     "write_production_packet_engine_artifacts",
     "write_production_redevelopment_artifacts",
     "write_runtime_artifacts",

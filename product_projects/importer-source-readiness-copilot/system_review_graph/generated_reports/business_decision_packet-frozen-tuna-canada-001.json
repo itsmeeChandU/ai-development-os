@@ -1221,11 +1221,11 @@
         "market_access_approved"
       ],
       "competitor_source_countries": [
-        "China",
-        "Vietnam",
+        "United States",
         "Mexico",
         "European Union",
-        "United States"
+        "China",
+        "Vietnam"
       ],
       "destination": "Canada",
       "exporter_origin": "Vietnam",

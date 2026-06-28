@@ -87,6 +87,7 @@ def main() -> int:
         PROJECT / "src" / "importer_source_readiness" / "external_validation_research.py",
         PROJECT / "src" / "importer_source_readiness" / "production_country_source_engine.py",
         PROJECT / "src" / "importer_source_readiness" / "production_data_model.py",
+        PROJECT / "src" / "importer_source_readiness" / "production_market_intelligence_engine.py",
         PROJECT / "src" / "importer_source_readiness" / "production_packet_engine.py",
         PROJECT / "src" / "importer_source_readiness" / "production_redevelopment.py",
         PROJECT / "tests" / "test_readiness.py",
@@ -108,6 +109,7 @@ def main() -> int:
         PROJECT / "tests" / "test_external_validation_research.py",
         PROJECT / "tests" / "test_production_country_source_engine.py",
         PROJECT / "tests" / "test_production_data_model.py",
+        PROJECT / "tests" / "test_production_market_intelligence_engine.py",
         PROJECT / "tests" / "test_production_packet_engine.py",
         PROJECT / "tests" / "test_production_redevelopment.py",
         PROJECT / "scripts" / "run_readiness.py",
@@ -128,6 +130,7 @@ def main() -> int:
         PROJECT / "scripts" / "run_external_validation_requirements.py",
         PROJECT / "scripts" / "run_production_country_source_engine.py",
         PROJECT / "scripts" / "run_production_data_model.py",
+        PROJECT / "scripts" / "run_production_market_intelligence_engine.py",
         PROJECT / "scripts" / "run_production_packet_engine.py",
         PROJECT / "scripts" / "run_production_redevelopment.py",
         PROJECT / "scripts" / "package_external_review.py",
@@ -151,6 +154,7 @@ def main() -> int:
         PROJECT / "docs" / "GO_LIVE_INPUT_REQUESTS.md",
         PROJECT / "docs" / "PRODUCTION_COUNTRY_SOURCE_ENGINE.md",
         PROJECT / "docs" / "PRODUCTION_DATA_MODEL.md",
+        PROJECT / "docs" / "PRODUCTION_MARKET_INTELLIGENCE_ENGINE.md",
         PROJECT / "docs" / "PRODUCTION_PACKET_ENGINE.md",
         PROJECT / "docs" / "PRODUCTION_REDEVELOPMENT.md",
         PROJECT / "docs" / "BUSINESS_CORE_LOGIC_CURRENT_STATE.md",
@@ -223,6 +227,9 @@ def main() -> int:
         PROJECT / "system_review_graph" / "production_source_lifecycle.json",
         PROJECT / "system_review_graph" / "production_data_model_manifest.json",
         PROJECT / "system_review_graph" / "production_data_model_seed.json",
+        PROJECT / "system_review_graph" / "production_market_intelligence_manifest.json",
+        PROJECT / "system_review_graph" / "production_market_signals.json",
+        PROJECT / "system_review_graph" / "production_market_dataset_connectors.json",
         PROJECT / "system_review_graph" / "production_packet_engine_manifest.json",
         PROJECT / "system_review_graph" / "production_packet_events.json",
         PROJECT / "system_review_graph" / "production_packet_views" / "packet-frozen-tuna-canada-001" / "starter_packet.json",
@@ -342,6 +349,7 @@ def main() -> int:
         ["python3", "scripts/run_production_data_model.py"],
         ["python3", "scripts/run_production_packet_engine.py"],
         ["python3", "scripts/run_production_country_source_engine.py"],
+        ["python3", "scripts/run_production_market_intelligence_engine.py"],
         ["python3", "scripts/build_external_review_packet.py"],
         ["python3", "scripts/export_operator_dashboard.py"],
         ["python3", "scripts/audit_external_package.py", "--root", "."],
@@ -552,6 +560,9 @@ def main() -> int:
     )
     production_country_source_engine = json.loads(
         (PROJECT / "system_review_graph" / "production_country_source_engine_manifest.json").read_text(encoding="utf-8")
+    )
+    production_market_intelligence = json.loads(
+        (PROJECT / "system_review_graph" / "production_market_intelligence_manifest.json").read_text(encoding="utf-8")
     )
     official_source_registry = json.loads(
         (PROJECT / "data" / "official_source_registry.json").read_text(encoding="utf-8")
@@ -1505,6 +1516,53 @@ def main() -> int:
         print("Product project check: FAIL")
         print("packet source impact should preserve tariff and CFIA claim blocks")
         return 1
+    if (
+        production_market_intelligence.get("status") != "production_market_intelligence_engine_ready_source_routed_no_demand_claims"
+        or production_market_intelligence.get("metric_count") != 9
+        or production_market_intelligence.get("market_signal_count", 0) < 9
+        or production_market_intelligence.get("dataset_connector_count", 0) < 7
+        or production_market_intelligence.get("external_effects_created") is not False
+        or production_market_intelligence.get("claims_opened") is not False
+    ):
+        print("Product project check: FAIL")
+        print("production market intelligence should produce source-routed signals with closed claims")
+        return 1
+    for blocked_claim in ("profitable_market", "guaranteed_demand", "buyer_validated"):
+        if blocked_claim not in production_market_intelligence.get("blocked_claims", []):
+            print("Product project check: FAIL")
+            print(f"production market intelligence should block {blocked_claim}")
+            return 1
+    metric_names = {row.get("metric") for row in production_market_intelligence.get("signals", [])}
+    for metric in (
+        "destination_import_value",
+        "three_to_five_year_trend",
+        "top_origin_countries",
+        "unit_value_range",
+        "market_access_barriers",
+        "buyer_importer_lead_routes",
+    ):
+        if metric not in metric_names:
+            print("Product project check: FAIL")
+            print(f"production market intelligence missing metric {metric}")
+            return 1
+    if any(row.get("value_status") != "not_ingested_dataset_required" for row in production_market_intelligence.get("signals", [])):
+        print("Product project check: FAIL")
+        print("market signals should not contain invented values before dataset ingestion")
+        return 1
+    market_packet_runs = production_market_intelligence.get("packet_runs", [])
+    if not market_packet_runs:
+        print("Product project check: FAIL")
+        print("production market intelligence missing packet run evidence")
+        return 1
+    market_packet = market_packet_runs[0].get("market_packet", {})
+    if (
+        market_packet.get("can_claim_market_demand") is not False
+        or market_packet.get("can_claim_profitability") is not False
+        or market_packet.get("can_claim_buyer_validation") is not False
+    ):
+        print("Product project check: FAIL")
+        print("market packet must not claim demand, profitability, or buyer validation")
+        return 1
     external_validation_pdf = PROJECT / "output" / "pdf" / "external_validation_requirements.pdf"
     if not external_validation_pdf.exists() or not external_validation_pdf.read_bytes().startswith(b"%PDF"):
         print("Product project check: FAIL")
@@ -1780,6 +1838,9 @@ def main() -> int:
     print(f"production_country_source_engine_status={production_country_source_engine['status']}")
     print(f"production_country_packs={production_country_source_engine['country_pack_count']}")
     print(f"production_source_lifecycle_rows={production_country_source_engine['source_lifecycle_count']}")
+    print(f"production_market_intelligence_status={production_market_intelligence['status']}")
+    print(f"production_market_signals={production_market_intelligence['market_signal_count']}")
+    print(f"production_market_dataset_connectors={production_market_intelligence['dataset_connector_count']}")
     print(f"external_validation_pdf={external_validation_pdf.relative_to(PROJECT)}")
     print(f"external_validation_reviewer_brief_pdf={external_validation_reviewer_brief_pdf.relative_to(PROJECT)}")
     print(f"go_live_input_status={go_live_input_readiness['status']}")

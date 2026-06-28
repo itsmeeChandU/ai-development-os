@@ -135,8 +135,13 @@ class ProductionRedevelopmentTests(unittest.TestCase):
             packages["country_source_engine"]["implementation_status"],
             "local_country_pack_and_source_lifecycle_engine_ready_external_gates_closed",
         )
+        self.assertEqual(
+            packages["market_intelligence_engine"]["implementation_status"],
+            "local_source_routed_market_signal_engine_ready_no_demand_claims",
+        )
         self.assertIn("system_review_graph/production_packet_engine_manifest.json", packages["packet_engine"]["artifacts"])
         self.assertIn("system_review_graph/production_country_source_engine_manifest.json", packages["country_source_engine"]["artifacts"])
+        self.assertIn("system_review_graph/production_market_intelligence_manifest.json", packages["market_intelligence_engine"]["artifacts"])
 
     def test_writer_creates_plan_research_and_review_doc(self) -> None:
         plan = build_production_redevelopment_plan()
