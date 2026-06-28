@@ -223,6 +223,71 @@
       ],
       "terms_status": "not_checked_local_contract",
       "url": "https://www.cbsa-asfc.gc.ca/services/cb-cd/cb-cd-eng.html"
+    },
+    {
+      "accessed_at": "2026-06-28",
+      "claim_boundary": "Reference source only; does not prove tariff treatment, preference qualification, regulatory requirements, or market-access approval.",
+      "evidence_role": "tariff and market-access comparison research source",
+      "fetch_cadence": "manual_review_before_fetch",
+      "jurisdiction": "International",
+      "live_fetch_allowed": false,
+      "loader": "intelligence_hub.official_source_registry",
+      "manual_only": true,
+      "name": "ITC Market Access Map",
+      "permission_boundary": "Local contract only. Check robots, terms, official API/download rules, and qualified source policy before enabling hosted live fetches.",
+      "refresh_mode": "external_refresh_required_before_claims",
+      "robots_status": "not_checked_local_contract",
+      "scheduled_fetch_job": "source-monitor:itc-market-access-map:metadata-refresh",
+      "source_id": "itc-market-access-map",
+      "tags": [
+        "official_reference",
+        "tariff"
+      ],
+      "terms_status": "not_checked_local_contract",
+      "url": "https://www.macmap.org/"
+    },
+    {
+      "accessed_at": "2026-06-28",
+      "claim_boundary": "Reference source only; does not prove export permission, licensing status, incentive eligibility, or product-specific export compliance.",
+      "evidence_role": "India export policy and foreign-trade process orientation",
+      "fetch_cadence": "manual_review_before_fetch",
+      "jurisdiction": "IN",
+      "live_fetch_allowed": false,
+      "loader": "intelligence_hub.official_source_registry",
+      "manual_only": true,
+      "name": "India Directorate General of Foreign Trade",
+      "permission_boundary": "Local contract only. Check robots, terms, official API/download rules, and qualified source policy before enabling hosted live fetches.",
+      "refresh_mode": "external_refresh_required_before_claims",
+      "robots_status": "not_checked_local_contract",
+      "scheduled_fetch_job": "source-monitor:india-dgft-foreign-trade-policy:metadata-refresh",
+      "source_id": "india-dgft-foreign-trade-policy",
+      "tags": [
+        "official_reference"
+      ],
+      "terms_status": "not_checked_local_contract",
+      "url": "https://www.dgft.gov.in/"
+    },
+    {
+      "accessed_at": "2026-06-28",
+      "claim_boundary": "Reference source only; does not prove tariff classification, export/import duty treatment, or customs compliance.",
+      "evidence_role": "India customs and tariff reference orientation",
+      "fetch_cadence": "manual_review_before_fetch",
+      "jurisdiction": "IN",
+      "live_fetch_allowed": false,
+      "loader": "intelligence_hub.official_source_registry",
+      "manual_only": true,
+      "name": "India Central Board of Indirect Taxes and Customs",
+      "permission_boundary": "Local contract only. Check robots, terms, official API/download rules, and qualified source policy before enabling hosted live fetches.",
+      "refresh_mode": "external_refresh_required_before_claims",
+      "robots_status": "not_checked_local_contract",
+      "scheduled_fetch_job": "source-monitor:india-cbic-customs:metadata-refresh",
+      "source_id": "india-cbic-customs",
+      "tags": [
+        "official_reference",
+        "tariff"
+      ],
+      "terms_status": "not_checked_local_contract",
+      "url": "https://www.cbic.gov.in/"
     }
   ],
   "proof_boundary": "This artifact defines how Intelligence Hub should monitor official sources and stale packets. It does not prove current tariff, CFIA, import permit, sanctions, buyer, supplier, legal, or commercial readiness.",
@@ -386,6 +451,54 @@
       "source_id": "cbsa-licensed-customs-brokers",
       "terms_status": "not_checked_local_contract",
       "url": "https://www.cbsa-asfc.gc.ca/services/cb-cd/cb-cd-eng.html"
+    },
+    {
+      "content_mode": "registry_metadata_only",
+      "fetch_cadence": "manual_review_before_fetch",
+      "freshness_status": "monitoring_contract_ready_requires_live_refresh",
+      "live_fetch_performed": false,
+      "manual_only": true,
+      "observed_at": "2026-06-25T00:00:00+00:00",
+      "proof_boundary": "Registry metadata proves which source to monitor, not current legal or compliance truth.",
+      "rights_status": "official_reference_url_only",
+      "robots_status": "not_checked_local_contract",
+      "snapshot_hash": "daab76f09f1730b446de7a7f254b0503ca3e9a7149a7f581b6caad0154a99652",
+      "snapshot_id": "snapshot:itc-market-access-map:daab76f09f17",
+      "source_id": "itc-market-access-map",
+      "terms_status": "not_checked_local_contract",
+      "url": "https://www.macmap.org/"
+    },
+    {
+      "content_mode": "registry_metadata_only",
+      "fetch_cadence": "manual_review_before_fetch",
+      "freshness_status": "monitoring_contract_ready_requires_live_refresh",
+      "live_fetch_performed": false,
+      "manual_only": true,
+      "observed_at": "2026-06-25T00:00:00+00:00",
+      "proof_boundary": "Registry metadata proves which source to monitor, not current legal or compliance truth.",
+      "rights_status": "official_reference_url_only",
+      "robots_status": "not_checked_local_contract",
+      "snapshot_hash": "86c7952b78f1415c9dc5a82080648a64a304f30ce264575d942a560fc896a5f0",
+      "snapshot_id": "snapshot:india-dgft-foreign-trade-policy:86c7952b78f1",
+      "source_id": "india-dgft-foreign-trade-policy",
+      "terms_status": "not_checked_local_contract",
+      "url": "https://www.dgft.gov.in/"
+    },
+    {
+      "content_mode": "registry_metadata_only",
+      "fetch_cadence": "manual_review_before_fetch",
+      "freshness_status": "monitoring_contract_ready_requires_live_refresh",
+      "live_fetch_performed": false,
+      "manual_only": true,
+      "observed_at": "2026-06-25T00:00:00+00:00",
+      "proof_boundary": "Registry metadata proves which source to monitor, not current legal or compliance truth.",
+      "rights_status": "official_reference_url_only",
+      "robots_status": "not_checked_local_contract",
+      "snapshot_hash": "bcda8c1e8fdce83493e5758d4bf9dffae3beb54a557a2aa143b244acc1fe5efa",
+      "snapshot_id": "snapshot:india-cbic-customs:bcda8c1e8fdc",
+      "source_id": "india-cbic-customs",
+      "terms_status": "not_checked_local_contract",
+      "url": "https://www.cbic.gov.in/"
     }
   ],
   "status": "policy_source_snapshots_ready"

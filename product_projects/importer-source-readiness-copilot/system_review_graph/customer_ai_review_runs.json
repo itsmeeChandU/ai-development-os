@@ -129,7 +129,7 @@
     "generated_at": "2026-06-25T00:00:00+00:00",
     "human_gate": "required_before_external_claims",
     "human_review_required": true,
-    "input_snapshot_hash": "c7a40afb2ec11a49fa37e6ca020a6115fe70cc8f4893bbd06871970933ded6d7",
+    "input_snapshot_hash": "45934267fcf8ed2f86bea2fb5487b8376bd03811589a83d9bb9678796911ee7f",
     "model_mode": "metadata_only",
     "model_name": "deterministic-safety-rules",
     "model_name_or_endpoint": "local_rule_simulator",
@@ -423,7 +423,10 @@
       "canada-sanctions",
       "ised-trade-data-online",
       "canada-cid",
-      "cbsa-licensed-customs-brokers"
+      "cbsa-licensed-customs-brokers",
+      "itc-market-access-map",
+      "india-dgft-foreign-trade-policy",
+      "india-cbic-customs"
     ],
     "status": "simulated_review_complete_human_gates_closed",
     "validation_result": {

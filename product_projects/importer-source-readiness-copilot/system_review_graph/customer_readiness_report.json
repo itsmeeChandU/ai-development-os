@@ -130,7 +130,7 @@
       "generated_at": "2026-06-25T00:00:00+00:00",
       "human_gate": "required_before_external_claims",
       "human_review_required": true,
-      "input_snapshot_hash": "c7a40afb2ec11a49fa37e6ca020a6115fe70cc8f4893bbd06871970933ded6d7",
+      "input_snapshot_hash": "45934267fcf8ed2f86bea2fb5487b8376bd03811589a83d9bb9678796911ee7f",
       "model_mode": "metadata_only",
       "model_name": "deterministic-safety-rules",
       "model_name_or_endpoint": "local_rule_simulator",
@@ -424,7 +424,10 @@
         "canada-sanctions",
         "ised-trade-data-online",
         "canada-cid",
-        "cbsa-licensed-customs-brokers"
+        "cbsa-licensed-customs-brokers",
+        "itc-market-access-map",
+        "india-dgft-foreign-trade-policy",
+        "india-cbic-customs"
       ],
       "status": "simulated_review_complete_human_gates_closed",
       "validation_result": {
@@ -769,6 +772,33 @@
       "jurisdiction": "CA",
       "name": "CBSA Licensed Customs Brokers",
       "url": "https://www.cbsa-asfc.gc.ca/services/cb-cd/cb-cd-eng.html"
+    },
+    {
+      "accessed_at": "2026-06-28",
+      "claim_boundary": "Reference source only; does not prove tariff treatment, preference qualification, regulatory requirements, or market-access approval.",
+      "evidence_role": "tariff and market-access comparison research source",
+      "id": "itc-market-access-map",
+      "jurisdiction": "International",
+      "name": "ITC Market Access Map",
+      "url": "https://www.macmap.org/"
+    },
+    {
+      "accessed_at": "2026-06-28",
+      "claim_boundary": "Reference source only; does not prove export permission, licensing status, incentive eligibility, or product-specific export compliance.",
+      "evidence_role": "India export policy and foreign-trade process orientation",
+      "id": "india-dgft-foreign-trade-policy",
+      "jurisdiction": "IN",
+      "name": "India Directorate General of Foreign Trade",
+      "url": "https://www.dgft.gov.in/"
+    },
+    {
+      "accessed_at": "2026-06-28",
+      "claim_boundary": "Reference source only; does not prove tariff classification, export/import duty treatment, or customs compliance.",
+      "evidence_role": "India customs and tariff reference orientation",
+      "id": "india-cbic-customs",
+      "jurisdiction": "IN",
+      "name": "India Central Board of Indirect Taxes and Customs",
+      "url": "https://www.cbic.gov.in/"
     }
   ],
   "operator_display_status": "Operator workbench usable for internal review",
@@ -943,7 +973,7 @@
       "blockers": [
         {
           "claim_blocked": "Source Freshness",
-          "created_at": "2026-06-28T01:54:01+00:00",
+          "created_at": "2026-06-28T03:01:53+00:00",
           "evidence": "source packet packet-frozen-tuna-canada-001",
           "evidence_required": "Fresh official-source refresh record with accessed_at, last_verified_at, content_hash, HTTP status, and reviewer boundary.",
           "gate": "closed",
@@ -974,7 +1004,7 @@
         },
         {
           "claim_blocked": "Source Freshness",
-          "created_at": "2026-06-28T01:54:01+00:00",
+          "created_at": "2026-06-28T03:01:53+00:00",
           "evidence": "source packet packet-frozen-tuna-canada-001",
           "evidence_required": "Fresh official-source refresh record with accessed_at, last_verified_at, content_hash, HTTP status, and reviewer boundary.",
           "gate": "closed",
@@ -1005,7 +1035,7 @@
         },
         {
           "claim_blocked": "Source Freshness",
-          "created_at": "2026-06-28T01:54:01+00:00",
+          "created_at": "2026-06-28T03:01:53+00:00",
           "evidence": "source packet packet-frozen-tuna-canada-001",
           "evidence_required": "Fresh official-source refresh record with accessed_at, last_verified_at, content_hash, HTTP status, and reviewer boundary.",
           "gate": "closed",
@@ -1036,7 +1066,7 @@
         },
         {
           "claim_blocked": "Compliance Review",
-          "created_at": "2026-06-28T01:54:01+00:00",
+          "created_at": "2026-06-28T03:01:53+00:00",
           "evidence": "source packet packet-frozen-tuna-canada-001",
           "evidence_required": "Dated restricted-party screening record with source and reviewer boundary.",
           "gate": "closed",
@@ -1067,7 +1097,7 @@
         },
         {
           "claim_blocked": "Compliance Review",
-          "created_at": "2026-06-28T01:54:01+00:00",
+          "created_at": "2026-06-28T03:01:53+00:00",
           "evidence": "source packet packet-frozen-tuna-canada-001",
           "evidence_required": "Scoped Canadian import/export, food, customs, or broker review finding.",
           "gate": "closed",
@@ -1098,7 +1128,7 @@
         },
         {
           "claim_blocked": "Buyer Validation",
-          "created_at": "2026-06-28T01:54:01+00:00",
+          "created_at": "2026-06-28T03:01:53+00:00",
           "evidence": "source packet packet-frozen-tuna-canada-001",
           "evidence_required": "Dated buyer/operator feedback tied to the packet and intended use.",
           "gate": "closed",
@@ -1129,7 +1159,7 @@
         },
         {
           "claim_blocked": "Source Rights / Contract",
-          "created_at": "2026-06-28T01:54:01+00:00",
+          "created_at": "2026-06-28T03:01:53+00:00",
           "evidence": "source packet packet-frozen-tuna-canada-001",
           "evidence_required": "Signed source-rights, data-rights, or commercial terms record.",
           "gate": "closed",
@@ -1352,7 +1382,7 @@
         "Trade agreement preference claim",
         "Public launch claim"
       ],
-      "official_reference_count": 10,
+      "official_reference_count": 13,
       "offline_evidence_only": false,
       "organization_id": "org-importer-demo",
       "origin_country": "Vietnam",

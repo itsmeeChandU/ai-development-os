@@ -32,6 +32,7 @@ class CompletionPlatformTests(unittest.TestCase):
         self.assertEqual(payload["status"], "all_local_stages_implemented_with_external_gates")
         self.assertEqual(payload["country_coverage"]["status"], "country_coverage_ready_with_claim_gates")
         self.assertEqual(payload["opportunity_scanner"]["status"], "opportunity_scanner_ready_with_research_gates")
+        self.assertEqual(payload["business_logic_phases"]["status"], "business_logic_phases_ready_with_evidence_gates")
         self.assertEqual(payload["transport_readiness"]["status"], "transport_readiness_ready_with_forwarder_gates")
         self.assertEqual(payload["billing_credit_controls"]["status"], "billing_credit_controls_ready_local_no_live_checkout")
         self.assertEqual(payload["agent_api_manifest"]["status"], "agent_api_manifest_ready_scoped_and_metered")
@@ -59,6 +60,28 @@ class CompletionPlatformTests(unittest.TestCase):
         self.assertFalse(any(stage["external_claims_opened"] for stage in payload["all_stage_readiness"]["stages"]))
 
         self.assertGreaterEqual(payload["opportunity_scanner"]["signal_count"], 1)
+        business = payload["business_logic_phases"]
+        self.assertEqual(business["phase_count"], 5)
+        self.assertEqual(business["packet_rows"][0]["decision_tree"]["question_count"], 12)
+        self.assertEqual(business["packet_rows"][0]["business_scores"]["score_count"], 5)
+        self.assertEqual(
+            business["packet_rows"][0]["canonical_packet_contract"]["field_provenance"]["responsibility_path"]["mode"],
+            "system_derived",
+        )
+        self.assertEqual(business["reviewer_signoff_framework"]["final_rule"], "no reviewer lane, no claim lane")
+        self.assertIn("live checkout stays disabled", business["hosted_beta_control_contract"]["payment_policy"])
+
+        agent_tools = {row["name"] for row in payload["agent_api_manifest"]["allowed_tools"]}
+        self.assertIn("get_business_logic_phase_report", agent_tools)
+        self.assertIn("generate_business_decision_report", agent_tools)
+
+        source_ids = {
+            source["source_id"]
+            for row in business["packet_rows"]
+            for source in row["market_intelligence"]["tariff_and_market_access_comparison"]["source_routes"]
+        }
+        self.assertIn("itc-market-access-map", source_ids)
+
         for signal in payload["opportunity_scanner"]["signals"]:
             self.assertEqual(signal["opportunity_signal"], "possible opportunity signal")
             self.assertEqual(signal["recommendation_claim"], "blocked")
@@ -160,6 +183,7 @@ class CompletionPlatformTests(unittest.TestCase):
                 "agent_api_gateway_contract.json",
                 "launch_operations_report.json",
                 "all_stage_readiness_report.json",
+                "business_logic_phase_report.json",
             ):
                 self.assertTrue((root / "system_review_graph" / name).exists(), name)
 

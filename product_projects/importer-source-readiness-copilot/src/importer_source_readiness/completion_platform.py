@@ -7,6 +7,8 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+from .business_logic import build_business_logic_phases
+
 
 def _now() -> str:
     return datetime.now(timezone.utc).replace(microsecond=0).isoformat()
@@ -31,6 +33,10 @@ def _country(value: Any) -> str:
         "USA": "United States",
         "UK": "United Kingdom",
         "GB": "United Kingdom",
+        "IN": "India",
+        "IND": "India",
+        "VN": "Vietnam",
+        "VNM": "Vietnam",
     }.get(text, text)
 
 
@@ -514,7 +520,9 @@ def build_agent_api_manifest() -> dict[str, Any]:
     allowed_tools = [
         "get_supported_countries",
         "get_country_coverage",
+        "get_business_logic_phase_report",
         "create_trade_packet",
+        "generate_business_decision_report",
         "generate_starter_checklist",
         "generate_missing_evidence_report",
         "generate_chatgpt_safe_summary",
@@ -539,12 +547,18 @@ def build_agent_api_manifest() -> dict[str, Any]:
     ]
     confirmation_required = {
         "create_trade_packet",
+        "generate_business_decision_report",
         "generate_missing_evidence_report",
         "generate_chatgpt_safe_summary",
         "generate_broker_packet",
         "request_billing_quote",
     }
-    metered_tools = {"generate_broker_packet", "generate_missing_evidence_report", "request_billing_quote"}
+    metered_tools = {
+        "generate_business_decision_report",
+        "generate_broker_packet",
+        "generate_missing_evidence_report",
+        "request_billing_quote",
+    }
     return {
         "generated_at": _now(),
         "status": "agent_api_manifest_ready_scoped_and_metered",
@@ -1229,6 +1243,7 @@ def build_all_stage_readiness(
 def build_completion_platform(workflow: dict[str, Any], official_sources: list[dict[str, Any]]) -> dict[str, Any]:
     coverage = build_country_coverage(workflow, official_sources)
     opportunity = build_opportunity_scanner(workflow, coverage, official_sources)
+    business_logic = build_business_logic_phases(workflow, official_sources)
     transport = build_transport_readiness(workflow)
     billing = build_billing_controls()
     agent_api = build_agent_api_manifest()
@@ -1259,6 +1274,7 @@ def build_completion_platform(workflow: dict[str, Any], official_sources: list[d
         "status": "all_local_stages_implemented_with_external_gates",
         "country_coverage": coverage,
         "opportunity_scanner": opportunity,
+        "business_logic_phases": business_logic,
         "transport_readiness": transport,
         "billing_credit_controls": billing,
         "agent_api_manifest": agent_api,
@@ -1279,6 +1295,7 @@ def write_completion_platform_artifacts(payload: dict[str, Any], repo_root: Path
     _write(graph / "completion_platform_manifest.json", payload)
     _write(graph / "country_coverage_report.json", payload["country_coverage"])
     _write(graph / "opportunity_scanner_report.json", payload["opportunity_scanner"])
+    _write(graph / "business_logic_phase_report.json", payload["business_logic_phases"])
     _write(graph / "transport_readiness_report.json", payload["transport_readiness"])
     _write(graph / "billing_credit_controls.json", payload["billing_credit_controls"])
     _write(graph / "agent_api_manifest.json", payload["agent_api_manifest"])

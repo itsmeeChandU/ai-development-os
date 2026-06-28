@@ -170,6 +170,7 @@ def main() -> int:
     completion = _load_json(ROOT / "system_review_graph" / "completion_platform_manifest.json")
     country_coverage = _load_json(ROOT / "system_review_graph" / "country_coverage_report.json")
     opportunity_scanner = _load_json(ROOT / "system_review_graph" / "opportunity_scanner_report.json")
+    business_logic = _load_json(ROOT / "system_review_graph" / "business_logic_phase_report.json")
     transport_readiness = _load_json(ROOT / "system_review_graph" / "transport_readiness_report.json")
     billing_controls = _load_json(ROOT / "system_review_graph" / "billing_credit_controls.json")
     agent_api = _load_json(ROOT / "system_review_graph" / "agent_api_manifest.json")
@@ -315,6 +316,7 @@ def main() -> int:
         "system_review_graph/completion_platform_manifest.json",
         "system_review_graph/country_coverage_report.json",
         "system_review_graph/opportunity_scanner_report.json",
+        "system_review_graph/business_logic_phase_report.json",
         "system_review_graph/transport_readiness_report.json",
         "system_review_graph/billing_credit_controls.json",
         "system_review_graph/agent_api_manifest.json",
@@ -349,6 +351,7 @@ def main() -> int:
         "system_review_graph/generated_reports/starter_checklist_packet-frozen-tuna-canada-001.json",
         "system_review_graph/generated_reports/chatgpt_safe_summary_packet-frozen-tuna-canada-001.json",
         "system_review_graph/generated_reports/broker_packet_packet-frozen-tuna-canada-001.json",
+        "system_review_graph/generated_reports/business_decision_packet-frozen-tuna-canada-001.json",
         "system_review_graph/source_refresh_runs.json",
         "system_review_graph/source_refresh_report_packet-frozen-tuna-canada-001.json",
         "system_review_graph/expert_review_packet_packet-frozen-tuna-canada-001.md",
@@ -739,6 +742,22 @@ def main() -> int:
         failures.append("opportunity scanner should be ready with research gates")
     if opportunity_scanner.get("signal_count", 0) < 1:
         failures.append("opportunity scanner should include at least one signal row")
+    if business_logic.get("status") != "business_logic_phases_ready_with_evidence_gates":
+        failures.append("business logic phase report should be ready with evidence gates")
+    if business_logic.get("phase_count") != 5:
+        failures.append("business logic phase report should include five phases")
+    if not business_logic.get("packet_rows"):
+        failures.append("business logic phase report should include packet rows")
+    else:
+        first_business_row = business_logic["packet_rows"][0]
+        if first_business_row.get("decision_tree", {}).get("question_count") != 12:
+            failures.append("business logic decision tree should include 12 questions")
+        if first_business_row.get("business_scores", {}).get("score_count") != 5:
+            failures.append("business logic should include five separate scores")
+        if first_business_row.get("canonical_packet_contract", {}).get("status") != "canonical_trade_packet_contract_ready":
+            failures.append("business logic should include the canonical packet contract")
+    if business_logic.get("operation_status") != "business_logic_operational_local_with_evidence_gates":
+        failures.append("business logic should include local operation proof")
     if transport_readiness.get("status") != "transport_readiness_ready_with_forwarder_gates":
         failures.append("transport readiness should be ready with forwarder gates")
     if not transport_readiness.get("rows"):
@@ -1116,6 +1135,7 @@ def main() -> int:
     print(f"policy_monitor={policy_monitor['status']}")
     print(f"completion_platform={completion['status']}")
     print(f"opportunity_scanner={opportunity_scanner['status']}")
+    print(f"business_logic={business_logic['status']}")
     print(f"country_coverage={country_coverage['status']}")
     print(f"transport_readiness={transport_readiness['status']}")
     print(f"billing_controls={billing_controls['status']}")

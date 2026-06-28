@@ -36,8 +36,8 @@
     "product_projects/importer-source-readiness-copilot/output/pdf/external_validation_reviewer_brief.pdf",
     "product_projects/importer-source-readiness-copilot/output/pdf/go_live_input_requests.pdf"
   ],
-  "generated_at": "2026-06-28T01:55:47+00:00",
-  "head": "d5a80d8a3178d9e1248944df9ac839d6f897a7a8",
+  "generated_at": "2026-06-28T03:00:05+00:00",
+  "head": "3ad78be5ee21aa8c14c8fb619a70d8f9d132d724",
   "proof_commands": [
     "python3 scripts/ai_dev_os_check.py",
     "python3 scripts/workflow_manifest_check.py",

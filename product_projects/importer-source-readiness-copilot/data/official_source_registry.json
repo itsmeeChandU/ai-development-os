@@ -88,5 +88,32 @@
     "jurisdiction": "CA",
     "evidence_role": "qualified broker discovery source",
     "claim_boundary": "Reference source only; does not prove a broker relationship, review, or signoff."
+  },
+  {
+    "id": "itc-market-access-map",
+    "name": "ITC Market Access Map",
+    "url": "https://www.macmap.org/",
+    "accessed_at": "2026-06-28",
+    "jurisdiction": "International",
+    "evidence_role": "tariff and market-access comparison research source",
+    "claim_boundary": "Reference source only; does not prove tariff treatment, preference qualification, regulatory requirements, or market-access approval."
+  },
+  {
+    "id": "india-dgft-foreign-trade-policy",
+    "name": "India Directorate General of Foreign Trade",
+    "url": "https://www.dgft.gov.in/",
+    "accessed_at": "2026-06-28",
+    "jurisdiction": "IN",
+    "evidence_role": "India export policy and foreign-trade process orientation",
+    "claim_boundary": "Reference source only; does not prove export permission, licensing status, incentive eligibility, or product-specific export compliance."
+  },
+  {
+    "id": "india-cbic-customs",
+    "name": "India Central Board of Indirect Taxes and Customs",
+    "url": "https://www.cbic.gov.in/",
+    "accessed_at": "2026-06-28",
+    "jurisdiction": "IN",
+    "evidence_role": "India customs and tariff reference orientation",
+    "claim_boundary": "Reference source only; does not prove tariff classification, export/import duty treatment, or customs compliance."
   }
 ]

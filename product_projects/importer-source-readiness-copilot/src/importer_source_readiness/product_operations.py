@@ -27,6 +27,7 @@ SAFE_TOOL_STATUS = "agent_tool_executed_local"
 
 OPERATION_COVERAGE_KEYS = {
     "data_intake",
+    "business_logic",
     "research_execution",
     "evidence_reporting",
     "expert_review_routing",
@@ -258,6 +259,47 @@ def generate_missing_evidence_report(repo_root: Path, packet_id: str | None = No
         details={"missing_count": len(payload["missing_items"])},
     )
     return {"status": "operation_complete", "operation_event": event, "report": payload}
+
+
+def generate_business_decision_report(repo_root: Path, packet_id: str | None = None) -> dict[str, Any]:
+    workflow = _read_workflow(repo_root)
+    packet = _select_packet(workflow, packet_id)
+    packet_id = str(packet["packet_id"])
+    platform = _load_json(_graph(repo_root) / "business_logic_phase_report.json", {})
+    row = next((item for item in platform.get("packet_rows", []) if str(item.get("packet_id")) == packet_id), {})
+    if not row:
+        official_sources = load_json_list(repo_root / "data" / "official_source_registry.json")
+        completion = build_completion_platform(workflow, official_sources)
+        write_completion_platform_artifacts(completion, repo_root)
+        platform = completion["business_logic_phases"]
+        row = next((item for item in platform.get("packet_rows", []) if str(item.get("packet_id")) == packet_id), {})
+    path = _generated_reports_dir(repo_root) / f"business_decision_{packet_id}.json"
+    payload = {
+        "status": "business_decision_report_generated",
+        "packet_id": packet_id,
+        "business_positioning": row.get("business_positioning"),
+        "recommended_first_wedge": row.get("recommended_first_wedge"),
+        "canonical_packet_contract": row.get("canonical_packet_contract", {}),
+        "decision_tree": row.get("decision_tree", {}),
+        "market_intelligence": row.get("market_intelligence", {}),
+        "country_packs": row.get("country_packs", {}),
+        "source_monitoring_contract": row.get("source_monitoring_contract", {}),
+        "packet_outputs": row.get("packet_outputs", {}),
+        "business_scores": row.get("business_scores", {}),
+        "blocked_claims": row.get("blocked_claims", []),
+        "next_valid_move": row.get("next_valid_move"),
+        "external_claims_opened": False,
+        "proof_boundary": "Business decision report prepares the next safe move; it does not approve import/export, tariff, buyer, supplier, shipment, or market-demand claims.",
+    }
+    write_json(payload, path)
+    event = _record_operation(
+        repo_root,
+        operation="generate_business_decision_report",
+        packet_id=packet_id,
+        coverage=["business_logic", "evidence_reporting", "agent_tool_execution"],
+        artifacts=[path, _graph(repo_root) / "business_logic_phase_report.json"],
+    )
+    return {"status": "operation_complete", "operation_event": event, "business_decision": payload}
 
 
 def record_data_intake_snapshot(repo_root: Path, packet_id: str | None = None) -> dict[str, Any]:
@@ -664,6 +706,25 @@ def get_country_coverage(repo_root: Path, packet_id: str | None = None) -> dict[
     return {"status": "operation_complete", "operation_event": event, "coverage": rows or coverage.get("countries", [])}
 
 
+def get_business_logic_phase_report(repo_root: Path, packet_id: str | None = None) -> dict[str, Any]:
+    business = _load_json(_graph(repo_root) / "business_logic_phase_report.json", {})
+    rows = business.get("packet_rows", [])
+    scoped = [row for row in rows if not packet_id or str(row.get("packet_id")) == packet_id]
+    event = _record_operation(
+        repo_root,
+        operation="get_business_logic_phase_report",
+        packet_id=packet_id,
+        coverage=["business_logic", "agent_tool_execution"],
+        artifacts=[_graph(repo_root) / "business_logic_phase_report.json"],
+        details={"row_count": len(scoped)},
+    )
+    return {
+        "status": "operation_complete",
+        "operation_event": event,
+        "business_logic": scoped or business,
+    }
+
+
 def get_packet_status(repo_root: Path, packet_id: str | None = None) -> dict[str, Any]:
     workflow = _read_workflow(repo_root)
     packet = _select_packet(workflow, packet_id)
@@ -691,7 +752,9 @@ def execute_agent_tool(
     tool_map = {
         "get_supported_countries": lambda: get_supported_countries(repo_root),
         "get_country_coverage": lambda: get_country_coverage(repo_root, packet_id),
+        "get_business_logic_phase_report": lambda: get_business_logic_phase_report(repo_root, packet_id),
         "create_trade_packet": lambda: create_trade_packet(repo_root, fields, actor),
+        "generate_business_decision_report": lambda: generate_business_decision_report(repo_root, packet_id),
         "generate_starter_checklist": lambda: generate_starter_checklist(repo_root, packet_id),
         "generate_missing_evidence_report": lambda: generate_missing_evidence_report(repo_root, packet_id),
         "generate_chatgpt_safe_summary": lambda: generate_chatgpt_safe_summary(repo_root, packet_id),
@@ -719,6 +782,7 @@ def execute_all_local_product_operations(repo_root: Path, packet_id: str | None 
     selected_id = str(selected["packet_id"])
     operations = [
         record_data_intake_snapshot(repo_root, selected_id),
+        generate_business_decision_report(repo_root, selected_id),
         run_research_execution(repo_root, selected_id),
         generate_missing_evidence_report(repo_root, selected_id),
         generate_starter_checklist(repo_root, selected_id),
@@ -750,6 +814,7 @@ def _apply_operation_proofs(repo_root: Path) -> None:
     expert_path = graph / "expert_network_report.json"
     team_path = graph / "team_workspace_report.json"
     launch_path = graph / "launch_operations_report.json"
+    business_path = graph / "business_logic_phase_report.json"
 
     if all_stage_path.exists():
         all_stages = _load_json(all_stage_path, {})
@@ -774,6 +839,7 @@ def _apply_operation_proofs(repo_root: Path) -> None:
         (expert_path, "expert_network_operational_local_with_human_review_gates"),
         (team_path, "team_workspace_operational_local_with_approval_gates"),
         (launch_path, "launch_operations_operational_local_with_human_approval_gates"),
+        (business_path, "business_logic_operational_local_with_evidence_gates"),
     ):
         if path.exists():
             payload = _load_json(path, {})

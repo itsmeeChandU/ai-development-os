@@ -178,6 +178,7 @@ def main() -> int:
         PROJECT / "system_review_graph" / "completion_platform_manifest.json",
         PROJECT / "system_review_graph" / "country_coverage_report.json",
         PROJECT / "system_review_graph" / "opportunity_scanner_report.json",
+        PROJECT / "system_review_graph" / "business_logic_phase_report.json",
         PROJECT / "system_review_graph" / "transport_readiness_report.json",
         PROJECT / "system_review_graph" / "billing_credit_controls.json",
         PROJECT / "system_review_graph" / "agent_api_manifest.json",
@@ -216,6 +217,7 @@ def main() -> int:
         PROJECT / "system_review_graph" / "generated_reports" / "starter_checklist_packet-frozen-tuna-canada-001.json",
         PROJECT / "system_review_graph" / "generated_reports" / "chatgpt_safe_summary_packet-frozen-tuna-canada-001.json",
         PROJECT / "system_review_graph" / "generated_reports" / "broker_packet_packet-frozen-tuna-canada-001.json",
+        PROJECT / "system_review_graph" / "generated_reports" / "business_decision_packet-frozen-tuna-canada-001.json",
         PROJECT / "system_review_graph" / "source_refresh_runs.json",
         PROJECT / "system_review_graph" / "source_refresh_report_packet-frozen-tuna-canada-001.json",
         PROJECT / "system_review_graph" / "expert_review_packet_packet-frozen-tuna-canada-001.md",
@@ -433,6 +435,9 @@ def main() -> int:
     )
     opportunity_scanner = json.loads(
         (PROJECT / "system_review_graph" / "opportunity_scanner_report.json").read_text(encoding="utf-8")
+    )
+    business_logic = json.loads(
+        (PROJECT / "system_review_graph" / "business_logic_phase_report.json").read_text(encoding="utf-8")
     )
     transport_readiness = json.loads(
         (PROJECT / "system_review_graph" / "transport_readiness_report.json").read_text(encoding="utf-8")
@@ -960,6 +965,35 @@ def main() -> int:
         print("Product project check: FAIL")
         print("opportunity scanner artifact is missing signal rows")
         return 1
+    if business_logic.get("status") != "business_logic_phases_ready_with_evidence_gates":
+        print("Product project check: FAIL")
+        print("business logic phase report is missing or stale")
+        return 1
+    if business_logic.get("phase_count") != 5:
+        print("Product project check: FAIL")
+        print("business logic report must include the five required phase contracts")
+        return 1
+    if not business_logic.get("packet_rows"):
+        print("Product project check: FAIL")
+        print("business logic report missing packet rows")
+        return 1
+    first_business_row = business_logic["packet_rows"][0]
+    if first_business_row.get("decision_tree", {}).get("question_count") != 12:
+        print("Product project check: FAIL")
+        print("business logic decision tree must include twelve decision questions")
+        return 1
+    if first_business_row.get("business_scores", {}).get("score_count") != 5:
+        print("Product project check: FAIL")
+        print("business logic report must expose five separate business scores")
+        return 1
+    if first_business_row.get("canonical_packet_contract", {}).get("status") != "canonical_trade_packet_contract_ready":
+        print("Product project check: FAIL")
+        print("business logic report missing canonical trade packet contract")
+        return 1
+    if business_logic.get("operation_status") != "business_logic_operational_local_with_evidence_gates":
+        print("Product project check: FAIL")
+        print("business logic report missing local operation proof")
+        return 1
     if transport_readiness.get("status") != "transport_readiness_ready_with_forwarder_gates" or not transport_readiness.get("rows"):
         print("Product project check: FAIL")
         print("transport readiness artifact is missing packet rows")
@@ -1360,6 +1394,7 @@ def main() -> int:
     print(f"policy_monitor={policy_monitor['status']}")
     print(f"completion_platform={completion['status']}")
     print(f"opportunity_scanner={opportunity_scanner['status']}")
+    print(f"business_logic={business_logic['status']}")
     print(f"country_coverage={country_coverage['status']}")
     print(f"transport_readiness={transport_readiness['status']}")
     print(f"billing_controls={billing_controls['status']}")

@@ -25,7 +25,7 @@
       "packet_limit": "contract"
     }
   ],
-  "executed_tool_count": 6,
+  "executed_tool_count": 7,
   "execution_report": "system_review_graph/product_operations_report.json",
   "forbidden_tools": [
     "approve_import",
@@ -42,7 +42,7 @@
     "submit_government_form",
     "send_report_externally_without_confirmation"
   ],
-  "generated_at": "2026-06-28T01:54:01+00:00",
+  "generated_at": "2026-06-28T03:01:53+00:00",
   "operation_status": "agent_api_gateway_executed_local_no_external_effects",
   "proof_boundary": "The gateway executes local product operations with external effects disabled; it does not expose a live public API, credentials, payment integration, or claim-opening authority.",
   "status": "agent_api_gateway_ready_local_executor_no_external_effects",
@@ -93,10 +93,44 @@
         "external_effects_created": false,
         "status": "accepted_for_local_execution"
       },
+      "method": "GET",
+      "route": "/api/agent-tools/get_business_logic_phase_report",
+      "scope_required": "packet:read",
+      "tool": "get_business_logic_phase_report"
+    },
+    {
+      "billing_gate": "included_with_limits",
+      "example_request": {
+        "dry_run": true,
+        "external_effects_allowed": false,
+        "packet_id": "packet-frozen-tuna-canada-001"
+      },
+      "example_response": {
+        "can_open_claim_gate": false,
+        "external_effects_created": false,
+        "status": "accepted_for_local_execution"
+      },
       "method": "POST",
       "route": "/api/agent-tools/create_trade_packet",
       "scope_required": "packet:write",
       "tool": "create_trade_packet"
+    },
+    {
+      "billing_gate": "metered",
+      "example_request": {
+        "dry_run": true,
+        "external_effects_allowed": false,
+        "packet_id": "packet-frozen-tuna-canada-001"
+      },
+      "example_response": {
+        "can_open_claim_gate": false,
+        "external_effects_created": false,
+        "status": "accepted_for_local_execution"
+      },
+      "method": "POST",
+      "route": "/api/agent-tools/generate_business_decision_report",
+      "scope_required": "packet:write",
+      "tool": "generate_business_decision_report"
     },
     {
       "billing_gate": "included_with_limits",

@@ -160,11 +160,32 @@
         "required_tier": 5,
         "status": "blocked_unsupported_country_specific_claims"
       },
-      "coverage_label": "generic starter checklist",
-      "coverage_tier": 1,
+      "coverage_label": "reference sources catalogued",
+      "coverage_tier": 2,
       "next_valid_move": "Add current monitored official sources, category templates, and qualified review before country-specific claims.",
-      "source_count": 0,
-      "source_provenance": [],
+      "source_count": 2,
+      "source_provenance": [
+        {
+          "accessed_at": "2026-06-28",
+          "claim_boundary": "Reference source only; does not prove export permission, licensing status, incentive eligibility, or product-specific export compliance.",
+          "evidence_role": "India export policy and foreign-trade process orientation",
+          "jurisdiction": "India",
+          "name": "India Directorate General of Foreign Trade",
+          "provenance_type": "official_source_registry",
+          "source_id": "india-dgft-foreign-trade-policy",
+          "url": "https://www.dgft.gov.in/"
+        },
+        {
+          "accessed_at": "2026-06-28",
+          "claim_boundary": "Reference source only; does not prove tariff classification, export/import duty treatment, or customs compliance.",
+          "evidence_role": "India customs and tariff reference orientation",
+          "jurisdiction": "India",
+          "name": "India Central Board of Indirect Taxes and Customs",
+          "provenance_type": "official_source_registry",
+          "source_id": "india-cbic-customs",
+          "url": "https://www.cbic.gov.in/"
+        }
+      ],
       "unsupported_country_specific_claims": [
         "customs_or_tariff_correctness",
         "country_rules_current",
@@ -261,7 +282,7 @@
     "4": "category template support",
     "5": "expert-reviewed templates"
   },
-  "generated_at": "2026-06-28T01:54:01+00:00",
+  "generated_at": "2026-06-28T03:01:53+00:00",
   "packet_coverage": [
     {
       "blocked_country_specific_claims": [
