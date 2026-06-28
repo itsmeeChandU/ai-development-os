@@ -209,6 +209,7 @@ REQUIRED = [
     "product_projects/importer-source-readiness-copilot/system_review_graph/country_coverage_report.json",
     "product_projects/importer-source-readiness-copilot/system_review_graph/opportunity_scanner_report.json",
     "product_projects/importer-source-readiness-copilot/system_review_graph/business_logic_phase_report.json",
+    "product_projects/importer-source-readiness-copilot/system_review_graph/business_phase_completion_report.json",
     "product_projects/importer-source-readiness-copilot/system_review_graph/transport_readiness_report.json",
     "product_projects/importer-source-readiness-copilot/system_review_graph/billing_credit_controls.json",
     "product_projects/importer-source-readiness-copilot/system_review_graph/agent_api_manifest.json",

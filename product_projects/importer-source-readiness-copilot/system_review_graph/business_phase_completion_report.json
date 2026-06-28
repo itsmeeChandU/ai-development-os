@@ -1,0 +1,359 @@
+{
+  "business_identity_lock": {
+    "first_category_scope": "food_seafood_agri_plus_general_goods",
+    "first_persona": "beginner_to_intermediate_exporter",
+    "first_wedge": "foreign_exporters_preparing_to_sell_into_canada",
+    "forbidden_claims": [
+      "approved",
+      "compliant",
+      "ready_to_ship",
+      "tariff_confirmed",
+      "buyer_validated",
+      "supplier_verified"
+    ],
+    "internal_engine_name": "Importer Source Readiness Copilot",
+    "one_sentence_promise": "Trade Readiness Copilot helps exporters prepare evidence-backed buyer and broker packets for selling into Canada, showing missing documents, official-source checks, blocked claims, and next safe actions.",
+    "public_product_name": "Trade Readiness Copilot",
+    "secondary_personas": [
+      "canadian_importer",
+      "internal_reviewer",
+      "broker_or_expert"
+    ],
+    "status": "business_identity_locked_local_claims_blocked"
+  },
+  "buyer_supplier_validation_contract": {
+    "blocked_language": [
+      "buyer_validated",
+      "supplier_verified"
+    ],
+    "buyer_evidence_ladder": [
+      {
+        "allowed_language": "buyer lead found",
+        "label": "lead_found",
+        "level": 0
+      },
+      {
+        "allowed_language": "buyer contact attempted",
+        "label": "contact_attempted",
+        "level": 1
+      },
+      {
+        "allowed_language": "buyer replied on a dated channel",
+        "label": "reply_received",
+        "level": 2
+      },
+      {
+        "allowed_language": "buyer meeting completed and notes attached",
+        "label": "meeting_completed",
+        "level": 3
+      },
+      {
+        "allowed_language": "letter of intent or equivalent evidence attached",
+        "label": "loi_received",
+        "level": 4
+      },
+      {
+        "allowed_language": "purchase order or paid order evidence attached",
+        "label": "po_or_paid_order",
+        "level": 5
+      }
+    ],
+    "mvp_outreach_policy": "questions_only_no_automatic_sending",
+    "proof_boundary": "The product records evidence levels; it does not validate buyers or verify suppliers.",
+    "status": "buyer_supplier_validation_ladders_ready_claims_blocked",
+    "supplier_evidence_ladder": [
+      {
+        "allowed_language": "supplier named by user",
+        "label": "supplier_named",
+        "level": 0
+      },
+      {
+        "allowed_language": "registration evidence collected",
+        "label": "business_registration_attached",
+        "level": 1
+      },
+      {
+        "allowed_language": "export ability evidence collected",
+        "label": "export_ability_evidence_attached",
+        "level": 2
+      },
+      {
+        "allowed_language": "product documents collected",
+        "label": "product_docs_attached",
+        "level": 3
+      },
+      {
+        "allowed_language": "inspection or certificate evidence collected",
+        "label": "inspection_or_certificate_attached",
+        "level": 4
+      },
+      {
+        "allowed_language": "prior shipment evidence collected",
+        "label": "prior_shipment_evidence_attached",
+        "level": 5
+      }
+    ]
+  },
+  "completion_phase_contracts": {
+    "completion_definition_controlled_private_beta": "A foreign exporter selling into Canada can enter product and country details, with or without documents, and receive a packet with market research requirements, missing evidence, official source routes, responsibility gaps, blocked claims, buyer/broker/supplier questions, and next safe move.",
+    "completion_definition_public_launch": "Public launch requires locked logic, beta outcomes, hosted controls, expert reviews, reviewed public claims, and named launch-owner approval.",
+    "controlled_private_beta_candidate_local": true,
+    "controlled_private_beta_ready_with_real_users": false,
+    "externally_blocked_phase_count": 8,
+    "local_contract_phase_count": 14,
+    "phase_count": 14,
+    "phase_ids": [
+      "phase_0",
+      "phase_1",
+      "phase_2",
+      "phase_3",
+      "phase_4",
+      "phase_5",
+      "phase_6",
+      "phase_7",
+      "phase_8",
+      "phase_9",
+      "phase_10",
+      "phase_11",
+      "phase_12",
+      "phase_13"
+    ],
+    "phases": [
+      {
+        "artifact": "business_identity_lock",
+        "exit_criteria_status": "met_locally",
+        "main_output": "wedge_persona_name_promise",
+        "name": "Business identity lock",
+        "phase": 0,
+        "status": "local_complete_claims_blocked"
+      },
+      {
+        "artifact": "packet_rows",
+        "exit_criteria_status": "met_locally",
+        "main_output": "decision_tree_stages_scores_provenance",
+        "name": "Business logic contract",
+        "phase": 1,
+        "status": "local_complete_claims_blocked"
+      },
+      {
+        "artifact": "beginner_flow_contract",
+        "exit_criteria_status": "met_locally",
+        "main_output": "starter_packet_contract",
+        "name": "No-document beginner flow",
+        "phase": 2,
+        "status": "local_complete_claims_blocked"
+      },
+      {
+        "artifact": "packet_rows[].market_intelligence",
+        "exit_criteria_status": "contract_met_data_evidence_required",
+        "main_output": "source_backed_market_signal_contract",
+        "name": "Market intelligence",
+        "phase": 3,
+        "status": "local_contract_complete_real_datasets_required"
+      },
+      {
+        "artifact": "packet_rows[].country_packs",
+        "exit_criteria_status": "met_locally_reference_only",
+        "main_output": "canada_india_vietnam_generic_country_packs",
+        "name": "Country packs",
+        "phase": 4,
+        "status": "local_complete_reference_boundaries"
+      },
+      {
+        "artifact": "packet_rows[].source_monitoring_contract",
+        "exit_criteria_status": "met_locally_live_refresh_evidence_required",
+        "main_output": "freshness_status_diff_classifier_packet_impact_logic",
+        "name": "Source monitoring",
+        "phase": 5,
+        "status": "local_complete_no_live_freshness_claim"
+      },
+      {
+        "artifact": "packet_rows[].packet_outputs",
+        "exit_criteria_status": "met_locally",
+        "main_output": "trade_readiness_packet_views",
+        "name": "Packet outputs",
+        "phase": 6,
+        "status": "local_complete_claims_blocked"
+      },
+      {
+        "artifact": "reviewer_signoff_framework",
+        "exit_criteria_status": "blocked_until_real_reviewer_records",
+        "main_output": "reviewer_signoff_records",
+        "name": "Human review gates",
+        "phase": 7,
+        "status": "external_evidence_required"
+      },
+      {
+        "artifact": "metadata_only_beta_contract",
+        "exit_criteria_status": "blocked_until_real_user_outcomes",
+        "main_output": "real_user_workflow_evidence",
+        "name": "Metadata-only beta",
+        "phase": 8,
+        "status": "external_evidence_required"
+      },
+      {
+        "artifact": "hosted_beta_control_contract",
+        "exit_criteria_status": "blocked_until_hosted_proof",
+        "main_output": "auth_db_storage_logs_ai_controls",
+        "name": "Hosted beta infrastructure",
+        "phase": 9,
+        "status": "external_platform_proof_required"
+      },
+      {
+        "artifact": "real_file_beta_contract",
+        "exit_criteria_status": "blocked_until_real_file_beta_controls_pass",
+        "main_output": "supervised_document_workflow",
+        "name": "Controlled real-file beta",
+        "phase": 10,
+        "status": "external_platform_and_consent_proof_required"
+      },
+      {
+        "artifact": "buyer_supplier_validation_contract",
+        "exit_criteria_status": "blocked_until_real_buyer_supplier_evidence",
+        "main_output": "buyer_supplier_evidence_ladders",
+        "name": "Buyer/supplier evidence",
+        "phase": 11,
+        "status": "local_contract_complete_real_evidence_required"
+      },
+      {
+        "artifact": "payment_pricing_contract",
+        "exit_criteria_status": "blocked_until_payment_review_and_live_setup",
+        "main_output": "paid_packet_scope_and_payment_gates",
+        "name": "Payments",
+        "phase": 12,
+        "status": "local_contract_complete_live_checkout_disabled"
+      },
+      {
+        "artifact": "public_launch_contract",
+        "exit_criteria_status": "blocked_until_named_owner_go_no_go",
+        "main_output": "narrow_reviewed_launch_scope",
+        "name": "Public launch",
+        "phase": 13,
+        "status": "launch_contract_ready_public_launch_blocked"
+      }
+    ],
+    "public_launch_ready": false,
+    "status": "all_14_phase_contracts_ready_external_gates_preserved"
+  },
+  "execution_report": "system_review_graph/product_operations_report.json",
+  "generated_at": "2026-06-28T03:52:53+00:00",
+  "hosted_beta_control_contract": {
+    "controls": [
+      {
+        "area": "authentication",
+        "minimum": "no demo users; real identity provider or hardened passwordless auth"
+      },
+      {
+        "area": "session_security",
+        "minimum": "secure cookies, CSRF, short expiry, organization isolation"
+      },
+      {
+        "area": "upload_handling",
+        "minimum": "extension/MIME allowlist, malware scan, storage isolation, no direct serving, rate limits"
+      },
+      {
+        "area": "data_governance",
+        "minimum": "privacy notice, AI-use notice, retention/deletion controls, breach process"
+      },
+      {
+        "area": "ai_routing",
+        "minimum": "no-AI/manual mode, metadata-only mode, redaction preview, provider inventory"
+      },
+      {
+        "area": "auditability",
+        "minimum": "upload, review, export, and deletion logs"
+      },
+      {
+        "area": "recovery",
+        "minimum": "backups and restore test"
+      },
+      {
+        "area": "observability",
+        "minimum": "health checks, error logging, security events"
+      }
+    ],
+    "payment_policy": "payments remain downstream; live checkout stays disabled until scope, support, refund, tax, webhook, and claim-boundary reviews pass",
+    "status": "hosted_beta_controls_blocked_until_real_platform_proof",
+    "storage_recommendation": "managed Postgres plus object storage for hosted beta; local SQLite and filesystem remain dev/local only"
+  },
+  "metadata_only_beta_contract": {
+    "external_evidence_required": true,
+    "phase_policy": "private beta phase 1 uses metadata-only packets plus optional sample or redacted documents",
+    "proof_boundary": "This contract prepares beta measurement; it does not create real beta outcomes.",
+    "required_observations": [
+      "who the product helps most",
+      "which output matters most",
+      "which fields users can answer",
+      "which fields confuse users",
+      "whether users would use, share, or pay for the packet",
+      "whether users understand blocked versus approved language"
+    ],
+    "status": "metadata_only_beta_contract_ready_real_users_required",
+    "target_user_count": "5-10 exporter or intermediary users"
+  },
+  "operation_status": "business_phase_completion_operational_local_external_gates_preserved",
+  "payment_pricing_contract": {
+    "forbidden_paid_scope": [
+      "customs approval",
+      "tariff confirmation",
+      "shipment readiness"
+    ],
+    "live_checkout_enabled": false,
+    "paid_scope": "prepared trade readiness packet and evidence organization",
+    "recommended_model": "free starter plus paid prepared packet or review-preparation package",
+    "required_before_live_checkout": [
+      "pricing decision",
+      "refund/support policy",
+      "tax/account review",
+      "payment processor setup",
+      "webhook handling review",
+      "billing/payment reviewer signoff",
+      "claim-boundary wording review"
+    ],
+    "status": "payment_pricing_contract_ready_live_checkout_disabled"
+  },
+  "proof_boundary": "This business logic is generated from local packet/evidence/source state. External market datasets, buyer/supplier validation, source freshness, and qualified reviews remain evidence gates.",
+  "public_launch_contract": {
+    "blocked_public_scope": [
+      "unrestricted real file uploads",
+      "live payments",
+      "automated buyer outreach",
+      "supplier verification claims",
+      "tariff/CFIA/customs confirmation",
+      "shipment approval language"
+    ],
+    "public_launch_ready": false,
+    "required_before_public_launch": [
+      "locked business logic",
+      "private beta outcomes",
+      "hosted controls proof",
+      "expert reviews recorded",
+      "public claims reviewed",
+      "named launch owner approval"
+    ],
+    "safe_initial_public_scope": [
+      "landing page",
+      "quick check",
+      "metadata-only starter packet",
+      "sample packet",
+      "waitlist or demo booking",
+      "safe educational source routing"
+    ],
+    "status": "public_launch_contract_ready_launch_blocked_until_real_approval"
+  },
+  "real_file_beta_contract": {
+    "proof_boundary": "Real-file beta requires hosted security, privacy, upload, and AI-safety review before use with sensitive documents.",
+    "required_controls": [
+      "explicit upload consent",
+      "AI-use consent before model processing",
+      "redaction preview",
+      "manual/no-AI option",
+      "visible retention period",
+      "tested deletion path",
+      "upload audit trail"
+    ],
+    "starting_scope": "3-5 trusted users only after hosted upload/privacy/security controls pass",
+    "status": "controlled_real_file_beta_blocked_until_hosted_review"
+  },
+  "status": "all_14_phase_contracts_ready_external_gates_preserved"
+}

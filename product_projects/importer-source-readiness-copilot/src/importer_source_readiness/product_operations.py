@@ -297,7 +297,11 @@ def generate_business_decision_report(repo_root: Path, packet_id: str | None = N
         operation="generate_business_decision_report",
         packet_id=packet_id,
         coverage=["business_logic", "evidence_reporting", "agent_tool_execution"],
-        artifacts=[path, _graph(repo_root) / "business_logic_phase_report.json"],
+        artifacts=[
+            path,
+            _graph(repo_root) / "business_logic_phase_report.json",
+            _graph(repo_root) / "business_phase_completion_report.json",
+        ],
     )
     return {"status": "operation_complete", "operation_event": event, "business_decision": payload}
 
@@ -815,6 +819,7 @@ def _apply_operation_proofs(repo_root: Path) -> None:
     team_path = graph / "team_workspace_report.json"
     launch_path = graph / "launch_operations_report.json"
     business_path = graph / "business_logic_phase_report.json"
+    business_phase_completion_path = graph / "business_phase_completion_report.json"
 
     if all_stage_path.exists():
         all_stages = _load_json(all_stage_path, {})
@@ -840,6 +845,7 @@ def _apply_operation_proofs(repo_root: Path) -> None:
         (team_path, "team_workspace_operational_local_with_approval_gates"),
         (launch_path, "launch_operations_operational_local_with_human_approval_gates"),
         (business_path, "business_logic_operational_local_with_evidence_gates"),
+        (business_phase_completion_path, "business_phase_completion_operational_local_external_gates_preserved"),
     ):
         if path.exists():
             payload = _load_json(path, {})

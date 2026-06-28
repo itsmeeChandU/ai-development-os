@@ -41,7 +41,7 @@
       "submit_government_form",
       "send_report_externally_without_confirmation"
     ],
-    "generated_at": "2026-06-28T03:13:33+00:00",
+    "generated_at": "2026-06-28T03:52:53+00:00",
     "proof_boundary": "The gateway executes local product operations with external effects disabled; it does not expose a live public API, credentials, payment integration, or claim-opening authority.",
     "status": "agent_api_gateway_ready_local_executor_no_external_effects",
     "tools": [
@@ -413,7 +413,7 @@
       "submit_government_form",
       "send_report_externally_without_confirmation"
     ],
-    "generated_at": "2026-06-28T03:13:33+00:00",
+    "generated_at": "2026-06-28T03:52:53+00:00",
     "proof_boundary": "This is a local API/MCP contract. It does not expose a live public API gateway or payment integration.",
     "safety_rules": [
       "Agents can create packets and reports only through backend claim/blocker rules.",
@@ -431,7 +431,7 @@
   },
   "all_stage_readiness": {
     "external_gate_count": 10,
-    "generated_at": "2026-06-28T03:13:33+00:00",
+    "generated_at": "2026-06-28T03:52:53+00:00",
     "go_live_state_count": 18,
     "implemented_stage_count": 19,
     "proof_boundary": "Stage 0 and Stages 1-18 are represented by local routes, APIs, generated artifacts, tests, and blocker rows. Real reviewers, private-beta users, production hosting, monitoring, legal/privacy/security approval, payment activation, qualified trade review, and public go-live owner approval remain external gates.",
@@ -1124,7 +1124,7 @@
         "requires_pre_authorization": true
       }
     ],
-    "generated_at": "2026-06-28T03:13:33+00:00",
+    "generated_at": "2026-06-28T03:52:53+00:00",
     "heavy_job_policy": {
       "external_charge_created": false,
       "free_plan_behavior": "block_before_worker_execution",
@@ -1190,7 +1190,7 @@
     "status": "billing_credit_controls_ready_local_no_live_checkout"
   },
   "billing_usage_ledger": {
-    "generated_at": "2026-06-28T03:13:33+00:00",
+    "generated_at": "2026-06-28T03:52:53+00:00",
     "proof_boundary": "The usage ledger estimates and blocks cost exposure locally; no payment, invoice, or live checkout is performed.",
     "status": "billing_usage_ledger_ready_local_no_charges",
     "usage_rows": [
@@ -1341,8 +1341,272 @@
     ]
   },
   "business_logic_phases": {
+    "beginner_flow_contract": {
+      "beginner_language": "You are at the research stage; the packet prepares questions and evidence before buyer, broker, or reviewer action.",
+      "default_first_screen": "exporter_quick_start",
+      "entry_buttons": [
+        "Explore a market",
+        "Prepare buyer packet",
+        "Check my documents"
+      ],
+      "minimum_inputs": [
+        "product",
+        "origin_country",
+        "destination_country",
+        "trade_direction",
+        "intended_use",
+        "buyer_or_importer_status"
+      ],
+      "proof_boundary": "No-document flow can prepare a starter packet, but it cannot prove market demand, source freshness, or trade readiness.",
+      "starter_packet_outputs": [
+        "product assumptions",
+        "missing fields",
+        "official source routes",
+        "first buyer/broker/supplier questions",
+        "document checklist",
+        "responsibility split warning",
+        "next safe action"
+      ],
+      "status": "no_document_beginner_flow_contract_ready"
+    },
     "blocked_claim_policy": "Business logic prepares decisions; it never approves import/export, tariff, buyer, supplier, shipment, compliance, legal, or market-demand claims.",
-    "generated_at": "2026-06-28T03:13:33+00:00",
+    "business_identity_lock": {
+      "first_category_scope": "food_seafood_agri_plus_general_goods",
+      "first_persona": "beginner_to_intermediate_exporter",
+      "first_wedge": "foreign_exporters_preparing_to_sell_into_canada",
+      "forbidden_claims": [
+        "approved",
+        "compliant",
+        "ready_to_ship",
+        "tariff_confirmed",
+        "buyer_validated",
+        "supplier_verified"
+      ],
+      "internal_engine_name": "Importer Source Readiness Copilot",
+      "one_sentence_promise": "Trade Readiness Copilot helps exporters prepare evidence-backed buyer and broker packets for selling into Canada, showing missing documents, official-source checks, blocked claims, and next safe actions.",
+      "public_product_name": "Trade Readiness Copilot",
+      "secondary_personas": [
+        "canadian_importer",
+        "internal_reviewer",
+        "broker_or_expert"
+      ],
+      "status": "business_identity_locked_local_claims_blocked"
+    },
+    "buyer_supplier_validation_contract": {
+      "blocked_language": [
+        "buyer_validated",
+        "supplier_verified"
+      ],
+      "buyer_evidence_ladder": [
+        {
+          "allowed_language": "buyer lead found",
+          "label": "lead_found",
+          "level": 0
+        },
+        {
+          "allowed_language": "buyer contact attempted",
+          "label": "contact_attempted",
+          "level": 1
+        },
+        {
+          "allowed_language": "buyer replied on a dated channel",
+          "label": "reply_received",
+          "level": 2
+        },
+        {
+          "allowed_language": "buyer meeting completed and notes attached",
+          "label": "meeting_completed",
+          "level": 3
+        },
+        {
+          "allowed_language": "letter of intent or equivalent evidence attached",
+          "label": "loi_received",
+          "level": 4
+        },
+        {
+          "allowed_language": "purchase order or paid order evidence attached",
+          "label": "po_or_paid_order",
+          "level": 5
+        }
+      ],
+      "mvp_outreach_policy": "questions_only_no_automatic_sending",
+      "proof_boundary": "The product records evidence levels; it does not validate buyers or verify suppliers.",
+      "status": "buyer_supplier_validation_ladders_ready_claims_blocked",
+      "supplier_evidence_ladder": [
+        {
+          "allowed_language": "supplier named by user",
+          "label": "supplier_named",
+          "level": 0
+        },
+        {
+          "allowed_language": "registration evidence collected",
+          "label": "business_registration_attached",
+          "level": 1
+        },
+        {
+          "allowed_language": "export ability evidence collected",
+          "label": "export_ability_evidence_attached",
+          "level": 2
+        },
+        {
+          "allowed_language": "product documents collected",
+          "label": "product_docs_attached",
+          "level": 3
+        },
+        {
+          "allowed_language": "inspection or certificate evidence collected",
+          "label": "inspection_or_certificate_attached",
+          "level": 4
+        },
+        {
+          "allowed_language": "prior shipment evidence collected",
+          "label": "prior_shipment_evidence_attached",
+          "level": 5
+        }
+      ]
+    },
+    "completion_phase_contracts": {
+      "completion_definition_controlled_private_beta": "A foreign exporter selling into Canada can enter product and country details, with or without documents, and receive a packet with market research requirements, missing evidence, official source routes, responsibility gaps, blocked claims, buyer/broker/supplier questions, and next safe move.",
+      "completion_definition_public_launch": "Public launch requires locked logic, beta outcomes, hosted controls, expert reviews, reviewed public claims, and named launch-owner approval.",
+      "controlled_private_beta_candidate_local": true,
+      "controlled_private_beta_ready_with_real_users": false,
+      "externally_blocked_phase_count": 8,
+      "local_contract_phase_count": 14,
+      "phase_count": 14,
+      "phase_ids": [
+        "phase_0",
+        "phase_1",
+        "phase_2",
+        "phase_3",
+        "phase_4",
+        "phase_5",
+        "phase_6",
+        "phase_7",
+        "phase_8",
+        "phase_9",
+        "phase_10",
+        "phase_11",
+        "phase_12",
+        "phase_13"
+      ],
+      "phases": [
+        {
+          "artifact": "business_identity_lock",
+          "exit_criteria_status": "met_locally",
+          "main_output": "wedge_persona_name_promise",
+          "name": "Business identity lock",
+          "phase": 0,
+          "status": "local_complete_claims_blocked"
+        },
+        {
+          "artifact": "packet_rows",
+          "exit_criteria_status": "met_locally",
+          "main_output": "decision_tree_stages_scores_provenance",
+          "name": "Business logic contract",
+          "phase": 1,
+          "status": "local_complete_claims_blocked"
+        },
+        {
+          "artifact": "beginner_flow_contract",
+          "exit_criteria_status": "met_locally",
+          "main_output": "starter_packet_contract",
+          "name": "No-document beginner flow",
+          "phase": 2,
+          "status": "local_complete_claims_blocked"
+        },
+        {
+          "artifact": "packet_rows[].market_intelligence",
+          "exit_criteria_status": "contract_met_data_evidence_required",
+          "main_output": "source_backed_market_signal_contract",
+          "name": "Market intelligence",
+          "phase": 3,
+          "status": "local_contract_complete_real_datasets_required"
+        },
+        {
+          "artifact": "packet_rows[].country_packs",
+          "exit_criteria_status": "met_locally_reference_only",
+          "main_output": "canada_india_vietnam_generic_country_packs",
+          "name": "Country packs",
+          "phase": 4,
+          "status": "local_complete_reference_boundaries"
+        },
+        {
+          "artifact": "packet_rows[].source_monitoring_contract",
+          "exit_criteria_status": "met_locally_live_refresh_evidence_required",
+          "main_output": "freshness_status_diff_classifier_packet_impact_logic",
+          "name": "Source monitoring",
+          "phase": 5,
+          "status": "local_complete_no_live_freshness_claim"
+        },
+        {
+          "artifact": "packet_rows[].packet_outputs",
+          "exit_criteria_status": "met_locally",
+          "main_output": "trade_readiness_packet_views",
+          "name": "Packet outputs",
+          "phase": 6,
+          "status": "local_complete_claims_blocked"
+        },
+        {
+          "artifact": "reviewer_signoff_framework",
+          "exit_criteria_status": "blocked_until_real_reviewer_records",
+          "main_output": "reviewer_signoff_records",
+          "name": "Human review gates",
+          "phase": 7,
+          "status": "external_evidence_required"
+        },
+        {
+          "artifact": "metadata_only_beta_contract",
+          "exit_criteria_status": "blocked_until_real_user_outcomes",
+          "main_output": "real_user_workflow_evidence",
+          "name": "Metadata-only beta",
+          "phase": 8,
+          "status": "external_evidence_required"
+        },
+        {
+          "artifact": "hosted_beta_control_contract",
+          "exit_criteria_status": "blocked_until_hosted_proof",
+          "main_output": "auth_db_storage_logs_ai_controls",
+          "name": "Hosted beta infrastructure",
+          "phase": 9,
+          "status": "external_platform_proof_required"
+        },
+        {
+          "artifact": "real_file_beta_contract",
+          "exit_criteria_status": "blocked_until_real_file_beta_controls_pass",
+          "main_output": "supervised_document_workflow",
+          "name": "Controlled real-file beta",
+          "phase": 10,
+          "status": "external_platform_and_consent_proof_required"
+        },
+        {
+          "artifact": "buyer_supplier_validation_contract",
+          "exit_criteria_status": "blocked_until_real_buyer_supplier_evidence",
+          "main_output": "buyer_supplier_evidence_ladders",
+          "name": "Buyer/supplier evidence",
+          "phase": 11,
+          "status": "local_contract_complete_real_evidence_required"
+        },
+        {
+          "artifact": "payment_pricing_contract",
+          "exit_criteria_status": "blocked_until_payment_review_and_live_setup",
+          "main_output": "paid_packet_scope_and_payment_gates",
+          "name": "Payments",
+          "phase": 12,
+          "status": "local_contract_complete_live_checkout_disabled"
+        },
+        {
+          "artifact": "public_launch_contract",
+          "exit_criteria_status": "blocked_until_named_owner_go_no_go",
+          "main_output": "narrow_reviewed_launch_scope",
+          "name": "Public launch",
+          "phase": 13,
+          "status": "launch_contract_ready_public_launch_blocked"
+        }
+      ],
+      "public_launch_ready": false,
+      "status": "all_14_phase_contracts_ready_external_gates_preserved"
+    },
+    "generated_at": "2026-06-28T03:52:53+00:00",
     "hosted_beta_control_contract": {
       "controls": [
         {
@@ -1381,6 +1645,21 @@
       "payment_policy": "payments remain downstream; live checkout stays disabled until scope, support, refund, tax, webhook, and claim-boundary reviews pass",
       "status": "hosted_beta_controls_blocked_until_real_platform_proof",
       "storage_recommendation": "managed Postgres plus object storage for hosted beta; local SQLite and filesystem remain dev/local only"
+    },
+    "metadata_only_beta_contract": {
+      "external_evidence_required": true,
+      "phase_policy": "private beta phase 1 uses metadata-only packets plus optional sample or redacted documents",
+      "proof_boundary": "This contract prepares beta measurement; it does not create real beta outcomes.",
+      "required_observations": [
+        "who the product helps most",
+        "which output matters most",
+        "which fields users can answer",
+        "which fields confuse users",
+        "whether users would use, share, or pay for the packet",
+        "whether users understand blocked versus approved language"
+      ],
+      "status": "metadata_only_beta_contract_ready_real_users_required",
+      "target_user_count": "5-10 exporter or intermediary users"
     },
     "packet_count": 1,
     "packet_rows": [
@@ -1422,6 +1701,7 @@
           },
           "scores": {
             "decision_safety_score": {
+              "cap_reason": "Capped because open blocker rows and external gates prevent approval-style decisions.",
               "color": "red",
               "external_claims_opened": false,
               "meaning": "7 blocker rows keep external decisions closed.",
@@ -1430,6 +1710,7 @@
               "value": 20
             },
             "evidence_completeness_score": {
+              "cap_reason": "Capped because the packet still has missing required evidence or review fields.",
               "color": "red",
               "external_claims_opened": false,
               "meaning": "3 evidence rows attached and 10 required items missing.",
@@ -1438,6 +1719,7 @@
               "value": 23
             },
             "market_signal_score": {
+              "cap_reason": "Capped because official trade dataset rows, access comparison, and buyer evidence are not attached.",
               "color": "grey",
               "external_claims_opened": false,
               "meaning": "Market signal cannot be scored until trade dataset, access-barrier, and buyer evidence are attached.",
@@ -1446,6 +1728,7 @@
               "value": 25
             },
             "responsibility_clarity_score": {
+              "cap_reason": "Capped because importer of record, Incoterms, or role split are not confirmed enough for external decisions.",
               "color": "red",
               "external_claims_opened": false,
               "meaning": "Confirm importer of record and Incoterms before shipment or buyer claims.",
@@ -1454,6 +1737,7 @@
               "value": 30
             },
             "source_freshness_score": {
+              "cap_reason": "Capped because routed official sources are not the same as current, reviewed source proof.",
               "color": "yellow",
               "external_claims_opened": false,
               "meaning": "Official/reference sources are routed, but current-source proof and qualified review are still required.",
@@ -1807,6 +2091,12 @@
           ],
           "stage": "document",
           "stage_required_answers": {
+            "beta_ready": [
+              "reviewer_ready_fields",
+              "scoped reviewer findings",
+              "metadata_only_private_beta_controls",
+              "hosted_beta_or_local_review_boundary"
+            ],
             "decision": [
               "document_stage_fields",
               "importer_of_record",
@@ -1821,6 +2111,13 @@
               "source_url_or_file_reference",
               "confirmation_path"
             ],
+            "reviewer_ready": [
+              "decision_stage_fields",
+              "broker_or_expert_review_packet",
+              "blocked_claims_report",
+              "review_scope",
+              "source_snapshot_or_stale_source_blocker"
+            ],
             "starter": [
               "product_name",
               "trade_direction",
@@ -1832,6 +2129,11 @@
         },
         "commercial_wedge_detail": "export-to-Canada readiness packets for food/agri/seafood/general goods exporters",
         "country_packs": {
+          "coverage_policy": {
+            "full": "country path has product-relevant source routes, freshness checks, and reviewer lane mapping",
+            "generic_fallback": "country path is research-only until official source coverage is added",
+            "partial": "country path has source routes but still needs product/category-specific evidence"
+          },
           "destination_country": "Canada",
           "next_valid_move": "Promote country packs only after current official-source refresh and qualified review.",
           "origin_country": "Vietnam",
@@ -2082,6 +2384,85 @@
                 "country pack does not prove current rules",
                 "qualified review and source refresh are required before country-specific claims"
               ],
+              "country": "India",
+              "export_sources": [
+                {
+                  "accessed_at": "2026-06-28",
+                  "claim_boundary": "Reference source only; does not prove export permission, licensing status, incentive eligibility, or product-specific export compliance.",
+                  "evidence_role": "India export policy and foreign-trade process orientation",
+                  "jurisdiction": "India",
+                  "name": "India Directorate General of Foreign Trade",
+                  "source_id": "india-dgft-foreign-trade-policy",
+                  "url": "https://www.dgft.gov.in/"
+                },
+                {
+                  "accessed_at": "2026-06-28",
+                  "claim_boundary": "Reference source only; does not prove tariff classification, export/import duty treatment, or customs compliance.",
+                  "evidence_role": "India customs and tariff reference orientation",
+                  "jurisdiction": "India",
+                  "name": "India Central Board of Indirect Taxes and Customs",
+                  "source_id": "india-cbic-customs",
+                  "url": "https://www.cbic.gov.in/"
+                }
+              ],
+              "food_plant_animal_sources": [],
+              "import_sources": [
+                {
+                  "accessed_at": "2026-06-28",
+                  "claim_boundary": "Reference source only; does not prove tariff classification, export/import duty treatment, or customs compliance.",
+                  "evidence_role": "India customs and tariff reference orientation",
+                  "jurisdiction": "India",
+                  "name": "India Central Board of Indirect Taxes and Customs",
+                  "source_id": "india-cbic-customs",
+                  "url": "https://www.cbic.gov.in/"
+                }
+              ],
+              "permitted_automation_methods": [
+                "manual_review",
+                "dated_source_refresh",
+                "hash_snapshot",
+                "terms_or_api_check_before_fetch"
+              ],
+              "reviewer_requirements": [
+                "customs or trade reviewer for tariff/import path",
+                "regulated-product reviewer when category requires it",
+                "broker or logistics reviewer before shipment decisions"
+              ],
+              "role": "strategic_next_origin_pack",
+              "sanctions_sources": [],
+              "source_count": 2,
+              "status": "country_pack_ready_reference_only",
+              "tariff_sources": [
+                {
+                  "accessed_at": "2026-06-28",
+                  "claim_boundary": "Reference source only; does not prove tariff classification, export/import duty treatment, or customs compliance.",
+                  "evidence_role": "India customs and tariff reference orientation",
+                  "jurisdiction": "India",
+                  "name": "India Central Board of Indirect Taxes and Customs",
+                  "source_id": "india-cbic-customs",
+                  "url": "https://www.cbic.gov.in/"
+                }
+              ],
+              "tax_vat_duty_sources": [
+                {
+                  "accessed_at": "2026-06-28",
+                  "claim_boundary": "Reference source only; does not prove tariff classification, export/import duty treatment, or customs compliance.",
+                  "evidence_role": "India customs and tariff reference orientation",
+                  "jurisdiction": "India",
+                  "name": "India Central Board of Indirect Taxes and Customs",
+                  "source_id": "india-cbic-customs",
+                  "url": "https://www.cbic.gov.in/"
+                }
+              ],
+              "trade_data_sources": []
+            },
+            {
+              "buyer_discovery_sources": [],
+              "claim_boundaries": [
+                "country pack routes users to sources only",
+                "country pack does not prove current rules",
+                "qualified review and source refresh are required before country-specific claims"
+              ],
               "country": "Generic",
               "export_sources": [],
               "food_plant_animal_sources": [],
@@ -2110,6 +2491,14 @@
           "status": "country_packs_ready_with_reference_boundaries"
         },
         "decision_tree": {
+          "answer_state_policy": [
+            "answered",
+            "unknown",
+            "needs_research",
+            "needs_user_confirmation",
+            "needs_expert_review",
+            "blocked"
+          ],
           "blocked_or_review_step_count": 5,
           "next_valid_move": "Generate a compliance review packet and request qualified review.",
           "proof_boundary": "The decision tree prepares the next safe move; it does not approve import, export, tariff, buyer, supplier, or shipment decisions.",
@@ -2117,72 +2506,84 @@
           "questions": [
             {
               "answer": "import",
+              "answer_state": "answered",
               "question": "Are you importing, exporting, or exploring?",
               "status": "answered",
               "step": 1
             },
             {
               "answer": "Frozen tuna fillet",
+              "answer_state": "answered",
               "question": "What product/category is involved?",
               "status": "answered",
               "step": 2
             },
             {
               "answer": "Vietnam",
+              "answer_state": "answered",
               "question": "What is the origin country?",
               "status": "answered",
               "step": 3
             },
             {
               "answer": "Canada",
+              "answer_state": "answered",
               "question": "What is the destination country?",
               "status": "answered",
               "step": 4
             },
             {
               "answer": "0304870000",
+              "answer_state": "needs_expert_review",
               "question": "Do you know the HS code?",
               "status": "needs_qualified_review",
               "step": 5
             },
             {
               "answer": "unknown",
+              "answer_state": "unknown",
               "question": "Do you have a buyer/importer?",
               "status": "needs_buyer_or_importer_discovery",
               "step": 6
             },
             {
               "answer": "unknown",
+              "answer_state": "blocked",
               "question": "Who is importer of record?",
               "status": "blocked_until_confirmed",
               "step": 7
             },
             {
               "answer": "unknown",
+              "answer_state": "blocked",
               "question": "What Incoterms or delivery responsibility applies?",
               "status": "blocked_until_confirmed",
               "step": 8
             },
             {
               "answer": "documents_attached",
+              "answer_state": "answered",
               "question": "Do you have documents?",
               "status": "answered",
               "step": 9
             },
             {
               "answer": "likely_regulated",
+              "answer_state": "needs_expert_review",
               "question": "Is the product likely regulated?",
               "status": "needs_regulated_product_review",
               "step": 10
             },
             {
               "answer": "cbsa-carm, cbsa-import-commercial-goods, cbsa-customs-tariff-2026, cfia-airs, gac-import-controls, justice-import-control-list, canada-sanctions, ised-trade-data-online",
+              "answer_state": "needs_user_confirmation",
               "question": "What official sources must be checked?",
               "status": "source_routes_ready_reference_only",
               "step": 11
             },
             {
               "answer": "Generate a compliance review packet and request qualified review.",
+              "answer_state": "needs_user_confirmation",
               "question": "What is the next safe move?",
               "status": "next_valid_move_available",
               "step": 12
@@ -2193,6 +2594,7 @@
         "market_intelligence": {
           "buyer_importer_discovery": {
             "claim_boundary": "Importer or buyer sources create possible leads only; buyer validation needs dated contact, terms, demand, and legitimacy evidence.",
+            "confidence_level": "research_plan",
             "outputs": [
               "possible lead source",
               "buyer questions",
@@ -2220,6 +2622,23 @@
             "possible importer or buyer lead source",
             "buyer/operator validation notes"
           ],
+          "decision_support_policy": {
+            "blocked_statement": "This is a profitable market.",
+            "confidence_levels": [
+              "no_data",
+              "research_plan",
+              "source_backed",
+              "document_backed",
+              "reviewer_verified"
+            ],
+            "required_on_every_signal": [
+              "source",
+              "date_or_accessed_at",
+              "limitation",
+              "next_validation_step"
+            ],
+            "safe_statement_template": "This appears worth deeper research because a named source shows a signal, but buyer demand is not validated until direct buyer evidence exists."
+          },
           "hs_product_keyword_search": {
             "hs_code": "0304870000",
             "product_keywords": [
@@ -2230,6 +2649,7 @@
             "status": "hs_code_available_for_research_not_confirmed"
           },
           "import_dependency_signal": {
+            "confidence_level": "research_plan",
             "safe_interpretations": [
               "high imports plus growing trend means potential demand worth validating",
               "high imports plus few source countries means possible supplier-diversification research",
@@ -2280,11 +2700,11 @@
               "market_access_approved"
             ],
             "competitor_source_countries": [
+              "China",
               "United States",
               "European Union",
-              "China",
-              "Vietnam",
-              "Mexico"
+              "Mexico",
+              "Vietnam"
             ],
             "destination": "Canada",
             "exporter_origin": "Vietnam",
@@ -2514,11 +2934,19 @@
               "claim_boundary": "Reference source only; does not prove CARM registration, accounting setup, duty payment readiness, or customs advice.",
               "content_hash": "",
               "content_hash_required": true,
+              "diff_classifier": [
+                "wording_change",
+                "date_change",
+                "tariff_or_regulatory_change",
+                "source_unavailable"
+              ],
               "diff_strategy": "hash_then_classify_material_change_before_claim_update",
               "evidence_role": "commercial importer duty and tax account workflow",
               "fetch_mode": "registered_reference_manual_refresh",
+              "freshness_status": "not_checked",
               "jurisdiction": "Canada",
               "name": "CBSA Assessment and Revenue Management (CARM)",
+              "packet_impact_logic": "critical source changes mark affected packet outputs stale until refreshed evidence and reviewer review are attached",
               "packet_stale_alert": "create stale-source blocker if source content changes or freshness expires",
               "packet_tags": [
                 "packet-frozen-tuna-canada-001",
@@ -2543,11 +2971,19 @@
               "claim_boundary": "Reference source only; does not replace CBSA, broker, customs, or legal review.",
               "content_hash": "",
               "content_hash_required": true,
+              "diff_classifier": [
+                "wording_change",
+                "date_change",
+                "tariff_or_regulatory_change",
+                "source_unavailable"
+              ],
               "diff_strategy": "hash_then_classify_material_change_before_claim_update",
               "evidence_role": "commercial import process orientation",
               "fetch_mode": "registered_reference_manual_refresh",
+              "freshness_status": "not_checked",
               "jurisdiction": "Canada",
               "name": "CBSA Import Commercial Goods Into Canada",
+              "packet_impact_logic": "critical source changes mark affected packet outputs stale until refreshed evidence and reviewer review are attached",
               "packet_stale_alert": "create stale-source blocker if source content changes or freshness expires",
               "packet_tags": [
                 "packet-frozen-tuna-canada-001",
@@ -2572,11 +3008,19 @@
               "claim_boundary": "Reference source only; classification and tariff treatment require qualified review.",
               "content_hash": "",
               "content_hash_required": true,
+              "diff_classifier": [
+                "wording_change",
+                "date_change",
+                "tariff_or_regulatory_change",
+                "source_unavailable"
+              ],
               "diff_strategy": "hash_then_classify_material_change_before_claim_update",
               "evidence_role": "Canadian tariff classification starting point",
               "fetch_mode": "registered_reference_manual_refresh",
+              "freshness_status": "not_checked",
               "jurisdiction": "Canada",
               "name": "CBSA Customs Tariff 2026",
+              "packet_impact_logic": "critical source changes mark affected packet outputs stale until refreshed evidence and reviewer review are attached",
               "packet_stale_alert": "create stale-source blocker if source content changes or freshness expires",
               "packet_tags": [
                 "packet-frozen-tuna-canada-001",
@@ -2601,11 +3045,19 @@
               "claim_boundary": "Reference source only; product-specific food import compliance requires qualified review and source verification.",
               "content_hash": "",
               "content_hash_required": true,
+              "diff_classifier": [
+                "wording_change",
+                "date_change",
+                "tariff_or_regulatory_change",
+                "source_unavailable"
+              ],
               "diff_strategy": "hash_then_classify_material_change_before_claim_update",
               "evidence_role": "CFIA-regulated commodity import requirement lookup",
               "fetch_mode": "registered_reference_manual_refresh",
+              "freshness_status": "not_checked",
               "jurisdiction": "Canada",
               "name": "CFIA Automated Import Reference System (AIRS)",
+              "packet_impact_logic": "critical source changes mark affected packet outputs stale until refreshed evidence and reviewer review are attached",
               "packet_stale_alert": "create stale-source blocker if source content changes or freshness expires",
               "packet_tags": [
                 "packet-frozen-tuna-canada-001",
@@ -2630,11 +3082,19 @@
               "claim_boundary": "Reference source only; does not prove whether a specific product requires an import permit.",
               "content_hash": "",
               "content_hash_required": true,
+              "diff_classifier": [
+                "wording_change",
+                "date_change",
+                "tariff_or_regulatory_change",
+                "source_unavailable"
+              ],
               "diff_strategy": "hash_then_classify_material_change_before_claim_update",
               "evidence_role": "import control and permit orientation",
               "fetch_mode": "registered_reference_manual_refresh",
+              "freshness_status": "not_checked",
               "jurisdiction": "Canada",
               "name": "Global Affairs Canada Import Controls and Import Permits",
+              "packet_impact_logic": "critical source changes mark affected packet outputs stale until refreshed evidence and reviewer review are attached",
               "packet_stale_alert": "create stale-source blocker if source content changes or freshness expires",
               "packet_tags": [
                 "packet-frozen-tuna-canada-001",
@@ -2659,11 +3119,19 @@
               "claim_boundary": "Reference source only; legal interpretation and product applicability require qualified review.",
               "content_hash": "",
               "content_hash_required": true,
+              "diff_classifier": [
+                "wording_change",
+                "date_change",
+                "tariff_or_regulatory_change",
+                "source_unavailable"
+              ],
               "diff_strategy": "hash_then_classify_material_change_before_claim_update",
               "evidence_role": "legal reference for controlled imports",
               "fetch_mode": "registered_reference_manual_refresh",
+              "freshness_status": "not_checked",
               "jurisdiction": "Canada",
               "name": "Justice Laws Import Control List",
+              "packet_impact_logic": "critical source changes mark affected packet outputs stale until refreshed evidence and reviewer review are attached",
               "packet_stale_alert": "create stale-source blocker if source content changes or freshness expires",
               "packet_tags": [
                 "packet-frozen-tuna-canada-001",
@@ -2688,11 +3156,19 @@
               "claim_boundary": "Reference source only; screening results require dated search records and reviewer signoff.",
               "content_hash": "",
               "content_hash_required": true,
+              "diff_classifier": [
+                "wording_change",
+                "date_change",
+                "tariff_or_regulatory_change",
+                "source_unavailable"
+              ],
               "diff_strategy": "hash_then_classify_material_change_before_claim_update",
               "evidence_role": "restricted-party and sanctions screening source",
               "fetch_mode": "registered_reference_manual_refresh",
+              "freshness_status": "not_checked",
               "jurisdiction": "Canada",
               "name": "Global Affairs Canada Consolidated Canadian Autonomous Sanctions List",
+              "packet_impact_logic": "critical source changes mark affected packet outputs stale until refreshed evidence and reviewer review are attached",
               "packet_stale_alert": "create stale-source blocker if source content changes or freshness expires",
               "packet_tags": [
                 "packet-frozen-tuna-canada-001",
@@ -2717,11 +3193,19 @@
               "claim_boundary": "Reference source only; does not prove market size, buyer demand, or revenue.",
               "content_hash": "",
               "content_hash_required": true,
+              "diff_classifier": [
+                "wording_change",
+                "date_change",
+                "tariff_or_regulatory_change",
+                "source_unavailable"
+              ],
               "diff_strategy": "hash_then_classify_material_change_before_claim_update",
               "evidence_role": "Canadian trade data research source",
               "fetch_mode": "registered_reference_manual_refresh",
+              "freshness_status": "not_checked",
               "jurisdiction": "Canada",
               "name": "ISED Trade Data Online",
+              "packet_impact_logic": "critical source changes mark affected packet outputs stale until refreshed evidence and reviewer review are attached",
               "packet_stale_alert": "create stale-source blocker if source content changes or freshness expires",
               "packet_tags": [
                 "packet-frozen-tuna-canada-001",
@@ -2746,11 +3230,19 @@
               "claim_boundary": "Reference source only; does not prove buyer validation, supplier fit, customs advice, or freshness of a specific product row.",
               "content_hash": "",
               "content_hash_required": true,
+              "diff_classifier": [
+                "wording_change",
+                "date_change",
+                "tariff_or_regulatory_change",
+                "source_unavailable"
+              ],
               "diff_strategy": "hash_then_classify_material_change_before_claim_update",
               "evidence_role": "importer discovery orientation",
               "fetch_mode": "registered_reference_manual_refresh",
+              "freshness_status": "not_checked",
               "jurisdiction": "Canada",
               "name": "Canadian Importers Database",
+              "packet_impact_logic": "critical source changes mark affected packet outputs stale until refreshed evidence and reviewer review are attached",
               "packet_stale_alert": "create stale-source blocker if source content changes or freshness expires",
               "packet_tags": [
                 "packet-frozen-tuna-canada-001",
@@ -2775,11 +3267,19 @@
               "claim_boundary": "Reference source only; does not prove a broker relationship, review, or signoff.",
               "content_hash": "",
               "content_hash_required": true,
+              "diff_classifier": [
+                "wording_change",
+                "date_change",
+                "tariff_or_regulatory_change",
+                "source_unavailable"
+              ],
               "diff_strategy": "hash_then_classify_material_change_before_claim_update",
               "evidence_role": "qualified broker discovery source",
               "fetch_mode": "registered_reference_manual_refresh",
+              "freshness_status": "not_checked",
               "jurisdiction": "Canada",
               "name": "CBSA Licensed Customs Brokers",
+              "packet_impact_logic": "critical source changes mark affected packet outputs stale until refreshed evidence and reviewer review are attached",
               "packet_stale_alert": "create stale-source blocker if source content changes or freshness expires",
               "packet_tags": [
                 "packet-frozen-tuna-canada-001",
@@ -2804,11 +3304,19 @@
               "claim_boundary": "Reference source only; does not prove tariff treatment, preference qualification, regulatory requirements, or market-access approval.",
               "content_hash": "",
               "content_hash_required": true,
+              "diff_classifier": [
+                "wording_change",
+                "date_change",
+                "tariff_or_regulatory_change",
+                "source_unavailable"
+              ],
               "diff_strategy": "hash_then_classify_material_change_before_claim_update",
               "evidence_role": "tariff and market-access comparison research source",
               "fetch_mode": "registered_reference_manual_refresh",
+              "freshness_status": "not_checked",
               "jurisdiction": "International",
               "name": "ITC Market Access Map",
+              "packet_impact_logic": "critical source changes mark affected packet outputs stale until refreshed evidence and reviewer review are attached",
               "packet_stale_alert": "create stale-source blocker if source content changes or freshness expires",
               "packet_tags": [
                 "packet-frozen-tuna-canada-001",
@@ -2830,6 +3338,26 @@
         }
       }
     ],
+    "payment_pricing_contract": {
+      "forbidden_paid_scope": [
+        "customs approval",
+        "tariff confirmation",
+        "shipment readiness"
+      ],
+      "live_checkout_enabled": false,
+      "paid_scope": "prepared trade readiness packet and evidence organization",
+      "recommended_model": "free starter plus paid prepared packet or review-preparation package",
+      "required_before_live_checkout": [
+        "pricing decision",
+        "refund/support policy",
+        "tax/account review",
+        "payment processor setup",
+        "webhook handling review",
+        "billing/payment reviewer signoff",
+        "claim-boundary wording review"
+      ],
+      "status": "payment_pricing_contract_ready_live_checkout_disabled"
+    },
     "phase_count": 5,
     "phase_ids": [
       "decision_tree_before_features",
@@ -2871,6 +3399,48 @@
       }
     ],
     "proof_boundary": "This business logic is generated from local packet/evidence/source state. External market datasets, buyer/supplier validation, source freshness, and qualified reviews remain evidence gates.",
+    "public_launch_contract": {
+      "blocked_public_scope": [
+        "unrestricted real file uploads",
+        "live payments",
+        "automated buyer outreach",
+        "supplier verification claims",
+        "tariff/CFIA/customs confirmation",
+        "shipment approval language"
+      ],
+      "public_launch_ready": false,
+      "required_before_public_launch": [
+        "locked business logic",
+        "private beta outcomes",
+        "hosted controls proof",
+        "expert reviews recorded",
+        "public claims reviewed",
+        "named launch owner approval"
+      ],
+      "safe_initial_public_scope": [
+        "landing page",
+        "quick check",
+        "metadata-only starter packet",
+        "sample packet",
+        "waitlist or demo booking",
+        "safe educational source routing"
+      ],
+      "status": "public_launch_contract_ready_launch_blocked_until_real_approval"
+    },
+    "real_file_beta_contract": {
+      "proof_boundary": "Real-file beta requires hosted security, privacy, upload, and AI-safety review before use with sensitive documents.",
+      "required_controls": [
+        "explicit upload consent",
+        "AI-use consent before model processing",
+        "redaction preview",
+        "manual/no-AI option",
+        "visible retention period",
+        "tested deletion path",
+        "upload audit trail"
+      ],
+      "starting_scope": "3-5 trusted users only after hosted upload/privacy/security controls pass",
+      "status": "controlled_real_file_beta_blocked_until_hosted_review"
+    },
     "reviewer_signoff_framework": {
       "customs_trade_template": {
         "approved_reference_only_language": [],
@@ -3272,7 +3842,7 @@
       "4": "category template support",
       "5": "expert-reviewed templates"
     },
-    "generated_at": "2026-06-28T03:13:33+00:00",
+    "generated_at": "2026-06-28T03:52:53+00:00",
     "packet_coverage": [
       {
         "blocked_country_specific_claims": [
@@ -3368,7 +3938,7 @@
         "scope": "credits, pricing, manual approval, and cost exposure"
       }
     ],
-    "generated_at": "2026-06-28T03:13:33+00:00",
+    "generated_at": "2026-06-28T03:52:53+00:00",
     "proof_boundary": "The product can prepare and route expert packets locally; real qualified review remains an external evidence gate.",
     "review_queue": [
       {
@@ -3419,7 +3989,7 @@
     ],
     "status": "expert_network_ready_local_with_human_review_gates"
   },
-  "generated_at": "2026-06-28T03:13:33+00:00",
+  "generated_at": "2026-06-28T03:52:53+00:00",
   "launch_operations": {
     "controls": [
       {
@@ -3453,7 +4023,7 @@
         "status": "local_contract_ready"
       }
     ],
-    "generated_at": "2026-06-28T03:13:33+00:00",
+    "generated_at": "2026-06-28T03:52:53+00:00",
     "packet_count": 1,
     "private_beta_entry": {
       "human_approval_required": true,
@@ -3487,7 +4057,7 @@
       "tool": "create_trade_packet"
     },
     "create_packet_route": "/packets/new",
-    "generated_at": "2026-06-28T03:13:33+00:00",
+    "generated_at": "2026-06-28T03:52:53+00:00",
     "proof_boundary": "Opportunity rows are signals and research prompts only, not recommendations, demand proof, margin proof, or buyer validation.",
     "signal_count": 1,
     "signals": [
@@ -3635,7 +4205,7 @@
   },
   "proof_boundary": "Stage 0 and go-live States 1-18 each have a route/API/artifact surface where locally implementable; production hosting, payment activation, live expert signoff, source freshness, buyer validation, legal/customs/compliance proof, private-beta outcomes, and public launch approval remain external gates.",
   "research_execution_plan": {
-    "generated_at": "2026-06-28T03:13:33+00:00",
+    "generated_at": "2026-06-28T03:52:53+00:00",
     "proof_boundary": "Research execution routes the work to model-prior, web, official-source, dataset, and expert/user evidence lanes; it does not itself prove the external facts.",
     "rows": [
       {
@@ -3677,7 +4247,7 @@
   },
   "status": "all_local_stages_implemented_with_external_gates",
   "team_workspace": {
-    "generated_at": "2026-06-28T03:13:33+00:00",
+    "generated_at": "2026-06-28T03:52:53+00:00",
     "proof_boundary": "Team workspace roles and approvals are local coordination surfaces; they do not prove real owner approval or external launch permission.",
     "status": "team_workspace_ready_local_with_approval_gates",
     "workspace_count": 1,
@@ -3745,7 +4315,7 @@
     ]
   },
   "traffic_pages_manifest": {
-    "generated_at": "2026-06-28T03:13:33+00:00",
+    "generated_at": "2026-06-28T03:52:53+00:00",
     "pages": [
       {
         "claim_boundary": "Traffic page educates and routes to the tool; it is not legal, customs, tariff, supplier, buyer, or shipment advice.",
@@ -3887,7 +4457,7 @@
       "freight_forwarder_selected",
       "shipment_ready"
     ],
-    "generated_at": "2026-06-28T03:13:33+00:00",
+    "generated_at": "2026-06-28T03:52:53+00:00",
     "packet_count": 1,
     "proof_boundary": "Transport readiness prepares questions only; it does not optimize routes, guarantee costs, or approve shipment.",
     "rows": [

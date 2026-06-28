@@ -12,6 +12,18 @@ This document describes the current non-functional requirements and boundaries f
 
 ## Current Non-Functional Requirements
 
+## Locked Non-Functional Answers
+
+| Question | Current Answer |
+| --- | --- |
+| Private beta data mode | Phase 1 metadata-only; Phase 2 supervised real-file beta after controls pass |
+| Authentication | Managed auth provider or hardened passwordless login required before hosted beta |
+| Database and object storage | Managed Postgres for packet state; private object storage for files |
+| AI provider policy | Default no-AI/manual unless user explicitly permits AI use for evidence |
+| Required reviewers | UX/Product, Security/Public Upload, Privacy/Legal, AI Safety, DevOps, Trade-Boundary/Customs, Freight/Logistics, Report Language, Billing/Payment |
+| File handling | Small PDFs only, explicit expiry, deletion support, no indefinite retention until reviewed |
+| Payments | Disabled through private beta unless payment gates and reviews pass |
+
 | ID | Requirement | Current State | Evidence |
 | --- | --- | --- | --- |
 | NFR-01 | Keep external effects closed by default | Implemented locally | `product_operations_report.json` |

@@ -53,6 +53,18 @@ The product helps users prepare trade readiness packets, organize evidence, revi
 
 ## Current Main Workflows
 
+## Locked Functional Answers
+
+| Question | Current Answer |
+| --- | --- |
+| Default first screen | Exporter quick start |
+| First-screen choices | Explore a market, Prepare buyer packet, Check my documents |
+| Primary deliverable | Trade Readiness Packet |
+| Other packet views | Starter checklist, buyer-ready packet, broker-review packet, business decision report |
+| Buyer/supplier outreach | Questions and preparation checklist only in private beta |
+| First-class countries | Canada destination, India origin, Vietnam demo/sample, Generic fallback |
+| Private beta upload scope | Metadata-only packets plus optional redacted/sample documents until upload review passes |
+
 ### Public Quick Check
 
 1. User starts a quick check.

@@ -19,6 +19,8 @@ BUSINESS_PHASE_IDS = [
     "commercial_packet_outputs",
 ]
 
+BUSINESS_COMPLETION_PHASE_IDS = [f"phase_{index}" for index in range(14)]
+
 BUSINESS_SCORE_IDS = [
     "market_signal_score",
     "evidence_completeness_score",
@@ -154,6 +156,22 @@ def _answer(value: Any, missing_label: str = "unknown") -> str:
     return str(value).strip() if _known(value) else missing_label
 
 
+def _decision_answer_state(status: str) -> str:
+    if status == "answered":
+        return "answered"
+    if status in {"needs_user_input", "needs_buyer_or_importer_discovery"}:
+        return "unknown"
+    if status in {"needs_research", "beginner_packet_supported"}:
+        return "needs_research"
+    if status in {"blocked_until_confirmed", "blocked_missing_source_routes"}:
+        return "blocked"
+    if status in {"needs_qualified_review", "needs_regulated_product_review", "standard_review_still_required"}:
+        return "needs_expert_review"
+    if status == "source_routes_ready_reference_only":
+        return "needs_user_confirmation"
+    return "needs_user_confirmation"
+
+
 def build_decision_tree(packet: dict[str, Any], official_sources: list[dict[str, Any]]) -> dict[str, Any]:
     """Build the 12-question trade decision tree recommended by the review."""
 
@@ -233,10 +251,20 @@ def build_decision_tree(packet: dict[str, Any], official_sources: list[dict[str,
             "status": "next_valid_move_available",
         },
     ]
+    for question in questions:
+        question["answer_state"] = _decision_answer_state(str(question["status"]))
     blockers = [row for row in questions if str(row["status"]).startswith(("blocked", "needs"))]
     return {
         "status": "decision_tree_ready_claims_blocked",
         "question_count": len(questions),
+        "answer_state_policy": [
+            "answered",
+            "unknown",
+            "needs_research",
+            "needs_user_confirmation",
+            "needs_expert_review",
+            "blocked",
+        ],
         "questions": questions,
         "blocked_or_review_step_count": len(blockers),
         "next_valid_move": questions[-1]["answer"],
@@ -344,12 +372,18 @@ def build_canonical_packet_contract(packet: dict[str, Any]) -> dict[str, Any]:
         if not _known(packet.get(field))
     ]
     evidence_count = int(packet.get("evidence_count") or 0)
+    reviewer_ready = not missing_core and not decision_missing and evidence_count > 0
+    beta_ready = reviewer_ready and str(packet.get("qualified_review_status") or "") == "reviewed"
     if missing_core:
         stage = "starter"
     elif evidence_count == 0:
         stage = "starter"
     elif decision_missing:
         stage = "document"
+    elif beta_ready:
+        stage = "beta_ready"
+    elif reviewer_ready:
+        stage = "reviewer_ready"
     else:
         stage = "decision"
     return {
@@ -366,6 +400,19 @@ def build_canonical_packet_contract(packet: dict[str, Any]) -> dict[str, Any]:
                 "buyer_or_importer_identity_or_broker_ready_rationale",
                 "source_freshness",
                 "category_review_statuses",
+            ],
+            "reviewer_ready": [
+                "decision_stage_fields",
+                "broker_or_expert_review_packet",
+                "blocked_claims_report",
+                "review_scope",
+                "source_snapshot_or_stale_source_blocker",
+            ],
+            "beta_ready": [
+                "reviewer_ready_fields",
+                "scoped reviewer findings",
+                "metadata_only_private_beta_controls",
+                "hosted_beta_or_local_review_boundary",
             ],
         },
         "missing_core_fields": missing_core,
@@ -390,7 +437,12 @@ def build_country_packs(packet: dict[str, Any], official_sources: list[dict[str,
     origin = _country(packet.get("origin_country"))
     destination = _country(packet.get("destination_country"))
     countries = []
-    for country, role in ((destination, "destination_import_pack"), (origin, "origin_export_pack"), ("Generic", "generic_fallback_pack")):
+    for country, role in (
+        (destination, "destination_import_pack"),
+        (origin, "origin_export_pack"),
+        ("India", "strategic_next_origin_pack"),
+        ("Generic", "generic_fallback_pack"),
+    ):
         if country in {row.get("country") for row in countries}:
             continue
         sources = _sources_for_country(official_sources, country)
@@ -426,6 +478,11 @@ def build_country_packs(packet: dict[str, Any], official_sources: list[dict[str,
         "origin_country": origin,
         "destination_country": destination,
         "packs": countries,
+        "coverage_policy": {
+            "full": "country path has product-relevant source routes, freshness checks, and reviewer lane mapping",
+            "partial": "country path has source routes but still needs product/category-specific evidence",
+            "generic_fallback": "country path is research-only until official source coverage is added",
+        },
         "next_valid_move": "Promote country packs only after current official-source refresh and qualified review.",
         "proof_boundary": "Country packs are routing and review-contract surfaces, not country-specific compliance proof.",
     }
@@ -481,6 +538,7 @@ def build_market_intelligence(packet: dict[str, Any], official_sources: list[dic
         },
         "import_dependency_signal": {
             "status": "unknown_until_trade_and_production_data_attached",
+            "confidence_level": "research_plan",
             "safe_interpretations": [
                 "high imports plus growing trend means potential demand worth validating",
                 "high imports plus few source countries means possible supplier-diversification research",
@@ -499,9 +557,16 @@ def build_market_intelligence(packet: dict[str, Any], official_sources: list[dic
         },
         "buyer_importer_discovery": {
             "status": "lead_discovery_only",
+            "confidence_level": "research_plan",
             "source_routes": importer_sources,
             "claim_boundary": "Importer or buyer sources create possible leads only; buyer validation needs dated contact, terms, demand, and legitimacy evidence.",
             "outputs": ["possible lead source", "buyer questions", "buyer validation tracker", "outreach packet not sent automatically"],
+        },
+        "decision_support_policy": {
+            "confidence_levels": ["no_data", "research_plan", "source_backed", "document_backed", "reviewer_verified"],
+            "required_on_every_signal": ["source", "date_or_accessed_at", "limitation", "next_validation_step"],
+            "safe_statement_template": "This appears worth deeper research because a named source shows a signal, but buyer demand is not validated until direct buyer evidence exists.",
+            "blocked_statement": "This is a profitable market.",
         },
         "data_requirements": data_requirements,
         "next_valid_move": "Attach dated trade dataset rows, market-access comparison, and buyer/operator validation before treating the signal as a decision.",
@@ -524,7 +589,15 @@ def build_source_monitoring_contract(packet: dict[str, Any], official_sources: l
             {
                 **_normalized_source_registry_row(source, packet),
                 "refresh_method": "manual_or_permitted_fetch_after_terms_check",
+                "freshness_status": "not_checked",
                 "parser_contract": "extract date/status/hash and classify change type before packet impact",
+                "diff_classifier": [
+                    "wording_change",
+                    "date_change",
+                    "tariff_or_regulatory_change",
+                    "source_unavailable",
+                ],
+                "packet_impact_logic": "critical source changes mark affected packet outputs stale until refreshed evidence and reviewer review are attached",
                 "content_hash_required": True,
                 "packet_stale_alert": "create stale-source blocker if source content changes or freshness expires",
                 "claim_boundary": source.get("claim_boundary") or "Reference only; does not prove current external requirements.",
@@ -660,12 +733,13 @@ def build_packet_outputs(packet: dict[str, Any]) -> dict[str, Any]:
     }
 
 
-def _score(color: str, value: int, status: str, meaning: str, next_valid_move: str) -> dict[str, Any]:
+def _score(color: str, value: int, status: str, meaning: str, next_valid_move: str, cap_reason: str) -> dict[str, Any]:
     return {
         "value": value,
         "color": color,
         "status": status,
         "meaning": meaning,
+        "cap_reason": cap_reason,
         "next_valid_move": next_valid_move,
         "external_claims_opened": False,
     }
@@ -694,6 +768,7 @@ def build_business_scores(
             "research_required",
             "Market signal cannot be scored until trade dataset, access-barrier, and buyer evidence are attached.",
             market["next_valid_move"],
+            "Capped because official trade dataset rows, access comparison, and buyer evidence are not attached.",
         ),
         "evidence_completeness_score": _score(
             "red" if missing else "yellow",
@@ -701,6 +776,7 @@ def build_business_scores(
             "blocked_missing_evidence" if missing else "internal_review_ready_external_claims_blocked",
             f"{attached} evidence rows attached and {missing} required items missing.",
             "Attach missing product, commercial, origin, review, buyer, and source evidence.",
+            "Capped because the packet still has missing required evidence or review fields.",
         ),
         "source_freshness_score": _score(
             "red" if stale else "yellow",
@@ -708,6 +784,7 @@ def build_business_scores(
             "blocked_stale_source" if stale else "reference_sources_routed_review_required",
             "Official/reference sources are routed, but current-source proof and qualified review are still required.",
             "Run dated source refresh and record hash/change classification.",
+            "Capped because routed official sources are not the same as current, reviewed source proof.",
         ),
         "responsibility_clarity_score": _score(
             "red" if responsibility_level == "unknown" else "yellow",
@@ -715,6 +792,7 @@ def build_business_scores(
             "blocked_responsibility_unknown" if responsibility_level == "unknown" else "responsibility_path_identified_review_required",
             responsibility.get("guidance") or "Importer of record and Incoterms must be confirmed.",
             "Confirm importer of record, Incoterms, buyer/importer role, and broker review path.",
+            "Capped because importer of record, Incoterms, or role split are not confirmed enough for external decisions.",
         ),
         "decision_safety_score": _score(
             "red" if blocker_count else "yellow",
@@ -722,6 +800,7 @@ def build_business_scores(
             "blocked_external_decision_unsafe" if blocker_count else "internal_review_only_external_claims_blocked",
             f"{blocker_count} blocker rows keep external decisions closed.",
             packet.get("public_summary", {}).get("next_valid_move") or "Proceed only to internal review.",
+            "Capped because open blocker rows and external gates prevent approval-style decisions.",
         ),
     }
     return {
@@ -835,6 +914,302 @@ def build_hosted_beta_control_contract() -> dict[str, Any]:
     }
 
 
+def build_business_identity_lock() -> dict[str, Any]:
+    return {
+        "status": "business_identity_locked_local_claims_blocked",
+        "public_product_name": "Trade Readiness Copilot",
+        "internal_engine_name": "Importer Source Readiness Copilot",
+        "first_wedge": "foreign_exporters_preparing_to_sell_into_canada",
+        "first_category_scope": "food_seafood_agri_plus_general_goods",
+        "first_persona": "beginner_to_intermediate_exporter",
+        "secondary_personas": ["canadian_importer", "internal_reviewer", "broker_or_expert"],
+        "one_sentence_promise": (
+            "Trade Readiness Copilot helps exporters prepare evidence-backed buyer and broker packets for selling into Canada, "
+            "showing missing documents, official-source checks, blocked claims, and next safe actions."
+        ),
+        "forbidden_claims": [
+            "approved",
+            "compliant",
+            "ready_to_ship",
+            "tariff_confirmed",
+            "buyer_validated",
+            "supplier_verified",
+        ],
+    }
+
+
+def build_beginner_flow_contract() -> dict[str, Any]:
+    return {
+        "status": "no_document_beginner_flow_contract_ready",
+        "default_first_screen": "exporter_quick_start",
+        "entry_buttons": ["Explore a market", "Prepare buyer packet", "Check my documents"],
+        "minimum_inputs": [
+            "product",
+            "origin_country",
+            "destination_country",
+            "trade_direction",
+            "intended_use",
+            "buyer_or_importer_status",
+        ],
+        "starter_packet_outputs": [
+            "product assumptions",
+            "missing fields",
+            "official source routes",
+            "first buyer/broker/supplier questions",
+            "document checklist",
+            "responsibility split warning",
+            "next safe action",
+        ],
+        "beginner_language": "You are at the research stage; the packet prepares questions and evidence before buyer, broker, or reviewer action.",
+        "proof_boundary": "No-document flow can prepare a starter packet, but it cannot prove market demand, source freshness, or trade readiness.",
+    }
+
+
+def build_buyer_supplier_validation_contract() -> dict[str, Any]:
+    return {
+        "status": "buyer_supplier_validation_ladders_ready_claims_blocked",
+        "buyer_evidence_ladder": [
+            {"level": 0, "label": "lead_found", "allowed_language": "buyer lead found"},
+            {"level": 1, "label": "contact_attempted", "allowed_language": "buyer contact attempted"},
+            {"level": 2, "label": "reply_received", "allowed_language": "buyer replied on a dated channel"},
+            {"level": 3, "label": "meeting_completed", "allowed_language": "buyer meeting completed and notes attached"},
+            {"level": 4, "label": "loi_received", "allowed_language": "letter of intent or equivalent evidence attached"},
+            {"level": 5, "label": "po_or_paid_order", "allowed_language": "purchase order or paid order evidence attached"},
+        ],
+        "supplier_evidence_ladder": [
+            {"level": 0, "label": "supplier_named", "allowed_language": "supplier named by user"},
+            {"level": 1, "label": "business_registration_attached", "allowed_language": "registration evidence collected"},
+            {"level": 2, "label": "export_ability_evidence_attached", "allowed_language": "export ability evidence collected"},
+            {"level": 3, "label": "product_docs_attached", "allowed_language": "product documents collected"},
+            {"level": 4, "label": "inspection_or_certificate_attached", "allowed_language": "inspection or certificate evidence collected"},
+            {"level": 5, "label": "prior_shipment_evidence_attached", "allowed_language": "prior shipment evidence collected"},
+        ],
+        "blocked_language": ["buyer_validated", "supplier_verified"],
+        "mvp_outreach_policy": "questions_only_no_automatic_sending",
+        "proof_boundary": "The product records evidence levels; it does not validate buyers or verify suppliers.",
+    }
+
+
+def build_metadata_only_beta_contract() -> dict[str, Any]:
+    return {
+        "status": "metadata_only_beta_contract_ready_real_users_required",
+        "phase_policy": "private beta phase 1 uses metadata-only packets plus optional sample or redacted documents",
+        "target_user_count": "5-10 exporter or intermediary users",
+        "required_observations": [
+            "who the product helps most",
+            "which output matters most",
+            "which fields users can answer",
+            "which fields confuse users",
+            "whether users would use, share, or pay for the packet",
+            "whether users understand blocked versus approved language",
+        ],
+        "external_evidence_required": True,
+        "proof_boundary": "This contract prepares beta measurement; it does not create real beta outcomes.",
+    }
+
+
+def build_real_file_beta_contract() -> dict[str, Any]:
+    return {
+        "status": "controlled_real_file_beta_blocked_until_hosted_review",
+        "starting_scope": "3-5 trusted users only after hosted upload/privacy/security controls pass",
+        "required_controls": [
+            "explicit upload consent",
+            "AI-use consent before model processing",
+            "redaction preview",
+            "manual/no-AI option",
+            "visible retention period",
+            "tested deletion path",
+            "upload audit trail",
+        ],
+        "proof_boundary": "Real-file beta requires hosted security, privacy, upload, and AI-safety review before use with sensitive documents.",
+    }
+
+
+def build_payment_pricing_contract() -> dict[str, Any]:
+    return {
+        "status": "payment_pricing_contract_ready_live_checkout_disabled",
+        "recommended_model": "free starter plus paid prepared packet or review-preparation package",
+        "paid_scope": "prepared trade readiness packet and evidence organization",
+        "forbidden_paid_scope": ["customs approval", "tariff confirmation", "shipment readiness"],
+        "required_before_live_checkout": [
+            "pricing decision",
+            "refund/support policy",
+            "tax/account review",
+            "payment processor setup",
+            "webhook handling review",
+            "billing/payment reviewer signoff",
+            "claim-boundary wording review",
+        ],
+        "live_checkout_enabled": False,
+    }
+
+
+def build_public_launch_contract() -> dict[str, Any]:
+    return {
+        "status": "public_launch_contract_ready_launch_blocked_until_real_approval",
+        "safe_initial_public_scope": [
+            "landing page",
+            "quick check",
+            "metadata-only starter packet",
+            "sample packet",
+            "waitlist or demo booking",
+            "safe educational source routing",
+        ],
+        "blocked_public_scope": [
+            "unrestricted real file uploads",
+            "live payments",
+            "automated buyer outreach",
+            "supplier verification claims",
+            "tariff/CFIA/customs confirmation",
+            "shipment approval language",
+        ],
+        "required_before_public_launch": [
+            "locked business logic",
+            "private beta outcomes",
+            "hosted controls proof",
+            "expert reviews recorded",
+            "public claims reviewed",
+            "named launch owner approval",
+        ],
+        "public_launch_ready": False,
+    }
+
+
+def build_completion_phase_contracts() -> dict[str, Any]:
+    phases = [
+        {
+            "phase": 0,
+            "name": "Business identity lock",
+            "status": "local_complete_claims_blocked",
+            "main_output": "wedge_persona_name_promise",
+            "artifact": "business_identity_lock",
+            "exit_criteria_status": "met_locally",
+        },
+        {
+            "phase": 1,
+            "name": "Business logic contract",
+            "status": "local_complete_claims_blocked",
+            "main_output": "decision_tree_stages_scores_provenance",
+            "artifact": "packet_rows",
+            "exit_criteria_status": "met_locally",
+        },
+        {
+            "phase": 2,
+            "name": "No-document beginner flow",
+            "status": "local_complete_claims_blocked",
+            "main_output": "starter_packet_contract",
+            "artifact": "beginner_flow_contract",
+            "exit_criteria_status": "met_locally",
+        },
+        {
+            "phase": 3,
+            "name": "Market intelligence",
+            "status": "local_contract_complete_real_datasets_required",
+            "main_output": "source_backed_market_signal_contract",
+            "artifact": "packet_rows[].market_intelligence",
+            "exit_criteria_status": "contract_met_data_evidence_required",
+        },
+        {
+            "phase": 4,
+            "name": "Country packs",
+            "status": "local_complete_reference_boundaries",
+            "main_output": "canada_india_vietnam_generic_country_packs",
+            "artifact": "packet_rows[].country_packs",
+            "exit_criteria_status": "met_locally_reference_only",
+        },
+        {
+            "phase": 5,
+            "name": "Source monitoring",
+            "status": "local_complete_no_live_freshness_claim",
+            "main_output": "freshness_status_diff_classifier_packet_impact_logic",
+            "artifact": "packet_rows[].source_monitoring_contract",
+            "exit_criteria_status": "met_locally_live_refresh_evidence_required",
+        },
+        {
+            "phase": 6,
+            "name": "Packet outputs",
+            "status": "local_complete_claims_blocked",
+            "main_output": "trade_readiness_packet_views",
+            "artifact": "packet_rows[].packet_outputs",
+            "exit_criteria_status": "met_locally",
+        },
+        {
+            "phase": 7,
+            "name": "Human review gates",
+            "status": "external_evidence_required",
+            "main_output": "reviewer_signoff_records",
+            "artifact": "reviewer_signoff_framework",
+            "exit_criteria_status": "blocked_until_real_reviewer_records",
+        },
+        {
+            "phase": 8,
+            "name": "Metadata-only beta",
+            "status": "external_evidence_required",
+            "main_output": "real_user_workflow_evidence",
+            "artifact": "metadata_only_beta_contract",
+            "exit_criteria_status": "blocked_until_real_user_outcomes",
+        },
+        {
+            "phase": 9,
+            "name": "Hosted beta infrastructure",
+            "status": "external_platform_proof_required",
+            "main_output": "auth_db_storage_logs_ai_controls",
+            "artifact": "hosted_beta_control_contract",
+            "exit_criteria_status": "blocked_until_hosted_proof",
+        },
+        {
+            "phase": 10,
+            "name": "Controlled real-file beta",
+            "status": "external_platform_and_consent_proof_required",
+            "main_output": "supervised_document_workflow",
+            "artifact": "real_file_beta_contract",
+            "exit_criteria_status": "blocked_until_real_file_beta_controls_pass",
+        },
+        {
+            "phase": 11,
+            "name": "Buyer/supplier evidence",
+            "status": "local_contract_complete_real_evidence_required",
+            "main_output": "buyer_supplier_evidence_ladders",
+            "artifact": "buyer_supplier_validation_contract",
+            "exit_criteria_status": "blocked_until_real_buyer_supplier_evidence",
+        },
+        {
+            "phase": 12,
+            "name": "Payments",
+            "status": "local_contract_complete_live_checkout_disabled",
+            "main_output": "paid_packet_scope_and_payment_gates",
+            "artifact": "payment_pricing_contract",
+            "exit_criteria_status": "blocked_until_payment_review_and_live_setup",
+        },
+        {
+            "phase": 13,
+            "name": "Public launch",
+            "status": "launch_contract_ready_public_launch_blocked",
+            "main_output": "narrow_reviewed_launch_scope",
+            "artifact": "public_launch_contract",
+            "exit_criteria_status": "blocked_until_named_owner_go_no_go",
+        },
+    ]
+    externally_blocked = [phase for phase in phases if "blocked" in str(phase["exit_criteria_status"]) or "required" in phase["status"]]
+    return {
+        "status": "all_14_phase_contracts_ready_external_gates_preserved",
+        "phase_ids": BUSINESS_COMPLETION_PHASE_IDS,
+        "phase_count": len(phases),
+        "local_contract_phase_count": len(phases),
+        "externally_blocked_phase_count": len(externally_blocked),
+        "controlled_private_beta_candidate_local": True,
+        "controlled_private_beta_ready_with_real_users": False,
+        "public_launch_ready": False,
+        "phases": phases,
+        "completion_definition_controlled_private_beta": (
+            "A foreign exporter selling into Canada can enter product and country details, with or without documents, and receive a packet with market research requirements, missing evidence, official source routes, responsibility gaps, blocked claims, buyer/broker/supplier questions, and next safe move."
+        ),
+        "completion_definition_public_launch": (
+            "Public launch requires locked logic, beta outcomes, hosted controls, expert reviews, reviewed public claims, and named launch-owner approval."
+        ),
+    }
+
+
 def build_business_logic_phases(
     workflow: dict[str, Any],
     official_sources: list[dict[str, Any]],
@@ -915,6 +1290,14 @@ def build_business_logic_phases(
         "score_ids": BUSINESS_SCORE_IDS,
         "phase_ids": BUSINESS_PHASE_IDS,
         "phases": phases,
+        "business_identity_lock": build_business_identity_lock(),
+        "beginner_flow_contract": build_beginner_flow_contract(),
+        "buyer_supplier_validation_contract": build_buyer_supplier_validation_contract(),
+        "metadata_only_beta_contract": build_metadata_only_beta_contract(),
+        "real_file_beta_contract": build_real_file_beta_contract(),
+        "payment_pricing_contract": build_payment_pricing_contract(),
+        "public_launch_contract": build_public_launch_contract(),
+        "completion_phase_contracts": build_completion_phase_contracts(),
         "reviewer_signoff_framework": build_reviewer_signoff_framework(),
         "hosted_beta_control_contract": build_hosted_beta_control_contract(),
         "packet_count": len(packet_rows),

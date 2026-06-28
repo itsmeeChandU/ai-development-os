@@ -11,7 +11,12 @@ if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
 from importer_source_readiness import load_json
-from importer_source_readiness.business_logic import BUSINESS_PHASE_IDS, BUSINESS_SCORE_IDS, build_business_logic_phases
+from importer_source_readiness.business_logic import (
+    BUSINESS_COMPLETION_PHASE_IDS,
+    BUSINESS_PHASE_IDS,
+    BUSINESS_SCORE_IDS,
+    build_business_logic_phases,
+)
 from importer_source_readiness.product_operations import (
     execute_agent_tool,
     generate_business_decision_report,
@@ -39,6 +44,14 @@ class BusinessLogicTests(unittest.TestCase):
         self.assertEqual(report["phase_count"], 5)
         self.assertEqual(report["phase_ids"], BUSINESS_PHASE_IDS)
         self.assertEqual(report["score_ids"], BUSINESS_SCORE_IDS)
+        self.assertEqual(report["business_identity_lock"]["first_wedge"], "foreign_exporters_preparing_to_sell_into_canada")
+        self.assertEqual(
+            report["completion_phase_contracts"]["status"],
+            "all_14_phase_contracts_ready_external_gates_preserved",
+        )
+        self.assertEqual(report["completion_phase_contracts"]["phase_ids"], BUSINESS_COMPLETION_PHASE_IDS)
+        self.assertEqual(report["completion_phase_contracts"]["phase_count"], 14)
+        self.assertFalse(report["completion_phase_contracts"]["public_launch_ready"])
         self.assertEqual(report["packet_count"], 1)
         row = report["packet_rows"][0]
         self.assertEqual(row["business_positioning"], "trade_decision_preparation_not_compliance_approval")
@@ -48,11 +61,15 @@ class BusinessLogicTests(unittest.TestCase):
         decision = row["decision_tree"]
         self.assertEqual(decision["status"], "decision_tree_ready_claims_blocked")
         self.assertEqual(decision["question_count"], 12)
+        self.assertIn("blocked", decision["answer_state_policy"])
+        self.assertTrue(all("answer_state" in step for step in decision["questions"]))
         self.assertTrue(any(step["status"] == "blocked_until_confirmed" for step in decision["questions"]))
 
         canonical = row["canonical_packet_contract"]
         self.assertEqual(canonical["status"], "canonical_trade_packet_contract_ready")
-        self.assertIn(canonical["stage"], {"starter", "document", "decision"})
+        self.assertIn(canonical["stage"], {"starter", "document", "decision", "reviewer_ready", "beta_ready"})
+        self.assertIn("reviewer_ready", canonical["stage_required_answers"])
+        self.assertIn("beta_ready", canonical["stage_required_answers"])
         self.assertIn("provenance", canonical["schema_required_fields"])
         self.assertEqual(canonical["field_provenance"]["responsibility_path"]["mode"], "system_derived")
         self.assertEqual(canonical["field_provenance"]["source_url"]["mode"], "official_source_reference")
@@ -62,6 +79,7 @@ class BusinessLogicTests(unittest.TestCase):
         self.assertEqual(scores["score_count"], 5)
         self.assertEqual(set(scores["scores"]), set(BUSINESS_SCORE_IDS))
         self.assertEqual(scores["scores"]["decision_safety_score"]["color"], "red")
+        self.assertIn("cap_reason", scores["scores"]["decision_safety_score"])
         self.assertIn("cap at 39", scores["formula_contract"]["decision_safety_score"])
         self.assertIn("buyer_validated", scores["score_policy"]["forbidden_labels"])
 
@@ -81,6 +99,8 @@ class BusinessLogicTests(unittest.TestCase):
         countries = {pack["country"]: pack for pack in country_packs["packs"]}
         self.assertIn("Canada", countries)
         self.assertIn("Vietnam", countries)
+        self.assertIn("India", countries)
+        self.assertEqual(countries["India"]["role"], "strategic_next_origin_pack")
         self.assertTrue(countries["Canada"]["import_sources"])
         self.assertTrue(countries["Canada"]["trade_data_sources"])
 
@@ -93,6 +113,9 @@ class BusinessLogicTests(unittest.TestCase):
         self.assertIn("canonical_url", first_source)
         self.assertIn("fetch_mode", first_source)
         self.assertIn("diff_strategy", first_source)
+        self.assertIn("freshness_status", first_source)
+        self.assertIn("diff_classifier", first_source)
+        self.assertIn("packet_impact_logic", first_source)
         self.assertIn("packet-frozen-tuna-canada-001", first_source["packet_tags"])
 
         outputs = row["packet_outputs"]
@@ -115,6 +138,20 @@ class BusinessLogicTests(unittest.TestCase):
         self.assertEqual(beta["status"], "hosted_beta_controls_blocked_until_real_platform_proof")
         self.assertEqual(beta["storage_recommendation"], "managed Postgres plus object storage for hosted beta; local SQLite and filesystem remain dev/local only")
         self.assertIn("live checkout stays disabled", beta["payment_policy"])
+        self.assertEqual(
+            report["metadata_only_beta_contract"]["status"],
+            "metadata_only_beta_contract_ready_real_users_required",
+        )
+        self.assertEqual(
+            report["buyer_supplier_validation_contract"]["status"],
+            "buyer_supplier_validation_ladders_ready_claims_blocked",
+        )
+        self.assertEqual(
+            report["payment_pricing_contract"]["status"],
+            "payment_pricing_contract_ready_live_checkout_disabled",
+        )
+        self.assertFalse(report["payment_pricing_contract"]["live_checkout_enabled"])
+        self.assertFalse(report["public_launch_contract"]["public_launch_ready"])
 
     def test_business_decision_operation_and_agent_tool_generate_artifacts(self) -> None:
         packets = load_json_list(ROOT / "data" / "customer_source_packets.json")

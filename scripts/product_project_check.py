@@ -182,6 +182,7 @@ def main() -> int:
         PROJECT / "system_review_graph" / "country_coverage_report.json",
         PROJECT / "system_review_graph" / "opportunity_scanner_report.json",
         PROJECT / "system_review_graph" / "business_logic_phase_report.json",
+        PROJECT / "system_review_graph" / "business_phase_completion_report.json",
         PROJECT / "system_review_graph" / "transport_readiness_report.json",
         PROJECT / "system_review_graph" / "billing_credit_controls.json",
         PROJECT / "system_review_graph" / "agent_api_manifest.json",
@@ -441,6 +442,9 @@ def main() -> int:
     )
     business_logic = json.loads(
         (PROJECT / "system_review_graph" / "business_logic_phase_report.json").read_text(encoding="utf-8")
+    )
+    business_phase_completion = json.loads(
+        (PROJECT / "system_review_graph" / "business_phase_completion_report.json").read_text(encoding="utf-8")
     )
     business_core_doc = (PROJECT / "docs" / "BUSINESS_CORE_LOGIC_CURRENT_STATE.md").read_text(encoding="utf-8")
     functional_doc = (PROJECT / "docs" / "FUNCTIONAL_REQUIREMENTS_CURRENT_STATE.md").read_text(encoding="utf-8")
@@ -1000,9 +1004,26 @@ def main() -> int:
         print("Product project check: FAIL")
         print("business logic report missing local operation proof")
         return 1
+    if business_phase_completion.get("status") != "all_14_phase_contracts_ready_external_gates_preserved":
+        print("Product project check: FAIL")
+        print("business phase completion report missing 14-phase contract status")
+        return 1
+    if business_phase_completion.get("completion_phase_contracts", {}).get("phase_count") != 14:
+        print("Product project check: FAIL")
+        print("business phase completion report must include phases 0-13")
+        return 1
+    if business_phase_completion.get("completion_phase_contracts", {}).get("public_launch_ready") is not False:
+        print("Product project check: FAIL")
+        print("business phase completion report must keep public launch blocked")
+        return 1
+    if business_phase_completion.get("operation_status") != "business_phase_completion_operational_local_external_gates_preserved":
+        print("Product project check: FAIL")
+        print("business phase completion report missing local operation proof")
+        return 1
     for term in (
         "business_logic_phases_ready_with_evidence_gates",
         "business_logic_operational_local_with_evidence_gates",
+        "all_14_phase_contracts_ready_external_gates_preserved",
         "market_signal_score",
         "evidence_completeness_score",
         "source_freshness_score",

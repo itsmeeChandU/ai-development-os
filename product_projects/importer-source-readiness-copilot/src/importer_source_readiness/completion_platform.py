@@ -1292,10 +1292,25 @@ def build_completion_platform(workflow: dict[str, Any], official_sources: list[d
 
 def write_completion_platform_artifacts(payload: dict[str, Any], repo_root: Path) -> dict[str, Any]:
     graph = repo_root / "system_review_graph"
+    business_logic = payload["business_logic_phases"]
+    business_phase_completion = {
+        "generated_at": business_logic["generated_at"],
+        "status": business_logic["completion_phase_contracts"]["status"],
+        "business_identity_lock": business_logic["business_identity_lock"],
+        "completion_phase_contracts": business_logic["completion_phase_contracts"],
+        "metadata_only_beta_contract": business_logic["metadata_only_beta_contract"],
+        "hosted_beta_control_contract": business_logic["hosted_beta_control_contract"],
+        "real_file_beta_contract": business_logic["real_file_beta_contract"],
+        "buyer_supplier_validation_contract": business_logic["buyer_supplier_validation_contract"],
+        "payment_pricing_contract": business_logic["payment_pricing_contract"],
+        "public_launch_contract": business_logic["public_launch_contract"],
+        "proof_boundary": business_logic["proof_boundary"],
+    }
     _write(graph / "completion_platform_manifest.json", payload)
     _write(graph / "country_coverage_report.json", payload["country_coverage"])
     _write(graph / "opportunity_scanner_report.json", payload["opportunity_scanner"])
-    _write(graph / "business_logic_phase_report.json", payload["business_logic_phases"])
+    _write(graph / "business_logic_phase_report.json", business_logic)
+    _write(graph / "business_phase_completion_report.json", business_phase_completion)
     _write(graph / "transport_readiness_report.json", payload["transport_readiness"])
     _write(graph / "billing_credit_controls.json", payload["billing_credit_controls"])
     _write(graph / "agent_api_manifest.json", payload["agent_api_manifest"])

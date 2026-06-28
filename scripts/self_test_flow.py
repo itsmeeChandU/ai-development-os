@@ -161,6 +161,7 @@ REQUIRED_FOR_FLOW = [
     "product_projects/importer-source-readiness-copilot/system_review_graph/public_report_types.json",
     "product_projects/importer-source-readiness-copilot/system_review_graph/public_upload_policy.json",
     "product_projects/importer-source-readiness-copilot/system_review_graph/business_logic_phase_report.json",
+    "product_projects/importer-source-readiness-copilot/system_review_graph/business_phase_completion_report.json",
     "product_projects/importer-source-readiness-copilot/system_review_graph/generated_reports/business_decision_packet-frozen-tuna-canada-001.json",
     "product_projects/importer-source-readiness-copilot/system_review_graph/source_refresh_runs.json",
     "product_projects/importer-source-readiness-copilot/system_review_graph/external_review_findings_report.json",

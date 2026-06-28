@@ -171,6 +171,7 @@ def main() -> int:
     country_coverage = _load_json(ROOT / "system_review_graph" / "country_coverage_report.json")
     opportunity_scanner = _load_json(ROOT / "system_review_graph" / "opportunity_scanner_report.json")
     business_logic = _load_json(ROOT / "system_review_graph" / "business_logic_phase_report.json")
+    business_phase_completion = _load_json(ROOT / "system_review_graph" / "business_phase_completion_report.json")
     transport_readiness = _load_json(ROOT / "system_review_graph" / "transport_readiness_report.json")
     billing_controls = _load_json(ROOT / "system_review_graph" / "billing_credit_controls.json")
     agent_api = _load_json(ROOT / "system_review_graph" / "agent_api_manifest.json")
@@ -323,6 +324,7 @@ def main() -> int:
         "system_review_graph/country_coverage_report.json",
         "system_review_graph/opportunity_scanner_report.json",
         "system_review_graph/business_logic_phase_report.json",
+        "system_review_graph/business_phase_completion_report.json",
         "system_review_graph/transport_readiness_report.json",
         "system_review_graph/billing_credit_controls.json",
         "system_review_graph/agent_api_manifest.json",
@@ -764,9 +766,18 @@ def main() -> int:
             failures.append("business logic should include the canonical packet contract")
     if business_logic.get("operation_status") != "business_logic_operational_local_with_evidence_gates":
         failures.append("business logic should include local operation proof")
+    if business_phase_completion.get("status") != "all_14_phase_contracts_ready_external_gates_preserved":
+        failures.append("business phase completion report should cover all 14 phase contracts")
+    if business_phase_completion.get("completion_phase_contracts", {}).get("phase_count") != 14:
+        failures.append("business phase completion report should include phases 0-13")
+    if business_phase_completion.get("completion_phase_contracts", {}).get("public_launch_ready") is not False:
+        failures.append("business phase completion must keep public launch blocked")
+    if business_phase_completion.get("operation_status") != "business_phase_completion_operational_local_external_gates_preserved":
+        failures.append("business phase completion report missing local operation proof")
     required_business_doc_terms = [
         "business_logic_phases_ready_with_evidence_gates",
         "business_logic_operational_local_with_evidence_gates",
+        "all_14_phase_contracts_ready_external_gates_preserved",
         "market_signal_score",
         "evidence_completeness_score",
         "source_freshness_score",

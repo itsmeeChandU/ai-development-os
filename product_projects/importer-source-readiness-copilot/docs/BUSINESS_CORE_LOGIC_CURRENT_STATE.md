@@ -6,6 +6,8 @@ Current status: `business_logic_phases_ready_with_evidence_gates`
 
 Operation status: `business_logic_operational_local_with_evidence_gates`
 
+Phase completion status: `all_14_phase_contracts_ready_external_gates_preserved`
+
 ## Product Position
 
 The product is a trade decision preparation system. It helps a user understand what is known, what is missing, which official sources should be checked, which claims are blocked, and what the next safe move is.
@@ -17,6 +19,25 @@ Current first wedge: foreign exporters selling into Canada, especially food, agr
 Current proof packet: `packet-frozen-tuna-canada-001`
 
 Current example flow: Vietnam origin to Canada destination for a food import packet.
+
+## Locked Business Answers
+
+| Decision | Locked Current Answer |
+| --- | --- |
+| First commercial wedge | Foreign exporters preparing to sell into Canada |
+| First category scope | Food, seafood, agri, plus general goods |
+| First customer persona | Beginner-to-intermediate exporter |
+| Secondary users | Canadian importers, internal reviewers, brokers, and experts |
+| Product name | Trade Readiness Copilot for external/user-facing language |
+| Internal engine name | Importer Source Readiness Copilot |
+| First destination pack | Canada |
+| Next explicit origin pack | India |
+| Demo/proof origin | Vietnam |
+| Generic country handling | Generic fallback remains research-only until source coverage is added |
+| Buyer evidence language | Use evidence levels; do not say buyer validated |
+| Supplier evidence language | Use evidence collected; do not say supplier verified |
+| Source freshness promise | Checked before packet generation or paid review, not continuous legal freshness |
+| Outreach policy | Questions only for MVP; no automatic sending |
 
 ## Core Business Object
 
@@ -51,13 +72,15 @@ This matters because field presence alone is not proof. A packet can know a prod
 
 ## Packet Stages
 
-The current logic supports three stages:
+The current logic supports five stages:
 
 | Stage | Meaning | Required Before Moving Forward |
 | --- | --- | --- |
 | Starter | User may have little or no evidence yet | product, direction, origin or destination, intended use |
 | Document | User has some evidence or source material | evidence item or offline flag, source or file reference, confirmation path |
 | Decision | User is preparing a trade decision packet | importer of record, Incoterms or delivery responsibility, buyer/importer identity or broker-ready rationale, source freshness, category review status |
+| Reviewer-ready | Packet has enough structure to route to a scoped reviewer | broker/expert packet, blocked-claims report, review scope, source snapshot or stale-source blocker |
+| Beta-ready | Packet is usable in a controlled beta context | reviewer-ready fields, scoped reviewer findings, metadata-only beta controls, hosted/local review boundary |
 
 The current example packet is at document stage because it has evidence, but importer of record and Incoterms are still missing.
 
@@ -153,6 +176,16 @@ The source monitoring contract now records the fields expected for each importan
 
 Current behavior is conservative. Sources are registered and routed. They do not prove current law, tariff treatment, permit status, or compliance until refresh and review evidence exists.
 
+The source monitor also carries:
+
+- freshness status
+- diff classifier
+- packet impact logic
+- source changed flow
+- stale-source blocker behavior
+
+If a critical source changes, affected packet outputs become stale until refreshed evidence and reviewer review are attached.
+
 ## Packet Outputs
 
 The business logic prepares these output groups:
@@ -188,6 +221,18 @@ Current reviewer lanes:
 
 AI can prepare review packets. AI cannot approve a reviewer lane.
 
+Each real review lane must return:
+
+- reviewer name
+- review date
+- scope reviewed
+- finding
+- required changes
+- decision: approved_for_scope, needs_changes, or blocked
+- evidence attachment
+
+Without those records, the lane stays blocked.
+
 ## Hosted Beta And Payment Boundary
 
 Hosted private beta remains blocked until real platform proof exists.
@@ -204,6 +249,25 @@ Minimum hosted beta controls include:
 - observability
 
 Payments remain downstream. Live checkout stays disabled until scope, support, refund, tax, webhook, and claim-boundary reviews pass.
+
+## Phase Completion Matrix
+
+| Phase | Name | Current Status | What Is Complete Now | What Still Needs Real Evidence |
+| ---: | --- | --- | --- | --- |
+| 0 | Business identity lock | local complete, claims blocked | wedge, persona, promise, name, forbidden claims | none for local scope |
+| 1 | Business logic contract | local complete, claims blocked | 12 questions, five stages, provenance, five scores, cap reasons | real reviewer verification before stronger claims |
+| 2 | No-document beginner flow | local complete, claims blocked | starter packet contract, source routes, questions, missing evidence | real user feedback |
+| 3 | Market intelligence | local contract complete, datasets required | signal structure, confidence levels, source/date/limitation rules | official dataset rows, buyer/operator validation |
+| 4 | Country packs | local complete, reference boundaries | Canada, India, Vietnam, Generic pack logic | current source refresh and qualified country review |
+| 5 | Source monitoring | local complete, no live freshness claim | freshness status, diff classifier, packet impact logic | permitted refresh evidence and reviewer review |
+| 6 | Packet outputs | local complete, claims blocked | Trade Readiness Packet views and supporting reports | user value validation |
+| 7 | Human review gates | contract ready, external evidence required | reviewer lanes and decision templates | real reviewer records |
+| 8 | Metadata-only beta | contract ready, real users required | beta measurement plan | 5-10 real user outcomes |
+| 9 | Hosted beta infrastructure | contract ready, hosted proof required | hosted control checklist | auth, DB, storage, logs, backups, AI routing proof |
+| 10 | Controlled real-file beta | contract ready, hosted review required | consent, redaction, deletion, audit requirements | supervised real-file beta results |
+| 11 | Buyer/supplier evidence | local contract complete, real evidence required | evidence ladders and language boundaries | dated buyer and supplier evidence |
+| 12 | Payments | local contract complete, live checkout disabled | paid scope and required reviews | pricing, tax, support, webhook, payment review |
+| 13 | Public launch | launch contract ready, public launch blocked | safe initial launch scope and blocked launch scope | named launch owner approval and all external gates |
 
 ## Implementation Evidence
 

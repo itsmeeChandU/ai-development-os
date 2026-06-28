@@ -62,6 +62,12 @@ class CompletionPlatformTests(unittest.TestCase):
         self.assertGreaterEqual(payload["opportunity_scanner"]["signal_count"], 1)
         business = payload["business_logic_phases"]
         self.assertEqual(business["phase_count"], 5)
+        self.assertEqual(
+            business["completion_phase_contracts"]["status"],
+            "all_14_phase_contracts_ready_external_gates_preserved",
+        )
+        self.assertEqual(business["completion_phase_contracts"]["phase_count"], 14)
+        self.assertFalse(business["completion_phase_contracts"]["public_launch_ready"])
         self.assertEqual(business["packet_rows"][0]["decision_tree"]["question_count"], 12)
         self.assertEqual(business["packet_rows"][0]["business_scores"]["score_count"], 5)
         self.assertEqual(
@@ -184,6 +190,7 @@ class CompletionPlatformTests(unittest.TestCase):
                 "launch_operations_report.json",
                 "all_stage_readiness_report.json",
                 "business_logic_phase_report.json",
+                "business_phase_completion_report.json",
             ):
                 self.assertTrue((root / "system_review_graph" / name).exists(), name)
 
