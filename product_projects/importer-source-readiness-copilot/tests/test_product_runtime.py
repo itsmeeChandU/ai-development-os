@@ -76,6 +76,7 @@ class ProductRuntimeTests(unittest.TestCase):
         self.assertIn("/api/launch-operations", runtime["api_routes"])
         self.assertIn("/api/product-operations/report", runtime["api_routes"])
         self.assertIn("/api/market-readiness", runtime["api_routes"])
+        self.assertIn("/api/market-readiness/inputs", runtime["api_routes"])
         self.assertIn("/api/product-operations/run", runtime["api_routes"])
         self.assertIn("/api/agent-tools/:tool", runtime["api_routes"])
         self.assertIn("/api/packets/:id/scores", runtime["api_routes"])

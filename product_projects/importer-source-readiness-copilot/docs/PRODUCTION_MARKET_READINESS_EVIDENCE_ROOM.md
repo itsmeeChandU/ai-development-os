@@ -13,6 +13,8 @@ The evidence room organizes real go-live inputs and review work orders. It is no
 - Live payment ready: false
 - Claims opened by room: false
 - Market-ready claim allowed: false
+- Local returned-input capture: true
+- Input capture route: `/api/market-readiness/inputs`
 
 ## Work Orders
 

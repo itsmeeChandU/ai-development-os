@@ -32,7 +32,8 @@ The market-readiness evidence room now writes
 `system_review_graph/production_market_readiness_gate_status_matrix.json`, and
 `docs/PRODUCTION_MARKET_READINESS_EVIDENCE_ROOM.md`. It converts the eight real
 go-live input areas into operator work orders with reviewer asks, source
-anchors, `external_inputs/` drop paths, and closed-claim status. It does not
+anchors, `external_inputs/` drop paths, a local returned-input form at
+`/api/market-readiness/inputs`, and closed-claim status. It does not
 approve market readiness, public launch, live payments, customs/trade language,
 legal/privacy/security, buyer validation, or supplier verification.
 It also writes the production redevelopment contract:

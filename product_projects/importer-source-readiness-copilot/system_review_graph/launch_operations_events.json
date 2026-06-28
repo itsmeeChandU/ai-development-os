@@ -3,7 +3,7 @@
     "control": "private_beta_launch",
     "external_effects_created": false,
     "human_approval_required": true,
-    "launch_event_id": "launch-event-packet-frozen-tuna-canada-001-private_beta_launch-2026-06-28T184435Z0000",
+    "launch_event_id": "launch-event-packet-frozen-tuna-canada-001-private_beta_launch-2026-06-28T185201Z0000",
     "next_valid_move": "Route board/private-beta approval packet to owners before enabling any external launch effect.",
     "packet_id": "packet-frozen-tuna-canada-001",
     "public_launch_allowed": false,

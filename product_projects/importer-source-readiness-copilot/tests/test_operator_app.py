@@ -213,6 +213,30 @@ class OperatorAppTests(unittest.TestCase):
         self.assertFalse(upload_payload["real_file_accepted"])
         self.assertFalse(upload_payload["unrestricted_uploads_enabled"])
 
+    def test_market_readiness_page_has_real_input_recorder_and_requires_notice(self) -> None:
+        with urlopen(f"{self.base_url}/market-readiness", timeout=5) as response:
+            html = response.read().decode("utf-8")
+
+        self.assertEqual(response.status, 200)
+        self.assertIn('action="/api/market-readiness/inputs"', html)
+        self.assertIn("Record A Returned Input", html)
+        self.assertIn("need_more_evidence", html)
+
+        body = urlencode(
+            {
+                "review_area": "qualified_customs_trade_review",
+                "decision": "need_more_evidence",
+                "reviewer_name": "Example Reviewer",
+                "reviewer_role": "Trade reviewer",
+                "scope_reviewed": "Example scope",
+                "signed_at": "2026-06-28",
+            }
+        ).encode("utf-8")
+        request = Request(f"{self.base_url}/api/market-readiness/inputs", data=body, method="POST")
+        with self.assertRaises(HTTPError) as context:
+            urlopen(request, timeout=5)
+        self.assertEqual(context.exception.code, 400)
+
     def test_payment_contract_routes_do_not_create_live_charges(self) -> None:
         checkout_body = urlencode({"tier": "starter_packet"}).encode("utf-8")
         checkout_request = Request(f"{self.base_url}/api/payments/checkout-session", data=checkout_body, method="POST")

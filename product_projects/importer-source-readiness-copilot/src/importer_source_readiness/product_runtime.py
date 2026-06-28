@@ -1428,6 +1428,7 @@ def build_runtime_state(workflow: dict[str, Any], *, extra_audit_events: list[di
             "/api/launch-operations",
             "/api/launch-control-plane",
             "/api/market-readiness",
+            "/api/market-readiness/inputs",
             "/api/product-operations/report",
             "/api/product-operations/run",
             "/api/agent-tools/:tool",
@@ -1574,6 +1575,7 @@ def write_runtime_artifacts(repo_root: Path, workflow: dict[str, Any], *, extra_
                     "/api/team-workspace",
                     "/api/launch-operations",
                     "/api/market-readiness",
+                    "/api/market-readiness/inputs",
                 ],
             },
             "modes": {
@@ -1586,7 +1588,7 @@ def write_runtime_artifacts(repo_root: Path, workflow: dict[str, Any], *, extra_
                 "transport_readiness": "Creates freight-forwarder questions and blocks route/cost/shipment claims.",
                 "billing_controls": "Estimates plan/credit gates locally; live checkout remains disabled.",
                 "all_stage_runtime": "Stage 0 plus go-live States 1-18 expose local routes, APIs, artifacts, blocker rows, and proof checks.",
-                "market_readiness_evidence_room": "Maps real go-live input requests into operator work orders and keeps market-ready claims closed.",
+                "market_readiness_evidence_room": "Maps real go-live input requests into operator work orders and captures returned inputs locally while keeping market-ready claims closed.",
             },
             "completion_stage_contracts": {
                 "manifest": "system_review_graph/completion_platform_manifest.json",

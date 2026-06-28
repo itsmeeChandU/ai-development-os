@@ -14,6 +14,7 @@ from pathlib import Path
 from typing import Any
 
 STATUS = "production_market_readiness_evidence_room_ready_inputs_mapped_gates_closed"
+INPUT_RECORD_STATUS = "market_readiness_input_record_saved_local_pending_re_evaluation"
 
 BLOCKED_MARKET_READY_CLAIMS = (
     "market_ready",
@@ -42,6 +43,17 @@ def _load_json(path: Path, default: Any) -> Any:
 
 def _rows_by_key(rows: list[dict[str, Any]], key: str) -> dict[str, dict[str, Any]]:
     return {str(row.get(key) or ""): row for row in rows if row.get(key)}
+
+
+def _split_lines(value: Any) -> list[str]:
+    if isinstance(value, list):
+        return [str(row).strip() for row in value if str(row).strip()]
+    return [line.strip() for line in str(value or "").splitlines() if line.strip()]
+
+
+def _clean_text(value: Any, limit: int = 1000) -> str:
+    text = str(value or "").replace("\x00", "").strip()
+    return text[:limit]
 
 
 def _source_anchors_for_gate(report: dict[str, Any], gate_id: str) -> list[dict[str, Any]]:
@@ -158,6 +170,85 @@ def _reviewer_brief_card(work_order: dict[str, Any]) -> dict[str, Any]:
     }
 
 
+def market_readiness_input_form_contract(repo_root: Path | None = None) -> dict[str, Any]:
+    root = repo_root or Path(__file__).resolve().parents[2]
+    templates = _load_json(root / "system_review_graph" / "go_live_input_templates.json", {})
+    return {
+        "status": "market_readiness_input_form_contract_ready",
+        "review_areas": [
+            {
+                "review_area": row.get("review_area"),
+                "plain_title": row.get("plain_title"),
+                "simple_question": row.get("simple_question"),
+                "who_to_ask": row.get("who_to_ask"),
+                "minimum_input": row.get("minimum_input", []),
+            }
+            for row in templates.get("templates", [])
+        ],
+        "allowed_decisions": templates.get("allowed_decisions", []),
+        "input_folder": templates.get("input_folder", "external_inputs/"),
+        "external_effects_created": False,
+        "proof_boundary": "The form records returned human input locally. It does not approve launch or open claims by itself.",
+    }
+
+
+def build_market_readiness_input_record(
+    fields: dict[str, Any],
+    repo_root: Path | None = None,
+    generated_at: str | None = None,
+) -> dict[str, Any]:
+    contract = market_readiness_input_form_contract(repo_root)
+    area_by_id = _rows_by_key(contract["review_areas"], "review_area")
+    review_area = _clean_text(fields.get("review_area"), 160)
+    if review_area not in area_by_id:
+        raise ValueError(f"unsupported market-readiness review area: {review_area}")
+    decision = _clean_text(fields.get("decision") or "need_more_evidence", 120)
+    if decision not in contract["allowed_decisions"]:
+        raise ValueError(f"unsupported market-readiness decision: {decision}")
+    signed_at = _clean_text(fields.get("signed_at") or fields.get("decided_at"), 80)
+    record = {
+        "status": INPUT_RECORD_STATUS,
+        "recorded_at": generated_at or _now(),
+        "review_area": review_area,
+        "plain_title": area_by_id[review_area].get("plain_title"),
+        "reviewer_name": _clean_text(fields.get("reviewer_name"), 160),
+        "reviewer_role": _clean_text(fields.get("reviewer_role"), 160),
+        "scope_reviewed": _clean_text(fields.get("scope_reviewed"), 500),
+        "decision": decision,
+        "signed_at": signed_at,
+        "top_issues": _split_lines(fields.get("top_issues")),
+        "evidence_missing": _split_lines(fields.get("evidence_missing")),
+        "evidence_links_or_files": _split_lines(fields.get("evidence_links_or_files")),
+        "claims_the_product_must_not_make": _split_lines(fields.get("claims_the_product_must_not_make")),
+        "what_would_make_this_ready": _clean_text(fields.get("what_would_make_this_ready"), 1000),
+        "minimum_input_present": bool(fields.get("reviewer_name") and fields.get("scope_reviewed") and signed_at),
+        "ready_decision_candidate": decision in {"ready_for_my_area", "not_applicable_for_this_launch", "go_for_public_launch"},
+        "external_effects_created": False,
+        "claims_opened_by_recording": False,
+        "proof_boundary": (
+            "This is a local record of returned input. It becomes go-live evidence only through "
+            "go_live_input_readiness_report.json and the launch control plane."
+        ),
+    }
+    return record
+
+
+def save_market_readiness_input_record(fields: dict[str, Any], repo_root: Path) -> dict[str, Any]:
+    record = build_market_readiness_input_record(fields, repo_root)
+    input_dir = repo_root / "external_inputs"
+    input_dir.mkdir(parents=True, exist_ok=True)
+    path = input_dir / f"{record['review_area']}.json"
+    path.write_text(json.dumps(record, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    return {
+        "status": INPUT_RECORD_STATUS,
+        "record": record,
+        "path": path,
+        "relative_path": str(path.relative_to(repo_root)),
+        "external_effects_created": False,
+        "claims_opened": False,
+    }
+
+
 def build_production_market_readiness_evidence_room(repo_root: Path | None = None) -> dict[str, Any]:
     root = repo_root or Path(__file__).resolve().parents[2]
     graph = root / "system_review_graph"
@@ -231,6 +322,9 @@ def build_production_market_readiness_evidence_room(repo_root: Path | None = Non
         "gate_status_matrix": gate_status_matrix,
         "source_anchor_count": sum(row["source_anchor_count"] for row in work_orders),
         "input_folder": templates.get("input_folder", "external_inputs/"),
+        "input_form_contract": market_readiness_input_form_contract(root),
+        "input_capture_enabled_local": True,
+        "input_capture_route": "/api/market-readiness/inputs",
         "template_status": templates.get("status", "missing"),
         "go_live_input_status": readiness.get("status", "missing"),
         "launch_control_status": launch.get("status", "missing"),
@@ -267,6 +361,8 @@ def render_market_readiness_evidence_room_markdown(payload: dict[str, Any]) -> s
         f"- Live payment ready: {str(payload['live_payment_ready']).lower()}",
         f"- Claims opened by room: {str(payload['claims_opened_by_room']).lower()}",
         f"- Market-ready claim allowed: {str(payload['market_ready_claim_allowed']).lower()}",
+        f"- Local returned-input capture: {str(payload['input_capture_enabled_local']).lower()}",
+        f"- Input capture route: `{payload['input_capture_route']}`",
         "",
         "## Work Orders",
         "",

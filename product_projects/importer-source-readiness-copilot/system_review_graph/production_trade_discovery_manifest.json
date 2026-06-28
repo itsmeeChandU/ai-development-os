@@ -3391,7 +3391,7 @@
   ],
   "demand_claimed": false,
   "external_effects_created": false,
-  "generated_at": "2026-06-28T18:44:36+00:00",
+  "generated_at": "2026-06-28T18:52:02+00:00",
   "market_opportunity_claimed": false,
   "missing_registry_sources": [],
   "next_valid_move": "Use discovery to choose a product family and lane, then create a starter packet and attach dated source/evidence rows.",

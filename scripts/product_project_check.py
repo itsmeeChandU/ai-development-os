@@ -2581,9 +2581,12 @@ def main() -> int:
         or production_market_readiness.get("reviewer_brief_card_count") != 8
         or production_market_readiness.get("missing_input_count") != go_live_input_readiness.get("missing_input_count")
         or production_market_readiness.get("source_anchor_count", 0) < 24
+        or production_market_readiness.get("input_capture_enabled_local") is not True
+        or production_market_readiness.get("input_capture_route") != "/api/market-readiness/inputs"
+        or production_market_readiness.get("input_form_contract", {}).get("status") != "market_readiness_input_form_contract_ready"
     ):
         print("Product project check: FAIL")
-        print("market readiness evidence room must map all real-world inputs, work orders, and source anchors")
+        print("market readiness evidence room must map all real-world inputs, work orders, source anchors, and local input capture")
         return 1
     for key in (
         "public_launch_ready",

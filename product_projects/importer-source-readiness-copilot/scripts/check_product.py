@@ -2192,6 +2192,12 @@ def main() -> int:
         failures.append("market readiness evidence room should generate reviewer-facing brief cards")
     if production_market_readiness.get("missing_input_count") != go_live_input_readiness.get("missing_input_count"):
         failures.append("market readiness missing input count should match go-live input readiness")
+    if production_market_readiness.get("input_capture_enabled_local") is not True:
+        failures.append("market readiness evidence room should enable local returned-input capture")
+    if production_market_readiness.get("input_capture_route") != "/api/market-readiness/inputs":
+        failures.append("market readiness evidence room should expose the returned-input capture route")
+    if production_market_readiness.get("input_form_contract", {}).get("status") != "market_readiness_input_form_contract_ready":
+        failures.append("market readiness evidence room should include a ready input form contract")
     for key in (
         "public_launch_ready",
         "hosted_private_beta_ready",

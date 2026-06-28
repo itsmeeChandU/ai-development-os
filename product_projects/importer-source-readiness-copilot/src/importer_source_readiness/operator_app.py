@@ -58,6 +58,12 @@ from .product_operations import (
     execute_agent_tool,
     execute_all_local_product_operations,
 )
+from .external_validation_research import write_external_validation_requirements
+from .production_market_readiness_evidence_room import (
+    build_production_market_readiness_evidence_room,
+    save_market_readiness_input_record,
+    write_production_market_readiness_evidence_room_artifacts,
+)
 
 
 API_ROUTES = {
@@ -1600,6 +1606,15 @@ def _render_launch_operations(repo_root: Path) -> str:
 
 def _render_market_readiness(repo_root: Path) -> str:
     room = _load_graph_json(repo_root, "production_market_readiness_evidence_room_manifest.json")
+    form_contract = room.get("input_form_contract", {})
+    review_area_options = _select_options(
+        [str(row.get("review_area")) for row in form_contract.get("review_areas", [])],
+        "qualified_customs_trade_review",
+    )
+    decision_options = _select_options(
+        form_contract.get("allowed_decisions", ["need_more_evidence"]),
+        "need_more_evidence",
+    )
     matrix_rows = "".join(
         "<tr>"
         f"<td>{escape(str(row.get('gate_name')))}</td>"
@@ -1636,6 +1651,27 @@ def _render_market_readiness(repo_root: Path) -> str:
     {_button_link("/api/market-readiness", "Open JSON", "database", tone="secondary")}
     {_button_link("/system_review_graph/production_market_readiness_evidence_work_orders.json", "Work orders", "file-text", tone="secondary")}
   </div>
+</section>
+<section class="surface">
+  <h2>Record A Returned Input</h2>
+  <p class="note">Use this after a real reviewer, operator, buyer, supplier, payment owner, or final owner responds. If the response is incomplete, save it with "need_more_evidence" so the product stays blocked.</p>
+  <form method="post" action="/api/market-readiness/inputs">
+    <div class="grid">
+      <div><label>Review area</label><select name="review_area">{review_area_options}</select></div>
+      <div><label>Decision</label><select name="decision">{decision_options}</select></div>
+      <div><label>Who answered?</label><input name="reviewer_name" placeholder="Name or accountable owner"></div>
+      <div><label>Role or qualification</label><input name="reviewer_role" placeholder="Customs reviewer, security reviewer, buyer, supplier, owner"></div>
+      <div><label>Signed or decided date</label><input name="signed_at" type="date"></div>
+      <div><label>Scope reviewed</label><input name="scope_reviewed" placeholder="Commit, URL, packet, country, payment scope, or launch scope"></div>
+    </div>
+    <label>Top issues</label><textarea name="top_issues" rows="3" placeholder="One issue per line"></textarea>
+    <label>Missing evidence</label><textarea name="evidence_missing" rows="3" placeholder="One missing item per line"></textarea>
+    <label>Evidence links or file names</label><textarea name="evidence_links_or_files" rows="3" placeholder="One link or local file path per line"></textarea>
+    <label>Claims the product must not make</label><textarea name="claims_the_product_must_not_make" rows="2" placeholder="One claim per line"></textarea>
+    <label>What would make this ready?</label><textarea name="what_would_make_this_ready" rows="3"></textarea>
+    <label><input type="checkbox" name="accept_real_input_notice" value="accepted"> This is a real returned input or an intentionally incomplete response; do not treat AI-only or founder-only notes as approval.</label>
+    <button type="submit">{_icon("check")}Save Response</button>
+  </form>
 </section>
 <section class="surface">
   <h2>Gate Status</h2>
@@ -2746,6 +2782,7 @@ def _index_payload(repo_root: Path) -> dict[str, Any]:
                 "/api/launch-operations",
                 "/api/product-operations/report",
                 "/api/market-readiness",
+                "/api/market-readiness/inputs",
                 "/api/product-operations/run",
                 "/api/agent-tools/:tool",
                 "/login",
@@ -3947,6 +3984,26 @@ def build_operator_app_handler(repo_root: Path) -> type[BaseHTTPRequestHandler]:
                     self.send_error(HTTPStatus.FORBIDDEN, str(exc))
                 except (KeyError, ValueError) as exc:
                     self.send_error(HTTPStatus.BAD_REQUEST, str(exc))
+                return
+            if path == "/api/market-readiness/inputs":
+                fields = self._read_fields()
+                if not _truthy_form_value(fields.get("accept_real_input_notice")):
+                    self.send_error(HTTPStatus.BAD_REQUEST, "Real input notice must be accepted")
+                    return
+                if any(_contains_script(str(value)) for value in fields.values()):
+                    self.send_error(HTTPStatus.BAD_REQUEST, "Input contains unsafe HTML")
+                    return
+                try:
+                    save_market_readiness_input_record(fields, repo_root)
+                    write_external_validation_requirements(repo_root, input_dir=repo_root / "external_inputs")
+                    refreshed = build_production_market_readiness_evidence_room(repo_root)
+                    write_production_market_readiness_evidence_room_artifacts(refreshed, repo_root)
+                except ValueError as exc:
+                    self.send_error(HTTPStatus.BAD_REQUEST, str(exc))
+                    return
+                self.send_response(HTTPStatus.SEE_OTHER)
+                self.send_header("Location", "/market-readiness")
+                self.end_headers()
                 return
             if path == "/api/public/starter":
                 self._handle_public_starter(actor)
