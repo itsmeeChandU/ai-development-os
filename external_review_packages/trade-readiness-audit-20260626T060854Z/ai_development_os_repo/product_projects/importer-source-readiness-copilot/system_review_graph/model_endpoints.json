@@ -1,0 +1,43 @@
+{
+  "endpoints": [
+    {
+      "api_key_reference": "IMPORTER_LLM_API_KEY",
+      "auth_method": "server_secret_reference",
+      "endpoint_url": "provider://business-api",
+      "health_check_status": "not_configured_for_public_hosting",
+      "id": "business-api-default",
+      "max_context_tokens": 64000,
+      "mode": "business_api",
+      "model_name": "structured-review-model",
+      "retention_policy": "business_api_default_no_training_by_product_policy",
+      "supports_json_schema": true,
+      "timeout_seconds": 60
+    },
+    {
+      "api_key_reference": "PRIVATE_LLM_API_KEY",
+      "auth_method": "private_network_secret_reference",
+      "endpoint_url": "https://private-llm.example.local",
+      "health_check_status": "design_ready_not_live",
+      "id": "private-endpoint-canada-001",
+      "max_context_tokens": 128000,
+      "mode": "private_hosted_llm",
+      "model_name": "private-structured-review",
+      "retention_policy": "private_tenant_no_provider_training",
+      "supports_json_schema": true,
+      "timeout_seconds": 90
+    },
+    {
+      "api_key_reference": "CUSTOMER_MANAGED_LLM_KEY",
+      "auth_method": "customer_secret_reference",
+      "endpoint_url": "https://customer-model.example.local",
+      "health_check_status": "design_ready_not_live",
+      "id": "customer-managed-demo",
+      "max_context_tokens": 32000,
+      "mode": "customer_managed_llm",
+      "model_name": "customer-managed-review",
+      "retention_policy": "customer_controlled",
+      "supports_json_schema": true,
+      "timeout_seconds": 90
+    }
+  ]
+}

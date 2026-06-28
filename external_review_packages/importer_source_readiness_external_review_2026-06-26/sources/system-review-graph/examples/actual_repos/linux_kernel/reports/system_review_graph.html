@@ -1,0 +1,1245 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Linux Kernel System Review Atlas</title>
+  <style>
+    body {
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, sans-serif;
+      margin: 0;
+      color: #18202a;
+      background: #f8fafc;
+    }
+    header { padding: 40px 32px; background: #172033; color: white; }
+    main { max-width: 1120px; margin: 0 auto; padding: 28px; }
+    section {
+      margin: 24px 0;
+      padding: 24px;
+      background: white;
+      border: 1px solid #dbe3ee;
+      border-radius: 10px;
+    }
+    h1, h2, h3 { line-height: 1.2; }
+    code, pre { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    .meta { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+    .pill { padding: 6px 10px; border: 1px solid rgba(255,255,255,.32); border-radius: 999px; }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+    }
+    .card { padding: 18px; border: 1px solid #dbe3ee; border-radius: 10px; background: #fbfdff; }
+    dt { font-weight: 700; margin-top: 10px; }
+    dd { margin-left: 0; color: #465466; }
+    table { border-collapse: collapse; width: 100%; }
+    th, td { border-bottom: 1px solid #dbe3ee; padding: 10px 8px; text-align: left; }
+    a { color: #1456cc; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Linux Kernel System Review Atlas</h1>
+    <p>Map-of-maps generated for a large repository: root atlas links to subsystem manifests.</p>
+    <div class="meta">
+      <span class="pill">Depth: blueprint</span>
+      <span class="pill">Systems: 24</span>
+      <span class="pill">Artifacts: 24</span>
+      <span class="pill">Gates: 1</span>
+      <span class="pill">Workflows: 4</span>
+    </div>
+  </header>
+  <main>
+    <section>
+      <h2>Bigger Picture</h2>
+      <p>This is a large-repository map-of-maps and blueprint stress test for System Review Graph. It uses real Linux kernel tracked paths plus source-evidence anchors to show the whole-system shape: build/config, boot/init, process scheduling, syscall entry, memory, filesystem/block IO, networking, driver probing, security hooks, modules/BPF/tracing, and Rust integration. The target reading experience is a blueprint wall: start with the root structure, then drill into the source-backed flow and child maps. It is still not an official Linux maintainer audit and does not prove runtime behavior without tests/traces.</p>
+    </section>
+    <section>
+      <h2>Source Links</h2>
+      <ul><li><a href="https://github.com/torvalds/linux">Linux kernel repository</a> - Public source repository used for the path-tree stress test.</li>
+<li><a href="https://github.com/torvalds/linux/commit/2d3090a8aeb596a26935db0955d46c9a5db5c6ce">Linux kernel commit 2d3090a</a> - Merge tag &#x27;v7.1-p5&#x27; of git://git.kernel.org/pub/scm/linux/kernel/git/herbert/crypto-2.6</li></ul>
+    </section>
+
+    <section>
+      <h2>Report Registers</h2>
+      <h3>Coverage Register</h3>
+      <table><thead><tr><th>Area</th><th>Count</th><th>What It Means</th><th>Reviewer Use</th></tr></thead><tbody><tr><td>Systems</td><td>24</td><td>Bounded contexts, services, subsystems, or product surfaces.</td><td>Use this to see whether the report maps the main operating areas.</td></tr>
+<tr><td>Artifacts</td><td>24</td><td>Inspectable files, APIs, tables, dashboards, reports, or outputs.</td><td>Use this to trace where system claims can be inspected.</td></tr>
+<tr><td>Schemas/contracts</td><td>1</td><td>Public or sanitized contracts for artifacts and handoffs.</td><td>Use this to rebuild examples without touching private data.</td></tr>
+<tr><td>Decision gates</td><td>1</td><td>Rules that advance, wait, block, or require human review.</td><td>Use this to find where the system controls action.</td></tr>
+<tr><td>Workflows</td><td>4</td><td>Lifecycle steps from input to output.</td><td>Use this to follow what happens end to end.</td></tr>
+<tr><td>Graph edges</td><td>109</td><td>Explicit and derived relationships between manifest nodes.</td><td>Use this to audit connectivity and missing relationships.</td></tr>
+<tr><td>Child maps</td><td>24</td><td>Linked subsystem maps for large repositories.</td><td>Use this to drill into a map-of-maps instead of one flat report.</td></tr>
+<tr><td>Blueprint sections</td><td>11</td><td>Source-evidence-backed operating flows.</td><td>Use this to review deep behavior claims with proof anchors.</td></tr>
+<tr><td>Blueprint evidence rows</td><td>56</td><td>Source paths, symbols, roles, and proof levels.</td><td>Use this to verify whether blueprint claims are source-backed.</td></tr>
+<tr><td>Source links</td><td>2</td><td>External or public references used by the report.</td><td>Use this to confirm the report&#x27;s public evidence base.</td></tr>
+<tr><td>Known boundaries</td><td>17</td><td>Open limits, unproven claims, redactions, or scope exclusions.</td><td>Use this to avoid treating the report as stronger than it is.</td></tr>
+<tr><td>Review questions</td><td>38</td><td>Questions a maintainer, auditor, or agent should answer next.</td><td>Use this as the human follow-up queue.</td></tr>
+<tr><td>Rebuild phases</td><td>2</td><td>Documented commands or phases for reproducing the report.</td><td>Use this to regenerate or verify the report locally.</td></tr></tbody></table>
+      <h3>Evidence Register</h3>
+      <table><thead><tr><th>Evidence</th><th>Kind</th><th>Coverage</th><th>Proof</th><th>Reviewer Use</th></tr></thead><tbody><tr><td><a href="https://github.com/torvalds/linux">Linux kernel repository</a></td><td>source link</td><td>whole report</td><td>declared</td><td>Public source repository used for the path-tree stress test.</td></tr>
+<tr><td><a href="https://github.com/torvalds/linux/commit/2d3090a8aeb596a26935db0955d46c9a5db5c6ce">Linux kernel commit 2d3090a</a></td><td>source link</td><td>whole report</td><td>declared</td><td>Merge tag &#x27;v7.1-p5&#x27; of git://git.kernel.org/pub/scm/linux/kernel/git/herbert/crypto-2.6</td></tr>
+<tr><td>Kconfig:8 (source &quot;scripts/Kconfig.include&quot;)</td><td>blueprint evidence</td><td>Whole Repository Coverage And Build Configuration: configuration root</td><td>source-confirmed</td><td>Top-level config includes helper macros first.</td></tr>
+<tr><td>Kconfig:10-34 (source subsystem Kconfig files)</td><td>blueprint evidence</td><td>Whole Repository Coverage And Build Configuration: subsystem coverage fan-out</td><td>source-confirmed</td><td>Top-level Kconfig fans out to init, kernel, fs, mm, net, drivers, security, crypto, lib, docs, and io_uring.</td></tr>
+<tr><td>Makefile:131-152 (KBUILD_EXTMOD)</td><td>blueprint evidence</td><td>Whole Repository Coverage And Build Configuration: external module boundary</td><td>source-confirmed</td><td>Main build supports external module roots and exports that path.</td></tr>
+<tr><td>scripts/kconfig/Makefile:50-95 (Kconfig targets)</td><td>blueprint evidence</td><td>Whole Repository Coverage And Build Configuration: configuration command surface</td><td>source-confirmed</td><td>Kconfig tooling turns config targets into .config decisions.</td></tr>
+<tr><td>init/main.c:1017 (start_kernel)</td><td>blueprint evidence</td><td>Boot, Kernel Init, And Userspace Handoff: generic kernel entry</td><td>source-confirmed</td><td>Generic initialization begins here after architecture handoff.</td></tr>
+<tr><td>init/main.c:716 (rest_init)</td><td>blueprint evidence</td><td>Boot, Kernel Init, And Userspace Handoff: handoff to init threads</td><td>source-confirmed</td><td>Creates/continues the path toward kernel_init and idle scheduling.</td></tr>
+<tr><td>init/main.c:1584 (kernel_init)</td><td>blueprint evidence</td><td>Boot, Kernel Init, And Userspace Handoff: init thread body</td><td>source-confirmed</td><td>Runs the late init path and userspace transition logic.</td></tr>
+<tr><td>include/linux/module.h:82-130 (module_init and initcall macros)</td><td>blueprint evidence</td><td>Boot, Kernel Init, And Userspace Handoff: ordered init extension points</td><td>source-confirmed</td><td>Built-in init functions are ordered through initcall classes.</td></tr>
+<tr><td>kernel/fork.c:1969 (copy_process)</td><td>blueprint evidence</td><td>Process Lifetime And Scheduler Control Plane: task construction</td><td>source-confirmed</td><td>Core task creation path used under clone/kernel_clone flows.</td></tr>
+<tr><td>kernel/fork.c:2668 (kernel_clone)</td><td>blueprint evidence</td><td>Process Lifetime And Scheduler Control Plane: clone orchestration</td><td>source-confirmed</td><td>Turns clone arguments into a task creation request.</td></tr>
+<tr><td>kernel/sched/core.c:7273 (schedule)</td><td>blueprint evidence</td><td>Process Lifetime And Scheduler Control Plane: scheduler entry</td><td>source-confirmed</td><td>Main scheduling call path.</td></tr>
+<tr><td>kernel/sched/core.c:5999-6558 (pick_next_task)</td><td>blueprint evidence</td><td>Process Lifetime And Scheduler Control Plane: task selection</td><td>source-confirmed</td><td>Chooses the next task via scheduler class logic.</td></tr>
+<tr><td>kernel/sched/core.c:4152 (try_to_wake_up)</td><td>blueprint evidence</td><td>Process Lifetime And Scheduler Control Plane: wakeup gate</td><td>source-confirmed</td><td>Moves blocked/sleeping tasks toward runnable state.</td></tr>
+<tr><td>kernel/exit.c:896 (do_exit)</td><td>blueprint evidence</td><td>Process Lifetime And Scheduler Control Plane: task termination</td><td>source-confirmed</td><td>Core task exit path.</td></tr>
+<tr><td>include/linux/syscalls.h:217-246 (SYSCALL_DEFINE macros)</td><td>blueprint evidence</td><td>User-Kernel Boundary And Syscall Dispatch: syscall declaration contract</td><td>source-confirmed</td><td>Defines syscall macro family and generated signatures.</td></tr>
+<tr><td>fs/read_write.c:706 (ksys_read)</td><td>blueprint evidence</td><td>User-Kernel Boundary And Syscall Dispatch: kernel read helper</td><td>source-confirmed</td><td>Read syscall delegates into kernel read helper logic.</td></tr>
+<tr><td>fs/read_write.c:724 (SYSCALL_DEFINE3(read))</td><td>blueprint evidence</td><td>User-Kernel Boundary And Syscall Dispatch: read syscall entry</td><td>source-confirmed</td><td>Public read syscall wrapper.</td></tr>
+<tr><td>fs/read_write.c:748 (SYSCALL_DEFINE3(write))</td><td>blueprint evidence</td><td>User-Kernel Boundary And Syscall Dispatch: write syscall entry</td><td>source-confirmed</td><td>Public write syscall wrapper.</td></tr>
+<tr><td>kernel/sys_ni.c:20 (sys_ni_syscall)</td><td>blueprint evidence</td><td>User-Kernel Boundary And Syscall Dispatch: missing syscall fallback</td><td>source-confirmed</td><td>Represents not-implemented syscall handling.</td></tr>
+<tr><td>mm/mmap.c:280-336 (do_mmap)</td><td>blueprint evidence</td><td>Memory Management, Mappings, Faults, And Page Allocation: user mapping creation</td><td>source-confirmed</td><td>Creates userland memory mappings.</td></tr>
+<tr><td>mm/memory.c:6465 (__handle_mm_fault)</td><td>blueprint evidence</td><td>Memory Management, Mappings, Faults, And Page Allocation: fault core</td><td>source-confirmed</td><td>Core page fault handling path.</td></tr>
+<tr><td>mm/memory.c:6699 (handle_mm_fault)</td><td>blueprint evidence</td><td>Memory Management, Mappings, Faults, And Page Allocation: fault API</td><td>source-confirmed</td><td>Exported fault handling wrapper.</td></tr>
+<tr><td>mm/page_alloc.c:4682 (__alloc_pages_slowpath)</td><td>blueprint evidence</td><td>Memory Management, Mappings, Faults, And Page Allocation: allocation pressure path</td><td>source-confirmed</td><td>Handles difficult allocation cases.</td></tr>
+<tr><td>mm/page_alloc.c:5250 (__alloc_pages_noprof)</td><td>blueprint evidence</td><td>Memory Management, Mappings, Faults, And Page Allocation: page allocation API</td><td>source-confirmed</td><td>Core page allocation entry.</td></tr>
+<tr><td>fs/open.c:1355 (do_sys_openat2)</td><td>blueprint evidence</td><td>Filesystem, VFS, Path Lookup, And Block IO: open syscall core</td><td>source-confirmed</td><td>Turns userspace open request into kernel open flow.</td></tr>
+<tr><td>fs/namei.c:4838 (path_openat)</td><td>blueprint evidence</td><td>Filesystem, VFS, Path Lookup, And Block IO: path lookup/open</td><td>source-confirmed</td><td>Core path resolution/open helper.</td></tr>
+<tr><td>fs/read_write.c:554 (vfs_read)</td><td>blueprint evidence</td><td>Filesystem, VFS, Path Lookup, And Block IO: VFS read</td><td>source-confirmed</td><td>VFS read entry once a file is resolved.</td></tr>
+<tr><td>fs/read_write.c:668 (vfs_write)</td><td>blueprint evidence</td><td>Filesystem, VFS, Path Lookup, And Block IO: VFS write</td><td>source-confirmed</td><td>VFS write entry once a file is resolved.</td></tr>
+<tr><td>block/blk-core.c:904-916 (submit_bio)</td><td>blueprint evidence</td><td>Filesystem, VFS, Path Lookup, And Block IO: block IO submission</td><td>source-confirmed</td><td>Submits BIO requests to block layer.</td></tr>
+<tr><td>block/blk-mq.c:3112-3124 (blk_mq_submit_bio)</td><td>blueprint evidence</td><td>Filesystem, VFS, Path Lookup, And Block IO: multi-queue block submission</td><td>source-confirmed</td><td>Creates/sends block requests.</td></tr>
+<tr><td>net/core/dev.c:6440-6454 (netif_receive_skb)</td><td>blueprint evidence</td><td>Networking Packet Receive, Protocol Dispatch, And Transmit: RX packet entry</td><td>source-confirmed</td><td>Main receive data processing function.</td></tr>
+<tr><td>net/core/dev.c:5972 (__netif_receive_skb_core)</td><td>blueprint evidence</td><td>Networking Packet Receive, Protocol Dispatch, And Transmit: RX core routing</td><td>source-confirmed</td><td>Core packet receive path.</td></tr>
+<tr><td>net/ipv4/ip_input.c:603 (ip_rcv)</td><td>blueprint evidence</td><td>Networking Packet Receive, Protocol Dispatch, And Transmit: IPv4 receive</td><td>source-confirmed</td><td>IPv4 packet receive handler.</td></tr>
+<tr><td>net/ipv4/tcp_ipv4.c:2068 (tcp_v4_rcv)</td><td>blueprint evidence</td><td>Networking Packet Receive, Protocol Dispatch, And Transmit: TCP receive</td><td>source-confirmed</td><td>TCP over IPv4 receive handler.</td></tr>
+<tr><td>net/core/dev.c:4766 (__dev_queue_xmit)</td><td>blueprint evidence</td><td>Networking Packet Receive, Protocol Dispatch, And Transmit: TX queue entry</td><td>source-confirmed</td><td>Transmits skb toward device queue.</td></tr>
+<tr><td>drivers/base/driver.c:218-249 (driver_register)</td><td>blueprint evidence</td><td>Driver Model, Device Matching, And Probe: driver registration</td><td>source-confirmed</td><td>Registers driver and passes work to bus_add_driver.</td></tr>
+<tr><td>drivers/base/bus.c:722-725 (bus_add_driver)</td><td>blueprint evidence</td><td>Driver Model, Device Matching, And Probe: bus integration</td><td>source-confirmed</td><td>Adds a driver to a bus.</td></tr>
+<tr><td>drivers/base/dd.c:655 (really_probe)</td><td>blueprint evidence</td><td>Driver Model, Device Matching, And Probe: actual probe path</td><td>source-confirmed</td><td>Core device-driver binding/probe function.</td></tr>
+<tr><td>drivers/base/dd.c:895 (driver_probe_device)</td><td>blueprint evidence</td><td>Driver Model, Device Matching, And Probe: probe attempt</td><td>source-confirmed</td><td>Attempts to bind device and driver together.</td></tr>
+<tr><td>drivers/base/dd.c:1142 (device_attach)</td><td>blueprint evidence</td><td>Driver Model, Device Matching, And Probe: device attach path</td><td>source-confirmed</td><td>Tries to attach a device to a driver.</td></tr>
+<tr><td>include/linux/lsm_hook_defs.h:18-29 (LSM_HOOK macro list)</td><td>blueprint evidence</td><td>Security And LSM Permission Hooks: security hook contract</td><td>source-confirmed</td><td>Defines the hook inventory used by LSM infrastructure.</td></tr>
+<tr><td>include/linux/lsm_hook_defs.h:142 (inode_permission)</td><td>blueprint evidence</td><td>Security And LSM Permission Hooks: inode permission hook</td><td>source-confirmed</td><td>One concrete filesystem permission hook.</td></tr>
+<tr><td>security/security.c:488 (call_int_hook)</td><td>blueprint evidence</td><td>Security And LSM Permission Hooks: hook dispatch</td><td>source-confirmed</td><td>Dispatches int-returning LSM hooks.</td></tr>
+<tr><td>security/security.c:1838 (security_inode_permission)</td><td>blueprint evidence</td><td>Security And LSM Permission Hooks: inode permission gate</td><td>source-confirmed</td><td>Calls inode_permission hook implementations.</td></tr>
+<tr><td>Documentation/security/lsm.rst:119 (security_inode_permission example)</td><td>blueprint evidence</td><td>Security And LSM Permission Hooks: documentation anchor</td><td>docs-confirmed</td><td>Docs mention inode permission as an example hook.</td></tr>
+<tr><td>include/linux/module.h:82-131 (module_init)</td><td>blueprint evidence</td><td>Extensibility, Modules, BPF, And Tracing: module/initcall contract</td><td>source-confirmed</td><td>Drivers and modules declare initialization entry points.</td></tr>
+<tr><td>kernel/module/main.c:3422 (load_module)</td><td>blueprint evidence</td><td>Extensibility, Modules, BPF, And Tracing: module load core</td><td>source-confirmed</td><td>Core module loading implementation.</td></tr>
+<tr><td>kernel/module/main.c:3634 (SYSCALL_DEFINE3(init_module))</td><td>blueprint evidence</td><td>Extensibility, Modules, BPF, And Tracing: module syscall entry</td><td>source-confirmed</td><td>Userspace module load syscall path.</td></tr>
+<tr><td>kernel/module/main.c:3799 (SYSCALL_DEFINE3(finit_module))</td><td>blueprint evidence</td><td>Extensibility, Modules, BPF, And Tracing: fd-based module syscall</td><td>source-confirmed</td><td>Loads module from file descriptor path.</td></tr>
+<tr><td>kernel/bpf/syscall.c:2864 (bpf_prog_load)</td><td>blueprint evidence</td><td>Extensibility, Modules, BPF, And Tracing: BPF program load core</td><td>source-confirmed</td><td>Loads/verifies BPF programs.</td></tr>
+<tr><td>kernel/bpf/syscall.c:6385 (SYSCALL_DEFINE3(bpf))</td><td>blueprint evidence</td><td>Extensibility, Modules, BPF, And Tracing: BPF syscall entry</td><td>source-confirmed</td><td>Userspace BPF command syscall.</td></tr>
+<tr><td>init/Kconfig:2190 (config RUST)</td><td>blueprint evidence</td><td>Rust Kernel Integration And Safety Boundary: Rust enablement gate</td><td>source-confirmed</td><td>Rust support is configured under general setup.</td></tr>
+<tr><td>Makefile:1103 (ifdef CONFIG_RUST)</td><td>blueprint evidence</td><td>Rust Kernel Integration And Safety Boundary: Rust build flag gate</td><td>source-confirmed</td><td>Top-level build changes behavior when Rust is enabled.</td></tr>
+<tr><td>rust/Makefile:6-24 (obj-$(CONFIG_RUST))</td><td>blueprint evidence</td><td>Rust Kernel Integration And Safety Boundary: Rust build products</td><td>source-confirmed</td><td>Rust core/helpers/bindings/uapi/kernel objects are config-gated.</td></tr>
+<tr><td>Documentation/rust/general-information.rst:13 (Rust support constraints)</td><td>blueprint evidence</td><td>Rust Kernel Integration And Safety Boundary: documentation anchor</td><td>docs-confirmed</td><td>Docs describe what Rust support can link.</td></tr>
+<tr><td>Documentation/rust/general-information.rst:118-131 (bindings and wrappers)</td><td>blueprint evidence</td><td>Rust Kernel Integration And Safety Boundary: C/Rust boundary</td><td>docs-confirmed</td><td>Docs describe generated bindings and wrappers around unsafe functionality.</td></tr>
+<tr><td>subsystems/arch/system_review_manifest.json</td><td>child_system_map</td><td>unknown</td><td>safe_to_share</td><td>Machine-readable child map for a top-level subsystem boundary.</td></tr>
+<tr><td>subsystems/block/system_review_manifest.json</td><td>child_system_map</td><td>unknown</td><td>safe_to_share</td><td>Machine-readable child map for a top-level subsystem boundary.</td></tr>
+<tr><td>subsystems/certs/system_review_manifest.json</td><td>child_system_map</td><td>unknown</td><td>safe_to_share</td><td>Machine-readable child map for a top-level subsystem boundary.</td></tr>
+<tr><td>subsystems/crypto/system_review_manifest.json</td><td>child_system_map</td><td>unknown</td><td>safe_to_share</td><td>Machine-readable child map for a top-level subsystem boundary.</td></tr>
+<tr><td>subsystems/documentation/system_review_manifest.json</td><td>child_system_map</td><td>unknown</td><td>safe_to_share</td><td>Machine-readable child map for a top-level subsystem boundary.</td></tr>
+<tr><td>subsystems/drivers/system_review_manifest.json</td><td>child_system_map</td><td>unknown</td><td>safe_to_share</td><td>Machine-readable child map for a top-level subsystem boundary.</td></tr>
+<tr><td>subsystems/fs/system_review_manifest.json</td><td>child_system_map</td><td>unknown</td><td>safe_to_share</td><td>Machine-readable child map for a top-level subsystem boundary.</td></tr>
+<tr><td>subsystems/include/system_review_manifest.json</td><td>child_system_map</td><td>unknown</td><td>safe_to_share</td><td>Machine-readable child map for a top-level subsystem boundary.</td></tr>
+<tr><td>subsystems/init/system_review_manifest.json</td><td>child_system_map</td><td>unknown</td><td>safe_to_share</td><td>Machine-readable child map for a top-level subsystem boundary.</td></tr>
+<tr><td>subsystems/io_uring/system_review_manifest.json</td><td>child_system_map</td><td>unknown</td><td>safe_to_share</td><td>Machine-readable child map for a top-level subsystem boundary.</td></tr>
+<tr><td>subsystems/ipc/system_review_manifest.json</td><td>child_system_map</td><td>unknown</td><td>safe_to_share</td><td>Machine-readable child map for a top-level subsystem boundary.</td></tr>
+<tr><td>subsystems/kernel/system_review_manifest.json</td><td>child_system_map</td><td>unknown</td><td>safe_to_share</td><td>Machine-readable child map for a top-level subsystem boundary.</td></tr>
+<tr><td>subsystems/lib/system_review_manifest.json</td><td>child_system_map</td><td>unknown</td><td>safe_to_share</td><td>Machine-readable child map for a top-level subsystem boundary.</td></tr>
+<tr><td>subsystems/mm/system_review_manifest.json</td><td>child_system_map</td><td>unknown</td><td>safe_to_share</td><td>Machine-readable child map for a top-level subsystem boundary.</td></tr>
+<tr><td>subsystems/net/system_review_manifest.json</td><td>child_system_map</td><td>unknown</td><td>safe_to_share</td><td>Machine-readable child map for a top-level subsystem boundary.</td></tr>
+<tr><td>subsystems/rust/system_review_manifest.json</td><td>child_system_map</td><td>unknown</td><td>safe_to_share</td><td>Machine-readable child map for a top-level subsystem boundary.</td></tr>
+<tr><td>subsystems/samples/system_review_manifest.json</td><td>child_system_map</td><td>unknown</td><td>safe_to_share</td><td>Machine-readable child map for a top-level subsystem boundary.</td></tr>
+<tr><td>subsystems/scripts/system_review_manifest.json</td><td>child_system_map</td><td>unknown</td><td>safe_to_share</td><td>Machine-readable child map for a top-level subsystem boundary.</td></tr>
+<tr><td>subsystems/security/system_review_manifest.json</td><td>child_system_map</td><td>unknown</td><td>safe_to_share</td><td>Machine-readable child map for a top-level subsystem boundary.</td></tr>
+<tr><td>subsystems/sound/system_review_manifest.json</td><td>child_system_map</td><td>unknown</td><td>safe_to_share</td><td>Machine-readable child map for a top-level subsystem boundary.</td></tr>
+<tr><td>subsystems/tools/system_review_manifest.json</td><td>child_system_map</td><td>unknown</td><td>safe_to_share</td><td>Machine-readable child map for a top-level subsystem boundary.</td></tr>
+<tr><td>subsystems/usr/system_review_manifest.json</td><td>child_system_map</td><td>unknown</td><td>safe_to_share</td><td>Machine-readable child map for a top-level subsystem boundary.</td></tr>
+<tr><td>subsystems/virt/system_review_manifest.json</td><td>child_system_map</td><td>unknown</td><td>safe_to_share</td><td>Machine-readable child map for a top-level subsystem boundary.</td></tr>
+<tr><td>subsystems/licenses/system_review_manifest.json</td><td>child_system_map</td><td>unknown</td><td>safe_to_share</td><td>Machine-readable child map for a top-level subsystem boundary.</td></tr>
+<tr><td>SubsystemMap</td><td>atlas_contract</td><td>map_id, path, scope, systems, status</td><td>contract declared</td><td>A child system review map that a root atlas can link, upload, and hand to reviewers or agents.</td></tr></tbody></table>
+      <h3>Gap Register</h3>
+      <table><thead><tr><th>Gap</th><th>Area</th><th>Status</th><th>Boundary</th><th>Next Step</th></tr></thead><tbody><tr><td>Known boundary</td><td>whole report</td><td>open</td><td>Atlas boundaries are inferred from source-tree directories and markers.</td><td>Accept the boundary or add evidence that closes it.</td></tr>
+<tr><td>Known boundary</td><td>whole report</td><td>open</td><td>A child map gives review context; it does not prove runtime behavior by itself.</td><td>Accept the boundary or add evidence that closes it.</td></tr>
+<tr><td>Known boundary</td><td>whole report</td><td>open</td><td>Very large systems still need maintainers or deeper agents to refine real workflows.</td><td>Accept the boundary or add evidence that closes it.</td></tr>
+<tr><td>Known boundary</td><td>whole report</td><td>open</td><td>CI regeneration can detect drift, but deciding meaning still needs review gates.</td><td>Accept the boundary or add evidence that closes it.</td></tr>
+<tr><td>Known boundary</td><td>whole report</td><td>open</td><td>The Linux example was generated from a path-only mirror of the git tree; file contents, build configuration, runtime behavior, and maintainer ownership were not audited.</td><td>Accept the boundary or add evidence that closes it.</td></tr>
+<tr><td>Known boundary</td><td>whole report</td><td>open</td><td>Blueprint sections cover major Linux operational flows, but not every file, architecture variant, driver family, filesystem, network protocol, scheduler class, or security module implementation.</td><td>Accept the boundary or add evidence that closes it.</td></tr>
+<tr><td>System truth boundary</td><td>arch/</td><td>review</td><td>Directory boundary is source-grounded; runtime responsibility and exact behavior require maintainer or deeper agent review.</td><td>Inspect this boundary before making stronger behavior claims.</td></tr>
+<tr><td>System truth boundary</td><td>block/</td><td>review</td><td>Directory boundary is source-grounded; runtime responsibility and exact behavior require maintainer or deeper agent review.</td><td>Inspect this boundary before making stronger behavior claims.</td></tr>
+<tr><td>System truth boundary</td><td>certs/</td><td>review</td><td>Directory boundary is source-grounded; runtime responsibility and exact behavior require maintainer or deeper agent review.</td><td>Inspect this boundary before making stronger behavior claims.</td></tr>
+<tr><td>System truth boundary</td><td>crypto/</td><td>review</td><td>Directory boundary is source-grounded; runtime responsibility and exact behavior require maintainer or deeper agent review.</td><td>Inspect this boundary before making stronger behavior claims.</td></tr>
+<tr><td>System truth boundary</td><td>Documentation/</td><td>review</td><td>Directory boundary is source-grounded; runtime responsibility and exact behavior require maintainer or deeper agent review.</td><td>Inspect this boundary before making stronger behavior claims.</td></tr>
+<tr><td>System truth boundary</td><td>drivers/</td><td>review</td><td>Directory boundary is source-grounded; runtime responsibility and exact behavior require maintainer or deeper agent review.</td><td>Inspect this boundary before making stronger behavior claims.</td></tr>
+<tr><td>System truth boundary</td><td>fs/</td><td>review</td><td>Directory boundary is source-grounded; runtime responsibility and exact behavior require maintainer or deeper agent review.</td><td>Inspect this boundary before making stronger behavior claims.</td></tr>
+<tr><td>System truth boundary</td><td>include/</td><td>review</td><td>Directory boundary is source-grounded; runtime responsibility and exact behavior require maintainer or deeper agent review.</td><td>Inspect this boundary before making stronger behavior claims.</td></tr>
+<tr><td>System truth boundary</td><td>init/</td><td>review</td><td>Directory boundary is source-grounded; runtime responsibility and exact behavior require maintainer or deeper agent review.</td><td>Inspect this boundary before making stronger behavior claims.</td></tr>
+<tr><td>System truth boundary</td><td>io_uring/</td><td>review</td><td>Directory boundary is source-grounded; runtime responsibility and exact behavior require maintainer or deeper agent review.</td><td>Inspect this boundary before making stronger behavior claims.</td></tr>
+<tr><td>System truth boundary</td><td>ipc/</td><td>review</td><td>Directory boundary is source-grounded; runtime responsibility and exact behavior require maintainer or deeper agent review.</td><td>Inspect this boundary before making stronger behavior claims.</td></tr>
+<tr><td>System truth boundary</td><td>kernel/</td><td>review</td><td>Directory boundary is source-grounded; runtime responsibility and exact behavior require maintainer or deeper agent review.</td><td>Inspect this boundary before making stronger behavior claims.</td></tr>
+<tr><td>System truth boundary</td><td>lib/</td><td>review</td><td>Directory boundary is source-grounded; runtime responsibility and exact behavior require maintainer or deeper agent review.</td><td>Inspect this boundary before making stronger behavior claims.</td></tr>
+<tr><td>System truth boundary</td><td>mm/</td><td>review</td><td>Directory boundary is source-grounded; runtime responsibility and exact behavior require maintainer or deeper agent review.</td><td>Inspect this boundary before making stronger behavior claims.</td></tr>
+<tr><td>System truth boundary</td><td>net/</td><td>review</td><td>Directory boundary is source-grounded; runtime responsibility and exact behavior require maintainer or deeper agent review.</td><td>Inspect this boundary before making stronger behavior claims.</td></tr>
+<tr><td>System truth boundary</td><td>rust/</td><td>review</td><td>Directory boundary is source-grounded; runtime responsibility and exact behavior require maintainer or deeper agent review.</td><td>Inspect this boundary before making stronger behavior claims.</td></tr>
+<tr><td>System truth boundary</td><td>samples/</td><td>review</td><td>Directory boundary is source-grounded; runtime responsibility and exact behavior require maintainer or deeper agent review.</td><td>Inspect this boundary before making stronger behavior claims.</td></tr>
+<tr><td>System truth boundary</td><td>scripts/</td><td>review</td><td>Directory boundary is source-grounded; runtime responsibility and exact behavior require maintainer or deeper agent review.</td><td>Inspect this boundary before making stronger behavior claims.</td></tr>
+<tr><td>System truth boundary</td><td>security/</td><td>review</td><td>Directory boundary is source-grounded; runtime responsibility and exact behavior require maintainer or deeper agent review.</td><td>Inspect this boundary before making stronger behavior claims.</td></tr>
+<tr><td>System truth boundary</td><td>sound/</td><td>review</td><td>Directory boundary is source-grounded; runtime responsibility and exact behavior require maintainer or deeper agent review.</td><td>Inspect this boundary before making stronger behavior claims.</td></tr>
+<tr><td>System truth boundary</td><td>tools/</td><td>review</td><td>Directory boundary is source-grounded; runtime responsibility and exact behavior require maintainer or deeper agent review.</td><td>Inspect this boundary before making stronger behavior claims.</td></tr>
+<tr><td>System truth boundary</td><td>usr/</td><td>review</td><td>Directory boundary is source-grounded; runtime responsibility and exact behavior require maintainer or deeper agent review.</td><td>Inspect this boundary before making stronger behavior claims.</td></tr>
+<tr><td>System truth boundary</td><td>virt/</td><td>review</td><td>Directory boundary is source-grounded; runtime responsibility and exact behavior require maintainer or deeper agent review.</td><td>Inspect this boundary before making stronger behavior claims.</td></tr>
+<tr><td>System truth boundary</td><td>LICENSES/</td><td>review</td><td>Directory boundary is source-grounded; runtime responsibility and exact behavior require maintainer or deeper agent review.</td><td>Inspect this boundary before making stronger behavior claims.</td></tr>
+<tr><td>Blueprint gap</td><td>Whole Repository Coverage And Build Configuration</td><td>open</td><td>This blueprint maps source/build control surfaces, not a specific .config or compiled image.</td><td>Add source evidence, tests, traces, or child-map detail.</td></tr>
+<tr><td>Blueprint gap</td><td>Boot, Kernel Init, And Userspace Handoff</td><td>open</td><td>This section uses generic source anchors and does not map every architecture boot file.</td><td>Add source evidence, tests, traces, or child-map detail.</td></tr>
+<tr><td>Blueprint gap</td><td>Process Lifetime And Scheduler Control Plane</td><td>open</td><td>This section does not expand every scheduler class, CPU topology path, or architecture context switch implementation.</td><td>Add source evidence, tests, traces, or child-map detail.</td></tr>
+<tr><td>Blueprint gap</td><td>User-Kernel Boundary And Syscall Dispatch</td><td>open</td><td>Architecture-specific syscall table files are not fully expanded in this root blueprint.</td><td>Add source evidence, tests, traces, or child-map detail.</td></tr>
+<tr><td>Blueprint gap</td><td>Memory Management, Mappings, Faults, And Page Allocation</td><td>open</td><td>Slab, vmalloc, huge pages, memcg, NUMA, and architecture fault entry are not fully expanded here.</td><td>Add source evidence, tests, traces, or child-map detail.</td></tr>
+<tr><td>Blueprint gap</td><td>Filesystem, VFS, Path Lookup, And Block IO</td><td>open</td><td>Specific filesystem implementations such as ext4, btrfs, xfs, and network filesystems need child blueprints.</td><td>Add source evidence, tests, traces, or child-map detail.</td></tr>
+<tr><td>Blueprint gap</td><td>Networking Packet Receive, Protocol Dispatch, And Transmit</td><td>open</td><td>IPv6, UDP, netfilter, namespaces, routing tables, qdisc, and NIC-specific drivers need child blueprints.</td><td>Add source evidence, tests, traces, or child-map detail.</td></tr>
+<tr><td>Blueprint gap</td><td>Driver Model, Device Matching, And Probe</td><td>open</td><td>PCI, USB, platform, ACPI, device-tree, and individual driver families need child blueprints.</td><td>Add source evidence, tests, traces, or child-map detail.</td></tr>
+<tr><td>Blueprint gap</td><td>Security And LSM Permission Hooks</td><td>open</td><td>SELinux, AppArmor, Smack, Landlock, BPF LSM, IMA/EVM, and capabilities need separate child blueprints.</td><td>Add source evidence, tests, traces, or child-map detail.</td></tr>
+<tr><td>Blueprint gap</td><td>Extensibility, Modules, BPF, And Tracing</td><td>open</td><td>Module signing, livepatch, perf, ftrace, kprobes, uprobes, and BPF verifier internals need child blueprints.</td><td>Add source evidence, tests, traces, or child-map detail.</td></tr>
+<tr><td>Blueprint gap</td><td>Rust Kernel Integration And Safety Boundary</td><td>open</td><td>This blueprint does not inspect each Rust abstraction, unsafe block, or Rust driver implementation.</td><td>Add source evidence, tests, traces, or child-map detail.</td></tr></tbody></table>
+      <h3>Action Register</h3>
+      <table><thead><tr><th>Action</th><th>Owner</th><th>Status</th><th>Trigger</th><th>Expected Output</th></tr></thead><tbody><tr><td>Review question</td><td>maintainer / auditor</td><td>open</td><td>Which child maps changed since the last merge?</td><td>Answer from source, tests, docs, logs, or maintainer knowledge.</td></tr>
+<tr><td>Review question</td><td>maintainer / auditor</td><td>open</td><td>Which subsystem boundary is too broad and needs splitting?</td><td>Answer from source, tests, docs, logs, or maintainer knowledge.</td></tr>
+<tr><td>Review question</td><td>maintainer / auditor</td><td>open</td><td>Which subsystem lacks workflow, gate, schema, or test evidence?</td><td>Answer from source, tests, docs, logs, or maintainer knowledge.</td></tr>
+<tr><td>Review question</td><td>maintainer / auditor</td><td>open</td><td>Can reviewers reproduce the map from the declared rebuild recipe?</td><td>Answer from source, tests, docs, logs, or maintainer knowledge.</td></tr>
+<tr><td>Review question</td><td>maintainer / auditor</td><td>open</td><td>Where does the atlas overclaim beyond source-surface evidence?</td><td>Answer from source, tests, docs, logs, or maintainer knowledge.</td></tr>
+<tr><td>Blueprint review</td><td>maintainer / auditor</td><td>open</td><td>Whole Repository Coverage And Build Configuration: Which top-level directories are config-selected into the build?</td><td>Answer before using this blueprint as a final architecture claim.</td></tr>
+<tr><td>Blueprint review</td><td>maintainer / auditor</td><td>open</td><td>Whole Repository Coverage And Build Configuration: Which generated headers or scripts become hidden contracts for later source paths?</td><td>Answer before using this blueprint as a final architecture claim.</td></tr>
+<tr><td>Blueprint review</td><td>maintainer / auditor</td><td>open</td><td>Whole Repository Coverage And Build Configuration: Which subsystem is absent in this atlas because it is build-generated rather than source-tree visible?</td><td>Answer before using this blueprint as a final architecture claim.</td></tr>
+<tr><td>Close blueprint gap</td><td>maintainer / auditor</td><td>open</td><td>Whole Repository Coverage And Build Configuration: This blueprint maps source/build control surfaces, not a specific .config or compiled image.</td><td>Add evidence or explicitly preserve the boundary.</td></tr>
+<tr><td>Blueprint review</td><td>maintainer / auditor</td><td>open</td><td>Boot, Kernel Init, And Userspace Handoff: Which initcalls are required before filesystems, drivers, and userspace can run?</td><td>Answer before using this blueprint as a final architecture claim.</td></tr>
+<tr><td>Blueprint review</td><td>maintainer / auditor</td><td>open</td><td>Boot, Kernel Init, And Userspace Handoff: Which boot path is architecture-specific and which is generic?</td><td>Answer before using this blueprint as a final architecture claim.</td></tr>
+<tr><td>Blueprint review</td><td>maintainer / auditor</td><td>open</td><td>Boot, Kernel Init, And Userspace Handoff: Where would a boot failure be proven by logs or tracepoints?</td><td>Answer before using this blueprint as a final architecture claim.</td></tr>
+<tr><td>Close blueprint gap</td><td>maintainer / auditor</td><td>open</td><td>Boot, Kernel Init, And Userspace Handoff: This section uses generic source anchors and does not map every architecture boot file.</td><td>Add evidence or explicitly preserve the boundary.</td></tr>
+<tr><td>Blueprint review</td><td>maintainer / auditor</td><td>open</td><td>Process Lifetime And Scheduler Control Plane: Which scheduler class owns the task at each moment?</td><td>Answer before using this blueprint as a final architecture claim.</td></tr>
+<tr><td>Blueprint review</td><td>maintainer / auditor</td><td>open</td><td>Process Lifetime And Scheduler Control Plane: Which locks or barriers protect wakeup and task state?</td><td>Answer before using this blueprint as a final architecture claim.</td></tr>
+<tr><td>Blueprint review</td><td>maintainer / auditor</td><td>open</td><td>Process Lifetime And Scheduler Control Plane: Which tests or traces prove latency and fairness for a specific workload?</td><td>Answer before using this blueprint as a final architecture claim.</td></tr>
+<tr><td>Close blueprint gap</td><td>maintainer / auditor</td><td>open</td><td>Process Lifetime And Scheduler Control Plane: This section does not expand every scheduler class, CPU topology path, or architecture context switch implementation.</td><td>Add evidence or explicitly preserve the boundary.</td></tr>
+<tr><td>Blueprint review</td><td>maintainer / auditor</td><td>open</td><td>User-Kernel Boundary And Syscall Dispatch: Which architecture entry file maps the syscall number to the generic implementation?</td><td>Answer before using this blueprint as a final architecture claim.</td></tr>
+<tr><td>Blueprint review</td><td>maintainer / auditor</td><td>open</td><td>User-Kernel Boundary And Syscall Dispatch: Which subsystem owns the post-syscall object model?</td><td>Answer before using this blueprint as a final architecture claim.</td></tr>
+<tr><td>Blueprint review</td><td>maintainer / auditor</td><td>open</td><td>User-Kernel Boundary And Syscall Dispatch: Where is user memory copied, checked, or faulted?</td><td>Answer before using this blueprint as a final architecture claim.</td></tr>
+<tr><td>Close blueprint gap</td><td>maintainer / auditor</td><td>open</td><td>User-Kernel Boundary And Syscall Dispatch: Architecture-specific syscall table files are not fully expanded in this root blueprint.</td><td>Add evidence or explicitly preserve the boundary.</td></tr>
+<tr><td>Blueprint review</td><td>maintainer / auditor</td><td>open</td><td>Memory Management, Mappings, Faults, And Page Allocation: Which memory path is user mapping, kernel allocation, slab, vmalloc, or page cache?</td><td>Answer before using this blueprint as a final architecture claim.</td></tr>
+<tr><td>Blueprint review</td><td>maintainer / auditor</td><td>open</td><td>Memory Management, Mappings, Faults, And Page Allocation: Which GFP flags and context determine blocking behavior?</td><td>Answer before using this blueprint as a final architecture claim.</td></tr>
+<tr><td>Blueprint review</td><td>maintainer / auditor</td><td>open</td><td>Memory Management, Mappings, Faults, And Page Allocation: Which tracepoints prove allocation pressure in runtime?</td><td>Answer before using this blueprint as a final architecture claim.</td></tr>
+<tr><td>Close blueprint gap</td><td>maintainer / auditor</td><td>open</td><td>Memory Management, Mappings, Faults, And Page Allocation: Slab, vmalloc, huge pages, memcg, NUMA, and architecture fault entry are not fully expanded here.</td><td>Add evidence or explicitly preserve the boundary.</td></tr>
+<tr><td>Blueprint review</td><td>maintainer / auditor</td><td>open</td><td>Filesystem, VFS, Path Lookup, And Block IO: Which filesystem file_operations implementation is reached for a specific path?</td><td>Answer before using this blueprint as a final architecture claim.</td></tr>
+<tr><td>Blueprint review</td><td>maintainer / auditor</td><td>open</td><td>Filesystem, VFS, Path Lookup, And Block IO: Does the path hit page cache, direct IO, or block IO?</td><td>Answer before using this blueprint as a final architecture claim.</td></tr>
+<tr><td>Blueprint review</td><td>maintainer / auditor</td><td>open</td><td>Filesystem, VFS, Path Lookup, And Block IO: Which LSM or mount namespace decision can stop the operation?</td><td>Answer before using this blueprint as a final architecture claim.</td></tr>
+<tr><td>Close blueprint gap</td><td>maintainer / auditor</td><td>open</td><td>Filesystem, VFS, Path Lookup, And Block IO: Specific filesystem implementations such as ext4, btrfs, xfs, and network filesystems need child blueprints.</td><td>Add evidence or explicitly preserve the boundary.</td></tr>
+<tr><td>Blueprint review</td><td>maintainer / auditor</td><td>open</td><td>Networking Packet Receive, Protocol Dispatch, And Transmit: Which driver/NAPI path creates the skb?</td><td>Answer before using this blueprint as a final architecture claim.</td></tr>
+<tr><td>Blueprint review</td><td>maintainer / auditor</td><td>open</td><td>Networking Packet Receive, Protocol Dispatch, And Transmit: Which netfilter, BPF, or qdisc hooks can intercept this packet?</td><td>Answer before using this blueprint as a final architecture claim.</td></tr>
+<tr><td>Blueprint review</td><td>maintainer / auditor</td><td>open</td><td>Networking Packet Receive, Protocol Dispatch, And Transmit: Which tracepoints prove drops versus delivery?</td><td>Answer before using this blueprint as a final architecture claim.</td></tr>
+<tr><td>Close blueprint gap</td><td>maintainer / auditor</td><td>open</td><td>Networking Packet Receive, Protocol Dispatch, And Transmit: IPv6, UDP, netfilter, namespaces, routing tables, qdisc, and NIC-specific drivers need child blueprints.</td><td>Add evidence or explicitly preserve the boundary.</td></tr>
+<tr><td>Blueprint review</td><td>maintainer / auditor</td><td>open</td><td>Driver Model, Device Matching, And Probe: Which bus-specific match function controls this device?</td><td>Answer before using this blueprint as a final architecture claim.</td></tr>
+<tr><td>Blueprint review</td><td>maintainer / auditor</td><td>open</td><td>Driver Model, Device Matching, And Probe: What resources are acquired during probe and released on remove?</td><td>Answer before using this blueprint as a final architecture claim.</td></tr>
+<tr><td>Blueprint review</td><td>maintainer / auditor</td><td>open</td><td>Driver Model, Device Matching, And Probe: Which deferred-probe or firmware dependency blocks binding?</td><td>Answer before using this blueprint as a final architecture claim.</td></tr>
+<tr><td>Close blueprint gap</td><td>maintainer / auditor</td><td>open</td><td>Driver Model, Device Matching, And Probe: PCI, USB, platform, ACPI, device-tree, and individual driver families need child blueprints.</td><td>Add evidence or explicitly preserve the boundary.</td></tr>
+<tr><td>Blueprint review</td><td>maintainer / auditor</td><td>open</td><td>Security And LSM Permission Hooks: Which security_* wrapper is called by the subsystem path?</td><td>Answer before using this blueprint as a final architecture claim.</td></tr>
+<tr><td>Blueprint review</td><td>maintainer / auditor</td><td>open</td><td>Security And LSM Permission Hooks: Which configured LSM implementations register the hook?</td><td>Answer before using this blueprint as a final architecture claim.</td></tr>
+<tr><td>Blueprint review</td><td>maintainer / auditor</td><td>open</td><td>Security And LSM Permission Hooks: Is the operation denied, audited, or only labeled?</td><td>Answer before using this blueprint as a final architecture claim.</td></tr>
+<tr><td>Close blueprint gap</td><td>maintainer / auditor</td><td>open</td><td>Security And LSM Permission Hooks: SELinux, AppArmor, Smack, Landlock, BPF LSM, IMA/EVM, and capabilities need separate child blueprints.</td><td>Add evidence or explicitly preserve the boundary.</td></tr>
+<tr><td>Blueprint review</td><td>maintainer / auditor</td><td>open</td><td>Extensibility, Modules, BPF, And Tracing: Which runtime behavior is built in, module-loaded, or BPF-attached?</td><td>Answer before using this blueprint as a final architecture claim.</td></tr>
+<tr><td>Blueprint review</td><td>maintainer / auditor</td><td>open</td><td>Extensibility, Modules, BPF, And Tracing: Which security and signature checks gate extension loading?</td><td>Answer before using this blueprint as a final architecture claim.</td></tr>
+<tr><td>Blueprint review</td><td>maintainer / auditor</td><td>open</td><td>Extensibility, Modules, BPF, And Tracing: Which tracepoints prove this path at runtime?</td><td>Answer before using this blueprint as a final architecture claim.</td></tr>
+<tr><td>Close blueprint gap</td><td>maintainer / auditor</td><td>open</td><td>Extensibility, Modules, BPF, And Tracing: Module signing, livepatch, perf, ftrace, kprobes, uprobes, and BPF verifier internals need child blueprints.</td><td>Add evidence or explicitly preserve the boundary.</td></tr>
+<tr><td>Blueprint review</td><td>maintainer / auditor</td><td>open</td><td>Rust Kernel Integration And Safety Boundary: Which Rust wrappers encapsulate unsafe C/kernel behavior?</td><td>Answer before using this blueprint as a final architecture claim.</td></tr>
+<tr><td>Blueprint review</td><td>maintainer / auditor</td><td>open</td><td>Rust Kernel Integration And Safety Boundary: Which generated bindings are relied on by a driver?</td><td>Answer before using this blueprint as a final architecture claim.</td></tr>
+<tr><td>Blueprint review</td><td>maintainer / auditor</td><td>open</td><td>Rust Kernel Integration And Safety Boundary: Does the driver enter normal module/driver probe paths after Rust build integration?</td><td>Answer before using this blueprint as a final architecture claim.</td></tr>
+<tr><td>Close blueprint gap</td><td>maintainer / auditor</td><td>open</td><td>Rust Kernel Integration And Safety Boundary: This blueprint does not inspect each Rust abstraction, unsafe block, or Rust driver implementation.</td><td>Add evidence or explicitly preserve the boundary.</td></tr>
+<tr><td>Resolve boundary</td><td>maintainer / auditor</td><td>open</td><td>Atlas boundaries are inferred from source-tree directories and markers.</td><td>Accept as scope or add proof that closes it.</td></tr>
+<tr><td>Resolve boundary</td><td>maintainer / auditor</td><td>open</td><td>A child map gives review context; it does not prove runtime behavior by itself.</td><td>Accept as scope or add proof that closes it.</td></tr>
+<tr><td>Resolve boundary</td><td>maintainer / auditor</td><td>open</td><td>Very large systems still need maintainers or deeper agents to refine real workflows.</td><td>Accept as scope or add proof that closes it.</td></tr>
+<tr><td>Resolve boundary</td><td>maintainer / auditor</td><td>open</td><td>CI regeneration can detect drift, but deciding meaning still needs review gates.</td><td>Accept as scope or add proof that closes it.</td></tr>
+<tr><td>Resolve boundary</td><td>maintainer / auditor</td><td>open</td><td>The Linux example was generated from a path-only mirror of the git tree; file contents, build configuration, runtime behavior, and maintainer ownership were not audited.</td><td>Accept as scope or add proof that closes it.</td></tr>
+<tr><td>Resolve boundary</td><td>maintainer / auditor</td><td>open</td><td>Blueprint sections cover major Linux operational flows, but not every file, architecture variant, driver family, filesystem, network protocol, scheduler class, or security module implementation.</td><td>Accept as scope or add proof that closes it.</td></tr>
+<tr><td>Rebuild phase</td><td>maintainer / agent</td><td>repeatable</td><td>atlas-scan</td><td>Generate root and child subsystem maps.</td></tr>
+<tr><td>Rebuild phase</td><td>maintainer / agent</td><td>repeatable</td><td>merge-regeneration</td><td>Regenerate reports in CI after a merge or major milestone.</td></tr></tbody></table>
+
+    </section>
+
+    <section>
+      <h2>Lifecycle Map</h2>
+      <pre class="mermaid">flowchart LR
+  scan_root_boundaries[&quot;Scan Root Boundaries&quot;]
+  open_child_maps[&quot;Open Child Maps&quot;]
+  refine_atlas[&quot;Refine Atlas&quot;]
+  regenerate_on_merge[&quot;Regenerate On Merge&quot;]
+  scan_root_boundaries --&gt; open_child_maps[&quot;Open Child Maps&quot;]
+  open_child_maps --&gt; refine_atlas[&quot;Refine Atlas&quot;]
+  refine_atlas --&gt; regenerate_on_merge[&quot;Regenerate On Merge&quot;]</pre>
+    </section>
+
+        <section>
+          <h2>Blueprint Map</h2>
+          <pre class="mermaid">flowchart TD
+  root[&quot;Linux Kernel System Review Atlas&quot;]
+  root --&gt; blueprint_whole_repo_build_config[&quot;Whole Repository Coverage And Build Configuration&quot;]
+  blueprint_whole_repo_build_config --&gt; blueprint_whole_repo_build_config_Kconfig[&quot;Kconfig&quot;]
+  blueprint_whole_repo_build_config --&gt; blueprint_whole_repo_build_config_Makefile[&quot;Makefile&quot;]
+  blueprint_whole_repo_build_config --&gt; blueprint_whole_repo_build_config_scripts[&quot;scripts&quot;]
+  blueprint_whole_repo_build_config --&gt; blueprint_whole_repo_build_config_arch[&quot;arch&quot;]
+  blueprint_whole_repo_build_config --&gt; blueprint_whole_repo_build_config_init[&quot;init&quot;]
+  blueprint_whole_repo_build_config --&gt; blueprint_whole_repo_build_config_kernel[&quot;kernel&quot;]
+  blueprint_whole_repo_build_config --&gt; blueprint_whole_repo_build_config_drivers[&quot;drivers&quot;]
+  blueprint_whole_repo_build_config --&gt; blueprint_whole_repo_build_config_fs[&quot;fs&quot;]
+  blueprint_whole_repo_build_config --&gt; blueprint_whole_repo_build_config_mm[&quot;mm&quot;]
+  blueprint_whole_repo_build_config --&gt; blueprint_whole_repo_build_config_net[&quot;net&quot;]
+  root --&gt; blueprint_boot_init_userspace[&quot;Boot, Kernel Init, And Userspace Handoff&quot;]
+  blueprint_boot_init_userspace --&gt; blueprint_boot_init_userspace_arch[&quot;arch&quot;]
+  blueprint_boot_init_userspace --&gt; blueprint_boot_init_userspace_init[&quot;init&quot;]
+  blueprint_boot_init_userspace --&gt; blueprint_boot_init_userspace_kernel[&quot;kernel&quot;]
+  blueprint_boot_init_userspace --&gt; blueprint_boot_init_userspace_usr[&quot;usr&quot;]
+  blueprint_boot_init_userspace --&gt; blueprint_boot_init_userspace_drivers[&quot;drivers&quot;]
+  blueprint_boot_init_userspace --&gt; blueprint_boot_init_userspace_fs[&quot;fs&quot;]
+  root --&gt; blueprint_process_scheduler_lifecycle[&quot;Process Lifetime And Scheduler Control Plane&quot;]
+  blueprint_process_scheduler_lifecycle --&gt; blueprint_process_scheduler_lifecycle_kernel[&quot;kernel&quot;]
+  blueprint_process_scheduler_lifecycle --&gt; blueprint_process_scheduler_lifecycle_include[&quot;include&quot;]
+  blueprint_process_scheduler_lifecycle --&gt; blueprint_process_scheduler_lifecycle_arch[&quot;arch&quot;]
+  root --&gt; blueprint_syscall_user_kernel_boundary[&quot;User-Kernel Boundary And Syscall Dispatch&quot;]
+  blueprint_syscall_user_kernel_boundary --&gt; blueprint_syscall_user_kernel_boundary_arch[&quot;arch&quot;]
+  blueprint_syscall_user_kernel_boundary --&gt; blueprint_syscall_user_kernel_boundary_include[&quot;include&quot;]
+  blueprint_syscall_user_kernel_boundary --&gt; blueprint_syscall_user_kernel_boundary_kernel[&quot;kernel&quot;]
+  blueprint_syscall_user_kernel_boundary --&gt; blueprint_syscall_user_kernel_boundary_fs[&quot;fs&quot;]
+  root --&gt; blueprint_memory_management_faults_allocations[&quot;Memory Management, Mappings, Faults, And Page Allocation&quot;]
+  blueprint_memory_management_faults_allocations --&gt; blueprint_memory_management_faults_allocations_mm[&quot;mm&quot;]
+  blueprint_memory_management_faults_allocations --&gt; blueprint_memory_management_faults_allocations_include[&quot;include&quot;]
+  blueprint_memory_management_faults_allocations --&gt; blueprint_memory_management_faults_allocations_kernel[&quot;kernel&quot;]
+  blueprint_memory_management_faults_allocations --&gt; blueprint_memory_management_faults_allocations_arch[&quot;arch&quot;]
+  root --&gt; blueprint_vfs_filesystem_block_io[&quot;Filesystem, VFS, Path Lookup, And Block IO&quot;]
+  blueprint_vfs_filesystem_block_io --&gt; blueprint_vfs_filesystem_block_io_fs[&quot;fs&quot;]
+  blueprint_vfs_filesystem_block_io --&gt; blueprint_vfs_filesystem_block_io_block[&quot;block&quot;]
+  blueprint_vfs_filesystem_block_io --&gt; blueprint_vfs_filesystem_block_io_include[&quot;include&quot;]
+  blueprint_vfs_filesystem_block_io --&gt; blueprint_vfs_filesystem_block_io_security[&quot;security&quot;]
+  blueprint_vfs_filesystem_block_io --&gt; blueprint_vfs_filesystem_block_io_drivers[&quot;drivers&quot;]
+  root --&gt; blueprint_network_packet_lifecycle[&quot;Networking Packet Receive, Protocol Dispatch, And Transmit&quot;]
+  blueprint_network_packet_lifecycle --&gt; blueprint_network_packet_lifecycle_net[&quot;net&quot;]
+  blueprint_network_packet_lifecycle --&gt; blueprint_network_packet_lifecycle_drivers[&quot;drivers&quot;]
+  blueprint_network_packet_lifecycle --&gt; blueprint_network_packet_lifecycle_include[&quot;include&quot;]
+  blueprint_network_packet_lifecycle --&gt; blueprint_network_packet_lifecycle_security[&quot;security&quot;]
+  root --&gt; blueprint_driver_model_device_probe[&quot;Driver Model, Device Matching, And Probe&quot;]
+  blueprint_driver_model_device_probe --&gt; blueprint_driver_model_device_probe_drivers[&quot;drivers&quot;]
+  blueprint_driver_model_device_probe --&gt; blueprint_driver_model_device_probe_include[&quot;include&quot;]
+  blueprint_driver_model_device_probe --&gt; blueprint_driver_model_device_probe_modules[&quot;modules&quot;]
+  blueprint_driver_model_device_probe --&gt; blueprint_driver_model_device_probe_bus_specific_subsystems[&quot;bus-specific subsystems&quot;]
+  root --&gt; blueprint_security_lsm_permission_hooks[&quot;Security And LSM Permission Hooks&quot;]
+  blueprint_security_lsm_permission_hooks --&gt; blueprint_security_lsm_permission_hooks_security[&quot;security&quot;]
+  blueprint_security_lsm_permission_hooks --&gt; blueprint_security_lsm_permission_hooks_include[&quot;include&quot;]
+  blueprint_security_lsm_permission_hooks --&gt; blueprint_security_lsm_permission_hooks_fs[&quot;fs&quot;]
+  blueprint_security_lsm_permission_hooks --&gt; blueprint_security_lsm_permission_hooks_kernel[&quot;kernel&quot;]
+  blueprint_security_lsm_permission_hooks --&gt; blueprint_security_lsm_permission_hooks_net[&quot;net&quot;]
+  blueprint_security_lsm_permission_hooks --&gt; blueprint_security_lsm_permission_hooks_bpf[&quot;bpf&quot;]
+  root --&gt; blueprint_extensibility_modules_bpf_tracing[&quot;Extensibility, Modules, BPF, And Tracing&quot;]
+  blueprint_extensibility_modules_bpf_tracing --&gt; blueprint_extensibility_modules_bpf_tracing_kernel[&quot;kernel&quot;]
+  blueprint_extensibility_modules_bpf_tracing --&gt; blueprint_extensibility_modules_bpf_tracing_include[&quot;include&quot;]
+  blueprint_extensibility_modules_bpf_tracing --&gt; blueprint_extensibility_modules_bpf_tracing_scripts[&quot;scripts&quot;]
+  blueprint_extensibility_modules_bpf_tracing --&gt; blueprint_extensibility_modules_bpf_tracing_security[&quot;security&quot;]
+  blueprint_extensibility_modules_bpf_tracing --&gt; blueprint_extensibility_modules_bpf_tracing_tools[&quot;tools&quot;]
+  root --&gt; blueprint_rust_kernel_integration[&quot;Rust Kernel Integration And Safety Boundary&quot;]
+  blueprint_rust_kernel_integration --&gt; blueprint_rust_kernel_integration_rust[&quot;rust&quot;]
+  blueprint_rust_kernel_integration --&gt; blueprint_rust_kernel_integration_drivers[&quot;drivers&quot;]
+  blueprint_rust_kernel_integration --&gt; blueprint_rust_kernel_integration_samples[&quot;samples&quot;]
+  blueprint_rust_kernel_integration --&gt; blueprint_rust_kernel_integration_scripts[&quot;scripts&quot;]
+  blueprint_rust_kernel_integration --&gt; blueprint_rust_kernel_integration_init[&quot;init&quot;]
+  blueprint_rust_kernel_integration --&gt; blueprint_rust_kernel_integration_Makefile[&quot;Makefile&quot;]</pre>
+        </section>
+
+
+        <section>
+          <h2>Blueprint Sections</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>Section</th><th>Purpose</th><th>Subsystems</th>
+                <th>Evidence</th><th>Flow</th><th>Controls</th>
+              </tr>
+            </thead>
+            <tbody>
+        <tr>
+          <td>Whole Repository Coverage And Build Configuration</td>
+          <td>Shows how the top-level Linux source tree becomes configured build intent instead of treating directories as isolated folders.</td>
+          <td>Kconfig, Makefile, scripts, arch, init, kernel, drivers, fs, mm, net, security, crypto, lib, io_uring, rust</td>
+          <td>4</td>
+          <td>3</td>
+          <td>2</td>
+        </tr>
+
+
+        <tr>
+          <td>Boot, Kernel Init, And Userspace Handoff</td>
+          <td>Tracks the early kernel path from architecture handoff into generic kernel init and the first userspace process.</td>
+          <td>arch, init, kernel, usr, drivers, fs</td>
+          <td>4</td>
+          <td>4</td>
+          <td>2</td>
+        </tr>
+
+
+        <tr>
+          <td>Process Lifetime And Scheduler Control Plane</td>
+          <td>Maps how tasks are created, made runnable, selected, switched, woken, and exited.</td>
+          <td>kernel, include, arch</td>
+          <td>6</td>
+          <td>5</td>
+          <td>3</td>
+        </tr>
+
+
+        <tr>
+          <td>User-Kernel Boundary And Syscall Dispatch</td>
+          <td>Shows how user requests enter kernel-defined syscall contracts and land in subsystem implementations.</td>
+          <td>arch, include, kernel, fs</td>
+          <td>5</td>
+          <td>3</td>
+          <td>2</td>
+        </tr>
+
+
+        <tr>
+          <td>Memory Management, Mappings, Faults, And Page Allocation</td>
+          <td>Connects mmap/VMA decisions, page faults, allocator fast/slow paths, reclaim/compaction/OOM pressure, and exported memory contracts.</td>
+          <td>mm, include, kernel, arch</td>
+          <td>5</td>
+          <td>4</td>
+          <td>2</td>
+        </tr>
+
+
+        <tr>
+          <td>Filesystem, VFS, Path Lookup, And Block IO</td>
+          <td>Shows how file-oriented syscalls move through path lookup, file objects, VFS read/write, filesystem operations, and block-device submission.</td>
+          <td>fs, block, include, security, drivers</td>
+          <td>6</td>
+          <td>4</td>
+          <td>3</td>
+        </tr>
+
+
+        <tr>
+          <td>Networking Packet Receive, Protocol Dispatch, And Transmit</td>
+          <td>Maps packets from network device buffers through core receive, IP/TCP dispatch, and transmit queue submission.</td>
+          <td>net, drivers, include, security</td>
+          <td>5</td>
+          <td>5</td>
+          <td>3</td>
+        </tr>
+
+
+        <tr>
+          <td>Driver Model, Device Matching, And Probe</td>
+          <td>Shows how drivers register with buses, devices match to drivers, and probe binds runtime device behavior.</td>
+          <td>drivers, include, modules, bus-specific subsystems</td>
+          <td>5</td>
+          <td>4</td>
+          <td>2</td>
+        </tr>
+
+
+        <tr>
+          <td>Security And LSM Permission Hooks</td>
+          <td>Maps the reusable security hook layer that lets security modules gate file, inode, process, network, BPF, and other kernel operations.</td>
+          <td>security, include, fs, kernel, net, bpf</td>
+          <td>5</td>
+          <td>3</td>
+          <td>2</td>
+        </tr>
+
+
+        <tr>
+          <td>Extensibility, Modules, BPF, And Tracing</td>
+          <td>Shows how Linux extends runtime behavior through loadable modules, initcall/module_init surfaces, BPF program loading, and tracepoint/observability surfaces.</td>
+          <td>kernel, include, scripts, security, tools</td>
+          <td>6</td>
+          <td>4</td>
+          <td>2</td>
+        </tr>
+
+
+        <tr>
+          <td>Rust Kernel Integration And Safety Boundary</td>
+          <td>Maps Rust as a kernel language surface: config-gated availability, build integration, generated bindings, safe abstractions, and driver/sample integration.</td>
+          <td>rust, drivers, samples, scripts, init, Makefile</td>
+          <td>5</td>
+          <td>4</td>
+          <td>2</td>
+        </tr>
+        </tbody>
+          </table>
+        </section>
+
+
+        <section>
+          <h2>Map Of Maps</h2>
+          <pre class="mermaid">flowchart TD
+  root[&quot;Linux Kernel System Review Atlas&quot;]
+  root --&gt; child_arch[&quot;arch/ subsystem map\ninferred_from_source_tree&quot;]
+  child_arch --&gt; child_arch_c_cpp[&quot;c_cpp&quot;]
+  root --&gt; child_block[&quot;block/ subsystem map\ninferred_from_source_tree&quot;]
+  child_block --&gt; child_block_c_cpp[&quot;c_cpp&quot;]
+  root --&gt; child_certs[&quot;certs/ subsystem map\ninferred_from_source_tree&quot;]
+  child_certs --&gt; child_certs_c_cpp[&quot;c_cpp&quot;]
+  root --&gt; child_crypto[&quot;crypto/ subsystem map\ninferred_from_source_tree&quot;]
+  child_crypto --&gt; child_crypto_c_cpp[&quot;c_cpp&quot;]
+  root --&gt; child_documentation[&quot;Documentation/ subsystem map\ninferred_from_source_tree&quot;]
+  child_documentation --&gt; child_documentation_python[&quot;python&quot;]
+  child_documentation --&gt; child_documentation_c_cpp[&quot;c_cpp&quot;]
+  root --&gt; child_drivers[&quot;drivers/ subsystem map\ninferred_from_source_tree&quot;]
+  child_drivers --&gt; child_drivers_c_cpp[&quot;c_cpp&quot;]
+  child_drivers --&gt; child_drivers_rust[&quot;rust&quot;]
+  root --&gt; child_fs[&quot;fs/ subsystem map\ninferred_from_source_tree&quot;]
+  child_fs --&gt; child_fs_c_cpp[&quot;c_cpp&quot;]
+  root --&gt; child_include[&quot;include/ subsystem map\ninferred_from_source_tree&quot;]
+  child_include --&gt; child_include_c_cpp[&quot;c_cpp&quot;]
+  root --&gt; child_init[&quot;init/ subsystem map\ninferred_from_source_tree&quot;]
+  child_init --&gt; child_init_c_cpp[&quot;c_cpp&quot;]
+  root --&gt; child_io_uring[&quot;io_uring/ subsystem map\ninferred_from_source_tree&quot;]
+  child_io_uring --&gt; child_io_uring_c_cpp[&quot;c_cpp&quot;]
+  root --&gt; child_ipc[&quot;ipc/ subsystem map\ninferred_from_source_tree&quot;]
+  child_ipc --&gt; child_ipc_c_cpp[&quot;c_cpp&quot;]
+  root --&gt; child_kernel[&quot;kernel/ subsystem map\ninferred_from_source_tree&quot;]
+  child_kernel --&gt; child_kernel_c_cpp[&quot;c_cpp&quot;]
+  root --&gt; child_lib[&quot;lib/ subsystem map\ninferred_from_source_tree&quot;]
+  child_lib --&gt; child_lib_c_cpp[&quot;c_cpp&quot;]
+  child_lib --&gt; child_lib_rust[&quot;rust&quot;]
+  root --&gt; child_mm[&quot;mm/ subsystem map\ninferred_from_source_tree&quot;]
+  child_mm --&gt; child_mm_c_cpp[&quot;c_cpp&quot;]
+  child_mm --&gt; child_mm_rust[&quot;rust&quot;]
+  root --&gt; child_net[&quot;net/ subsystem map\ninferred_from_source_tree&quot;]
+  child_net --&gt; child_net_c_cpp[&quot;c_cpp&quot;]
+  root --&gt; child_rust[&quot;rust/ subsystem map\ninferred_from_source_tree&quot;]
+  child_rust --&gt; child_rust_c_cpp[&quot;c_cpp&quot;]
+  child_rust --&gt; child_rust_rust[&quot;rust&quot;]
+  root --&gt; child_samples[&quot;samples/ subsystem map\ninferred_from_source_tree&quot;]
+  child_samples --&gt; child_samples_c_cpp[&quot;c_cpp&quot;]
+  child_samples --&gt; child_samples_rust[&quot;rust&quot;]
+  root --&gt; child_scripts[&quot;scripts/ subsystem map\ninferred_from_source_tree&quot;]
+  child_scripts --&gt; child_scripts_python[&quot;python&quot;]
+  child_scripts --&gt; child_scripts_c_cpp[&quot;c_cpp&quot;]
+  child_scripts --&gt; child_scripts_rust[&quot;rust&quot;]
+  root --&gt; child_security[&quot;security/ subsystem map\ninferred_from_source_tree&quot;]
+  child_security --&gt; child_security_c_cpp[&quot;c_cpp&quot;]
+  root --&gt; child_sound[&quot;sound/ subsystem map\ninferred_from_source_tree&quot;]
+  child_sound --&gt; child_sound_c_cpp[&quot;c_cpp&quot;]
+  root --&gt; child_tools[&quot;tools/ subsystem map\ninferred_from_source_tree&quot;]
+  child_tools --&gt; child_tools_python[&quot;python&quot;]
+  child_tools --&gt; child_tools_c_cpp[&quot;c_cpp&quot;]
+  child_tools --&gt; child_tools_rust[&quot;rust&quot;]
+  root --&gt; child_usr[&quot;usr/ subsystem map\ninferred_from_source_tree&quot;]
+  child_usr --&gt; child_usr_c_cpp[&quot;c_cpp&quot;]
+  root --&gt; child_virt[&quot;virt/ subsystem map\ninferred_from_source_tree&quot;]
+  child_virt --&gt; child_virt_c_cpp[&quot;c_cpp&quot;]
+  root --&gt; child_licenses[&quot;LICENSES/ subsystem map\ninferred_from_source_tree&quot;]</pre>
+          <table>
+            <thead>
+              <tr>
+                <th>Child map</th><th>Manifest</th><th>Status</th>
+                <th>Scope</th><th>Review hint</th>
+              </tr>
+            </thead>
+            <tbody>
+        <tr>
+          <td><a href="../subsystems/arch/reports/system_review_graph.md">arch/ subsystem map</a></td>
+          <td><a href="../subsystems/arch/system_review_manifest.json">manifest</a></td>
+          <td>inferred_from_source_tree</td>
+          <td>arch</td>
+          <td>Open subsystems/arch/system_review_manifest.json first, then inspect real Linux source/docs/tests for the workflows and gates this inferred child map cannot prove.</td>
+        </tr>
+
+
+        <tr>
+          <td><a href="../subsystems/block/reports/system_review_graph.md">block/ subsystem map</a></td>
+          <td><a href="../subsystems/block/system_review_manifest.json">manifest</a></td>
+          <td>inferred_from_source_tree</td>
+          <td>block</td>
+          <td>Open subsystems/block/system_review_manifest.json first, then inspect real Linux source/docs/tests for the workflows and gates this inferred child map cannot prove.</td>
+        </tr>
+
+
+        <tr>
+          <td><a href="../subsystems/certs/reports/system_review_graph.md">certs/ subsystem map</a></td>
+          <td><a href="../subsystems/certs/system_review_manifest.json">manifest</a></td>
+          <td>inferred_from_source_tree</td>
+          <td>certs</td>
+          <td>Open subsystems/certs/system_review_manifest.json first, then inspect real Linux source/docs/tests for the workflows and gates this inferred child map cannot prove.</td>
+        </tr>
+
+
+        <tr>
+          <td><a href="../subsystems/crypto/reports/system_review_graph.md">crypto/ subsystem map</a></td>
+          <td><a href="../subsystems/crypto/system_review_manifest.json">manifest</a></td>
+          <td>inferred_from_source_tree</td>
+          <td>crypto</td>
+          <td>Open subsystems/crypto/system_review_manifest.json first, then inspect real Linux source/docs/tests for the workflows and gates this inferred child map cannot prove.</td>
+        </tr>
+
+
+        <tr>
+          <td><a href="../subsystems/documentation/reports/system_review_graph.md">Documentation/ subsystem map</a></td>
+          <td><a href="../subsystems/documentation/system_review_manifest.json">manifest</a></td>
+          <td>inferred_from_source_tree</td>
+          <td>Documentation</td>
+          <td>Open subsystems/documentation/system_review_manifest.json first, then inspect real Linux source/docs/tests for the workflows and gates this inferred child map cannot prove.</td>
+        </tr>
+
+
+        <tr>
+          <td><a href="../subsystems/drivers/reports/system_review_graph.md">drivers/ subsystem map</a></td>
+          <td><a href="../subsystems/drivers/system_review_manifest.json">manifest</a></td>
+          <td>inferred_from_source_tree</td>
+          <td>drivers</td>
+          <td>Open subsystems/drivers/system_review_manifest.json first, then inspect real Linux source/docs/tests for the workflows and gates this inferred child map cannot prove.</td>
+        </tr>
+
+
+        <tr>
+          <td><a href="../subsystems/fs/reports/system_review_graph.md">fs/ subsystem map</a></td>
+          <td><a href="../subsystems/fs/system_review_manifest.json">manifest</a></td>
+          <td>inferred_from_source_tree</td>
+          <td>fs</td>
+          <td>Open subsystems/fs/system_review_manifest.json first, then inspect real Linux source/docs/tests for the workflows and gates this inferred child map cannot prove.</td>
+        </tr>
+
+
+        <tr>
+          <td><a href="../subsystems/include/reports/system_review_graph.md">include/ subsystem map</a></td>
+          <td><a href="../subsystems/include/system_review_manifest.json">manifest</a></td>
+          <td>inferred_from_source_tree</td>
+          <td>include</td>
+          <td>Open subsystems/include/system_review_manifest.json first, then inspect real Linux source/docs/tests for the workflows and gates this inferred child map cannot prove.</td>
+        </tr>
+
+
+        <tr>
+          <td><a href="../subsystems/init/reports/system_review_graph.md">init/ subsystem map</a></td>
+          <td><a href="../subsystems/init/system_review_manifest.json">manifest</a></td>
+          <td>inferred_from_source_tree</td>
+          <td>init</td>
+          <td>Open subsystems/init/system_review_manifest.json first, then inspect real Linux source/docs/tests for the workflows and gates this inferred child map cannot prove.</td>
+        </tr>
+
+
+        <tr>
+          <td><a href="../subsystems/io_uring/reports/system_review_graph.md">io_uring/ subsystem map</a></td>
+          <td><a href="../subsystems/io_uring/system_review_manifest.json">manifest</a></td>
+          <td>inferred_from_source_tree</td>
+          <td>io_uring</td>
+          <td>Open subsystems/io_uring/system_review_manifest.json first, then inspect real Linux source/docs/tests for the workflows and gates this inferred child map cannot prove.</td>
+        </tr>
+
+
+        <tr>
+          <td><a href="../subsystems/ipc/reports/system_review_graph.md">ipc/ subsystem map</a></td>
+          <td><a href="../subsystems/ipc/system_review_manifest.json">manifest</a></td>
+          <td>inferred_from_source_tree</td>
+          <td>ipc</td>
+          <td>Open subsystems/ipc/system_review_manifest.json first, then inspect real Linux source/docs/tests for the workflows and gates this inferred child map cannot prove.</td>
+        </tr>
+
+
+        <tr>
+          <td><a href="../subsystems/kernel/reports/system_review_graph.md">kernel/ subsystem map</a></td>
+          <td><a href="../subsystems/kernel/system_review_manifest.json">manifest</a></td>
+          <td>inferred_from_source_tree</td>
+          <td>kernel</td>
+          <td>Open subsystems/kernel/system_review_manifest.json first, then inspect real Linux source/docs/tests for the workflows and gates this inferred child map cannot prove.</td>
+        </tr>
+
+
+        <tr>
+          <td><a href="../subsystems/lib/reports/system_review_graph.md">lib/ subsystem map</a></td>
+          <td><a href="../subsystems/lib/system_review_manifest.json">manifest</a></td>
+          <td>inferred_from_source_tree</td>
+          <td>lib</td>
+          <td>Open subsystems/lib/system_review_manifest.json first, then inspect real Linux source/docs/tests for the workflows and gates this inferred child map cannot prove.</td>
+        </tr>
+
+
+        <tr>
+          <td><a href="../subsystems/mm/reports/system_review_graph.md">mm/ subsystem map</a></td>
+          <td><a href="../subsystems/mm/system_review_manifest.json">manifest</a></td>
+          <td>inferred_from_source_tree</td>
+          <td>mm</td>
+          <td>Open subsystems/mm/system_review_manifest.json first, then inspect real Linux source/docs/tests for the workflows and gates this inferred child map cannot prove.</td>
+        </tr>
+
+
+        <tr>
+          <td><a href="../subsystems/net/reports/system_review_graph.md">net/ subsystem map</a></td>
+          <td><a href="../subsystems/net/system_review_manifest.json">manifest</a></td>
+          <td>inferred_from_source_tree</td>
+          <td>net</td>
+          <td>Open subsystems/net/system_review_manifest.json first, then inspect real Linux source/docs/tests for the workflows and gates this inferred child map cannot prove.</td>
+        </tr>
+
+
+        <tr>
+          <td><a href="../subsystems/rust/reports/system_review_graph.md">rust/ subsystem map</a></td>
+          <td><a href="../subsystems/rust/system_review_manifest.json">manifest</a></td>
+          <td>inferred_from_source_tree</td>
+          <td>rust</td>
+          <td>Open subsystems/rust/system_review_manifest.json first, then inspect real Linux source/docs/tests for the workflows and gates this inferred child map cannot prove.</td>
+        </tr>
+
+
+        <tr>
+          <td><a href="../subsystems/samples/reports/system_review_graph.md">samples/ subsystem map</a></td>
+          <td><a href="../subsystems/samples/system_review_manifest.json">manifest</a></td>
+          <td>inferred_from_source_tree</td>
+          <td>samples</td>
+          <td>Open subsystems/samples/system_review_manifest.json first, then inspect real Linux source/docs/tests for the workflows and gates this inferred child map cannot prove.</td>
+        </tr>
+
+
+        <tr>
+          <td><a href="../subsystems/scripts/reports/system_review_graph.md">scripts/ subsystem map</a></td>
+          <td><a href="../subsystems/scripts/system_review_manifest.json">manifest</a></td>
+          <td>inferred_from_source_tree</td>
+          <td>scripts</td>
+          <td>Open subsystems/scripts/system_review_manifest.json first, then inspect real Linux source/docs/tests for the workflows and gates this inferred child map cannot prove.</td>
+        </tr>
+
+
+        <tr>
+          <td><a href="../subsystems/security/reports/system_review_graph.md">security/ subsystem map</a></td>
+          <td><a href="../subsystems/security/system_review_manifest.json">manifest</a></td>
+          <td>inferred_from_source_tree</td>
+          <td>security</td>
+          <td>Open subsystems/security/system_review_manifest.json first, then inspect real Linux source/docs/tests for the workflows and gates this inferred child map cannot prove.</td>
+        </tr>
+
+
+        <tr>
+          <td><a href="../subsystems/sound/reports/system_review_graph.md">sound/ subsystem map</a></td>
+          <td><a href="../subsystems/sound/system_review_manifest.json">manifest</a></td>
+          <td>inferred_from_source_tree</td>
+          <td>sound</td>
+          <td>Open subsystems/sound/system_review_manifest.json first, then inspect real Linux source/docs/tests for the workflows and gates this inferred child map cannot prove.</td>
+        </tr>
+
+
+        <tr>
+          <td><a href="../subsystems/tools/reports/system_review_graph.md">tools/ subsystem map</a></td>
+          <td><a href="../subsystems/tools/system_review_manifest.json">manifest</a></td>
+          <td>inferred_from_source_tree</td>
+          <td>tools</td>
+          <td>Open subsystems/tools/system_review_manifest.json first, then inspect real Linux source/docs/tests for the workflows and gates this inferred child map cannot prove.</td>
+        </tr>
+
+
+        <tr>
+          <td><a href="../subsystems/usr/reports/system_review_graph.md">usr/ subsystem map</a></td>
+          <td><a href="../subsystems/usr/system_review_manifest.json">manifest</a></td>
+          <td>inferred_from_source_tree</td>
+          <td>usr</td>
+          <td>Open subsystems/usr/system_review_manifest.json first, then inspect real Linux source/docs/tests for the workflows and gates this inferred child map cannot prove.</td>
+        </tr>
+
+
+        <tr>
+          <td><a href="../subsystems/virt/reports/system_review_graph.md">virt/ subsystem map</a></td>
+          <td><a href="../subsystems/virt/system_review_manifest.json">manifest</a></td>
+          <td>inferred_from_source_tree</td>
+          <td>virt</td>
+          <td>Open subsystems/virt/system_review_manifest.json first, then inspect real Linux source/docs/tests for the workflows and gates this inferred child map cannot prove.</td>
+        </tr>
+
+
+        <tr>
+          <td><a href="../subsystems/licenses/reports/system_review_graph.md">LICENSES/ subsystem map</a></td>
+          <td><a href="../subsystems/licenses/system_review_manifest.json">manifest</a></td>
+          <td>inferred_from_source_tree</td>
+          <td>LICENSES</td>
+          <td>Open subsystems/licenses/system_review_manifest.json first, then inspect real Linux source/docs/tests for the workflows and gates this inferred child map cannot prove.</td>
+        </tr>
+        </tbody>
+          </table>
+        </section>
+
+
+        <section>
+          <h2>Artifact And Schema Map</h2>
+          <pre class="mermaid">flowchart LR
+  system_arch[&quot;arch/&quot;]
+  system_arch --&gt; artifact_arch_child_map[&quot;arch/ Child System Map&quot;]
+  artifact_arch_child_map --&gt; schema_SubsystemMap[&quot;SubsystemMap&quot;]
+  system_block[&quot;block/&quot;]
+  system_block --&gt; artifact_block_child_map[&quot;block/ Child System Map&quot;]
+  artifact_block_child_map --&gt; schema_SubsystemMap[&quot;SubsystemMap&quot;]
+  system_certs[&quot;certs/&quot;]
+  system_certs --&gt; artifact_certs_child_map[&quot;certs/ Child System Map&quot;]
+  artifact_certs_child_map --&gt; schema_SubsystemMap[&quot;SubsystemMap&quot;]
+  system_crypto[&quot;crypto/&quot;]
+  system_crypto --&gt; artifact_crypto_child_map[&quot;crypto/ Child System Map&quot;]
+  artifact_crypto_child_map --&gt; schema_SubsystemMap[&quot;SubsystemMap&quot;]
+  system_documentation[&quot;Documentation/&quot;]
+  system_documentation --&gt; artifact_documentation_child_map[&quot;Documentation/ Child System Map&quot;]
+  artifact_documentation_child_map --&gt; schema_SubsystemMap[&quot;SubsystemMap&quot;]
+  system_drivers[&quot;drivers/&quot;]
+  system_drivers --&gt; artifact_drivers_child_map[&quot;drivers/ Child System Map&quot;]
+  artifact_drivers_child_map --&gt; schema_SubsystemMap[&quot;SubsystemMap&quot;]
+  system_fs[&quot;fs/&quot;]
+  system_fs --&gt; artifact_fs_child_map[&quot;fs/ Child System Map&quot;]
+  artifact_fs_child_map --&gt; schema_SubsystemMap[&quot;SubsystemMap&quot;]
+  system_include[&quot;include/&quot;]
+  system_include --&gt; artifact_include_child_map[&quot;include/ Child System Map&quot;]
+  artifact_include_child_map --&gt; schema_SubsystemMap[&quot;SubsystemMap&quot;]
+  system_init[&quot;init/&quot;]
+  system_init --&gt; artifact_init_child_map[&quot;init/ Child System Map&quot;]
+  artifact_init_child_map --&gt; schema_SubsystemMap[&quot;SubsystemMap&quot;]
+  system_io_uring[&quot;io_uring/&quot;]
+  system_io_uring --&gt; artifact_io_uring_child_map[&quot;io_uring/ Child System Map&quot;]
+  artifact_io_uring_child_map --&gt; schema_SubsystemMap[&quot;SubsystemMap&quot;]
+  system_ipc[&quot;ipc/&quot;]
+  system_ipc --&gt; artifact_ipc_child_map[&quot;ipc/ Child System Map&quot;]
+  artifact_ipc_child_map --&gt; schema_SubsystemMap[&quot;SubsystemMap&quot;]
+  system_kernel[&quot;kernel/&quot;]
+  system_kernel --&gt; artifact_kernel_child_map[&quot;kernel/ Child System Map&quot;]
+  artifact_kernel_child_map --&gt; schema_SubsystemMap[&quot;SubsystemMap&quot;]
+  system_lib[&quot;lib/&quot;]
+  system_lib --&gt; artifact_lib_child_map[&quot;lib/ Child System Map&quot;]
+  artifact_lib_child_map --&gt; schema_SubsystemMap[&quot;SubsystemMap&quot;]
+  system_mm[&quot;mm/&quot;]
+  system_mm --&gt; artifact_mm_child_map[&quot;mm/ Child System Map&quot;]
+  artifact_mm_child_map --&gt; schema_SubsystemMap[&quot;SubsystemMap&quot;]
+  system_net[&quot;net/&quot;]
+  system_net --&gt; artifact_net_child_map[&quot;net/ Child System Map&quot;]
+  artifact_net_child_map --&gt; schema_SubsystemMap[&quot;SubsystemMap&quot;]
+  system_rust[&quot;rust/&quot;]
+  system_rust --&gt; artifact_rust_child_map[&quot;rust/ Child System Map&quot;]
+  artifact_rust_child_map --&gt; schema_SubsystemMap[&quot;SubsystemMap&quot;]
+  system_samples[&quot;samples/&quot;]
+  system_samples --&gt; artifact_samples_child_map[&quot;samples/ Child System Map&quot;]
+  artifact_samples_child_map --&gt; schema_SubsystemMap[&quot;SubsystemMap&quot;]
+  system_scripts[&quot;scripts/&quot;]
+  system_scripts --&gt; artifact_scripts_child_map[&quot;scripts/ Child System Map&quot;]
+  artifact_scripts_child_map --&gt; schema_SubsystemMap[&quot;SubsystemMap&quot;]
+  system_security[&quot;security/&quot;]
+  system_security --&gt; artifact_security_child_map[&quot;security/ Child System Map&quot;]
+  artifact_security_child_map --&gt; schema_SubsystemMap[&quot;SubsystemMap&quot;]
+  system_sound[&quot;sound/&quot;]
+  system_sound --&gt; artifact_sound_child_map[&quot;sound/ Child System Map&quot;]
+  artifact_sound_child_map --&gt; schema_SubsystemMap[&quot;SubsystemMap&quot;]
+  system_tools[&quot;tools/&quot;]
+  system_tools --&gt; artifact_tools_child_map[&quot;tools/ Child System Map&quot;]
+  artifact_tools_child_map --&gt; schema_SubsystemMap[&quot;SubsystemMap&quot;]
+  system_usr[&quot;usr/&quot;]
+  system_usr --&gt; artifact_usr_child_map[&quot;usr/ Child System Map&quot;]
+  artifact_usr_child_map --&gt; schema_SubsystemMap[&quot;SubsystemMap&quot;]
+  system_virt[&quot;virt/&quot;]
+  system_virt --&gt; artifact_virt_child_map[&quot;virt/ Child System Map&quot;]
+  artifact_virt_child_map --&gt; schema_SubsystemMap[&quot;SubsystemMap&quot;]
+  system_licenses[&quot;LICENSES/&quot;]
+  system_licenses --&gt; artifact_licenses_child_map[&quot;LICENSES/ Child System Map&quot;]
+  artifact_licenses_child_map --&gt; schema_SubsystemMap[&quot;SubsystemMap&quot;]</pre>
+        </section>
+        <section>
+          <h2>Gate Map</h2>
+          <pre class="mermaid">flowchart LR
+  gate_subsystem_review_gate{&quot;Subsystem Review Gate&quot;}
+  gate_subsystem_review_gate --&gt; out_subsystem_review_gate_accepted[&quot;accepted&quot;]
+  gate_subsystem_review_gate --&gt; out_subsystem_review_gate_needs_deeper_map[&quot;needs_deeper_map&quot;]
+  gate_subsystem_review_gate --&gt; out_subsystem_review_gate_split_or_merge[&quot;split_or_merge&quot;]
+  gate_subsystem_review_gate --&gt; out_subsystem_review_gate_rejected[&quot;rejected&quot;]
+  gate_subsystem_review_gate{&quot;Subsystem Review Gate&quot;} --&gt; step_scan_root_boundaries[&quot;Scan Root Boundaries&quot;]
+  gate_subsystem_review_gate{&quot;Subsystem Review Gate&quot;} --&gt; step_open_child_maps[&quot;Open Child Maps&quot;]
+  gate_subsystem_review_gate{&quot;Subsystem Review Gate&quot;} --&gt; step_refine_atlas[&quot;Refine Atlas&quot;]
+  gate_subsystem_review_gate{&quot;Subsystem Review Gate&quot;} --&gt; step_regenerate_on_merge[&quot;Regenerate On Merge&quot;]</pre>
+        </section>
+
+
+        <section>
+          <h2>Relationship Graph</h2>
+          <pre class="mermaid">flowchart TD
+  arch[&quot;arch/ subsystem map&quot;] -- &quot;owns or uses&quot; --&gt; arch_child_map[&quot;arch/ Child System Map&quot;]
+  arch[&quot;arch/ subsystem map&quot;] -- &quot;is gated by&quot; --&gt; subsystem_review_gate[&quot;Subsystem Review Gate&quot;]
+  block[&quot;block/ subsystem map&quot;] -- &quot;owns or uses&quot; --&gt; block_child_map[&quot;block/ Child System Map&quot;]
+  block[&quot;block/ subsystem map&quot;] -- &quot;is gated by&quot; --&gt; subsystem_review_gate[&quot;Subsystem Review Gate&quot;]
+  certs[&quot;certs/ subsystem map&quot;] -- &quot;owns or uses&quot; --&gt; certs_child_map[&quot;certs/ Child System Map&quot;]
+  certs[&quot;certs/ subsystem map&quot;] -- &quot;is gated by&quot; --&gt; subsystem_review_gate[&quot;Subsystem Review Gate&quot;]
+  crypto[&quot;crypto/ subsystem map&quot;] -- &quot;owns or uses&quot; --&gt; crypto_child_map[&quot;crypto/ Child System Map&quot;]
+  crypto[&quot;crypto/ subsystem map&quot;] -- &quot;is gated by&quot; --&gt; subsystem_review_gate[&quot;Subsystem Review Gate&quot;]
+  documentation[&quot;Documentation/ subsystem map&quot;] -- &quot;owns or uses&quot; --&gt; documentation_child_map[&quot;Documentation/ Child System Map&quot;]
+  documentation[&quot;Documentation/ subsystem map&quot;] -- &quot;is gated by&quot; --&gt; subsystem_review_gate[&quot;Subsystem Review Gate&quot;]
+  drivers[&quot;drivers/ subsystem map&quot;] -- &quot;owns or uses&quot; --&gt; drivers_child_map[&quot;drivers/ Child System Map&quot;]
+  drivers[&quot;drivers/ subsystem map&quot;] -- &quot;is gated by&quot; --&gt; subsystem_review_gate[&quot;Subsystem Review Gate&quot;]
+  fs[&quot;fs/ subsystem map&quot;] -- &quot;owns or uses&quot; --&gt; fs_child_map[&quot;fs/ Child System Map&quot;]
+  fs[&quot;fs/ subsystem map&quot;] -- &quot;is gated by&quot; --&gt; subsystem_review_gate[&quot;Subsystem Review Gate&quot;]
+  include[&quot;include/ subsystem map&quot;] -- &quot;owns or uses&quot; --&gt; include_child_map[&quot;include/ Child System Map&quot;]
+  include[&quot;include/ subsystem map&quot;] -- &quot;is gated by&quot; --&gt; subsystem_review_gate[&quot;Subsystem Review Gate&quot;]
+  init[&quot;init/ subsystem map&quot;] -- &quot;owns or uses&quot; --&gt; init_child_map[&quot;init/ Child System Map&quot;]
+  init[&quot;init/ subsystem map&quot;] -- &quot;is gated by&quot; --&gt; subsystem_review_gate[&quot;Subsystem Review Gate&quot;]
+  io_uring[&quot;io_uring/ subsystem map&quot;] -- &quot;owns or uses&quot; --&gt; io_uring_child_map[&quot;io_uring/ Child System Map&quot;]
+  io_uring[&quot;io_uring/ subsystem map&quot;] -- &quot;is gated by&quot; --&gt; subsystem_review_gate[&quot;Subsystem Review Gate&quot;]
+  ipc[&quot;ipc/ subsystem map&quot;] -- &quot;owns or uses&quot; --&gt; ipc_child_map[&quot;ipc/ Child System Map&quot;]
+  ipc[&quot;ipc/ subsystem map&quot;] -- &quot;is gated by&quot; --&gt; subsystem_review_gate[&quot;Subsystem Review Gate&quot;]
+  kernel[&quot;kernel/ subsystem map&quot;] -- &quot;owns or uses&quot; --&gt; kernel_child_map[&quot;kernel/ Child System Map&quot;]
+  kernel[&quot;kernel/ subsystem map&quot;] -- &quot;is gated by&quot; --&gt; subsystem_review_gate[&quot;Subsystem Review Gate&quot;]
+  lib[&quot;lib/ subsystem map&quot;] -- &quot;owns or uses&quot; --&gt; lib_child_map[&quot;lib/ Child System Map&quot;]
+  lib[&quot;lib/ subsystem map&quot;] -- &quot;is gated by&quot; --&gt; subsystem_review_gate[&quot;Subsystem Review Gate&quot;]
+  mm[&quot;mm/ subsystem map&quot;] -- &quot;owns or uses&quot; --&gt; mm_child_map[&quot;mm/ Child System Map&quot;]
+  mm[&quot;mm/ subsystem map&quot;] -- &quot;is gated by&quot; --&gt; subsystem_review_gate[&quot;Subsystem Review Gate&quot;]
+  net[&quot;net/ subsystem map&quot;] -- &quot;owns or uses&quot; --&gt; net_child_map[&quot;net/ Child System Map&quot;]
+  net[&quot;net/ subsystem map&quot;] -- &quot;is gated by&quot; --&gt; subsystem_review_gate[&quot;Subsystem Review Gate&quot;]
+  rust[&quot;rust/ subsystem map&quot;] -- &quot;owns or uses&quot; --&gt; rust_child_map[&quot;rust/ Child System Map&quot;]
+  rust[&quot;rust/ subsystem map&quot;] -- &quot;is gated by&quot; --&gt; subsystem_review_gate[&quot;Subsystem Review Gate&quot;]
+  samples[&quot;samples/ subsystem map&quot;] -- &quot;owns or uses&quot; --&gt; samples_child_map[&quot;samples/ Child System Map&quot;]
+  samples[&quot;samples/ subsystem map&quot;] -- &quot;is gated by&quot; --&gt; subsystem_review_gate[&quot;Subsystem Review Gate&quot;]
+  scripts[&quot;scripts/ subsystem map&quot;] -- &quot;owns or uses&quot; --&gt; scripts_child_map[&quot;scripts/ Child System Map&quot;]
+  scripts[&quot;scripts/ subsystem map&quot;] -- &quot;is gated by&quot; --&gt; subsystem_review_gate[&quot;Subsystem Review Gate&quot;]
+  security[&quot;security/ subsystem map&quot;] -- &quot;owns or uses&quot; --&gt; security_child_map[&quot;security/ Child System Map&quot;]
+  security[&quot;security/ subsystem map&quot;] -- &quot;is gated by&quot; --&gt; subsystem_review_gate[&quot;Subsystem Review Gate&quot;]
+  sound[&quot;sound/ subsystem map&quot;] -- &quot;owns or uses&quot; --&gt; sound_child_map[&quot;sound/ Child System Map&quot;]
+  sound[&quot;sound/ subsystem map&quot;] -- &quot;is gated by&quot; --&gt; subsystem_review_gate[&quot;Subsystem Review Gate&quot;]
+  tools[&quot;tools/ subsystem map&quot;] -- &quot;owns or uses&quot; --&gt; tools_child_map[&quot;tools/ Child System Map&quot;]
+  tools[&quot;tools/ subsystem map&quot;] -- &quot;is gated by&quot; --&gt; subsystem_review_gate[&quot;Subsystem Review Gate&quot;]
+  usr[&quot;usr/ subsystem map&quot;] -- &quot;owns or uses&quot; --&gt; usr_child_map[&quot;usr/ Child System Map&quot;]
+  usr[&quot;usr/ subsystem map&quot;] -- &quot;is gated by&quot; --&gt; subsystem_review_gate[&quot;Subsystem Review Gate&quot;]
+  virt[&quot;virt/ subsystem map&quot;] -- &quot;owns or uses&quot; --&gt; virt_child_map[&quot;virt/ Child System Map&quot;]
+  virt[&quot;virt/ subsystem map&quot;] -- &quot;is gated by&quot; --&gt; subsystem_review_gate[&quot;Subsystem Review Gate&quot;]
+  licenses[&quot;LICENSES/ subsystem map&quot;] -- &quot;owns or uses&quot; --&gt; licenses_child_map[&quot;LICENSES/ Child System Map&quot;]
+  licenses[&quot;LICENSES/ subsystem map&quot;] -- &quot;is gated by&quot; --&gt; subsystem_review_gate[&quot;Subsystem Review Gate&quot;]
+  scan_root_boundaries[&quot;Scan Root Boundaries&quot;] -- &quot;produces&quot; --&gt; arch_child_map[&quot;arch/ Child System Map&quot;]
+  scan_root_boundaries[&quot;Scan Root Boundaries&quot;] -- &quot;produces&quot; --&gt; block_child_map[&quot;block/ Child System Map&quot;]
+  scan_root_boundaries[&quot;Scan Root Boundaries&quot;] -- &quot;produces&quot; --&gt; certs_child_map[&quot;certs/ Child System Map&quot;]
+  scan_root_boundaries[&quot;Scan Root Boundaries&quot;] -- &quot;produces&quot; --&gt; crypto_child_map[&quot;crypto/ Child System Map&quot;]
+  scan_root_boundaries[&quot;Scan Root Boundaries&quot;] -- &quot;produces&quot; --&gt; documentation_child_map[&quot;Documentation/ Child System Map&quot;]
+  scan_root_boundaries[&quot;Scan Root Boundaries&quot;] -- &quot;produces&quot; --&gt; drivers_child_map[&quot;drivers/ Child System Map&quot;]
+  scan_root_boundaries[&quot;Scan Root Boundaries&quot;] -- &quot;produces&quot; --&gt; fs_child_map[&quot;fs/ Child System Map&quot;]
+  scan_root_boundaries[&quot;Scan Root Boundaries&quot;] -- &quot;produces&quot; --&gt; include_child_map[&quot;include/ Child System Map&quot;]
+  scan_root_boundaries[&quot;Scan Root Boundaries&quot;] -- &quot;produces&quot; --&gt; init_child_map[&quot;init/ Child System Map&quot;]
+  scan_root_boundaries[&quot;Scan Root Boundaries&quot;] -- &quot;produces&quot; --&gt; io_uring_child_map[&quot;io_uring/ Child System Map&quot;]
+  scan_root_boundaries[&quot;Scan Root Boundaries&quot;] -- &quot;produces&quot; --&gt; ipc_child_map[&quot;ipc/ Child System Map&quot;]
+  scan_root_boundaries[&quot;Scan Root Boundaries&quot;] -- &quot;produces&quot; --&gt; kernel_child_map[&quot;kernel/ Child System Map&quot;]
+  scan_root_boundaries[&quot;Scan Root Boundaries&quot;] -- &quot;produces&quot; --&gt; lib_child_map[&quot;lib/ Child System Map&quot;]
+  scan_root_boundaries[&quot;Scan Root Boundaries&quot;] -- &quot;produces&quot; --&gt; mm_child_map[&quot;mm/ Child System Map&quot;]
+  scan_root_boundaries[&quot;Scan Root Boundaries&quot;] -- &quot;produces&quot; --&gt; net_child_map[&quot;net/ Child System Map&quot;]
+  scan_root_boundaries[&quot;Scan Root Boundaries&quot;] -- &quot;produces&quot; --&gt; rust_child_map[&quot;rust/ Child System Map&quot;]
+  scan_root_boundaries[&quot;Scan Root Boundaries&quot;] -- &quot;produces&quot; --&gt; samples_child_map[&quot;samples/ Child System Map&quot;]
+  scan_root_boundaries[&quot;Scan Root Boundaries&quot;] -- &quot;produces&quot; --&gt; scripts_child_map[&quot;scripts/ Child System Map&quot;]
+  scan_root_boundaries[&quot;Scan Root Boundaries&quot;] -- &quot;produces&quot; --&gt; security_child_map[&quot;security/ Child System Map&quot;]
+  scan_root_boundaries[&quot;Scan Root Boundaries&quot;] -- &quot;produces&quot; --&gt; sound_child_map[&quot;sound/ Child System Map&quot;]
+  scan_root_boundaries[&quot;Scan Root Boundaries&quot;] -- &quot;produces&quot; --&gt; tools_child_map[&quot;tools/ Child System Map&quot;]
+  scan_root_boundaries[&quot;Scan Root Boundaries&quot;] -- &quot;produces&quot; --&gt; usr_child_map[&quot;usr/ Child System Map&quot;]
+  scan_root_boundaries[&quot;Scan Root Boundaries&quot;] -- &quot;produces&quot; --&gt; virt_child_map[&quot;virt/ Child System Map&quot;]
+  scan_root_boundaries[&quot;Scan Root Boundaries&quot;] -- &quot;produces&quot; --&gt; licenses_child_map[&quot;LICENSES/ Child System Map&quot;]
+  subsystem_review_gate[&quot;Subsystem Review Gate&quot;] -- &quot;gates&quot; --&gt; scan_root_boundaries[&quot;Scan Root Boundaries&quot;]
+  scan_root_boundaries[&quot;Scan Root Boundaries&quot;] -- &quot;routes to&quot; --&gt; open_child_maps[&quot;Open Child Maps&quot;]
+  arch_child_map[&quot;arch/ Child System Map&quot;] -- &quot;feeds&quot; --&gt; open_child_maps[&quot;Open Child Maps&quot;]
+  block_child_map[&quot;block/ Child System Map&quot;] -- &quot;feeds&quot; --&gt; open_child_maps[&quot;Open Child Maps&quot;]
+  certs_child_map[&quot;certs/ Child System Map&quot;] -- &quot;feeds&quot; --&gt; open_child_maps[&quot;Open Child Maps&quot;]
+  crypto_child_map[&quot;crypto/ Child System Map&quot;] -- &quot;feeds&quot; --&gt; open_child_maps[&quot;Open Child Maps&quot;]
+  documentation_child_map[&quot;Documentation/ Child System Map&quot;] -- &quot;feeds&quot; --&gt; open_child_maps[&quot;Open Child Maps&quot;]
+  drivers_child_map[&quot;drivers/ Child System Map&quot;] -- &quot;feeds&quot; --&gt; open_child_maps[&quot;Open Child Maps&quot;]
+  root_atlas[&quot;Atlas&quot;] -- &quot;links to&quot; --&gt; arch[&quot;arch/ subsystem map&quot;]
+  root_atlas[&quot;Atlas&quot;] -- &quot;links to&quot; --&gt; block[&quot;block/ subsystem map&quot;]
+  root_atlas[&quot;Atlas&quot;] -- &quot;links to&quot; --&gt; certs[&quot;certs/ subsystem map&quot;]
+  root_atlas[&quot;Atlas&quot;] -- &quot;links to&quot; --&gt; crypto[&quot;crypto/ subsystem map&quot;]
+  root_atlas[&quot;Atlas&quot;] -- &quot;links to&quot; --&gt; documentation[&quot;Documentation/ subsystem map&quot;]
+  root_atlas[&quot;Atlas&quot;] -- &quot;links to&quot; --&gt; drivers[&quot;drivers/ subsystem map&quot;]
+  root_atlas[&quot;Atlas&quot;] -- &quot;links to&quot; --&gt; fs[&quot;fs/ subsystem map&quot;]
+  root_atlas[&quot;Atlas&quot;] -- &quot;links to&quot; --&gt; include[&quot;include/ subsystem map&quot;]
+  root_atlas[&quot;Atlas&quot;] -- &quot;links to&quot; --&gt; init[&quot;init/ subsystem map&quot;]
+  root_atlas[&quot;Atlas&quot;] -- &quot;links to&quot; --&gt; io_uring[&quot;io_uring/ subsystem map&quot;]
+  root_atlas[&quot;Atlas&quot;] -- &quot;links to&quot; --&gt; ipc[&quot;ipc/ subsystem map&quot;]
+  root_atlas[&quot;Atlas&quot;] -- &quot;links to&quot; --&gt; kernel[&quot;kernel/ subsystem map&quot;]
+  root_atlas[&quot;Atlas&quot;] -- &quot;links to&quot; --&gt; lib[&quot;lib/ subsystem map&quot;]
+  root_atlas[&quot;Atlas&quot;] -- &quot;links to&quot; --&gt; mm[&quot;mm/ subsystem map&quot;]
+  root_atlas[&quot;Atlas&quot;] -- &quot;links to&quot; --&gt; net[&quot;net/ subsystem map&quot;]
+  root_atlas[&quot;Atlas&quot;] -- &quot;links to&quot; --&gt; rust[&quot;rust/ subsystem map&quot;]
+  root_atlas[&quot;Atlas&quot;] -- &quot;links to&quot; --&gt; samples[&quot;samples/ subsystem map&quot;]
+  root_atlas[&quot;Atlas&quot;] -- &quot;links to&quot; --&gt; scripts[&quot;scripts/ subsystem map&quot;]
+  root_atlas[&quot;Atlas&quot;] -- &quot;links to&quot; --&gt; security[&quot;security/ subsystem map&quot;]
+  root_atlas[&quot;Atlas&quot;] -- &quot;links to&quot; --&gt; sound[&quot;sound/ subsystem map&quot;]
+  root_atlas[&quot;Atlas&quot;] -- &quot;links to&quot; --&gt; tools[&quot;tools/ subsystem map&quot;]
+  root_atlas[&quot;Atlas&quot;] -- &quot;links to&quot; --&gt; usr[&quot;usr/ subsystem map&quot;]
+  root_atlas[&quot;Atlas&quot;] -- &quot;links to&quot; --&gt; virt[&quot;virt/ subsystem map&quot;]
+  root_atlas[&quot;Atlas&quot;] -- &quot;links to&quot; --&gt; licenses[&quot;LICENSES/ subsystem map&quot;]</pre>
+        </section>
+
+    <section>
+      <h2>Systems</h2>
+      <div class="grid">
+        <article class="card" id="arch">
+          <h3>arch/</h3>
+          <p>Top-level repository subsystem inferred from directory boundary. Use the child map for language surfaces and first review targets.</p>
+          <dl>
+            <dt>Architecture</dt><dd>top-level source-tree subsystem</dd>
+            <dt>Lifecycle</dt><dd>open child map -&gt; inspect source surfaces -&gt; refine real workflows</dd>
+            <dt>Boundary</dt><dd>Directory boundary is source-grounded; runtime responsibility and exact behavior require maintainer or deeper agent review.</dd>
+          </dl>
+        </article>
+
+
+        <article class="card" id="block">
+          <h3>block/</h3>
+          <p>Top-level repository subsystem inferred from directory boundary. Use the child map for language surfaces and first review targets.</p>
+          <dl>
+            <dt>Architecture</dt><dd>top-level source-tree subsystem</dd>
+            <dt>Lifecycle</dt><dd>open child map -&gt; inspect source surfaces -&gt; refine real workflows</dd>
+            <dt>Boundary</dt><dd>Directory boundary is source-grounded; runtime responsibility and exact behavior require maintainer or deeper agent review.</dd>
+          </dl>
+        </article>
+
+
+        <article class="card" id="certs">
+          <h3>certs/</h3>
+          <p>Top-level repository subsystem inferred from directory boundary. Use the child map for language surfaces and first review targets.</p>
+          <dl>
+            <dt>Architecture</dt><dd>top-level source-tree subsystem</dd>
+            <dt>Lifecycle</dt><dd>open child map -&gt; inspect source surfaces -&gt; refine real workflows</dd>
+            <dt>Boundary</dt><dd>Directory boundary is source-grounded; runtime responsibility and exact behavior require maintainer or deeper agent review.</dd>
+          </dl>
+        </article>
+
+
+        <article class="card" id="crypto">
+          <h3>crypto/</h3>
+          <p>Top-level repository subsystem inferred from directory boundary. Use the child map for language surfaces and first review targets.</p>
+          <dl>
+            <dt>Architecture</dt><dd>top-level source-tree subsystem</dd>
+            <dt>Lifecycle</dt><dd>open child map -&gt; inspect source surfaces -&gt; refine real workflows</dd>
+            <dt>Boundary</dt><dd>Directory boundary is source-grounded; runtime responsibility and exact behavior require maintainer or deeper agent review.</dd>
+          </dl>
+        </article>
+
+
+        <article class="card" id="documentation">
+          <h3>Documentation/</h3>
+          <p>Top-level repository subsystem inferred from directory boundary. Use the child map for language surfaces and first review targets.</p>
+          <dl>
+            <dt>Architecture</dt><dd>top-level source-tree subsystem</dd>
+            <dt>Lifecycle</dt><dd>open child map -&gt; inspect source surfaces -&gt; refine real workflows</dd>
+            <dt>Boundary</dt><dd>Directory boundary is source-grounded; runtime responsibility and exact behavior require maintainer or deeper agent review.</dd>
+          </dl>
+        </article>
+
+
+        <article class="card" id="drivers">
+          <h3>drivers/</h3>
+          <p>Top-level repository subsystem inferred from directory boundary. Use the child map for language surfaces and first review targets.</p>
+          <dl>
+            <dt>Architecture</dt><dd>top-level source-tree subsystem</dd>
+            <dt>Lifecycle</dt><dd>open child map -&gt; inspect source surfaces -&gt; refine real workflows</dd>
+            <dt>Boundary</dt><dd>Directory boundary is source-grounded; runtime responsibility and exact behavior require maintainer or deeper agent review.</dd>
+          </dl>
+        </article>
+
+
+        <article class="card" id="fs">
+          <h3>fs/</h3>
+          <p>Top-level repository subsystem inferred from directory boundary. Use the child map for language surfaces and first review targets.</p>
+          <dl>
+            <dt>Architecture</dt><dd>top-level source-tree subsystem</dd>
+            <dt>Lifecycle</dt><dd>open child map -&gt; inspect source surfaces -&gt; refine real workflows</dd>
+            <dt>Boundary</dt><dd>Directory boundary is source-grounded; runtime responsibility and exact behavior require maintainer or deeper agent review.</dd>
+          </dl>
+        </article>
+
+
+        <article class="card" id="include">
+          <h3>include/</h3>
+          <p>Top-level repository subsystem inferred from directory boundary. Use the child map for language surfaces and first review targets.</p>
+          <dl>
+            <dt>Architecture</dt><dd>top-level source-tree subsystem</dd>
+            <dt>Lifecycle</dt><dd>open child map -&gt; inspect source surfaces -&gt; refine real workflows</dd>
+            <dt>Boundary</dt><dd>Directory boundary is source-grounded; runtime responsibility and exact behavior require maintainer or deeper agent review.</dd>
+          </dl>
+        </article>
+
+
+        <article class="card" id="init">
+          <h3>init/</h3>
+          <p>Top-level repository subsystem inferred from directory boundary. Use the child map for language surfaces and first review targets.</p>
+          <dl>
+            <dt>Architecture</dt><dd>top-level source-tree subsystem</dd>
+            <dt>Lifecycle</dt><dd>open child map -&gt; inspect source surfaces -&gt; refine real workflows</dd>
+            <dt>Boundary</dt><dd>Directory boundary is source-grounded; runtime responsibility and exact behavior require maintainer or deeper agent review.</dd>
+          </dl>
+        </article>
+
+
+        <article class="card" id="io_uring">
+          <h3>io_uring/</h3>
+          <p>Top-level repository subsystem inferred from directory boundary. Use the child map for language surfaces and first review targets.</p>
+          <dl>
+            <dt>Architecture</dt><dd>top-level source-tree subsystem</dd>
+            <dt>Lifecycle</dt><dd>open child map -&gt; inspect source surfaces -&gt; refine real workflows</dd>
+            <dt>Boundary</dt><dd>Directory boundary is source-grounded; runtime responsibility and exact behavior require maintainer or deeper agent review.</dd>
+          </dl>
+        </article>
+
+
+        <article class="card" id="ipc">
+          <h3>ipc/</h3>
+          <p>Top-level repository subsystem inferred from directory boundary. Use the child map for language surfaces and first review targets.</p>
+          <dl>
+            <dt>Architecture</dt><dd>top-level source-tree subsystem</dd>
+            <dt>Lifecycle</dt><dd>open child map -&gt; inspect source surfaces -&gt; refine real workflows</dd>
+            <dt>Boundary</dt><dd>Directory boundary is source-grounded; runtime responsibility and exact behavior require maintainer or deeper agent review.</dd>
+          </dl>
+        </article>
+
+
+        <article class="card" id="kernel">
+          <h3>kernel/</h3>
+          <p>Top-level repository subsystem inferred from directory boundary. Use the child map for language surfaces and first review targets.</p>
+          <dl>
+            <dt>Architecture</dt><dd>top-level source-tree subsystem</dd>
+            <dt>Lifecycle</dt><dd>open child map -&gt; inspect source surfaces -&gt; refine real workflows</dd>
+            <dt>Boundary</dt><dd>Directory boundary is source-grounded; runtime responsibility and exact behavior require maintainer or deeper agent review.</dd>
+          </dl>
+        </article>
+
+
+        <article class="card" id="lib">
+          <h3>lib/</h3>
+          <p>Top-level repository subsystem inferred from directory boundary. Use the child map for language surfaces and first review targets.</p>
+          <dl>
+            <dt>Architecture</dt><dd>top-level source-tree subsystem</dd>
+            <dt>Lifecycle</dt><dd>open child map -&gt; inspect source surfaces -&gt; refine real workflows</dd>
+            <dt>Boundary</dt><dd>Directory boundary is source-grounded; runtime responsibility and exact behavior require maintainer or deeper agent review.</dd>
+          </dl>
+        </article>
+
+
+        <article class="card" id="mm">
+          <h3>mm/</h3>
+          <p>Top-level repository subsystem inferred from directory boundary. Use the child map for language surfaces and first review targets.</p>
+          <dl>
+            <dt>Architecture</dt><dd>top-level source-tree subsystem</dd>
+            <dt>Lifecycle</dt><dd>open child map -&gt; inspect source surfaces -&gt; refine real workflows</dd>
+            <dt>Boundary</dt><dd>Directory boundary is source-grounded; runtime responsibility and exact behavior require maintainer or deeper agent review.</dd>
+          </dl>
+        </article>
+
+
+        <article class="card" id="net">
+          <h3>net/</h3>
+          <p>Top-level repository subsystem inferred from directory boundary. Use the child map for language surfaces and first review targets.</p>
+          <dl>
+            <dt>Architecture</dt><dd>top-level source-tree subsystem</dd>
+            <dt>Lifecycle</dt><dd>open child map -&gt; inspect source surfaces -&gt; refine real workflows</dd>
+            <dt>Boundary</dt><dd>Directory boundary is source-grounded; runtime responsibility and exact behavior require maintainer or deeper agent review.</dd>
+          </dl>
+        </article>
+
+
+        <article class="card" id="rust">
+          <h3>rust/</h3>
+          <p>Top-level repository subsystem inferred from directory boundary. Use the child map for language surfaces and first review targets.</p>
+          <dl>
+            <dt>Architecture</dt><dd>top-level source-tree subsystem</dd>
+            <dt>Lifecycle</dt><dd>open child map -&gt; inspect source surfaces -&gt; refine real workflows</dd>
+            <dt>Boundary</dt><dd>Directory boundary is source-grounded; runtime responsibility and exact behavior require maintainer or deeper agent review.</dd>
+          </dl>
+        </article>
+
+
+        <article class="card" id="samples">
+          <h3>samples/</h3>
+          <p>Top-level repository subsystem inferred from directory boundary. Use the child map for language surfaces and first review targets.</p>
+          <dl>
+            <dt>Architecture</dt><dd>top-level source-tree subsystem</dd>
+            <dt>Lifecycle</dt><dd>open child map -&gt; inspect source surfaces -&gt; refine real workflows</dd>
+            <dt>Boundary</dt><dd>Directory boundary is source-grounded; runtime responsibility and exact behavior require maintainer or deeper agent review.</dd>
+          </dl>
+        </article>
+
+
+        <article class="card" id="scripts">
+          <h3>scripts/</h3>
+          <p>Top-level repository subsystem inferred from directory boundary. Use the child map for language surfaces and first review targets.</p>
+          <dl>
+            <dt>Architecture</dt><dd>top-level source-tree subsystem</dd>
+            <dt>Lifecycle</dt><dd>open child map -&gt; inspect source surfaces -&gt; refine real workflows</dd>
+            <dt>Boundary</dt><dd>Directory boundary is source-grounded; runtime responsibility and exact behavior require maintainer or deeper agent review.</dd>
+          </dl>
+        </article>
+
+
+        <article class="card" id="security">
+          <h3>security/</h3>
+          <p>Top-level repository subsystem inferred from directory boundary. Use the child map for language surfaces and first review targets.</p>
+          <dl>
+            <dt>Architecture</dt><dd>top-level source-tree subsystem</dd>
+            <dt>Lifecycle</dt><dd>open child map -&gt; inspect source surfaces -&gt; refine real workflows</dd>
+            <dt>Boundary</dt><dd>Directory boundary is source-grounded; runtime responsibility and exact behavior require maintainer or deeper agent review.</dd>
+          </dl>
+        </article>
+
+
+        <article class="card" id="sound">
+          <h3>sound/</h3>
+          <p>Top-level repository subsystem inferred from directory boundary. Use the child map for language surfaces and first review targets.</p>
+          <dl>
+            <dt>Architecture</dt><dd>top-level source-tree subsystem</dd>
+            <dt>Lifecycle</dt><dd>open child map -&gt; inspect source surfaces -&gt; refine real workflows</dd>
+            <dt>Boundary</dt><dd>Directory boundary is source-grounded; runtime responsibility and exact behavior require maintainer or deeper agent review.</dd>
+          </dl>
+        </article>
+
+
+        <article class="card" id="tools">
+          <h3>tools/</h3>
+          <p>Top-level repository subsystem inferred from directory boundary. Use the child map for language surfaces and first review targets.</p>
+          <dl>
+            <dt>Architecture</dt><dd>top-level source-tree subsystem</dd>
+            <dt>Lifecycle</dt><dd>open child map -&gt; inspect source surfaces -&gt; refine real workflows</dd>
+            <dt>Boundary</dt><dd>Directory boundary is source-grounded; runtime responsibility and exact behavior require maintainer or deeper agent review.</dd>
+          </dl>
+        </article>
+
+
+        <article class="card" id="usr">
+          <h3>usr/</h3>
+          <p>Top-level repository subsystem inferred from directory boundary. Use the child map for language surfaces and first review targets.</p>
+          <dl>
+            <dt>Architecture</dt><dd>top-level source-tree subsystem</dd>
+            <dt>Lifecycle</dt><dd>open child map -&gt; inspect source surfaces -&gt; refine real workflows</dd>
+            <dt>Boundary</dt><dd>Directory boundary is source-grounded; runtime responsibility and exact behavior require maintainer or deeper agent review.</dd>
+          </dl>
+        </article>
+
+
+        <article class="card" id="virt">
+          <h3>virt/</h3>
+          <p>Top-level repository subsystem inferred from directory boundary. Use the child map for language surfaces and first review targets.</p>
+          <dl>
+            <dt>Architecture</dt><dd>top-level source-tree subsystem</dd>
+            <dt>Lifecycle</dt><dd>open child map -&gt; inspect source surfaces -&gt; refine real workflows</dd>
+            <dt>Boundary</dt><dd>Directory boundary is source-grounded; runtime responsibility and exact behavior require maintainer or deeper agent review.</dd>
+          </dl>
+        </article>
+
+
+        <article class="card" id="licenses">
+          <h3>LICENSES/</h3>
+          <p>Top-level repository subsystem inferred from directory boundary. Use the child map for language surfaces and first review targets.</p>
+          <dl>
+            <dt>Architecture</dt><dd>top-level source-tree subsystem</dd>
+            <dt>Lifecycle</dt><dd>open child map -&gt; inspect source surfaces -&gt; refine real workflows</dd>
+            <dt>Boundary</dt><dd>Directory boundary is source-grounded; runtime responsibility and exact behavior require maintainer or deeper agent review.</dd>
+          </dl>
+        </article>
+        </div>
+    </section>
+    <section>
+      <h2>Review Questions</h2>
+      <ul><li>Which child maps changed since the last merge?</li>
+<li>Which subsystem boundary is too broad and needs splitting?</li>
+<li>Which subsystem lacks workflow, gate, schema, or test evidence?</li>
+<li>Can reviewers reproduce the map from the declared rebuild recipe?</li>
+<li>Where does the atlas overclaim beyond source-surface evidence?</li></ul>
+    </section>
+  </main>
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: true, securityLevel: 'strict' });
+  </script>
+</body>
+</html>

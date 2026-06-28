@@ -1,0 +1,74 @@
+[
+  {
+    "id": "scope-private-controlled-beta",
+    "category": "launch_scope",
+    "status": "implemented",
+    "owner": "operator",
+    "evidence": "system_review_graph/board_go_live_readiness_report.json",
+    "control": "Only private controlled beta or board review is allowed; public launch remains closed.",
+    "next_valid_move": "Board approves or rejects private beta scope."
+  },
+  {
+    "id": "external-effects-closed",
+    "category": "safety",
+    "status": "implemented",
+    "owner": "operator",
+    "evidence": "system_review_graph/readiness_report.json and system_review_graph/external_gate_report.json",
+    "control": "External sends, paid actions, advice claims, and supplier recommendations remain zero.",
+    "next_valid_move": "Keep counters at zero unless a future approved launch gate opens them."
+  },
+  {
+    "id": "canadian-official-tools-attached",
+    "category": "canadian_evidence",
+    "status": "implemented",
+    "owner": "research",
+    "evidence": "data/canada_tool_registry.json",
+    "control": "Canadian official tools and references are attached with claim boundaries.",
+    "next_valid_move": "Refresh dates before each board or launch review."
+  },
+  {
+    "id": "qualified-compliance-signoff",
+    "category": "human_approval",
+    "status": "approval_required",
+    "owner": "compliance",
+    "evidence": "data/expert_review_simulations.json",
+    "control": "Canadian customs/trade/food compliance signoff is required before external claims.",
+    "next_valid_move": "Route the generated packet to a licensed Canadian customs broker or qualified reviewer."
+  },
+  {
+    "id": "legal-privacy-signoff",
+    "category": "human_approval",
+    "status": "approval_required",
+    "owner": "legal",
+    "evidence": "data/expert_review_simulations.json and data/canada_tool_registry.json",
+    "control": "Canadian legal/privacy review is required before public copy, data collection, or fundraising documents are sent as official materials.",
+    "next_valid_move": "Have counsel/privacy reviewer approve terms, privacy posture, liability boundary, and claims."
+  },
+  {
+    "id": "finance-signoff",
+    "category": "human_approval",
+    "status": "approval_required",
+    "owner": "founder",
+    "evidence": "investor/vc_pitch_deck.md and board/financial_operating_model.md",
+    "control": "Funding ask, pricing, runway, and spend plan require founder/accountant/finance review.",
+    "next_valid_move": "Approve a 12-month operating plan and first 90-day budget before commitments."
+  },
+  {
+    "id": "data-rights-refresh-signoff",
+    "category": "human_approval",
+    "status": "approval_required",
+    "owner": "data",
+    "evidence": "data/evidence_packets.json and data/canada_tool_registry.json",
+    "control": "Source rights, refresh cadence, lineage, and API credentials must be approved before external source claims.",
+    "next_valid_move": "Add a no-write refresh proof and source-rights approval."
+  },
+  {
+    "id": "security-ops-signoff",
+    "category": "human_approval",
+    "status": "approval_required",
+    "owner": "security",
+    "evidence": "data/expert_review_simulations.json and data/canada_tool_registry.json",
+    "control": "Deployment environment, access, logging, backup, incident response, support, and rollback require operator/security approval.",
+    "next_valid_move": "Approve private beta deployment controls before external users."
+  }
+]

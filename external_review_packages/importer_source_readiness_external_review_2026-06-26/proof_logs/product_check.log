@@ -1,0 +1,11 @@
+Product check: PASS
+status=ready_with_external_gates
+blocker_count=9
+external_blocker_count=11
+continuation_lanes=7
+startup_status=startup_in_progress
+vc_pitch_status=vc_pitch_ready_with_diligence_gates
+board_go_live_status=board_go_live_candidate_with_human_approval_gates
+operator_workflow_status=operator_workflow_ready_internal
+operator_work_queue_count=31
+unsafe_gates=closed

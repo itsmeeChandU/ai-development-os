@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" role="img" aria-labelledby="title desc">
+  <title id="title">System Review Graph mark</title>
+  <desc id="desc">A layered graph mark showing source, evidence, decisions, and review.</desc>
+  <defs>
+    <linearGradient id="srg-bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#16233f"/>
+      <stop offset="0.58" stop-color="#176b78"/>
+      <stop offset="1" stop-color="#d7a441"/>
+    </linearGradient>
+  </defs>
+  <rect width="160" height="160" rx="28" fill="#f8fafc"/>
+  <rect x="10" y="10" width="140" height="140" rx="24" fill="url(#srg-bg)"/>
+  <path d="M42 48h36l18 18h22" fill="none" stroke="#f8fafc" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M42 82h34l20-16" fill="none" stroke="#cce8e1" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M42 116h32l22-50" fill="none" stroke="#ffe5a3" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="42" cy="48" r="11" fill="#f8fafc"/>
+  <circle cx="42" cy="82" r="11" fill="#cce8e1"/>
+  <circle cx="42" cy="116" r="11" fill="#ffe5a3"/>
+  <circle cx="96" cy="66" r="16" fill="#16233f" stroke="#f8fafc" stroke-width="6"/>
+  <path d="M107 66h22" fill="none" stroke="#f8fafc" stroke-width="8" stroke-linecap="round"/>
+  <path d="M74 102l23 20 35-45" fill="none" stroke="#f8fafc" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

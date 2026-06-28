@@ -1,0 +1,333 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DuckDB Public Repo System Review Graph</title>
+  <style>
+    body {
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, sans-serif;
+      margin: 0;
+      color: #18202a;
+      background: #f8fafc;
+    }
+    header { padding: 40px 32px; background: #172033; color: white; }
+    main { max-width: 1120px; margin: 0 auto; padding: 28px; }
+    section {
+      margin: 24px 0;
+      padding: 24px;
+      background: white;
+      border: 1px solid #dbe3ee;
+      border-radius: 10px;
+    }
+    h1, h2, h3 { line-height: 1.2; }
+    code, pre { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    .meta { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+    .pill { padding: 6px 10px; border: 1px solid rgba(255,255,255,.32); border-radius: 999px; }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+    }
+    .card { padding: 18px; border: 1px solid #dbe3ee; border-radius: 10px; background: #fbfdff; }
+    dt { font-weight: 700; margin-top: 10px; }
+    dd { margin-left: 0; color: #465466; }
+    table { border-collapse: collapse; width: 100%; }
+    th, td { border-bottom: 1px solid #dbe3ee; padding: 10px 8px; text-align: left; }
+    a { color: #1456cc; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>DuckDB Public Repo System Review Graph</h1>
+    <p>DuckDB turns SQL and local data access into vectorized analytical execution inside an embedded database engine.</p>
+    <div class="meta">
+      <span class="pill">Depth: deep</span>
+      <span class="pill">Systems: 6</span>
+      <span class="pill">Artifacts: 8</span>
+      <span class="pill">Gates: 5</span>
+      <span class="pill">Workflows: 6</span>
+    </div>
+  </header>
+  <main>
+    <section>
+      <h2>Bigger Picture</h2>
+      <p>This example shows how to map a database engine repo. The system is not just a command-line tool or a client library; it is a layered execution engine where SQL is parsed, bound, planned, optimized, executed in vectorized operators, connected to storage and transactions, and extended through extensions. A reviewer should understand the route from query text to result chunks and persisted state.</p>
+    </section>
+    <section>
+      <h2>Source Links</h2>
+      <ul><li><a href="https://github.com/duckdb/duckdb">GitHub repository</a> - Primary public source used for repo identity and source paths.</li>
+<li><a href="https://duckdb.org/docs/">DuckDB documentation</a> - Public docs for SQL, clients, extensions, and engine behavior.</li>
+<li><a href="https://duckdb.org/docs/stable/internals/overview">DuckDB internals overview</a> - Public internals documentation for engine orientation.</li></ul>
+    </section>
+
+    <section>
+      <h2>Report Registers</h2>
+      <h3>Coverage Register</h3>
+      <table><thead><tr><th>Area</th><th>Count</th><th>What It Means</th><th>Reviewer Use</th></tr></thead><tbody><tr><td>Systems</td><td>6</td><td>Bounded contexts, services, subsystems, or product surfaces.</td><td>Use this to see whether the report maps the main operating areas.</td></tr>
+<tr><td>Artifacts</td><td>8</td><td>Inspectable files, APIs, tables, dashboards, reports, or outputs.</td><td>Use this to trace where system claims can be inspected.</td></tr>
+<tr><td>Schemas/contracts</td><td>6</td><td>Public or sanitized contracts for artifacts and handoffs.</td><td>Use this to rebuild examples without touching private data.</td></tr>
+<tr><td>Decision gates</td><td>5</td><td>Rules that advance, wait, block, or require human review.</td><td>Use this to find where the system controls action.</td></tr>
+<tr><td>Workflows</td><td>6</td><td>Lifecycle steps from input to output.</td><td>Use this to follow what happens end to end.</td></tr>
+<tr><td>Graph edges</td><td>49</td><td>Explicit and derived relationships between manifest nodes.</td><td>Use this to audit connectivity and missing relationships.</td></tr>
+<tr><td>Child maps</td><td>0</td><td>Linked subsystem maps for large repositories.</td><td>Use this to drill into a map-of-maps instead of one flat report.</td></tr>
+<tr><td>Blueprint sections</td><td>0</td><td>Source-evidence-backed operating flows.</td><td>Use this to review deep behavior claims with proof anchors.</td></tr>
+<tr><td>Blueprint evidence rows</td><td>0</td><td>Source paths, symbols, roles, and proof levels.</td><td>Use this to verify whether blueprint claims are source-backed.</td></tr>
+<tr><td>Source links</td><td>3</td><td>External or public references used by the report.</td><td>Use this to confirm the report&#x27;s public evidence base.</td></tr>
+<tr><td>Known boundaries</td><td>4</td><td>Open limits, unproven claims, redactions, or scope exclusions.</td><td>Use this to avoid treating the report as stronger than it is.</td></tr>
+<tr><td>Review questions</td><td>5</td><td>Questions a maintainer, auditor, or agent should answer next.</td><td>Use this as the human follow-up queue.</td></tr>
+<tr><td>Rebuild phases</td><td>2</td><td>Documented commands or phases for reproducing the report.</td><td>Use this to regenerate or verify the report locally.</td></tr></tbody></table>
+      <h3>Evidence Register</h3>
+      <table><thead><tr><th>Evidence</th><th>Kind</th><th>Coverage</th><th>Proof</th><th>Reviewer Use</th></tr></thead><tbody><tr><td><a href="https://github.com/duckdb/duckdb">GitHub repository</a></td><td>source link</td><td>whole report</td><td>declared</td><td>Primary public source used for repo identity and source paths.</td></tr>
+<tr><td><a href="https://duckdb.org/docs/">DuckDB documentation</a></td><td>source link</td><td>whole report</td><td>declared</td><td>Public docs for SQL, clients, extensions, and engine behavior.</td></tr>
+<tr><td><a href="https://duckdb.org/docs/stable/internals/overview">DuckDB internals overview</a></td><td>source link</td><td>whole report</td><td>declared</td><td>Public internals documentation for engine orientation.</td></tr>
+<tr><td>src/parser/</td><td>source_directory</td><td>engine</td><td>safe_to_share</td><td>Turns SQL text into parsed statements.</td></tr>
+<tr><td>src/planner/</td><td>source_directory</td><td>engine</td><td>safe_to_share</td><td>Binds and plans parsed SQL into logical operators.</td></tr>
+<tr><td>src/optimizer/</td><td>source_directory</td><td>engine</td><td>safe_to_share</td><td>Rewrites and improves logical plans before physical execution.</td></tr>
+<tr><td>src/execution/</td><td>source_directory</td><td>engine</td><td>safe_to_share</td><td>Executes physical operators and data pipelines.</td></tr>
+<tr><td>src/storage/</td><td>source_directory</td><td>engine</td><td>safe_to_share</td><td>Handles table storage, persistence, scans, and writes.</td></tr>
+<tr><td>src/transaction/</td><td>source_directory</td><td>engine</td><td>safe_to_share</td><td>Coordinates transaction lifecycle and commit boundaries.</td></tr>
+<tr><td>extension/</td><td>source_directory</td><td>extensions</td><td>safe_to_share</td><td>Hosts built-in and optional extension surfaces such as parquet, json, icu, tpch, and tpcds.</td></tr>
+<tr><td>test/</td><td>tests</td><td>quality</td><td>safe_to_share</td><td>Protects SQL behavior, storage behavior, extensions, and compatibility.</td></tr>
+<tr><td>SQLRequest</td><td>query_contract</td><td>sql_text, connection_context, parameters, transaction_state</td><td>contract declared</td><td>Represents incoming SQL and execution context before parsing and binding.</td></tr>
+<tr><td>LogicalPlan</td><td>planning_contract</td><td>operators, bindings, types, catalog_refs</td><td>contract declared</td><td>Represents a query after parsing and semantic binding.</td></tr>
+<tr><td>PhysicalPlan</td><td>execution_contract</td><td>physical_operators, pipelines, dependencies, estimated_costs</td><td>contract declared</td><td>Represents executable operator pipelines.</td></tr>
+<tr><td>DataChunk</td><td>vectorized_data_contract</td><td>vectors, column_types, cardinality</td><td>contract declared</td><td>Represents batches of data flowing through vectorized execution.</td></tr>
+<tr><td>StorageTransaction</td><td>storage_contract</td><td>catalog_state, table_state, write_set, commit_status</td><td>contract declared</td><td>Represents storage and transaction state for reads and writes.</td></tr>
+<tr><td>ExtensionSpec</td><td>extension_contract</td><td>extension_name, functions, load_policy, compatibility</td><td>contract declared</td><td>Describes extension-provided functionality and loading boundaries.</td></tr></tbody></table>
+      <h3>Gap Register</h3>
+      <table><thead><tr><th>Gap</th><th>Area</th><th>Status</th><th>Boundary</th><th>Next Step</th></tr></thead><tbody><tr><td>Known boundary</td><td>whole report</td><td>open</td><td>This is a public educational map, not an official DuckDB maintainer audit.</td><td>Accept the boundary or add evidence that closes it.</td></tr>
+<tr><td>Known boundary</td><td>whole report</td><td>open</td><td>It maps high-level engine layers and public source paths, not every operator or internal invariant.</td><td>Accept the boundary or add evidence that closes it.</td></tr>
+<tr><td>Known boundary</td><td>whole report</td><td>open</td><td>A real audit should inspect a specific commit, build configuration, tests, fuzzers, benchmarks, and release notes.</td><td>Accept the boundary or add evidence that closes it.</td></tr>
+<tr><td>Known boundary</td><td>whole report</td><td>open</td><td>Do not use production SQL or private data in public examples.</td><td>Accept the boundary or add evidence that closes it.</td></tr>
+<tr><td>System truth boundary</td><td>SQL Front Door</td><td>review</td><td>A parsed query is not executable until binding and planning succeed.</td><td>Inspect this boundary before making stronger behavior claims.</td></tr>
+<tr><td>System truth boundary</td><td>Planner And Optimizer</td><td>review</td><td>Optimization must not change query meaning.</td><td>Inspect this boundary before making stronger behavior claims.</td></tr>
+<tr><td>System truth boundary</td><td>Vectorized Execution Engine</td><td>review</td><td>Execution depends on valid plan, memory, transaction, and storage state.</td><td>Inspect this boundary before making stronger behavior claims.</td></tr>
+<tr><td>System truth boundary</td><td>Storage And Transaction Layer</td><td>review</td><td>Storage behavior is valid only within transaction rules.</td><td>Inspect this boundary before making stronger behavior claims.</td></tr>
+<tr><td>System truth boundary</td><td>Extension System</td><td>review</td><td>Extensions expand behavior but must respect engine compatibility and load policy.</td><td>Inspect this boundary before making stronger behavior claims.</td></tr>
+<tr><td>System truth boundary</td><td>Quality And Compatibility Loop</td><td>review</td><td>This report does not replace upstream CI or benchmark review.</td><td>Inspect this boundary before making stronger behavior claims.</td></tr>
+<tr><td>Blueprint not declared</td><td>whole report</td><td>optional</td><td>No source-backed blueprint sections were declared.</td><td>Add blueprint sections when the report needs source-level proof.</td></tr></tbody></table>
+      <h3>Action Register</h3>
+      <table><thead><tr><th>Action</th><th>Owner</th><th>Status</th><th>Trigger</th><th>Expected Output</th></tr></thead><tbody><tr><td>Review question</td><td>maintainer / auditor</td><td>open</td><td>How does SQL move from text to parsed statement, logical plan, optimized plan, physical operators, and result chunks?</td><td>Answer from source, tests, docs, logs, or maintainer knowledge.</td></tr>
+<tr><td>Review question</td><td>maintainer / auditor</td><td>open</td><td>Which gates preserve query semantics during binding and optimization?</td><td>Answer from source, tests, docs, logs, or maintainer knowledge.</td></tr>
+<tr><td>Review question</td><td>maintainer / auditor</td><td>open</td><td>Where do storage and transaction boundaries constrain execution?</td><td>Answer from source, tests, docs, logs, or maintainer knowledge.</td></tr>
+<tr><td>Review question</td><td>maintainer / auditor</td><td>open</td><td>How do extensions expand engine behavior without destabilizing the core?</td><td>Answer from source, tests, docs, logs, or maintainer knowledge.</td></tr>
+<tr><td>Review question</td><td>maintainer / auditor</td><td>open</td><td>Which public tests, fuzzers, benchmarks, and release notes would a deeper audit inspect?</td><td>Answer from source, tests, docs, logs, or maintainer knowledge.</td></tr>
+<tr><td>Resolve boundary</td><td>maintainer / auditor</td><td>open</td><td>This is a public educational map, not an official DuckDB maintainer audit.</td><td>Accept as scope or add proof that closes it.</td></tr>
+<tr><td>Resolve boundary</td><td>maintainer / auditor</td><td>open</td><td>It maps high-level engine layers and public source paths, not every operator or internal invariant.</td><td>Accept as scope or add proof that closes it.</td></tr>
+<tr><td>Resolve boundary</td><td>maintainer / auditor</td><td>open</td><td>A real audit should inspect a specific commit, build configuration, tests, fuzzers, benchmarks, and release notes.</td><td>Accept as scope or add proof that closes it.</td></tr>
+<tr><td>Resolve boundary</td><td>maintainer / auditor</td><td>open</td><td>Do not use production SQL or private data in public examples.</td><td>Accept as scope or add proof that closes it.</td></tr>
+<tr><td>Rebuild phase</td><td>maintainer / agent</td><td>repeatable</td><td>validate</td><td>Check the DuckDB public repo manifest.</td></tr>
+<tr><td>Rebuild phase</td><td>maintainer / agent</td><td>repeatable</td><td>build</td><td>Generate the DuckDB system review report.</td></tr></tbody></table>
+
+    </section>
+
+    <section>
+      <h2>Lifecycle Map</h2>
+      <pre class="mermaid">flowchart LR
+  receive_sql[&quot;Receive SQL&quot;]
+  parse_and_bind[&quot;Parse And Bind&quot;]
+  plan_and_optimize[&quot;Plan And Optimize&quot;]
+  execute_plan[&quot;Execute Plan&quot;]
+  commit_or_return[&quot;Commit Or Return Results&quot;]
+  load_extension[&quot;Load Extension&quot;]
+  receive_sql --&gt; parse_and_bind[&quot;Parse And Bind&quot;]
+  parse_and_bind --&gt; plan_and_optimize[&quot;Plan And Optimize&quot;]
+  plan_and_optimize --&gt; execute_plan[&quot;Execute Plan&quot;]
+  execute_plan --&gt; commit_or_return[&quot;Commit Or Return Results&quot;]
+  load_extension --&gt; parse_and_bind[&quot;Parse And Bind&quot;]</pre>
+    </section>
+
+
+
+
+        <section>
+          <h2>Artifact And Schema Map</h2>
+          <pre class="mermaid">flowchart LR
+  system_sql_front_door[&quot;SQL Front Door&quot;]
+  system_sql_front_door --&gt; artifact_parser_source[&quot;Parser Source&quot;]
+  artifact_parser_source --&gt; schema_SQLRequest[&quot;SQLRequest&quot;]
+  system_planner_optimizer[&quot;Planner And Optimizer&quot;]
+  system_planner_optimizer --&gt; artifact_planner_source[&quot;Planner Source&quot;]
+  artifact_planner_source --&gt; schema_LogicalPlan[&quot;LogicalPlan&quot;]
+  system_planner_optimizer --&gt; artifact_optimizer_source[&quot;Optimizer Source&quot;]
+  artifact_optimizer_source --&gt; schema_LogicalPlan[&quot;LogicalPlan&quot;]
+  system_vectorized_execution_engine[&quot;Vectorized Execution Engine&quot;]
+  system_vectorized_execution_engine --&gt; artifact_execution_source[&quot;Execution Source&quot;]
+  artifact_execution_source --&gt; schema_PhysicalPlan[&quot;PhysicalPlan&quot;]
+  system_storage_transaction_layer[&quot;Storage And Transaction Layer&quot;]
+  system_storage_transaction_layer --&gt; artifact_storage_source[&quot;Storage Source&quot;]
+  artifact_storage_source --&gt; schema_StorageTransaction[&quot;StorageTransaction&quot;]
+  system_storage_transaction_layer --&gt; artifact_transaction_source[&quot;Transaction Source&quot;]
+  artifact_transaction_source --&gt; schema_StorageTransaction[&quot;StorageTransaction&quot;]
+  system_extension_system[&quot;Extension System&quot;]
+  system_extension_system --&gt; artifact_extension_tree[&quot;Extension Tree&quot;]
+  artifact_extension_tree --&gt; schema_ExtensionSpec[&quot;ExtensionSpec&quot;]
+  system_quality_compatibility_loop[&quot;Quality And Compatibility Loop&quot;]
+  system_quality_compatibility_loop --&gt; artifact_test_suite[&quot;Test Suite&quot;]
+  artifact_test_suite --&gt; schema_SQLRequest[&quot;SQLRequest&quot;]</pre>
+        </section>
+        <section>
+          <h2>Gate Map</h2>
+          <pre class="mermaid">flowchart LR
+  gate_parse_bind_gate{&quot;Parse And Bind Gate&quot;}
+  gate_parse_bind_gate --&gt; out_parse_bind_gate_LogicalPlan[&quot;LogicalPlan&quot;]
+  gate_parse_bind_gate --&gt; out_parse_bind_gate_query_error[&quot;query_error&quot;]
+  gate_optimization_gate{&quot;Optimization Gate&quot;}
+  gate_optimization_gate --&gt; out_optimization_gate_optimized_plan[&quot;optimized_plan&quot;]
+  gate_optimization_gate --&gt; out_optimization_gate_fallback_plan[&quot;fallback_plan&quot;]
+  gate_execution_gate{&quot;Execution Gate&quot;}
+  gate_execution_gate --&gt; out_execution_gate_DataChunk[&quot;DataChunk&quot;]
+  gate_execution_gate --&gt; out_execution_gate_execution_error[&quot;execution_error&quot;]
+  gate_storage_commit_gate{&quot;Storage Commit Gate&quot;}
+  gate_storage_commit_gate --&gt; out_storage_commit_gate_committed[&quot;committed&quot;]
+  gate_storage_commit_gate --&gt; out_storage_commit_gate_rolled_back[&quot;rolled_back&quot;]
+  gate_extension_load_gate{&quot;Extension Load Gate&quot;}
+  gate_extension_load_gate --&gt; out_extension_load_gate_extension_loaded[&quot;extension_loaded&quot;]
+  gate_extension_load_gate --&gt; out_extension_load_gate_extension_blocked[&quot;extension_blocked&quot;]
+  gate_parse_bind_gate{&quot;Parse And Bind Gate&quot;} --&gt; step_parse_and_bind[&quot;Parse And Bind&quot;]
+  gate_optimization_gate{&quot;Optimization Gate&quot;} --&gt; step_plan_and_optimize[&quot;Plan And Optimize&quot;]
+  gate_execution_gate{&quot;Execution Gate&quot;} --&gt; step_execute_plan[&quot;Execute Plan&quot;]
+  gate_storage_commit_gate{&quot;Storage Commit Gate&quot;} --&gt; step_commit_or_return[&quot;Commit Or Return Results&quot;]
+  gate_extension_load_gate{&quot;Extension Load Gate&quot;} --&gt; step_load_extension[&quot;Load Extension&quot;]</pre>
+        </section>
+
+
+        <section>
+          <h2>Relationship Graph</h2>
+          <pre class="mermaid">flowchart TD
+  extension_system[&quot;Extension System&quot;] -- &quot;adds functions to&quot; --&gt; planner_optimizer[&quot;Planner And Optimizer&quot;]
+  storage_transaction_layer[&quot;Storage And Transaction Layer&quot;] -- &quot;feeds data to&quot; --&gt; vectorized_execution_engine[&quot;Vectorized Execution Engine&quot;]
+  sql_front_door[&quot;SQL Front Door&quot;] -- &quot;owns or uses&quot; --&gt; parser_source[&quot;Parser Source&quot;]
+  sql_front_door[&quot;SQL Front Door&quot;] -- &quot;is gated by&quot; --&gt; parse_bind_gate[&quot;Parse And Bind Gate&quot;]
+  planner_optimizer[&quot;Planner And Optimizer&quot;] -- &quot;owns or uses&quot; --&gt; planner_source[&quot;Planner Source&quot;]
+  planner_optimizer[&quot;Planner And Optimizer&quot;] -- &quot;owns or uses&quot; --&gt; optimizer_source[&quot;Optimizer Source&quot;]
+  planner_optimizer[&quot;Planner And Optimizer&quot;] -- &quot;is gated by&quot; --&gt; optimization_gate[&quot;Optimization Gate&quot;]
+  vectorized_execution_engine[&quot;Vectorized Execution Engine&quot;] -- &quot;owns or uses&quot; --&gt; execution_source[&quot;Execution Source&quot;]
+  vectorized_execution_engine[&quot;Vectorized Execution Engine&quot;] -- &quot;is gated by&quot; --&gt; execution_gate[&quot;Execution Gate&quot;]
+  storage_transaction_layer[&quot;Storage And Transaction Layer&quot;] -- &quot;owns or uses&quot; --&gt; storage_source[&quot;Storage Source&quot;]
+  storage_transaction_layer[&quot;Storage And Transaction Layer&quot;] -- &quot;owns or uses&quot; --&gt; transaction_source[&quot;Transaction Source&quot;]
+  storage_transaction_layer[&quot;Storage And Transaction Layer&quot;] -- &quot;is gated by&quot; --&gt; storage_commit_gate[&quot;Storage Commit Gate&quot;]
+  storage_transaction_layer[&quot;Storage And Transaction Layer&quot;] -- &quot;is gated by&quot; --&gt; execution_gate[&quot;Execution Gate&quot;]
+  extension_system[&quot;Extension System&quot;] -- &quot;owns or uses&quot; --&gt; extension_tree[&quot;Extension Tree&quot;]
+  extension_system[&quot;Extension System&quot;] -- &quot;is gated by&quot; --&gt; extension_load_gate[&quot;Extension Load Gate&quot;]
+  quality_compatibility_loop[&quot;Quality And Compatibility Loop&quot;] -- &quot;owns or uses&quot; --&gt; test_suite[&quot;Test Suite&quot;]
+  quality_compatibility_loop[&quot;Quality And Compatibility Loop&quot;] -- &quot;is gated by&quot; --&gt; parse_bind_gate[&quot;Parse And Bind Gate&quot;]
+  quality_compatibility_loop[&quot;Quality And Compatibility Loop&quot;] -- &quot;is gated by&quot; --&gt; execution_gate[&quot;Execution Gate&quot;]
+  quality_compatibility_loop[&quot;Quality And Compatibility Loop&quot;] -- &quot;is gated by&quot; --&gt; storage_commit_gate[&quot;Storage Commit Gate&quot;]
+  client_request[&quot;client_request&quot;] -- &quot;feeds&quot; --&gt; receive_sql[&quot;Receive SQL&quot;]
+  receive_sql[&quot;Receive SQL&quot;] -- &quot;produces&quot; --&gt; SQLRequest[&quot;SQLRequest&quot;]
+  receive_sql[&quot;Receive SQL&quot;] -- &quot;routes to&quot; --&gt; parse_and_bind[&quot;Parse And Bind&quot;]
+  SQLRequest[&quot;SQLRequest&quot;] -- &quot;feeds&quot; --&gt; parse_and_bind[&quot;Parse And Bind&quot;]
+  parser_source[&quot;Parser Source&quot;] -- &quot;feeds&quot; --&gt; parse_and_bind[&quot;Parse And Bind&quot;]
+  parse_and_bind[&quot;Parse And Bind&quot;] -- &quot;produces&quot; --&gt; LogicalPlan[&quot;LogicalPlan&quot;]
+  parse_bind_gate[&quot;Parse And Bind Gate&quot;] -- &quot;gates&quot; --&gt; parse_and_bind[&quot;Parse And Bind&quot;]
+  parse_and_bind[&quot;Parse And Bind&quot;] -- &quot;routes to&quot; --&gt; plan_and_optimize[&quot;Plan And Optimize&quot;]
+  LogicalPlan[&quot;LogicalPlan&quot;] -- &quot;feeds&quot; --&gt; plan_and_optimize[&quot;Plan And Optimize&quot;]
+  planner_source[&quot;Planner Source&quot;] -- &quot;feeds&quot; --&gt; plan_and_optimize[&quot;Plan And Optimize&quot;]
+  optimizer_source[&quot;Optimizer Source&quot;] -- &quot;feeds&quot; --&gt; plan_and_optimize[&quot;Plan And Optimize&quot;]
+  plan_and_optimize[&quot;Plan And Optimize&quot;] -- &quot;produces&quot; --&gt; PhysicalPlan[&quot;PhysicalPlan&quot;]
+  optimization_gate[&quot;Optimization Gate&quot;] -- &quot;gates&quot; --&gt; plan_and_optimize[&quot;Plan And Optimize&quot;]
+  plan_and_optimize[&quot;Plan And Optimize&quot;] -- &quot;routes to&quot; --&gt; execute_plan[&quot;Execute Plan&quot;]
+  PhysicalPlan[&quot;PhysicalPlan&quot;] -- &quot;feeds&quot; --&gt; execute_plan[&quot;Execute Plan&quot;]
+  execution_source[&quot;Execution Source&quot;] -- &quot;feeds&quot; --&gt; execute_plan[&quot;Execute Plan&quot;]
+  StorageTransaction[&quot;StorageTransaction&quot;] -- &quot;feeds&quot; --&gt; execute_plan[&quot;Execute Plan&quot;]
+  execute_plan[&quot;Execute Plan&quot;] -- &quot;produces&quot; --&gt; DataChunk[&quot;DataChunk&quot;]
+  execution_gate[&quot;Execution Gate&quot;] -- &quot;gates&quot; --&gt; execute_plan[&quot;Execute Plan&quot;]
+  execute_plan[&quot;Execute Plan&quot;] -- &quot;routes to&quot; --&gt; commit_or_return[&quot;Commit Or Return Results&quot;]
+  DataChunk[&quot;DataChunk&quot;] -- &quot;feeds&quot; --&gt; commit_or_return[&quot;Commit Or Return Results&quot;]
+  StorageTransaction[&quot;StorageTransaction&quot;] -- &quot;feeds&quot; --&gt; commit_or_return[&quot;Commit Or Return Results&quot;]
+  commit_or_return[&quot;Commit Or Return Results&quot;] -- &quot;produces&quot; --&gt; query_result[&quot;query_result&quot;]
+  commit_or_return[&quot;Commit Or Return Results&quot;] -- &quot;produces&quot; --&gt; committed[&quot;committed&quot;]
+  storage_commit_gate[&quot;Storage Commit Gate&quot;] -- &quot;gates&quot; --&gt; commit_or_return[&quot;Commit Or Return Results&quot;]
+  ExtensionSpec[&quot;ExtensionSpec&quot;] -- &quot;feeds&quot; --&gt; load_extension[&quot;Load Extension&quot;]
+  extension_tree[&quot;Extension Tree&quot;] -- &quot;feeds&quot; --&gt; load_extension[&quot;Load Extension&quot;]
+  load_extension[&quot;Load Extension&quot;] -- &quot;produces&quot; --&gt; extension_loaded[&quot;extension_loaded&quot;]
+  extension_load_gate[&quot;Extension Load Gate&quot;] -- &quot;gates&quot; --&gt; load_extension[&quot;Load Extension&quot;]
+  load_extension[&quot;Load Extension&quot;] -- &quot;routes to&quot; --&gt; parse_and_bind[&quot;Parse And Bind&quot;]</pre>
+        </section>
+
+    <section>
+      <h2>Systems</h2>
+      <div class="grid">
+        <article class="card" id="sql_front_door">
+          <h3>SQL Front Door</h3>
+          <p>Accepts SQL from clients and turns it into parsed and bound statements.</p>
+          <dl>
+            <dt>Architecture</dt><dd>embedded database front end</dd>
+            <dt>Lifecycle</dt><dd>SQLRequest -&gt; parser -&gt; binder -&gt; LogicalPlan</dd>
+            <dt>Boundary</dt><dd>A parsed query is not executable until binding and planning succeed.</dd>
+          </dl>
+        </article>
+
+
+        <article class="card" id="planner_optimizer">
+          <h3>Planner And Optimizer</h3>
+          <p>Builds logical plans and rewrites them into better executable forms.</p>
+          <dl>
+            <dt>Architecture</dt><dd>query planner and optimizer</dd>
+            <dt>Lifecycle</dt><dd>LogicalPlan -&gt; optimized plan -&gt; PhysicalPlan</dd>
+            <dt>Boundary</dt><dd>Optimization must not change query meaning.</dd>
+          </dl>
+        </article>
+
+
+        <article class="card" id="vectorized_execution_engine">
+          <h3>Vectorized Execution Engine</h3>
+          <p>Executes physical operator pipelines over data chunks.</p>
+          <dl>
+            <dt>Architecture</dt><dd>vectorized analytical execution</dd>
+            <dt>Lifecycle</dt><dd>PhysicalPlan -&gt; operator pipeline -&gt; DataChunk</dd>
+            <dt>Boundary</dt><dd>Execution depends on valid plan, memory, transaction, and storage state.</dd>
+          </dl>
+        </article>
+
+
+        <article class="card" id="storage_transaction_layer">
+          <h3>Storage And Transaction Layer</h3>
+          <p>Persists data, scans tables, and coordinates transaction boundaries.</p>
+          <dl>
+            <dt>Architecture</dt><dd>embedded storage manager</dd>
+            <dt>Lifecycle</dt><dd>scan/write request -&gt; storage state -&gt; commit or rollback</dd>
+            <dt>Boundary</dt><dd>Storage behavior is valid only within transaction rules.</dd>
+          </dl>
+        </article>
+
+
+        <article class="card" id="extension_system">
+          <h3>Extension System</h3>
+          <p>Adds optional capabilities and file/function integrations through extension modules.</p>
+          <dl>
+            <dt>Architecture</dt><dd>extension framework</dd>
+            <dt>Lifecycle</dt><dd>extension spec -&gt; load gate -&gt; functions/operators</dd>
+            <dt>Boundary</dt><dd>Extensions expand behavior but must respect engine compatibility and load policy.</dd>
+          </dl>
+        </article>
+
+
+        <article class="card" id="quality_compatibility_loop">
+          <h3>Quality And Compatibility Loop</h3>
+          <p>Exercises SQL, storage, extension, and compatibility scenarios.</p>
+          <dl>
+            <dt>Architecture</dt><dd>test matrix</dd>
+            <dt>Lifecycle</dt><dd>source change -&gt; test cases -&gt; release confidence</dd>
+            <dt>Boundary</dt><dd>This report does not replace upstream CI or benchmark review.</dd>
+          </dl>
+        </article>
+        </div>
+    </section>
+    <section>
+      <h2>Review Questions</h2>
+      <ul><li>How does SQL move from text to parsed statement, logical plan, optimized plan, physical operators, and result chunks?</li>
+<li>Which gates preserve query semantics during binding and optimization?</li>
+<li>Where do storage and transaction boundaries constrain execution?</li>
+<li>How do extensions expand engine behavior without destabilizing the core?</li>
+<li>Which public tests, fuzzers, benchmarks, and release notes would a deeper audit inspect?</li></ul>
+    </section>
+  </main>
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: true, securityLevel: 'strict' });
+  </script>
+</body>
+</html>

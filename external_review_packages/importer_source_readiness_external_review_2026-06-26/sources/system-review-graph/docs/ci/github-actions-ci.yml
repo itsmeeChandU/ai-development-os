@@ -1,0 +1,31 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+      - name: Install package
+        run: python -m pip install -e .
+      - name: Install test tools
+        run: python -m pip install pytest ruff
+      - name: Lint
+        run: ruff check .
+      - name: Test
+        run: pytest -q
+      - name: Build example reports
+        run: |
+          system-review-graph build --manifest examples/fictional_ai_ops/system_review_manifest.json --out-dir examples/fictional_ai_ops/reports
+          system-review-graph build --manifest examples/actual_repos/fastapi/system_review_manifest.json --out-dir examples/actual_repos/fastapi/reports
+          system-review-graph build --manifest examples/actual_repos/duckdb/system_review_manifest.json --out-dir examples/actual_repos/duckdb/reports
+          system-review-graph build --manifest examples/actual_repos/opentelemetry_collector/system_review_manifest.json --out-dir examples/actual_repos/opentelemetry_collector/reports
+      - name: Generate merge-time system atlas
+        run: |
+          system-review-graph scan --repo . --atlas --out /tmp/system-review-atlas --max-subsystems 16 --build-reports --depth overview

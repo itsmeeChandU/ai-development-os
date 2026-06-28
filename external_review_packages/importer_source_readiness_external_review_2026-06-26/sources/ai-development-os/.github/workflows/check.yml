@@ -1,0 +1,21 @@
+name: check
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  repo-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python scripts/ai_dev_os_check.py
+      - run: python scripts/workflow_manifest_check.py
+      - run: python scripts/agentic_workflow_orchestrator.py validate
+      - run: python scripts/agentic_workflow_orchestrator.py automation-check
+      - run: python scripts/eval_suite.py --manifest manifests/agentic_execution_manifest.json --out system_review_graph/eval_report.ci.json
+      - run: python scripts/blocker_ledger.py validate --input system_review_graph/blockers.jsonl --allow-missing --out system_review_graph/blocker_ledger_report.ci.json
+      - run: python scripts/self_test_flow.py

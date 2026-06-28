@@ -1,0 +1,47 @@
+[
+  {
+    "id": "buyer-validation",
+    "module": "buyer_validation",
+    "status": "missing",
+    "owner": "product",
+    "evidence": "No dated buyer, importer, broker, or operator feedback attached.",
+    "issue": "buyer/operator validation is missing",
+    "next_valid_move": "Collect dated buyer or operator feedback, including no-fit/no-budget evidence, and attach it to the evidence packet."
+  },
+  {
+    "id": "qualified-compliance-review",
+    "module": "legal_compliance",
+    "status": "missing",
+    "owner": "compliance",
+    "evidence": "No qualified customs, food safety, or legal review attached.",
+    "issue": "qualified compliance review is missing",
+    "next_valid_move": "Get qualified Canadian review for country matrix, tariff treatment, CFIA food import obligations, sanctions screening, and claims language."
+  },
+  {
+    "id": "commercial-source-contract",
+    "module": "commercial_contract",
+    "status": "missing",
+    "owner": "operations",
+    "evidence": "No written source, data, supplier, broker, buyer, or commercial terms attached.",
+    "issue": "commercial/source contract is missing",
+    "next_valid_move": "Attach written terms for data/source rights, supplier/buyer contact use, liability boundary, and termination."
+  },
+  {
+    "id": "source-rights-and-freshness",
+    "module": "data_freshness",
+    "status": "needs_review",
+    "owner": "data",
+    "evidence": "Official source registry exists, but no repeatable dated refresh job or source-rights review is attached.",
+    "issue": "repeatable data freshness and source rights are not proven",
+    "next_valid_move": "Define source rights, refresh cadence, freshness SLA, and a no-write refresh proof before product claims."
+  },
+  {
+    "id": "launch-claims",
+    "module": "launch_readiness",
+    "status": "missing",
+    "owner": "operator",
+    "evidence": "No public release, legal copy, compliance signoff, or support workflow attached.",
+    "issue": "public or commercial launch claims are not allowed",
+    "next_valid_move": "Keep the product internal until buyer validation, contracts, compliance review, and operator support are proven."
+  }
+]

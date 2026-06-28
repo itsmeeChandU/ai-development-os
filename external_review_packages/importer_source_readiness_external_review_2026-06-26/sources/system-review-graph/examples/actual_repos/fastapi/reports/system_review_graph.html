@@ -1,0 +1,325 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>FastAPI Public Repo System Review Graph</title>
+  <style>
+    body {
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, sans-serif;
+      margin: 0;
+      color: #18202a;
+      background: #f8fafc;
+    }
+    header { padding: 40px 32px; background: #172033; color: white; }
+    main { max-width: 1120px; margin: 0 auto; padding: 28px; }
+    section {
+      margin: 24px 0;
+      padding: 24px;
+      background: white;
+      border: 1px solid #dbe3ee;
+      border-radius: 10px;
+    }
+    h1, h2, h3 { line-height: 1.2; }
+    code, pre { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    .meta { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+    .pill { padding: 6px 10px; border: 1px solid rgba(255,255,255,.32); border-radius: 999px; }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+    }
+    .card { padding: 18px; border: 1px solid #dbe3ee; border-radius: 10px; background: #fbfdff; }
+    dt { font-weight: 700; margin-top: 10px; }
+    dd { margin-left: 0; color: #465466; }
+    table { border-collapse: collapse; width: 100%; }
+    th, td { border-bottom: 1px solid #dbe3ee; padding: 10px 8px; text-align: left; }
+    a { color: #1456cc; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>FastAPI Public Repo System Review Graph</h1>
+    <p>FastAPI turns Python type hints and path-operation declarations into validated API runtime behavior and OpenAPI contracts.</p>
+    <div class="meta">
+      <span class="pill">Depth: deep</span>
+      <span class="pill">Systems: 6</span>
+      <span class="pill">Artifacts: 6</span>
+      <span class="pill">Gates: 5</span>
+      <span class="pill">Workflows: 6</span>
+    </div>
+  </header>
+  <main>
+    <section>
+      <h2>Bigger Picture</h2>
+      <p>This example shows how to map a framework repo. The system is not one deployed application; it is a reusable engine that lets application authors declare routes, dependencies, models, security, and documentation contracts. A reviewer should follow how a developer declaration becomes runtime routing, validation, response handling, and OpenAPI documentation.</p>
+    </section>
+    <section>
+      <h2>Source Links</h2>
+      <ul><li><a href="https://github.com/fastapi/fastapi">GitHub repository</a> - Primary public source used for repo identity and source paths.</li>
+<li><a href="https://fastapi.tiangolo.com/">FastAPI documentation</a> - Public docs for framework concepts and user-facing behavior.</li>
+<li><a href="https://fastapi.tiangolo.com/features/">Public OpenAPI docs concept</a> - High-level feature surface for generated API documentation and validation.</li></ul>
+    </section>
+
+    <section>
+      <h2>Report Registers</h2>
+      <h3>Coverage Register</h3>
+      <table><thead><tr><th>Area</th><th>Count</th><th>What It Means</th><th>Reviewer Use</th></tr></thead><tbody><tr><td>Systems</td><td>6</td><td>Bounded contexts, services, subsystems, or product surfaces.</td><td>Use this to see whether the report maps the main operating areas.</td></tr>
+<tr><td>Artifacts</td><td>6</td><td>Inspectable files, APIs, tables, dashboards, reports, or outputs.</td><td>Use this to trace where system claims can be inspected.</td></tr>
+<tr><td>Schemas/contracts</td><td>5</td><td>Public or sanitized contracts for artifacts and handoffs.</td><td>Use this to rebuild examples without touching private data.</td></tr>
+<tr><td>Decision gates</td><td>5</td><td>Rules that advance, wait, block, or require human review.</td><td>Use this to find where the system controls action.</td></tr>
+<tr><td>Workflows</td><td>6</td><td>Lifecycle steps from input to output.</td><td>Use this to follow what happens end to end.</td></tr>
+<tr><td>Graph edges</td><td>45</td><td>Explicit and derived relationships between manifest nodes.</td><td>Use this to audit connectivity and missing relationships.</td></tr>
+<tr><td>Child maps</td><td>0</td><td>Linked subsystem maps for large repositories.</td><td>Use this to drill into a map-of-maps instead of one flat report.</td></tr>
+<tr><td>Blueprint sections</td><td>0</td><td>Source-evidence-backed operating flows.</td><td>Use this to review deep behavior claims with proof anchors.</td></tr>
+<tr><td>Blueprint evidence rows</td><td>0</td><td>Source paths, symbols, roles, and proof levels.</td><td>Use this to verify whether blueprint claims are source-backed.</td></tr>
+<tr><td>Source links</td><td>3</td><td>External or public references used by the report.</td><td>Use this to confirm the report&#x27;s public evidence base.</td></tr>
+<tr><td>Known boundaries</td><td>4</td><td>Open limits, unproven claims, redactions, or scope exclusions.</td><td>Use this to avoid treating the report as stronger than it is.</td></tr>
+<tr><td>Review questions</td><td>5</td><td>Questions a maintainer, auditor, or agent should answer next.</td><td>Use this as the human follow-up queue.</td></tr>
+<tr><td>Rebuild phases</td><td>2</td><td>Documented commands or phases for reproducing the report.</td><td>Use this to regenerate or verify the report locally.</td></tr></tbody></table>
+      <h3>Evidence Register</h3>
+      <table><thead><tr><th>Evidence</th><th>Kind</th><th>Coverage</th><th>Proof</th><th>Reviewer Use</th></tr></thead><tbody><tr><td><a href="https://github.com/fastapi/fastapi">GitHub repository</a></td><td>source link</td><td>whole report</td><td>declared</td><td>Primary public source used for repo identity and source paths.</td></tr>
+<tr><td><a href="https://fastapi.tiangolo.com/">FastAPI documentation</a></td><td>source link</td><td>whole report</td><td>declared</td><td>Public docs for framework concepts and user-facing behavior.</td></tr>
+<tr><td><a href="https://fastapi.tiangolo.com/features/">Public OpenAPI docs concept</a></td><td>source link</td><td>whole report</td><td>declared</td><td>High-level feature surface for generated API documentation and validation.</td></tr>
+<tr><td>fastapi/</td><td>python_package</td><td>framework</td><td>safe_to_share</td><td>Public framework package imported by application authors.</td></tr>
+<tr><td>fastapi/routing.py</td><td>source_directory</td><td>framework</td><td>safe_to_share</td><td>Connects declared routes to request handling.</td></tr>
+<tr><td>fastapi/dependencies/</td><td>source_directory</td><td>framework</td><td>safe_to_share</td><td>Resolves dependency graphs and request-time inputs.</td></tr>
+<tr><td>fastapi/openapi/</td><td>source_directory</td><td>framework</td><td>safe_to_share</td><td>Builds OpenAPI artifacts from application declarations.</td></tr>
+<tr><td>docs/</td><td>public_docs</td><td>docs</td><td>safe_to_share</td><td>Explains framework usage and examples for application authors.</td></tr>
+<tr><td>tests/</td><td>tests</td><td>quality</td><td>safe_to_share</td><td>Protects behavior across routing, validation, docs, security, and compatibility.</td></tr>
+<tr><td>PathOperationDeclaration</td><td>developer_contract</td><td>path, method, endpoint_callable, response_model, dependencies</td><td>contract declared</td><td>Describes what an application author declares when registering an API endpoint.</td></tr>
+<tr><td>DependencySpec</td><td>runtime_contract</td><td>callable, scope, parameters, security_requirements</td><td>contract declared</td><td>Represents dependencies that must be resolved before an endpoint runs.</td></tr>
+<tr><td>ValidationContract</td><td>request_response_contract</td><td>input_schema, output_schema, status_code, error_shape</td><td>contract declared</td><td>Connects Python type hints and model definitions to request and response validation.</td></tr>
+<tr><td>OpenAPIContract</td><td>documentation_contract</td><td>paths, components, schemas, security, responses</td><td>contract declared</td><td>The generated machine-readable API contract used by docs and clients.</td></tr>
+<tr><td>TestScenario</td><td>quality_contract</td><td>feature, input, expected_status, expected_body</td><td>contract declared</td><td>A public test scenario that protects framework behavior.</td></tr></tbody></table>
+      <h3>Gap Register</h3>
+      <table><thead><tr><th>Gap</th><th>Area</th><th>Status</th><th>Boundary</th><th>Next Step</th></tr></thead><tbody><tr><td>Known boundary</td><td>whole report</td><td>open</td><td>This is a public educational map, not an official FastAPI maintainer audit.</td><td>Accept the boundary or add evidence that closes it.</td></tr>
+<tr><td>Known boundary</td><td>whole report</td><td>open</td><td>It maps framework behavior, not a specific deployed FastAPI application.</td><td>Accept the boundary or add evidence that closes it.</td></tr>
+<tr><td>Known boundary</td><td>whole report</td><td>open</td><td>Runtime details may evolve as the upstream repo changes.</td><td>Accept the boundary or add evidence that closes it.</td></tr>
+<tr><td>Known boundary</td><td>whole report</td><td>open</td><td>A real audit should inspect the exact commit, CI status, tests, and release notes.</td><td>Accept the boundary or add evidence that closes it.</td></tr>
+<tr><td>System truth boundary</td><td>Developer Declaration Surface</td><td>review</td><td>A declaration is intent; runtime gates still validate requests and dependencies.</td><td>Inspect this boundary before making stronger behavior claims.</td></tr>
+<tr><td>System truth boundary</td><td>Routing Layer</td><td>review</td><td>Route matching does not mean endpoint execution is safe yet.</td><td>Inspect this boundary before making stronger behavior claims.</td></tr>
+<tr><td>System truth boundary</td><td>Dependency Engine</td><td>review</td><td>Dependencies can block execution before endpoint logic runs.</td><td>Inspect this boundary before making stronger behavior claims.</td></tr>
+<tr><td>System truth boundary</td><td>Validation And Serialization</td><td>review</td><td>Validation is bounded by declared models and framework compatibility behavior.</td><td>Inspect this boundary before making stronger behavior claims.</td></tr>
+<tr><td>System truth boundary</td><td>OpenAPI And Docs Engine</td><td>review</td><td>Generated docs describe declared framework behavior, not an external production service.</td><td>Inspect this boundary before making stronger behavior claims.</td></tr>
+<tr><td>System truth boundary</td><td>Quality And Release Loop</td><td>review</td><td>This public map does not replace maintainer CI or release policy.</td><td>Inspect this boundary before making stronger behavior claims.</td></tr>
+<tr><td>Blueprint not declared</td><td>whole report</td><td>optional</td><td>No source-backed blueprint sections were declared.</td><td>Add blueprint sections when the report needs source-level proof.</td></tr></tbody></table>
+      <h3>Action Register</h3>
+      <table><thead><tr><th>Action</th><th>Owner</th><th>Status</th><th>Trigger</th><th>Expected Output</th></tr></thead><tbody><tr><td>Review question</td><td>maintainer / auditor</td><td>open</td><td>How does a Python route declaration become runtime route behavior?</td><td>Answer from source, tests, docs, logs, or maintainer knowledge.</td></tr>
+<tr><td>Review question</td><td>maintainer / auditor</td><td>open</td><td>Which gates prevent unresolved dependencies or invalid payloads from reaching endpoint logic?</td><td>Answer from source, tests, docs, logs, or maintainer knowledge.</td></tr>
+<tr><td>Review question</td><td>maintainer / auditor</td><td>open</td><td>How does generated OpenAPI stay aligned with runtime behavior?</td><td>Answer from source, tests, docs, logs, or maintainer knowledge.</td></tr>
+<tr><td>Review question</td><td>maintainer / auditor</td><td>open</td><td>Which tests protect compatibility for routing, validation, dependencies, security, and docs?</td><td>Answer from source, tests, docs, logs, or maintainer knowledge.</td></tr>
+<tr><td>Review question</td><td>maintainer / auditor</td><td>open</td><td>What should a reviewer inspect if auditing a specific FastAPI application built on top of this framework?</td><td>Answer from source, tests, docs, logs, or maintainer knowledge.</td></tr>
+<tr><td>Resolve boundary</td><td>maintainer / auditor</td><td>open</td><td>This is a public educational map, not an official FastAPI maintainer audit.</td><td>Accept as scope or add proof that closes it.</td></tr>
+<tr><td>Resolve boundary</td><td>maintainer / auditor</td><td>open</td><td>It maps framework behavior, not a specific deployed FastAPI application.</td><td>Accept as scope or add proof that closes it.</td></tr>
+<tr><td>Resolve boundary</td><td>maintainer / auditor</td><td>open</td><td>Runtime details may evolve as the upstream repo changes.</td><td>Accept as scope or add proof that closes it.</td></tr>
+<tr><td>Resolve boundary</td><td>maintainer / auditor</td><td>open</td><td>A real audit should inspect the exact commit, CI status, tests, and release notes.</td><td>Accept as scope or add proof that closes it.</td></tr>
+<tr><td>Rebuild phase</td><td>maintainer / agent</td><td>repeatable</td><td>validate</td><td>Check the FastAPI public repo manifest.</td></tr>
+<tr><td>Rebuild phase</td><td>maintainer / agent</td><td>repeatable</td><td>build</td><td>Generate the FastAPI system review report.</td></tr></tbody></table>
+
+    </section>
+
+    <section>
+      <h2>Lifecycle Map</h2>
+      <pre class="mermaid">flowchart LR
+  declare_path_operation[&quot;Declare Path Operation&quot;]
+  match_request[&quot;Match Request&quot;]
+  resolve_dependencies[&quot;Resolve Dependencies&quot;]
+  validate_and_execute[&quot;Validate And Execute&quot;]
+  publish_contract[&quot;Publish OpenAPI Contract&quot;]
+  test_behavior[&quot;Test Behavior&quot;]
+  declare_path_operation --&gt; match_request[&quot;Match Request&quot;]
+  match_request --&gt; resolve_dependencies[&quot;Resolve Dependencies&quot;]
+  resolve_dependencies --&gt; validate_and_execute[&quot;Validate And Execute&quot;]
+  validate_and_execute --&gt; publish_contract[&quot;Publish OpenAPI Contract&quot;]
+  publish_contract --&gt; test_behavior[&quot;Test Behavior&quot;]</pre>
+    </section>
+
+
+
+
+        <section>
+          <h2>Artifact And Schema Map</h2>
+          <pre class="mermaid">flowchart LR
+  system_developer_declaration_surface[&quot;Developer Declaration Surface&quot;]
+  system_developer_declaration_surface --&gt; artifact_fastapi_package[&quot;FastAPI Package&quot;]
+  artifact_fastapi_package --&gt; schema_PathOperationDeclaration[&quot;PathOperationDeclaration&quot;]
+  system_routing_layer[&quot;Routing Layer&quot;]
+  system_routing_layer --&gt; artifact_routing_source[&quot;Routing Source&quot;]
+  artifact_routing_source --&gt; schema_PathOperationDeclaration[&quot;PathOperationDeclaration&quot;]
+  system_dependency_engine[&quot;Dependency Engine&quot;]
+  system_dependency_engine --&gt; artifact_dependency_source[&quot;Dependency Source&quot;]
+  artifact_dependency_source --&gt; schema_DependencySpec[&quot;DependencySpec&quot;]
+  system_validation_serialization[&quot;Validation And Serialization&quot;]
+  system_validation_serialization --&gt; artifact_fastapi_package[&quot;FastAPI Package&quot;]
+  artifact_fastapi_package --&gt; schema_PathOperationDeclaration[&quot;PathOperationDeclaration&quot;]
+  system_openapi_docs_engine[&quot;OpenAPI And Docs Engine&quot;]
+  system_openapi_docs_engine --&gt; artifact_openapi_source[&quot;OpenAPI Source&quot;]
+  artifact_openapi_source --&gt; schema_OpenAPIContract[&quot;OpenAPIContract&quot;]
+  system_openapi_docs_engine --&gt; artifact_docs_site[&quot;Documentation Site&quot;]
+  artifact_docs_site --&gt; schema_OpenAPIContract[&quot;OpenAPIContract&quot;]
+  system_quality_release_loop[&quot;Quality And Release Loop&quot;]
+  system_quality_release_loop --&gt; artifact_test_suite[&quot;Test Suite&quot;]
+  artifact_test_suite --&gt; schema_TestScenario[&quot;TestScenario&quot;]</pre>
+        </section>
+        <section>
+          <h2>Gate Map</h2>
+          <pre class="mermaid">flowchart LR
+  gate_declaration_gate{&quot;Declaration Gate&quot;}
+  gate_declaration_gate --&gt; out_declaration_gate_registered_route[&quot;registered_route&quot;]
+  gate_declaration_gate --&gt; out_declaration_gate_invalid_declaration[&quot;invalid_declaration&quot;]
+  gate_dependency_resolution_gate{&quot;Dependency Resolution Gate&quot;}
+  gate_dependency_resolution_gate --&gt; out_dependency_resolution_gate_resolved_inputs[&quot;resolved_inputs&quot;]
+  gate_dependency_resolution_gate --&gt; out_dependency_resolution_gate_dependency_error[&quot;dependency_error&quot;]
+  gate_validation_gate{&quot;Request And Response Validation Gate&quot;}
+  gate_validation_gate --&gt; out_validation_gate_valid_payload[&quot;valid_payload&quot;]
+  gate_validation_gate --&gt; out_validation_gate_validation_error[&quot;validation_error&quot;]
+  gate_openapi_contract_gate{&quot;OpenAPI Contract Gate&quot;}
+  gate_openapi_contract_gate --&gt; out_openapi_contract_gate_openapi_document[&quot;openapi_document&quot;]
+  gate_openapi_contract_gate --&gt; out_openapi_contract_gate_docs_gap[&quot;docs_gap&quot;]
+  gate_test_release_gate{&quot;Test And Release Gate&quot;}
+  gate_test_release_gate --&gt; out_test_release_gate_release_candidate[&quot;release_candidate&quot;]
+  gate_test_release_gate --&gt; out_test_release_gate_blocked_release[&quot;blocked_release&quot;]
+  gate_declaration_gate{&quot;Declaration Gate&quot;} --&gt; step_declare_path_operation[&quot;Declare Path Operation&quot;]
+  gate_declaration_gate{&quot;Declaration Gate&quot;} --&gt; step_match_request[&quot;Match Request&quot;]
+  gate_dependency_resolution_gate{&quot;Dependency Resolution Gate&quot;} --&gt; step_resolve_dependencies[&quot;Resolve Dependencies&quot;]
+  gate_validation_gate{&quot;Request And Response Validation Gate&quot;} --&gt; step_validate_and_execute[&quot;Validate And Execute&quot;]
+  gate_openapi_contract_gate{&quot;OpenAPI Contract Gate&quot;} --&gt; step_publish_contract[&quot;Publish OpenAPI Contract&quot;]
+  gate_test_release_gate{&quot;Test And Release Gate&quot;} --&gt; step_test_behavior[&quot;Test Behavior&quot;]</pre>
+        </section>
+
+
+        <section>
+          <h2>Relationship Graph</h2>
+          <pre class="mermaid">flowchart TD
+  openapi_docs_engine[&quot;OpenAPI And Docs Engine&quot;] -- &quot;documents&quot; --&gt; developer_declaration_surface[&quot;Developer Declaration Surface&quot;]
+  developer_declaration_surface[&quot;Developer Declaration Surface&quot;] -- &quot;owns or uses&quot; --&gt; fastapi_package[&quot;FastAPI Package&quot;]
+  developer_declaration_surface[&quot;Developer Declaration Surface&quot;] -- &quot;is gated by&quot; --&gt; declaration_gate[&quot;Declaration Gate&quot;]
+  routing_layer[&quot;Routing Layer&quot;] -- &quot;owns or uses&quot; --&gt; routing_source[&quot;Routing Source&quot;]
+  routing_layer[&quot;Routing Layer&quot;] -- &quot;is gated by&quot; --&gt; declaration_gate[&quot;Declaration Gate&quot;]
+  dependency_engine[&quot;Dependency Engine&quot;] -- &quot;owns or uses&quot; --&gt; dependency_source[&quot;Dependency Source&quot;]
+  dependency_engine[&quot;Dependency Engine&quot;] -- &quot;is gated by&quot; --&gt; dependency_resolution_gate[&quot;Dependency Resolution Gate&quot;]
+  validation_serialization[&quot;Validation And Serialization&quot;] -- &quot;owns or uses&quot; --&gt; fastapi_package[&quot;FastAPI Package&quot;]
+  validation_serialization[&quot;Validation And Serialization&quot;] -- &quot;is gated by&quot; --&gt; validation_gate[&quot;Request And Response Validation Gate&quot;]
+  openapi_docs_engine[&quot;OpenAPI And Docs Engine&quot;] -- &quot;owns or uses&quot; --&gt; openapi_source[&quot;OpenAPI Source&quot;]
+  openapi_docs_engine[&quot;OpenAPI And Docs Engine&quot;] -- &quot;owns or uses&quot; --&gt; docs_site[&quot;Documentation Site&quot;]
+  openapi_docs_engine[&quot;OpenAPI And Docs Engine&quot;] -- &quot;is gated by&quot; --&gt; openapi_contract_gate[&quot;OpenAPI Contract Gate&quot;]
+  quality_release_loop[&quot;Quality And Release Loop&quot;] -- &quot;owns or uses&quot; --&gt; test_suite[&quot;Test Suite&quot;]
+  quality_release_loop[&quot;Quality And Release Loop&quot;] -- &quot;is gated by&quot; --&gt; test_release_gate[&quot;Test And Release Gate&quot;]
+  python_type_hints[&quot;python_type_hints&quot;] -- &quot;feeds&quot; --&gt; declare_path_operation[&quot;Declare Path Operation&quot;]
+  endpoint_callable[&quot;endpoint_callable&quot;] -- &quot;feeds&quot; --&gt; declare_path_operation[&quot;Declare Path Operation&quot;]
+  declare_path_operation[&quot;Declare Path Operation&quot;] -- &quot;produces&quot; --&gt; fastapi_package[&quot;FastAPI Package&quot;]
+  declare_path_operation[&quot;Declare Path Operation&quot;] -- &quot;produces&quot; --&gt; PathOperationDeclaration[&quot;PathOperationDeclaration&quot;]
+  declaration_gate[&quot;Declaration Gate&quot;] -- &quot;gates&quot; --&gt; declare_path_operation[&quot;Declare Path Operation&quot;]
+  declare_path_operation[&quot;Declare Path Operation&quot;] -- &quot;routes to&quot; --&gt; match_request[&quot;Match Request&quot;]
+  PathOperationDeclaration[&quot;PathOperationDeclaration&quot;] -- &quot;feeds&quot; --&gt; match_request[&quot;Match Request&quot;]
+  http_request[&quot;http_request&quot;] -- &quot;feeds&quot; --&gt; match_request[&quot;Match Request&quot;]
+  match_request[&quot;Match Request&quot;] -- &quot;produces&quot; --&gt; routing_source[&quot;Routing Source&quot;]
+  declaration_gate[&quot;Declaration Gate&quot;] -- &quot;gates&quot; --&gt; match_request[&quot;Match Request&quot;]
+  match_request[&quot;Match Request&quot;] -- &quot;routes to&quot; --&gt; resolve_dependencies[&quot;Resolve Dependencies&quot;]
+  DependencySpec[&quot;DependencySpec&quot;] -- &quot;feeds&quot; --&gt; resolve_dependencies[&quot;Resolve Dependencies&quot;]
+  http_request[&quot;http_request&quot;] -- &quot;feeds&quot; --&gt; resolve_dependencies[&quot;Resolve Dependencies&quot;]
+  resolve_dependencies[&quot;Resolve Dependencies&quot;] -- &quot;produces&quot; --&gt; resolved_inputs[&quot;resolved_inputs&quot;]
+  dependency_resolution_gate[&quot;Dependency Resolution Gate&quot;] -- &quot;gates&quot; --&gt; resolve_dependencies[&quot;Resolve Dependencies&quot;]
+  resolve_dependencies[&quot;Resolve Dependencies&quot;] -- &quot;routes to&quot; --&gt; validate_and_execute[&quot;Validate And Execute&quot;]
+  resolved_inputs[&quot;resolved_inputs&quot;] -- &quot;feeds&quot; --&gt; validate_and_execute[&quot;Validate And Execute&quot;]
+  ValidationContract[&quot;ValidationContract&quot;] -- &quot;feeds&quot; --&gt; validate_and_execute[&quot;Validate And Execute&quot;]
+  validate_and_execute[&quot;Validate And Execute&quot;] -- &quot;produces&quot; --&gt; response_body[&quot;response_body&quot;]
+  validation_gate[&quot;Request And Response Validation Gate&quot;] -- &quot;gates&quot; --&gt; validate_and_execute[&quot;Validate And Execute&quot;]
+  validate_and_execute[&quot;Validate And Execute&quot;] -- &quot;routes to&quot; --&gt; publish_contract[&quot;Publish OpenAPI Contract&quot;]
+  PathOperationDeclaration[&quot;PathOperationDeclaration&quot;] -- &quot;feeds&quot; --&gt; publish_contract[&quot;Publish OpenAPI Contract&quot;]
+  ValidationContract[&quot;ValidationContract&quot;] -- &quot;feeds&quot; --&gt; publish_contract[&quot;Publish OpenAPI Contract&quot;]
+  publish_contract[&quot;Publish OpenAPI Contract&quot;] -- &quot;produces&quot; --&gt; openapi_source[&quot;OpenAPI Source&quot;]
+  publish_contract[&quot;Publish OpenAPI Contract&quot;] -- &quot;produces&quot; --&gt; docs_site[&quot;Documentation Site&quot;]
+  openapi_contract_gate[&quot;OpenAPI Contract Gate&quot;] -- &quot;gates&quot; --&gt; publish_contract[&quot;Publish OpenAPI Contract&quot;]
+  publish_contract[&quot;Publish OpenAPI Contract&quot;] -- &quot;routes to&quot; --&gt; test_behavior[&quot;Test Behavior&quot;]
+  source_change[&quot;source_change&quot;] -- &quot;feeds&quot; --&gt; test_behavior[&quot;Test Behavior&quot;]
+  TestScenario[&quot;TestScenario&quot;] -- &quot;feeds&quot; --&gt; test_behavior[&quot;Test Behavior&quot;]
+  test_behavior[&quot;Test Behavior&quot;] -- &quot;produces&quot; --&gt; test_suite[&quot;Test Suite&quot;]
+  test_release_gate[&quot;Test And Release Gate&quot;] -- &quot;gates&quot; --&gt; test_behavior[&quot;Test Behavior&quot;]</pre>
+        </section>
+
+    <section>
+      <h2>Systems</h2>
+      <div class="grid">
+        <article class="card" id="developer_declaration_surface">
+          <h3>Developer Declaration Surface</h3>
+          <p>The public API application authors use to declare routes, models, dependencies, and metadata.</p>
+          <dl>
+            <dt>Architecture</dt><dd>library API</dd>
+            <dt>Lifecycle</dt><dd>developer code -&gt; path operation declaration -&gt; route registry</dd>
+            <dt>Boundary</dt><dd>A declaration is intent; runtime gates still validate requests and dependencies.</dd>
+          </dl>
+        </article>
+
+
+        <article class="card" id="routing_layer">
+          <h3>Routing Layer</h3>
+          <p>Matches incoming HTTP requests to declared path operations.</p>
+          <dl>
+            <dt>Architecture</dt><dd>request router</dd>
+            <dt>Lifecycle</dt><dd>request -&gt; route match -&gt; dependency resolution</dd>
+            <dt>Boundary</dt><dd>Route matching does not mean endpoint execution is safe yet.</dd>
+          </dl>
+        </article>
+
+
+        <article class="card" id="dependency_engine">
+          <h3>Dependency Engine</h3>
+          <p>Resolves nested dependencies, security requirements, and request-time inputs.</p>
+          <dl>
+            <dt>Architecture</dt><dd>dependency graph resolver</dd>
+            <dt>Lifecycle</dt><dd>route match -&gt; dependency graph -&gt; endpoint arguments</dd>
+            <dt>Boundary</dt><dd>Dependencies can block execution before endpoint logic runs.</dd>
+          </dl>
+        </article>
+
+
+        <article class="card" id="validation_serialization">
+          <h3>Validation And Serialization</h3>
+          <p>Validates request inputs and serializes endpoint responses according to declared contracts.</p>
+          <dl>
+            <dt>Architecture</dt><dd>schema-driven runtime validation</dd>
+            <dt>Lifecycle</dt><dd>endpoint args -&gt; endpoint result -&gt; response model</dd>
+            <dt>Boundary</dt><dd>Validation is bounded by declared models and framework compatibility behavior.</dd>
+          </dl>
+        </article>
+
+
+        <article class="card" id="openapi_docs_engine">
+          <h3>OpenAPI And Docs Engine</h3>
+          <p>Turns route declarations and schemas into machine-readable OpenAPI and human documentation.</p>
+          <dl>
+            <dt>Architecture</dt><dd>contract renderer</dd>
+            <dt>Lifecycle</dt><dd>path operation declarations -&gt; OpenAPI document -&gt; docs UI</dd>
+            <dt>Boundary</dt><dd>Generated docs describe declared framework behavior, not an external production service.</dd>
+          </dl>
+        </article>
+
+
+        <article class="card" id="quality_release_loop">
+          <h3>Quality And Release Loop</h3>
+          <p>Uses tests and review to protect framework compatibility.</p>
+          <dl>
+            <dt>Architecture</dt><dd>test and maintainer gate</dd>
+            <dt>Lifecycle</dt><dd>source change -&gt; test scenario -&gt; release candidate</dd>
+            <dt>Boundary</dt><dd>This public map does not replace maintainer CI or release policy.</dd>
+          </dl>
+        </article>
+        </div>
+    </section>
+    <section>
+      <h2>Review Questions</h2>
+      <ul><li>How does a Python route declaration become runtime route behavior?</li>
+<li>Which gates prevent unresolved dependencies or invalid payloads from reaching endpoint logic?</li>
+<li>How does generated OpenAPI stay aligned with runtime behavior?</li>
+<li>Which tests protect compatibility for routing, validation, dependencies, security, and docs?</li>
+<li>What should a reviewer inspect if auditing a specific FastAPI application built on top of this framework?</li></ul>
+    </section>
+  </main>
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: true, securityLevel: 'strict' });
+  </script>
+</body>
+</html>

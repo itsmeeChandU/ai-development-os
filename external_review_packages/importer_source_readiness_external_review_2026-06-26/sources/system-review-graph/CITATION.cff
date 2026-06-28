@@ -1,0 +1,12 @@
+cff-version: 1.2.0
+message: "If you use System Review Graph in research, reports, audits, demos, or public examples, please cite it."
+title: "System Review Graph"
+type: software
+authors:
+  - name: "Sai Chandra Madduri"
+version: "0.5.4"
+date-released: "2026-06-08"
+repository-code: "https://github.com/itsmeeChandU/system-review-graph"
+url: "https://github.com/itsmeeChandU/system-review-graph"
+license: "MIT"
+abstract: "System Review Graph generates system-level review graphs and audit reports that explain what a repository actually does, not just what code exists."

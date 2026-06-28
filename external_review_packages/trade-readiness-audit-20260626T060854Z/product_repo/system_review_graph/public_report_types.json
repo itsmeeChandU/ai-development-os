@@ -1,0 +1,26 @@
+{
+  "reports": [
+    "Draft Trade Readiness Report.pdf",
+    "Buyer-Ready Packet.pdf",
+    "Broker Review Packet.pdf",
+    "Missing Evidence Checklist.pdf",
+    "Operator Review Report.pdf",
+    "Expert Review Packet.pdf"
+  ],
+  "sections": [
+    "Summary",
+    "Product details",
+    "Trade direction",
+    "Countries",
+    "Documents provided",
+    "Evidence quality",
+    "Missing docs",
+    "Blocked claims",
+    "Official/reference sources",
+    "Required reviews",
+    "Next valid moves",
+    "AI involvement disclosure",
+    "Boundary/disclaimer"
+  ],
+  "status": "public_report_types_ready"
+}

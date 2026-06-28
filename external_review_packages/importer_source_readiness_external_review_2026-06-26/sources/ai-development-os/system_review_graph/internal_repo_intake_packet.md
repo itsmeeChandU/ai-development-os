@@ -1,0 +1,94 @@
+# Internal Repo Intake Packet
+
+```json
+{
+  "blockers": [],
+  "generated_at": "2026-06-25T16:46:22+00:00",
+  "idea_source": {
+    "allowed_use": "Generate startup/app ideas, export source graph contracts, and host product-boundary truth surfaces.",
+    "branch_rule": "main plus codex/* product or contract branches",
+    "id": "intelligence-hub",
+    "proof_commands": [
+      "/Users/chandu/Workspace/Finance/intelligence-hub/.venv/bin/python -m pytest tests/test_code_review_graph.py -q"
+    ],
+    "remote": "https://github.com/itsmeeChandU/intelligence-hub.git",
+    "required_context": [
+      "sourcecode_graph_contract.json",
+      "Venture Studio idea packet when available"
+    ],
+    "role": "idea_source_and_product_boundary"
+  },
+  "intake_rules": [
+    "Treat user or Intelligence Hub idea packets as claims until repo evidence and research/data routes validate them.",
+    "Select existing internal repos only when their role matches the product lane.",
+    "Create a new private product repo when the idea should not modify an existing product boundary.",
+    "Keep Ruflo as coordination memory only; do not use it as repo truth.",
+    "Write missing repo access, missing credentials, missing data, or missing expert review as blocker rows with next_valid_move."
+  ],
+  "kind": "internal_repo_intake",
+  "next_valid_move": "Load source idea packet, select product target repo, then emit lane packet.",
+  "repo_groups": [
+    {
+      "description": "Repos or systems that can originate startup/application ideas.",
+      "id": "idea_sources",
+      "repos": [
+        "intelligence-hub"
+      ]
+    },
+    {
+      "description": "Repos that normalize, route, schedule, and prove prompt-to-product work.",
+      "id": "coordination_layer",
+      "repos": [
+        "ai-development-os"
+      ]
+    },
+    {
+      "description": "Repos that provide bounded system and code context for agents.",
+      "id": "context_layers",
+      "repos": [
+        "system-review-graph",
+        "code-review-graph"
+      ]
+    },
+    {
+      "description": "Repos that may contain product implementation, generated source truth, or downstream app work.",
+      "id": "product_repos",
+      "repos": [
+        "intelligence-hub",
+        "importer-source-readiness-copilot",
+        "future-product-repo"
+      ]
+    }
+  ],
+  "status": "ready",
+  "target_repo": {
+    "allowed_use": "Hold the actual importer/exporter source readiness product implementation, continuation lanes, VC pitch packet, board go-live packet, and proof artifacts.",
+    "branch_rule": "main plus codex/* product branches",
+    "id": "importer-source-readiness-copilot",
+    "proof_commands": [
+      "python3 scripts/check_product.py",
+      "python3 scripts/run_external_gates.py",
+      "python3 scripts/export_operator_dashboard.py",
+      "python3 scripts/plan_continuation.py",
+      "python3 scripts/build_vc_pitch_packet.py",
+      "python3 scripts/build_board_go_live_packet.py",
+      "python3 -m unittest discover -s tests -p 'test_*.py'"
+    ],
+    "remote": "https://github.com/itsmeeChandU/importer-source-readiness-copilot.git",
+    "required_context": [
+      "AGENTS.md",
+      "docs/PRODUCT_STATUS.md",
+      "docs/STARTUP_LIFECYCLE.md",
+      "docs/OPERATOR_GUIDE.md",
+      "system_review_graph/readiness_report.json",
+      "system_review_graph/external_gate_report.json",
+      "system_review_graph/continuation_plan.json",
+      "system_review_graph/vc_pitch_readiness_report.json",
+      "system_review_graph/board_go_live_readiness_report.json",
+      "system_review_graph/operator_screenshot_manifest.json",
+      "system_review_graph/operator_dashboard.html"
+    ],
+    "role": "product_implementation_target"
+  }
+}
+```

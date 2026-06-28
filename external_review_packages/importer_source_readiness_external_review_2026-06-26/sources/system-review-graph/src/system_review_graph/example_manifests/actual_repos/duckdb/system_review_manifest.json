@@ -1,0 +1,437 @@
+{
+  "title": "DuckDB Public Repo System Review Graph",
+  "one_line": "DuckDB turns SQL and local data access into vectorized analytical execution inside an embedded database engine.",
+  "scope": "A public-safe system map of the DuckDB open-source repository based on public source directories and documentation.",
+  "bigger_picture": "This example shows how to map a database engine repo. The system is not just a command-line tool or a client library; it is a layered execution engine where SQL is parsed, bound, planned, optimized, executed in vectorized operators, connected to storage and transactions, and extended through extensions. A reviewer should understand the route from query text to result chunks and persisted state.",
+  "current_truth": {
+    "example_type": "actual_public_repo",
+    "repo": "duckdb/duckdb",
+    "source_accessed_at": "2026-06-08",
+    "private_database_required": false,
+    "production_data_required": false,
+    "official_maintainer_audit": false
+  },
+  "source_links": [
+    {
+      "label": "GitHub repository",
+      "url": "https://github.com/duckdb/duckdb",
+      "notes": "Primary public source used for repo identity and source paths."
+    },
+    {
+      "label": "DuckDB documentation",
+      "url": "https://duckdb.org/docs/",
+      "notes": "Public docs for SQL, clients, extensions, and engine behavior."
+    },
+    {
+      "label": "DuckDB internals overview",
+      "url": "https://duckdb.org/docs/stable/internals/overview",
+      "notes": "Public internals documentation for engine orientation."
+    }
+  ],
+  "schemas": [
+    {
+      "name": "SQLRequest",
+      "kind": "query_contract",
+      "required_fields": ["sql_text", "connection_context", "parameters", "transaction_state"],
+      "purpose": "Represents incoming SQL and execution context before parsing and binding."
+    },
+    {
+      "name": "LogicalPlan",
+      "kind": "planning_contract",
+      "required_fields": ["operators", "bindings", "types", "catalog_refs"],
+      "purpose": "Represents a query after parsing and semantic binding."
+    },
+    {
+      "name": "PhysicalPlan",
+      "kind": "execution_contract",
+      "required_fields": ["physical_operators", "pipelines", "dependencies", "estimated_costs"],
+      "purpose": "Represents executable operator pipelines."
+    },
+    {
+      "name": "DataChunk",
+      "kind": "vectorized_data_contract",
+      "required_fields": ["vectors", "column_types", "cardinality"],
+      "purpose": "Represents batches of data flowing through vectorized execution."
+    },
+    {
+      "name": "StorageTransaction",
+      "kind": "storage_contract",
+      "required_fields": ["catalog_state", "table_state", "write_set", "commit_status"],
+      "purpose": "Represents storage and transaction state for reads and writes."
+    },
+    {
+      "name": "ExtensionSpec",
+      "kind": "extension_contract",
+      "required_fields": ["extension_name", "functions", "load_policy", "compatibility"],
+      "purpose": "Describes extension-provided functionality and loading boundaries."
+    }
+  ],
+  "artifacts": [
+    {
+      "artifact_id": "parser_source",
+      "name": "Parser Source",
+      "kind": "source_directory",
+      "path": "src/parser/",
+      "owner": "engine",
+      "schema": "SQLRequest",
+      "purpose": "Turns SQL text into parsed statements.",
+      "redaction": "safe_to_share"
+    },
+    {
+      "artifact_id": "planner_source",
+      "name": "Planner Source",
+      "kind": "source_directory",
+      "path": "src/planner/",
+      "owner": "engine",
+      "schema": "LogicalPlan",
+      "purpose": "Binds and plans parsed SQL into logical operators.",
+      "redaction": "safe_to_share"
+    },
+    {
+      "artifact_id": "optimizer_source",
+      "name": "Optimizer Source",
+      "kind": "source_directory",
+      "path": "src/optimizer/",
+      "owner": "engine",
+      "schema": "LogicalPlan",
+      "purpose": "Rewrites and improves logical plans before physical execution.",
+      "redaction": "safe_to_share"
+    },
+    {
+      "artifact_id": "execution_source",
+      "name": "Execution Source",
+      "kind": "source_directory",
+      "path": "src/execution/",
+      "owner": "engine",
+      "schema": "PhysicalPlan",
+      "purpose": "Executes physical operators and data pipelines.",
+      "redaction": "safe_to_share"
+    },
+    {
+      "artifact_id": "storage_source",
+      "name": "Storage Source",
+      "kind": "source_directory",
+      "path": "src/storage/",
+      "owner": "engine",
+      "schema": "StorageTransaction",
+      "purpose": "Handles table storage, persistence, scans, and writes.",
+      "redaction": "safe_to_share"
+    },
+    {
+      "artifact_id": "transaction_source",
+      "name": "Transaction Source",
+      "kind": "source_directory",
+      "path": "src/transaction/",
+      "owner": "engine",
+      "schema": "StorageTransaction",
+      "purpose": "Coordinates transaction lifecycle and commit boundaries.",
+      "redaction": "safe_to_share"
+    },
+    {
+      "artifact_id": "extension_tree",
+      "name": "Extension Tree",
+      "kind": "source_directory",
+      "path": "extension/",
+      "owner": "extensions",
+      "schema": "ExtensionSpec",
+      "purpose": "Hosts built-in and optional extension surfaces such as parquet, json, icu, tpch, and tpcds.",
+      "redaction": "safe_to_share"
+    },
+    {
+      "artifact_id": "test_suite",
+      "name": "Test Suite",
+      "kind": "tests",
+      "path": "test/",
+      "owner": "quality",
+      "schema": "SQLRequest",
+      "purpose": "Protects SQL behavior, storage behavior, extensions, and compatibility.",
+      "redaction": "safe_to_share"
+    }
+  ],
+  "decision_gates": [
+    {
+      "gate_id": "parse_bind_gate",
+      "name": "Parse And Bind Gate",
+      "inputs": ["SQLRequest", "catalog_state"],
+      "outputs": ["LogicalPlan", "query_error"],
+      "human_gate": false,
+      "risk_boundary": "Invalid SQL or missing catalog references should not reach execution.",
+      "rules": [
+        { "if": "SQL parses and all names/types bind", "then": "LogicalPlan" },
+        { "if": "syntax, type, or catalog binding fails", "then": "query_error" }
+      ]
+    },
+    {
+      "gate_id": "optimization_gate",
+      "name": "Optimization Gate",
+      "inputs": ["LogicalPlan", "statistics"],
+      "outputs": ["optimized_plan", "fallback_plan"],
+      "human_gate": false,
+      "risk_boundary": "Optimization should preserve query semantics.",
+      "rules": [
+        { "if": "rewrite is valid and beneficial", "then": "optimized_plan" },
+        { "if": "rewrite is unsafe or not applicable", "then": "fallback_plan" }
+      ]
+    },
+    {
+      "gate_id": "execution_gate",
+      "name": "Execution Gate",
+      "inputs": ["PhysicalPlan", "StorageTransaction"],
+      "outputs": ["DataChunk", "execution_error"],
+      "human_gate": false,
+      "risk_boundary": "Physical operators should respect transaction and memory boundaries.",
+      "rules": [
+        { "if": "operators and resources are valid", "then": "DataChunk" },
+        { "if": "runtime error, resource issue, or invalid state", "then": "execution_error" }
+      ]
+    },
+    {
+      "gate_id": "storage_commit_gate",
+      "name": "Storage Commit Gate",
+      "inputs": ["StorageTransaction"],
+      "outputs": ["committed", "rolled_back"],
+      "human_gate": false,
+      "risk_boundary": "Writes should commit atomically or roll back.",
+      "rules": [
+        { "if": "transaction validates and commit succeeds", "then": "committed" },
+        { "if": "conflict or failure", "then": "rolled_back" }
+      ]
+    },
+    {
+      "gate_id": "extension_load_gate",
+      "name": "Extension Load Gate",
+      "inputs": ["ExtensionSpec"],
+      "outputs": ["extension_loaded", "extension_blocked"],
+      "human_gate": false,
+      "risk_boundary": "Extensions should load only when compatible and allowed by policy.",
+      "rules": [
+        { "if": "extension is compatible and policy allows loading", "then": "extension_loaded" },
+        { "if": "extension incompatible or policy blocks", "then": "extension_blocked" }
+      ]
+    }
+  ],
+  "systems": [
+    {
+      "system_id": "sql_front_door",
+      "name": "SQL Front Door",
+      "purpose": "Accepts SQL from clients and turns it into parsed and bound statements.",
+      "owner": "engine",
+      "language_stack": ["C++", "SQL"],
+      "architecture_style": "embedded database front end",
+      "lifecycle": "SQLRequest -> parser -> binder -> LogicalPlan",
+      "code_surfaces": ["src/parser/", "src/main/"],
+      "artifacts": ["parser_source"],
+      "decision_gates": ["parse_bind_gate"],
+      "truth_boundary": "A parsed query is not executable until binding and planning succeed.",
+      "ideal_target": "Query errors are caught early with clear semantics."
+    },
+    {
+      "system_id": "planner_optimizer",
+      "name": "Planner And Optimizer",
+      "purpose": "Builds logical plans and rewrites them into better executable forms.",
+      "owner": "engine",
+      "language_stack": ["C++"],
+      "architecture_style": "query planner and optimizer",
+      "lifecycle": "LogicalPlan -> optimized plan -> PhysicalPlan",
+      "code_surfaces": ["src/planner/", "src/optimizer/"],
+      "artifacts": ["planner_source", "optimizer_source"],
+      "decision_gates": ["optimization_gate"],
+      "truth_boundary": "Optimization must not change query meaning.",
+      "ideal_target": "The cheapest safe plan is selected for execution."
+    },
+    {
+      "system_id": "vectorized_execution_engine",
+      "name": "Vectorized Execution Engine",
+      "purpose": "Executes physical operator pipelines over data chunks.",
+      "owner": "engine",
+      "language_stack": ["C++"],
+      "architecture_style": "vectorized analytical execution",
+      "lifecycle": "PhysicalPlan -> operator pipeline -> DataChunk",
+      "code_surfaces": ["src/execution/"],
+      "artifacts": ["execution_source"],
+      "decision_gates": ["execution_gate"],
+      "truth_boundary": "Execution depends on valid plan, memory, transaction, and storage state.",
+      "ideal_target": "Analytical queries execute predictably and efficiently."
+    },
+    {
+      "system_id": "storage_transaction_layer",
+      "name": "Storage And Transaction Layer",
+      "purpose": "Persists data, scans tables, and coordinates transaction boundaries.",
+      "owner": "engine",
+      "language_stack": ["C++"],
+      "architecture_style": "embedded storage manager",
+      "lifecycle": "scan/write request -> storage state -> commit or rollback",
+      "code_surfaces": ["src/storage/", "src/transaction/"],
+      "artifacts": ["storage_source", "transaction_source"],
+      "decision_gates": ["storage_commit_gate", "execution_gate"],
+      "truth_boundary": "Storage behavior is valid only within transaction rules.",
+      "ideal_target": "Reads and writes remain consistent across local analytical workloads."
+    },
+    {
+      "system_id": "extension_system",
+      "name": "Extension System",
+      "purpose": "Adds optional capabilities and file/function integrations through extension modules.",
+      "owner": "extensions",
+      "language_stack": ["C++"],
+      "architecture_style": "extension framework",
+      "lifecycle": "extension spec -> load gate -> functions/operators",
+      "code_surfaces": ["extension/"],
+      "artifacts": ["extension_tree"],
+      "decision_gates": ["extension_load_gate"],
+      "truth_boundary": "Extensions expand behavior but must respect engine compatibility and load policy.",
+      "ideal_target": "New capabilities plug in without destabilizing core execution."
+    },
+    {
+      "system_id": "quality_compatibility_loop",
+      "name": "Quality And Compatibility Loop",
+      "purpose": "Exercises SQL, storage, extension, and compatibility scenarios.",
+      "owner": "quality",
+      "language_stack": ["C++", "SQL", "Python"],
+      "architecture_style": "test matrix",
+      "lifecycle": "source change -> test cases -> release confidence",
+      "code_surfaces": ["test/"],
+      "artifacts": ["test_suite"],
+      "decision_gates": ["parse_bind_gate", "execution_gate", "storage_commit_gate"],
+      "truth_boundary": "This report does not replace upstream CI or benchmark review.",
+      "ideal_target": "Engine changes remain behaviorally compatible and measurable."
+    }
+  ],
+  "workflows": [
+    {
+      "step_id": "receive_sql",
+      "name": "Receive SQL",
+      "actor": "SQL Front Door",
+      "consumes": ["client_request"],
+      "produces": ["SQLRequest"],
+      "gates": [],
+      "next_steps": ["parse_and_bind"],
+      "purpose": "Capture SQL and connection context."
+    },
+    {
+      "step_id": "parse_and_bind",
+      "name": "Parse And Bind",
+      "actor": "SQL Front Door",
+      "consumes": ["SQLRequest", "parser_source"],
+      "produces": ["LogicalPlan"],
+      "gates": ["parse_bind_gate"],
+      "next_steps": ["plan_and_optimize"],
+      "purpose": "Convert SQL into a typed logical representation."
+    },
+    {
+      "step_id": "plan_and_optimize",
+      "name": "Plan And Optimize",
+      "actor": "Planner And Optimizer",
+      "consumes": ["LogicalPlan", "planner_source", "optimizer_source"],
+      "produces": ["PhysicalPlan"],
+      "gates": ["optimization_gate"],
+      "next_steps": ["execute_plan"],
+      "purpose": "Build executable operators while preserving semantics."
+    },
+    {
+      "step_id": "execute_plan",
+      "name": "Execute Plan",
+      "actor": "Vectorized Execution Engine",
+      "consumes": ["PhysicalPlan", "execution_source", "StorageTransaction"],
+      "produces": ["DataChunk"],
+      "gates": ["execution_gate"],
+      "next_steps": ["commit_or_return"],
+      "purpose": "Run physical operators and move vectorized data."
+    },
+    {
+      "step_id": "commit_or_return",
+      "name": "Commit Or Return Results",
+      "actor": "Storage And Transaction Layer",
+      "consumes": ["DataChunk", "StorageTransaction"],
+      "produces": ["query_result", "committed"],
+      "gates": ["storage_commit_gate"],
+      "next_steps": [],
+      "purpose": "Return read results or commit write transactions."
+    },
+    {
+      "step_id": "load_extension",
+      "name": "Load Extension",
+      "actor": "Extension System",
+      "consumes": ["ExtensionSpec", "extension_tree"],
+      "produces": ["extension_loaded"],
+      "gates": ["extension_load_gate"],
+      "next_steps": ["parse_and_bind"],
+      "purpose": "Make extension functionality available to query planning and execution."
+    }
+  ],
+  "edges": [
+    {
+      "source": "extension_system",
+      "target": "planner_optimizer",
+      "relation": "adds_functions_to",
+      "why": "Extensions can make new functions or scan capabilities available to planning."
+    },
+    {
+      "source": "storage_transaction_layer",
+      "target": "vectorized_execution_engine",
+      "relation": "feeds_data_to",
+      "why": "Execution operators scan data through storage and transaction state."
+    }
+  ],
+  "architecture_patterns": [
+    {
+      "name": "Database engine",
+      "works_for": "Embedded databases, query engines, storage engines, and analytical runtimes",
+      "mapping": "Map front end, planner, optimizer, execution, storage, transaction, extension, and test loops.",
+      "redaction": "Public repos can expose source paths; private engines can expose logical layers and interface contracts only."
+    },
+    {
+      "name": "Private data strategy",
+      "works_for": "Companies that cannot expose databases or workloads",
+      "mapping": "Use fake SQL examples, logical contracts, benchmark categories, and gate descriptions instead of production queries.",
+      "redaction": "Never publish customer SQL, table names, data files, or workload traces without rights."
+    }
+  ],
+  "walkthroughs": [
+    {
+      "name": "One query through the engine",
+      "story": "A SQL request is parsed and bound into a logical plan, optimized, converted to physical operators, executed over data chunks, and either returned as a result or committed if it changes storage.",
+      "example": {
+        "input": "SELECT count(*) FROM sample_table",
+        "path": ["SQLRequest", "LogicalPlan", "PhysicalPlan", "DataChunk", "query_result"],
+        "gates": ["parse_bind_gate", "optimization_gate", "execution_gate"]
+      }
+    },
+    {
+      "name": "How to audit a private engine without workload data",
+      "story": "A reviewer can inspect logical layers, contracts, gates, tests, and fake workloads without seeing private datasets or production SQL.",
+      "example": {
+        "requires_customer_data": false,
+        "safe_artifacts": ["src/parser/", "src/planner/", "src/optimizer/", "src/execution/", "src/storage/", "test/"]
+      }
+    }
+  ],
+  "review_questions": [
+    "How does SQL move from text to parsed statement, logical plan, optimized plan, physical operators, and result chunks?",
+    "Which gates preserve query semantics during binding and optimization?",
+    "Where do storage and transaction boundaries constrain execution?",
+    "How do extensions expand engine behavior without destabilizing the core?",
+    "Which public tests, fuzzers, benchmarks, and release notes would a deeper audit inspect?"
+  ],
+  "rebuild_recipe": [
+    {
+      "phase": "validate",
+      "goal": "Check the DuckDB public repo manifest.",
+      "commands": [
+        "system-review-graph validate --manifest examples/actual_repos/duckdb/system_review_manifest.json"
+      ]
+    },
+    {
+      "phase": "build",
+      "goal": "Generate the DuckDB system review report.",
+      "commands": [
+        "system-review-graph build --manifest examples/actual_repos/duckdb/system_review_manifest.json --out-dir examples/actual_repos/duckdb/reports"
+      ]
+    }
+  ],
+  "known_boundaries": [
+    "This is a public educational map, not an official DuckDB maintainer audit.",
+    "It maps high-level engine layers and public source paths, not every operator or internal invariant.",
+    "A real audit should inspect a specific commit, build configuration, tests, fuzzers, benchmarks, and release notes.",
+    "Do not use production SQL or private data in public examples."
+  ]
+}

@@ -1,0 +1,83 @@
+{
+  "blocked_claims": [
+    "approval",
+    "tariff_confirmed",
+    "CFIA_cleared",
+    "buyer_validated",
+    "shipment_ready",
+    "legal_or_customs_advice"
+  ],
+  "internal_engine": "Importer Source Readiness Copilot",
+  "promise": "Before you import or export, know what is missing. Turn a messy trade idea into an evidence-backed readiness packet that shows what is known, what is missing, which claims are blocked, and what review is required before moving forward.",
+  "proof_boundary": "Trade Readiness Copilot organizes import/export evidence and blockers. It does not provide legal, customs, tariff, tax, CFIA, supplier, buyer, compliance, shipment, or launch advice.",
+  "public_privacy_controls": {
+    "ai_use_notice": "required",
+    "delete_after_processing_control": "implemented_local_route",
+    "no_ai_mode": "supported by organization/evidence policy",
+    "private_ai_mode": "supported by endpoint contract",
+    "redacted_ai_mode": "supported",
+    "retention_notice": "delete or expire after public quick check",
+    "review_boundary": "PIPEDA/OWASP/NIST references are control prompts, not legal or security certification claims.",
+    "upload_notice": "required"
+  },
+  "public_product": "Trade Readiness Copilot",
+  "public_product_surface": {
+    "customer_flow": [
+      "choose tool",
+      "upload PDF",
+      "process",
+      "preview gaps",
+      "download draft PDF",
+      "delete files or create account"
+    ],
+    "hidden_internal_terms": [
+      "system_review_graph",
+      "proof logs",
+      "operator screenshots",
+      "fixture-backed language",
+      "board gates"
+    ],
+    "levels": [
+      "Level 1 public free tool - no login, limited PDF upload, draft PDF, auto-delete/delete controls",
+      "Level 2 free account - saved history and workspace",
+      "Level 3 Pro - more packets and review workflows",
+      "Level 4 Business - team/operator workbench",
+      "Level 5 Enterprise/private AI - customer-managed or private hosted model routing"
+    ],
+    "status": "public_quick_check_ready_local_with_external_gates",
+    "visible_modules": [
+      "Import Readiness",
+      "Export Readiness",
+      "Source Packet Builder",
+      "Evidence Ledger",
+      "PDF Report Generator",
+      "Expert Review Packet",
+      "Operator Workbench"
+    ]
+  },
+  "routes": {
+    "api": [
+      "/api/public/quick-check",
+      "/api/public/packets/:id/reports/draft.pdf",
+      "/api/public/packets/:id/reports/buyer.pdf",
+      "/api/public/packets/:id/reports/broker.pdf",
+      "/api/public/packets/:id/delete-files"
+    ],
+    "ui": [
+      "/",
+      "/tools",
+      "/trade-check",
+      "/tools/import-readiness",
+      "/tools/export-readiness",
+      "/tools/buyer-broker-packet",
+      "/public/packets/:packetId/result"
+    ]
+  },
+  "status": "public_trade_readiness_ready_local",
+  "trade_direction_values": [
+    "import",
+    "export",
+    "both",
+    "unknown"
+  ]
+}

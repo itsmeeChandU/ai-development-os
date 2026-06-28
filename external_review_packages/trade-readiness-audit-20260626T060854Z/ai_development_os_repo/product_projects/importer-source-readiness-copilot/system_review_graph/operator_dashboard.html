@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Importer Source Readiness Copilot</title>
+  <style>
+    :root { color-scheme: light dark; --ink: #172026; --muted: #52616f; --line: #ccd5df; --panel: #f7f9fb; --panel-strong: #eef3f7; --warn: #fff7df; --warn-line: #ead28a; --danger: #9f2f2f; --accent: #1d6b65; --accent-soft: #dff3ef; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; margin: 0; color: var(--ink); background: #fbfcfd; }
+    main { max-width: 1180px; margin: 0 auto; padding: 32px; }
+    h1, h2, h3 { margin: 0 0 8px; }
+    h1 { font-size: 34px; line-height: 1.1; }
+    h2 { font-size: 22px; margin-top: 30px; }
+    h3 { font-size: 16px; }
+    p { line-height: 1.5; }
+    .grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin: 20px 0; }
+    .metric { border: 1px solid var(--line); border-radius: 6px; padding: 14px; background: var(--panel); }
+    .label { color: var(--muted); font-size: 13px; }
+    .value { font-size: 20px; line-height: 1.2; font-weight: 700; margin-top: 6px; overflow-wrap: anywhere; }
+    table { width: 100%; border-collapse: collapse; margin: 14px 0 28px; }
+    th, td { text-align: left; border-bottom: 1px solid #dce3ea; padding: 9px; vertical-align: top; }
+    th { background: var(--panel-strong); }
+    .closed { color: var(--danger); font-weight: 700; }
+    .note { background: var(--warn); border: 1px solid var(--warn-line); padding: 12px; border-radius: 6px; }
+    .section-heading { display: flex; justify-content: space-between; gap: 18px; align-items: start; margin-top: 28px; }
+    .section-heading p { color: var(--muted); margin: 0; max-width: 820px; }
+    .screenshot-summary { min-width: 132px; border: 1px solid var(--line); background: #fff; border-radius: 6px; padding: 10px 12px; text-align: right; }
+    .screenshot-summary span { display: block; color: var(--muted); font-size: 12px; overflow-wrap: anywhere; }
+    .screenshot-summary strong { display: block; font-size: 28px; }
+    .workflow-summary { min-width: 158px; border: 1px solid var(--line); background: var(--accent-soft); border-radius: 6px; padding: 10px 12px; text-align: right; }
+    .workflow-summary span { display: block; color: var(--muted); font-size: 12px; overflow-wrap: anywhere; }
+    .workflow-summary strong { display: block; font-size: 28px; }
+    .workflow-summary em { display: block; color: var(--accent); font-size: 12px; font-style: normal; font-weight: 700; }
+    .blocker-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin: 16px 0; }
+    .blocker-card { border: 1px solid var(--line); border-left: 4px solid var(--danger); border-radius: 6px; background: #fff; padding: 12px; }
+    .blocker-card span { display: block; color: var(--muted); font-size: 12px; margin-bottom: 4px; }
+    .blocker-card p { color: var(--muted); margin: 0; }
+    .screenshot-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; margin-top: 16px; }
+    .screenshot-card { border: 1px solid var(--line); border-radius: 6px; overflow: hidden; background: #fff; }
+    .screenshot-card img { display: block; width: 100%; aspect-ratio: 16 / 10; object-fit: contain; background: #111820; border-bottom: 1px solid var(--line); }
+    .screenshot-body { padding: 13px; }
+    .path { color: var(--muted); font-size: 12px; margin: 0 0 10px; overflow-wrap: anywhere; }
+    dl { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin: 0 0 10px; }
+    dt { color: var(--muted); font-size: 11px; text-transform: uppercase; }
+    dd { margin: 1px 0 0; font-size: 12px; overflow-wrap: anywhere; }
+    .boundary { border-top: 1px solid #e6ebf0; color: var(--muted); font-size: 12px; margin: 10px 0 0; padding-top: 10px; }
+    .empty-state { grid-column: 1 / -1; border: 1px dashed var(--line); border-radius: 6px; padding: 18px; background: #fff; }
+    .empty-title { font-weight: 700; margin-bottom: 4px; }
+    @media (max-width: 860px) {
+      main { padding: 22px; }
+      .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .section-heading { display: block; }
+      .screenshot-summary { text-align: left; margin-top: 12px; }
+    }
+    @media (max-width: 560px) {
+      .grid { grid-template-columns: 1fr; }
+      dl { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+<main>
+  <h1>Importer Source Readiness Copilot</h1>
+  <p class="note">Local product logic is complete. External claims remain closed until the listed evidence gates are satisfied by dated official sources, contracts, buyers, and qualified review.</p>
+  <section class="grid">
+    <div class="metric"><div class="label">Status</div><div class="value">Internal logic ready - external claims blocked</div></div>
+    <div class="metric"><div class="label">Current Product Stage</div><div class="value">Customer packet prototype active - real customer use not enabled</div></div>
+    <div class="metric"><div class="label">Source rows</div><div class="value">2</div></div>
+    <div class="metric"><div class="label">Total blockers</div><div class="value">20</div></div>
+  </section>
+
+  <section class="customer-workflow" aria-labelledby="customer-workflow-title">
+    <div class="section-heading">
+      <div>
+        <h2 id="customer-workflow-title">Customer Source Packet Workflow</h2>
+        <p>Customer packet prototype active - real customer use not enabled. It produces safe readiness reports and blockers, not import approval, tariff confirmation, CFIA clearance, supplier recommendations, buyer validation, legal advice, or launch approval.</p>
+      </div>
+      <div class="workflow-summary">
+        <span>Internal logic ready - external claims blocked</span>
+        <strong>1</strong>
+        <em><a href="/packets/new">new packet</a></em>
+      </div>
+    </div>
+    <table>
+      <thead><tr><th>Packet</th><th>Product</th><th>Status</th><th>Evidence</th><th>Blockers</th><th>Next Valid Move</th></tr></thead>
+      <tbody><tr><td><a href='/packets/packet-frozen-tuna-canada-001'>Frozen tuna Canada source packet</a></td><td>Frozen tuna fillet</td><td>Blocked - source freshness missing</td><td>3 attached / 10 missing; 3 stale; 3 reference-only</td><td>7</td><td>Refresh official sources and keep claims reference-only until qualified review.</td></tr></tbody>
+    </table>
+  </section>
+
+
+  <section class="private-beta" aria-labelledby="private-beta-title">
+    <div class="section-heading">
+      <div>
+        <h2 id="private-beta-title">Path To Private Beta</h2>
+        <p>Complete source refresh proof, privacy/legal terms, qualified review workflow, buyer validation, source contracts, and private-beta security controls.</p>
+      </div>
+      <div class="workflow-summary">
+        <span>Private beta blocked</span>
+        <strong>7</strong>
+        <em>blocked gates</em>
+      </div>
+    </div>
+    <div class="blocker-grid"><article class='blocker-card'><span>P0 - Must fix before customer/private beta</span><h3>Source Freshness</h3><p>Refresh official sources and keep claims reference-only until qualified review.</p></article>
+<article class='blocker-card'><span>P0 - Must fix before customer/private beta</span><h3>Compliance Review</h3><p>Run restricted-party screening and attach the dated search record.</p></article>
+<article class='blocker-card'><span>P0 - Must fix before customer/private beta</span><h3>Source Rights / Contract</h3><p>Attach source-rights or commercial terms before external use.</p></article>
+<article class='blocker-card'><span>P0 - Must fix before customer/private beta</span><h3>Buyer Validation</h3><p>Collect buyer/operator validation before demand or PMF claims.</p></article>
+<article class='blocker-card'><span>P0 - Must fix before customer/private beta</span><h3>Security / Private Beta</h3><p>Add auth, organizations, roles, audit logs, upload controls, backup, and incident-response procedures.</p></article>
+<article class='blocker-card'><span>P0 - Must fix before customer/private beta</span><h3>Legal / Privacy</h3><p>Create privacy notice, terms, data deletion policy, and qualified legal/privacy review packet.</p></article></div>
+    <h3>Ready</h3>
+    <ul><li>Internal operator logic</li><li>Blocker engine</li><li>Official source registry</li><li>Unsafe gate closure</li><li>Customer packet prototype</li><li>Evidence ledger</li></ul>
+  </section>
+
+
+  <section class="operator-workflow" aria-labelledby="operator-workflow-title">
+    <div class="section-heading">
+      <div>
+        <h2 id="operator-workflow-title">Operator Work Queue</h2>
+        <p>This workflow is an operator workbench for internal review. It coordinates generated reports, Canadian reference tools, continuation lanes, and human approval gates; it does not prove external-world readiness, customs/tariff correctness, buyer demand, legal/financial approval, supplier quality, or production launch approval.</p>
+      </div>
+      <div class="workflow-summary">
+        <span>Operator workbench usable for internal review</span>
+        <strong>31</strong>
+        <em>usable now: yes</em>
+      </div>
+    </div>
+    <table>
+      <thead><tr><th>Priority</th><th>Type</th><th>Owner</th><th>Status</th><th>Next Valid Move</th><th>Canada Tools</th></tr></thead>
+      <tbody><tr><td><strong>90</strong></td><td>human approval gate</td><td>Canadian trade compliance reviewer simulation</td><td>approval required</td><td>Send the country matrix and source packet to a licensed Canadian customs broker or qualified compliance reviewer.</td><td>n/a</td></tr>
+<tr><td><strong>90</strong></td><td>human approval gate</td><td>data</td><td>approval required</td><td>Add a no-write refresh proof and source-rights approval.</td><td>n/a</td></tr>
+<tr><td><strong>90</strong></td><td>human approval gate</td><td>data source reviewer simulation</td><td>approval required</td><td>Implement a dated no-write refresh proof and attach source-rights approval before external source claims.</td><td>n/a</td></tr>
+<tr><td><strong>90</strong></td><td>human approval gate</td><td>founder</td><td>approval required</td><td>Approve a 12-month operating plan and first 90-day budget before commitments.</td><td>n/a</td></tr>
+<tr><td><strong>90</strong></td><td>human approval gate</td><td>financial advisor simulation</td><td>approval required</td><td>Founder and finance reviewer should approve a 12-month budget, pricing experiment, and cash runway before spend commitments.</td><td>n/a</td></tr>
+<tr><td><strong>90</strong></td><td>human approval gate</td><td>legal</td><td>approval required</td><td>Have counsel/privacy reviewer approve terms, privacy posture, liability boundary, and claims.</td><td>n/a</td></tr>
+<tr><td><strong>90</strong></td><td>human approval gate</td><td>legal and privacy reviewer simulation</td><td>approval required</td><td>Have Canadian counsel/privacy reviewer approve terms, privacy copy, liability boundaries, and investor language.</td><td>n/a</td></tr>
+<tr><td><strong>90</strong></td><td>human approval gate</td><td>product operator</td><td>approval required</td><td>Board reviews the generated brief and either approves a private beta or sends corrections.</td><td>n/a</td></tr>
+<tr><td><strong>90</strong></td><td>human approval gate</td><td>compliance</td><td>approval required</td><td>Route the generated packet to a licensed Canadian customs broker or qualified reviewer.</td><td>n/a</td></tr>
+<tr><td><strong>90</strong></td><td>human approval gate</td><td>security</td><td>approval required</td><td>Approve private beta deployment controls before external users.</td><td>n/a</td></tr>
+<tr><td><strong>90</strong></td><td>human approval gate</td><td>security and operations reviewer simulation</td><td>approval required</td><td>Approve a controlled private beta environment with access control, logging, incident response, and rollback owner.</td><td>n/a</td></tr>
+<tr><td><strong>86</strong></td><td>external evidence gate</td><td>compliance</td><td>blocked external input</td><td>Have a licensed Canadian customs broker or qualified Canadian trade/food compliance reviewer verify CBSA/CARM importer obligations, tariff classification, CFIA AIRS requirements, import controls, sanctions screening, and claim language.</td><td><a href='https://inspection.canada.ca/en/importing-food-plants-animals/airs'>cfia-airs</a></td></tr>
+<tr><td><strong>86</strong></td><td>external evidence gate</td><td>compliance</td><td>blocked external input</td><td>Have a licensed Canadian customs broker or qualified Canadian trade/food compliance reviewer verify CBSA/CARM importer obligations, tariff classification, CFIA AIRS requirements, import controls, sanctions screening, and claim language.</td><td><a href='https://www.cbsa-asfc.gc.ca/trade-commerce/tariff-tarif/2026/menu-eng.html'>cbsa-customs-tariff-2026</a>, <a href='https://www.cbsa-asfc.gc.ca/services/cb-cd/cb-cd-eng.html'>cbsa-licensed-customs-brokers</a></td></tr>
+<tr><td><strong>86</strong></td><td>external evidence gate</td><td>operator</td><td>blocked external input</td><td>Keep the product internal until buyer validation, contracts, compliance review, and operator support are proven.</td><td><a href='https://www.canada.ca/en/services/business/start/planning.html'>canada-business-planning</a>, <a href='https://www.bdc.ca/en/articles-tools/entrepreneur-toolkit/templates-business-guides/financial-plan-template'>bdc-financial-plan-template</a>, <a href='https://www.priv.gc.ca/en/privacy-topics/privacy-laws-in-canada/the-personal-information-protection-and-electronic-documents-act-pipeda/pipeda_brief/'>pipeda-brief</a>, <a href='https://www.cyber.gc.ca/en/guidance/baseline-cyber-security-controls-small-and-medium-organizations'>cyber-centre-baseline-controls</a></td></tr>
+<tr><td><strong>86</strong></td><td>external evidence gate</td><td>compliance</td><td>blocked external input</td><td>Get qualified Canadian review for country matrix, tariff treatment, CFIA food import obligations, sanctions screening, and claims language.</td><td><a href='https://www.cbsa-asfc.gc.ca/services/cb-cd/cb-cd-eng.html'>cbsa-licensed-customs-brokers</a>, <a href='https://www.priv.gc.ca/en/privacy-topics/privacy-laws-in-canada/the-personal-information-protection-and-electronic-documents-act-pipeda/pipeda_brief/'>pipeda-brief</a></td></tr>
+<tr><td><strong>82</strong></td><td>external evidence gate</td><td>compliance</td><td>blocked external input</td><td>Have a licensed Canadian customs broker or qualified Canadian trade/food compliance reviewer verify CBSA/CARM importer obligations, tariff classification, CFIA AIRS requirements, import controls, sanctions screening, and claim language.</td><td><a href='https://www.international.gc.ca/controls-controles/about-a_propos/impor/permits-licences.aspx?lang=eng'>gac-import-controls</a></td></tr>
+<tr><td><strong>82</strong></td><td>external evidence gate</td><td>compliance</td><td>blocked external input</td><td>Have a licensed Canadian customs broker or qualified Canadian trade/food compliance reviewer verify CBSA/CARM importer obligations, tariff classification, CFIA AIRS requirements, import controls, sanctions screening, and claim language.</td><td><a href='https://www.cbsa-asfc.gc.ca/import/menu-eng.html'>cbsa-import-commercial-goods</a></td></tr>
+<tr><td><strong>82</strong></td><td>external evidence gate</td><td>compliance</td><td>blocked external input</td><td>Have a licensed Canadian customs broker or qualified Canadian trade/food compliance reviewer verify CBSA/CARM importer obligations, tariff classification, CFIA AIRS requirements, import controls, sanctions screening, and claim language.</td><td><a href='https://www.international.gc.ca/world-monde/international_relations-relations_internationales/sanctions/consolidated-consolide.aspx?lang=eng'>canada-sanctions</a></td></tr></tbody>
+    </table>
+  </section>
+
+
+  <section class="screenshots" aria-labelledby="operator-screenshots-title">
+    <div class="section-heading">
+      <div>
+        <h2 id="operator-screenshots-title">Operator Screenshots</h2>
+        <p>Operator screenshots are visual evidence artifacts. They help review the current operator experience, but generated reports, blocker ledgers, tests, and human approval gates remain canonical for readiness claims.</p>
+      </div>
+      <div class="screenshot-summary">
+        <span>screenshots ready</span>
+        <strong>1</strong>
+      </div>
+    </div>
+    <div class="screenshot-grid">
+<article class='screenshot-card'><a href='operator_screenshots/operator-dashboard.png' aria-label='Open Operator Dashboard'><img src='operator_screenshots/operator-dashboard.png' alt='Operator Dashboard' loading='lazy'></a><div class='screenshot-body'><h3>Operator Dashboard</h3><p class='path'>system_review_graph/operator_screenshots/operator-dashboard.png</p><dl><div><dt>Captured</dt><dd>2026-06-25T17:32:42+00:00</dd></div><div><dt>Media</dt><dd>image/png</dd></div><div><dt>Bytes</dt><dd>369331</dd></div><div><dt>SHA</dt><dd>609d509c7069</dd></div></dl><p class='boundary'>Visual review aid only; generated JSON reports and blocker ledgers remain readiness truth.</p></div></article>
+    </div>
+  </section>
+
+  <h2>Readiness Blockers</h2>
+  <table>
+    <thead><tr><th>ID</th><th>Module</th><th>Owner</th><th>Issue</th><th>Next Valid Move</th></tr></thead>
+    <tbody><tr><td>frozen-tuna-fillet-readiness:freshness-not-proven</td><td>data_freshness</td><td>data</td><td>data freshness is not proven for product claims</td><td>Run a dated refresh or mark the row as fixture-only.</td></tr>
+<tr><td>frozen-tuna-fillet-readiness:buyer-validation-missing</td><td>buyer_validation</td><td>product</td><td>buyer validation is missing</td><td>Collect dated buyer feedback or no-fit evidence before commercial claims.</td></tr>
+<tr><td>frozen-tuna-fillet-readiness:legal-review-missing</td><td>legal_compliance</td><td>compliance</td><td>legal/compliance review is missing</td><td>Get qualified review before legal, customs, import/export, or public claims.</td></tr>
+<tr><td>frozen-tuna-fillet-readiness:contract-missing</td><td>commercial_contract</td><td>operations</td><td>commercial/source contract is missing</td><td>Attach written source, supplier, buyer, or commercial terms before readiness claims.</td></tr>
+<tr><td>country-requirement-template:official-source-missing</td><td>official_source_review</td><td>research</td><td>official source URL is missing or the row is fixture-only</td><td>Attach a current official source URL and access date before source claims.</td></tr>
+<tr><td>country-requirement-template:freshness-not-proven</td><td>data_freshness</td><td>data</td><td>data freshness is not proven for product claims</td><td>Run a dated refresh or mark the row as fixture-only.</td></tr>
+<tr><td>country-requirement-template:buyer-validation-missing</td><td>buyer_validation</td><td>product</td><td>buyer validation is missing</td><td>Collect dated buyer feedback or no-fit evidence before commercial claims.</td></tr>
+<tr><td>country-requirement-template:legal-review-missing</td><td>legal_compliance</td><td>compliance</td><td>legal/compliance review is missing</td><td>Get qualified review before legal, customs, import/export, or public claims.</td></tr>
+<tr><td>country-requirement-template:contract-missing</td><td>commercial_contract</td><td>operations</td><td>commercial/source contract is missing</td><td>Attach written source, supplier, buyer, or commercial terms before readiness claims.</td></tr></tbody>
+  </table>
+  <h2>External Gate Blockers</h2>
+  <table>
+    <thead><tr><th>ID</th><th>Module</th><th>Owner</th><th>Issue</th><th>Next Valid Move</th></tr></thead>
+    <tbody><tr><td>ca-frozen-tuna-fillet-030487:import_rules_status</td><td>country_import_rules</td><td>compliance</td><td>qualified import-rules review is missing</td><td>Have a licensed Canadian customs broker or qualified Canadian trade/food compliance reviewer verify CBSA/CARM importer obligations, tariff classification, CFIA AIRS requirements, import controls, sanctions screening, and claim language.</td></tr>
+<tr><td>ca-frozen-tuna-fillet-030487:export_rules_status</td><td>country_export_rules</td><td>compliance</td><td>qualified export-rules review is missing</td><td>Have a licensed Canadian customs broker or qualified Canadian trade/food compliance reviewer verify CBSA/CARM importer obligations, tariff classification, CFIA AIRS requirements, import controls, sanctions screening, and claim language.</td></tr>
+<tr><td>ca-frozen-tuna-fillet-030487:tariff_status</td><td>tariff_classification</td><td>compliance</td><td>tariff or HS classification is not qualified</td><td>Have a licensed Canadian customs broker or qualified Canadian trade/food compliance reviewer verify CBSA/CARM importer obligations, tariff classification, CFIA AIRS requirements, import controls, sanctions screening, and claim language.</td></tr>
+<tr><td>ca-frozen-tuna-fillet-030487:food_safety_status</td><td>food_safety</td><td>compliance</td><td>food safety requirements are not qualified</td><td>Have a licensed Canadian customs broker or qualified Canadian trade/food compliance reviewer verify CBSA/CARM importer obligations, tariff classification, CFIA AIRS requirements, import controls, sanctions screening, and claim language.</td></tr>
+<tr><td>ca-frozen-tuna-fillet-030487:restricted_party_status</td><td>restricted_party_screening</td><td>compliance</td><td>restricted-party screening is not complete</td><td>Have a licensed Canadian customs broker or qualified Canadian trade/food compliance reviewer verify CBSA/CARM importer obligations, tariff classification, CFIA AIRS requirements, import controls, sanctions screening, and claim language.</td></tr>
+<tr><td>ca-frozen-tuna-fillet-030487:broker_or_expert_review_status</td><td>expert_review</td><td>compliance</td><td>broker or qualified expert review is missing</td><td>Have a licensed Canadian customs broker or qualified Canadian trade/food compliance reviewer verify CBSA/CARM importer obligations, tariff classification, CFIA AIRS requirements, import controls, sanctions screening, and claim language.</td></tr>
+<tr><td>buyer-validation:evidence-missing</td><td>buyer_validation</td><td>product</td><td>buyer/operator validation is missing</td><td>Collect dated buyer or operator feedback, including no-fit/no-budget evidence, and attach it to the evidence packet.</td></tr>
+<tr><td>qualified-compliance-review:evidence-missing</td><td>legal_compliance</td><td>compliance</td><td>qualified compliance review is missing</td><td>Get qualified Canadian review for country matrix, tariff treatment, CFIA food import obligations, sanctions screening, and claims language.</td></tr>
+<tr><td>commercial-source-contract:evidence-missing</td><td>commercial_contract</td><td>operations</td><td>commercial/source contract is missing</td><td>Attach written terms for data/source rights, supplier/buyer contact use, liability boundary, and termination.</td></tr>
+<tr><td>source-rights-and-freshness:evidence-missing</td><td>data_freshness</td><td>data</td><td>repeatable data freshness and source rights are not proven</td><td>Define source rights, refresh cadence, freshness SLA, and a no-write refresh proof before product claims.</td></tr>
+<tr><td>launch-claims:evidence-missing</td><td>launch_readiness</td><td>operator</td><td>public or commercial launch claims are not allowed</td><td>Keep the product internal until buyer validation, contracts, compliance review, and operator support are proven.</td></tr></tbody>
+  </table>
+  <h2>Official Source Registry</h2>
+  <ul><li><a href='https://www.cbsa-asfc.gc.ca/services/carm-gcra/menu-eng.html'>CBSA Assessment and Revenue Management (CARM)</a> - accessed 2026-06-25; Reference source only; does not prove CARM registration, accounting setup, duty payment readiness, or customs advice.</li>
+<li><a href='https://www.cbsa-asfc.gc.ca/import/menu-eng.html'>CBSA Import Commercial Goods Into Canada</a> - accessed 2026-06-25; Reference source only; does not replace CBSA, broker, customs, or legal review.</li>
+<li><a href='https://www.cbsa-asfc.gc.ca/trade-commerce/tariff-tarif/2026/menu-eng.html'>CBSA Customs Tariff 2026</a> - accessed 2026-06-25; Reference source only; classification and tariff treatment require qualified review.</li>
+<li><a href='https://inspection.canada.ca/en/importing-food-plants-animals/airs'>CFIA Automated Import Reference System (AIRS)</a> - accessed 2026-06-25; Reference source only; product-specific food import compliance requires qualified review and source verification.</li>
+<li><a href='https://www.international.gc.ca/controls-controles/about-a_propos/impor/permits-licences.aspx?lang=eng'>Global Affairs Canada Import Controls and Import Permits</a> - accessed 2026-06-25; Reference source only; does not prove whether a specific product requires an import permit.</li>
+<li><a href='https://laws-lois.justice.gc.ca/eng/regulations/c.r.c.%2C_c._604/index.html'>Justice Laws Import Control List</a> - accessed 2026-06-25; Reference source only; legal interpretation and product applicability require qualified review.</li>
+<li><a href='https://www.international.gc.ca/world-monde/international_relations-relations_internationales/sanctions/consolidated-consolide.aspx?lang=eng'>Global Affairs Canada Consolidated Canadian Autonomous Sanctions List</a> - accessed 2026-06-25; Reference source only; screening results require dated search records and reviewer signoff.</li>
+<li><a href='https://ised-isde.canada.ca/site/trade-data-online/en/overview'>ISED Trade Data Online</a> - accessed 2026-06-25; Reference source only; does not prove market size, buyer demand, or revenue.</li>
+<li><a href='https://ised-isde.canada.ca/site/ised/en/research-and-business-intelligence/canadian-importers-database'>Canadian Importers Database</a> - accessed 2026-06-25; Reference source only; does not prove buyer validation, supplier fit, customs advice, or freshness of a specific product row.</li>
+<li><a href='https://www.cbsa-asfc.gc.ca/services/cb-cd/cb-cd-eng.html'>CBSA Licensed Customs Brokers</a> - accessed 2026-06-25; Reference source only; does not prove a broker relationship, review, or signoff.</li></ul>
+  <h2>Unsafe Gates</h2>
+  <p class="closed">All unsafe gates are closed: no external sends, paid actions, customs/tariff claims, import/export advice claims, or supplier recommendations were made.</p>
+</main>
+</body>
+</html>

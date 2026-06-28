@@ -1,0 +1,19 @@
+Using CPython 3.13.9
+Creating virtual environment at: .venv
+   Building code-review-graph @ file:///Users/chandu/Documents/intelligance%20os/external_review_packages/importer_source_readiness_external_review_2026-06-26/sources/code-review-graph-private
+      Built code-review-graph @ file:///Users/chandu/Documents/intelligance%20os/external_review_packages/importer_source_readiness_external_review_2026-06-26/sources/code-review-graph-private
+Downloading cryptography (6.8MiB)
+Downloading networkx (2.0MiB)
+Downloading pygments (1.2MiB)
+Downloading tree-sitter-language-pack (31.5MiB)
+Downloading beartype (1.3MiB)
+Downloading pydantic-core (1.8MiB)
+ Downloading pygments
+ Downloading beartype
+ Downloading pydantic-core
+ Downloading networkx
+ Downloading cryptography
+ Downloading tree-sitter-language-pack
+Installed 79 packages in 134ms
+.....................                                                    [100%]
+21 passed in 1.61s

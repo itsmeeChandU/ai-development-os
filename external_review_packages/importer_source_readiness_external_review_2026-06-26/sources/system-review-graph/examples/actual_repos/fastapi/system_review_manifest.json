@@ -1,0 +1,407 @@
+{
+  "title": "FastAPI Public Repo System Review Graph",
+  "one_line": "FastAPI turns Python type hints and path-operation declarations into validated API runtime behavior and OpenAPI contracts.",
+  "scope": "A public-safe system map of the FastAPI open-source repository based on public source directories and documentation.",
+  "bigger_picture": "This example shows how to map a framework repo. The system is not one deployed application; it is a reusable engine that lets application authors declare routes, dependencies, models, security, and documentation contracts. A reviewer should follow how a developer declaration becomes runtime routing, validation, response handling, and OpenAPI documentation.",
+  "current_truth": {
+    "example_type": "actual_public_repo",
+    "repo": "fastapi/fastapi",
+    "source_accessed_at": "2026-06-08",
+    "private_database_required": false,
+    "production_data_required": false,
+    "official_maintainer_audit": false
+  },
+  "source_links": [
+    {
+      "label": "GitHub repository",
+      "url": "https://github.com/fastapi/fastapi",
+      "notes": "Primary public source used for repo identity and source paths."
+    },
+    {
+      "label": "FastAPI documentation",
+      "url": "https://fastapi.tiangolo.com/",
+      "notes": "Public docs for framework concepts and user-facing behavior."
+    },
+    {
+      "label": "Public OpenAPI docs concept",
+      "url": "https://fastapi.tiangolo.com/features/",
+      "notes": "High-level feature surface for generated API documentation and validation."
+    }
+  ],
+  "schemas": [
+    {
+      "name": "PathOperationDeclaration",
+      "kind": "developer_contract",
+      "required_fields": ["path", "method", "endpoint_callable", "response_model", "dependencies"],
+      "purpose": "Describes what an application author declares when registering an API endpoint.",
+      "privacy_notes": "This is a framework contract, not user production data."
+    },
+    {
+      "name": "DependencySpec",
+      "kind": "runtime_contract",
+      "required_fields": ["callable", "scope", "parameters", "security_requirements"],
+      "purpose": "Represents dependencies that must be resolved before an endpoint runs."
+    },
+    {
+      "name": "ValidationContract",
+      "kind": "request_response_contract",
+      "required_fields": ["input_schema", "output_schema", "status_code", "error_shape"],
+      "purpose": "Connects Python type hints and model definitions to request and response validation."
+    },
+    {
+      "name": "OpenAPIContract",
+      "kind": "documentation_contract",
+      "required_fields": ["paths", "components", "schemas", "security", "responses"],
+      "purpose": "The generated machine-readable API contract used by docs and clients."
+    },
+    {
+      "name": "TestScenario",
+      "kind": "quality_contract",
+      "required_fields": ["feature", "input", "expected_status", "expected_body"],
+      "purpose": "A public test scenario that protects framework behavior."
+    }
+  ],
+  "artifacts": [
+    {
+      "artifact_id": "fastapi_package",
+      "name": "FastAPI Package",
+      "kind": "python_package",
+      "path": "fastapi/",
+      "owner": "framework",
+      "schema": "PathOperationDeclaration",
+      "purpose": "Public framework package imported by application authors.",
+      "redaction": "safe_to_share"
+    },
+    {
+      "artifact_id": "routing_source",
+      "name": "Routing Source",
+      "kind": "source_directory",
+      "path": "fastapi/routing.py",
+      "owner": "framework",
+      "schema": "PathOperationDeclaration",
+      "purpose": "Connects declared routes to request handling.",
+      "redaction": "safe_to_share"
+    },
+    {
+      "artifact_id": "dependency_source",
+      "name": "Dependency Source",
+      "kind": "source_directory",
+      "path": "fastapi/dependencies/",
+      "owner": "framework",
+      "schema": "DependencySpec",
+      "purpose": "Resolves dependency graphs and request-time inputs.",
+      "redaction": "safe_to_share"
+    },
+    {
+      "artifact_id": "openapi_source",
+      "name": "OpenAPI Source",
+      "kind": "source_directory",
+      "path": "fastapi/openapi/",
+      "owner": "framework",
+      "schema": "OpenAPIContract",
+      "purpose": "Builds OpenAPI artifacts from application declarations.",
+      "redaction": "safe_to_share"
+    },
+    {
+      "artifact_id": "docs_site",
+      "name": "Documentation Site",
+      "kind": "public_docs",
+      "path": "docs/",
+      "owner": "docs",
+      "schema": "OpenAPIContract",
+      "purpose": "Explains framework usage and examples for application authors.",
+      "redaction": "safe_to_share"
+    },
+    {
+      "artifact_id": "test_suite",
+      "name": "Test Suite",
+      "kind": "tests",
+      "path": "tests/",
+      "owner": "quality",
+      "schema": "TestScenario",
+      "purpose": "Protects behavior across routing, validation, docs, security, and compatibility.",
+      "redaction": "safe_to_share"
+    }
+  ],
+  "decision_gates": [
+    {
+      "gate_id": "declaration_gate",
+      "name": "Declaration Gate",
+      "inputs": ["PathOperationDeclaration"],
+      "outputs": ["registered_route", "invalid_declaration"],
+      "human_gate": false,
+      "risk_boundary": "Invalid route declarations should fail before they become runtime behavior.",
+      "rules": [
+        { "if": "endpoint callable and method/path are valid", "then": "registered_route" },
+        { "if": "required route metadata is malformed", "then": "invalid_declaration" }
+      ]
+    },
+    {
+      "gate_id": "dependency_resolution_gate",
+      "name": "Dependency Resolution Gate",
+      "inputs": ["DependencySpec", "request_state"],
+      "outputs": ["resolved_inputs", "dependency_error"],
+      "human_gate": false,
+      "risk_boundary": "Endpoint code should not run with unresolved dependencies.",
+      "rules": [
+        { "if": "all dependencies resolve", "then": "resolved_inputs" },
+        { "if": "dependency raises or security requirement fails", "then": "dependency_error" }
+      ]
+    },
+    {
+      "gate_id": "validation_gate",
+      "name": "Request And Response Validation Gate",
+      "inputs": ["ValidationContract", "request_body", "response_body"],
+      "outputs": ["valid_payload", "validation_error"],
+      "human_gate": false,
+      "risk_boundary": "Payload shape should match declared contracts.",
+      "rules": [
+        { "if": "payload matches declared schema", "then": "valid_payload" },
+        { "if": "payload violates declared schema", "then": "validation_error" }
+      ]
+    },
+    {
+      "gate_id": "openapi_contract_gate",
+      "name": "OpenAPI Contract Gate",
+      "inputs": ["PathOperationDeclaration", "ValidationContract"],
+      "outputs": ["openapi_document", "docs_gap"],
+      "human_gate": false,
+      "risk_boundary": "Generated docs should reflect declared API behavior.",
+      "rules": [
+        { "if": "route metadata and schemas are complete", "then": "openapi_document" },
+        { "if": "documentation metadata is missing or inconsistent", "then": "docs_gap" }
+      ]
+    },
+    {
+      "gate_id": "test_release_gate",
+      "name": "Test And Release Gate",
+      "inputs": ["TestScenario", "source_change"],
+      "outputs": ["release_candidate", "blocked_release"],
+      "human_gate": true,
+      "risk_boundary": "Framework behavior changes should be protected by tests and maintainer review.",
+      "rules": [
+        { "if": "tests pass and review accepts compatibility impact", "then": "release_candidate" },
+        { "if": "regression or undocumented behavior change", "then": "blocked_release" }
+      ]
+    }
+  ],
+  "systems": [
+    {
+      "system_id": "developer_declaration_surface",
+      "name": "Developer Declaration Surface",
+      "purpose": "The public API application authors use to declare routes, models, dependencies, and metadata.",
+      "owner": "framework",
+      "language_stack": ["Python"],
+      "architecture_style": "library API",
+      "lifecycle": "developer code -> path operation declaration -> route registry",
+      "code_surfaces": ["fastapi/"],
+      "artifacts": ["fastapi_package"],
+      "decision_gates": ["declaration_gate"],
+      "truth_boundary": "A declaration is intent; runtime gates still validate requests and dependencies.",
+      "ideal_target": "Small Python declarations produce predictable API behavior."
+    },
+    {
+      "system_id": "routing_layer",
+      "name": "Routing Layer",
+      "purpose": "Matches incoming HTTP requests to declared path operations.",
+      "owner": "framework",
+      "language_stack": ["Python", "ASGI"],
+      "architecture_style": "request router",
+      "lifecycle": "request -> route match -> dependency resolution",
+      "code_surfaces": ["fastapi/routing.py"],
+      "artifacts": ["routing_source"],
+      "decision_gates": ["declaration_gate"],
+      "truth_boundary": "Route matching does not mean endpoint execution is safe yet.",
+      "ideal_target": "Every request lands on the right endpoint contract or fails clearly."
+    },
+    {
+      "system_id": "dependency_engine",
+      "name": "Dependency Engine",
+      "purpose": "Resolves nested dependencies, security requirements, and request-time inputs.",
+      "owner": "framework",
+      "language_stack": ["Python"],
+      "architecture_style": "dependency graph resolver",
+      "lifecycle": "route match -> dependency graph -> endpoint arguments",
+      "code_surfaces": ["fastapi/dependencies/"],
+      "artifacts": ["dependency_source"],
+      "decision_gates": ["dependency_resolution_gate"],
+      "truth_boundary": "Dependencies can block execution before endpoint logic runs.",
+      "ideal_target": "Dependency behavior is traceable and test-covered."
+    },
+    {
+      "system_id": "validation_serialization",
+      "name": "Validation And Serialization",
+      "purpose": "Validates request inputs and serializes endpoint responses according to declared contracts.",
+      "owner": "framework",
+      "language_stack": ["Python", "Pydantic"],
+      "architecture_style": "schema-driven runtime validation",
+      "lifecycle": "endpoint args -> endpoint result -> response model",
+      "code_surfaces": ["fastapi/_compat/", "fastapi/routing.py"],
+      "artifacts": ["fastapi_package"],
+      "decision_gates": ["validation_gate"],
+      "truth_boundary": "Validation is bounded by declared models and framework compatibility behavior.",
+      "ideal_target": "Runtime payloads match documented contracts."
+    },
+    {
+      "system_id": "openapi_docs_engine",
+      "name": "OpenAPI And Docs Engine",
+      "purpose": "Turns route declarations and schemas into machine-readable OpenAPI and human documentation.",
+      "owner": "docs",
+      "language_stack": ["Python", "Markdown"],
+      "architecture_style": "contract renderer",
+      "lifecycle": "path operation declarations -> OpenAPI document -> docs UI",
+      "code_surfaces": ["fastapi/openapi/", "docs/"],
+      "artifacts": ["openapi_source", "docs_site"],
+      "decision_gates": ["openapi_contract_gate"],
+      "truth_boundary": "Generated docs describe declared framework behavior, not an external production service.",
+      "ideal_target": "Docs and runtime contracts stay aligned."
+    },
+    {
+      "system_id": "quality_release_loop",
+      "name": "Quality And Release Loop",
+      "purpose": "Uses tests and review to protect framework compatibility.",
+      "owner": "quality",
+      "language_stack": ["Python"],
+      "architecture_style": "test and maintainer gate",
+      "lifecycle": "source change -> test scenario -> release candidate",
+      "code_surfaces": ["tests/"],
+      "artifacts": ["test_suite"],
+      "decision_gates": ["test_release_gate"],
+      "truth_boundary": "This public map does not replace maintainer CI or release policy.",
+      "ideal_target": "Framework changes are reviewable, tested, and documented."
+    }
+  ],
+  "workflows": [
+    {
+      "step_id": "declare_path_operation",
+      "name": "Declare Path Operation",
+      "actor": "Application Author",
+      "consumes": ["python_type_hints", "endpoint_callable"],
+      "produces": ["fastapi_package", "PathOperationDeclaration"],
+      "gates": ["declaration_gate"],
+      "next_steps": ["match_request"],
+      "purpose": "Create the API contract from Python code."
+    },
+    {
+      "step_id": "match_request",
+      "name": "Match Request",
+      "actor": "Routing Layer",
+      "consumes": ["PathOperationDeclaration", "http_request"],
+      "produces": ["routing_source"],
+      "gates": ["declaration_gate"],
+      "next_steps": ["resolve_dependencies"],
+      "purpose": "Route incoming requests to the correct declared endpoint."
+    },
+    {
+      "step_id": "resolve_dependencies",
+      "name": "Resolve Dependencies",
+      "actor": "Dependency Engine",
+      "consumes": ["DependencySpec", "http_request"],
+      "produces": ["resolved_inputs"],
+      "gates": ["dependency_resolution_gate"],
+      "next_steps": ["validate_and_execute"],
+      "purpose": "Build endpoint arguments and enforce dependency/security requirements."
+    },
+    {
+      "step_id": "validate_and_execute",
+      "name": "Validate And Execute",
+      "actor": "Validation And Serialization",
+      "consumes": ["resolved_inputs", "ValidationContract"],
+      "produces": ["response_body"],
+      "gates": ["validation_gate"],
+      "next_steps": ["publish_contract"],
+      "purpose": "Run endpoint logic after validation and serialize the result."
+    },
+    {
+      "step_id": "publish_contract",
+      "name": "Publish OpenAPI Contract",
+      "actor": "OpenAPI And Docs Engine",
+      "consumes": ["PathOperationDeclaration", "ValidationContract"],
+      "produces": ["openapi_source", "docs_site"],
+      "gates": ["openapi_contract_gate"],
+      "next_steps": ["test_behavior"],
+      "purpose": "Expose route behavior as docs and machine-readable contract."
+    },
+    {
+      "step_id": "test_behavior",
+      "name": "Test Behavior",
+      "actor": "Quality And Release Loop",
+      "consumes": ["source_change", "TestScenario"],
+      "produces": ["test_suite"],
+      "gates": ["test_release_gate"],
+      "next_steps": [],
+      "purpose": "Protect framework behavior before release."
+    }
+  ],
+  "edges": [
+    {
+      "source": "openapi_docs_engine",
+      "target": "developer_declaration_surface",
+      "relation": "documents",
+      "why": "Docs teach developers how to use the declaration surface."
+    }
+  ],
+  "architecture_patterns": [
+    {
+      "name": "Framework repo",
+      "works_for": "Web frameworks, SDKs, CLI frameworks, and runtime libraries",
+      "mapping": "Map public APIs as systems, declaration objects as schemas, runtime guards as gates, and tests/docs as release surfaces.",
+      "redaction": "Usually safe to share source paths; do not invent production deployment details."
+    },
+    {
+      "name": "Generated contract surface",
+      "works_for": "OpenAPI, GraphQL, protobuf, and typed client generation",
+      "mapping": "Show how developer declarations become generated contracts and how the contract is validated.",
+      "redaction": "Use public sample schemas or fake app examples."
+    }
+  ],
+  "walkthroughs": [
+    {
+      "name": "One route from declaration to response",
+      "story": "A developer declares a path operation. FastAPI registers the route, resolves dependencies for an incoming request, validates inputs, executes endpoint logic, validates/serializes the response, and exposes the route in OpenAPI.",
+      "example": {
+        "developer_intent": "GET /items/{item_id}",
+        "route_gate": "declaration_gate",
+        "runtime_gates": ["dependency_resolution_gate", "validation_gate"],
+        "public_contract": "OpenAPIContract"
+      }
+    },
+    {
+      "name": "How to audit without production data",
+      "story": "A reviewer does not need a real app database. They inspect the framework path: declaration, routing, dependency resolution, validation, OpenAPI output, tests, and docs.",
+      "example": {
+        "requires_private_database": false,
+        "review_artifacts": ["fastapi/routing.py", "fastapi/dependencies/", "fastapi/openapi/", "tests/", "docs/"]
+      }
+    }
+  ],
+  "review_questions": [
+    "How does a Python route declaration become runtime route behavior?",
+    "Which gates prevent unresolved dependencies or invalid payloads from reaching endpoint logic?",
+    "How does generated OpenAPI stay aligned with runtime behavior?",
+    "Which tests protect compatibility for routing, validation, dependencies, security, and docs?",
+    "What should a reviewer inspect if auditing a specific FastAPI application built on top of this framework?"
+  ],
+  "rebuild_recipe": [
+    {
+      "phase": "validate",
+      "goal": "Check the FastAPI public repo manifest.",
+      "commands": [
+        "system-review-graph validate --manifest examples/actual_repos/fastapi/system_review_manifest.json"
+      ]
+    },
+    {
+      "phase": "build",
+      "goal": "Generate the FastAPI system review report.",
+      "commands": [
+        "system-review-graph build --manifest examples/actual_repos/fastapi/system_review_manifest.json --out-dir examples/actual_repos/fastapi/reports"
+      ]
+    }
+  ],
+  "known_boundaries": [
+    "This is a public educational map, not an official FastAPI maintainer audit.",
+    "It maps framework behavior, not a specific deployed FastAPI application.",
+    "Runtime details may evolve as the upstream repo changes.",
+    "A real audit should inspect the exact commit, CI status, tests, and release notes."
+  ]
+}

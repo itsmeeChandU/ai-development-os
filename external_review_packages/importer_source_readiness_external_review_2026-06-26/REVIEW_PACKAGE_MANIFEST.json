@@ -1,0 +1,31 @@
+{
+  "package_name": "importer_source_readiness_external_review_2026-06-26",
+  "prepared_for": "external product, technical, compliance, security, finance, and board review",
+  "prepared_at": "2026-06-26",
+  "product": "Importer Source Readiness Copilot",
+  "status": {
+    "software": "ready_with_external_gates",
+    "operator_app": "operator_workflow_ready_internal",
+    "startup": "startup_in_progress",
+    "vc_pitch": "vc_pitch_ready_with_diligence_gates",
+    "board": "board_go_live_candidate_with_human_approval_gates",
+    "unsafe_gates": "closed",
+    "public_launch_ready": false
+  },
+  "repo_heads": {
+    "importer-source-readiness-copilot": "f8c48b738da3bdd0b42287d8b6b1a54484724647",
+    "ai-development-os": "0d701f3973941edcba682a3053e29a67fee36c8d",
+    "system-review-graph": "ec847c1572a9b16317eca19c47bbe8583c088caf",
+    "code-review-graph-private": "8611f9e707cb1450cecefc39d7da47c31e6cb105"
+  },
+  "top_level_paths": [
+    "START_HERE.md",
+    "WHAT_WE_ARE_BUILDING.md",
+    "CURRENT_SLICE_VS_TARGET_PRODUCT.md",
+    "review_docs/",
+    "sources/",
+    "evidence/",
+    "proof_logs/"
+  ],
+  "proof_boundary": "This package proves local code, generated artifacts, and internal operator workflow readiness. It does not prove buyer validation, legal/compliance approval, customs/tariff correctness, supplier readiness, signed contracts, financial approval, production deployment, or public launch readiness."
+}

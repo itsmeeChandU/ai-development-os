@@ -1,0 +1,84 @@
+name: Publish
+
+on:
+  release:
+    types:
+      - published
+  workflow_dispatch:
+    inputs:
+      confirm:
+        description: "Type publish to upload the current package version to PyPI."
+        required: true
+
+permissions:
+  contents: read
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+jobs:
+  build:
+    name: Build release distributions
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.11"
+      - name: Install tools
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e .
+          python -m pip install build twine cffconvert pytest ruff
+      - name: Validate
+        run: |
+          ruff check .
+          pytest -q
+          cffconvert --validate --infile CITATION.cff
+          python - <<'PY'
+          from pathlib import Path
+          import xml.etree.ElementTree as ET
+
+          for path in [
+              Path("assets/system-review-graph-mark.svg"),
+              Path("assets/social-preview.svg"),
+          ]:
+              ET.parse(path)
+              print(f"valid SVG XML: {path}")
+          PY
+      - name: Build distributions
+        run: |
+          rm -rf dist
+          python -m build
+          python -m twine check dist/*
+      - name: Smoke test installed wheel
+        run: |
+          python -m venv /tmp/srg-wheel-smoke
+          /tmp/srg-wheel-smoke/bin/python -m pip install dist/*.whl
+          /tmp/srg-wheel-smoke/bin/system-review-graph list-examples
+          /tmp/srg-wheel-smoke/bin/system-review-graph init-example --example fictional_ai_ops --out-dir /tmp/srg-example --force
+          /tmp/srg-wheel-smoke/bin/system-review-graph build --manifest /tmp/srg-example/system_review_manifest.json --out-dir /tmp/srg-report --depth overview
+      - uses: actions/upload-artifact@v6
+        with:
+          name: release-distributions
+          path: dist/*
+          if-no-files-found: error
+
+  publish:
+    name: Publish to PyPI
+    needs: build
+    if: github.event_name == 'release' || github.event.inputs.confirm == 'publish'
+    runs-on: ubuntu-latest
+    environment:
+      name: pypi
+      url: https://pypi.org/project/system-review-graph/
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/download-artifact@v7
+        with:
+          name: release-distributions
+          path: dist
+      - name: Publish distributions to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1

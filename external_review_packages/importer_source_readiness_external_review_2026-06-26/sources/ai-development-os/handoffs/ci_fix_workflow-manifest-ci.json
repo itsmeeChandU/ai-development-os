@@ -1,0 +1,66 @@
+{
+  "blocker_schema": [
+    "id",
+    "module",
+    "issue",
+    "owner",
+    "evidence",
+    "gate",
+    "next_valid_move",
+    "unsafe_to_bypass"
+  ],
+  "check_name": "workflow_manifest_ci",
+  "failure_excerpt": "",
+  "generated_at": "2026-06-25T06:17:47+00:00",
+  "kind": "ci_fix_handoff",
+  "known_job": {
+    "commands": [
+      "python scripts/ai_dev_os_check.py",
+      "python scripts/workflow_manifest_check.py",
+      "python scripts/agentic_workflow_orchestrator.py validate",
+      "python scripts/agentic_workflow_orchestrator.py automation-check",
+      "python scripts/eval_suite.py --manifest manifests/agentic_execution_manifest.json --out system_review_graph/eval_report.ci.json",
+      "python scripts/blocker_ledger.py validate --input system_review_graph/blockers.jsonl --allow-missing --out system_review_graph/blocker_ledger_report.ci.json",
+      "python scripts/self_test_flow.py"
+    ],
+    "gates": [
+      "manifest_valid",
+      "execution_manifest_valid",
+      "automation_runtime_valid",
+      "eval_suite_passed",
+      "blocker_ledger_valid",
+      "self_test_passed"
+    ],
+    "id": "workflow_manifest_ci",
+    "repo_id": "ai-development-os",
+    "trigger": "push and pull_request"
+  },
+  "lane": {
+    "allowed_files": [
+      ".github/**",
+      "scripts/**",
+      "tests/**",
+      "docs/**"
+    ],
+    "forbidden_files": [
+      "LICENSE",
+      "NOTICE.md",
+      "CONTRIBUTOR_TERMS.md",
+      "DCO.txt"
+    ],
+    "goal": "Fix the failing CI check without weakening proof gates.",
+    "id": "ci-fix-workflow-manifest-ci",
+    "mode": "surgeon",
+    "proof_commands": [
+      "python scripts/ai_dev_os_check.py",
+      "python scripts/workflow_manifest_check.py",
+      "python scripts/agentic_workflow_orchestrator.py validate",
+      "python scripts/agentic_workflow_orchestrator.py automation-check",
+      "python scripts/eval_suite.py --manifest manifests/agentic_execution_manifest.json --out system_review_graph/eval_report.ci.json",
+      "python scripts/blocker_ledger.py validate --input system_review_graph/blockers.jsonl --allow-missing --out system_review_graph/blocker_ledger_report.ci.json",
+      "python scripts/self_test_flow.py"
+    ]
+  },
+  "next_valid_move": "Inspect the failing log, make the smallest fix, run the listed proof commands.",
+  "unsafe_or_external_gates": "closed"
+}

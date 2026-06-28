@@ -1,0 +1,24 @@
+{
+  "ai_development_os_commit": "a11204d",
+  "app_url": "http://127.0.0.1:8766/start",
+  "new_capabilities": [
+    "beginner no-documents starter flow",
+    "component-style app shell and workflow stepper",
+    "PDF triage, quarantine metadata, and user confirmation",
+    "starter/missing/buyer/broker/report PDFs",
+    "ChatGPT-safe summary",
+    "saved packet workspace",
+    "Intelligence Hub database-style policy monitor and SQLite store"
+  ],
+  "product_commit": "f2afdc7",
+  "product_repo": "itsmeeChandU/importer-source-readiness-copilot",
+  "proof_boundary": "Local private-beta product is ready with external gates; no launch, legal, customs, tariff, CFIA, buyer, supplier, or commercial readiness claim is opened.",
+  "proof_commands": [
+    "python3 -m py_compile src/importer_source_readiness/*.py scripts/*.py",
+    "python3 -m unittest discover -s tests -p 'test_*.py'",
+    "python3 scripts/check_product.py",
+    "python3 scripts/product_project_check.py",
+    "python3 scripts/ai_dev_os_check.py"
+  ],
+  "status": "review_package_ready"
+}

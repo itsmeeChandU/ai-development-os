@@ -1,0 +1,819 @@
+{
+  "allowed_use": "internal_source_readiness_review_and_board_private_beta_decisioning",
+  "canadian_tool_count": 16,
+  "canadian_tools": [
+    {
+      "category": "customs_accounting",
+      "claim_boundary": "Orientation only; does not prove importer registration, duty/tax readiness, or CARM account control.",
+      "id": "cbsa-carm",
+      "name": "CBSA Assessment and Revenue Management (CARM)",
+      "source_url": "https://www.cbsa-asfc.gc.ca/services/carm-gcra/menu-eng.html"
+    },
+    {
+      "category": "import_workflow",
+      "claim_boundary": "Orientation only; does not replace CBSA, customs broker, or legal advice.",
+      "id": "cbsa-import-commercial-goods",
+      "name": "CBSA Import Commercial Goods Into Canada",
+      "source_url": "https://www.cbsa-asfc.gc.ca/import/menu-eng.html"
+    },
+    {
+      "category": "tariff_classification",
+      "claim_boundary": "Orientation only; tariff classification needs qualified review.",
+      "id": "cbsa-customs-tariff-2026",
+      "name": "CBSA Customs Tariff 2026",
+      "source_url": "https://www.cbsa-asfc.gc.ca/trade-commerce/tariff-tarif/2026/menu-eng.html"
+    },
+    {
+      "category": "food_import_requirements",
+      "claim_boundary": "Reference only; CFIA AIRS and applicable law need qualified review before product claims.",
+      "id": "cfia-airs",
+      "name": "CFIA Automated Import Reference System",
+      "source_url": "https://inspection.canada.ca/en/importing-food-plants-animals/airs"
+    },
+    {
+      "category": "food_import_api",
+      "claim_boundary": "Access and usage rights are not proven; AVS credentials remain an implementation blocker.",
+      "id": "cfia-airs-avs",
+      "name": "CFIA AIRS Verification Service",
+      "source_url": "https://inspection.canada.ca/en/importing-food-plants-animals/airs/avs"
+    },
+    {
+      "category": "controlled_imports",
+      "claim_boundary": "Orientation only; product applicability and permits require qualified review.",
+      "id": "gac-import-controls",
+      "name": "Global Affairs Canada Import Controls and Import Permits",
+      "source_url": "https://www.international.gc.ca/controls-controles/about-a_propos/impor/permits-licences.aspx?lang=eng"
+    },
+    {
+      "category": "legal_reference",
+      "claim_boundary": "Reference only; legal interpretation requires qualified counsel or compliance reviewer.",
+      "id": "justice-import-control-list",
+      "name": "Justice Laws Import Control List",
+      "source_url": "https://laws-lois.justice.gc.ca/eng/regulations/c.r.c.%2C_c._604/index.html"
+    },
+    {
+      "category": "restricted_party_screening",
+      "claim_boundary": "Screening evidence must be dated and reviewed; source presence alone does not clear parties.",
+      "id": "canada-sanctions",
+      "name": "Consolidated Canadian Autonomous Sanctions List",
+      "source_url": "https://www.international.gc.ca/world-monde/international_relations-relations_internationales/sanctions/consolidated-consolide.aspx?lang=eng"
+    },
+    {
+      "category": "trade_data",
+      "claim_boundary": "Data availability only; market size and demand claims need a dated model.",
+      "id": "ised-trade-data-online",
+      "name": "ISED Trade Data Online",
+      "source_url": "https://ised-isde.canada.ca/site/trade-data-online/en/overview"
+    },
+    {
+      "category": "importer_discovery",
+      "claim_boundary": "Discovery only; does not prove buyer validation or supplier recommendation.",
+      "id": "canada-cid",
+      "name": "Canadian Importers Database",
+      "source_url": "https://ised-isde.canada.ca/site/ised/en/research-and-business-intelligence/canadian-importers-database"
+    },
+    {
+      "category": "qualified_reviewer_discovery",
+      "claim_boundary": "Directory only; does not create a broker relationship or signoff.",
+      "id": "cbsa-licensed-customs-brokers",
+      "name": "CBSA Licensed Customs Brokers",
+      "source_url": "https://www.cbsa-asfc.gc.ca/services/cb-cd/cb-cd-eng.html"
+    },
+    {
+      "category": "permits_licences",
+      "claim_boundary": "Discovery only; actual permits/licences need jurisdiction-specific confirmation.",
+      "id": "bizpal",
+      "name": "BizPaL",
+      "source_url": "https://bizpal.ca/"
+    },
+    {
+      "category": "business_planning",
+      "claim_boundary": "Planning reference only; does not replace accounting, tax, or legal advice.",
+      "id": "canada-business-planning",
+      "name": "Canada.ca Planning a Business",
+      "source_url": "https://www.canada.ca/en/services/business/start/planning.html"
+    },
+    {
+      "category": "financial_planning",
+      "claim_boundary": "Template reference only; financial projections need founder/accountant review.",
+      "id": "bdc-financial-plan-template",
+      "name": "BDC Financial Plan Template",
+      "source_url": "https://www.bdc.ca/en/articles-tools/entrepreneur-toolkit/templates-business-guides/financial-plan-template"
+    },
+    {
+      "category": "privacy",
+      "claim_boundary": "Privacy orientation only; legal/privacy counsel review remains required before launch.",
+      "id": "pipeda-brief",
+      "name": "Office of the Privacy Commissioner of Canada PIPEDA Requirements in Brief",
+      "source_url": "https://www.priv.gc.ca/en/privacy-topics/privacy-laws-in-canada/the-personal-information-protection-and-electronic-documents-act-pipeda/pipeda_brief/"
+    },
+    {
+      "category": "cybersecurity",
+      "claim_boundary": "Security baseline orientation only; implementation and audit evidence are separate gates.",
+      "id": "cyber-centre-baseline-controls",
+      "name": "Canadian Centre for Cyber Security Baseline Cyber Security Controls",
+      "source_url": "https://www.cyber.gc.ca/en/guidance/baseline-cyber-security-controls-small-and-medium-organizations"
+    }
+  ],
+  "closed_claims": [
+    "CFIA_compliance_ready",
+    "buyer_validated",
+    "commercially_ready",
+    "customs_or_tariff_advice_ready",
+    "financial_advice_ready",
+    "fully_operational",
+    "launch_ready",
+    "legal_advice_ready",
+    "product_market_fit_proven",
+    "production_deploy_approved",
+    "public_launch_ready",
+    "qualified_compliance_ready",
+    "revenue_proven",
+    "supplier_recommendation_ready"
+  ],
+  "generated_at": "2026-06-25T00:00:00+00:00",
+  "not_allowed_use": [
+    "customs_or_tariff_advice",
+    "supplier_recommendation",
+    "buyer_validation_claim",
+    "public_launch_claim",
+    "legal_or_financial_advice",
+    "production_deployment_approval"
+  ],
+  "operator_can_use_now": true,
+  "primary_market": "Canada",
+  "product": "Importer Source Readiness Copilot",
+  "proof_boundary": "This workflow is an operator workbench for internal review. It coordinates generated reports, Canadian reference tools, continuation lanes, and human approval gates; it does not prove external-world readiness, customs/tariff correctness, buyer demand, legal/financial approval, supplier quality, or production launch approval.",
+  "status": "operator_workflow_ready_internal",
+  "top_next_valid_move": "Send the country matrix and source packet to a licensed Canadian customs broker or qualified compliance reviewer.",
+  "unsafe_gates_closed": true,
+  "work_queue": [
+    {
+      "claim_boundary": "AI simulation is not final approval; a responsible human owner must approve or reject this gate.",
+      "evidence": "data/expert_review_simulations.json",
+      "id": "approval:canadian-trade-compliance:human-approval",
+      "label": "licensed Canadian customs broker or qualified trade compliance reviewer must verify CBSA/CARM, tariff, CFIA, import controls, sanctions, and claim language",
+      "next_valid_move": "Send the country matrix and source packet to a licensed Canadian customs broker or qualified compliance reviewer.",
+      "owner": "Canadian trade compliance reviewer simulation",
+      "priority": 90,
+      "proof_command": "Attach dated approval evidence, then rerun python3 scripts/check_product.py.",
+      "status": "approval_required",
+      "type": "human_approval_gate"
+    },
+    {
+      "claim_boundary": "AI simulation is not final approval; a responsible human owner must approve or reject this gate.",
+      "evidence": "data/evidence_packets.json and data/canada_tool_registry.json",
+      "id": "approval:data-rights-refresh-signoff",
+      "label": "Source rights, refresh cadence, lineage, and API credentials must be approved before external source claims.",
+      "next_valid_move": "Add a no-write refresh proof and source-rights approval.",
+      "owner": "data",
+      "priority": 90,
+      "proof_command": "Attach dated approval evidence, then rerun python3 scripts/check_product.py.",
+      "status": "approval_required",
+      "type": "human_approval_gate"
+    },
+    {
+      "claim_boundary": "AI simulation is not final approval; a responsible human owner must approve or reject this gate.",
+      "evidence": "data/expert_review_simulations.json",
+      "id": "approval:data-source:human-approval",
+      "label": "data owner must approve source rights, refresh cadence, lineage, and any credentialed/paid source usage",
+      "next_valid_move": "Implement a dated no-write refresh proof and attach source-rights approval before external source claims.",
+      "owner": "data source reviewer simulation",
+      "priority": 90,
+      "proof_command": "Attach dated approval evidence, then rerun python3 scripts/check_product.py.",
+      "status": "approval_required",
+      "type": "human_approval_gate"
+    },
+    {
+      "claim_boundary": "AI simulation is not final approval; a responsible human owner must approve or reject this gate.",
+      "evidence": "investor/vc_pitch_deck.md and board/financial_operating_model.md",
+      "id": "approval:finance-signoff",
+      "label": "Funding ask, pricing, runway, and spend plan require founder/accountant/finance review.",
+      "next_valid_move": "Approve a 12-month operating plan and first 90-day budget before commitments.",
+      "owner": "founder",
+      "priority": 90,
+      "proof_command": "Attach dated approval evidence, then rerun python3 scripts/check_product.py.",
+      "status": "approval_required",
+      "type": "human_approval_gate"
+    },
+    {
+      "claim_boundary": "AI simulation is not final approval; a responsible human owner must approve or reject this gate.",
+      "evidence": "data/expert_review_simulations.json",
+      "id": "approval:financial-advisor:human-approval",
+      "label": "founder, accountant, or finance advisor must approve financial projections, funding ask, runway, and pricing assumptions",
+      "next_valid_move": "Founder and finance reviewer should approve a 12-month budget, pricing experiment, and cash runway before spend commitments.",
+      "owner": "financial advisor simulation",
+      "priority": 90,
+      "proof_command": "Attach dated approval evidence, then rerun python3 scripts/check_product.py.",
+      "status": "approval_required",
+      "type": "human_approval_gate"
+    },
+    {
+      "claim_boundary": "AI simulation is not final approval; a responsible human owner must approve or reject this gate.",
+      "evidence": "data/expert_review_simulations.json and data/canada_tool_registry.json",
+      "id": "approval:legal-privacy-signoff",
+      "label": "Canadian legal/privacy review is required before public copy, data collection, or fundraising documents are sent as official materials.",
+      "next_valid_move": "Have counsel/privacy reviewer approve terms, privacy posture, liability boundary, and claims.",
+      "owner": "legal",
+      "priority": 90,
+      "proof_command": "Attach dated approval evidence, then rerun python3 scripts/check_product.py.",
+      "status": "approval_required",
+      "type": "human_approval_gate"
+    },
+    {
+      "claim_boundary": "AI simulation is not final approval; a responsible human owner must approve or reject this gate.",
+      "evidence": "data/expert_review_simulations.json",
+      "id": "approval:legal-privacy:human-approval",
+      "label": "Canadian counsel or privacy reviewer must approve legal copy, PIPEDA/privacy posture, entity/IP/terms, and public claims",
+      "next_valid_move": "Have Canadian counsel/privacy reviewer approve terms, privacy copy, liability boundaries, and investor language.",
+      "owner": "legal and privacy reviewer simulation",
+      "priority": 90,
+      "proof_command": "Attach dated approval evidence, then rerun python3 scripts/check_product.py.",
+      "status": "approval_required",
+      "type": "human_approval_gate"
+    },
+    {
+      "claim_boundary": "AI simulation is not final approval; a responsible human owner must approve or reject this gate.",
+      "evidence": "data/expert_review_simulations.json",
+      "id": "approval:product-operator:human-approval",
+      "label": "operator launch owner must approve the private beta scope and support workflow",
+      "next_valid_move": "Board reviews the generated brief and either approves a private beta or sends corrections.",
+      "owner": "product operator",
+      "priority": 90,
+      "proof_command": "Attach dated approval evidence, then rerun python3 scripts/check_product.py.",
+      "status": "approval_required",
+      "type": "human_approval_gate"
+    },
+    {
+      "claim_boundary": "AI simulation is not final approval; a responsible human owner must approve or reject this gate.",
+      "evidence": "data/expert_review_simulations.json",
+      "id": "approval:qualified-compliance-signoff",
+      "label": "Canadian customs/trade/food compliance signoff is required before external claims.",
+      "next_valid_move": "Route the generated packet to a licensed Canadian customs broker or qualified reviewer.",
+      "owner": "compliance",
+      "priority": 90,
+      "proof_command": "Attach dated approval evidence, then rerun python3 scripts/check_product.py.",
+      "status": "approval_required",
+      "type": "human_approval_gate"
+    },
+    {
+      "claim_boundary": "AI simulation is not final approval; a responsible human owner must approve or reject this gate.",
+      "evidence": "data/expert_review_simulations.json and data/canada_tool_registry.json",
+      "id": "approval:security-ops-signoff",
+      "label": "Deployment environment, access, logging, backup, incident response, support, and rollback require operator/security approval.",
+      "next_valid_move": "Approve private beta deployment controls before external users.",
+      "owner": "security",
+      "priority": 90,
+      "proof_command": "Attach dated approval evidence, then rerun python3 scripts/check_product.py.",
+      "status": "approval_required",
+      "type": "human_approval_gate"
+    },
+    {
+      "claim_boundary": "AI simulation is not final approval; a responsible human owner must approve or reject this gate.",
+      "evidence": "data/expert_review_simulations.json",
+      "id": "approval:security-ops:human-approval",
+      "label": "operator/security owner must approve deployment environment, access control, incident response, backups, and support coverage",
+      "next_valid_move": "Approve a controlled private beta environment with access control, logging, incident response, and rollback owner.",
+      "owner": "security and operations reviewer simulation",
+      "priority": 90,
+      "proof_command": "Attach dated approval evidence, then rerun python3 scripts/check_product.py.",
+      "status": "approval_required",
+      "type": "human_approval_gate"
+    },
+    {
+      "canadian_tool_refs": [
+        {
+          "category": "food_import_requirements",
+          "claim_boundary": "Reference only; CFIA AIRS and applicable law need qualified review before product claims.",
+          "id": "cfia-airs",
+          "name": "CFIA Automated Import Reference System",
+          "source_url": "https://inspection.canada.ca/en/importing-food-plants-animals/airs"
+        }
+      ],
+      "claim_boundary": "Requires dated evidence or qualified review before any external claim can open.",
+      "evidence": "ca-frozen-tuna-fillet-030487",
+      "id": "gate:ca-frozen-tuna-fillet-030487:food_safety_status",
+      "label": "food safety requirements are not qualified",
+      "module": "food_safety",
+      "next_valid_move": "Have a licensed Canadian customs broker or qualified Canadian trade/food compliance reviewer verify CBSA/CARM importer obligations, tariff classification, CFIA AIRS requirements, import controls, sanctions screening, and claim language.",
+      "owner": "compliance",
+      "priority": 86,
+      "proof_command": "python3 scripts/run_external_gates.py && python3 scripts/check_product.py",
+      "status": "blocked_external_input",
+      "type": "external_evidence_gate"
+    },
+    {
+      "canadian_tool_refs": [
+        {
+          "category": "tariff_classification",
+          "claim_boundary": "Orientation only; tariff classification needs qualified review.",
+          "id": "cbsa-customs-tariff-2026",
+          "name": "CBSA Customs Tariff 2026",
+          "source_url": "https://www.cbsa-asfc.gc.ca/trade-commerce/tariff-tarif/2026/menu-eng.html"
+        },
+        {
+          "category": "qualified_reviewer_discovery",
+          "claim_boundary": "Directory only; does not create a broker relationship or signoff.",
+          "id": "cbsa-licensed-customs-brokers",
+          "name": "CBSA Licensed Customs Brokers",
+          "source_url": "https://www.cbsa-asfc.gc.ca/services/cb-cd/cb-cd-eng.html"
+        }
+      ],
+      "claim_boundary": "Requires dated evidence or qualified review before any external claim can open.",
+      "evidence": "ca-frozen-tuna-fillet-030487",
+      "id": "gate:ca-frozen-tuna-fillet-030487:tariff_status",
+      "label": "tariff or HS classification is not qualified",
+      "module": "tariff_classification",
+      "next_valid_move": "Have a licensed Canadian customs broker or qualified Canadian trade/food compliance reviewer verify CBSA/CARM importer obligations, tariff classification, CFIA AIRS requirements, import controls, sanctions screening, and claim language.",
+      "owner": "compliance",
+      "priority": 86,
+      "proof_command": "python3 scripts/run_external_gates.py && python3 scripts/check_product.py",
+      "status": "blocked_external_input",
+      "type": "external_evidence_gate"
+    },
+    {
+      "canadian_tool_refs": [
+        {
+          "category": "business_planning",
+          "claim_boundary": "Planning reference only; does not replace accounting, tax, or legal advice.",
+          "id": "canada-business-planning",
+          "name": "Canada.ca Planning a Business",
+          "source_url": "https://www.canada.ca/en/services/business/start/planning.html"
+        },
+        {
+          "category": "financial_planning",
+          "claim_boundary": "Template reference only; financial projections need founder/accountant review.",
+          "id": "bdc-financial-plan-template",
+          "name": "BDC Financial Plan Template",
+          "source_url": "https://www.bdc.ca/en/articles-tools/entrepreneur-toolkit/templates-business-guides/financial-plan-template"
+        },
+        {
+          "category": "privacy",
+          "claim_boundary": "Privacy orientation only; legal/privacy counsel review remains required before launch.",
+          "id": "pipeda-brief",
+          "name": "Office of the Privacy Commissioner of Canada PIPEDA Requirements in Brief",
+          "source_url": "https://www.priv.gc.ca/en/privacy-topics/privacy-laws-in-canada/the-personal-information-protection-and-electronic-documents-act-pipeda/pipeda_brief/"
+        },
+        {
+          "category": "cybersecurity",
+          "claim_boundary": "Security baseline orientation only; implementation and audit evidence are separate gates.",
+          "id": "cyber-centre-baseline-controls",
+          "name": "Canadian Centre for Cyber Security Baseline Cyber Security Controls",
+          "source_url": "https://www.cyber.gc.ca/en/guidance/baseline-cyber-security-controls-small-and-medium-organizations"
+        }
+      ],
+      "claim_boundary": "Requires dated evidence or qualified review before any external claim can open.",
+      "evidence": "No public release, legal copy, compliance signoff, or support workflow attached.",
+      "id": "gate:launch-claims:evidence-missing",
+      "label": "public or commercial launch claims are not allowed",
+      "module": "launch_readiness",
+      "next_valid_move": "Keep the product internal until buyer validation, contracts, compliance review, and operator support are proven.",
+      "owner": "operator",
+      "priority": 86,
+      "proof_command": "python3 scripts/run_external_gates.py && python3 scripts/check_product.py",
+      "status": "blocked_external_input",
+      "type": "external_evidence_gate"
+    },
+    {
+      "canadian_tool_refs": [
+        {
+          "category": "qualified_reviewer_discovery",
+          "claim_boundary": "Directory only; does not create a broker relationship or signoff.",
+          "id": "cbsa-licensed-customs-brokers",
+          "name": "CBSA Licensed Customs Brokers",
+          "source_url": "https://www.cbsa-asfc.gc.ca/services/cb-cd/cb-cd-eng.html"
+        },
+        {
+          "category": "privacy",
+          "claim_boundary": "Privacy orientation only; legal/privacy counsel review remains required before launch.",
+          "id": "pipeda-brief",
+          "name": "Office of the Privacy Commissioner of Canada PIPEDA Requirements in Brief",
+          "source_url": "https://www.priv.gc.ca/en/privacy-topics/privacy-laws-in-canada/the-personal-information-protection-and-electronic-documents-act-pipeda/pipeda_brief/"
+        }
+      ],
+      "claim_boundary": "Requires dated evidence or qualified review before any external claim can open.",
+      "evidence": "No qualified customs, food safety, or legal review attached.",
+      "id": "gate:qualified-compliance-review:evidence-missing",
+      "label": "qualified compliance review is missing",
+      "module": "legal_compliance",
+      "next_valid_move": "Get qualified Canadian review for country matrix, tariff treatment, CFIA food import obligations, sanctions screening, and claims language.",
+      "owner": "compliance",
+      "priority": 86,
+      "proof_command": "python3 scripts/run_external_gates.py && python3 scripts/check_product.py",
+      "status": "blocked_external_input",
+      "type": "external_evidence_gate"
+    },
+    {
+      "canadian_tool_refs": [
+        {
+          "category": "controlled_imports",
+          "claim_boundary": "Orientation only; product applicability and permits require qualified review.",
+          "id": "gac-import-controls",
+          "name": "Global Affairs Canada Import Controls and Import Permits",
+          "source_url": "https://www.international.gc.ca/controls-controles/about-a_propos/impor/permits-licences.aspx?lang=eng"
+        }
+      ],
+      "claim_boundary": "Requires dated evidence or qualified review before any external claim can open.",
+      "evidence": "ca-frozen-tuna-fillet-030487",
+      "id": "gate:ca-frozen-tuna-fillet-030487:export_rules_status",
+      "label": "qualified export-rules review is missing",
+      "module": "country_export_rules",
+      "next_valid_move": "Have a licensed Canadian customs broker or qualified Canadian trade/food compliance reviewer verify CBSA/CARM importer obligations, tariff classification, CFIA AIRS requirements, import controls, sanctions screening, and claim language.",
+      "owner": "compliance",
+      "priority": 82,
+      "proof_command": "python3 scripts/run_external_gates.py && python3 scripts/check_product.py",
+      "status": "blocked_external_input",
+      "type": "external_evidence_gate"
+    },
+    {
+      "canadian_tool_refs": [
+        {
+          "category": "import_workflow",
+          "claim_boundary": "Orientation only; does not replace CBSA, customs broker, or legal advice.",
+          "id": "cbsa-import-commercial-goods",
+          "name": "CBSA Import Commercial Goods Into Canada",
+          "source_url": "https://www.cbsa-asfc.gc.ca/import/menu-eng.html"
+        }
+      ],
+      "claim_boundary": "Requires dated evidence or qualified review before any external claim can open.",
+      "evidence": "ca-frozen-tuna-fillet-030487",
+      "id": "gate:ca-frozen-tuna-fillet-030487:import_rules_status",
+      "label": "qualified import-rules review is missing",
+      "module": "country_import_rules",
+      "next_valid_move": "Have a licensed Canadian customs broker or qualified Canadian trade/food compliance reviewer verify CBSA/CARM importer obligations, tariff classification, CFIA AIRS requirements, import controls, sanctions screening, and claim language.",
+      "owner": "compliance",
+      "priority": 82,
+      "proof_command": "python3 scripts/run_external_gates.py && python3 scripts/check_product.py",
+      "status": "blocked_external_input",
+      "type": "external_evidence_gate"
+    },
+    {
+      "canadian_tool_refs": [
+        {
+          "category": "restricted_party_screening",
+          "claim_boundary": "Screening evidence must be dated and reviewed; source presence alone does not clear parties.",
+          "id": "canada-sanctions",
+          "name": "Consolidated Canadian Autonomous Sanctions List",
+          "source_url": "https://www.international.gc.ca/world-monde/international_relations-relations_internationales/sanctions/consolidated-consolide.aspx?lang=eng"
+        }
+      ],
+      "claim_boundary": "Requires dated evidence or qualified review before any external claim can open.",
+      "evidence": "ca-frozen-tuna-fillet-030487",
+      "id": "gate:ca-frozen-tuna-fillet-030487:restricted_party_status",
+      "label": "restricted-party screening is not complete",
+      "module": "restricted_party_screening",
+      "next_valid_move": "Have a licensed Canadian customs broker or qualified Canadian trade/food compliance reviewer verify CBSA/CARM importer obligations, tariff classification, CFIA AIRS requirements, import controls, sanctions screening, and claim language.",
+      "owner": "compliance",
+      "priority": 82,
+      "proof_command": "python3 scripts/run_external_gates.py && python3 scripts/check_product.py",
+      "status": "blocked_external_input",
+      "type": "external_evidence_gate"
+    },
+    {
+      "blocked_modules": [
+        "buyer_validation",
+        "commercial_contract",
+        "data_freshness",
+        "legal_compliance",
+        "official_source_review"
+      ],
+      "blocker_count": 5,
+      "canadian_tool_refs": [
+        {
+          "category": "customs_accounting",
+          "claim_boundary": "Orientation only; does not prove importer registration, duty/tax readiness, or CARM account control.",
+          "id": "cbsa-carm",
+          "name": "CBSA Assessment and Revenue Management (CARM)",
+          "source_url": "https://www.cbsa-asfc.gc.ca/services/carm-gcra/menu-eng.html"
+        },
+        {
+          "category": "import_workflow",
+          "claim_boundary": "Orientation only; does not replace CBSA, customs broker, or legal advice.",
+          "id": "cbsa-import-commercial-goods",
+          "name": "CBSA Import Commercial Goods Into Canada",
+          "source_url": "https://www.cbsa-asfc.gc.ca/import/menu-eng.html"
+        },
+        {
+          "category": "tariff_classification",
+          "claim_boundary": "Orientation only; tariff classification needs qualified review.",
+          "id": "cbsa-customs-tariff-2026",
+          "name": "CBSA Customs Tariff 2026",
+          "source_url": "https://www.cbsa-asfc.gc.ca/trade-commerce/tariff-tarif/2026/menu-eng.html"
+        },
+        {
+          "category": "food_import_requirements",
+          "claim_boundary": "Reference only; CFIA AIRS and applicable law need qualified review before product claims.",
+          "id": "cfia-airs",
+          "name": "CFIA Automated Import Reference System",
+          "source_url": "https://inspection.canada.ca/en/importing-food-plants-animals/airs"
+        },
+        {
+          "category": "restricted_party_screening",
+          "claim_boundary": "Screening evidence must be dated and reviewed; source presence alone does not clear parties.",
+          "id": "canada-sanctions",
+          "name": "Consolidated Canadian Autonomous Sanctions List",
+          "source_url": "https://www.international.gc.ca/world-monde/international_relations-relations_internationales/sanctions/consolidated-consolide.aspx?lang=eng"
+        },
+        {
+          "category": "importer_discovery",
+          "claim_boundary": "Discovery only; does not prove buyer validation or supplier recommendation.",
+          "id": "canada-cid",
+          "name": "Canadian Importers Database",
+          "source_url": "https://ised-isde.canada.ca/site/ised/en/research-and-business-intelligence/canadian-importers-database"
+        },
+        {
+          "category": "qualified_reviewer_discovery",
+          "claim_boundary": "Directory only; does not create a broker relationship or signoff.",
+          "id": "cbsa-licensed-customs-brokers",
+          "name": "CBSA Licensed Customs Brokers",
+          "source_url": "https://www.cbsa-asfc.gc.ca/services/cb-cd/cb-cd-eng.html"
+        }
+      ],
+      "claim_boundary": "Internal operator review only; this row does not prove supplier, buyer, customs, tariff, or launch readiness.",
+      "country": "CA",
+      "evidence": "system_review_graph/readiness_report.json",
+      "hs_code": "",
+      "id": "source:country-requirement-template",
+      "label": "Fixture country requirements placeholder",
+      "next_valid_move": "Use this row for internal operator readiness only; collect external evidence before claims.",
+      "owner": "operator",
+      "priority": 78,
+      "product_slug": "country-requirement-template",
+      "proof_command": "python3 scripts/run_readiness.py && python3 scripts/check_product.py",
+      "queue_id": "DEMO-COUNTRY-GATE",
+      "status": "ready_with_external_gates",
+      "type": "source_card_review"
+    },
+    {
+      "blocker_count": 3,
+      "claim_boundary": "Continuation lane must collect evidence before completion claims change.",
+      "id": "lane:buyer-validation",
+      "label": "Buyer and operator validation",
+      "next_valid_move": "Collect dated buyer feedback or no-fit evidence before commercial claims.",
+      "owner": "product",
+      "priority": 76,
+      "proof_command": "Attach evidence to data/evidence_packets.json and rerun python3 scripts/check_product.py.",
+      "required_evidence": [
+        "dated buyer, importer, broker, or operator interviews",
+        "no-fit, no-budget, or willingness-to-pay notes",
+        "operator workflow gaps found during real review"
+      ],
+      "status": "blocked_external_input",
+      "type": "continuation_lane"
+    },
+    {
+      "blocker_count": 3,
+      "claim_boundary": "Continuation lane must collect evidence before completion claims change.",
+      "id": "lane:contract-terms",
+      "label": "Commercial and source contracts",
+      "next_valid_move": "Attach written source, supplier, buyer, or commercial terms before readiness claims.",
+      "owner": "operations",
+      "priority": 76,
+      "proof_command": "Attach contract evidence to data/evidence_packets.json and rerun python3 scripts/check_product.py.",
+      "required_evidence": [
+        "written source, supplier, buyer, or data-use terms",
+        "liability, support, termination, and rights boundaries",
+        "commercial owner acceptance"
+      ],
+      "status": "blocked_external_input",
+      "type": "continuation_lane"
+    },
+    {
+      "blocker_count": 3,
+      "claim_boundary": "Continuation lane must collect evidence before completion claims change.",
+      "id": "lane:country-matrix-review",
+      "label": "Country import/export requirements",
+      "next_valid_move": "Have a licensed Canadian customs broker or qualified Canadian trade/food compliance reviewer verify CBSA/CARM importer obligations, tariff classification, CFIA AIRS requirements, import controls, sanctions screening, and claim language.",
+      "owner": "compliance",
+      "priority": 76,
+      "proof_command": "Update data/country_requirements_matrix.json and rerun python3 scripts/run_external_gates.py.",
+      "required_evidence": [
+        "dated official-source links for each country and product category",
+        "import/export rule review with claim boundaries",
+        "country matrix row owner and last-checked date"
+      ],
+      "status": "blocked_external_input",
+      "type": "continuation_lane"
+    },
+    {
+      "blocker_count": 1,
+      "claim_boundary": "Continuation lane must collect evidence before completion claims change.",
+      "id": "lane:launch-approval",
+      "label": "Launch and public-claim approval",
+      "next_valid_move": "Keep the product internal until buyer validation, contracts, compliance review, and operator support are proven.",
+      "owner": "operator",
+      "priority": 76,
+      "proof_command": "Rerun python3 scripts/check_product.py after all upstream evidence lanes are closed.",
+      "required_evidence": [
+        "approved public copy and support workflow",
+        "release owner signoff",
+        "explicit proof that buyer, compliance, contract, and data lanes are closed"
+      ],
+      "status": "blocked_external_input",
+      "type": "continuation_lane"
+    },
+    {
+      "blocker_count": 6,
+      "claim_boundary": "Continuation lane must collect evidence before completion claims change.",
+      "id": "lane:qualified-compliance-review",
+      "label": "Qualified compliance review",
+      "next_valid_move": "Get qualified review before legal, customs, import/export, or public claims.",
+      "owner": "compliance",
+      "priority": 76,
+      "proof_command": "Update country matrix and evidence packets, then rerun python3 scripts/check_product.py.",
+      "required_evidence": [
+        "qualified customs, food safety, or legal review notes",
+        "reviewer identity, date, scope, and claim boundary",
+        "approved or rejected language for operator-facing claims"
+      ],
+      "status": "blocked_external_input",
+      "type": "continuation_lane"
+    },
+    {
+      "blocker_count": 1,
+      "claim_boundary": "Continuation lane must collect evidence before completion claims change.",
+      "id": "lane:restricted-party-screening",
+      "label": "Restricted-party screening",
+      "next_valid_move": "Have a licensed Canadian customs broker or qualified Canadian trade/food compliance reviewer verify CBSA/CARM importer obligations, tariff classification, CFIA AIRS requirements, import controls, sanctions screening, and claim language.",
+      "owner": "compliance",
+      "priority": 76,
+      "proof_command": "Update country matrix/evidence packets and rerun python3 scripts/run_external_gates.py.",
+      "required_evidence": [
+        "dated screening result for relevant parties",
+        "screening source, jurisdiction, and reviewer",
+        "clear pass/fail decision and escalation path"
+      ],
+      "status": "blocked_external_input",
+      "type": "continuation_lane"
+    },
+    {
+      "blocker_count": 3,
+      "claim_boundary": "Continuation lane must collect evidence before completion claims change.",
+      "id": "lane:source-rights-freshness",
+      "label": "Source rights and data freshness",
+      "next_valid_move": "Run a dated refresh or mark the row as fixture-only.",
+      "owner": "data",
+      "priority": 76,
+      "proof_command": "Update source registry/evidence packets and rerun python3 scripts/check_product.py.",
+      "required_evidence": [
+        "source rights and allowed-use notes",
+        "repeatable refresh proof with date and source lineage",
+        "freshness SLA or explicit fixture-only boundary"
+      ],
+      "status": "blocked_external_input",
+      "type": "continuation_lane"
+    },
+    {
+      "canadian_tool_refs": [],
+      "claim_boundary": "Requires dated evidence or qualified review before any external claim can open.",
+      "evidence": "No dated buyer, importer, broker, or operator feedback attached.",
+      "id": "gate:buyer-validation:evidence-missing",
+      "label": "buyer/operator validation is missing",
+      "module": "buyer_validation",
+      "next_valid_move": "Collect dated buyer or operator feedback, including no-fit/no-budget evidence, and attach it to the evidence packet.",
+      "owner": "product",
+      "priority": 72,
+      "proof_command": "python3 scripts/run_external_gates.py && python3 scripts/check_product.py",
+      "status": "blocked_external_input",
+      "type": "external_evidence_gate"
+    },
+    {
+      "canadian_tool_refs": [],
+      "claim_boundary": "Requires dated evidence or qualified review before any external claim can open.",
+      "evidence": "ca-frozen-tuna-fillet-030487",
+      "id": "gate:ca-frozen-tuna-fillet-030487:broker_or_expert_review_status",
+      "label": "broker or qualified expert review is missing",
+      "module": "expert_review",
+      "next_valid_move": "Have a licensed Canadian customs broker or qualified Canadian trade/food compliance reviewer verify CBSA/CARM importer obligations, tariff classification, CFIA AIRS requirements, import controls, sanctions screening, and claim language.",
+      "owner": "compliance",
+      "priority": 72,
+      "proof_command": "python3 scripts/run_external_gates.py && python3 scripts/check_product.py",
+      "status": "blocked_external_input",
+      "type": "external_evidence_gate"
+    },
+    {
+      "canadian_tool_refs": [],
+      "claim_boundary": "Requires dated evidence or qualified review before any external claim can open.",
+      "evidence": "No written source, data, supplier, broker, buyer, or commercial terms attached.",
+      "id": "gate:commercial-source-contract:evidence-missing",
+      "label": "commercial/source contract is missing",
+      "module": "commercial_contract",
+      "next_valid_move": "Attach written terms for data/source rights, supplier/buyer contact use, liability boundary, and termination.",
+      "owner": "operations",
+      "priority": 72,
+      "proof_command": "python3 scripts/run_external_gates.py && python3 scripts/check_product.py",
+      "status": "blocked_external_input",
+      "type": "external_evidence_gate"
+    },
+    {
+      "canadian_tool_refs": [
+        {
+          "category": "trade_data",
+          "claim_boundary": "Data availability only; market size and demand claims need a dated model.",
+          "id": "ised-trade-data-online",
+          "name": "ISED Trade Data Online",
+          "source_url": "https://ised-isde.canada.ca/site/trade-data-online/en/overview"
+        },
+        {
+          "category": "importer_discovery",
+          "claim_boundary": "Discovery only; does not prove buyer validation or supplier recommendation.",
+          "id": "canada-cid",
+          "name": "Canadian Importers Database",
+          "source_url": "https://ised-isde.canada.ca/site/ised/en/research-and-business-intelligence/canadian-importers-database"
+        }
+      ],
+      "claim_boundary": "Requires dated evidence or qualified review before any external claim can open.",
+      "evidence": "Official source registry exists, but no repeatable dated refresh job or source-rights review is attached.",
+      "id": "gate:source-rights-and-freshness:evidence-missing",
+      "label": "repeatable data freshness and source rights are not proven",
+      "module": "data_freshness",
+      "next_valid_move": "Define source rights, refresh cadence, freshness SLA, and a no-write refresh proof before product claims.",
+      "owner": "data",
+      "priority": 72,
+      "proof_command": "python3 scripts/run_external_gates.py && python3 scripts/check_product.py",
+      "status": "blocked_external_input",
+      "type": "external_evidence_gate"
+    },
+    {
+      "blocked_modules": [
+        "buyer_validation",
+        "commercial_contract",
+        "data_freshness",
+        "legal_compliance"
+      ],
+      "blocker_count": 4,
+      "canadian_tool_refs": [
+        {
+          "category": "customs_accounting",
+          "claim_boundary": "Orientation only; does not prove importer registration, duty/tax readiness, or CARM account control.",
+          "id": "cbsa-carm",
+          "name": "CBSA Assessment and Revenue Management (CARM)",
+          "source_url": "https://www.cbsa-asfc.gc.ca/services/carm-gcra/menu-eng.html"
+        },
+        {
+          "category": "import_workflow",
+          "claim_boundary": "Orientation only; does not replace CBSA, customs broker, or legal advice.",
+          "id": "cbsa-import-commercial-goods",
+          "name": "CBSA Import Commercial Goods Into Canada",
+          "source_url": "https://www.cbsa-asfc.gc.ca/import/menu-eng.html"
+        },
+        {
+          "category": "tariff_classification",
+          "claim_boundary": "Orientation only; tariff classification needs qualified review.",
+          "id": "cbsa-customs-tariff-2026",
+          "name": "CBSA Customs Tariff 2026",
+          "source_url": "https://www.cbsa-asfc.gc.ca/trade-commerce/tariff-tarif/2026/menu-eng.html"
+        },
+        {
+          "category": "food_import_requirements",
+          "claim_boundary": "Reference only; CFIA AIRS and applicable law need qualified review before product claims.",
+          "id": "cfia-airs",
+          "name": "CFIA Automated Import Reference System",
+          "source_url": "https://inspection.canada.ca/en/importing-food-plants-animals/airs"
+        },
+        {
+          "category": "restricted_party_screening",
+          "claim_boundary": "Screening evidence must be dated and reviewed; source presence alone does not clear parties.",
+          "id": "canada-sanctions",
+          "name": "Consolidated Canadian Autonomous Sanctions List",
+          "source_url": "https://www.international.gc.ca/world-monde/international_relations-relations_internationales/sanctions/consolidated-consolide.aspx?lang=eng"
+        },
+        {
+          "category": "importer_discovery",
+          "claim_boundary": "Discovery only; does not prove buyer validation or supplier recommendation.",
+          "id": "canada-cid",
+          "name": "Canadian Importers Database",
+          "source_url": "https://ised-isde.canada.ca/site/ised/en/research-and-business-intelligence/canadian-importers-database"
+        },
+        {
+          "category": "qualified_reviewer_discovery",
+          "claim_boundary": "Directory only; does not create a broker relationship or signoff.",
+          "id": "cbsa-licensed-customs-brokers",
+          "name": "CBSA Licensed Customs Brokers",
+          "source_url": "https://www.cbsa-asfc.gc.ca/services/cb-cd/cb-cd-eng.html"
+        }
+      ],
+      "claim_boundary": "Internal operator review only; this row does not prove supplier, buyer, customs, tariff, or launch readiness.",
+      "country": "CA",
+      "evidence": "system_review_graph/readiness_report.json",
+      "hs_code": "0304870000",
+      "id": "source:frozen-tuna-fillet-readiness",
+      "label": "Canadian Importers Database",
+      "next_valid_move": "Use this row for internal operator readiness only; collect external evidence before claims.",
+      "owner": "operator",
+      "priority": 65,
+      "product_slug": "frozen-tuna-fillet-readiness",
+      "proof_command": "python3 scripts/run_readiness.py && python3 scripts/check_product.py",
+      "queue_id": "IQ-0197",
+      "status": "ready_with_external_gates",
+      "type": "source_card_review"
+    }
+  ],
+  "work_queue_count": 31,
+  "work_queue_counts_by_type": {
+    "continuation_lane": 7,
+    "external_evidence_gate": 11,
+    "human_approval_gate": 11,
+    "source_card_review": 2
+  }
+}

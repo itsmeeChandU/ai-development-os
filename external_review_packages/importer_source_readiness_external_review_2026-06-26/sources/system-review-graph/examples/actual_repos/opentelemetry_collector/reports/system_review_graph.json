@@ -1,0 +1,959 @@
+{
+  "architecture_patterns": [
+    {
+      "mapping": "Map config, components, pipeline topology, lifecycle gates, backpressure gates, and delivery gates.",
+      "name": "Component pipeline",
+      "redaction": "Expose component names and contracts; redact customer endpoints, secrets, and payload content.",
+      "works_for": "Telemetry agents, ETL jobs, event routers, streaming processors, and plugin frameworks"
+    },
+    {
+      "mapping": "Use public component contracts, fake config, health states, and delivery-policy examples.",
+      "name": "Enterprise API-only review",
+      "redaction": "Do not publish production telemetry, endpoint URLs, tokens, tenant names, or incident traces.",
+      "works_for": "Platforms where reviewers cannot access databases or deployed services"
+    }
+  ],
+  "artifacts": [
+    {
+      "artifact_id": "receiver_tree",
+      "kind": "source_directory",
+      "name": "Receiver Tree",
+      "owner": "collector",
+      "path": "receiver/",
+      "purpose": "Defines receiver interfaces, helpers, and built-in receiver components.",
+      "redaction": "safe_to_share",
+      "schema": "ReceiverContract"
+    },
+    {
+      "artifact_id": "processor_tree",
+      "kind": "source_directory",
+      "name": "Processor Tree",
+      "owner": "collector",
+      "path": "processor/",
+      "purpose": "Defines processors that transform, batch, limit, or otherwise mediate telemetry.",
+      "redaction": "safe_to_share",
+      "schema": "ProcessorContract"
+    },
+    {
+      "artifact_id": "exporter_tree",
+      "kind": "source_directory",
+      "name": "Exporter Tree",
+      "owner": "collector",
+      "path": "exporter/",
+      "purpose": "Defines exporters and exporter helper behavior.",
+      "redaction": "safe_to_share",
+      "schema": "ExporterContract"
+    },
+    {
+      "artifact_id": "connector_tree",
+      "kind": "source_directory",
+      "name": "Connector Tree",
+      "owner": "collector",
+      "path": "connector/",
+      "purpose": "Defines connectors that can route telemetry between pipelines.",
+      "redaction": "safe_to_share",
+      "schema": "TelemetryBatch"
+    },
+    {
+      "artifact_id": "extension_tree",
+      "kind": "source_directory",
+      "name": "Extension Tree",
+      "owner": "collector",
+      "path": "extension/",
+      "purpose": "Defines service extensions such as auth, zpages, memory limiters, and capabilities.",
+      "redaction": "safe_to_share",
+      "schema": "ComponentStatus"
+    },
+    {
+      "artifact_id": "service_tree",
+      "kind": "source_directory",
+      "name": "Service Tree",
+      "owner": "collector",
+      "path": "service/",
+      "purpose": "Coordinates configuration, pipelines, component lifecycle, telemetry, and host capabilities.",
+      "redaction": "safe_to_share",
+      "schema": "CollectorConfig"
+    },
+    {
+      "artifact_id": "confmap_tree",
+      "kind": "source_directory",
+      "name": "Configuration Map Tree",
+      "owner": "collector",
+      "path": "confmap/",
+      "purpose": "Loads and resolves configuration maps and providers.",
+      "redaction": "safe_to_share",
+      "schema": "CollectorConfig"
+    },
+    {
+      "artifact_id": "docs_tree",
+      "kind": "public_docs",
+      "name": "Docs Tree",
+      "owner": "docs",
+      "path": "docs/",
+      "purpose": "Documents collector behavior, proposals, and images.",
+      "redaction": "safe_to_share",
+      "schema": "CollectorConfig"
+    }
+  ],
+  "bigger_picture": "This example shows how to map a component pipeline repo. The system is a configurable telemetry service: configuration declares pipelines, receivers ingest signals, processors transform or batch them, connectors can bridge pipelines, exporters send telemetry onward, extensions add service capabilities, and service orchestration manages startup, shutdown, and observability.",
+  "blueprint_sections": [],
+  "child_maps": [],
+  "current_truth": {
+    "example_type": "actual_public_repo",
+    "official_maintainer_audit": false,
+    "private_database_required": false,
+    "production_data_required": false,
+    "repo": "open-telemetry/opentelemetry-collector",
+    "source_accessed_at": "2026-06-08"
+  },
+  "edges": [
+    {
+      "relation": "declares_runtime_for",
+      "source": "configuration_system",
+      "target": "service_orchestrator",
+      "why": "The service orchestrator starts pipelines from resolved configuration."
+    },
+    {
+      "relation": "feeds_processed_batches_to",
+      "source": "processor_layer",
+      "target": "exporter_layer",
+      "why": "Processor output is delivered to exporters in configured pipelines."
+    },
+    {
+      "relation": "owns_or_uses",
+      "source": "configuration_system",
+      "target": "confmap_tree",
+      "why": "system manifest declared artifact ownership/usage"
+    },
+    {
+      "relation": "owns_or_uses",
+      "source": "configuration_system",
+      "target": "service_tree",
+      "why": "system manifest declared artifact ownership/usage"
+    },
+    {
+      "relation": "is_gated_by",
+      "source": "configuration_system",
+      "target": "config_validation_gate",
+      "why": "system manifest declared decision gate"
+    },
+    {
+      "relation": "owns_or_uses",
+      "source": "receiver_layer",
+      "target": "receiver_tree",
+      "why": "system manifest declared artifact ownership/usage"
+    },
+    {
+      "relation": "is_gated_by",
+      "source": "receiver_layer",
+      "target": "component_lifecycle_gate",
+      "why": "system manifest declared decision gate"
+    },
+    {
+      "relation": "owns_or_uses",
+      "source": "processor_layer",
+      "target": "processor_tree",
+      "why": "system manifest declared artifact ownership/usage"
+    },
+    {
+      "relation": "is_gated_by",
+      "source": "processor_layer",
+      "target": "backpressure_gate",
+      "why": "system manifest declared decision gate"
+    },
+    {
+      "relation": "is_gated_by",
+      "source": "processor_layer",
+      "target": "component_lifecycle_gate",
+      "why": "system manifest declared decision gate"
+    },
+    {
+      "relation": "owns_or_uses",
+      "source": "connector_extension_layer",
+      "target": "connector_tree",
+      "why": "system manifest declared artifact ownership/usage"
+    },
+    {
+      "relation": "owns_or_uses",
+      "source": "connector_extension_layer",
+      "target": "extension_tree",
+      "why": "system manifest declared artifact ownership/usage"
+    },
+    {
+      "relation": "is_gated_by",
+      "source": "connector_extension_layer",
+      "target": "component_lifecycle_gate",
+      "why": "system manifest declared decision gate"
+    },
+    {
+      "relation": "owns_or_uses",
+      "source": "exporter_layer",
+      "target": "exporter_tree",
+      "why": "system manifest declared artifact ownership/usage"
+    },
+    {
+      "relation": "is_gated_by",
+      "source": "exporter_layer",
+      "target": "export_delivery_gate",
+      "why": "system manifest declared decision gate"
+    },
+    {
+      "relation": "is_gated_by",
+      "source": "exporter_layer",
+      "target": "component_lifecycle_gate",
+      "why": "system manifest declared decision gate"
+    },
+    {
+      "relation": "owns_or_uses",
+      "source": "service_orchestrator",
+      "target": "service_tree",
+      "why": "system manifest declared artifact ownership/usage"
+    },
+    {
+      "relation": "owns_or_uses",
+      "source": "service_orchestrator",
+      "target": "docs_tree",
+      "why": "system manifest declared artifact ownership/usage"
+    },
+    {
+      "relation": "is_gated_by",
+      "source": "service_orchestrator",
+      "target": "config_validation_gate",
+      "why": "system manifest declared decision gate"
+    },
+    {
+      "relation": "is_gated_by",
+      "source": "service_orchestrator",
+      "target": "component_lifecycle_gate",
+      "why": "system manifest declared decision gate"
+    },
+    {
+      "relation": "feeds",
+      "source": "config_file",
+      "target": "load_configuration",
+      "why": "Resolve component and pipeline configuration."
+    },
+    {
+      "relation": "feeds",
+      "source": "confmap_tree",
+      "target": "load_configuration",
+      "why": "Resolve component and pipeline configuration."
+    },
+    {
+      "relation": "produces",
+      "source": "load_configuration",
+      "target": "CollectorConfig",
+      "why": "Resolve component and pipeline configuration."
+    },
+    {
+      "relation": "gates",
+      "source": "config_validation_gate",
+      "target": "load_configuration",
+      "why": "Resolve component and pipeline configuration."
+    },
+    {
+      "relation": "routes_to",
+      "source": "load_configuration",
+      "target": "start_components",
+      "why": "Resolve component and pipeline configuration."
+    },
+    {
+      "relation": "feeds",
+      "source": "CollectorConfig",
+      "target": "start_components",
+      "why": "Start receivers, processors, exporters, connectors, and extensions."
+    },
+    {
+      "relation": "feeds",
+      "source": "service_tree",
+      "target": "start_components",
+      "why": "Start receivers, processors, exporters, connectors, and extensions."
+    },
+    {
+      "relation": "produces",
+      "source": "start_components",
+      "target": "ComponentStatus",
+      "why": "Start receivers, processors, exporters, connectors, and extensions."
+    },
+    {
+      "relation": "gates",
+      "source": "component_lifecycle_gate",
+      "target": "start_components",
+      "why": "Start receivers, processors, exporters, connectors, and extensions."
+    },
+    {
+      "relation": "routes_to",
+      "source": "start_components",
+      "target": "receive_telemetry",
+      "why": "Start receivers, processors, exporters, connectors, and extensions."
+    },
+    {
+      "relation": "feeds",
+      "source": "external_signal",
+      "target": "receive_telemetry",
+      "why": "Bring traces, metrics, or logs into a configured pipeline."
+    },
+    {
+      "relation": "feeds",
+      "source": "ReceiverContract",
+      "target": "receive_telemetry",
+      "why": "Bring traces, metrics, or logs into a configured pipeline."
+    },
+    {
+      "relation": "produces",
+      "source": "receive_telemetry",
+      "target": "TelemetryBatch",
+      "why": "Bring traces, metrics, or logs into a configured pipeline."
+    },
+    {
+      "relation": "gates",
+      "source": "component_lifecycle_gate",
+      "target": "receive_telemetry",
+      "why": "Bring traces, metrics, or logs into a configured pipeline."
+    },
+    {
+      "relation": "routes_to",
+      "source": "receive_telemetry",
+      "target": "process_telemetry",
+      "why": "Bring traces, metrics, or logs into a configured pipeline."
+    },
+    {
+      "relation": "feeds",
+      "source": "TelemetryBatch",
+      "target": "process_telemetry",
+      "why": "Apply configured processing and protect host resources."
+    },
+    {
+      "relation": "feeds",
+      "source": "ProcessorContract",
+      "target": "process_telemetry",
+      "why": "Apply configured processing and protect host resources."
+    },
+    {
+      "relation": "produces",
+      "source": "process_telemetry",
+      "target": "TelemetryBatch",
+      "why": "Apply configured processing and protect host resources."
+    },
+    {
+      "relation": "gates",
+      "source": "backpressure_gate",
+      "target": "process_telemetry",
+      "why": "Apply configured processing and protect host resources."
+    },
+    {
+      "relation": "routes_to",
+      "source": "process_telemetry",
+      "target": "route_or_export",
+      "why": "Apply configured processing and protect host resources."
+    },
+    {
+      "relation": "feeds",
+      "source": "TelemetryBatch",
+      "target": "route_or_export",
+      "why": "Send telemetry onward or route it through another pipeline."
+    },
+    {
+      "relation": "feeds",
+      "source": "ExporterContract",
+      "target": "route_or_export",
+      "why": "Send telemetry onward or route it through another pipeline."
+    },
+    {
+      "relation": "produces",
+      "source": "route_or_export",
+      "target": "exported",
+      "why": "Send telemetry onward or route it through another pipeline."
+    },
+    {
+      "relation": "produces",
+      "source": "route_or_export",
+      "target": "retry",
+      "why": "Send telemetry onward or route it through another pipeline."
+    },
+    {
+      "relation": "produces",
+      "source": "route_or_export",
+      "target": "failed_export",
+      "why": "Send telemetry onward or route it through another pipeline."
+    },
+    {
+      "relation": "gates",
+      "source": "export_delivery_gate",
+      "target": "route_or_export",
+      "why": "Send telemetry onward or route it through another pipeline."
+    },
+    {
+      "relation": "routes_to",
+      "source": "route_or_export",
+      "target": "observe_collector",
+      "why": "Send telemetry onward or route it through another pipeline."
+    },
+    {
+      "relation": "feeds",
+      "source": "ComponentStatus",
+      "target": "observe_collector",
+      "why": "Expose service status and runtime telemetry for operators."
+    },
+    {
+      "relation": "feeds",
+      "source": "export_result",
+      "target": "observe_collector",
+      "why": "Expose service status and runtime telemetry for operators."
+    },
+    {
+      "relation": "produces",
+      "source": "observe_collector",
+      "target": "service_telemetry",
+      "why": "Expose service status and runtime telemetry for operators."
+    },
+    {
+      "relation": "gates",
+      "source": "component_lifecycle_gate",
+      "target": "observe_collector",
+      "why": "Expose service status and runtime telemetry for operators."
+    }
+  ],
+  "gates": [
+    {
+      "gate_id": "config_validation_gate",
+      "human_gate": false,
+      "inputs": [
+        "CollectorConfig"
+      ],
+      "name": "Configuration Validation Gate",
+      "outputs": [
+        "valid_config",
+        "config_error"
+      ],
+      "risk_boundary": "The collector should not start an invalid pipeline.",
+      "rules": [
+        {
+          "if": "all referenced components exist and pipeline shape is valid",
+          "then": "valid_config"
+        },
+        {
+          "if": "missing component, invalid signal type, or bad setting",
+          "then": "config_error"
+        }
+      ]
+    },
+    {
+      "gate_id": "component_lifecycle_gate",
+      "human_gate": false,
+      "inputs": [
+        "ReceiverContract",
+        "ProcessorContract",
+        "ExporterContract",
+        "ComponentStatus"
+      ],
+      "name": "Component Lifecycle Gate",
+      "outputs": [
+        "component_started",
+        "component_failed"
+      ],
+      "risk_boundary": "Telemetry should flow only after required components start successfully.",
+      "rules": [
+        {
+          "if": "component starts and reports healthy",
+          "then": "component_started"
+        },
+        {
+          "if": "component fails startup or dependency check",
+          "then": "component_failed"
+        }
+      ]
+    },
+    {
+      "gate_id": "backpressure_gate",
+      "human_gate": false,
+      "inputs": [
+        "TelemetryBatch",
+        "ComponentStatus"
+      ],
+      "name": "Backpressure And Memory Gate",
+      "outputs": [
+        "accept_batch",
+        "drop_or_throttle"
+      ],
+      "risk_boundary": "A collector should protect host resources under load.",
+      "rules": [
+        {
+          "if": "resource limits allow processing",
+          "then": "accept_batch"
+        },
+        {
+          "if": "queue or memory policy triggers",
+          "then": "drop_or_throttle"
+        }
+      ]
+    },
+    {
+      "gate_id": "export_delivery_gate",
+      "human_gate": false,
+      "inputs": [
+        "TelemetryBatch",
+        "ExporterContract"
+      ],
+      "name": "Export Delivery Gate",
+      "outputs": [
+        "exported",
+        "retry",
+        "failed_export"
+      ],
+      "risk_boundary": "Telemetry delivery failures should follow retry and queue policy.",
+      "rules": [
+        {
+          "if": "destination accepts batch",
+          "then": "exported"
+        },
+        {
+          "if": "temporary failure and retry policy allows",
+          "then": "retry"
+        },
+        {
+          "if": "permanent failure or queue exhausted",
+          "then": "failed_export"
+        }
+      ]
+    }
+  ],
+  "generated_at": "2026-06-08T20:57:31+00:00",
+  "known_boundaries": [
+    "This is a public educational map, not an official OpenTelemetry maintainer audit.",
+    "It maps the collector architecture at a high level, not every component or distribution.",
+    "Real enterprise reviews should use fake or redacted telemetry payloads.",
+    "A full audit should inspect exact config, component versions, tests, runtime metrics, and deployment policy."
+  ],
+  "one_line": "The OpenTelemetry Collector routes telemetry through configurable receivers, processors, connectors, extensions, and exporters.",
+  "rebuild_recipe": [
+    {
+      "commands": [
+        "system-review-graph validate --manifest examples/actual_repos/opentelemetry_collector/system_review_manifest.json"
+      ],
+      "goal": "Check the OpenTelemetry Collector public repo manifest.",
+      "phase": "validate"
+    },
+    {
+      "commands": [
+        "system-review-graph build --manifest examples/actual_repos/opentelemetry_collector/system_review_manifest.json --out-dir examples/actual_repos/opentelemetry_collector/reports"
+      ],
+      "goal": "Generate the OpenTelemetry Collector system review report.",
+      "phase": "build"
+    }
+  ],
+  "review_questions": [
+    "How does configuration become a running telemetry pipeline?",
+    "Which gates prevent invalid config or failed components from processing telemetry?",
+    "Where are backpressure, memory, queue, retry, and delivery policies enforced?",
+    "How can a reviewer audit topology without seeing customer telemetry payloads?",
+    "Which component health and service telemetry artifacts would prove runtime behavior?"
+  ],
+  "schemas": [
+    {
+      "example": {},
+      "kind": "configuration_contract",
+      "name": "CollectorConfig",
+      "privacy_notes": "",
+      "purpose": "Declares which components exist and how telemetry flows through pipelines.",
+      "required_fields": [
+        "receivers",
+        "processors",
+        "exporters",
+        "service.pipelines"
+      ]
+    },
+    {
+      "example": {},
+      "kind": "component_contract",
+      "name": "ReceiverContract",
+      "privacy_notes": "",
+      "purpose": "Describes an ingest component that accepts telemetry.",
+      "required_fields": [
+        "component_id",
+        "signal_type",
+        "endpoint",
+        "start_status"
+      ]
+    },
+    {
+      "example": {},
+      "kind": "component_contract",
+      "name": "ProcessorContract",
+      "privacy_notes": "",
+      "purpose": "Describes transformation, batching, filtering, memory, or enrichment behavior.",
+      "required_fields": [
+        "component_id",
+        "signal_type",
+        "transform_policy",
+        "failure_policy"
+      ]
+    },
+    {
+      "example": {},
+      "kind": "component_contract",
+      "name": "ExporterContract",
+      "privacy_notes": "",
+      "purpose": "Describes where telemetry is sent and how failures are handled.",
+      "required_fields": [
+        "component_id",
+        "destination",
+        "retry_policy",
+        "queue_policy"
+      ]
+    },
+    {
+      "example": {},
+      "kind": "data_contract",
+      "name": "TelemetryBatch",
+      "privacy_notes": "",
+      "purpose": "Represents telemetry moving through a pipeline.",
+      "required_fields": [
+        "signal_type",
+        "resource_attrs",
+        "scope",
+        "records"
+      ]
+    },
+    {
+      "example": {},
+      "kind": "health_contract",
+      "name": "ComponentStatus",
+      "privacy_notes": "",
+      "purpose": "Represents component lifecycle and health state.",
+      "required_fields": [
+        "component_id",
+        "status",
+        "error",
+        "observed_at"
+      ]
+    }
+  ],
+  "scope": "A public-safe system map of the OpenTelemetry Collector open-source repository based on public source directories and documentation.",
+  "source_links": [
+    {
+      "label": "GitHub repository",
+      "notes": "Primary public source used for repo identity and source paths.",
+      "url": "https://github.com/open-telemetry/opentelemetry-collector"
+    },
+    {
+      "label": "OpenTelemetry Collector documentation",
+      "notes": "Public docs for collector concepts and configuration.",
+      "url": "https://opentelemetry.io/docs/collector/"
+    },
+    {
+      "label": "OpenTelemetry project",
+      "notes": "Public project context for telemetry standards.",
+      "url": "https://opentelemetry.io/"
+    }
+  ],
+  "systems": [
+    {
+      "architecture_style": "configuration and provider layer",
+      "artifacts": [
+        "confmap_tree",
+        "service_tree"
+      ],
+      "code_surfaces": [
+        "confmap/",
+        "service/"
+      ],
+      "decision_gates": [
+        "config_validation_gate"
+      ],
+      "example": {},
+      "ideal_target": "Every pipeline is explicit, valid, and inspectable before startup.",
+      "language_stack": [
+        "Go",
+        "YAML"
+      ],
+      "lifecycle": "config file/provider -> CollectorConfig -> pipeline graph",
+      "name": "Configuration System",
+      "owner": "collector",
+      "purpose": "Loads and resolves collector configuration into service pipelines.",
+      "system_id": "configuration_system",
+      "truth_boundary": "Configuration describes desired telemetry flow; startup gates decide whether it can run."
+    },
+    {
+      "architecture_style": "component ingest layer",
+      "artifacts": [
+        "receiver_tree"
+      ],
+      "code_surfaces": [
+        "receiver/"
+      ],
+      "decision_gates": [
+        "component_lifecycle_gate"
+      ],
+      "example": {},
+      "ideal_target": "Telemetry ingress is explicit and observable.",
+      "language_stack": [
+        "Go"
+      ],
+      "lifecycle": "external telemetry -> receiver -> pipeline",
+      "name": "Receiver Layer",
+      "owner": "collector",
+      "purpose": "Accepts telemetry from external sources and injects it into pipelines.",
+      "system_id": "receiver_layer",
+      "truth_boundary": "A receiver only starts when configuration and lifecycle checks pass."
+    },
+    {
+      "architecture_style": "pipeline transformation layer",
+      "artifacts": [
+        "processor_tree"
+      ],
+      "code_surfaces": [
+        "processor/"
+      ],
+      "decision_gates": [
+        "backpressure_gate",
+        "component_lifecycle_gate"
+      ],
+      "example": {},
+      "ideal_target": "Transformations are predictable, measurable, and resource-aware.",
+      "language_stack": [
+        "Go"
+      ],
+      "lifecycle": "TelemetryBatch -> processor chain -> TelemetryBatch",
+      "name": "Processor Layer",
+      "owner": "collector",
+      "purpose": "Transforms, batches, limits, or filters telemetry before export.",
+      "system_id": "processor_layer",
+      "truth_boundary": "Processor behavior is bounded by pipeline order and configuration."
+    },
+    {
+      "architecture_style": "component extension layer",
+      "artifacts": [
+        "connector_tree",
+        "extension_tree"
+      ],
+      "code_surfaces": [
+        "connector/",
+        "extension/"
+      ],
+      "decision_gates": [
+        "component_lifecycle_gate"
+      ],
+      "example": {},
+      "ideal_target": "Optional capabilities are explicit and health-reporting.",
+      "language_stack": [
+        "Go"
+      ],
+      "lifecycle": "component config -> started connector/extension -> runtime capability",
+      "name": "Connector And Extension Layer",
+      "owner": "collector",
+      "purpose": "Bridges pipelines and adds service-level capabilities.",
+      "system_id": "connector_extension_layer",
+      "truth_boundary": "Connectors and extensions can change topology or service behavior; they must start cleanly."
+    },
+    {
+      "architecture_style": "component egress layer",
+      "artifacts": [
+        "exporter_tree"
+      ],
+      "code_surfaces": [
+        "exporter/"
+      ],
+      "decision_gates": [
+        "export_delivery_gate",
+        "component_lifecycle_gate"
+      ],
+      "example": {},
+      "ideal_target": "Export behavior is reliable, backpressure-aware, and observable.",
+      "language_stack": [
+        "Go"
+      ],
+      "lifecycle": "TelemetryBatch -> exporter -> destination",
+      "name": "Exporter Layer",
+      "owner": "collector",
+      "purpose": "Sends processed telemetry to configured destinations.",
+      "system_id": "exporter_layer",
+      "truth_boundary": "Delivery depends on destination, queue, retry, and failure policy."
+    },
+    {
+      "architecture_style": "service runtime",
+      "artifacts": [
+        "service_tree",
+        "docs_tree"
+      ],
+      "code_surfaces": [
+        "service/",
+        "component/"
+      ],
+      "decision_gates": [
+        "config_validation_gate",
+        "component_lifecycle_gate"
+      ],
+      "example": {},
+      "ideal_target": "A running collector is explainable from config to component status.",
+      "language_stack": [
+        "Go"
+      ],
+      "lifecycle": "valid config -> start components -> run pipelines -> shutdown",
+      "name": "Service Orchestrator",
+      "owner": "collector",
+      "purpose": "Coordinates component lifecycle, pipelines, host capabilities, and service telemetry.",
+      "system_id": "service_orchestrator",
+      "truth_boundary": "The service can expose health and telemetry, but configured components determine data path."
+    }
+  ],
+  "title": "OpenTelemetry Collector Public Repo System Review Graph",
+  "walkthroughs": [
+    {
+      "example": {
+        "gates": [
+          "config_validation_gate",
+          "component_lifecycle_gate",
+          "backpressure_gate",
+          "export_delivery_gate"
+        ],
+        "path": [
+          "CollectorConfig",
+          "ReceiverContract",
+          "TelemetryBatch",
+          "ProcessorContract",
+          "ExporterContract"
+        ],
+        "signals": [
+          "traces",
+          "metrics",
+          "logs"
+        ]
+      },
+      "name": "One telemetry batch through a pipeline",
+      "story": "A config declares a pipeline. The service starts components. A receiver accepts telemetry, processors transform or batch it, connectors can route it, and exporters deliver it with retry and queue policies."
+    },
+    {
+      "example": {
+        "requires_customer_payloads": false,
+        "safe_artifacts": [
+          "receiver/",
+          "processor/",
+          "exporter/",
+          "connector/",
+          "extension/",
+          "service/",
+          "confmap/"
+        ]
+      },
+      "name": "How to audit without customer telemetry",
+      "story": "A reviewer can use fake config and public component contracts to understand topology, gates, and failure handling without seeing production payloads."
+    }
+  ],
+  "workflows": [
+    {
+      "actor": "Configuration System",
+      "consumes": [
+        "config_file",
+        "confmap_tree"
+      ],
+      "gates": [
+        "config_validation_gate"
+      ],
+      "name": "Load Configuration",
+      "next_steps": [
+        "start_components"
+      ],
+      "produces": [
+        "CollectorConfig"
+      ],
+      "purpose": "Resolve component and pipeline configuration.",
+      "step_id": "load_configuration"
+    },
+    {
+      "actor": "Service Orchestrator",
+      "consumes": [
+        "CollectorConfig",
+        "service_tree"
+      ],
+      "gates": [
+        "component_lifecycle_gate"
+      ],
+      "name": "Start Components",
+      "next_steps": [
+        "receive_telemetry"
+      ],
+      "produces": [
+        "ComponentStatus"
+      ],
+      "purpose": "Start receivers, processors, exporters, connectors, and extensions.",
+      "step_id": "start_components"
+    },
+    {
+      "actor": "Receiver Layer",
+      "consumes": [
+        "external_signal",
+        "ReceiverContract"
+      ],
+      "gates": [
+        "component_lifecycle_gate"
+      ],
+      "name": "Receive Telemetry",
+      "next_steps": [
+        "process_telemetry"
+      ],
+      "produces": [
+        "TelemetryBatch"
+      ],
+      "purpose": "Bring traces, metrics, or logs into a configured pipeline.",
+      "step_id": "receive_telemetry"
+    },
+    {
+      "actor": "Processor Layer",
+      "consumes": [
+        "TelemetryBatch",
+        "ProcessorContract"
+      ],
+      "gates": [
+        "backpressure_gate"
+      ],
+      "name": "Process Telemetry",
+      "next_steps": [
+        "route_or_export"
+      ],
+      "produces": [
+        "TelemetryBatch"
+      ],
+      "purpose": "Apply configured processing and protect host resources.",
+      "step_id": "process_telemetry"
+    },
+    {
+      "actor": "Connector And Exporter Layers",
+      "consumes": [
+        "TelemetryBatch",
+        "ExporterContract"
+      ],
+      "gates": [
+        "export_delivery_gate"
+      ],
+      "name": "Route Or Export",
+      "next_steps": [
+        "observe_collector"
+      ],
+      "produces": [
+        "exported",
+        "retry",
+        "failed_export"
+      ],
+      "purpose": "Send telemetry onward or route it through another pipeline.",
+      "step_id": "route_or_export"
+    },
+    {
+      "actor": "Service Orchestrator",
+      "consumes": [
+        "ComponentStatus",
+        "export_result"
+      ],
+      "gates": [
+        "component_lifecycle_gate"
+      ],
+      "name": "Observe Collector",
+      "next_steps": [],
+      "produces": [
+        "service_telemetry"
+      ],
+      "purpose": "Expose service status and runtime telemetry for operators.",
+      "step_id": "observe_collector"
+    }
+  ]
+}

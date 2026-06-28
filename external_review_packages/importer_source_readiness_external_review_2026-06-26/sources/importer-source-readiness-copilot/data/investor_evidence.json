@@ -1,0 +1,56 @@
+[
+  {
+    "id": "wto-global-trade-outlook-2025",
+    "type": "market_scale",
+    "source_name": "World Trade Organization Global Trade Outlook and Statistics",
+    "source_url": "https://www.wto.org/english/res_e/publications_e/trade_outlook25_e.htm",
+    "accessed_at": "2026-06-25",
+    "claim": "Global trade is a large, active market with current WTO forecasts and statistics published for 2025 and 2026.",
+    "claim_boundary": "Use for market context only; do not use as TAM/SAM/SOM proof without a separate Canadian market model."
+  },
+  {
+    "id": "ised-trade-data-online",
+    "type": "official_trade_data",
+    "source_name": "ISED Trade Data Online",
+    "source_url": "https://ised-isde.canada.ca/site/trade-data-online/en/overview",
+    "accessed_at": "2026-06-25",
+    "claim": "Canada provides official trade-data tooling for customized reports on Canadian and U.S. goods trade with over 200 countries.",
+    "claim_boundary": "Use to support data-source availability; do not claim Canadian revenue market size until a dated TAM model is produced."
+  },
+  {
+    "id": "canada-cid",
+    "type": "market_scale",
+    "source_name": "Canadian Importers Database",
+    "source_url": "https://ised-isde.canada.ca/site/ised/en/research-and-business-intelligence/canadian-importers-database",
+    "accessed_at": "2026-06-25",
+    "claim": "The Canadian Importers Database provides importer-discovery orientation by product, city, and country of origin.",
+    "claim_boundary": "Use for discovery only; do not claim buyer validation, supplier recommendation, or current customer intent."
+  },
+  {
+    "id": "cbsa-commercial-imports",
+    "type": "regulatory_workflow",
+    "source_name": "CBSA Import Commercial Goods Into Canada",
+    "source_url": "https://www.cbsa-asfc.gc.ca/import/menu-eng.html",
+    "accessed_at": "2026-06-25",
+    "claim": "Canadian commercial import work requires preparation, classification, duty/tax review, shipping, examination, reporting, and release workflows.",
+    "claim_boundary": "Use to explain workflow complexity; do not provide customs, tariff, or import/export advice."
+  },
+  {
+    "id": "cbsa-customs-tariff-2026",
+    "type": "regulatory_workflow",
+    "source_name": "CBSA Customs Tariff 2026",
+    "source_url": "https://www.cbsa-asfc.gc.ca/trade-commerce/tariff-tarif/2026/menu-eng.html",
+    "accessed_at": "2026-06-25",
+    "claim": "Canada publishes a 2026 Customs Tariff and tariff-classification guidance through CBSA.",
+    "claim_boundary": "Use as official orientation; product classification and tariff treatment require qualified review."
+  },
+  {
+    "id": "cfia-airs",
+    "type": "compliance_complexity",
+    "source_name": "CFIA Automated Import Reference System",
+    "source_url": "https://inspection.canada.ca/en/importing-food-plants-animals/airs",
+    "accessed_at": "2026-06-25",
+    "claim": "CFIA AIRS is a reference tool for Canadian import requirements for CFIA-regulated commodities.",
+    "claim_boundary": "Use to explain why qualified food-import review matters; do not claim CFIA approval or compliance readiness."
+  }
+]

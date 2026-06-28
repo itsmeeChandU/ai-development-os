@@ -1,0 +1,34 @@
+AI Development OS is licensed under the GNU Affero General Public License,
+version 3 or any later version, with the attribution notice described in
+NOTICE.md.
+
+SPDX-License-Identifier: AGPL-3.0-or-later
+
+Copyright (c) 2026 Sai Chandra
+
+Public license grant:
+
+This program is free software: you can redistribute it and/or modify it under
+the terms of the GNU Affero General Public License as published by the Free
+Software Foundation, either version 3 of the License, or at your option any
+later version.
+
+This program is distributed in the hope that it will be useful, but WITHOUT
+ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
+details.
+
+You should have received a copy of the GNU Affero General Public License along
+with this program. If not, see <https://www.gnu.org/licenses/>.
+
+Attribution notice:
+
+Modified versions, forks, distributions, and network services based on this
+project must preserve the attribution notice in NOTICE.md in the relevant
+documentation, legal notices, About screen, or equivalent user-facing credits.
+
+Dual-license note:
+
+The copyright holder may offer separate commercial, private, or alternative
+licenses. The AGPL public license applies to everyone else receiving this
+project under these public terms.

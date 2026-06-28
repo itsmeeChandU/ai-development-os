@@ -1,0 +1,366 @@
+{
+  "requirements": [
+    {
+      "artifacts": [
+        "product_runtime_state.json",
+        "auth_rbac_matrix.json",
+        "customer_workflow.sqlite"
+      ],
+      "boundary": "Local session auth and RBAC are implemented for private beta dry-runs; production identity review remains external.",
+      "id": "REQ-01",
+      "name": "Identity, organization, permissions",
+      "proof": [
+        "tests/test_product_runtime.py",
+        "tests/test_operator_app.py"
+      ],
+      "status": "implemented_local_private_beta"
+    },
+    {
+      "artifacts": [
+        "customer_source_packets.json",
+        "customer_readiness_report.json"
+      ],
+      "boundary": "Packet intake creates review state, not import approval.",
+      "id": "REQ-02",
+      "name": "Packet intake",
+      "proof": [
+        "tests/test_operator_app.py",
+        "tests/test_source_packet_workflow.py"
+      ],
+      "status": "implemented"
+    },
+    {
+      "artifacts": [
+        "evidence_ledger.json"
+      ],
+      "boundary": "No evidence, no claim; stale/reference-only evidence blocks external claims.",
+      "id": "REQ-03",
+      "name": "Evidence ledger",
+      "proof": [
+        "tests/test_source_packet_workflow.py"
+      ],
+      "status": "implemented"
+    },
+    {
+      "artifacts": [
+        "source_refresh_runs.json",
+        "source_refresh_report_packet-frozen-tuna-canada-001.json"
+      ],
+      "boundary": "Refresh records are evidence inputs; they do not replace qualified review.",
+      "id": "REQ-04",
+      "name": "Official source refresh",
+      "proof": [
+        "tests/test_source_packet_workflow.py"
+      ],
+      "status": "implemented_with_live_fetch_boundary"
+    },
+    {
+      "artifacts": [
+        "claims_gate_matrix.json",
+        "customer_readiness_report.json",
+        "blockers.jsonl"
+      ],
+      "boundary": "External-world claims stay blocked until evidence and human gates close.",
+      "id": "REQ-05",
+      "name": "Claim and blocker engine",
+      "proof": [
+        "scripts/check_product.py"
+      ],
+      "status": "implemented_fail_closed"
+    },
+    {
+      "artifacts": [
+        "ai_data_policy.json",
+        "ai_model_router.json",
+        "customer_ai_review_runs.json"
+      ],
+      "boundary": "Router controls local simulated review and endpoint contracts; no live provider call is made by default.",
+      "id": "REQ-06",
+      "name": "AI processing and model routing",
+      "proof": [
+        "tests/test_product_runtime.py",
+        "tests/test_operator_app.py"
+      ],
+      "status": "implemented_policy_router"
+    },
+    {
+      "artifacts": [
+        "customer_ai_review_runs.json"
+      ],
+      "boundary": "AI reviewers create findings and next moves only; they cannot open gates.",
+      "id": "REQ-07",
+      "name": "AI simulated reviewers",
+      "proof": [
+        "tests/test_product_runtime.py",
+        "tests/test_source_packet_workflow.py"
+      ],
+      "status": "implemented_fail_closed"
+    },
+    {
+      "artifacts": [
+        "operator_dashboard.html",
+        "operator_workflow_report.json"
+      ],
+      "boundary": "Operator UX is local/private-beta oriented.",
+      "id": "REQ-08",
+      "name": "Operator UX",
+      "proof": [
+        "tests/test_operator_app.py"
+      ],
+      "status": "implemented_local_app"
+    },
+    {
+      "artifacts": [
+        "review_requests.json",
+        "expert_review_packet_packet-frozen-tuna-canada-001.md"
+      ],
+      "boundary": "Expert review packet is scoped; no advice or approval is implied by the app.",
+      "id": "REQ-09",
+      "name": "Expert review UX",
+      "proof": [
+        "tests/test_operator_app.py"
+      ],
+      "status": "implemented_scoped_tokens"
+    },
+    {
+      "artifacts": [
+        "report_exports.json",
+        "customer_readiness_report.md"
+      ],
+      "boundary": "Reports disclose blockers and AI involvement; they are not certificates.",
+      "id": "REQ-10",
+      "name": "Reports and exports",
+      "proof": [
+        "tests/test_source_packet_workflow.py",
+        "scripts/check_product.py"
+      ],
+      "status": "implemented_safe_exports"
+    },
+    {
+      "artifacts": [
+        "product_runtime_state.json"
+      ],
+      "boundary": "Customer UX is private-beta candidate, not public launch proof.",
+      "id": "REQ-11",
+      "name": "Customer UX",
+      "proof": [
+        "tests/test_operator_app.py"
+      ],
+      "status": "implemented"
+    },
+    {
+      "artifacts": [
+        "product_runtime_state.json"
+      ],
+      "boundary": "Admin controls are local/private-beta implementation surfaces.",
+      "id": "REQ-12",
+      "name": "Admin UX",
+      "proof": [
+        "tests/test_operator_app.py"
+      ],
+      "status": "implemented"
+    },
+    {
+      "artifacts": [
+        "ai_data_policy.json",
+        "redaction_pipeline.json",
+        "deletion_requests.json"
+      ],
+      "boundary": "Policies and deletion workflow exist; qualified privacy/legal review remains required before hosted customer use.",
+      "id": "REQ-13",
+      "name": "Privacy and data controls",
+      "proof": [
+        "tests/test_product_runtime.py",
+        "tests/test_operator_app.py"
+      ],
+      "status": "implemented_with_external_review_gate"
+    },
+    {
+      "artifacts": [
+        "auth_rbac_matrix.json",
+        "deployment_readiness_report.json"
+      ],
+      "boundary": "Production identity, TLS, secret manager, malware scanning, and security review remain external gates.",
+      "id": "REQ-14",
+      "name": "Security",
+      "proof": [
+        "tests/test_operator_app.py",
+        "scripts/check_product.py"
+      ],
+      "status": "implemented_local_controls_with_hosting_gates"
+    },
+    {
+      "artifacts": [
+        "audit_events.json",
+        "customer_action_log.json",
+        "deployment_readiness_report.json"
+      ],
+      "boundary": "Local JSON/SQLite audit exists; production observability stack remains a deployment gate.",
+      "id": "REQ-15",
+      "name": "Audit and observability",
+      "proof": [
+        "tests/test_operator_app.py"
+      ],
+      "status": "implemented"
+    },
+    {
+      "artifacts": [
+        "Dockerfile",
+        "compose.yaml",
+        ".env.example",
+        "deployment_readiness_report.json"
+      ],
+      "boundary": "Hostable artifacts exist; no live production environment is claimed.",
+      "id": "REQ-16",
+      "name": "Deployment environments",
+      "proof": [
+        "scripts/check_product.py"
+      ],
+      "status": "implemented_hostable_local_stack"
+    },
+    {
+      "artifacts": [
+        "RUN_RESULTS.md",
+        "requirements_traceability_matrix.json"
+      ],
+      "boundary": "Acceptance proves local product behavior and generated artifacts, not external legal/compliance approval.",
+      "id": "REQ-17",
+      "name": "Testing and acceptance gates",
+      "proof": [
+        "python3 -m unittest discover -s tests -p test_*.py",
+        "python3 scripts/check_product.py"
+      ],
+      "status": "implemented"
+    },
+    {
+      "artifacts": [
+        "public_trade_readiness_manifest.json",
+        "public_upload_manifest.json",
+        "report_exports.json"
+      ],
+      "boundary": "Public quick check is no-login draft PDF generation with delete controls; it is not approval, advice, shipment readiness, or persistent account history.",
+      "id": "REQ-PUBLIC-01",
+      "name": "Public trade readiness quick check",
+      "proof": [
+        "tests/test_operator_app.py",
+        "scripts/check_product.py"
+      ],
+      "status": "implemented_local_public_surface"
+    },
+    {
+      "artifacts": [
+        "customer_readiness_report.json",
+        "public_trade_readiness_manifest.json"
+      ],
+      "boundary": "Exporter packet creates evidence gaps and review packets only.",
+      "id": "REQ-EXPORT-01",
+      "name": "Create Export-to-Canada packet",
+      "proof": [
+        "tests/test_source_packet_workflow.py",
+        "tests/test_operator_app.py"
+      ],
+      "status": "implemented"
+    },
+    {
+      "artifacts": [
+        "customer_readiness_report.json"
+      ],
+      "boundary": "Missing buyer/importer creates a blocker; presence is not buyer validation.",
+      "id": "REQ-EXPORT-02",
+      "name": "Identify Canadian buyer/importer",
+      "proof": [
+        "tests/test_source_packet_workflow.py"
+      ],
+      "status": "implemented_fail_closed"
+    },
+    {
+      "artifacts": [
+        "customer_readiness_report.json"
+      ],
+      "boundary": "Incoterms classify responsibility path only; they do not prove legal or customs readiness.",
+      "id": "REQ-EXPORT-03",
+      "name": "Capture Incoterms or delivery responsibility",
+      "proof": [
+        "tests/test_source_packet_workflow.py"
+      ],
+      "status": "implemented_fail_closed"
+    },
+    {
+      "artifacts": [
+        "customer_readiness_report.json"
+      ],
+      "boundary": "Exporter/DDP/non-resident importer responsibility triggers broker review gates.",
+      "id": "REQ-EXPORT-04",
+      "name": "Mark Canadian import responsibility",
+      "proof": [
+        "tests/test_source_packet_workflow.py"
+      ],
+      "status": "implemented_fail_closed"
+    },
+    {
+      "artifacts": [
+        "claims_gate_matrix.json",
+        "customer_readiness_report.json"
+      ],
+      "boundary": "Canadian official/reference checks remain evidence only until qualified review.",
+      "id": "REQ-EXPORT-05",
+      "name": "Check Canadian-side readiness blockers",
+      "proof": [
+        "scripts/check_product.py"
+      ],
+      "status": "implemented_fail_closed"
+    },
+    {
+      "artifacts": [
+        "customer_readiness_report.json"
+      ],
+      "boundary": "Exporter-side readiness is a document-gap lane, not country legal advice.",
+      "id": "REQ-EXPORT-06",
+      "name": "Check exporter-side document readiness",
+      "proof": [
+        "tests/test_source_packet_workflow.py"
+      ],
+      "status": "implemented_fail_closed"
+    },
+    {
+      "artifacts": [
+        "report_exports.json"
+      ],
+      "boundary": "Buyer packet is a draft question/evidence packet and cannot claim buyer validation.",
+      "id": "REQ-EXPORT-07",
+      "name": "Generate buyer-ready packet",
+      "proof": [
+        "tests/test_operator_app.py"
+      ],
+      "status": "implemented_pdf_draft"
+    },
+    {
+      "artifacts": [
+        "report_exports.json",
+        "review_requests.json"
+      ],
+      "boundary": "Broker packet asks for scoped review; it is not broker advice or clearance.",
+      "id": "REQ-EXPORT-08",
+      "name": "Generate Canadian broker-review packet",
+      "proof": [
+        "tests/test_operator_app.py"
+      ],
+      "status": "implemented_pdf_draft"
+    },
+    {
+      "artifacts": [
+        "claims_gate_matrix.json",
+        "customer_readiness_report.json"
+      ],
+      "boundary": "All external-world claims remain blocked without qualified evidence and human gates.",
+      "id": "REQ-EXPORT-09",
+      "name": "Block compliance, tariff, CFIA, buyer, and shipment claims",
+      "proof": [
+        "tests/test_source_packet_workflow.py",
+        "scripts/check_product.py"
+      ],
+      "status": "implemented_fail_closed"
+    }
+  ],
+  "status": "requirements_traceability_ready"
+}

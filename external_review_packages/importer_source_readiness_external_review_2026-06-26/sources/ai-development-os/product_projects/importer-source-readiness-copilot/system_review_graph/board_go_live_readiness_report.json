@@ -1,0 +1,558 @@
+{
+  "allowed_next_stage": "board_review_for_private_beta",
+  "board_decision_scope": "private_controlled_beta_or_board_review_only",
+  "board_packet_artifacts": [
+    "board/board_go_live_brief.md",
+    "board/expert_review_packet.md",
+    "board/launch_control_checklist.md",
+    "board/financial_operating_model.md",
+    "system_review_graph/board_go_live_readiness_report.json"
+  ],
+  "canadian_tool_status": {
+    "malformed_rows": [],
+    "missing_categories": [],
+    "provided_categories": [
+      "business_planning",
+      "controlled_imports",
+      "customs_accounting",
+      "cybersecurity",
+      "financial_planning",
+      "food_import_api",
+      "food_import_requirements",
+      "import_workflow",
+      "importer_discovery",
+      "legal_reference",
+      "permits_licences",
+      "privacy",
+      "qualified_reviewer_discovery",
+      "restricted_party_screening",
+      "tariff_classification",
+      "trade_data"
+    ],
+    "ready": true,
+    "required_categories": [
+      "business_planning",
+      "controlled_imports",
+      "customs_accounting",
+      "cybersecurity",
+      "financial_planning",
+      "food_import_requirements",
+      "import_workflow",
+      "importer_discovery",
+      "permits_licences",
+      "privacy",
+      "qualified_reviewer_discovery",
+      "restricted_party_screening",
+      "tariff_classification",
+      "trade_data"
+    ],
+    "tool_count": 16
+  },
+  "canadian_tools": [
+    {
+      "accessed_at": "2026-06-25",
+      "board_use": "Importer duty/tax accounting and account-readiness gate.",
+      "category": "customs_accounting",
+      "claim_boundary": "Orientation only; does not prove importer registration, duty/tax readiness, or CARM account control.",
+      "id": "cbsa-carm",
+      "jurisdiction": "CA",
+      "name": "CBSA Assessment and Revenue Management (CARM)",
+      "source_url": "https://www.cbsa-asfc.gc.ca/services/carm-gcra/menu-eng.html"
+    },
+    {
+      "accessed_at": "2026-06-25",
+      "board_use": "Canadian import workflow baseline for go-live checklist design.",
+      "category": "import_workflow",
+      "claim_boundary": "Orientation only; does not replace CBSA, customs broker, or legal advice.",
+      "id": "cbsa-import-commercial-goods",
+      "jurisdiction": "CA",
+      "name": "CBSA Import Commercial Goods Into Canada",
+      "source_url": "https://www.cbsa-asfc.gc.ca/import/menu-eng.html"
+    },
+    {
+      "accessed_at": "2026-06-25",
+      "board_use": "Canadian tariff-classification evidence source for the compliance lane.",
+      "category": "tariff_classification",
+      "claim_boundary": "Orientation only; tariff classification needs qualified review.",
+      "id": "cbsa-customs-tariff-2026",
+      "jurisdiction": "CA",
+      "name": "CBSA Customs Tariff 2026",
+      "source_url": "https://www.cbsa-asfc.gc.ca/trade-commerce/tariff-tarif/2026/menu-eng.html"
+    },
+    {
+      "accessed_at": "2026-06-25",
+      "board_use": "CFIA-regulated commodity requirements lookup for food-import review.",
+      "category": "food_import_requirements",
+      "claim_boundary": "Reference only; CFIA AIRS and applicable law need qualified review before product claims.",
+      "id": "cfia-airs",
+      "jurisdiction": "CA",
+      "name": "CFIA Automated Import Reference System",
+      "source_url": "https://inspection.canada.ca/en/importing-food-plants-animals/airs"
+    },
+    {
+      "accessed_at": "2026-06-25",
+      "board_use": "Potential future API-style verification integration requiring access credentials.",
+      "category": "food_import_api",
+      "claim_boundary": "Access and usage rights are not proven; AVS credentials remain an implementation blocker.",
+      "id": "cfia-airs-avs",
+      "jurisdiction": "CA",
+      "name": "CFIA AIRS Verification Service",
+      "source_url": "https://inspection.canada.ca/en/importing-food-plants-animals/airs/avs"
+    },
+    {
+      "accessed_at": "2026-06-25",
+      "board_use": "Controlled-product and import-permit review lane.",
+      "category": "controlled_imports",
+      "claim_boundary": "Orientation only; product applicability and permits require qualified review.",
+      "id": "gac-import-controls",
+      "jurisdiction": "CA",
+      "name": "Global Affairs Canada Import Controls and Import Permits",
+      "source_url": "https://www.international.gc.ca/controls-controles/about-a_propos/impor/permits-licences.aspx?lang=eng"
+    },
+    {
+      "accessed_at": "2026-06-25",
+      "board_use": "Legal reference point for controlled imports.",
+      "category": "legal_reference",
+      "claim_boundary": "Reference only; legal interpretation requires qualified counsel or compliance reviewer.",
+      "id": "justice-import-control-list",
+      "jurisdiction": "CA",
+      "name": "Justice Laws Import Control List",
+      "source_url": "https://laws-lois.justice.gc.ca/eng/regulations/c.r.c.%2C_c._604/index.html"
+    },
+    {
+      "accessed_at": "2026-06-25",
+      "board_use": "Canadian restricted-party screening source.",
+      "category": "restricted_party_screening",
+      "claim_boundary": "Screening evidence must be dated and reviewed; source presence alone does not clear parties.",
+      "id": "canada-sanctions",
+      "jurisdiction": "CA",
+      "name": "Consolidated Canadian Autonomous Sanctions List",
+      "source_url": "https://www.international.gc.ca/world-monde/international_relations-relations_internationales/sanctions/consolidated-consolide.aspx?lang=eng"
+    },
+    {
+      "accessed_at": "2026-06-25",
+      "board_use": "Canadian trade-data source for market and source research.",
+      "category": "trade_data",
+      "claim_boundary": "Data availability only; market size and demand claims need a dated model.",
+      "id": "ised-trade-data-online",
+      "jurisdiction": "CA",
+      "name": "ISED Trade Data Online",
+      "source_url": "https://ised-isde.canada.ca/site/trade-data-online/en/overview"
+    },
+    {
+      "accessed_at": "2026-06-25",
+      "board_use": "Importer discovery and buyer-research seed list.",
+      "category": "importer_discovery",
+      "claim_boundary": "Discovery only; does not prove buyer validation or supplier recommendation.",
+      "id": "canada-cid",
+      "jurisdiction": "CA",
+      "name": "Canadian Importers Database",
+      "source_url": "https://ised-isde.canada.ca/site/ised/en/research-and-business-intelligence/canadian-importers-database"
+    },
+    {
+      "accessed_at": "2026-06-25",
+      "board_use": "Source for finding a qualified Canadian customs broker review lane.",
+      "category": "qualified_reviewer_discovery",
+      "claim_boundary": "Directory only; does not create a broker relationship or signoff.",
+      "id": "cbsa-licensed-customs-brokers",
+      "jurisdiction": "CA",
+      "name": "CBSA Licensed Customs Brokers",
+      "source_url": "https://www.cbsa-asfc.gc.ca/services/cb-cd/cb-cd-eng.html"
+    },
+    {
+      "accessed_at": "2026-06-25",
+      "board_use": "Canadian permit and licence discovery lane by location and business activity.",
+      "category": "permits_licences",
+      "claim_boundary": "Discovery only; actual permits/licences need jurisdiction-specific confirmation.",
+      "id": "bizpal",
+      "jurisdiction": "CA",
+      "name": "BizPaL",
+      "source_url": "https://bizpal.ca/"
+    },
+    {
+      "accessed_at": "2026-06-25",
+      "board_use": "Canadian business planning and structure readiness reference.",
+      "category": "business_planning",
+      "claim_boundary": "Planning reference only; does not replace accounting, tax, or legal advice.",
+      "id": "canada-business-planning",
+      "jurisdiction": "CA",
+      "name": "Canada.ca Planning a Business",
+      "source_url": "https://www.canada.ca/en/services/business/start/planning.html"
+    },
+    {
+      "accessed_at": "2026-06-25",
+      "board_use": "Canadian financial-planning structure for funding and runway assumptions.",
+      "category": "financial_planning",
+      "claim_boundary": "Template reference only; financial projections need founder/accountant review.",
+      "id": "bdc-financial-plan-template",
+      "jurisdiction": "CA",
+      "name": "BDC Financial Plan Template",
+      "source_url": "https://www.bdc.ca/en/articles-tools/entrepreneur-toolkit/templates-business-guides/financial-plan-template"
+    },
+    {
+      "accessed_at": "2026-06-25",
+      "board_use": "Canadian private-sector privacy review lane.",
+      "category": "privacy",
+      "claim_boundary": "Privacy orientation only; legal/privacy counsel review remains required before launch.",
+      "id": "pipeda-brief",
+      "jurisdiction": "CA",
+      "name": "Office of the Privacy Commissioner of Canada PIPEDA Requirements in Brief",
+      "source_url": "https://www.priv.gc.ca/en/privacy-topics/privacy-laws-in-canada/the-personal-information-protection-and-electronic-documents-act-pipeda/pipeda_brief/"
+    },
+    {
+      "accessed_at": "2026-06-25",
+      "board_use": "Canadian small/medium organization cybersecurity baseline for launch controls.",
+      "category": "cybersecurity",
+      "claim_boundary": "Security baseline orientation only; implementation and audit evidence are separate gates.",
+      "id": "cyber-centre-baseline-controls",
+      "jurisdiction": "CA",
+      "name": "Canadian Centre for Cyber Security Baseline Cyber Security Controls",
+      "source_url": "https://www.cyber.gc.ca/en/guidance/baseline-cyber-security-controls-small-and-medium-organizations"
+    }
+  ],
+  "canadian_tools_ready": true,
+  "closed_claims": [
+    "public_launch_ready",
+    "production_deploy_approved",
+    "customs_or_tariff_advice_ready",
+    "CFIA_compliance_ready",
+    "legal_advice_ready",
+    "financial_advice_ready",
+    "buyer_validated",
+    "revenue_proven",
+    "product_market_fit_proven",
+    "supplier_recommendation_ready"
+  ],
+  "demo_ready": true,
+  "expert_review_status": {
+    "incomplete_reviews": [],
+    "missing_reviews": [],
+    "provided_reviews": [
+      "canadian-trade-compliance",
+      "data-source",
+      "financial-advisor",
+      "legal-privacy",
+      "product-operator",
+      "security-ops"
+    ],
+    "ready": true,
+    "required_reviews": [
+      "canadian-trade-compliance",
+      "data-source",
+      "financial-advisor",
+      "legal-privacy",
+      "product-operator",
+      "security-ops"
+    ],
+    "review_count": 6
+  },
+  "generated_at": "2026-06-25T23:54:10+00:00",
+  "human_approval_gate_count": 11,
+  "human_approval_gates": [
+    {
+      "evidence": "data/expert_review_simulations.json",
+      "gate": "Canadian customs/trade/food compliance signoff is required before external claims.",
+      "id": "qualified-compliance-signoff",
+      "next_valid_move": "Route the generated packet to a licensed Canadian customs broker or qualified reviewer.",
+      "owner": "compliance",
+      "source": "launch_control",
+      "unsafe_to_bypass": true
+    },
+    {
+      "evidence": "data/expert_review_simulations.json and data/canada_tool_registry.json",
+      "gate": "Canadian legal/privacy review is required before public copy, data collection, or fundraising documents are sent as official materials.",
+      "id": "legal-privacy-signoff",
+      "next_valid_move": "Have counsel/privacy reviewer approve terms, privacy posture, liability boundary, and claims.",
+      "owner": "legal",
+      "source": "launch_control",
+      "unsafe_to_bypass": true
+    },
+    {
+      "evidence": "investor/vc_pitch_deck.md and board/financial_operating_model.md",
+      "gate": "Funding ask, pricing, runway, and spend plan require founder/accountant/finance review.",
+      "id": "finance-signoff",
+      "next_valid_move": "Approve a 12-month operating plan and first 90-day budget before commitments.",
+      "owner": "founder",
+      "source": "launch_control",
+      "unsafe_to_bypass": true
+    },
+    {
+      "evidence": "data/evidence_packets.json and data/canada_tool_registry.json",
+      "gate": "Source rights, refresh cadence, lineage, and API credentials must be approved before external source claims.",
+      "id": "data-rights-refresh-signoff",
+      "next_valid_move": "Add a no-write refresh proof and source-rights approval.",
+      "owner": "data",
+      "source": "launch_control",
+      "unsafe_to_bypass": true
+    },
+    {
+      "evidence": "data/expert_review_simulations.json and data/canada_tool_registry.json",
+      "gate": "Deployment environment, access, logging, backup, incident response, support, and rollback require operator/security approval.",
+      "id": "security-ops-signoff",
+      "next_valid_move": "Approve private beta deployment controls before external users.",
+      "owner": "security",
+      "source": "launch_control",
+      "unsafe_to_bypass": true
+    },
+    {
+      "evidence": "data/expert_review_simulations.json",
+      "gate": "operator launch owner must approve the private beta scope and support workflow",
+      "id": "product-operator:human-approval",
+      "next_valid_move": "Board reviews the generated brief and either approves a private beta or sends corrections.",
+      "owner": "product operator",
+      "source": "expert_review_simulation",
+      "unsafe_to_bypass": true
+    },
+    {
+      "evidence": "data/expert_review_simulations.json",
+      "gate": "licensed Canadian customs broker or qualified trade compliance reviewer must verify CBSA/CARM, tariff, CFIA, import controls, sanctions, and claim language",
+      "id": "canadian-trade-compliance:human-approval",
+      "next_valid_move": "Send the country matrix and source packet to a licensed Canadian customs broker or qualified compliance reviewer.",
+      "owner": "Canadian trade compliance reviewer simulation",
+      "source": "expert_review_simulation",
+      "unsafe_to_bypass": true
+    },
+    {
+      "evidence": "data/expert_review_simulations.json",
+      "gate": "founder, accountant, or finance advisor must approve financial projections, funding ask, runway, and pricing assumptions",
+      "id": "financial-advisor:human-approval",
+      "next_valid_move": "Founder and finance reviewer should approve a 12-month budget, pricing experiment, and cash runway before spend commitments.",
+      "owner": "financial advisor simulation",
+      "source": "expert_review_simulation",
+      "unsafe_to_bypass": true
+    },
+    {
+      "evidence": "data/expert_review_simulations.json",
+      "gate": "Canadian counsel or privacy reviewer must approve legal copy, PIPEDA/privacy posture, entity/IP/terms, and public claims",
+      "id": "legal-privacy:human-approval",
+      "next_valid_move": "Have Canadian counsel/privacy reviewer approve terms, privacy copy, liability boundaries, and investor language.",
+      "owner": "legal and privacy reviewer simulation",
+      "source": "expert_review_simulation",
+      "unsafe_to_bypass": true
+    },
+    {
+      "evidence": "data/expert_review_simulations.json",
+      "gate": "data owner must approve source rights, refresh cadence, lineage, and any credentialed/paid source usage",
+      "id": "data-source:human-approval",
+      "next_valid_move": "Implement a dated no-write refresh proof and attach source-rights approval before external source claims.",
+      "owner": "data source reviewer simulation",
+      "source": "expert_review_simulation",
+      "unsafe_to_bypass": true
+    },
+    {
+      "evidence": "data/expert_review_simulations.json",
+      "gate": "operator/security owner must approve deployment environment, access control, incident response, backups, and support coverage",
+      "id": "security-ops:human-approval",
+      "next_valid_move": "Approve a controlled private beta environment with access control, logging, incident response, and rollback owner.",
+      "owner": "security and operations reviewer simulation",
+      "source": "expert_review_simulation",
+      "unsafe_to_bypass": true
+    }
+  ],
+  "implementation_complete_for_board_review": true,
+  "launch_control_status": {
+    "control_count": 8,
+    "human_approval_gate_count": 5,
+    "implemented_count": 3,
+    "invalid_controls": [],
+    "ready": true
+  },
+  "launch_controls": [
+    {
+      "category": "launch_scope",
+      "control": "Only private controlled beta or board review is allowed; public launch remains closed.",
+      "evidence": "system_review_graph/board_go_live_readiness_report.json",
+      "id": "scope-private-controlled-beta",
+      "next_valid_move": "Board approves or rejects private beta scope.",
+      "owner": "operator",
+      "status": "implemented"
+    },
+    {
+      "category": "safety",
+      "control": "External sends, paid actions, advice claims, and supplier recommendations remain zero.",
+      "evidence": "system_review_graph/readiness_report.json and system_review_graph/external_gate_report.json",
+      "id": "external-effects-closed",
+      "next_valid_move": "Keep counters at zero unless a future approved launch gate opens them.",
+      "owner": "operator",
+      "status": "implemented"
+    },
+    {
+      "category": "canadian_evidence",
+      "control": "Canadian official tools and references are attached with claim boundaries.",
+      "evidence": "data/canada_tool_registry.json",
+      "id": "canadian-official-tools-attached",
+      "next_valid_move": "Refresh dates before each board or launch review.",
+      "owner": "research",
+      "status": "implemented"
+    },
+    {
+      "category": "human_approval",
+      "control": "Canadian customs/trade/food compliance signoff is required before external claims.",
+      "evidence": "data/expert_review_simulations.json",
+      "id": "qualified-compliance-signoff",
+      "next_valid_move": "Route the generated packet to a licensed Canadian customs broker or qualified reviewer.",
+      "owner": "compliance",
+      "status": "approval_required"
+    },
+    {
+      "category": "human_approval",
+      "control": "Canadian legal/privacy review is required before public copy, data collection, or fundraising documents are sent as official materials.",
+      "evidence": "data/expert_review_simulations.json and data/canada_tool_registry.json",
+      "id": "legal-privacy-signoff",
+      "next_valid_move": "Have counsel/privacy reviewer approve terms, privacy posture, liability boundary, and claims.",
+      "owner": "legal",
+      "status": "approval_required"
+    },
+    {
+      "category": "human_approval",
+      "control": "Funding ask, pricing, runway, and spend plan require founder/accountant/finance review.",
+      "evidence": "investor/vc_pitch_deck.md and board/financial_operating_model.md",
+      "id": "finance-signoff",
+      "next_valid_move": "Approve a 12-month operating plan and first 90-day budget before commitments.",
+      "owner": "founder",
+      "status": "approval_required"
+    },
+    {
+      "category": "human_approval",
+      "control": "Source rights, refresh cadence, lineage, and API credentials must be approved before external source claims.",
+      "evidence": "data/evidence_packets.json and data/canada_tool_registry.json",
+      "id": "data-rights-refresh-signoff",
+      "next_valid_move": "Add a no-write refresh proof and source-rights approval.",
+      "owner": "data",
+      "status": "approval_required"
+    },
+    {
+      "category": "human_approval",
+      "control": "Deployment environment, access, logging, backup, incident response, support, and rollback require operator/security approval.",
+      "evidence": "data/expert_review_simulations.json and data/canada_tool_registry.json",
+      "id": "security-ops-signoff",
+      "next_valid_move": "Approve private beta deployment controls before external users.",
+      "owner": "security",
+      "status": "approval_required"
+    }
+  ],
+  "launch_controls_ready": true,
+  "next_valid_move": "Board can review the generated packet for a controlled private beta while qualified Canadian customs, legal/privacy, finance, data, security, and operator approvals remain explicit gates.",
+  "primary_market": "Canada",
+  "product": "Importer Source Readiness Copilot",
+  "proof_boundary": "This is board-to-go-live candidate evidence for Canada-focused private beta review. It is not public launch approval, legal advice, financial advice, customs/tariff advice, CFIA approval, buyer validation, revenue proof, or production deployment approval. Human experts and the board review what the AI-built system produced and approve, reject, or redirect the next stage.",
+  "simulated_expert_reviews": [
+    {
+      "findings": [
+        "The local product loop is usable for internal source readiness review.",
+        "The strongest go-live scope is private controlled beta, not public launch.",
+        "Operator copy must keep blocked claims visible rather than hide them."
+      ],
+      "human_approval_gate": "operator launch owner must approve the private beta scope and support workflow",
+      "id": "product-operator",
+      "implemented_inputs": [
+        "operator dashboard",
+        "continuation plan",
+        "board go-live brief",
+        "launch control checklist"
+      ],
+      "next_valid_move": "Board reviews the generated brief and either approves a private beta or sends corrections.",
+      "review_scope": "Operator workflow, source-card readiness, dashboard, continuation lanes, and board packet.",
+      "role": "product operator",
+      "status": "agent_review_complete"
+    },
+    {
+      "findings": [
+        "Canadian official tools are identified and linked.",
+        "The product does not make customs, tariff, CFIA, permit, or sanctions clearance claims.",
+        "The country matrix remains closed until qualified review is attached."
+      ],
+      "human_approval_gate": "licensed Canadian customs broker or qualified trade compliance reviewer must verify CBSA/CARM, tariff, CFIA, import controls, sanctions, and claim language",
+      "id": "canadian-trade-compliance",
+      "implemented_inputs": [
+        "Canada official tool registry",
+        "Canada-first country matrix",
+        "restricted-party screening blocker",
+        "qualified broker review blocker"
+      ],
+      "next_valid_move": "Send the country matrix and source packet to a licensed Canadian customs broker or qualified compliance reviewer.",
+      "review_scope": "Canadian import workflow, CARM, tariff classification, CFIA AIRS, import controls, and sanctions screening.",
+      "role": "Canadian trade compliance reviewer simulation",
+      "status": "agent_review_complete"
+    },
+    {
+      "findings": [
+        "The investor ask is a planning assumption, not an offer or financial advice.",
+        "A Canadian financial plan structure is available through BDC references.",
+        "Revenue, PMF, and willingness-to-pay remain diligence gates."
+      ],
+      "human_approval_gate": "founder, accountant, or finance advisor must approve financial projections, funding ask, runway, and pricing assumptions",
+      "id": "financial-advisor",
+      "implemented_inputs": [
+        "draft funding ask boundary",
+        "business model diligence lane",
+        "financial approval gate",
+        "board launch brief finance section"
+      ],
+      "next_valid_move": "Founder and finance reviewer should approve a 12-month budget, pricing experiment, and cash runway before spend commitments.",
+      "review_scope": "Draft financing ask, first 90-day operating assumptions, Canadian planning references, and revenue-claim boundaries.",
+      "role": "financial advisor simulation",
+      "status": "agent_review_complete"
+    },
+    {
+      "findings": [
+        "The product avoids legal, securities, customs, tariff, supplier, and public launch claims.",
+        "PIPEDA/privacy requirements are recognized as Canadian launch gates.",
+        "Terms, privacy notice, and liability boundary are not yet human-approved."
+      ],
+      "human_approval_gate": "Canadian counsel or privacy reviewer must approve legal copy, PIPEDA/privacy posture, entity/IP/terms, and public claims",
+      "id": "legal-privacy",
+      "implemented_inputs": [
+        "closed claims list",
+        "PIPEDA source in Canada tool registry",
+        "legal/privacy launch control",
+        "human approval gate"
+      ],
+      "next_valid_move": "Have Canadian counsel/privacy reviewer approve terms, privacy copy, liability boundaries, and investor language.",
+      "review_scope": "Legal claims, fundraising boundaries, PIPEDA/private-sector privacy posture, terms, and liability boundaries.",
+      "role": "legal and privacy reviewer simulation",
+      "status": "agent_review_complete"
+    },
+    {
+      "findings": [
+        "Canadian official sources are attached as reference records.",
+        "Fixture data is still correctly bounded and not treated as live source proof.",
+        "Repeatable refresh, rights, and API credentials remain go-live gates."
+      ],
+      "human_approval_gate": "data owner must approve source rights, refresh cadence, lineage, and any credentialed/paid source usage",
+      "id": "data-source",
+      "implemented_inputs": [
+        "official source registry",
+        "Canada tool registry",
+        "source rights/freshness blocker",
+        "board data approval gate"
+      ],
+      "next_valid_move": "Implement a dated no-write refresh proof and attach source-rights approval before external source claims.",
+      "review_scope": "Official-source registry, Canadian data sources, repeatable refresh needs, rights, and fixture boundaries.",
+      "role": "data source reviewer simulation",
+      "status": "agent_review_complete"
+    },
+    {
+      "findings": [
+        "External sends, paid actions, and live effects are still closed.",
+        "Canadian cyber baseline source is attached for the security checklist.",
+        "No production deployment is approved until operator/security signoff exists."
+      ],
+      "human_approval_gate": "operator/security owner must approve deployment environment, access control, incident response, backups, and support coverage",
+      "id": "security-ops",
+      "implemented_inputs": [
+        "unsafe gate counters",
+        "Canadian cyber baseline source",
+        "support and rollback launch controls",
+        "deployment approval blocker"
+      ],
+      "next_valid_move": "Approve a controlled private beta environment with access control, logging, incident response, and rollback owner.",
+      "review_scope": "External effects, deployment, access control, auditability, Canadian cyber baseline, support, and rollback.",
+      "role": "security and operations reviewer simulation",
+      "status": "agent_review_complete"
+    }
+  ],
+  "simulated_expert_reviews_ready": true,
+  "status": "board_go_live_candidate_with_human_approval_gates",
+  "unsafe_gates_closed": true
+}

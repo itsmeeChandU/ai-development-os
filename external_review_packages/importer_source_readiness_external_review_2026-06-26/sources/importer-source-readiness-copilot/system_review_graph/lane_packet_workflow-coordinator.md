@@ -1,0 +1,73 @@
+# Lane Packet
+
+```json
+{
+  "generated_at": "2026-06-25T12:51:15+00:00",
+  "goal": "Complete importer source readiness copilot product loop",
+  "handoff_required_fields": [
+    "lane",
+    "branch_or_worktree",
+    "changed_files",
+    "commands_run",
+    "generated_artifacts",
+    "blockers",
+    "unsafe_or_external_gates",
+    "next_valid_move",
+    "commit",
+    "push_state"
+  ],
+  "kind": "lane_packet",
+  "lane": {
+    "allowed_files": [
+      "AGENTS.md",
+      "README.md",
+      "docs/**",
+      "manifests/**",
+      "scripts/**",
+      "templates/**",
+      ".github/**"
+    ],
+    "branch": "codex/workflow-coordinator-20260625",
+    "forbidden_files": [
+      "LICENSE",
+      "NOTICE.md",
+      "CONTRIBUTOR_TERMS.md",
+      "DCO.txt"
+    ],
+    "goal": "Own the durable workflow, execution manifest, lane packets, CI checks, and final integration proof.",
+    "handoff_required_fields": [
+      "lane",
+      "branch_or_worktree",
+      "changed_files",
+      "commands_run",
+      "generated_artifacts",
+      "blockers",
+      "unsafe_or_external_gates",
+      "next_valid_move",
+      "commit",
+      "push_state"
+    ],
+    "handoff_template": "templates/HANDOFF.md",
+    "id": "workflow-coordinator",
+    "mode": "goal",
+    "proof_commands": [
+      "python3 scripts/workflow_manifest_check.py",
+      "python3 scripts/agentic_workflow_orchestrator.py validate",
+      "python3 scripts/agentic_workflow_orchestrator.py plan --goal \"smoke\" --repo ai-development-os",
+      "python3 scripts/ai_dev_os_check.py",
+      "python3 scripts/self_test_flow.py"
+    ],
+    "remote": "https://github.com/itsmeeChandU/ai-development-os.git",
+    "repo_id": "ai-development-os",
+    "repo_role": "coordinator_layer",
+    "target_branch": "main",
+    "worktree": "/Users/chandu/.codex/worktrees/ai-dev-os-workflow/ai-development-os-workflow-coordinator",
+    "worktree_commands": [
+      "git fetch origin",
+      "git worktree add /Users/chandu/.codex/worktrees/ai-dev-os-workflow/ai-development-os-workflow-coordinator -b codex/workflow-coordinator-20260625 origin/main"
+    ]
+  },
+  "unsafe_or_external_gates": "closed unless explicit user intent and repo proof open them",
+  "worker_prompt": "Read AGENTS.md and the lane packet. Work only inside allowed_files, avoid forbidden_files, run proof_commands, refresh generated artifacts when applicable, and write a handoff or blocker row."
+}
+```

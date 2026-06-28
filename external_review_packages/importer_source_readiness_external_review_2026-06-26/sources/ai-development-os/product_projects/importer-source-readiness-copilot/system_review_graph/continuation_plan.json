@@ -1,0 +1,374 @@
+{
+  "blocker_count": 20,
+  "closed_claims": [
+    "fully_operational",
+    "launch_ready",
+    "buyer_validated",
+    "qualified_compliance_ready",
+    "customs_or_tariff_advice_ready",
+    "supplier_recommendation_ready",
+    "commercially_ready"
+  ],
+  "external_gate_status": "ready_with_external_gates",
+  "generated_at": "2026-06-25T23:54:10+00:00",
+  "lane_count": 7,
+  "lanes": [
+    {
+      "blocker_count": 3,
+      "blockers": [
+        {
+          "evidence": "Canadian Importers Database",
+          "gate": "closed",
+          "id": "frozen-tuna-fillet-readiness:buyer-validation-missing",
+          "issue": "buyer validation is missing",
+          "module": "buyer_validation",
+          "next_valid_move": "Collect dated buyer feedback or no-fit evidence before commercial claims.",
+          "owner": "product",
+          "source_report": "readiness_report"
+        },
+        {
+          "evidence": "Fixture country requirements placeholder",
+          "gate": "closed",
+          "id": "country-requirement-template:buyer-validation-missing",
+          "issue": "buyer validation is missing",
+          "module": "buyer_validation",
+          "next_valid_move": "Collect dated buyer feedback or no-fit evidence before commercial claims.",
+          "owner": "product",
+          "source_report": "readiness_report"
+        },
+        {
+          "evidence": "No dated buyer, importer, broker, or operator feedback attached.",
+          "gate": "closed",
+          "id": "buyer-validation:evidence-missing",
+          "issue": "buyer/operator validation is missing",
+          "module": "buyer_validation",
+          "next_valid_move": "Collect dated buyer or operator feedback, including no-fit/no-budget evidence, and attach it to the evidence packet.",
+          "owner": "product",
+          "source_report": "external_gate_report"
+        }
+      ],
+      "id": "buyer-validation",
+      "next_valid_move": "Collect dated buyer feedback or no-fit evidence before commercial claims.",
+      "owner": "product",
+      "proof_command": "Attach evidence to data/evidence_packets.json and rerun python3 scripts/check_product.py.",
+      "required_evidence": [
+        "dated buyer, importer, broker, or operator interviews",
+        "no-fit, no-budget, or willingness-to-pay notes",
+        "operator workflow gaps found during real review"
+      ],
+      "source_modules": [
+        "buyer_validation"
+      ],
+      "status": "blocked_external_input",
+      "title": "Buyer and operator validation",
+      "unsafe_to_bypass": true
+    },
+    {
+      "blocker_count": 6,
+      "blockers": [
+        {
+          "evidence": "Canadian Importers Database",
+          "gate": "closed",
+          "id": "frozen-tuna-fillet-readiness:legal-review-missing",
+          "issue": "legal/compliance review is missing",
+          "module": "legal_compliance",
+          "next_valid_move": "Get qualified review before legal, customs, import/export, or public claims.",
+          "owner": "compliance",
+          "source_report": "readiness_report"
+        },
+        {
+          "evidence": "Fixture country requirements placeholder",
+          "gate": "closed",
+          "id": "country-requirement-template:legal-review-missing",
+          "issue": "legal/compliance review is missing",
+          "module": "legal_compliance",
+          "next_valid_move": "Get qualified review before legal, customs, import/export, or public claims.",
+          "owner": "compliance",
+          "source_report": "readiness_report"
+        },
+        {
+          "evidence": "No qualified customs, food safety, or legal review attached.",
+          "gate": "closed",
+          "id": "qualified-compliance-review:evidence-missing",
+          "issue": "qualified compliance review is missing",
+          "module": "legal_compliance",
+          "next_valid_move": "Get qualified Canadian review for country matrix, tariff treatment, CFIA food import obligations, sanctions screening, and claims language.",
+          "owner": "compliance",
+          "source_report": "external_gate_report"
+        },
+        {
+          "evidence": "ca-frozen-tuna-fillet-030487",
+          "gate": "closed",
+          "id": "ca-frozen-tuna-fillet-030487:broker_or_expert_review_status",
+          "issue": "broker or qualified expert review is missing",
+          "module": "expert_review",
+          "next_valid_move": "Have a licensed Canadian customs broker or qualified Canadian trade/food compliance reviewer verify CBSA/CARM importer obligations, tariff classification, CFIA AIRS requirements, import controls, sanctions screening, and claim language.",
+          "owner": "compliance",
+          "source_report": "external_gate_report"
+        },
+        {
+          "evidence": "ca-frozen-tuna-fillet-030487",
+          "gate": "closed",
+          "id": "ca-frozen-tuna-fillet-030487:tariff_status",
+          "issue": "tariff or HS classification is not qualified",
+          "module": "tariff_classification",
+          "next_valid_move": "Have a licensed Canadian customs broker or qualified Canadian trade/food compliance reviewer verify CBSA/CARM importer obligations, tariff classification, CFIA AIRS requirements, import controls, sanctions screening, and claim language.",
+          "owner": "compliance",
+          "source_report": "external_gate_report"
+        },
+        {
+          "evidence": "ca-frozen-tuna-fillet-030487",
+          "gate": "closed",
+          "id": "ca-frozen-tuna-fillet-030487:food_safety_status",
+          "issue": "food safety requirements are not qualified",
+          "module": "food_safety",
+          "next_valid_move": "Have a licensed Canadian customs broker or qualified Canadian trade/food compliance reviewer verify CBSA/CARM importer obligations, tariff classification, CFIA AIRS requirements, import controls, sanctions screening, and claim language.",
+          "owner": "compliance",
+          "source_report": "external_gate_report"
+        }
+      ],
+      "id": "qualified-compliance-review",
+      "next_valid_move": "Get qualified review before legal, customs, import/export, or public claims.",
+      "owner": "compliance",
+      "proof_command": "Update country matrix and evidence packets, then rerun python3 scripts/check_product.py.",
+      "required_evidence": [
+        "qualified customs, food safety, or legal review notes",
+        "reviewer identity, date, scope, and claim boundary",
+        "approved or rejected language for operator-facing claims"
+      ],
+      "source_modules": [
+        "legal_compliance",
+        "expert_review",
+        "tariff_classification",
+        "food_safety"
+      ],
+      "status": "blocked_external_input",
+      "title": "Qualified compliance review",
+      "unsafe_to_bypass": true
+    },
+    {
+      "blocker_count": 3,
+      "blockers": [
+        {
+          "evidence": "ca-frozen-tuna-fillet-030487",
+          "gate": "closed",
+          "id": "ca-frozen-tuna-fillet-030487:import_rules_status",
+          "issue": "qualified import-rules review is missing",
+          "module": "country_import_rules",
+          "next_valid_move": "Have a licensed Canadian customs broker or qualified Canadian trade/food compliance reviewer verify CBSA/CARM importer obligations, tariff classification, CFIA AIRS requirements, import controls, sanctions screening, and claim language.",
+          "owner": "compliance",
+          "source_report": "external_gate_report"
+        },
+        {
+          "evidence": "ca-frozen-tuna-fillet-030487",
+          "gate": "closed",
+          "id": "ca-frozen-tuna-fillet-030487:export_rules_status",
+          "issue": "qualified export-rules review is missing",
+          "module": "country_export_rules",
+          "next_valid_move": "Have a licensed Canadian customs broker or qualified Canadian trade/food compliance reviewer verify CBSA/CARM importer obligations, tariff classification, CFIA AIRS requirements, import controls, sanctions screening, and claim language.",
+          "owner": "compliance",
+          "source_report": "external_gate_report"
+        },
+        {
+          "evidence": "Fixture country requirements placeholder",
+          "gate": "closed",
+          "id": "country-requirement-template:official-source-missing",
+          "issue": "official source URL is missing or the row is fixture-only",
+          "module": "official_source_review",
+          "next_valid_move": "Attach a current official source URL and access date before source claims.",
+          "owner": "research",
+          "source_report": "readiness_report"
+        }
+      ],
+      "id": "country-matrix-review",
+      "next_valid_move": "Have a licensed Canadian customs broker or qualified Canadian trade/food compliance reviewer verify CBSA/CARM importer obligations, tariff classification, CFIA AIRS requirements, import controls, sanctions screening, and claim language.",
+      "owner": "compliance",
+      "proof_command": "Update data/country_requirements_matrix.json and rerun python3 scripts/run_external_gates.py.",
+      "required_evidence": [
+        "dated official-source links for each country and product category",
+        "import/export rule review with claim boundaries",
+        "country matrix row owner and last-checked date"
+      ],
+      "source_modules": [
+        "country_import_rules",
+        "country_export_rules",
+        "official_source_review"
+      ],
+      "status": "blocked_external_input",
+      "title": "Country import/export requirements",
+      "unsafe_to_bypass": true
+    },
+    {
+      "blocker_count": 3,
+      "blockers": [
+        {
+          "evidence": "Canadian Importers Database",
+          "gate": "closed",
+          "id": "frozen-tuna-fillet-readiness:freshness-not-proven",
+          "issue": "data freshness is not proven for product claims",
+          "module": "data_freshness",
+          "next_valid_move": "Run a dated refresh or mark the row as fixture-only.",
+          "owner": "data",
+          "source_report": "readiness_report"
+        },
+        {
+          "evidence": "Fixture country requirements placeholder",
+          "gate": "closed",
+          "id": "country-requirement-template:freshness-not-proven",
+          "issue": "data freshness is not proven for product claims",
+          "module": "data_freshness",
+          "next_valid_move": "Run a dated refresh or mark the row as fixture-only.",
+          "owner": "data",
+          "source_report": "readiness_report"
+        },
+        {
+          "evidence": "Official source registry exists, but no repeatable dated refresh job or source-rights review is attached.",
+          "gate": "closed",
+          "id": "source-rights-and-freshness:evidence-missing",
+          "issue": "repeatable data freshness and source rights are not proven",
+          "module": "data_freshness",
+          "next_valid_move": "Define source rights, refresh cadence, freshness SLA, and a no-write refresh proof before product claims.",
+          "owner": "data",
+          "source_report": "external_gate_report"
+        }
+      ],
+      "id": "source-rights-freshness",
+      "next_valid_move": "Run a dated refresh or mark the row as fixture-only.",
+      "owner": "data",
+      "proof_command": "Update source registry/evidence packets and rerun python3 scripts/check_product.py.",
+      "required_evidence": [
+        "source rights and allowed-use notes",
+        "repeatable refresh proof with date and source lineage",
+        "freshness SLA or explicit fixture-only boundary"
+      ],
+      "source_modules": [
+        "data_freshness"
+      ],
+      "status": "blocked_external_input",
+      "title": "Source rights and data freshness",
+      "unsafe_to_bypass": true
+    },
+    {
+      "blocker_count": 3,
+      "blockers": [
+        {
+          "evidence": "Canadian Importers Database",
+          "gate": "closed",
+          "id": "frozen-tuna-fillet-readiness:contract-missing",
+          "issue": "commercial/source contract is missing",
+          "module": "commercial_contract",
+          "next_valid_move": "Attach written source, supplier, buyer, or commercial terms before readiness claims.",
+          "owner": "operations",
+          "source_report": "readiness_report"
+        },
+        {
+          "evidence": "Fixture country requirements placeholder",
+          "gate": "closed",
+          "id": "country-requirement-template:contract-missing",
+          "issue": "commercial/source contract is missing",
+          "module": "commercial_contract",
+          "next_valid_move": "Attach written source, supplier, buyer, or commercial terms before readiness claims.",
+          "owner": "operations",
+          "source_report": "readiness_report"
+        },
+        {
+          "evidence": "No written source, data, supplier, broker, buyer, or commercial terms attached.",
+          "gate": "closed",
+          "id": "commercial-source-contract:evidence-missing",
+          "issue": "commercial/source contract is missing",
+          "module": "commercial_contract",
+          "next_valid_move": "Attach written terms for data/source rights, supplier/buyer contact use, liability boundary, and termination.",
+          "owner": "operations",
+          "source_report": "external_gate_report"
+        }
+      ],
+      "id": "contract-terms",
+      "next_valid_move": "Attach written source, supplier, buyer, or commercial terms before readiness claims.",
+      "owner": "operations",
+      "proof_command": "Attach contract evidence to data/evidence_packets.json and rerun python3 scripts/check_product.py.",
+      "required_evidence": [
+        "written source, supplier, buyer, or data-use terms",
+        "liability, support, termination, and rights boundaries",
+        "commercial owner acceptance"
+      ],
+      "source_modules": [
+        "commercial_contract"
+      ],
+      "status": "blocked_external_input",
+      "title": "Commercial and source contracts",
+      "unsafe_to_bypass": true
+    },
+    {
+      "blocker_count": 1,
+      "blockers": [
+        {
+          "evidence": "ca-frozen-tuna-fillet-030487",
+          "gate": "closed",
+          "id": "ca-frozen-tuna-fillet-030487:restricted_party_status",
+          "issue": "restricted-party screening is not complete",
+          "module": "restricted_party_screening",
+          "next_valid_move": "Have a licensed Canadian customs broker or qualified Canadian trade/food compliance reviewer verify CBSA/CARM importer obligations, tariff classification, CFIA AIRS requirements, import controls, sanctions screening, and claim language.",
+          "owner": "compliance",
+          "source_report": "external_gate_report"
+        }
+      ],
+      "id": "restricted-party-screening",
+      "next_valid_move": "Have a licensed Canadian customs broker or qualified Canadian trade/food compliance reviewer verify CBSA/CARM importer obligations, tariff classification, CFIA AIRS requirements, import controls, sanctions screening, and claim language.",
+      "owner": "compliance",
+      "proof_command": "Update country matrix/evidence packets and rerun python3 scripts/run_external_gates.py.",
+      "required_evidence": [
+        "dated screening result for relevant parties",
+        "screening source, jurisdiction, and reviewer",
+        "clear pass/fail decision and escalation path"
+      ],
+      "source_modules": [
+        "restricted_party_screening"
+      ],
+      "status": "blocked_external_input",
+      "title": "Restricted-party screening",
+      "unsafe_to_bypass": true
+    },
+    {
+      "blocker_count": 1,
+      "blockers": [
+        {
+          "evidence": "No public release, legal copy, compliance signoff, or support workflow attached.",
+          "gate": "closed",
+          "id": "launch-claims:evidence-missing",
+          "issue": "public or commercial launch claims are not allowed",
+          "module": "launch_readiness",
+          "next_valid_move": "Keep the product internal until buyer validation, contracts, compliance review, and operator support are proven.",
+          "owner": "operator",
+          "source_report": "external_gate_report"
+        }
+      ],
+      "id": "launch-approval",
+      "next_valid_move": "Keep the product internal until buyer validation, contracts, compliance review, and operator support are proven.",
+      "owner": "operator",
+      "proof_command": "Rerun python3 scripts/check_product.py after all upstream evidence lanes are closed.",
+      "required_evidence": [
+        "approved public copy and support workflow",
+        "release owner signoff",
+        "explicit proof that buyer, compliance, contract, and data lanes are closed"
+      ],
+      "source_modules": [
+        "launch_readiness"
+      ],
+      "status": "blocked_external_input",
+      "title": "Launch and public-claim approval",
+      "unsafe_to_bypass": true
+    }
+  ],
+  "local_operator_status": "operator_ready_internal",
+  "must_continue": true,
+  "next_valid_move": "Continue through the evidence lanes before claiming the startup, product, launch, supplier, customs, tariff, buyer, or commercial flow is done.",
+  "not_done_reasons": [
+    "readiness report is internally usable but externally gated",
+    "external gate report still has missing evidence",
+    "20 blocker rows require external evidence or qualified review"
+  ],
+  "proof_boundary": "Local software completion is not startup completion. ready_with_external_gates means continue with evidence lanes before operational, launch, legal, customs, supplier, buyer, or commercial claims.",
+  "readiness_status": "ready_with_external_gates",
+  "software_loop_status": "complete",
+  "status": "startup_in_progress"
+}

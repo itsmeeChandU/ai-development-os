@@ -1,0 +1,6 @@
+Build a startup product: a custom operating system for a low-cost edge device
+that collects sensor data, runs local inference, works offline, syncs when
+network is available, and has an operator console. I do not know the exact
+hardware yet. Research hardware and OS options, estimate the work, create the
+architecture, split work across agents, and identify what can be built now in
+simulation versus what needs procurement or lab proof.

@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 640" role="img" aria-labelledby="title desc">
+  <title id="title">System Review Graph social preview</title>
+  <desc id="desc">Social preview image for System Review Graph.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#111827"/>
+      <stop offset="0.48" stop-color="#145c67"/>
+      <stop offset="1" stop-color="#b8872f"/>
+    </linearGradient>
+    <linearGradient id="panel" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.18"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0.06"/>
+    </linearGradient>
+  </defs>
+  <rect width="1280" height="640" fill="url(#bg)"/>
+  <rect x="72" y="72" width="1136" height="496" rx="34" fill="url(#panel)" stroke="#dbeafe" stroke-opacity="0.35" stroke-width="2"/>
+  <g transform="translate(118 128) scale(1.75)">
+    <rect width="160" height="160" rx="28" fill="#f8fafc"/>
+    <rect x="10" y="10" width="140" height="140" rx="24" fill="#172033"/>
+    <path d="M42 48h36l18 18h22" fill="none" stroke="#f8fafc" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M42 82h34l20-16" fill="none" stroke="#8dd8cc" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M42 116h32l22-50" fill="none" stroke="#ffd77b" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="42" cy="48" r="11" fill="#f8fafc"/>
+    <circle cx="42" cy="82" r="11" fill="#8dd8cc"/>
+    <circle cx="42" cy="116" r="11" fill="#ffd77b"/>
+    <circle cx="96" cy="66" r="16" fill="#172033" stroke="#f8fafc" stroke-width="6"/>
+    <path d="M107 66h22" fill="none" stroke="#f8fafc" stroke-width="8" stroke-linecap="round"/>
+    <path d="M74 102l23 20 35-45" fill="none" stroke="#f8fafc" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <text x="420" y="214" fill="#f8fafc" font-family="Inter, ui-sans-serif, system-ui, sans-serif" font-size="72" font-weight="800">System Review Graph</text>
+  <text x="424" y="282" fill="#d8f2ee" font-family="Inter, ui-sans-serif, system-ui, sans-serif" font-size="33" font-weight="600">What a repo actually does, not just what code exists.</text>
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="6">
+    <path d="M430 392h128l54-54h110" stroke="#f8fafc"/>
+    <path d="M430 454h160l52-116" stroke="#8dd8cc"/>
+    <path d="M722 338h142l58 58h128" stroke="#ffd77b"/>
+    <path d="M642 454h184l96-58" stroke="#f8fafc"/>
+  </g>
+  <g font-family="Inter, ui-sans-serif, system-ui, sans-serif" font-size="22" font-weight="700">
+    <text x="430" y="374" fill="#f8fafc">source</text>
+    <text x="562" y="374" fill="#f8fafc">evidence</text>
+    <text x="724" y="322" fill="#ffd77b">gate</text>
+    <text x="932" y="382" fill="#ffd77b">action</text>
+    <text x="430" y="486" fill="#8dd8cc">system map</text>
+    <text x="646" y="486" fill="#f8fafc">review registers</text>
+  </g>
+  <text x="424" y="548" fill="#e5e7eb" font-family="Inter, ui-sans-serif, system-ui, sans-serif" font-size="24">github.com/itsmeeChandU/system-review-graph</text>
+</svg>

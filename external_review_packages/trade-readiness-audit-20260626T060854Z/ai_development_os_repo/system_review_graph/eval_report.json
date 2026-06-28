@@ -1,0 +1,73 @@
+{
+  "blockers": [],
+  "eval_count": 9,
+  "generated_at": "2026-06-26T03:54:18+00:00",
+  "manifest": "/Users/chandu/Documents/intelligance os/manifests/agentic_execution_manifest.json",
+  "proof_boundary": "This eval suite validates execution-loop structure. It does not replace lane-specific tests or runtime smoke checks.",
+  "rows": [
+    {
+      "id": "lane_packet_completeness",
+      "measurement": "scripts/agentic_workflow_orchestrator.py validate",
+      "missing_fields": [],
+      "pass_condition": "No missing lane packet fields.",
+      "status": "pass"
+    },
+    {
+      "id": "contract_section_coverage",
+      "measurement": "scripts/workflow_manifest_check.py",
+      "missing_fields": [],
+      "pass_condition": "All required sections are present in the workflow contract.",
+      "status": "pass"
+    },
+    {
+      "id": "branch_freshness",
+      "measurement": "git fetch origin && git merge-base --is-ancestor origin/main HEAD",
+      "missing_fields": [],
+      "pass_condition": "Branch contains origin/main or is rebased before merge.",
+      "status": "pass"
+    },
+    {
+      "id": "handoff_completeness",
+      "measurement": "handoff schema review",
+      "missing_fields": [],
+      "pass_condition": "Required fields are complete and evidence-backed.",
+      "status": "pass"
+    },
+    {
+      "id": "ready_with_external_gates_continuation",
+      "measurement": "scripts/product_project_check.py",
+      "missing_fields": [],
+      "pass_condition": "Continuation plan exists and proves the next evidence lanes before final product claims.",
+      "status": "pass"
+    },
+    {
+      "id": "vc_pitch_readiness",
+      "measurement": "scripts/product_project_check.py",
+      "missing_fields": [],
+      "pass_condition": "VC pitch packet is ready for private investor conversations without claiming launch, revenue, PMF, compliance, buyer, supplier, customs, tariff, or financing proof.",
+      "status": "pass"
+    },
+    {
+      "id": "board_go_live_readiness",
+      "measurement": "scripts/product_project_check.py",
+      "missing_fields": [],
+      "pass_condition": "Board packet is ready for controlled private beta decisioning without claiming public launch, production deployment, legal, financial, compliance, buyer, revenue, PMF, supplier, customs, or tariff proof.",
+      "status": "pass"
+    },
+    {
+      "id": "external_harness_boundary",
+      "measurement": "scripts/agentic_workflow_orchestrator.py harness-intake --harness ecc --install-mode observe --target-repo ai-development-os --out-dir system_review_graph",
+      "missing_fields": [],
+      "pass_condition": "Harness packet is generated without opening install, network-write, paid, credential, push, deploy, legal, or launch gates.",
+      "status": "pass"
+    },
+    {
+      "id": "main_push_readiness",
+      "measurement": "post-merge checks and git status",
+      "missing_fields": [],
+      "pass_condition": "Target main branch is clean after passing checks and push.",
+      "status": "pass"
+    }
+  ],
+  "status": "pass"
+}

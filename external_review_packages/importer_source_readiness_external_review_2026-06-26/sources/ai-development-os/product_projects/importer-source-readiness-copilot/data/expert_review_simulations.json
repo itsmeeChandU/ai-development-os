@@ -1,0 +1,116 @@
+[
+  {
+    "id": "product-operator",
+    "role": "product operator",
+    "status": "agent_review_complete",
+    "human_approval_gate": "operator launch owner must approve the private beta scope and support workflow",
+    "review_scope": "Operator workflow, source-card readiness, dashboard, continuation lanes, and board packet.",
+    "findings": [
+      "The local product loop is usable for internal source readiness review.",
+      "The strongest go-live scope is private controlled beta, not public launch.",
+      "Operator copy must keep blocked claims visible rather than hide them."
+    ],
+    "implemented_inputs": [
+      "operator dashboard",
+      "continuation plan",
+      "board go-live brief",
+      "launch control checklist"
+    ],
+    "next_valid_move": "Board reviews the generated brief and either approves a private beta or sends corrections."
+  },
+  {
+    "id": "canadian-trade-compliance",
+    "role": "Canadian trade compliance reviewer simulation",
+    "status": "agent_review_complete",
+    "human_approval_gate": "licensed Canadian customs broker or qualified trade compliance reviewer must verify CBSA/CARM, tariff, CFIA, import controls, sanctions, and claim language",
+    "review_scope": "Canadian import workflow, CARM, tariff classification, CFIA AIRS, import controls, and sanctions screening.",
+    "findings": [
+      "Canadian official tools are identified and linked.",
+      "The product does not make customs, tariff, CFIA, permit, or sanctions clearance claims.",
+      "The country matrix remains closed until qualified review is attached."
+    ],
+    "implemented_inputs": [
+      "Canada official tool registry",
+      "Canada-first country matrix",
+      "restricted-party screening blocker",
+      "qualified broker review blocker"
+    ],
+    "next_valid_move": "Send the country matrix and source packet to a licensed Canadian customs broker or qualified compliance reviewer."
+  },
+  {
+    "id": "financial-advisor",
+    "role": "financial advisor simulation",
+    "status": "agent_review_complete",
+    "human_approval_gate": "founder, accountant, or finance advisor must approve financial projections, funding ask, runway, and pricing assumptions",
+    "review_scope": "Draft financing ask, first 90-day operating assumptions, Canadian planning references, and revenue-claim boundaries.",
+    "findings": [
+      "The investor ask is a planning assumption, not an offer or financial advice.",
+      "A Canadian financial plan structure is available through BDC references.",
+      "Revenue, PMF, and willingness-to-pay remain diligence gates."
+    ],
+    "implemented_inputs": [
+      "draft funding ask boundary",
+      "business model diligence lane",
+      "financial approval gate",
+      "board launch brief finance section"
+    ],
+    "next_valid_move": "Founder and finance reviewer should approve a 12-month budget, pricing experiment, and cash runway before spend commitments."
+  },
+  {
+    "id": "legal-privacy",
+    "role": "legal and privacy reviewer simulation",
+    "status": "agent_review_complete",
+    "human_approval_gate": "Canadian counsel or privacy reviewer must approve legal copy, PIPEDA/privacy posture, entity/IP/terms, and public claims",
+    "review_scope": "Legal claims, fundraising boundaries, PIPEDA/private-sector privacy posture, terms, and liability boundaries.",
+    "findings": [
+      "The product avoids legal, securities, customs, tariff, supplier, and public launch claims.",
+      "PIPEDA/privacy requirements are recognized as Canadian launch gates.",
+      "Terms, privacy notice, and liability boundary are not yet human-approved."
+    ],
+    "implemented_inputs": [
+      "closed claims list",
+      "PIPEDA source in Canada tool registry",
+      "legal/privacy launch control",
+      "human approval gate"
+    ],
+    "next_valid_move": "Have Canadian counsel/privacy reviewer approve terms, privacy copy, liability boundaries, and investor language."
+  },
+  {
+    "id": "data-source",
+    "role": "data source reviewer simulation",
+    "status": "agent_review_complete",
+    "human_approval_gate": "data owner must approve source rights, refresh cadence, lineage, and any credentialed/paid source usage",
+    "review_scope": "Official-source registry, Canadian data sources, repeatable refresh needs, rights, and fixture boundaries.",
+    "findings": [
+      "Canadian official sources are attached as reference records.",
+      "Fixture data is still correctly bounded and not treated as live source proof.",
+      "Repeatable refresh, rights, and API credentials remain go-live gates."
+    ],
+    "implemented_inputs": [
+      "official source registry",
+      "Canada tool registry",
+      "source rights/freshness blocker",
+      "board data approval gate"
+    ],
+    "next_valid_move": "Implement a dated no-write refresh proof and attach source-rights approval before external source claims."
+  },
+  {
+    "id": "security-ops",
+    "role": "security and operations reviewer simulation",
+    "status": "agent_review_complete",
+    "human_approval_gate": "operator/security owner must approve deployment environment, access control, incident response, backups, and support coverage",
+    "review_scope": "External effects, deployment, access control, auditability, Canadian cyber baseline, support, and rollback.",
+    "findings": [
+      "External sends, paid actions, and live effects are still closed.",
+      "Canadian cyber baseline source is attached for the security checklist.",
+      "No production deployment is approved until operator/security signoff exists."
+    ],
+    "implemented_inputs": [
+      "unsafe gate counters",
+      "Canadian cyber baseline source",
+      "support and rollback launch controls",
+      "deployment approval blocker"
+    ],
+    "next_valid_move": "Approve a controlled private beta environment with access control, logging, incident response, and rollback owner."
+  }
+]

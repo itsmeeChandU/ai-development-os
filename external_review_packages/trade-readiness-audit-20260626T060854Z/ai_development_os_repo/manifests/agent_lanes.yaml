@@ -1,0 +1,85 @@
+version: 1
+coordinator:
+  owns:
+    - main integration
+    - task graph
+    - generated artifact refresh
+    - final verification
+    - release notes
+    - GitHub version-control truth
+    - Ruflo coordination boundary
+    - workflow manifest
+agent_modes:
+  - research
+  - architect
+  - surgeon
+  - reviewer
+  - merge
+  - goal
+default_lanes:
+  - lane: instruction-normalization
+    goal: "Convert messy or evolving user instructions into a stable execution contract."
+    agent_type: explorer
+    allowed_files: ["docs/**", "templates/**", "system_review_graph/**"]
+  - lane: state-reconstruction
+    goal: "Convert prompt, repo, data, tests, runtime, and artifacts into actual current product state."
+    agent_type: explorer
+    allowed_files: ["docs/**", "templates/**", "system_review_graph/**", "data/**", "tests/**"]
+  - lane: delivery-control
+    goal: "Produce architecture overview, estimates, lane prompts, cost/procurement notes, and estimate-vs-actual reports."
+    agent_type: explorer
+    allowed_files: ["docs/**", "templates/**", "manifests/**", "system_review_graph/**", "handoffs/**"]
+  - lane: product-intake
+    goal: "Turn idea into user, promise, constraints, modules, and launch gates."
+    agent_type: explorer
+    allowed_files: ["docs/**", "templates/**", "system_review_graph/**"]
+  - lane: architecture
+    goal: "Create module contracts, code map, and integration boundaries."
+    agent_type: explorer
+    allowed_files: ["docs/**", "system_review_graph/**", "manifests/**"]
+  - lane: data
+    goal: "Define sources, schemas, loaders, freshness, rights, and fixtures."
+    agent_type: worker
+    allowed_files: ["data/**", "scripts/**", "tests/**", "system_review_graph/**"]
+  - lane: backend
+    goal: "Implement APIs, domain logic, storage, and report surfaces."
+    agent_type: worker
+    allowed_files: ["src/**", "app/**", "scripts/**", "tests/**"]
+  - lane: frontend
+    goal: "Implement usable UI backed by generated truth and real state."
+    agent_type: worker
+    allowed_files: ["app/**", "web/**", "tests/**", "docs/**"]
+  - lane: qa-ci
+    goal: "Own tests, smoke checks, generated artifact validation, and CI."
+    agent_type: worker
+    allowed_files: ["tests/**", ".github/**", "scripts/**", "docs/**"]
+  - lane: research
+    goal: "Research missing capabilities and update resource graph."
+    agent_type: explorer
+    allowed_files: ["docs/RESEARCH_INTAKE.md", "docs/TOOLCHAIN.md", "docs/STRATEGY_RESEARCH_PLAYBOOK.md", "manifests/tool_registry.yaml"]
+  - lane: hardware-os
+    goal: "Research hardware, firmware, OS, drivers, simulation, lab proof, and procurement blockers."
+    agent_type: explorer
+    allowed_files: ["docs/**", "templates/**", "manifests/**", "system_review_graph/**"]
+  - lane: simulation-bench
+    goal: "Build simulation, emulator, fixture, or bench-test proof paths before field claims."
+    agent_type: worker
+    allowed_files: ["src/**", "tests/**", "scripts/**", "data/**", "system_review_graph/**"]
+  - lane: compliance-safety
+    goal: "Identify applicable standards, hazard rows, field constraints, and certification blockers."
+    agent_type: explorer
+    allowed_files: ["docs/**", "templates/**", "system_review_graph/**"]
+  - lane: operations
+    goal: "Own launch readiness, runbooks, monitoring, support, rollback, and operator surfaces."
+    agent_type: worker
+    allowed_files: ["docs/**", "scripts/**", "tests/**", "system_review_graph/**"]
+handoff_required_fields:
+  - lane
+  - branch_or_worktree
+  - changed_files
+  - commands_run
+  - generated_artifacts
+  - blockers
+  - next_valid_move
+  - unsafe_or_external_gates
+  - estimate_vs_actual

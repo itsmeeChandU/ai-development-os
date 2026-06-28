@@ -1,0 +1,306 @@
+{
+  "architecture_patterns": [
+    {
+      "mapping": "Detect language/build/test/doc surfaces first, then refine into exact systems and workflows.",
+      "name": "Mixed-language repository",
+      "redaction": "Publish paths and contracts, not private records or secrets.",
+      "works_for": "C, C++, Java, C#, Python, JavaScript/TypeScript, Go, Rust, and mixed repos"
+    }
+  ],
+  "artifacts": [
+    {
+      "artifact_id": "c_cpp_source_surface",
+      "kind": "source_surface",
+      "name": "C / C++ Surface",
+      "owner": "unknown",
+      "path": "ac97/, ac97_bus.c, aoa/, arm/, atmel/, core/, drivers/, firewire/, hda/, i2c/, isa/, last.c",
+      "purpose": "Detected C / C++ source and build surfaces.",
+      "redaction": "safe_to_share",
+      "schema": "SourceSurface"
+    },
+    {
+      "artifact_id": "config_build_surface",
+      "kind": "config",
+      "name": "Config And Build Surface",
+      "owner": "unknown",
+      "path": "Makefile, ac97/Makefile, xen/Makefile, parisc/Makefile, pci/Makefile, drivers/Makefile, core/Makefile, isa/Makefile, virtio/Makefile, hda/Makefile, soc/Makefile, firewire/Makefile, ppc/Makefile, i2c/Makefile, mips/Makefile, sh/Makefile, usb/Makefile, spi/Makefile, synth/Makefile, x86/Makefile, pcmcia/Makefile, arm/Makefile, sparc/Makefile, aoa/Makefile, atmel/Makefile, aoa/soundbus/Makefile, aoa/fabrics/Makefile, aoa/codecs/Makefile, aoa/core/Makefile, aoa/soundbus/i2sbus/Makefile",
+      "purpose": "Detected build, package, container, or configuration files.",
+      "redaction": "safe_to_share",
+      "schema": "ConfigSurface"
+    }
+  ],
+  "bigger_picture": "This is an inferred starter map. It detects language and project surfaces, then asks maintainers or agents to refine actual workflows, gates, and boundaries.",
+  "blueprint_sections": [],
+  "child_maps": [],
+  "current_truth": {
+    "atlas_parent": "srg-linux-paths",
+    "detected_languages": [
+      "c_cpp"
+    ],
+    "file_limit": 6000,
+    "files_seen": 2955,
+    "runtime_behavior_proven": false,
+    "scanner": "language_neutral_starter",
+    "subsystem_path": "sound"
+  },
+  "edges": [
+    {
+      "relation": "owns_or_uses",
+      "source": "c_cpp",
+      "target": "c_cpp_source_surface",
+      "why": "system manifest declared artifact ownership/usage"
+    },
+    {
+      "relation": "is_gated_by",
+      "source": "c_cpp",
+      "target": "manual_review_gate",
+      "why": "system manifest declared decision gate"
+    },
+    {
+      "relation": "feeds",
+      "source": "c_cpp_source_surface",
+      "target": "inspect_source_surfaces",
+      "why": "Turn detected code/build surfaces into a human-reviewed system map."
+    },
+    {
+      "relation": "produces",
+      "source": "inspect_source_surfaces",
+      "target": "candidate_system_map",
+      "why": "Turn detected code/build surfaces into a human-reviewed system map."
+    },
+    {
+      "relation": "gates",
+      "source": "manual_review_gate",
+      "target": "inspect_source_surfaces",
+      "why": "Turn detected code/build surfaces into a human-reviewed system map."
+    },
+    {
+      "relation": "routes_to",
+      "source": "inspect_source_surfaces",
+      "target": "refine_workflows",
+      "why": "Turn detected code/build surfaces into a human-reviewed system map."
+    },
+    {
+      "relation": "feeds",
+      "source": "candidate_system_map",
+      "target": "refine_workflows",
+      "why": "Replace inferred surfaces with exact workflows, gates, and boundaries."
+    },
+    {
+      "relation": "produces",
+      "source": "refine_workflows",
+      "target": "system_review_manifest",
+      "why": "Replace inferred surfaces with exact workflows, gates, and boundaries."
+    },
+    {
+      "relation": "gates",
+      "source": "manual_review_gate",
+      "target": "refine_workflows",
+      "why": "Replace inferred surfaces with exact workflows, gates, and boundaries."
+    }
+  ],
+  "gates": [
+    {
+      "gate_id": "manual_review_gate",
+      "human_gate": true,
+      "inputs": [
+        "detected surfaces",
+        "maintainer knowledge"
+      ],
+      "name": "Manual Review Gate",
+      "outputs": [
+        "accepted",
+        "needs_refinement",
+        "rejected"
+      ],
+      "risk_boundary": "Scanner output is a starting point, not proof of runtime behavior.",
+      "rules": [
+        {
+          "if": "surface matches real subsystem",
+          "then": "accepted"
+        },
+        {
+          "if": "surface is too broad or ambiguous",
+          "then": "needs_refinement"
+        },
+        {
+          "if": "surface is generated/noise",
+          "then": "rejected"
+        }
+      ]
+    }
+  ],
+  "generated_at": "2026-06-08T20:57:41+00:00",
+  "known_boundaries": [
+    "Scanner output is inferred from file paths and markers.",
+    "Runtime behavior, production deployment, and ownership are not proven.",
+    "Maintainers or agents should refine workflows, gates, and boundaries before audit use.",
+    "Generated from Linux path metadata only; use the public source commit before making technical claims."
+  ],
+  "one_line": "Starter manifest generated from repository language, build, docs, and test surfaces.",
+  "rebuild_recipe": [
+    {
+      "commands": [
+        "system-review-graph scan --repo . --out system_review_manifest.json"
+      ],
+      "goal": "Generate a starter manifest from repository surfaces.",
+      "phase": "scan"
+    }
+  ],
+  "review_questions": [
+    "Which detected language surfaces are real subsystems?",
+    "Which directories are generated or vendor noise?",
+    "Where are APIs, CLIs, configs, migrations, docs, and tests?",
+    "Which workflows move data or decisions end to end?",
+    "Which gates block unsafe or unreviewed behavior?"
+  ],
+  "schemas": [
+    {
+      "example": {},
+      "kind": "detected_contract",
+      "name": "SourceSurface",
+      "privacy_notes": "Only paths and coarse metadata are included.",
+      "purpose": "A detected source/build surface that needs human review.",
+      "required_fields": [
+        "path",
+        "language_stack",
+        "build_markers"
+      ]
+    },
+    {
+      "example": {},
+      "kind": "detected_contract",
+      "name": "DocumentationSurface",
+      "privacy_notes": "",
+      "purpose": "Detected docs that may explain system behavior.",
+      "required_fields": [
+        "path",
+        "purpose"
+      ]
+    },
+    {
+      "example": {},
+      "kind": "detected_contract",
+      "name": "TestSurface",
+      "privacy_notes": "",
+      "purpose": "Detected tests that may prove behavior.",
+      "required_fields": [
+        "path",
+        "purpose"
+      ]
+    },
+    {
+      "example": {},
+      "kind": "detected_contract",
+      "name": "ConfigSurface",
+      "privacy_notes": "",
+      "purpose": "Detected build/config/deployment surface.",
+      "required_fields": [
+        "path",
+        "purpose"
+      ]
+    }
+  ],
+  "scope": "Generated starter subsystem map for sound in /private/tmp/srg-linux-paths.",
+  "source_links": [
+    {
+      "label": "Linux kernel repository",
+      "notes": "Public source repository used for the path-tree stress test.",
+      "url": "https://github.com/torvalds/linux"
+    },
+    {
+      "label": "Linux kernel commit 2d3090a",
+      "notes": "Merge tag 'v7.1-p5' of git://git.kernel.org/pub/scm/linux/kernel/git/herbert/crypto-2.6",
+      "url": "https://github.com/torvalds/linux/commit/2d3090a8aeb596a26935db0955d46c9a5db5c6ce"
+    }
+  ],
+  "systems": [
+    {
+      "architecture_style": "detected source surface",
+      "artifacts": [
+        "c_cpp_source_surface"
+      ],
+      "code_surfaces": [
+        "ac97/",
+        "ac97_bus.c",
+        "aoa/",
+        "arm/",
+        "atmel/",
+        "core/",
+        "drivers/",
+        "firewire/",
+        "hda/",
+        "i2c/",
+        "isa/",
+        "last.c"
+      ],
+      "decision_gates": [
+        "manual_review_gate"
+      ],
+      "example": {},
+      "ideal_target": "Replace this starter node with exact subsystem ownership and workflows.",
+      "language_stack": [
+        "C",
+        "C++"
+      ],
+      "lifecycle": "source files -> build/test docs -> inferred system role",
+      "name": "C / C++ Surface",
+      "owner": "unknown",
+      "purpose": "Detected C / C++ code and build surfaces for review.",
+      "system_id": "c_cpp",
+      "truth_boundary": "Detected from repository files; runtime behavior is not proven."
+    }
+  ],
+  "title": "srg-linux-paths / sound Subsystem System Review Graph",
+  "walkthroughs": [
+    {
+      "example": {
+        "refine": [
+          "systems",
+          "artifacts",
+          "workflows",
+          "decision_gates"
+        ],
+        "scan": "system-review-graph scan --repo . --out system_review_manifest.json"
+      },
+      "name": "From scan to real system review",
+      "story": "Run scan, inspect detected surfaces, replace broad language nodes with real subsystems, then add workflows and gates."
+    }
+  ],
+  "workflows": [
+    {
+      "actor": "Reviewer",
+      "consumes": [
+        "c_cpp_source_surface"
+      ],
+      "gates": [
+        "manual_review_gate"
+      ],
+      "name": "Inspect Source Surfaces",
+      "next_steps": [
+        "refine_workflows"
+      ],
+      "produces": [
+        "candidate_system_map"
+      ],
+      "purpose": "Turn detected code/build surfaces into a human-reviewed system map.",
+      "step_id": "inspect_source_surfaces"
+    },
+    {
+      "actor": "Maintainer",
+      "consumes": [
+        "candidate_system_map"
+      ],
+      "gates": [
+        "manual_review_gate"
+      ],
+      "name": "Refine Workflows",
+      "next_steps": [],
+      "produces": [
+        "system_review_manifest"
+      ],
+      "purpose": "Replace inferred surfaces with exact workflows, gates, and boundaries.",
+      "step_id": "refine_workflows"
+    }
+  ]
+}

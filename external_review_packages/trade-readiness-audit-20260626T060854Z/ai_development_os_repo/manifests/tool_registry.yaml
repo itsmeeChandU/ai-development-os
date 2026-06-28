@@ -1,0 +1,349 @@
+version: 1
+date_checked: "2026-06-22"
+policy:
+  project_license: AGPL-3.0-or-later
+  attribution_notice: "Built with AI Development OS by Sai Chandra."
+  commercial_exception_rule: "Private/proprietary derivatives, attribution changes, official association, or closed-source hosted use require a separate written agreement."
+  responsibility_rule: "Derivative product owners are responsible for their own products, claims, data, compliance, deployments, and outcomes."
+  contribution_rule: "Contributions require DCO sign-off and agreement to contributor terms that preserve project-owner relicensing optionality."
+  default_license_preference:
+    - MIT
+    - Apache-2.0
+    - BSD
+  adoption_rule: "Adopt only when it closes a repo-proven capability gap."
+tools:
+  - name: OpenAI Codex CLI
+    url: https://github.com/openai/codex
+    category: coding-agent
+    use_for: local repo coding, review, CLI automation
+    license: Apache-2.0
+    decision: adopt
+  - name: OpenAI Agents SDK Python
+    url: https://github.com/openai/openai-agents-python
+    category: agent-runtime
+    use_for: product agents, handoffs, tracing, multi-agent workflows
+    license: MIT
+    decision: adopt
+  - name: OpenAI Agents SDK JS
+    url: https://github.com/openai/openai-agents-js
+    category: agent-runtime
+    use_for: TypeScript agent apps
+    license: MIT
+    decision: adopt
+  - name: Model Context Protocol
+    url: https://github.com/modelcontextprotocol
+    category: integration-protocol
+    use_for: external tools, docs, resources, prompts
+    license: mixed
+    decision: adopt
+  - name: GitHub MCP Server
+    url: https://github.com/github/github-mcp-server
+    category: mcp-server
+    use_for: issues, PRs, repo context, GitHub automation
+    license: MIT
+    decision: adopt
+  - name: Playwright
+    url: https://github.com/microsoft/playwright
+    category: browser-testing
+    use_for: UI testing, screenshots, browser automation
+    license: Apache-2.0
+    decision: adopt
+  - name: Browser Use
+    url: https://github.com/browser-use/browser-use
+    category: browser-agent
+    use_for: browser tasks that need agent control
+    license: MIT
+    decision: watch
+  - name: OpenHands
+    url: https://github.com/OpenHands/openhands
+    category: coding-agent-platform
+    use_for: self-hosted agent engineering team experiments
+    license: MIT
+    decision: watch
+  - name: Aider
+    url: https://github.com/Aider-AI/aider
+    category: coding-agent
+    use_for: terminal pair-programming fallback
+    license: Apache-2.0
+    decision: watch
+  - name: SWE-agent
+    url: https://github.com/SWE-agent/SWE-agent
+    category: coding-agent-benchmark-runtime
+    use_for: issue-to-patch workflows and evaluation
+    license: MIT
+    decision: watch
+  - name: LangGraph
+    url: https://github.com/langchain-ai/langgraph
+    category: orchestration
+    use_for: explicit state-machine agent flows
+    license: MIT
+    decision: adopt_when_needed
+  - name: CrewAI
+    url: https://github.com/crewAIInc/crewAI
+    category: orchestration
+    use_for: role-based multi-agent automation
+    license: MIT
+    decision: watch
+  - name: AutoGen
+    url: https://github.com/microsoft/autogen
+    category: orchestration
+    use_for: multi-agent research prototypes
+    license: MIT
+    decision: watch
+  - name: smolagents
+    url: https://github.com/huggingface/smolagents
+    category: orchestration
+    use_for: lightweight code-agent experiments
+    license: Apache-2.0
+    decision: watch
+  - name: uv
+    url: https://github.com/astral-sh/uv
+    category: package-runtime
+    use_for: Python environment and dependency management
+    license: MIT OR Apache-2.0
+    decision: adopt
+  - name: Ruff
+    url: https://github.com/astral-sh/ruff
+    category: lint-format
+    use_for: Python linting and formatting
+    license: MIT
+    decision: adopt
+  - name: pre-commit
+    url: https://github.com/pre-commit/pre-commit
+    category: local-quality-gates
+    use_for: hooks before commit
+    license: MIT
+    decision: adopt
+  - name: Ruflo
+    url: local-mcp
+    category: coordination-memory
+    use_for: local swarm records, hooks, memory, coordination evidence
+    license: local
+    decision: adopt_when_available
+  - name: Everything Claude Code
+    url: https://github.com/affaan-m/ECC
+    category: external-agent-harness
+    use_for: optional skills, commands, hook patterns, worktree lifecycle, verification loops, and same-day product-slice acceleration
+    license: MIT
+    decision: adopt_optional_patterns
+    boundary: "External harness acceleration only; AI Development OS repo proof, generated artifacts, tests, and human/external gates remain canonical."
+  - name: ECC AgentShield
+    url: https://www.npmjs.com/package/ecc-agentshield
+    category: agent-config-security
+    use_for: scan Claude Code or external harness configs, hooks, MCP definitions, agents, and skills before committing optional harness configuration
+    license: MIT
+    decision: adopt_when_external_harness_configs_change
+  - name: Zephyr RTOS
+    url: https://github.com/zephyrproject-rtos/zephyr
+    category: embedded-rtos
+    use_for: scalable RTOS for microcontroller and connected-device products
+    license: Apache-2.0
+    decision: adopt_when_hardware_fit
+  - name: Yocto Project
+    url: https://www.yoctoproject.org/
+    category: embedded-linux
+    use_for: custom Linux-based systems for production embedded hardware
+    license: mixed-open-source
+    decision: adopt_when_embedded_linux_requires_reproducible_distribution
+  - name: Buildroot
+    url: https://buildroot.org/
+    category: embedded-linux
+    use_for: simple efficient cross-compiled embedded Linux images
+    license: GPL-2.0-or-later
+    decision: adopt_when_fast_embedded_linux_prototype
+  - name: QEMU
+    url: https://www.qemu.org/
+    category: machine-emulation
+    use_for: full-system OS and architecture emulation before hardware is available
+    license: GPL-2.0
+    decision: adopt_when_machine_model_exists
+  - name: Renode
+    url: https://renode.io/
+    category: embedded-simulation
+    use_for: deterministic embedded and multi-node device simulation
+    license: open-source
+    decision: adopt_when_embedded_device_simulation_needed
+  - name: OpenOCD
+    url: https://openocd.org/
+    category: hardware-debug
+    use_for: JTAG/SWD debugging, flashing, and hardware-in-loop bench work
+    license: GPL-2.0-or-later
+    decision: adopt_when_physical_debug_adapter_needed
+  - name: KiCad
+    url: https://www.kicad.org/
+    category: electronics-cad
+    use_for: schematic capture, PCB design, Gerber and manufacturing outputs
+    license: GPL-3.0
+    decision: adopt_when_custom_pcb_needed
+  - name: FreeCAD
+    url: https://www.freecad.org/
+    category: mechanical-cad
+    use_for: parametric mechanical design and enclosures
+    license: LGPL-2.0-or-later
+    decision: adopt_when_mechanical_design_needed
+  - name: ngspice
+    url: https://ngspice.sourceforge.io/
+    category: circuit-simulation
+    use_for: analog, digital, and mixed-signal circuit simulation
+    license: BSD-like
+    decision: adopt_when_circuit_behavior_needs_proof
+  - name: Yosys
+    url: https://yosyshq.net/yosys/
+    category: rtl-synthesis
+    use_for: Verilog RTL synthesis and FPGA/ASIC exploration
+    license: ISC
+    decision: adopt_when_rtl_path_needed
+  - name: Verilator
+    url: https://github.com/verilator/verilator
+    category: rtl-simulation
+    use_for: Verilog/SystemVerilog simulation and lint
+    license: LGPL-3.0-or-later OR Artistic-2.0
+    decision: adopt_when_rtl_simulation_needed
+  - name: cocotb
+    url: https://www.cocotb.org/
+    category: rtl-verification
+    use_for: Python-based VHDL/SystemVerilog co-simulation tests
+    license: BSD
+    decision: adopt_when_chip_or_fpga_verification_needed
+  - name: DuckDB
+    url: https://github.com/duckdb/duckdb
+    category: local-analytics
+    use_for: local data lake, report artifacts, and audit queries
+    license: MIT
+    decision: adopt_when_local_tabular_state_needed
+  - name: DVC
+    url: https://github.com/iterative/dvc
+    category: data-versioning
+    use_for: versioned datasets, models, and reproducible data pipelines
+    license: Apache-2.0
+    decision: adopt_when_data_artifacts_outgrow_git
+  - name: Great Expectations
+    url: https://github.com/great-expectations/great_expectations
+    category: data-quality
+    use_for: dataset validation, freshness, and schema expectations
+    license: Apache-2.0
+    decision: adopt_when_data_contracts_needed
+  - name: OpenTelemetry
+    url: https://github.com/open-telemetry
+    category: observability
+    use_for: traces, metrics, logs, and cross-service telemetry
+    license: Apache-2.0
+    decision: adopt_when_runtime_observability_needed
+  - name: Grafana
+    url: https://github.com/grafana/grafana
+    category: observability-ui
+    use_for: dashboards for product and system operations
+    license: AGPL-3.0
+    decision: adopt_when_operator_dashboards_needed
+  - name: Prometheus
+    url: https://github.com/prometheus/prometheus
+    category: metrics
+    use_for: metrics collection and alerting
+    license: Apache-2.0
+    decision: adopt_when_metrics_needed
+  - name: gitleaks
+    url: https://github.com/gitleaks/gitleaks
+    category: secret-scanning
+    use_for: prevent committing secrets and credentials
+    license: MIT
+    decision: adopt
+  - name: Trivy
+    url: https://github.com/aquasecurity/trivy
+    category: vulnerability-scanning
+    use_for: containers, dependencies, IaC, and secret scanning
+    license: Apache-2.0
+    decision: adopt_when_supply_chain_needed
+  - name: Semgrep
+    url: https://github.com/semgrep/semgrep
+    category: static-analysis
+    use_for: code security and policy checks
+    license: LGPL-2.1
+    decision: adopt_when_static_policy_needed
+  - name: Syft
+    url: https://github.com/anchore/syft
+    category: sbom
+    use_for: software bill of materials generation
+    license: Apache-2.0
+    decision: adopt_when_release_or_supply_chain_needed
+  - name: Grype
+    url: https://github.com/anchore/grype
+    category: vulnerability-scanning
+    use_for: scan SBOMs and images for vulnerabilities
+    license: Apache-2.0
+    decision: adopt_when_release_or_supply_chain_needed
+  - name: OSV-Scanner
+    url: https://github.com/google/osv-scanner
+    category: dependency-vulnerability-scanning
+    use_for: vulnerability checks from OSV database
+    license: Apache-2.0
+    decision: adopt_when_dependency_scanning_needed
+  - name: CycloneDX
+    url: https://cyclonedx.org/
+    category: sbom-standard
+    use_for: SBOM format and supply-chain exchange
+    license: standard
+    decision: reference
+  - name: SPDX
+    url: https://spdx.dev/
+    category: license-sbom-standard
+    use_for: license identifiers, SBOMs, and compliance records
+    license: standard
+    decision: reference
+  - name: REUSE
+    url: https://reuse.software/
+    category: license-compliance
+    use_for: machine-readable licensing and copyright compliance
+    license: reference
+    decision: watch
+tool_layers:
+  - layer: research
+    purpose: current docs, datasheets, standards, source alternatives
+    required_artifact: templates/RESEARCH_RECORD.md
+  - layer: state-reconstruction
+    purpose: prompt plus repo/data/runtime truth to actual current state
+    required_artifact: templates/STATE_RECONSTRUCTION_REPORT.md
+  - layer: hardware-os
+    purpose: hardware, firmware, drivers, OS, board support package
+    required_artifact: templates/COMPLEX_PRODUCT_SPEC.md
+  - layer: tool-decision
+    purpose: justify tool adoption, fallback, and proof command
+    required_artifact: templates/TOOL_DECISION_RECORD.md
+  - layer: procurement-lab
+    purpose: parts, equipment, lead times, bench proof
+    required_artifact: templates/PROCUREMENT_AND_LAB_PLAN.md
+strategy_sources:
+  - name: Jobs To Be Done
+    url: https://www.christenseninstitute.org/theory/jobs-to-be-done/
+    category: product-strategy
+    use_for: user progress, switching trigger, product promise
+    decision: reference
+  - name: Wardley Mapping
+    url: https://learnwardleymapping.com/
+    category: strategy-mapping
+    use_for: value chain, build-vs-buy, evolution stage
+    decision: reference
+  - name: Awesome Wardley Maps
+    url: https://github.com/wardley-maps-community/awesome-wardley-maps
+    category: strategy-mapping-resources
+    use_for: Wardley mapping examples and tools
+    decision: reference
+  - name: Shape Up
+    url: https://basecamp.com/shapeup
+    category: product-process
+    use_for: appetite, shaped pitches, bounded product slices
+    decision: reference
+  - name: Toyota Kata
+    url: https://www-personal.umich.edu/~mrother/Homepage.html
+    category: continuous-improvement
+    use_for: current condition, target condition, obstacle, next experiment
+    decision: reference
+research_backlog:
+  - name: prompt-to-product benchmarks
+    question: "Which open-source benchmarks best measure complete product delivery, not just code patches?"
+    status: todo
+  - name: agent UI verification harnesses
+    question: "Which tools best combine screenshots, browser events, accessibility checks, and agent-readable failures?"
+    status: todo
+  - name: product proof ledgers
+    question: "Which open-source patterns exist for generated readiness reports and blocker ledgers?"
+    status: todo

@@ -1,0 +1,336 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>OpenTelemetry Collector Public Repo System Review Graph</title>
+  <style>
+    body {
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, sans-serif;
+      margin: 0;
+      color: #18202a;
+      background: #f8fafc;
+    }
+    header { padding: 40px 32px; background: #172033; color: white; }
+    main { max-width: 1120px; margin: 0 auto; padding: 28px; }
+    section {
+      margin: 24px 0;
+      padding: 24px;
+      background: white;
+      border: 1px solid #dbe3ee;
+      border-radius: 10px;
+    }
+    h1, h2, h3 { line-height: 1.2; }
+    code, pre { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    .meta { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+    .pill { padding: 6px 10px; border: 1px solid rgba(255,255,255,.32); border-radius: 999px; }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+    }
+    .card { padding: 18px; border: 1px solid #dbe3ee; border-radius: 10px; background: #fbfdff; }
+    dt { font-weight: 700; margin-top: 10px; }
+    dd { margin-left: 0; color: #465466; }
+    table { border-collapse: collapse; width: 100%; }
+    th, td { border-bottom: 1px solid #dbe3ee; padding: 10px 8px; text-align: left; }
+    a { color: #1456cc; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>OpenTelemetry Collector Public Repo System Review Graph</h1>
+    <p>The OpenTelemetry Collector routes telemetry through configurable receivers, processors, connectors, extensions, and exporters.</p>
+    <div class="meta">
+      <span class="pill">Depth: deep</span>
+      <span class="pill">Systems: 6</span>
+      <span class="pill">Artifacts: 8</span>
+      <span class="pill">Gates: 4</span>
+      <span class="pill">Workflows: 6</span>
+    </div>
+  </header>
+  <main>
+    <section>
+      <h2>Bigger Picture</h2>
+      <p>This example shows how to map a component pipeline repo. The system is a configurable telemetry service: configuration declares pipelines, receivers ingest signals, processors transform or batch them, connectors can bridge pipelines, exporters send telemetry onward, extensions add service capabilities, and service orchestration manages startup, shutdown, and observability.</p>
+    </section>
+    <section>
+      <h2>Source Links</h2>
+      <ul><li><a href="https://github.com/open-telemetry/opentelemetry-collector">GitHub repository</a> - Primary public source used for repo identity and source paths.</li>
+<li><a href="https://opentelemetry.io/docs/collector/">OpenTelemetry Collector documentation</a> - Public docs for collector concepts and configuration.</li>
+<li><a href="https://opentelemetry.io/">OpenTelemetry project</a> - Public project context for telemetry standards.</li></ul>
+    </section>
+
+    <section>
+      <h2>Report Registers</h2>
+      <h3>Coverage Register</h3>
+      <table><thead><tr><th>Area</th><th>Count</th><th>What It Means</th><th>Reviewer Use</th></tr></thead><tbody><tr><td>Systems</td><td>6</td><td>Bounded contexts, services, subsystems, or product surfaces.</td><td>Use this to see whether the report maps the main operating areas.</td></tr>
+<tr><td>Artifacts</td><td>8</td><td>Inspectable files, APIs, tables, dashboards, reports, or outputs.</td><td>Use this to trace where system claims can be inspected.</td></tr>
+<tr><td>Schemas/contracts</td><td>6</td><td>Public or sanitized contracts for artifacts and handoffs.</td><td>Use this to rebuild examples without touching private data.</td></tr>
+<tr><td>Decision gates</td><td>4</td><td>Rules that advance, wait, block, or require human review.</td><td>Use this to find where the system controls action.</td></tr>
+<tr><td>Workflows</td><td>6</td><td>Lifecycle steps from input to output.</td><td>Use this to follow what happens end to end.</td></tr>
+<tr><td>Graph edges</td><td>51</td><td>Explicit and derived relationships between manifest nodes.</td><td>Use this to audit connectivity and missing relationships.</td></tr>
+<tr><td>Child maps</td><td>0</td><td>Linked subsystem maps for large repositories.</td><td>Use this to drill into a map-of-maps instead of one flat report.</td></tr>
+<tr><td>Blueprint sections</td><td>0</td><td>Source-evidence-backed operating flows.</td><td>Use this to review deep behavior claims with proof anchors.</td></tr>
+<tr><td>Blueprint evidence rows</td><td>0</td><td>Source paths, symbols, roles, and proof levels.</td><td>Use this to verify whether blueprint claims are source-backed.</td></tr>
+<tr><td>Source links</td><td>3</td><td>External or public references used by the report.</td><td>Use this to confirm the report&#x27;s public evidence base.</td></tr>
+<tr><td>Known boundaries</td><td>4</td><td>Open limits, unproven claims, redactions, or scope exclusions.</td><td>Use this to avoid treating the report as stronger than it is.</td></tr>
+<tr><td>Review questions</td><td>5</td><td>Questions a maintainer, auditor, or agent should answer next.</td><td>Use this as the human follow-up queue.</td></tr>
+<tr><td>Rebuild phases</td><td>2</td><td>Documented commands or phases for reproducing the report.</td><td>Use this to regenerate or verify the report locally.</td></tr></tbody></table>
+      <h3>Evidence Register</h3>
+      <table><thead><tr><th>Evidence</th><th>Kind</th><th>Coverage</th><th>Proof</th><th>Reviewer Use</th></tr></thead><tbody><tr><td><a href="https://github.com/open-telemetry/opentelemetry-collector">GitHub repository</a></td><td>source link</td><td>whole report</td><td>declared</td><td>Primary public source used for repo identity and source paths.</td></tr>
+<tr><td><a href="https://opentelemetry.io/docs/collector/">OpenTelemetry Collector documentation</a></td><td>source link</td><td>whole report</td><td>declared</td><td>Public docs for collector concepts and configuration.</td></tr>
+<tr><td><a href="https://opentelemetry.io/">OpenTelemetry project</a></td><td>source link</td><td>whole report</td><td>declared</td><td>Public project context for telemetry standards.</td></tr>
+<tr><td>receiver/</td><td>source_directory</td><td>collector</td><td>safe_to_share</td><td>Defines receiver interfaces, helpers, and built-in receiver components.</td></tr>
+<tr><td>processor/</td><td>source_directory</td><td>collector</td><td>safe_to_share</td><td>Defines processors that transform, batch, limit, or otherwise mediate telemetry.</td></tr>
+<tr><td>exporter/</td><td>source_directory</td><td>collector</td><td>safe_to_share</td><td>Defines exporters and exporter helper behavior.</td></tr>
+<tr><td>connector/</td><td>source_directory</td><td>collector</td><td>safe_to_share</td><td>Defines connectors that can route telemetry between pipelines.</td></tr>
+<tr><td>extension/</td><td>source_directory</td><td>collector</td><td>safe_to_share</td><td>Defines service extensions such as auth, zpages, memory limiters, and capabilities.</td></tr>
+<tr><td>service/</td><td>source_directory</td><td>collector</td><td>safe_to_share</td><td>Coordinates configuration, pipelines, component lifecycle, telemetry, and host capabilities.</td></tr>
+<tr><td>confmap/</td><td>source_directory</td><td>collector</td><td>safe_to_share</td><td>Loads and resolves configuration maps and providers.</td></tr>
+<tr><td>docs/</td><td>public_docs</td><td>docs</td><td>safe_to_share</td><td>Documents collector behavior, proposals, and images.</td></tr>
+<tr><td>CollectorConfig</td><td>configuration_contract</td><td>receivers, processors, exporters, service.pipelines</td><td>contract declared</td><td>Declares which components exist and how telemetry flows through pipelines.</td></tr>
+<tr><td>ReceiverContract</td><td>component_contract</td><td>component_id, signal_type, endpoint, start_status</td><td>contract declared</td><td>Describes an ingest component that accepts telemetry.</td></tr>
+<tr><td>ProcessorContract</td><td>component_contract</td><td>component_id, signal_type, transform_policy, failure_policy</td><td>contract declared</td><td>Describes transformation, batching, filtering, memory, or enrichment behavior.</td></tr>
+<tr><td>ExporterContract</td><td>component_contract</td><td>component_id, destination, retry_policy, queue_policy</td><td>contract declared</td><td>Describes where telemetry is sent and how failures are handled.</td></tr>
+<tr><td>TelemetryBatch</td><td>data_contract</td><td>signal_type, resource_attrs, scope, records</td><td>contract declared</td><td>Represents telemetry moving through a pipeline.</td></tr>
+<tr><td>ComponentStatus</td><td>health_contract</td><td>component_id, status, error, observed_at</td><td>contract declared</td><td>Represents component lifecycle and health state.</td></tr></tbody></table>
+      <h3>Gap Register</h3>
+      <table><thead><tr><th>Gap</th><th>Area</th><th>Status</th><th>Boundary</th><th>Next Step</th></tr></thead><tbody><tr><td>Known boundary</td><td>whole report</td><td>open</td><td>This is a public educational map, not an official OpenTelemetry maintainer audit.</td><td>Accept the boundary or add evidence that closes it.</td></tr>
+<tr><td>Known boundary</td><td>whole report</td><td>open</td><td>It maps the collector architecture at a high level, not every component or distribution.</td><td>Accept the boundary or add evidence that closes it.</td></tr>
+<tr><td>Known boundary</td><td>whole report</td><td>open</td><td>Real enterprise reviews should use fake or redacted telemetry payloads.</td><td>Accept the boundary or add evidence that closes it.</td></tr>
+<tr><td>Known boundary</td><td>whole report</td><td>open</td><td>A full audit should inspect exact config, component versions, tests, runtime metrics, and deployment policy.</td><td>Accept the boundary or add evidence that closes it.</td></tr>
+<tr><td>System truth boundary</td><td>Configuration System</td><td>review</td><td>Configuration describes desired telemetry flow; startup gates decide whether it can run.</td><td>Inspect this boundary before making stronger behavior claims.</td></tr>
+<tr><td>System truth boundary</td><td>Receiver Layer</td><td>review</td><td>A receiver only starts when configuration and lifecycle checks pass.</td><td>Inspect this boundary before making stronger behavior claims.</td></tr>
+<tr><td>System truth boundary</td><td>Processor Layer</td><td>review</td><td>Processor behavior is bounded by pipeline order and configuration.</td><td>Inspect this boundary before making stronger behavior claims.</td></tr>
+<tr><td>System truth boundary</td><td>Connector And Extension Layer</td><td>review</td><td>Connectors and extensions can change topology or service behavior; they must start cleanly.</td><td>Inspect this boundary before making stronger behavior claims.</td></tr>
+<tr><td>System truth boundary</td><td>Exporter Layer</td><td>review</td><td>Delivery depends on destination, queue, retry, and failure policy.</td><td>Inspect this boundary before making stronger behavior claims.</td></tr>
+<tr><td>System truth boundary</td><td>Service Orchestrator</td><td>review</td><td>The service can expose health and telemetry, but configured components determine data path.</td><td>Inspect this boundary before making stronger behavior claims.</td></tr>
+<tr><td>Blueprint not declared</td><td>whole report</td><td>optional</td><td>No source-backed blueprint sections were declared.</td><td>Add blueprint sections when the report needs source-level proof.</td></tr></tbody></table>
+      <h3>Action Register</h3>
+      <table><thead><tr><th>Action</th><th>Owner</th><th>Status</th><th>Trigger</th><th>Expected Output</th></tr></thead><tbody><tr><td>Review question</td><td>maintainer / auditor</td><td>open</td><td>How does configuration become a running telemetry pipeline?</td><td>Answer from source, tests, docs, logs, or maintainer knowledge.</td></tr>
+<tr><td>Review question</td><td>maintainer / auditor</td><td>open</td><td>Which gates prevent invalid config or failed components from processing telemetry?</td><td>Answer from source, tests, docs, logs, or maintainer knowledge.</td></tr>
+<tr><td>Review question</td><td>maintainer / auditor</td><td>open</td><td>Where are backpressure, memory, queue, retry, and delivery policies enforced?</td><td>Answer from source, tests, docs, logs, or maintainer knowledge.</td></tr>
+<tr><td>Review question</td><td>maintainer / auditor</td><td>open</td><td>How can a reviewer audit topology without seeing customer telemetry payloads?</td><td>Answer from source, tests, docs, logs, or maintainer knowledge.</td></tr>
+<tr><td>Review question</td><td>maintainer / auditor</td><td>open</td><td>Which component health and service telemetry artifacts would prove runtime behavior?</td><td>Answer from source, tests, docs, logs, or maintainer knowledge.</td></tr>
+<tr><td>Resolve boundary</td><td>maintainer / auditor</td><td>open</td><td>This is a public educational map, not an official OpenTelemetry maintainer audit.</td><td>Accept as scope or add proof that closes it.</td></tr>
+<tr><td>Resolve boundary</td><td>maintainer / auditor</td><td>open</td><td>It maps the collector architecture at a high level, not every component or distribution.</td><td>Accept as scope or add proof that closes it.</td></tr>
+<tr><td>Resolve boundary</td><td>maintainer / auditor</td><td>open</td><td>Real enterprise reviews should use fake or redacted telemetry payloads.</td><td>Accept as scope or add proof that closes it.</td></tr>
+<tr><td>Resolve boundary</td><td>maintainer / auditor</td><td>open</td><td>A full audit should inspect exact config, component versions, tests, runtime metrics, and deployment policy.</td><td>Accept as scope or add proof that closes it.</td></tr>
+<tr><td>Rebuild phase</td><td>maintainer / agent</td><td>repeatable</td><td>validate</td><td>Check the OpenTelemetry Collector public repo manifest.</td></tr>
+<tr><td>Rebuild phase</td><td>maintainer / agent</td><td>repeatable</td><td>build</td><td>Generate the OpenTelemetry Collector system review report.</td></tr></tbody></table>
+
+    </section>
+
+    <section>
+      <h2>Lifecycle Map</h2>
+      <pre class="mermaid">flowchart LR
+  load_configuration[&quot;Load Configuration&quot;]
+  start_components[&quot;Start Components&quot;]
+  receive_telemetry[&quot;Receive Telemetry&quot;]
+  process_telemetry[&quot;Process Telemetry&quot;]
+  route_or_export[&quot;Route Or Export&quot;]
+  observe_collector[&quot;Observe Collector&quot;]
+  load_configuration --&gt; start_components[&quot;Start Components&quot;]
+  start_components --&gt; receive_telemetry[&quot;Receive Telemetry&quot;]
+  receive_telemetry --&gt; process_telemetry[&quot;Process Telemetry&quot;]
+  process_telemetry --&gt; route_or_export[&quot;Route Or Export&quot;]
+  route_or_export --&gt; observe_collector[&quot;Observe Collector&quot;]</pre>
+    </section>
+
+
+
+
+        <section>
+          <h2>Artifact And Schema Map</h2>
+          <pre class="mermaid">flowchart LR
+  system_configuration_system[&quot;Configuration System&quot;]
+  system_configuration_system --&gt; artifact_confmap_tree[&quot;Configuration Map Tree&quot;]
+  artifact_confmap_tree --&gt; schema_CollectorConfig[&quot;CollectorConfig&quot;]
+  system_configuration_system --&gt; artifact_service_tree[&quot;Service Tree&quot;]
+  artifact_service_tree --&gt; schema_CollectorConfig[&quot;CollectorConfig&quot;]
+  system_receiver_layer[&quot;Receiver Layer&quot;]
+  system_receiver_layer --&gt; artifact_receiver_tree[&quot;Receiver Tree&quot;]
+  artifact_receiver_tree --&gt; schema_ReceiverContract[&quot;ReceiverContract&quot;]
+  system_processor_layer[&quot;Processor Layer&quot;]
+  system_processor_layer --&gt; artifact_processor_tree[&quot;Processor Tree&quot;]
+  artifact_processor_tree --&gt; schema_ProcessorContract[&quot;ProcessorContract&quot;]
+  system_connector_extension_layer[&quot;Connector And Extension Layer&quot;]
+  system_connector_extension_layer --&gt; artifact_connector_tree[&quot;Connector Tree&quot;]
+  artifact_connector_tree --&gt; schema_TelemetryBatch[&quot;TelemetryBatch&quot;]
+  system_connector_extension_layer --&gt; artifact_extension_tree[&quot;Extension Tree&quot;]
+  artifact_extension_tree --&gt; schema_ComponentStatus[&quot;ComponentStatus&quot;]
+  system_exporter_layer[&quot;Exporter Layer&quot;]
+  system_exporter_layer --&gt; artifact_exporter_tree[&quot;Exporter Tree&quot;]
+  artifact_exporter_tree --&gt; schema_ExporterContract[&quot;ExporterContract&quot;]
+  system_service_orchestrator[&quot;Service Orchestrator&quot;]
+  system_service_orchestrator --&gt; artifact_service_tree[&quot;Service Tree&quot;]
+  artifact_service_tree --&gt; schema_CollectorConfig[&quot;CollectorConfig&quot;]
+  system_service_orchestrator --&gt; artifact_docs_tree[&quot;Docs Tree&quot;]
+  artifact_docs_tree --&gt; schema_CollectorConfig[&quot;CollectorConfig&quot;]</pre>
+        </section>
+        <section>
+          <h2>Gate Map</h2>
+          <pre class="mermaid">flowchart LR
+  gate_config_validation_gate{&quot;Configuration Validation Gate&quot;}
+  gate_config_validation_gate --&gt; out_config_validation_gate_valid_config[&quot;valid_config&quot;]
+  gate_config_validation_gate --&gt; out_config_validation_gate_config_error[&quot;config_error&quot;]
+  gate_component_lifecycle_gate{&quot;Component Lifecycle Gate&quot;}
+  gate_component_lifecycle_gate --&gt; out_component_lifecycle_gate_component_started[&quot;component_started&quot;]
+  gate_component_lifecycle_gate --&gt; out_component_lifecycle_gate_component_failed[&quot;component_failed&quot;]
+  gate_backpressure_gate{&quot;Backpressure And Memory Gate&quot;}
+  gate_backpressure_gate --&gt; out_backpressure_gate_accept_batch[&quot;accept_batch&quot;]
+  gate_backpressure_gate --&gt; out_backpressure_gate_drop_or_throttle[&quot;drop_or_throttle&quot;]
+  gate_export_delivery_gate{&quot;Export Delivery Gate&quot;}
+  gate_export_delivery_gate --&gt; out_export_delivery_gate_exported[&quot;exported&quot;]
+  gate_export_delivery_gate --&gt; out_export_delivery_gate_retry[&quot;retry&quot;]
+  gate_export_delivery_gate --&gt; out_export_delivery_gate_failed_export[&quot;failed_export&quot;]
+  gate_config_validation_gate{&quot;Configuration Validation Gate&quot;} --&gt; step_load_configuration[&quot;Load Configuration&quot;]
+  gate_component_lifecycle_gate{&quot;Component Lifecycle Gate&quot;} --&gt; step_start_components[&quot;Start Components&quot;]
+  gate_component_lifecycle_gate{&quot;Component Lifecycle Gate&quot;} --&gt; step_receive_telemetry[&quot;Receive Telemetry&quot;]
+  gate_backpressure_gate{&quot;Backpressure And Memory Gate&quot;} --&gt; step_process_telemetry[&quot;Process Telemetry&quot;]
+  gate_export_delivery_gate{&quot;Export Delivery Gate&quot;} --&gt; step_route_or_export[&quot;Route Or Export&quot;]
+  gate_component_lifecycle_gate{&quot;Component Lifecycle Gate&quot;} --&gt; step_observe_collector[&quot;Observe Collector&quot;]</pre>
+        </section>
+
+
+        <section>
+          <h2>Relationship Graph</h2>
+          <pre class="mermaid">flowchart TD
+  configuration_system[&quot;Configuration System&quot;] -- &quot;declares runtime for&quot; --&gt; service_orchestrator[&quot;Service Orchestrator&quot;]
+  processor_layer[&quot;Processor Layer&quot;] -- &quot;feeds processed batches to&quot; --&gt; exporter_layer[&quot;Exporter Layer&quot;]
+  configuration_system[&quot;Configuration System&quot;] -- &quot;owns or uses&quot; --&gt; confmap_tree[&quot;Configuration Map Tree&quot;]
+  configuration_system[&quot;Configuration System&quot;] -- &quot;owns or uses&quot; --&gt; service_tree[&quot;Service Tree&quot;]
+  configuration_system[&quot;Configuration System&quot;] -- &quot;is gated by&quot; --&gt; config_validation_gate[&quot;Configuration Validation Gate&quot;]
+  receiver_layer[&quot;Receiver Layer&quot;] -- &quot;owns or uses&quot; --&gt; receiver_tree[&quot;Receiver Tree&quot;]
+  receiver_layer[&quot;Receiver Layer&quot;] -- &quot;is gated by&quot; --&gt; component_lifecycle_gate[&quot;Component Lifecycle Gate&quot;]
+  processor_layer[&quot;Processor Layer&quot;] -- &quot;owns or uses&quot; --&gt; processor_tree[&quot;Processor Tree&quot;]
+  processor_layer[&quot;Processor Layer&quot;] -- &quot;is gated by&quot; --&gt; backpressure_gate[&quot;Backpressure And Memory Gate&quot;]
+  processor_layer[&quot;Processor Layer&quot;] -- &quot;is gated by&quot; --&gt; component_lifecycle_gate[&quot;Component Lifecycle Gate&quot;]
+  connector_extension_layer[&quot;Connector And Extension Layer&quot;] -- &quot;owns or uses&quot; --&gt; connector_tree[&quot;Connector Tree&quot;]
+  connector_extension_layer[&quot;Connector And Extension Layer&quot;] -- &quot;owns or uses&quot; --&gt; extension_tree[&quot;Extension Tree&quot;]
+  connector_extension_layer[&quot;Connector And Extension Layer&quot;] -- &quot;is gated by&quot; --&gt; component_lifecycle_gate[&quot;Component Lifecycle Gate&quot;]
+  exporter_layer[&quot;Exporter Layer&quot;] -- &quot;owns or uses&quot; --&gt; exporter_tree[&quot;Exporter Tree&quot;]
+  exporter_layer[&quot;Exporter Layer&quot;] -- &quot;is gated by&quot; --&gt; export_delivery_gate[&quot;Export Delivery Gate&quot;]
+  exporter_layer[&quot;Exporter Layer&quot;] -- &quot;is gated by&quot; --&gt; component_lifecycle_gate[&quot;Component Lifecycle Gate&quot;]
+  service_orchestrator[&quot;Service Orchestrator&quot;] -- &quot;owns or uses&quot; --&gt; service_tree[&quot;Service Tree&quot;]
+  service_orchestrator[&quot;Service Orchestrator&quot;] -- &quot;owns or uses&quot; --&gt; docs_tree[&quot;Docs Tree&quot;]
+  service_orchestrator[&quot;Service Orchestrator&quot;] -- &quot;is gated by&quot; --&gt; config_validation_gate[&quot;Configuration Validation Gate&quot;]
+  service_orchestrator[&quot;Service Orchestrator&quot;] -- &quot;is gated by&quot; --&gt; component_lifecycle_gate[&quot;Component Lifecycle Gate&quot;]
+  config_file[&quot;config_file&quot;] -- &quot;feeds&quot; --&gt; load_configuration[&quot;Load Configuration&quot;]
+  confmap_tree[&quot;Configuration Map Tree&quot;] -- &quot;feeds&quot; --&gt; load_configuration[&quot;Load Configuration&quot;]
+  load_configuration[&quot;Load Configuration&quot;] -- &quot;produces&quot; --&gt; CollectorConfig[&quot;CollectorConfig&quot;]
+  config_validation_gate[&quot;Configuration Validation Gate&quot;] -- &quot;gates&quot; --&gt; load_configuration[&quot;Load Configuration&quot;]
+  load_configuration[&quot;Load Configuration&quot;] -- &quot;routes to&quot; --&gt; start_components[&quot;Start Components&quot;]
+  CollectorConfig[&quot;CollectorConfig&quot;] -- &quot;feeds&quot; --&gt; start_components[&quot;Start Components&quot;]
+  service_tree[&quot;Service Tree&quot;] -- &quot;feeds&quot; --&gt; start_components[&quot;Start Components&quot;]
+  start_components[&quot;Start Components&quot;] -- &quot;produces&quot; --&gt; ComponentStatus[&quot;ComponentStatus&quot;]
+  component_lifecycle_gate[&quot;Component Lifecycle Gate&quot;] -- &quot;gates&quot; --&gt; start_components[&quot;Start Components&quot;]
+  start_components[&quot;Start Components&quot;] -- &quot;routes to&quot; --&gt; receive_telemetry[&quot;Receive Telemetry&quot;]
+  external_signal[&quot;external_signal&quot;] -- &quot;feeds&quot; --&gt; receive_telemetry[&quot;Receive Telemetry&quot;]
+  ReceiverContract[&quot;ReceiverContract&quot;] -- &quot;feeds&quot; --&gt; receive_telemetry[&quot;Receive Telemetry&quot;]
+  receive_telemetry[&quot;Receive Telemetry&quot;] -- &quot;produces&quot; --&gt; TelemetryBatch[&quot;TelemetryBatch&quot;]
+  component_lifecycle_gate[&quot;Component Lifecycle Gate&quot;] -- &quot;gates&quot; --&gt; receive_telemetry[&quot;Receive Telemetry&quot;]
+  receive_telemetry[&quot;Receive Telemetry&quot;] -- &quot;routes to&quot; --&gt; process_telemetry[&quot;Process Telemetry&quot;]
+  TelemetryBatch[&quot;TelemetryBatch&quot;] -- &quot;feeds&quot; --&gt; process_telemetry[&quot;Process Telemetry&quot;]
+  ProcessorContract[&quot;ProcessorContract&quot;] -- &quot;feeds&quot; --&gt; process_telemetry[&quot;Process Telemetry&quot;]
+  process_telemetry[&quot;Process Telemetry&quot;] -- &quot;produces&quot; --&gt; TelemetryBatch[&quot;TelemetryBatch&quot;]
+  backpressure_gate[&quot;Backpressure And Memory Gate&quot;] -- &quot;gates&quot; --&gt; process_telemetry[&quot;Process Telemetry&quot;]
+  process_telemetry[&quot;Process Telemetry&quot;] -- &quot;routes to&quot; --&gt; route_or_export[&quot;Route Or Export&quot;]
+  TelemetryBatch[&quot;TelemetryBatch&quot;] -- &quot;feeds&quot; --&gt; route_or_export[&quot;Route Or Export&quot;]
+  ExporterContract[&quot;ExporterContract&quot;] -- &quot;feeds&quot; --&gt; route_or_export[&quot;Route Or Export&quot;]
+  route_or_export[&quot;Route Or Export&quot;] -- &quot;produces&quot; --&gt; exported[&quot;exported&quot;]
+  route_or_export[&quot;Route Or Export&quot;] -- &quot;produces&quot; --&gt; retry[&quot;retry&quot;]
+  route_or_export[&quot;Route Or Export&quot;] -- &quot;produces&quot; --&gt; failed_export[&quot;failed_export&quot;]
+  export_delivery_gate[&quot;Export Delivery Gate&quot;] -- &quot;gates&quot; --&gt; route_or_export[&quot;Route Or Export&quot;]
+  route_or_export[&quot;Route Or Export&quot;] -- &quot;routes to&quot; --&gt; observe_collector[&quot;Observe Collector&quot;]
+  ComponentStatus[&quot;ComponentStatus&quot;] -- &quot;feeds&quot; --&gt; observe_collector[&quot;Observe Collector&quot;]
+  export_result[&quot;export_result&quot;] -- &quot;feeds&quot; --&gt; observe_collector[&quot;Observe Collector&quot;]
+  observe_collector[&quot;Observe Collector&quot;] -- &quot;produces&quot; --&gt; service_telemetry[&quot;service_telemetry&quot;]
+  component_lifecycle_gate[&quot;Component Lifecycle Gate&quot;] -- &quot;gates&quot; --&gt; observe_collector[&quot;Observe Collector&quot;]</pre>
+        </section>
+
+    <section>
+      <h2>Systems</h2>
+      <div class="grid">
+        <article class="card" id="configuration_system">
+          <h3>Configuration System</h3>
+          <p>Loads and resolves collector configuration into service pipelines.</p>
+          <dl>
+            <dt>Architecture</dt><dd>configuration and provider layer</dd>
+            <dt>Lifecycle</dt><dd>config file/provider -&gt; CollectorConfig -&gt; pipeline graph</dd>
+            <dt>Boundary</dt><dd>Configuration describes desired telemetry flow; startup gates decide whether it can run.</dd>
+          </dl>
+        </article>
+
+
+        <article class="card" id="receiver_layer">
+          <h3>Receiver Layer</h3>
+          <p>Accepts telemetry from external sources and injects it into pipelines.</p>
+          <dl>
+            <dt>Architecture</dt><dd>component ingest layer</dd>
+            <dt>Lifecycle</dt><dd>external telemetry -&gt; receiver -&gt; pipeline</dd>
+            <dt>Boundary</dt><dd>A receiver only starts when configuration and lifecycle checks pass.</dd>
+          </dl>
+        </article>
+
+
+        <article class="card" id="processor_layer">
+          <h3>Processor Layer</h3>
+          <p>Transforms, batches, limits, or filters telemetry before export.</p>
+          <dl>
+            <dt>Architecture</dt><dd>pipeline transformation layer</dd>
+            <dt>Lifecycle</dt><dd>TelemetryBatch -&gt; processor chain -&gt; TelemetryBatch</dd>
+            <dt>Boundary</dt><dd>Processor behavior is bounded by pipeline order and configuration.</dd>
+          </dl>
+        </article>
+
+
+        <article class="card" id="connector_extension_layer">
+          <h3>Connector And Extension Layer</h3>
+          <p>Bridges pipelines and adds service-level capabilities.</p>
+          <dl>
+            <dt>Architecture</dt><dd>component extension layer</dd>
+            <dt>Lifecycle</dt><dd>component config -&gt; started connector/extension -&gt; runtime capability</dd>
+            <dt>Boundary</dt><dd>Connectors and extensions can change topology or service behavior; they must start cleanly.</dd>
+          </dl>
+        </article>
+
+
+        <article class="card" id="exporter_layer">
+          <h3>Exporter Layer</h3>
+          <p>Sends processed telemetry to configured destinations.</p>
+          <dl>
+            <dt>Architecture</dt><dd>component egress layer</dd>
+            <dt>Lifecycle</dt><dd>TelemetryBatch -&gt; exporter -&gt; destination</dd>
+            <dt>Boundary</dt><dd>Delivery depends on destination, queue, retry, and failure policy.</dd>
+          </dl>
+        </article>
+
+
+        <article class="card" id="service_orchestrator">
+          <h3>Service Orchestrator</h3>
+          <p>Coordinates component lifecycle, pipelines, host capabilities, and service telemetry.</p>
+          <dl>
+            <dt>Architecture</dt><dd>service runtime</dd>
+            <dt>Lifecycle</dt><dd>valid config -&gt; start components -&gt; run pipelines -&gt; shutdown</dd>
+            <dt>Boundary</dt><dd>The service can expose health and telemetry, but configured components determine data path.</dd>
+          </dl>
+        </article>
+        </div>
+    </section>
+    <section>
+      <h2>Review Questions</h2>
+      <ul><li>How does configuration become a running telemetry pipeline?</li>
+<li>Which gates prevent invalid config or failed components from processing telemetry?</li>
+<li>Where are backpressure, memory, queue, retry, and delivery policies enforced?</li>
+<li>How can a reviewer audit topology without seeing customer telemetry payloads?</li>
+<li>Which component health and service telemetry artifacts would prove runtime behavior?</li></ul>
+    </section>
+  </main>
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: true, securityLevel: 'strict' });
+  </script>
+</body>
+</html>

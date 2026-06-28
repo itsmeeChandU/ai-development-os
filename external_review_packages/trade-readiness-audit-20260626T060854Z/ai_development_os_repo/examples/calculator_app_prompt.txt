@@ -1,0 +1,3 @@
+Build a calculator app with add, subtract, multiply, divide, keyboard input,
+clear, and a clean UI. It should run locally and have a simple test or smoke
+check.

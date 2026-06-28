@@ -1,0 +1,28 @@
+[
+  {
+    "id": "ca-frozen-tuna-fillet-030487",
+    "country": "CA",
+    "product_category": "frozen tuna fillets",
+    "hs_code": "0304870000",
+    "official_sources": [
+      "cbsa-carm",
+      "cbsa-import-commercial-goods",
+      "cbsa-customs-tariff-2026",
+      "cfia-airs",
+      "gac-import-controls",
+      "justice-import-control-list",
+      "canada-sanctions",
+      "cbsa-licensed-customs-brokers"
+    ],
+    "import_rules_status": "requires_qualified_review",
+    "export_rules_status": "requires_qualified_review",
+    "tariff_status": "requires_qualified_review",
+    "food_safety_status": "requires_qualified_review",
+    "restricted_party_status": "missing",
+    "broker_or_expert_review_status": "missing",
+    "claims_allowed": false,
+    "owner": "compliance",
+    "last_checked": "2026-06-25",
+    "next_valid_move": "Have a licensed Canadian customs broker or qualified Canadian trade/food compliance reviewer verify CBSA/CARM importer obligations, tariff classification, CFIA AIRS requirements, import controls, sanctions screening, and claim language."
+  }
+]

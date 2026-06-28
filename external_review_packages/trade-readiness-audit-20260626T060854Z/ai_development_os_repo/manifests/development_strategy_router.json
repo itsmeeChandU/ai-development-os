@@ -1,0 +1,131 @@
+{
+  "version": 1,
+  "date_checked": "2026-06-25",
+  "name": "ai_development_os_development_strategy_router",
+  "purpose": "Choose the development mode, agents, external inputs, contracts, and proof gates required by the product field.",
+  "principle": "AI-native development should move faster by matching the field. Software can often ship through code/test loops; physical, regulated, data-rights, and cross-border products need external evidence and contracts before launch claims.",
+  "development_modes": [
+    {
+      "id": "M0_SOFTWARE_LOCAL",
+      "use_when": "Small local tools, prototypes, internal apps, web apps without special data or legal dependencies.",
+      "agent_mix": ["architect", "surgeon", "reviewer"],
+      "proof_gates": ["local tests", "UI or CLI smoke", "handoff"],
+      "external_inputs": []
+    },
+    {
+      "id": "M1_DATA_API_PRODUCT",
+      "use_when": "Products that require APIs, data feeds, credentials, freshness, lineage, rights, or repeatable ingestion.",
+      "agent_mix": ["research", "data", "architect", "surgeon", "reviewer"],
+      "proof_gates": ["data source contract", "fixture", "freshness check", "integration test"],
+      "external_inputs": ["API terms", "credentials", "rate limits", "source rights"]
+    },
+    {
+      "id": "M2_AI_ML_PRODUCT",
+      "use_when": "Products using models, retrieval, evaluation, training/fine-tuning, synthetic data, or model quality claims.",
+      "agent_mix": ["research", "data", "eval", "surgeon", "reviewer"],
+      "proof_gates": ["dataset card", "eval set", "quality report", "failure cases", "privacy check"],
+      "external_inputs": ["model terms", "dataset rights", "human eval when quality matters"]
+    },
+    {
+      "id": "M3_REGULATED_OR_HIGH_STAKES",
+      "use_when": "Medical, legal, financial, safety-critical, employment, education, public claims, or compliance-sensitive workflows.",
+      "agent_mix": ["research", "architect", "compliance", "reviewer", "qualified expert"],
+      "proof_gates": ["official-source review", "risk register", "qualified review blocker", "staged launch gate"],
+      "external_inputs": ["qualified subject expert", "legal/compliance review", "jurisdiction rules"]
+    },
+    {
+      "id": "M4_HARDWARE_MANUFACTURING",
+      "use_when": "Physical products, electronics, embedded systems, devices, robotics, components, manufacturing, or procurement.",
+      "agent_mix": ["research", "hardware", "simulation", "procurement", "manufacturing", "reviewer"],
+      "proof_gates": ["datasheets", "BOM", "supplier shortlist", "simulation or bench blocker", "manufacturing plan"],
+      "external_inputs": ["manufacturer quotes", "component lead times", "certification needs", "prototype/bench access"]
+    },
+    {
+      "id": "M5_CROSS_BORDER_SUPPLY_CHAIN",
+      "use_when": "Import/export, country-specific sourcing, tariffs, customs, certifications, logistics, or regional compliance.",
+      "agent_mix": ["research", "procurement", "compliance", "operations", "qualified expert"],
+      "proof_gates": ["country requirements matrix", "import/export blocker", "supplier/legal review", "logistics plan"],
+      "external_inputs": ["customs/tariff evidence", "country regulations", "licensed broker or compliance expert when needed"]
+    },
+    {
+      "id": "M6_COMMERCIAL_CONTRACT_DEPENDENT",
+      "use_when": "Needs partner agreements, manufacturing contracts, licensing, data contracts, SLAs, resale rights, or commercial exceptions.",
+      "agent_mix": ["research", "legal", "operations", "reviewer"],
+      "proof_gates": ["contract checklist", "terms review blocker", "responsibility boundary", "launch no-claim gate"],
+      "external_inputs": ["written contract", "licensing terms", "commercial/legal review"]
+    }
+  ],
+  "field_playbooks": [
+    {
+      "field": "software",
+      "default_mode": "M0_SOFTWARE_LOCAL",
+      "first_agents": ["architect", "surgeon", "reviewer"],
+      "first_artifacts": ["instruction contract", "architecture overview", "tests"]
+    },
+    {
+      "field": "data_product",
+      "default_mode": "M1_DATA_API_PRODUCT",
+      "first_agents": ["research", "data", "surgeon", "reviewer"],
+      "first_artifacts": ["source contract", "fixture", "freshness policy"]
+    },
+    {
+      "field": "ai_ml",
+      "default_mode": "M2_AI_ML_PRODUCT",
+      "first_agents": ["research", "data", "eval", "surgeon"],
+      "first_artifacts": ["dataset card", "eval report", "model-risk notes"]
+    },
+    {
+      "field": "regulated",
+      "default_mode": "M3_REGULATED_OR_HIGH_STAKES",
+      "first_agents": ["research", "compliance", "reviewer"],
+      "first_artifacts": ["official-source review", "risk register", "expert-review blocker"]
+    },
+    {
+      "field": "manufacturing",
+      "default_mode": "M4_HARDWARE_MANUFACTURING",
+      "first_agents": ["hardware", "procurement", "simulation", "manufacturing"],
+      "first_artifacts": ["BOM", "supplier shortlist", "manufacturing assumptions", "prototype blockers"]
+    },
+    {
+      "field": "import_export",
+      "default_mode": "M5_CROSS_BORDER_SUPPLY_CHAIN",
+      "first_agents": ["research", "procurement", "compliance", "operations"],
+      "first_artifacts": ["country requirements matrix", "tariff/customs evidence", "logistics blockers"]
+    },
+    {
+      "field": "contract_dependent",
+      "default_mode": "M6_COMMERCIAL_CONTRACT_DEPENDENT",
+      "first_agents": ["legal", "operations", "reviewer"],
+      "first_artifacts": ["contract checklist", "terms blocker", "responsibility boundary"]
+    }
+  ],
+  "country_requirements_template": {
+    "required_fields": [
+      "country",
+      "product_category",
+      "import_rules_source",
+      "export_rules_source",
+      "tariff_or_hs_code_status",
+      "certification_requirements",
+      "restricted_party_or_sanctions_check",
+      "logistics_constraints",
+      "local_partner_or_broker_needed",
+      "next_valid_move"
+    ],
+    "proof_boundary": "Country and import/export requirements must come from current official sources or qualified logistics/compliance experts before action."
+  },
+  "external_contract_template": {
+    "required_fields": [
+      "contract_type",
+      "counterparty",
+      "scope",
+      "rights_granted",
+      "data_or_ip_terms",
+      "liability_boundary",
+      "termination",
+      "review_owner",
+      "launch_gate"
+    ],
+    "proof_boundary": "AI can draft a checklist; signed contracts and qualified review are external gates."
+  }
+}

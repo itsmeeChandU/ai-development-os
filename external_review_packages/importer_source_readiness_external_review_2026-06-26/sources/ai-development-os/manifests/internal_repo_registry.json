@@ -1,0 +1,125 @@
+{
+  "version": 1,
+  "date_checked": "2026-06-25",
+  "name": "ai_development_os_internal_repo_registry",
+  "purpose": "Declare the internal and helper repositories AI Development OS can coordinate for prompt-to-product delivery.",
+  "canonical_truth": "GitHub remote refs, local clean worktrees, repo files, tests, and generated artifacts.",
+  "repo_groups": [
+    {
+      "id": "idea_sources",
+      "description": "Repos or systems that can originate startup/application ideas.",
+      "repos": ["intelligence-hub"]
+    },
+    {
+      "id": "coordination_layer",
+      "description": "Repos that normalize, route, schedule, and prove prompt-to-product work.",
+      "repos": ["ai-development-os"]
+    },
+    {
+      "id": "context_layers",
+      "description": "Repos that provide bounded system and code context for agents.",
+      "repos": ["system-review-graph", "code-review-graph"]
+    },
+    {
+      "id": "product_repos",
+      "description": "Repos that may contain product implementation, generated source truth, or downstream app work.",
+      "repos": ["intelligence-hub", "importer-source-readiness-copilot", "future-product-repo"]
+    }
+  ],
+  "repos": [
+    {
+      "id": "ai-development-os",
+      "role": "coordinator_layer",
+      "remote": "https://github.com/itsmeeChandU/ai-development-os.git",
+      "branch_rule": "main plus codex/* lane branches",
+      "required_context": ["AGENTS.md", "manifests/agentic_execution_manifest.json"],
+      "proof_commands": [
+        "python3 scripts/agentic_workflow_orchestrator.py automation-check",
+        "python3 scripts/ai_dev_os_check.py"
+      ],
+      "allowed_use": "Normalize ideas, emit packets, schedule routines, and coordinate proof gates."
+    },
+    {
+      "id": "system-review-graph",
+      "role": "system_context_layer",
+      "remote": "https://github.com/itsmeeChandU/system-review-graph.git",
+      "branch_rule": "main plus codex/* context branches",
+      "required_context": ["system_review_manifest.json", "repo context bundle"],
+      "proof_commands": [
+        "PYTHONPATH=src python3 -m pytest tests/test_documentation_graph.py -q"
+      ],
+      "allowed_use": "Load bounded SRG, documentation graph, workflow, and code-review graph context."
+    },
+    {
+      "id": "code-review-graph",
+      "role": "code_contract_layer",
+      "remote": "https://github.com/itsmeeChandU/code-review-graph-private.git",
+      "upstream": "https://github.com/tirth8205/code-review-graph.git",
+      "branch_rule": "main plus codex/* contract branches",
+      "required_context": ["code_review_graph_contract.json"],
+      "proof_commands": [
+        "uv run pytest tests/test_visualization.py -q",
+        "uv run ruff check code_review_graph tests"
+      ],
+      "allowed_use": "Export stable source structure for files, modules, symbols, imports, edges, tests, generated artifacts, and risk hints."
+    },
+    {
+      "id": "intelligence-hub",
+      "role": "idea_source_and_product_boundary",
+      "remote": "https://github.com/itsmeeChandU/intelligence-hub.git",
+      "branch_rule": "main plus codex/* product or contract branches",
+      "required_context": ["sourcecode_graph_contract.json", "Venture Studio idea packet when available"],
+      "proof_commands": [
+        "/Users/chandu/Workspace/Finance/intelligence-hub/.venv/bin/python -m pytest tests/test_code_review_graph.py -q"
+      ],
+      "allowed_use": "Generate startup/app ideas, export source graph contracts, and host product-boundary truth surfaces."
+    },
+    {
+      "id": "importer-source-readiness-copilot",
+      "role": "product_implementation_target",
+      "remote": "https://github.com/itsmeeChandU/importer-source-readiness-copilot.git",
+      "branch_rule": "main plus codex/* product branches",
+      "required_context": [
+        "AGENTS.md",
+        "docs/PRODUCT_STATUS.md",
+        "docs/STARTUP_LIFECYCLE.md",
+        "docs/OPERATOR_GUIDE.md",
+        "system_review_graph/readiness_report.json",
+        "system_review_graph/external_gate_report.json",
+        "system_review_graph/continuation_plan.json",
+        "system_review_graph/vc_pitch_readiness_report.json",
+        "system_review_graph/board_go_live_readiness_report.json",
+        "system_review_graph/operator_workflow_report.json",
+        "system_review_graph/operator_screenshot_manifest.json",
+        "system_review_graph/operator_dashboard.html"
+      ],
+      "proof_commands": [
+        "python3 scripts/check_product.py",
+        "python3 scripts/run_external_gates.py",
+        "python3 scripts/export_operator_dashboard.py",
+        "python3 scripts/plan_continuation.py",
+        "python3 scripts/build_vc_pitch_packet.py",
+        "python3 scripts/build_board_go_live_packet.py",
+        "python3 scripts/run_operator_workflow.py",
+        "python3 -m unittest discover -s tests -p 'test_*.py'"
+      ],
+      "allowed_use": "Hold the actual importer/exporter source readiness product implementation, continuation lanes, VC pitch packet, board go-live packet, operator workflow queue, and proof artifacts."
+    },
+    {
+      "id": "future-product-repo",
+      "role": "product_implementation_target",
+      "remote": "to_be_created_or_selected",
+      "branch_rule": "create from origin/main or initialize private repo before lanes",
+      "required_context": ["AGENTS.md", "instruction contract", "system review graph"],
+      "proof_commands": ["defined by generated lane packet"],
+      "allowed_use": "Hold the actual application implementation when a startup idea becomes a standalone product."
+    }
+  ],
+  "intake_rules": [
+    "Treat user or Intelligence Hub idea packets as claims until repo evidence and research/data routes validate them.",
+    "Select existing internal repos only when their role matches the product lane.",
+    "Create a new private product repo when the idea should not modify an existing product boundary.",
+    "Keep Ruflo as coordination memory only; do not use it as repo truth.",
+    "Write missing repo access, missing credentials, missing data, or missing expert review as blocker rows with next_valid_move."
+  ]
+}

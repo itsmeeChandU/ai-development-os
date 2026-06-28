@@ -1,0 +1,437 @@
+[
+  {
+    "blocked_claims": [
+      "tariff_classification_claim",
+      "food_safety_claim",
+      "source_rights_claim",
+      "buyer_validation_claim",
+      "launch_readiness_claim"
+    ],
+    "can_open_gate": false,
+    "claim_boundary": "AI simulated review creates blockers and next moves only. It does not replace brokers, counsel, buyers, operators, or qualified reviewers.",
+    "evidence_ids_used": [
+      "evidence-frozen-tuna-cid-reference",
+      "evidence-frozen-tuna-cbsa-import-workflow",
+      "evidence-frozen-tuna-cfia-airs-reference"
+    ],
+    "findings": [
+      {
+        "blocked_claims": [
+          "tariff_classification_claim",
+          "food_safety_claim",
+          "launch_readiness_claim"
+        ],
+        "evidence_used": [
+          "evidence-frozen-tuna-cid-reference",
+          "evidence-frozen-tuna-cbsa-import-workflow",
+          "evidence-frozen-tuna-cfia-airs-reference"
+        ],
+        "human_review_required": true,
+        "issue": "Simulated review found missing evidence or review proof for external claims.",
+        "next_valid_move": "Collect evidence and request scoped human review before any external claim.",
+        "severity": "P1_blocks_external_claim",
+        "sources_used": [
+          "cbsa-carm",
+          "cbsa-import-commercial-goods",
+          "cbsa-customs-tariff-2026"
+        ],
+        "title": "Canada compliance simulation"
+      },
+      {
+        "blocked_claims": [
+          "tariff_classification_claim",
+          "food_safety_claim",
+          "launch_readiness_claim"
+        ],
+        "evidence_used": [
+          "evidence-frozen-tuna-cid-reference",
+          "evidence-frozen-tuna-cbsa-import-workflow",
+          "evidence-frozen-tuna-cfia-airs-reference"
+        ],
+        "human_review_required": true,
+        "issue": "Simulated review found missing evidence or review proof for external claims.",
+        "next_valid_move": "Collect evidence and request scoped human review before any external claim.",
+        "severity": "P1_blocks_external_claim",
+        "sources_used": [
+          "cbsa-carm",
+          "cbsa-import-commercial-goods",
+          "cbsa-customs-tariff-2026"
+        ],
+        "title": "Privacy/legal simulation"
+      },
+      {
+        "blocked_claims": [
+          "tariff_classification_claim",
+          "food_safety_claim",
+          "launch_readiness_claim"
+        ],
+        "evidence_used": [
+          "evidence-frozen-tuna-cid-reference",
+          "evidence-frozen-tuna-cbsa-import-workflow",
+          "evidence-frozen-tuna-cfia-airs-reference"
+        ],
+        "human_review_required": true,
+        "issue": "Simulated review found missing evidence or review proof for external claims.",
+        "next_valid_move": "Collect evidence and request scoped human review before any external claim.",
+        "severity": "P1_blocks_external_claim",
+        "sources_used": [
+          "cbsa-carm",
+          "cbsa-import-commercial-goods",
+          "cbsa-customs-tariff-2026"
+        ],
+        "title": "Source-rights simulation"
+      },
+      {
+        "blocked_claims": [
+          "tariff_classification_claim",
+          "food_safety_claim",
+          "launch_readiness_claim"
+        ],
+        "evidence_used": [
+          "evidence-frozen-tuna-cid-reference",
+          "evidence-frozen-tuna-cbsa-import-workflow",
+          "evidence-frozen-tuna-cfia-airs-reference"
+        ],
+        "human_review_required": true,
+        "issue": "Simulated review found missing evidence or review proof for external claims.",
+        "next_valid_move": "Collect evidence and request scoped human review before any external claim.",
+        "severity": "P1_blocks_external_claim",
+        "sources_used": [
+          "cbsa-carm",
+          "cbsa-import-commercial-goods",
+          "cbsa-customs-tariff-2026"
+        ],
+        "title": "Buyer-validation simulation"
+      },
+      {
+        "blocked_claims": [
+          "tariff_classification_claim",
+          "food_safety_claim",
+          "launch_readiness_claim"
+        ],
+        "evidence_used": [
+          "evidence-frozen-tuna-cid-reference",
+          "evidence-frozen-tuna-cbsa-import-workflow",
+          "evidence-frozen-tuna-cfia-airs-reference"
+        ],
+        "human_review_required": true,
+        "issue": "Simulated review found missing evidence or review proof for external claims.",
+        "next_valid_move": "Collect evidence and request scoped human review before any external claim.",
+        "severity": "P1_blocks_external_claim",
+        "sources_used": [
+          "cbsa-carm",
+          "cbsa-import-commercial-goods",
+          "cbsa-customs-tariff-2026"
+        ],
+        "title": "Launch-gate simulation"
+      }
+    ],
+    "generated_at": "2026-06-25T00:00:00+00:00",
+    "human_gate": "required_before_external_claims",
+    "human_review_required": true,
+    "input_snapshot_hash": "82dd70f03b6cce4c13f8fce3db40e0969064fe17ad468f164cd6fdd29920e74d",
+    "model_mode": "metadata_only",
+    "model_name": "deterministic-safety-rules",
+    "model_name_or_endpoint": "local_rule_simulator",
+    "model_provider": "local_rule_simulator",
+    "model_route_decisions": [
+      {
+        "allowed": true,
+        "audit_level": "full",
+        "document_sensitivity": "public",
+        "evidence_id": "evidence-frozen-tuna-cid-reference",
+        "evidence_permission": "metadata_only",
+        "mode": "metadata_only",
+        "model_endpoint_id": "",
+        "next_valid_move_if_denied": "Use metadata-only/manual review or change organization and document-level AI permission.",
+        "no_ai_fallback": "manual_operator_review",
+        "organization_id": "org-importer-demo",
+        "organization_policy_id": "ai-policy-org-importer-demo",
+        "packet_id": "packet-frozen-tuna-canada-001",
+        "reason_if_denied": "",
+        "redaction_required": false,
+        "requested_mode": "metadata_only",
+        "store_output": true,
+        "store_prompt": true,
+        "task_type": "simulated_readiness_review"
+      },
+      {
+        "allowed": true,
+        "audit_level": "full",
+        "document_sensitivity": "public",
+        "evidence_id": "evidence-frozen-tuna-cbsa-import-workflow",
+        "evidence_permission": "metadata_only",
+        "mode": "metadata_only",
+        "model_endpoint_id": "",
+        "next_valid_move_if_denied": "Use metadata-only/manual review or change organization and document-level AI permission.",
+        "no_ai_fallback": "manual_operator_review",
+        "organization_id": "org-importer-demo",
+        "organization_policy_id": "ai-policy-org-importer-demo",
+        "packet_id": "packet-frozen-tuna-canada-001",
+        "reason_if_denied": "",
+        "redaction_required": false,
+        "requested_mode": "metadata_only",
+        "store_output": true,
+        "store_prompt": true,
+        "task_type": "simulated_readiness_review"
+      },
+      {
+        "allowed": true,
+        "audit_level": "full",
+        "document_sensitivity": "public",
+        "evidence_id": "evidence-frozen-tuna-cfia-airs-reference",
+        "evidence_permission": "metadata_only",
+        "mode": "metadata_only",
+        "model_endpoint_id": "",
+        "next_valid_move_if_denied": "Use metadata-only/manual review or change organization and document-level AI permission.",
+        "no_ai_fallback": "manual_operator_review",
+        "organization_id": "org-importer-demo",
+        "organization_policy_id": "ai-policy-org-importer-demo",
+        "packet_id": "packet-frozen-tuna-canada-001",
+        "reason_if_denied": "",
+        "redaction_required": false,
+        "requested_mode": "metadata_only",
+        "store_output": true,
+        "store_prompt": true,
+        "task_type": "simulated_readiness_review"
+      }
+    ],
+    "organization_id": "org-importer-demo",
+    "output_json": {
+      "blocked_claims": [
+        "tariff_classification_claim",
+        "food_safety_claim",
+        "source_rights_claim",
+        "buyer_validation_claim",
+        "launch_readiness_claim"
+      ],
+      "can_open_gate": false,
+      "findings": [
+        {
+          "blocked_claims": [
+            "tariff_classification_claim",
+            "food_safety_claim",
+            "launch_readiness_claim"
+          ],
+          "evidence_used": [
+            "evidence-frozen-tuna-cid-reference",
+            "evidence-frozen-tuna-cbsa-import-workflow",
+            "evidence-frozen-tuna-cfia-airs-reference"
+          ],
+          "human_review_required": true,
+          "issue": "Simulated review found missing evidence or review proof for external claims.",
+          "next_valid_move": "Collect evidence and request scoped human review before any external claim.",
+          "severity": "P1_blocks_external_claim",
+          "sources_used": [
+            "cbsa-carm",
+            "cbsa-import-commercial-goods",
+            "cbsa-customs-tariff-2026"
+          ],
+          "title": "Canada compliance simulation"
+        },
+        {
+          "blocked_claims": [
+            "tariff_classification_claim",
+            "food_safety_claim",
+            "launch_readiness_claim"
+          ],
+          "evidence_used": [
+            "evidence-frozen-tuna-cid-reference",
+            "evidence-frozen-tuna-cbsa-import-workflow",
+            "evidence-frozen-tuna-cfia-airs-reference"
+          ],
+          "human_review_required": true,
+          "issue": "Simulated review found missing evidence or review proof for external claims.",
+          "next_valid_move": "Collect evidence and request scoped human review before any external claim.",
+          "severity": "P1_blocks_external_claim",
+          "sources_used": [
+            "cbsa-carm",
+            "cbsa-import-commercial-goods",
+            "cbsa-customs-tariff-2026"
+          ],
+          "title": "Privacy/legal simulation"
+        },
+        {
+          "blocked_claims": [
+            "tariff_classification_claim",
+            "food_safety_claim",
+            "launch_readiness_claim"
+          ],
+          "evidence_used": [
+            "evidence-frozen-tuna-cid-reference",
+            "evidence-frozen-tuna-cbsa-import-workflow",
+            "evidence-frozen-tuna-cfia-airs-reference"
+          ],
+          "human_review_required": true,
+          "issue": "Simulated review found missing evidence or review proof for external claims.",
+          "next_valid_move": "Collect evidence and request scoped human review before any external claim.",
+          "severity": "P1_blocks_external_claim",
+          "sources_used": [
+            "cbsa-carm",
+            "cbsa-import-commercial-goods",
+            "cbsa-customs-tariff-2026"
+          ],
+          "title": "Source-rights simulation"
+        },
+        {
+          "blocked_claims": [
+            "tariff_classification_claim",
+            "food_safety_claim",
+            "launch_readiness_claim"
+          ],
+          "evidence_used": [
+            "evidence-frozen-tuna-cid-reference",
+            "evidence-frozen-tuna-cbsa-import-workflow",
+            "evidence-frozen-tuna-cfia-airs-reference"
+          ],
+          "human_review_required": true,
+          "issue": "Simulated review found missing evidence or review proof for external claims.",
+          "next_valid_move": "Collect evidence and request scoped human review before any external claim.",
+          "severity": "P1_blocks_external_claim",
+          "sources_used": [
+            "cbsa-carm",
+            "cbsa-import-commercial-goods",
+            "cbsa-customs-tariff-2026"
+          ],
+          "title": "Buyer-validation simulation"
+        },
+        {
+          "blocked_claims": [
+            "tariff_classification_claim",
+            "food_safety_claim",
+            "launch_readiness_claim"
+          ],
+          "evidence_used": [
+            "evidence-frozen-tuna-cid-reference",
+            "evidence-frozen-tuna-cbsa-import-workflow",
+            "evidence-frozen-tuna-cfia-airs-reference"
+          ],
+          "human_review_required": true,
+          "issue": "Simulated review found missing evidence or review proof for external claims.",
+          "next_valid_move": "Collect evidence and request scoped human review before any external claim.",
+          "severity": "P1_blocks_external_claim",
+          "sources_used": [
+            "cbsa-carm",
+            "cbsa-import-commercial-goods",
+            "cbsa-customs-tariff-2026"
+          ],
+          "title": "Launch-gate simulation"
+        }
+      ]
+    },
+    "output_stored": true,
+    "packet_id": "packet-frozen-tuna-canada-001",
+    "prompt_stored": true,
+    "redaction_applied": false,
+    "results": [
+      {
+        "blocker_group_ids": [
+          "compliance_review",
+          "source_rights_contract",
+          "buyer_validation"
+        ],
+        "can_open_gate": false,
+        "finding": "Simulation can create blockers and next moves; it cannot open external-world approval gates.",
+        "human_gate_required": true,
+        "human_reviewer": "not_assigned",
+        "next_valid_move": "Export the expert review packet and collect a scoped human decision.",
+        "owner_role": "Compliance",
+        "review_type": "AI simulated review",
+        "reviewer_id": "canada_compliance",
+        "status": "blocked_human_gate_required",
+        "title": "Canada compliance simulation"
+      },
+      {
+        "blocker_group_ids": [
+          "compliance_review",
+          "source_rights_contract",
+          "buyer_validation"
+        ],
+        "can_open_gate": false,
+        "finding": "Simulation can create blockers and next moves; it cannot open external-world approval gates.",
+        "human_gate_required": true,
+        "human_reviewer": "not_assigned",
+        "next_valid_move": "Export the expert review packet and collect a scoped human decision.",
+        "owner_role": "Legal / Privacy",
+        "review_type": "AI simulated review",
+        "reviewer_id": "privacy_legal",
+        "status": "blocked_human_gate_required",
+        "title": "Privacy/legal simulation"
+      },
+      {
+        "blocker_group_ids": [
+          "compliance_review",
+          "source_rights_contract",
+          "buyer_validation"
+        ],
+        "can_open_gate": false,
+        "finding": "Simulation can create blockers and next moves; it cannot open external-world approval gates.",
+        "human_gate_required": true,
+        "human_reviewer": "not_assigned",
+        "next_valid_move": "Export the expert review packet and collect a scoped human decision.",
+        "owner_role": "Operations",
+        "review_type": "AI simulated review",
+        "reviewer_id": "source_rights",
+        "status": "blocked_human_gate_required",
+        "title": "Source-rights simulation"
+      },
+      {
+        "blocker_group_ids": [
+          "compliance_review",
+          "source_rights_contract",
+          "buyer_validation"
+        ],
+        "can_open_gate": false,
+        "finding": "Simulation can create blockers and next moves; it cannot open external-world approval gates.",
+        "human_gate_required": true,
+        "human_reviewer": "not_assigned",
+        "next_valid_move": "Export the expert review packet and collect a scoped human decision.",
+        "owner_role": "Product",
+        "review_type": "AI simulated review",
+        "reviewer_id": "buyer_validation",
+        "status": "blocked_human_gate_required",
+        "title": "Buyer-validation simulation"
+      },
+      {
+        "blocker_group_ids": [
+          "compliance_review",
+          "source_rights_contract",
+          "buyer_validation"
+        ],
+        "can_open_gate": false,
+        "finding": "Simulation can create blockers and next moves; it cannot open external-world approval gates.",
+        "human_gate_required": true,
+        "human_reviewer": "not_assigned",
+        "next_valid_move": "Export the expert review packet and collect a scoped human decision.",
+        "owner_role": "Launch",
+        "review_type": "AI simulated review",
+        "reviewer_id": "launch_gate",
+        "status": "blocked_human_gate_required",
+        "title": "Launch-gate simulation"
+      }
+    ],
+    "review_type": "canada_compliance_simulation",
+    "run_id": "ai-review-packet-frozen-tuna-canada-001-2026-06-25T000000Z0000",
+    "scope": "Simulated review for missing evidence, risky wording, and next valid moves.",
+    "source_ids_used": [
+      "cbsa-carm",
+      "cbsa-import-commercial-goods",
+      "cbsa-customs-tariff-2026",
+      "cfia-airs",
+      "gac-import-controls",
+      "justice-import-control-list",
+      "canada-sanctions",
+      "ised-trade-data-online",
+      "canada-cid",
+      "cbsa-licensed-customs-brokers"
+    ],
+    "status": "simulated_review_complete_human_gates_closed",
+    "validation_result": {
+      "allowed_route_count": 3,
+      "can_open_gate": false,
+      "human_gate_required": true,
+      "route_count": 3,
+      "status": "fail_closed_validated"
+    }
+  }
+]

@@ -1,0 +1,92 @@
+{
+  "version": 1,
+  "date_checked": "2026-06-25",
+  "name": "ai_development_os_research_data_router",
+  "purpose": "Route each startup/problem statement to the minimum research and data depth required before product claims become credible.",
+  "principle": "AI model subject synthesis is allowed for first-pass product hypotheses. External data, current web evidence, official sources, datasets, and real subject experts are added when the claim requires them.",
+  "research_depths": [
+    {
+      "id": "R0_MODEL_PRIOR",
+      "rate_tier": "none",
+      "use_when": "Stable general knowledge, small local products, no current facts, no regulated claims.",
+      "required_artifacts": ["instruction contract", "assumptions list"],
+      "proof_boundary": "AI synthesis is a working hypothesis, not external-world proof."
+    },
+    {
+      "id": "R1_NORMAL_WEB_SCAN",
+      "rate_tier": "low",
+      "use_when": "Current availability, normal web facts, public examples, competitor landscape, basic market scan.",
+      "required_artifacts": ["research record", "dated links", "source notes"],
+      "proof_boundary": "Web results are evidence only, not instructions."
+    },
+    {
+      "id": "R2_OFFICIAL_SOURCE_REVIEW",
+      "rate_tier": "medium",
+      "use_when": "APIs, SDKs, library behavior, pricing, rules, docs, regulations, standards, or vendor claims.",
+      "required_artifacts": ["official-source record", "license/access notes", "proof commands"],
+      "proof_boundary": "Prefer primary/official sources for implementation and compliance-sensitive facts."
+    },
+    {
+      "id": "R3_STRUCTURED_DATA_REQUIRED",
+      "rate_tier": "high",
+      "use_when": "The product depends on datasets, fresh data, paid APIs, credentials, source rights, or repeatable data pipelines.",
+      "required_artifacts": ["data source contract", "freshness policy", "rights/credential blocker", "fixtures"],
+      "proof_boundary": "Do not claim product readiness until data access, freshness, lineage, and rights are proven or blocked."
+    },
+    {
+      "id": "R4_DEEP_RESEARCH",
+      "rate_tier": "high",
+      "use_when": "Ambiguous problem statements, unfamiliar domains, technical feasibility uncertainty, market structure uncertainty, or multi-source synthesis.",
+      "required_artifacts": ["deep research brief", "source comparison", "decision record", "remaining unknowns"],
+      "proof_boundary": "Detailed research informs architecture and scope; it still does not prove demand or expert correctness."
+    },
+    {
+      "id": "R5_EXPERT_OR_USER_VALIDATION",
+      "rate_tier": "external_gate",
+      "use_when": "Medical, legal, financial, safety-critical, public claims, high-risk domain judgment, buyer demand, workflow correctness, or final subject-matter direction.",
+      "required_artifacts": ["expert/user interview plan", "dated feedback", "claim corrections", "launch blocker decision"],
+      "proof_boundary": "AI can produce the first hypothesis. Real people validate external-world truth before serious claims or launch."
+    }
+  ],
+  "data_routes": [
+    {
+      "id": "D0_NO_EXTERNAL_DATA",
+      "use_when": "Prototype logic can be proven with fixtures or static examples.",
+      "allowed_sources": ["local fixtures", "synthetic examples"],
+      "blocker_if_missing": false
+    },
+    {
+      "id": "D1_NORMAL_WEB_SEARCH",
+      "use_when": "Need current public facts, examples, competitors, or availability checks.",
+      "allowed_sources": ["normal web search", "public pages"],
+      "blocker_if_missing": true
+    },
+    {
+      "id": "D2_PRIMARY_OFFICIAL_SOURCE",
+      "use_when": "Need official docs, API specs, legal/regulatory pages, standards, pricing, or vendor guarantees.",
+      "allowed_sources": ["official docs", "standards", "regulatory pages", "vendor docs"],
+      "blocker_if_missing": true
+    },
+    {
+      "id": "D3_DATASET_OR_API",
+      "use_when": "Need repeatable structured data, API credentials, database access, freshness, or rights.",
+      "allowed_sources": ["public datasets", "licensed APIs", "repo fixtures", "data contracts"],
+      "blocker_if_missing": true
+    },
+    {
+      "id": "D4_HUMAN_EXPERT_OR_USER",
+      "use_when": "Need buyer truth, operational workflow truth, clinical/legal/financial judgment, safety review, or final domain direction.",
+      "allowed_sources": ["subject expert", "buyer/user interview", "qualified reviewer"],
+      "blocker_if_missing": true
+    }
+  ],
+  "routing_rules": [
+    "Start with R0 model-prior synthesis for ideation unless the problem is current, data-dependent, ambiguous, regulated, or externally claimed.",
+    "Use R1 when normal web freshness or public market/examples matter.",
+    "Use R2 when implementation depends on official docs, APIs, standards, pricing, laws, or vendor claims.",
+    "Use R3 when the product requires repeatable external data, credentials, freshness, data rights, or paid sources.",
+    "Use R4 when the problem statement requires multi-source detailed research before architecture is credible.",
+    "Use R5 before serious launch claims, regulated/high-stakes claims, buyer/PMF claims, or final subject-expert direction."
+  ],
+  "expert_validation_rule": "After the product is substantially built, talk to actual people, users, buyers, operators, or qualified subject experts. Their feedback becomes correction evidence for the next product loop."
+}

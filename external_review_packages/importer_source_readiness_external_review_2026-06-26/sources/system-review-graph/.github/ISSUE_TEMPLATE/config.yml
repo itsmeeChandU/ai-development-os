@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Security policy
+    url: https://github.com/itsmeeChandU/system-review-graph/blob/main/SECURITY.md
+    about: Please read before reporting security-sensitive issues.

@@ -1,0 +1,91 @@
+[build-system]
+requires = ["hatchling>=1.25"]
+build-backend = "hatchling.build"
+
+[project]
+name = "system-review-graph"
+version = "0.5.4"
+description = "Turn any repo into a system-level review map: what it does, what it trusts, what it blocks, and what reviewers should inspect next."
+readme = "README.md"
+requires-python = ">=3.10"
+license = "MIT"
+authors = [
+  { name = "Sai Chandra Madduri and System Review Graph contributors" }
+]
+keywords = [
+  "architecture",
+  "audit",
+  "code-review",
+  "developer-tools",
+  "documentation",
+  "mcp",
+  "repo-map",
+  "reverse-engineering",
+  "software-architecture",
+  "software-audit",
+  "system-design",
+  "system-review",
+  "mermaid"
+]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Topic :: Documentation",
+  "Topic :: Software Development :: Documentation",
+  "Topic :: Software Development :: Quality Assurance"
+]
+
+[project.urls]
+Homepage = "https://github.com/itsmeeChandU/system-review-graph"
+Repository = "https://github.com/itsmeeChandU/system-review-graph"
+Issues = "https://github.com/itsmeeChandU/system-review-graph/issues"
+Changelog = "https://github.com/itsmeeChandU/system-review-graph/blob/main/CHANGELOG.md"
+Documentation = "https://github.com/itsmeeChandU/system-review-graph#readme"
+Security = "https://github.com/itsmeeChandU/system-review-graph/blob/main/SECURITY.md"
+PyPI = "https://pypi.org/project/system-review-graph/"
+CI = "https://github.com/itsmeeChandU/system-review-graph/actions/workflows/ci.yml"
+
+[project.scripts]
+system-review-graph = "system_review_graph.cli:main"
+system-review-graph-mcp = "system_review_graph.mcp_server:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/system_review_graph"]
+
+[tool.hatch.build.targets.sdist]
+include = [
+  "/src",
+  "/tests",
+  "/examples",
+  "/docs",
+  "/assets",
+  "/README.md",
+  "/LICENSE",
+  "/NOTICE.md",
+  "/AUTHORS.md",
+  "/CITATION.cff",
+  "/CHANGELOG.md",
+  "/SECURITY.md",
+  "/SUPPORT.md",
+  "/CODE_OF_CONDUCT.md",
+  "/ROADMAP.md",
+  "/pyproject.toml"
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM"]

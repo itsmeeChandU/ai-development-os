@@ -1,0 +1,447 @@
+{
+  "title": "Fictional AI Ops System Review Graph",
+  "one_line": "Code-review graph shows the files; this system-review graph shows how evidence becomes recommended action, outcome, and lesson.",
+  "scope": "A fictional public-safe AI operations system used as an open-source example.",
+  "bigger_picture": "This example shows how a team can explain a complex system without exposing private databases. The system collects safe source summaries, stores evidence contracts, recommends actions, blocks risky operations behind human review, captures outcomes, and turns lessons into better rules.",
+  "current_truth": {
+    "recommendations_today": 12,
+    "actions_allowed_without_human": 4,
+    "actions_requiring_human_review": 8,
+    "unsafe_action_bypass_count": 0,
+    "outcomes_pending_capture": 3,
+    "production_database_exposed": false
+  },
+  "schemas": [
+    {
+      "name": "SourceEnvelope",
+      "kind": "sanitized_event",
+      "required_fields": ["source_id", "observed_at", "source_type", "summary", "rights_status"],
+      "purpose": "Describes a source observation without exposing raw vendor payloads.",
+      "privacy_notes": "Raw source bodies and credentials are never included.",
+      "example": {
+        "source_id": "support_summary",
+        "observed_at": "2026-06-08T14:00:00Z",
+        "source_type": "ticket_rollup",
+        "summary": "12 tickets mention billing delay",
+        "rights_status": "internal_review"
+      }
+    },
+    {
+      "name": "EvidenceFact",
+      "kind": "graph_fact",
+      "required_fields": ["fact_id", "subject", "kind", "payload", "valid_at", "source_ref"],
+      "purpose": "Stores traceable evidence used by recommendations.",
+      "privacy_notes": "Payload should be redacted or fake in public examples."
+    },
+    {
+      "name": "RecommendationCard",
+      "kind": "decision_input",
+      "required_fields": ["recommendation_id", "subject", "confidence", "reason", "evidence_refs", "risk_level"],
+      "purpose": "Explains why the system recommends an action."
+    },
+    {
+      "name": "ActionIntent",
+      "kind": "downstream_action",
+      "required_fields": ["action_id", "recommendation_id", "action_type", "human_gate_required", "status"],
+      "purpose": "Represents a proposed action before execution."
+    },
+    {
+      "name": "OutcomeRecord",
+      "kind": "reality_feedback",
+      "required_fields": ["outcome_id", "action_id", "capture_status", "result", "evidence_refs"],
+      "purpose": "Captures whether action created the intended result."
+    },
+    {
+      "name": "LessonRecord",
+      "kind": "learning_loop",
+      "required_fields": ["lesson_id", "outcome_id", "lesson", "rule_change_status"],
+      "purpose": "Turns outcomes into validated or parked rule changes."
+    }
+  ],
+  "artifacts": [
+    {
+      "artifact_id": "source_rollup_api",
+      "name": "Source Rollup API",
+      "kind": "api",
+      "path": "GET /internal/source-rollups",
+      "owner": "data-platform",
+      "schema": "SourceEnvelope",
+      "purpose": "Returns sanitized source summaries.",
+      "redaction": "public_summary_only"
+    },
+    {
+      "artifact_id": "evidence_graph",
+      "name": "Evidence Graph",
+      "kind": "private_database",
+      "path": "private://evidence_graph",
+      "owner": "data-platform",
+      "schema": "EvidenceFact",
+      "purpose": "Canonical internal evidence store.",
+      "redaction": "schema_only"
+    },
+    {
+      "artifact_id": "recommendation_report",
+      "name": "Recommendation Report",
+      "kind": "json_report",
+      "path": "reports/recommendations.json",
+      "owner": "intelligence",
+      "schema": "RecommendationCard",
+      "purpose": "Reviewable recommendation cards.",
+      "redaction": "safe_to_share"
+    },
+    {
+      "artifact_id": "action_queue",
+      "name": "Action Queue",
+      "kind": "queue",
+      "path": "queue://action-intents",
+      "owner": "operations",
+      "schema": "ActionIntent",
+      "purpose": "Downstream actions waiting for execution or review.",
+      "redaction": "counts_only"
+    },
+    {
+      "artifact_id": "outcome_ledger",
+      "name": "Outcome Ledger",
+      "kind": "jsonl_ledger",
+      "path": "reports/outcomes.jsonl",
+      "owner": "operations",
+      "schema": "OutcomeRecord",
+      "purpose": "Reality feedback from executed or skipped actions.",
+      "redaction": "safe_to_share"
+    },
+    {
+      "artifact_id": "lesson_registry",
+      "name": "Lesson Registry",
+      "kind": "jsonl_ledger",
+      "path": "reports/lessons.jsonl",
+      "owner": "research",
+      "schema": "LessonRecord",
+      "purpose": "Validated lessons and parked rule changes.",
+      "redaction": "safe_to_share"
+    },
+    {
+      "artifact_id": "operator_console",
+      "name": "Operator Console",
+      "kind": "ui",
+      "path": "app://operator",
+      "owner": "operations",
+      "schema": "ActionIntent",
+      "purpose": "Shows recommendations, blockers, approvals, outcomes, and lessons.",
+      "redaction": "public_summary_only"
+    }
+  ],
+  "decision_gates": [
+    {
+      "gate_id": "source_rights_gate",
+      "name": "Source Rights Gate",
+      "inputs": ["SourceEnvelope.rights_status"],
+      "outputs": ["internal_only", "safe_to_use", "blocked"],
+      "human_gate": false,
+      "risk_boundary": "No downstream product or public claim uses a source unless rights are clear.",
+      "rules": [
+        { "if": "rights_status == blocked", "then": "blocked" },
+        { "if": "rights_status == internal_review", "then": "internal_only" },
+        { "if": "rights_status == approved", "then": "safe_to_use" }
+      ]
+    },
+    {
+      "gate_id": "recommendation_confidence_gate",
+      "name": "Recommendation Confidence Gate",
+      "inputs": ["RecommendationCard.confidence", "RecommendationCard.evidence_refs"],
+      "outputs": ["advance", "wait", "reject"],
+      "human_gate": false,
+      "risk_boundary": "Weak or ungrounded recommendations cannot become action intents.",
+      "rules": [
+        { "if": "confidence >= 0.75 and evidence_refs present", "then": "advance" },
+        { "if": "confidence >= 0.5", "then": "wait" },
+        { "if": "missing evidence", "then": "reject" }
+      ]
+    },
+    {
+      "gate_id": "human_action_gate",
+      "name": "Human Action Gate",
+      "inputs": ["ActionIntent.action_type", "RecommendationCard.risk_level"],
+      "outputs": ["approved", "blocked", "needs_review"],
+      "human_gate": true,
+      "risk_boundary": "External sends, money movement, deletion, legal claims, and user-visible changes need approval.",
+      "rules": [
+        { "if": "risk_level == high", "then": "needs_review" },
+        { "if": "action_type in external_send, deletion, money_movement", "then": "needs_review" },
+        { "if": "approval missing for restricted action", "then": "blocked" }
+      ]
+    },
+    {
+      "gate_id": "lesson_promotion_gate",
+      "name": "Lesson Promotion Gate",
+      "inputs": ["OutcomeRecord.result", "LessonRecord.rule_change_status"],
+      "outputs": ["promote", "park", "kill"],
+      "human_gate": false,
+      "risk_boundary": "One good outcome is not enough to change future system behavior.",
+      "rules": [
+        { "if": "repeated positive outcomes and validation pass", "then": "promote" },
+        { "if": "evidence incomplete", "then": "park" },
+        { "if": "negative or unsafe outcome", "then": "kill" }
+      ]
+    }
+  ],
+  "systems": [
+    {
+      "system_id": "source_mesh",
+      "name": "Source Mesh",
+      "purpose": "Collects sanitized source summaries from internal and public systems.",
+      "owner": "data-platform",
+      "language_stack": ["Python", "TypeScript"],
+      "architecture_style": "loader mesh",
+      "lifecycle": "source -> SourceEnvelope -> source rights gate",
+      "code_surfaces": ["loaders/", "services/source_rollups"],
+      "artifacts": ["source_rollup_api"],
+      "decision_gates": ["source_rights_gate"],
+      "truth_boundary": "Source summaries are not product claims.",
+      "ideal_target": "Every source has freshness, rights, and retry metadata.",
+      "example": {
+        "source_id": "support_summary",
+        "status": "internal_only"
+      }
+    },
+    {
+      "system_id": "evidence_core",
+      "name": "Evidence Core",
+      "purpose": "Stores facts, relationships, and reasoning traces used by recommendations.",
+      "owner": "data-platform",
+      "language_stack": ["PostgreSQL", "Python"],
+      "architecture_style": "private evidence graph",
+      "lifecycle": "SourceEnvelope -> EvidenceFact -> graph neighborhood",
+      "code_surfaces": ["db/migrations", "services/evidence"],
+      "artifacts": ["evidence_graph"],
+      "decision_gates": [],
+      "truth_boundary": "Database remains private; public report exposes only schema and examples.",
+      "ideal_target": "Every recommendation can trace back to facts and sources."
+    },
+    {
+      "system_id": "recommendation_engine",
+      "name": "Recommendation Engine",
+      "purpose": "Turns evidence into reviewable recommendation cards.",
+      "owner": "intelligence",
+      "language_stack": ["Python"],
+      "architecture_style": "batch plus API scoring",
+      "lifecycle": "EvidenceFact -> RecommendationCard -> confidence gate",
+      "code_surfaces": ["engine/recommendations"],
+      "artifacts": ["recommendation_report"],
+      "decision_gates": ["recommendation_confidence_gate"],
+      "truth_boundary": "A recommendation is not an executed action.",
+      "ideal_target": "Every recommendation has evidence, confidence, failure modes, and next action."
+    },
+    {
+      "system_id": "action_engine",
+      "name": "Action Engine",
+      "purpose": "Routes approved recommendations into bounded action intents.",
+      "owner": "operations",
+      "language_stack": ["Python", "Redis"],
+      "architecture_style": "event-driven workflow",
+      "lifecycle": "RecommendationCard -> ActionIntent -> human gate",
+      "code_surfaces": ["workers/action_engine"],
+      "artifacts": ["action_queue"],
+      "decision_gates": ["human_action_gate"],
+      "truth_boundary": "Restricted actions require approval before execution.",
+      "ideal_target": "Every action intent has an outcome slot."
+    },
+    {
+      "system_id": "outcome_learning_loop",
+      "name": "Outcome Learning Loop",
+      "purpose": "Captures what happened and converts outcomes into lessons.",
+      "owner": "research",
+      "language_stack": ["Python"],
+      "architecture_style": "ledger and validation loop",
+      "lifecycle": "ActionIntent -> OutcomeRecord -> LessonRecord -> promotion gate",
+      "code_surfaces": ["workers/outcomes", "workers/lessons"],
+      "artifacts": ["outcome_ledger", "lesson_registry"],
+      "decision_gates": ["lesson_promotion_gate"],
+      "truth_boundary": "A lesson does not change future behavior until promotion is validated.",
+      "ideal_target": "Knowledge becomes wisdom through observed outcomes."
+    },
+    {
+      "system_id": "operator_ui",
+      "name": "Operator UI",
+      "purpose": "Shows recommendations, approvals, outcomes, and lessons without owning truth.",
+      "owner": "operations",
+      "language_stack": ["TypeScript", "React"],
+      "architecture_style": "report-backed control room",
+      "lifecycle": "reports -> UI -> operator decision -> action intent",
+      "code_surfaces": ["apps/operator"],
+      "artifacts": ["operator_console"],
+      "decision_gates": ["human_action_gate"],
+      "truth_boundary": "UI reads canonical reports and requests actions; it does not invent truth.",
+      "ideal_target": "Operator can run the day from one evidence-backed control room."
+    }
+  ],
+  "workflows": [
+    {
+      "step_id": "load_sources",
+      "name": "Load Sources",
+      "actor": "Source Mesh",
+      "consumes": ["external_public_sources", "private_internal_sources"],
+      "produces": ["source_rollup_api"],
+      "gates": ["source_rights_gate"],
+      "next_steps": ["write_evidence"],
+      "purpose": "Create sanitized source summaries."
+    },
+    {
+      "step_id": "write_evidence",
+      "name": "Write Evidence",
+      "actor": "Evidence Core",
+      "consumes": ["source_rollup_api"],
+      "produces": ["evidence_graph"],
+      "gates": ["source_rights_gate"],
+      "next_steps": ["score_recommendations"],
+      "purpose": "Persist traceable facts without exposing private records."
+    },
+    {
+      "step_id": "score_recommendations",
+      "name": "Score Recommendations",
+      "actor": "Recommendation Engine",
+      "consumes": ["evidence_graph"],
+      "produces": ["recommendation_report"],
+      "gates": ["recommendation_confidence_gate"],
+      "next_steps": ["route_action"],
+      "purpose": "Generate reviewable recommendation cards."
+    },
+    {
+      "step_id": "route_action",
+      "name": "Route Action",
+      "actor": "Action Engine",
+      "consumes": ["recommendation_report"],
+      "produces": ["action_queue"],
+      "gates": ["human_action_gate"],
+      "next_steps": ["capture_outcome"],
+      "purpose": "Create bounded action intents."
+    },
+    {
+      "step_id": "capture_outcome",
+      "name": "Capture Outcome",
+      "actor": "Outcome Worker",
+      "consumes": ["action_queue"],
+      "produces": ["outcome_ledger"],
+      "gates": ["human_action_gate"],
+      "next_steps": ["learn_from_outcome"],
+      "purpose": "Record what happened after action or no-action."
+    },
+    {
+      "step_id": "learn_from_outcome",
+      "name": "Learn From Outcome",
+      "actor": "Research Worker",
+      "consumes": ["outcome_ledger"],
+      "produces": ["lesson_registry"],
+      "gates": ["lesson_promotion_gate"],
+      "next_steps": ["score_recommendations"],
+      "purpose": "Improve or reject future rules."
+    }
+  ],
+  "edges": [
+    {
+      "source": "operator_console",
+      "target": "human_action_gate",
+      "relation": "requests_approval_from",
+      "why": "Operator UI handles restricted action review."
+    }
+  ],
+  "architecture_patterns": [
+    {
+      "name": "Open-source library",
+      "works_for": "Python, JavaScript, Rust, Go, Java, or mixed-language libraries",
+      "mapping": "Map public APIs as artifacts, type contracts as schemas, CI/release checks as gates, and examples as walkthroughs.",
+      "redaction": "Usually safe to share full paths and examples."
+    },
+    {
+      "name": "Private enterprise microservice",
+      "works_for": "Teams that cannot expose databases or production internals",
+      "mapping": "Map services, APIs, queues, and sanitized contracts. Use logical names for private infrastructure.",
+      "redaction": "Publish schema-only or counts-only artifacts for sensitive stores."
+    },
+    {
+      "name": "Data platform",
+      "works_for": "Warehouses, data lakes, ELT/ETL pipelines, reporting systems",
+      "mapping": "Map source loaders, quality checks, marts, dashboards, rights/freshness gates, and report outputs.",
+      "redaction": "Expose table contracts and quality counts, not raw records."
+    },
+    {
+      "name": "AI or agent system",
+      "works_for": "LLM apps, agent swarms, RAG systems, ML workflows",
+      "mapping": "Map tools, memory, prompts, retrieval artifacts, eval gates, human approvals, and outcome loops.",
+      "redaction": "Remove secrets, user content, private prompts, and production traces."
+    },
+    {
+      "name": "Embedded or microarchitecture-style system",
+      "works_for": "Firmware, hardware interfaces, compiler/runtime internals, chips, robotics",
+      "mapping": "Map interface contracts, telemetry, safety thresholds, state machines, and fault gates.",
+      "redaction": "Publish logical interfaces and safety boundaries, not proprietary layouts or confidential specs."
+    }
+  ],
+  "walkthroughs": [
+    {
+      "name": "From source to action",
+      "story": "A source rollup says billing-delay tickets increased. The evidence graph stores a redacted fact. The recommendation engine creates a card. The action engine proposes customer communication. The human action gate requires approval because this is external communication.",
+      "example": {
+        "source": "support_summary",
+        "fact": "billing delay mentions increased",
+        "recommendation": "prepare customer update",
+        "gate": "human_action_gate",
+        "result": "needs_review"
+      }
+    },
+    {
+      "name": "From outcome to lesson",
+      "story": "An approved action produces a positive outcome. The lesson loop records that early customer communication reduced repeat tickets. The lesson is parked until repeated validation proves the rule should be promoted.",
+      "example": {
+        "outcome": "repeat tickets down 18%",
+        "lesson": "early communication may reduce repeat tickets",
+        "promotion": "park_until_repeated"
+      }
+    },
+    {
+      "name": "Private database review",
+      "story": "The database is never exposed. Reviewers see the EvidenceFact contract, redaction policy, source counts, and decision gates. They can understand behavior without seeing private rows.",
+      "example": {
+        "database": "private://evidence_graph",
+        "public_view": "schema_only",
+        "reviewable": ["contract", "gate", "artifact purpose", "redaction policy"]
+      }
+    }
+  ],
+  "review_questions": [
+    "Which source and evidence artifacts prove each recommendation?",
+    "Which decision gate blocks unsafe downstream action?",
+    "Which actions require human approval and why?",
+    "Where is the outcome captured after action or no-action?",
+    "Which lessons are promoted, parked, or killed based on reality feedback?",
+    "What can be safely reviewed if the production database remains private?"
+  ],
+  "rebuild_recipe": [
+    {
+      "phase": "validate",
+      "goal": "Check the manifest shape.",
+      "commands": [
+        "system-review-graph validate --manifest examples/fictional_ai_ops/system_review_manifest.json"
+      ]
+    },
+    {
+      "phase": "build",
+      "goal": "Generate JSON and Markdown reports.",
+      "commands": [
+        "system-review-graph build --manifest examples/fictional_ai_ops/system_review_manifest.json --out-dir examples/fictional_ai_ops/reports"
+      ]
+    },
+    {
+      "phase": "review",
+      "goal": "Read the system as an operating map.",
+      "commands": [
+        "open examples/fictional_ai_ops/reports/system_review_graph.md"
+      ]
+    }
+  ],
+  "known_boundaries": [
+    "This report explains architecture and system behavior; it does not prove production correctness.",
+    "Sanitized examples must not be treated as real data.",
+    "A passing gate in a report still needs implementation tests in the actual system.",
+    "Human/legal/security gates should be implemented in production code, not only documented."
+  ]
+}

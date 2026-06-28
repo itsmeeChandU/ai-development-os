@@ -1,0 +1,202 @@
+{
+  "closed_claims": [
+    "public_launch_ready",
+    "fully_operational",
+    "revenue_proven",
+    "product_market_fit_proven",
+    "qualified_compliance_ready",
+    "customs_or_tariff_advice_ready",
+    "supplier_recommendation_ready",
+    "buyer_validated"
+  ],
+  "continuation_lane_count": 7,
+  "continuation_ready": true,
+  "demo_ready": true,
+  "demo_script": [
+    "Run python3 scripts/check_product.py and show PASS output.",
+    "Open system_review_graph/operator_dashboard.html.",
+    "Show readiness_report.json and external_gate_report.json blockers.",
+    "Show continuation_plan.json to prove the product knows what must continue.",
+    "Show investor/vc_pitch_deck.md and diligence_room_index.md for the VC conversation."
+  ],
+  "diligence_lanes": [
+    {
+      "id": "vc-buyer-discovery",
+      "next_valid_move": "Run buyer discovery and attach notes or no-fit evidence before claiming demand.",
+      "owner": "product",
+      "required_evidence": "10 to 15 dated importer, broker, operator, or sourcing lead conversations.",
+      "status": "open_diligence_gate",
+      "unsafe_to_bypass": true
+    },
+    {
+      "id": "vc-design-partner",
+      "next_valid_move": "Convert warm operator interest into a dated pilot-intent or rejection note.",
+      "owner": "founder",
+      "required_evidence": "At least one written design-partner or pilot-intent artifact.",
+      "status": "open_diligence_gate",
+      "unsafe_to_bypass": true
+    },
+    {
+      "id": "vc-compliance-review",
+      "next_valid_move": "Have a qualified reviewer inspect the country matrix and pitch claims.",
+      "owner": "compliance",
+      "required_evidence": "Qualified customs, food safety, and claims-language review.",
+      "status": "open_diligence_gate",
+      "unsafe_to_bypass": true
+    },
+    {
+      "id": "vc-data-rights",
+      "next_valid_move": "Document data rights and repeatable refresh proof before scaling beyond fixtures.",
+      "owner": "data",
+      "required_evidence": "Source-rights, refresh cadence, and allowed-use proof for official and commercial sources.",
+      "status": "open_diligence_gate",
+      "unsafe_to_bypass": true
+    },
+    {
+      "id": "vc-business-model",
+      "next_valid_move": "Validate willingness to pay during buyer discovery and update the pitch packet.",
+      "owner": "founder",
+      "required_evidence": "Pricing hypothesis, ICP, sales motion, and first 90-day experiment plan.",
+      "status": "open_diligence_gate",
+      "unsafe_to_bypass": true
+    },
+    {
+      "id": "vc-legal-financing",
+      "next_valid_move": "Confirm fundraising terms with counsel before sending investor documents.",
+      "owner": "founder",
+      "required_evidence": "Entity, IP, cap table, financing terms, and securities-law review.",
+      "status": "open_diligence_gate",
+      "unsafe_to_bypass": true
+    }
+  ],
+  "draft_funding_ask": {
+    "amount_usd": 500000,
+    "boundary": "Draft planning assumption only; not an offering document or legal/financial advice.",
+    "instrument": "draft pre-seed SAFE or equivalent, subject to counsel",
+    "runway_months": 12,
+    "use_of_funds": [
+      "buyer discovery and design-partner pilots",
+      "qualified compliance review and claim-boundary design",
+      "source-rights, refresh, and data integration",
+      "operator UI and workflow automation",
+      "security, audit, and GitHub/SRG/code-review graph integration"
+    ]
+  },
+  "evidence_ready": true,
+  "evidence_status": {
+    "malformed_rows": [],
+    "missing_types": [],
+    "provided_types": [
+      "compliance_complexity",
+      "market_scale",
+      "official_trade_data",
+      "regulatory_workflow"
+    ],
+    "ready": true,
+    "required_types": [
+      "compliance_complexity",
+      "market_scale",
+      "official_trade_data",
+      "regulatory_workflow"
+    ],
+    "source_count": 6
+  },
+  "external_gate_status": "ready_with_external_gates",
+  "generated_at": "2026-06-26T03:53:35+00:00",
+  "investor_sources": [
+    {
+      "accessed_at": "2026-06-25",
+      "claim": "Global trade is a large, active market with current WTO forecasts and statistics published for 2025 and 2026.",
+      "claim_boundary": "Use for market context only; do not use as TAM/SAM/SOM proof without a separate Canadian market model.",
+      "id": "wto-global-trade-outlook-2025",
+      "source_name": "World Trade Organization Global Trade Outlook and Statistics",
+      "source_url": "https://www.wto.org/english/res_e/publications_e/trade_outlook25_e.htm",
+      "type": "market_scale"
+    },
+    {
+      "accessed_at": "2026-06-25",
+      "claim": "Canada provides official trade-data tooling for customized reports on Canadian and U.S. goods trade with over 200 countries.",
+      "claim_boundary": "Use to support data-source availability; do not claim Canadian revenue market size until a dated TAM model is produced.",
+      "id": "ised-trade-data-online",
+      "source_name": "ISED Trade Data Online",
+      "source_url": "https://ised-isde.canada.ca/site/trade-data-online/en/overview",
+      "type": "official_trade_data"
+    },
+    {
+      "accessed_at": "2026-06-25",
+      "claim": "The Canadian Importers Database provides importer-discovery orientation by product, city, and country of origin.",
+      "claim_boundary": "Use for discovery only; do not claim buyer validation, supplier recommendation, or current customer intent.",
+      "id": "canada-cid",
+      "source_name": "Canadian Importers Database",
+      "source_url": "https://ised-isde.canada.ca/site/ised/en/research-and-business-intelligence/canadian-importers-database",
+      "type": "market_scale"
+    },
+    {
+      "accessed_at": "2026-06-25",
+      "claim": "Canadian commercial import work requires preparation, classification, duty/tax review, shipping, examination, reporting, and release workflows.",
+      "claim_boundary": "Use to explain workflow complexity; do not provide customs, tariff, or import/export advice.",
+      "id": "cbsa-commercial-imports",
+      "source_name": "CBSA Import Commercial Goods Into Canada",
+      "source_url": "https://www.cbsa-asfc.gc.ca/import/menu-eng.html",
+      "type": "regulatory_workflow"
+    },
+    {
+      "accessed_at": "2026-06-25",
+      "claim": "Canada publishes a 2026 Customs Tariff and tariff-classification guidance through CBSA.",
+      "claim_boundary": "Use as official orientation; product classification and tariff treatment require qualified review.",
+      "id": "cbsa-customs-tariff-2026",
+      "source_name": "CBSA Customs Tariff 2026",
+      "source_url": "https://www.cbsa-asfc.gc.ca/trade-commerce/tariff-tarif/2026/menu-eng.html",
+      "type": "regulatory_workflow"
+    },
+    {
+      "accessed_at": "2026-06-25",
+      "claim": "CFIA AIRS is a reference tool for Canadian import requirements for CFIA-regulated commodities.",
+      "claim_boundary": "Use to explain why qualified food-import review matters; do not claim CFIA approval or compliance readiness.",
+      "id": "cfia-airs",
+      "source_name": "CFIA Automated Import Reference System",
+      "source_url": "https://inspection.canada.ca/en/importing-food-plants-animals/airs",
+      "type": "compliance_complexity"
+    }
+  ],
+  "next_valid_move": "Use the pitch packet for private VC conversations while opening buyer discovery, design-partner, compliance, data-rights, business-model, and financing diligence lanes.",
+  "one_line": "A blocked-safe operator copilot that turns importer/exporter source packets into readiness status, evidence lanes, and next valid moves before teams overclaim.",
+  "open_external_blockers": 20,
+  "pitch_claims": [
+    {
+      "boundary": "Problem framing only; not legal, customs, tariff, supplier, or buyer advice.",
+      "claim": "Import/export source work has real proof gaps across official sources, country rules, buyer validation, contracts, and qualified review.",
+      "evidence": [
+        "system_review_graph/readiness_report.json",
+        "system_review_graph/external_gate_report.json",
+        "data/investor_evidence.json"
+      ],
+      "id": "problem"
+    },
+    {
+      "boundary": "Demo readiness only; not external operational readiness.",
+      "claim": "The local product loop can demonstrate blocked-safe source-card evaluation, operator dashboard output, continuation lanes, and proof gates.",
+      "evidence": [
+        "system_review_graph/operator_dashboard.html",
+        "system_review_graph/continuation_plan.json",
+        "python3 scripts/check_product.py"
+      ],
+      "id": "product"
+    },
+    {
+      "boundary": "Strategy hypothesis pending buyer discovery and design partners.",
+      "claim": "The wedge is internal operator readiness for import/export source packets before teams make public, commercial, supplier, or compliance claims.",
+      "evidence": [
+        "investor/demo_script.md",
+        "investor/diligence_room_index.md"
+      ],
+      "id": "wedge"
+    }
+  ],
+  "pitch_mode": "private_investor_conversation",
+  "product": "Importer Source Readiness Copilot",
+  "proof_boundary": "This report supports an honest private VC pitch. It does not prove traction, revenue, legal/compliance approval, supplier readiness, customs/tariff advice, public launch readiness, or external operational readiness.",
+  "readiness_status": "ready_with_external_gates",
+  "startup_continuation_status": "startup_in_progress",
+  "status": "vc_pitch_ready_with_diligence_gates"
+}
