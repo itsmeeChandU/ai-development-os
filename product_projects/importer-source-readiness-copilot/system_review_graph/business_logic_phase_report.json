@@ -1,7 +1,7 @@
 {
   "blocked_claim_policy": "Business logic prepares decisions; it never approves import/export, tariff, buyer, supplier, shipment, compliance, legal, or market-demand claims.",
   "execution_report": "system_review_graph/product_operations_report.json",
-  "generated_at": "2026-06-28T03:01:53+00:00",
+  "generated_at": "2026-06-28T03:13:33+00:00",
   "hosted_beta_control_contract": {
     "controls": [
       {
@@ -940,11 +940,11 @@
             "market_access_approved"
           ],
           "competitor_source_countries": [
-            "China",
             "United States",
             "European Union",
-            "Mexico",
-            "Vietnam"
+            "China",
+            "Vietnam",
+            "Mexico"
           ],
           "destination": "Canada",
           "exporter_origin": "Vietnam",

@@ -6,13 +6,13 @@
     "policy_enforcement_code": 55,
     "policy_language": 60,
     "simulated_review_approval_closed": 231,
-    "template_reference": 106
+    "template_reference": 107
   },
   "disallowed_count": 0,
   "disallowed_findings": [],
-  "finding_count": 513,
-  "generated_at": "2026-06-28T03:01:33+00:00",
-  "head": "3ad78be5ee21aa8c14c8fb619a70d8f9d132d724",
+  "finding_count": 514,
+  "generated_at": "2026-06-28T03:13:51+00:00",
+  "head": "77ed4d4fe6dbaf4d9e24115f95c656677da997fa",
   "policy": "docs/NO_SCAFFOLD_DELIVERY_POLICY.md",
   "policy_failures": [],
   "prior_delivery_audit": {
@@ -75,7 +75,7 @@
     "go_live_public_launch_ready": false,
     "simulated_ai_review_can_open_gate": false
   },
-  "scanned_file_count": 2532,
+  "scanned_file_count": 2538,
   "skipped_contexts": [
     "external_review_packages",
     "binary files"

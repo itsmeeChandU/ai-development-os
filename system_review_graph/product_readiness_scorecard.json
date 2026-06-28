@@ -44,7 +44,7 @@
     "next_valid_move": "Collect real reviewer, hosted, payment, beta/user, buyer/supplier, and launch-owner inputs.",
     "public_launch_ready": false
   },
-  "generated_at": "2026-06-28T03:00:01+00:00",
+  "generated_at": "2026-06-28T03:13:41+00:00",
   "project": "product_projects/importer-source-readiness-copilot",
   "score": {
     "passed": 6,

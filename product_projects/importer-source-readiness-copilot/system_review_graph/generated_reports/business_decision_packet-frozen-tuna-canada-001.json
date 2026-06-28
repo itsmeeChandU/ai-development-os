@@ -894,10 +894,10 @@
         "market_access_approved"
       ],
       "competitor_source_countries": [
-        "Vietnam",
-        "European Union",
         "China",
+        "Vietnam",
         "Mexico",
+        "European Union",
         "United States"
       ],
       "destination": "Canada",

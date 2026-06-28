@@ -188,6 +188,9 @@ def main() -> int:
     external_validation = _load_json(ROOT / "system_review_graph" / "external_validation_requirements_report.json")
     external_validation_evidence = _load_json(ROOT / "system_review_graph" / "external_validation_evidence_requirements.json")
     go_live_input_templates = _load_json(ROOT / "system_review_graph" / "go_live_input_templates.json")
+    business_core_doc = (ROOT / "docs" / "BUSINESS_CORE_LOGIC_CURRENT_STATE.md").read_text(encoding="utf-8")
+    functional_doc = (ROOT / "docs" / "FUNCTIONAL_REQUIREMENTS_CURRENT_STATE.md").read_text(encoding="utf-8")
+    non_functional_doc = (ROOT / "docs" / "NON_FUNCTIONAL_REQUIREMENTS_CURRENT_STATE.md").read_text(encoding="utf-8")
     go_live_input_readiness = _load_json(ROOT / "system_review_graph" / "go_live_input_readiness_report.json")
     reviewer_wave_plan = _load_json(ROOT / "system_review_graph" / "reviewer_wave_execution_plan.json")
     private_beta_smoke = _load_json(ROOT / "system_review_graph" / "private_beta_smoke_test_plan.json")
@@ -283,6 +286,9 @@ def main() -> int:
         "docs/EXTERNAL_VALIDATION_REQUIREMENTS.md",
         "docs/EXTERNAL_VALIDATION_REVIEWER_BRIEF.md",
         "docs/GO_LIVE_INPUT_REQUESTS.md",
+        "docs/BUSINESS_CORE_LOGIC_CURRENT_STATE.md",
+        "docs/FUNCTIONAL_REQUIREMENTS_CURRENT_STATE.md",
+        "docs/NON_FUNCTIONAL_REQUIREMENTS_CURRENT_STATE.md",
         "system_review_graph/customer_readiness_report.json",
         "system_review_graph/customer_readiness_report.md",
         "system_review_graph/customer_source_packets.json",
@@ -758,6 +764,35 @@ def main() -> int:
             failures.append("business logic should include the canonical packet contract")
     if business_logic.get("operation_status") != "business_logic_operational_local_with_evidence_gates":
         failures.append("business logic should include local operation proof")
+    required_business_doc_terms = [
+        "business_logic_phases_ready_with_evidence_gates",
+        "business_logic_operational_local_with_evidence_gates",
+        "market_signal_score",
+        "evidence_completeness_score",
+        "source_freshness_score",
+        "responsibility_clarity_score",
+        "decision_safety_score",
+        "Questions To Close Before We Lock This Logic",
+    ]
+    for term in required_business_doc_terms:
+        if term not in business_core_doc:
+            failures.append(f"business core logic document missing {term}")
+    for term in (
+        "FR-10",
+        "Business Decision Preparation",
+        "external_effects_created: false",
+        "claims_opened: false",
+    ):
+        if term not in functional_doc:
+            failures.append(f"functional requirements document missing {term}")
+    for term in (
+        "NFR-01",
+        "Keep external effects closed by default",
+        "live payment ready remains false",
+        "delivery policy audit passes",
+    ):
+        if term not in non_functional_doc:
+            failures.append(f"non-functional requirements document missing {term}")
     if transport_readiness.get("status") != "transport_readiness_ready_with_forwarder_gates":
         failures.append("transport readiness should be ready with forwarder gates")
     if not transport_readiness.get("rows"):
@@ -1136,6 +1171,7 @@ def main() -> int:
     print(f"completion_platform={completion['status']}")
     print(f"opportunity_scanner={opportunity_scanner['status']}")
     print(f"business_logic={business_logic['status']}")
+    print("requirements_docs=current_state_set_ready")
     print(f"country_coverage={country_coverage['status']}")
     print(f"transport_readiness={transport_readiness['status']}")
     print(f"billing_controls={billing_controls['status']}")

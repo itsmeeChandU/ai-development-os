@@ -160,5 +160,36 @@
     "organization_id": "org-importer-demo",
     "packet_id": "packet-demo-turmeric-invoice",
     "user_agent": "Python-urllib/3.11"
+  },
+  {
+    "after_json": {
+      "approved_claims_scoped": [],
+      "blocked_claims": [
+        "tariff_classification_claim",
+        "food_safety_claim"
+      ],
+      "conditions": "Need dated official source refresh and broker review.",
+      "created_at": "2026-06-28T03:12:37+00:00",
+      "decision": "needs_more_evidence",
+      "evidence_reviewed_ids": [
+        "evidence-frozen-tuna-source"
+      ],
+      "expires_at": "2026-07-12T03:12:37+00:00",
+      "finding_type": "canada-food-import-review",
+      "id": "finding-packet-frozen-tuna-canada-001-2026-06-28T031237Z0000",
+      "notes": "Scoped review only; no approval.",
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "review_request_id": "review-request-packet-frozen-tuna-canada-001",
+      "reviewer_name": "Scoped Expert Reviewer",
+      "reviewer_organization": "External scoped reviewer",
+      "reviewer_role": "Qualified Canada trade/food reviewer",
+      "scope": "Review evidence and claim language for Canada import, food, and tariff readiness."
+    },
+    "created_at": "2026-06-28T03:12:37+00:00",
+    "entity_id": "finding-packet-frozen-tuna-canada-001-2026-06-28T031237Z0000",
+    "entity_type": "HumanReviewFinding",
+    "event_id": "packet-frozen-tuna-canada-001:review-finding-submitted:2026-06-28T03:12:37+00:00",
+    "event_type": "review_finding_submitted",
+    "packet_id": "packet-frozen-tuna-canada-001"
   }
 ]

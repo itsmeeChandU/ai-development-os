@@ -137,6 +137,9 @@ def main() -> int:
         PROJECT / "docs" / "EXTERNAL_VALIDATION_REQUIREMENTS.md",
         PROJECT / "docs" / "EXTERNAL_VALIDATION_REVIEWER_BRIEF.md",
         PROJECT / "docs" / "GO_LIVE_INPUT_REQUESTS.md",
+        PROJECT / "docs" / "BUSINESS_CORE_LOGIC_CURRENT_STATE.md",
+        PROJECT / "docs" / "FUNCTIONAL_REQUIREMENTS_CURRENT_STATE.md",
+        PROJECT / "docs" / "NON_FUNCTIONAL_REQUIREMENTS_CURRENT_STATE.md",
         PROJECT / "system_review_graph" / "external_gate_report.json",
         PROJECT / "system_review_graph" / "continuation_plan.json",
         PROJECT / "system_review_graph" / "vc_pitch_readiness_report.json",
@@ -439,6 +442,9 @@ def main() -> int:
     business_logic = json.loads(
         (PROJECT / "system_review_graph" / "business_logic_phase_report.json").read_text(encoding="utf-8")
     )
+    business_core_doc = (PROJECT / "docs" / "BUSINESS_CORE_LOGIC_CURRENT_STATE.md").read_text(encoding="utf-8")
+    functional_doc = (PROJECT / "docs" / "FUNCTIONAL_REQUIREMENTS_CURRENT_STATE.md").read_text(encoding="utf-8")
+    non_functional_doc = (PROJECT / "docs" / "NON_FUNCTIONAL_REQUIREMENTS_CURRENT_STATE.md").read_text(encoding="utf-8")
     transport_readiness = json.loads(
         (PROJECT / "system_review_graph" / "transport_readiness_report.json").read_text(encoding="utf-8")
     )
@@ -994,6 +1000,30 @@ def main() -> int:
         print("Product project check: FAIL")
         print("business logic report missing local operation proof")
         return 1
+    for term in (
+        "business_logic_phases_ready_with_evidence_gates",
+        "business_logic_operational_local_with_evidence_gates",
+        "market_signal_score",
+        "evidence_completeness_score",
+        "source_freshness_score",
+        "responsibility_clarity_score",
+        "decision_safety_score",
+        "Questions To Close Before We Lock This Logic",
+    ):
+        if term not in business_core_doc:
+            print("Product project check: FAIL")
+            print(f"business core logic document missing {term}")
+            return 1
+    for term in ("FR-10", "Business Decision Preparation", "external_effects_created: false", "claims_opened: false"):
+        if term not in functional_doc:
+            print("Product project check: FAIL")
+            print(f"functional requirements document missing {term}")
+            return 1
+    for term in ("NFR-01", "Keep external effects closed by default", "live payment ready remains false", "delivery policy audit passes"):
+        if term not in non_functional_doc:
+            print("Product project check: FAIL")
+            print(f"non-functional requirements document missing {term}")
+            return 1
     if transport_readiness.get("status") != "transport_readiness_ready_with_forwarder_gates" or not transport_readiness.get("rows"):
         print("Product project check: FAIL")
         print("transport readiness artifact is missing packet rows")
@@ -1395,6 +1425,7 @@ def main() -> int:
     print(f"completion_platform={completion['status']}")
     print(f"opportunity_scanner={opportunity_scanner['status']}")
     print(f"business_logic={business_logic['status']}")
+    print("requirements_docs=current_state_set_ready")
     print(f"country_coverage={country_coverage['status']}")
     print(f"transport_readiness={transport_readiness['status']}")
     print(f"billing_controls={billing_controls['status']}")
