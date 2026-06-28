@@ -150,6 +150,10 @@ Trade Readiness Copilot keeps the current business-rule engine and rebuilds the 
 - Claims still closed: parser_extraction_is_draft_evidence, real_uploads_blocked_until_security_privacy_controls.
 - Next valid move: Build the production implementation for this phase and attach the listed evidence before any gated claim can open.
 
+- Implementation status: `local_document_pipeline_sample_library_ready_security_gates_closed`
+- Implementation artifacts: data/official_sample_documents/, data/parser_qa_documents/, system_review_graph/production_document_intelligence_manifest.json, system_review_graph/production_document_pipeline.json, system_review_graph/production_document_extracted_fields.json, docs/PRODUCTION_DOCUMENT_INTELLIGENCE_ENGINE.md.
+- Implementation proof: Production document intelligence now maps declared document gaps, downloaded official sample forms, source-route-only country samples, synthetic filled parser QA documents, extracted-field provenance, redaction previews, and evidence records while keeping real upload/security/AI/document claims closed.
+
 ### Phase 11: Evidence ledger and claim-gate engine
 
 - Local status: `phase_research_build_source_evidence_gate_tracks_ready`

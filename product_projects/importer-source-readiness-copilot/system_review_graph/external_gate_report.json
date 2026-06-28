@@ -192,6 +192,27 @@
       "url": "https://inspection.canada.ca/en/importing-food-plants-animals/airs"
     },
     {
+      "accessed_at": "2026-06-28",
+      "claim_boundary": "Reference source only; official sample form only; it is not customer evidence, customs approval, accounting proof, or shipment readiness.",
+      "id": "cbsa-ci1-canada-customs-invoice",
+      "name": "CBSA CI1 Canada Customs Invoice",
+      "url": "https://www.cbsa-asfc.gc.ca/publications/forms-formulaires/ci1.pdf"
+    },
+    {
+      "accessed_at": "2026-06-28",
+      "claim_boundary": "Reference source only; official sample form only; it does not prove cargo release, transport readiness, customs accounting, or compliance.",
+      "id": "cbsa-a8a-b-cargo-control-document",
+      "name": "CBSA A8A(B) Cargo Control Document",
+      "url": "https://www.cbsa-asfc.gc.ca/publications/forms-formulaires/a8a-b.pdf"
+    },
+    {
+      "accessed_at": "2026-06-28",
+      "claim_boundary": "Reference source only; official sample form only; it does not prove CFIA clearance, admissibility, or compliance.",
+      "id": "cfia-5272-documentation-review-request",
+      "name": "CFIA 5272 Request for Documentation Review",
+      "url": "https://inspection.canada.ca/sites/default/files/legacy/DAM/DAM-form-forme/STAGING/text-texte/c5272_re_1369400657637_eng.pdf"
+    },
+    {
       "accessed_at": "2026-06-25",
       "claim_boundary": "Reference source only; does not prove whether a specific product requires an import permit.",
       "id": "gac-import-controls",
@@ -249,10 +270,31 @@
     },
     {
       "accessed_at": "2026-06-28",
+      "claim_boundary": "Reference source only; no stable local PDF sample was verified in this pass and India export claims require current source review.",
+      "id": "india-dgft-appendices-anf",
+      "name": "India DGFT Appendices and Aayat Niryat Forms",
+      "url": "https://www.dgft.gov.in/CP/?opt=appendices-and-anf"
+    },
+    {
+      "accessed_at": "2026-06-28",
       "claim_boundary": "Reference source only; does not prove tariff classification, export/import duty treatment, or customs compliance.",
       "id": "india-cbic-customs",
       "name": "India Central Board of Indirect Taxes and Customs",
       "url": "https://www.cbic.gov.in/"
+    },
+    {
+      "accessed_at": "2026-06-28",
+      "claim_boundary": "Reference source only; no stable local PDF sample was verified in this pass and customs readiness claims remain blocked.",
+      "id": "india-cbic-customs-forms",
+      "name": "India CBIC Customs Forms Route",
+      "url": "https://www.cbic.gov.in/"
+    },
+    {
+      "accessed_at": "2026-06-28",
+      "claim_boundary": "Reference source only; no stable local PDF sample was verified in this pass and Vietnam customs/export claims require current source review.",
+      "id": "vietnam-customs-portal",
+      "name": "General Department of Vietnam Customs Portal",
+      "url": "https://www.customs.gov.vn/"
     },
     {
       "accessed_at": "2026-06-28",

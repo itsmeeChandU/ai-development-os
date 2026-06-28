@@ -21,12 +21,14 @@
         "paid_review": "check before paid/expert review"
       },
       "reviewer_required": true,
-      "source_count": 14,
+      "source_count": 16,
       "source_ids": [
         "cbsa-carm",
         "cbsa-import-commercial-goods",
         "cbsa-customs-tariff-2026",
         "cfia-airs",
+        "cbsa-a8a-b-cargo-control-document",
+        "cfia-5272-documentation-review-request",
         "gac-import-controls",
         "justice-import-control-list",
         "canada-sanctions",
@@ -165,6 +167,6 @@
     }
   ],
   "external_effects_created": false,
-  "generated_at": "2026-06-28T12:36:45+00:00",
+  "generated_at": "2026-06-28T13:51:10+00:00",
   "status": "production_country_packs_ready_reference_only_claims_closed"
 }

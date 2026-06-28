@@ -14,7 +14,7 @@
       "coverage_label": "monitored sources",
       "coverage_tier": 3,
       "next_valid_move": "Add current monitored official sources, category templates, and qualified review before country-specific claims.",
-      "source_count": 12,
+      "source_count": 15,
       "source_provenance": [
         {
           "accessed_at": "2026-06-25",
@@ -55,6 +55,36 @@
           "provenance_type": "official_source_registry",
           "source_id": "cfia-airs",
           "url": "https://inspection.canada.ca/en/importing-food-plants-animals/airs"
+        },
+        {
+          "accessed_at": "2026-06-28",
+          "claim_boundary": "Reference source only; official sample form only; it is not customer evidence, customs approval, accounting proof, or shipment readiness.",
+          "evidence_role": "official Canada customs invoice sample form for document parser orientation",
+          "jurisdiction": "Canada",
+          "name": "CBSA CI1 Canada Customs Invoice",
+          "provenance_type": "official_source_registry",
+          "source_id": "cbsa-ci1-canada-customs-invoice",
+          "url": "https://www.cbsa-asfc.gc.ca/publications/forms-formulaires/ci1.pdf"
+        },
+        {
+          "accessed_at": "2026-06-28",
+          "claim_boundary": "Reference source only; official sample form only; it does not prove cargo release, transport readiness, customs accounting, or compliance.",
+          "evidence_role": "official cargo control sample form for transport-document parser orientation",
+          "jurisdiction": "Canada",
+          "name": "CBSA A8A(B) Cargo Control Document",
+          "provenance_type": "official_source_registry",
+          "source_id": "cbsa-a8a-b-cargo-control-document",
+          "url": "https://www.cbsa-asfc.gc.ca/publications/forms-formulaires/a8a-b.pdf"
+        },
+        {
+          "accessed_at": "2026-06-28",
+          "claim_boundary": "Reference source only; official sample form only; it does not prove CFIA clearance, admissibility, or compliance.",
+          "evidence_role": "official CFIA documentation-review form for regulated-product parser orientation",
+          "jurisdiction": "Canada",
+          "name": "CFIA 5272 Request for Documentation Review",
+          "provenance_type": "official_source_registry",
+          "source_id": "cfia-5272-documentation-review-request",
+          "url": "https://inspection.canada.ca/sites/default/files/legacy/DAM/DAM-form-forme/STAGING/text-texte/c5272_re_1369400657637_eng.pdf"
         },
         {
           "accessed_at": "2026-06-25",
@@ -183,7 +213,7 @@
       "coverage_label": "reference sources catalogued",
       "coverage_tier": 2,
       "next_valid_move": "Add current monitored official sources, category templates, and qualified review before country-specific claims.",
-      "source_count": 2,
+      "source_count": 4,
       "source_provenance": [
         {
           "accessed_at": "2026-06-28",
@@ -197,12 +227,32 @@
         },
         {
           "accessed_at": "2026-06-28",
+          "claim_boundary": "Reference source only; no stable local PDF sample was verified in this pass and India export claims require current source review.",
+          "evidence_role": "official DGFT form/source route for India exporter document requirements and future sample-form lookup",
+          "jurisdiction": "India",
+          "name": "India DGFT Appendices and Aayat Niryat Forms",
+          "provenance_type": "official_source_registry",
+          "source_id": "india-dgft-appendices-anf",
+          "url": "https://www.dgft.gov.in/CP/?opt=appendices-and-anf"
+        },
+        {
+          "accessed_at": "2026-06-28",
           "claim_boundary": "Reference source only; does not prove tariff classification, export/import duty treatment, or customs compliance.",
           "evidence_role": "India customs and tariff reference orientation",
           "jurisdiction": "India",
           "name": "India Central Board of Indirect Taxes and Customs",
           "provenance_type": "official_source_registry",
           "source_id": "india-cbic-customs",
+          "url": "https://www.cbic.gov.in/"
+        },
+        {
+          "accessed_at": "2026-06-28",
+          "claim_boundary": "Reference source only; no stable local PDF sample was verified in this pass and customs readiness claims remain blocked.",
+          "evidence_role": "official CBIC source route for customs form lookup and future sample-form attachment",
+          "jurisdiction": "India",
+          "name": "India CBIC Customs Forms Route",
+          "provenance_type": "official_source_registry",
+          "source_id": "india-cbic-customs-forms",
           "url": "https://www.cbic.gov.in/"
         }
       ],
@@ -284,11 +334,22 @@
         "required_tier": 5,
         "status": "blocked_unsupported_country_specific_claims"
       },
-      "coverage_label": "generic starter checklist",
-      "coverage_tier": 1,
+      "coverage_label": "reference sources catalogued",
+      "coverage_tier": 2,
       "next_valid_move": "Add current monitored official sources, category templates, and qualified review before country-specific claims.",
-      "source_count": 0,
-      "source_provenance": [],
+      "source_count": 1,
+      "source_provenance": [
+        {
+          "accessed_at": "2026-06-28",
+          "claim_boundary": "Reference source only; no stable local PDF sample was verified in this pass and Vietnam customs/export claims require current source review.",
+          "evidence_role": "official Vietnam customs source route for origin/demo lane document lookup",
+          "jurisdiction": "Vietnam",
+          "name": "General Department of Vietnam Customs Portal",
+          "provenance_type": "official_source_registry",
+          "source_id": "vietnam-customs-portal",
+          "url": "https://www.customs.gov.vn/"
+        }
+      ],
       "unsupported_country_specific_claims": [
         "customs_or_tariff_correctness",
         "country_rules_current",
@@ -313,7 +374,7 @@
     "4": "category template support",
     "5": "expert-reviewed templates"
   },
-  "generated_at": "2026-06-28T12:36:44+00:00",
+  "generated_at": "2026-06-28T13:51:09+00:00",
   "packet_coverage": [
     {
       "blocked_country_specific_claims": [
@@ -324,10 +385,10 @@
         "import_or_export_approved"
       ],
       "can_make_country_specific_claims": false,
-      "coverage_label": "generic starter checklist",
+      "coverage_label": "reference sources catalogued",
       "coverage_status": "country_specific_claims_blocked",
       "destination_country": "Canada",
-      "effective_coverage_tier": 1,
+      "effective_coverage_tier": 2,
       "next_valid_move": "Use generic readiness output unless both countries and category have monitored/expert-reviewed coverage.",
       "origin_country": "Vietnam",
       "packet_id": "packet-frozen-tuna-canada-001",

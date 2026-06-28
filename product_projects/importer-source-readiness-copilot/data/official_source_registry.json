@@ -36,6 +36,33 @@
     "claim_boundary": "Reference source only; product-specific food import compliance requires qualified review and source verification."
   },
   {
+    "id": "cbsa-ci1-canada-customs-invoice",
+    "name": "CBSA CI1 Canada Customs Invoice",
+    "url": "https://www.cbsa-asfc.gc.ca/publications/forms-formulaires/ci1.pdf",
+    "accessed_at": "2026-06-28",
+    "jurisdiction": "CA",
+    "evidence_role": "official Canada customs invoice sample form for document parser orientation",
+    "claim_boundary": "Reference source only; official sample form only; it is not customer evidence, customs approval, accounting proof, or shipment readiness."
+  },
+  {
+    "id": "cbsa-a8a-b-cargo-control-document",
+    "name": "CBSA A8A(B) Cargo Control Document",
+    "url": "https://www.cbsa-asfc.gc.ca/publications/forms-formulaires/a8a-b.pdf",
+    "accessed_at": "2026-06-28",
+    "jurisdiction": "CA",
+    "evidence_role": "official cargo control sample form for transport-document parser orientation",
+    "claim_boundary": "Reference source only; official sample form only; it does not prove cargo release, transport readiness, customs accounting, or compliance."
+  },
+  {
+    "id": "cfia-5272-documentation-review-request",
+    "name": "CFIA 5272 Request for Documentation Review",
+    "url": "https://inspection.canada.ca/sites/default/files/legacy/DAM/DAM-form-forme/STAGING/text-texte/c5272_re_1369400657637_eng.pdf",
+    "accessed_at": "2026-06-28",
+    "jurisdiction": "CA",
+    "evidence_role": "official CFIA documentation-review form for regulated-product parser orientation",
+    "claim_boundary": "Reference source only; official sample form only; it does not prove CFIA clearance, admissibility, or compliance."
+  },
+  {
     "id": "gac-import-controls",
     "name": "Global Affairs Canada Import Controls and Import Permits",
     "url": "https://www.international.gc.ca/controls-controles/about-a_propos/impor/permits-licences.aspx?lang=eng",
@@ -108,6 +135,15 @@
     "claim_boundary": "Reference source only; does not prove export permission, licensing status, incentive eligibility, or product-specific export compliance."
   },
   {
+    "id": "india-dgft-appendices-anf",
+    "name": "India DGFT Appendices and Aayat Niryat Forms",
+    "url": "https://www.dgft.gov.in/CP/?opt=appendices-and-anf",
+    "accessed_at": "2026-06-28",
+    "jurisdiction": "IN",
+    "evidence_role": "official DGFT form/source route for India exporter document requirements and future sample-form lookup",
+    "claim_boundary": "Reference source only; no stable local PDF sample was verified in this pass and India export claims require current source review."
+  },
+  {
     "id": "india-cbic-customs",
     "name": "India Central Board of Indirect Taxes and Customs",
     "url": "https://www.cbic.gov.in/",
@@ -115,6 +151,24 @@
     "jurisdiction": "IN",
     "evidence_role": "India customs and tariff reference orientation",
     "claim_boundary": "Reference source only; does not prove tariff classification, export/import duty treatment, or customs compliance."
+  },
+  {
+    "id": "india-cbic-customs-forms",
+    "name": "India CBIC Customs Forms Route",
+    "url": "https://www.cbic.gov.in/",
+    "accessed_at": "2026-06-28",
+    "jurisdiction": "IN",
+    "evidence_role": "official CBIC source route for customs form lookup and future sample-form attachment",
+    "claim_boundary": "Reference source only; no stable local PDF sample was verified in this pass and customs readiness claims remain blocked."
+  },
+  {
+    "id": "vietnam-customs-portal",
+    "name": "General Department of Vietnam Customs Portal",
+    "url": "https://www.customs.gov.vn/",
+    "accessed_at": "2026-06-28",
+    "jurisdiction": "VN",
+    "evidence_role": "official Vietnam customs source route for origin/demo lane document lookup",
+    "claim_boundary": "Reference source only; no stable local PDF sample was verified in this pass and Vietnam customs/export claims require current source review."
   },
   {
     "id": "gac-sanctions",

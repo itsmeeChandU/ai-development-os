@@ -28,7 +28,7 @@ The product helps users prepare trade readiness packets, organize evidence, revi
 | --- | --- | --- | --- |
 | FR-01 | Capture trade packet information | Implemented locally | `customer_source_packets.json`, packet routes |
 | FR-02 | Support beginner/no-document flow | Implemented locally | starter checklist output |
-| FR-03 | Support document upload and PDF triage | Implemented locally with confirmation gates | `document_processing.py`, public upload policy |
+| FR-03 | Support no-file quick checks, document upload, and PDF triage | Implemented locally with confirmation gates | `document_processing.py`, public upload policy, `production_document_intelligence_manifest.json` |
 | FR-04 | Maintain evidence ledger | Implemented locally | `evidence_ledger.json` |
 | FR-05 | Maintain official source registry | Implemented locally as reference routes | `official_source_registry.json` |
 | FR-06 | Refresh source records safely | Implemented locally with freshness boundaries | `source_refresh_runs.json` |
@@ -50,6 +50,8 @@ The product helps users prepare trade readiness packets, organize evidence, revi
 | FR-22 | Execute safe local agent tools | Implemented locally with no external effects | `product_operations_report.json` |
 | FR-23 | Keep live checkout disabled | Implemented as blocked billing controls | `billing_credit_controls.json` |
 | FR-24 | Keep launch controls and go-live blockers visible | Implemented locally | `launch_operations_report.json`, `final_go_live_decision_report.json` |
+| FR-25 | Maintain production document intelligence pipeline | Implemented locally with official sample documents and parser QA fixtures | `production_document_pipeline.json`, `production_document_extracted_fields.json` |
+| FR-26 | Keep uploaded-document actions separate from no-document packets | Implemented locally | no-document quick-check regression test and public result route |
 
 ## Current Main Workflows
 
@@ -77,6 +79,16 @@ The product helps users prepare trade readiness packets, organize evidence, revi
 6. Product returns missing evidence, source routes, blockers, and next valid move.
 7. Strong claims stay blocked.
 
+If the user continues without documents, the packet records a no-document
+intake evidence row and shows missing-evidence, starter, buyer, and broker
+outputs. It does not show extracted-field confirmation or delete-uploaded-files
+actions because no upload exists.
+
+If the user uploads PDFs, the packet creates quarantine metadata, draft extracted
+fields, document-intelligence rows, user-confirmation actions, and delete-file
+actions. Parser output remains draft evidence until the user confirms and a
+qualified reviewer checks the relevant scope.
+
 ### Customer Packet Workspace
 
 1. Customer creates or opens a packet.
@@ -96,6 +108,35 @@ The product helps users prepare trade readiness packets, organize evidence, revi
 6. Product calculates six separate business scores.
 7. Product generates a business decision report.
 8. Product keeps approval, tariff, buyer, supplier, shipment, and launch claims blocked.
+
+### Production Document Intelligence
+
+1. Product recognizes expected trade document classes: commercial invoice,
+   packing list, certificate of origin, bill of lading, airway bill, product
+   specification, lab certificate, phytosanitary/health certificate, purchase
+   order, contract, and inspection report.
+2. Product separates official sample documents from synthetic parser QA
+   fixtures and from customer-uploaded evidence.
+3. Product records file-signature checks, generated filenames, quarantine
+   status, extraction confidence, user-confirmation status, and claim boundary.
+4. Product maps every extracted field to document ID, page or section,
+   provenance, confidence, user-confirmation status, supported claims, and
+   blocked claims.
+5. Product blocks authenticity, tariff, CFIA, customs, buyer, supplier,
+   shipment, and launch claims from parser output.
+
+### Enterprise / Advisor Use Cases
+
+1. Broker or trade advisor can manage multiple client packets and export
+   missing-evidence or broker-review packets.
+2. Enterprise sourcing team can compare lanes while seeing which country/source
+   paths are full, partial, reference-only, or generic.
+3. Compliance or legal reviewer can inspect blocked claims, source routes,
+   evidence provenance, and the exact scope of requested review.
+4. Security or privacy reviewer can inspect upload, AI, deletion, audit, and
+   retention controls before real-user data is accepted.
+5. Finance or billing reviewer can confirm that paid scope is preparation only
+   and live checkout remains disabled until payment gates pass.
 
 ### Expert Review
 

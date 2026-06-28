@@ -53,6 +53,9 @@ This engine turns researched official-source routes into country/source logic. I
 - `cbsa-import-commercial-goods`: customs_import_process / `checked_current_reference_only`.
 - `cbsa-customs-tariff-2026`: tariff_orientation / `not_checked`.
 - `cfia-airs`: regulated_goods / `checked_current_reference_only`.
+- `cbsa-ci1-canada-customs-invoice`: official_reference / `not_checked`.
+- `cbsa-a8a-b-cargo-control-document`: import_controls / `not_checked`.
+- `cfia-5272-documentation-review-request`: regulated_goods / `not_checked`.
 - `gac-import-controls`: import_controls / `not_checked`.
 - `justice-import-control-list`: import_controls / `not_checked`.
 - `canada-sanctions`: sanctions_restricted_party / `not_checked`.
@@ -61,7 +64,10 @@ This engine turns researched official-source routes into country/source logic. I
 - `cbsa-licensed-customs-brokers`: broker_directory / `not_checked`.
 - `itc-market-access-map`: market_access_comparison / `not_checked`.
 - `india-dgft-foreign-trade-policy`: export_policy, import_export_code, origin_export_controls / `not_checked`.
+- `india-dgft-appendices-anf`: official_reference / `not_checked`.
 - `india-cbic-customs`: customs_reference / `not_checked`.
+- `india-cbic-customs-forms`: official_reference / `not_checked`.
+- `vietnam-customs-portal`: official_reference / `not_checked`.
 - `gac-sanctions`: sanctions_restricted_party / `not_checked`.
 - `world-bank-wits`: global_trade_data / `not_checked`.
 - `itc-trade-map`: buyer_importer_discovery / `not_checked`.

@@ -87,6 +87,7 @@ def main() -> int:
         PROJECT / "src" / "importer_source_readiness" / "external_validation_research.py",
         PROJECT / "src" / "importer_source_readiness" / "production_country_source_engine.py",
         PROJECT / "src" / "importer_source_readiness" / "production_data_model.py",
+        PROJECT / "src" / "importer_source_readiness" / "production_document_intelligence_engine.py",
         PROJECT / "src" / "importer_source_readiness" / "production_market_intelligence_engine.py",
         PROJECT / "src" / "importer_source_readiness" / "production_packet_engine.py",
         PROJECT / "src" / "importer_source_readiness" / "production_redevelopment.py",
@@ -109,6 +110,7 @@ def main() -> int:
         PROJECT / "tests" / "test_external_validation_research.py",
         PROJECT / "tests" / "test_production_country_source_engine.py",
         PROJECT / "tests" / "test_production_data_model.py",
+        PROJECT / "tests" / "test_production_document_intelligence_engine.py",
         PROJECT / "tests" / "test_production_market_intelligence_engine.py",
         PROJECT / "tests" / "test_production_packet_engine.py",
         PROJECT / "tests" / "test_production_redevelopment.py",
@@ -130,6 +132,7 @@ def main() -> int:
         PROJECT / "scripts" / "run_external_validation_requirements.py",
         PROJECT / "scripts" / "run_production_country_source_engine.py",
         PROJECT / "scripts" / "run_production_data_model.py",
+        PROJECT / "scripts" / "run_production_document_intelligence_engine.py",
         PROJECT / "scripts" / "run_production_market_intelligence_engine.py",
         PROJECT / "scripts" / "run_production_packet_engine.py",
         PROJECT / "scripts" / "run_production_redevelopment.py",
@@ -154,6 +157,7 @@ def main() -> int:
         PROJECT / "docs" / "GO_LIVE_INPUT_REQUESTS.md",
         PROJECT / "docs" / "PRODUCTION_COUNTRY_SOURCE_ENGINE.md",
         PROJECT / "docs" / "PRODUCTION_DATA_MODEL.md",
+        PROJECT / "docs" / "PRODUCTION_DOCUMENT_INTELLIGENCE_ENGINE.md",
         PROJECT / "docs" / "PRODUCTION_MARKET_INTELLIGENCE_ENGINE.md",
         PROJECT / "docs" / "PRODUCTION_PACKET_ENGINE.md",
         PROJECT / "docs" / "PRODUCTION_REDEVELOPMENT.md",
@@ -230,6 +234,23 @@ def main() -> int:
         PROJECT / "system_review_graph" / "production_market_intelligence_manifest.json",
         PROJECT / "system_review_graph" / "production_market_signals.json",
         PROJECT / "system_review_graph" / "production_market_dataset_connectors.json",
+        PROJECT / "system_review_graph" / "production_document_intelligence_manifest.json",
+        PROJECT / "system_review_graph" / "production_document_pipeline.json",
+        PROJECT / "system_review_graph" / "production_document_extracted_fields.json",
+        PROJECT / "data" / "official_sample_documents" / "canada" / "cbsa-ci1-canada-customs-invoice.pdf",
+        PROJECT / "data" / "official_sample_documents" / "canada" / "cbsa-a8a-b-cargo-control-document.pdf",
+        PROJECT / "data" / "official_sample_documents" / "canada" / "cfia-5272-documentation-review-request.pdf",
+        PROJECT / "data" / "parser_qa_documents" / "synthetic-commercial-invoice-canada.pdf",
+        PROJECT / "data" / "parser_qa_documents" / "synthetic-packing-list-india-export.pdf",
+        PROJECT / "data" / "parser_qa_documents" / "synthetic-certificate-of-origin-india.pdf",
+        PROJECT / "data" / "parser_qa_documents" / "synthetic-bill-of-lading-vietnam.pdf",
+        PROJECT / "data" / "parser_qa_documents" / "synthetic-airway-bill-generic.pdf",
+        PROJECT / "data" / "parser_qa_documents" / "synthetic-product-specification-vietnam-seafood.pdf",
+        PROJECT / "data" / "parser_qa_documents" / "synthetic-lab-certificate-food.pdf",
+        PROJECT / "data" / "parser_qa_documents" / "synthetic-health-certificate-vietnam.pdf",
+        PROJECT / "data" / "parser_qa_documents" / "synthetic-purchase-order-canada-buyer.pdf",
+        PROJECT / "data" / "parser_qa_documents" / "synthetic-contract-incoterms.pdf",
+        PROJECT / "data" / "parser_qa_documents" / "synthetic-inspection-report-supplier.pdf",
         PROJECT / "system_review_graph" / "production_packet_engine_manifest.json",
         PROJECT / "system_review_graph" / "production_packet_events.json",
         PROJECT / "system_review_graph" / "production_packet_views" / "packet-frozen-tuna-canada-001" / "starter_packet.json",
@@ -350,6 +371,7 @@ def main() -> int:
         ["python3", "scripts/run_production_packet_engine.py"],
         ["python3", "scripts/run_production_country_source_engine.py"],
         ["python3", "scripts/run_production_market_intelligence_engine.py"],
+        ["python3", "scripts/run_production_document_intelligence_engine.py"],
         ["python3", "scripts/build_external_review_packet.py"],
         ["python3", "scripts/export_operator_dashboard.py"],
         ["python3", "scripts/audit_external_package.py", "--root", "."],
@@ -563,6 +585,9 @@ def main() -> int:
     )
     production_market_intelligence = json.loads(
         (PROJECT / "system_review_graph" / "production_market_intelligence_manifest.json").read_text(encoding="utf-8")
+    )
+    production_document_intelligence = json.loads(
+        (PROJECT / "system_review_graph" / "production_document_intelligence_manifest.json").read_text(encoding="utf-8")
     )
     official_source_registry = json.loads(
         (PROJECT / "data" / "official_source_registry.json").read_text(encoding="utf-8")
@@ -1563,6 +1588,76 @@ def main() -> int:
         print("Product project check: FAIL")
         print("market packet must not claim demand, profitability, or buyer validation")
         return 1
+    if (
+        production_document_intelligence.get("status") != "production_document_intelligence_engine_ready_local_pipeline_security_gates_closed"
+        or production_document_intelligence.get("pipeline_stage_count", 0) < 16
+        or production_document_intelligence.get("document_class_count") != 11
+        or production_document_intelligence.get("official_sample_document_count", 0) < 3
+        or production_document_intelligence.get("source_route_only_sample_count", 0) < 3
+        or production_document_intelligence.get("synthetic_parser_fixture_count") != 11
+        or production_document_intelligence.get("extracted_field_count", 0) < 20
+        or production_document_intelligence.get("real_uploads_enabled") is not False
+        or production_document_intelligence.get("malware_scan_proven") is not False
+        or production_document_intelligence.get("object_storage_ready") is not False
+        or production_document_intelligence.get("external_effects_created") is not False
+        or production_document_intelligence.get("claims_opened") is not False
+        or production_document_intelligence.get("public_launch_ready") is not False
+        or production_document_intelligence.get("parser_outputs_are_draft") is not True
+    ):
+        print("Product project check: FAIL")
+        print("production document intelligence should produce sample-backed draft records with closed security and claim gates")
+        return 1
+    for blocked_claim in ("document_authenticity_verified", "customs_ready", "tariff_confirmed", "cfia_approved", "supplier_verified"):
+        if blocked_claim not in production_document_intelligence.get("blocked_claims", []):
+            print("Product project check: FAIL")
+            print(f"production document intelligence should block {blocked_claim}")
+            return 1
+    document_stages = {row.get("stage") for row in production_document_intelligence.get("pipeline_stages", [])}
+    for stage in ("malware_scan", "document_classification", "field_extraction", "evidence_ledger_mapping", "redaction_preview", "ai_optional_analysis"):
+        if stage not in document_stages:
+            print("Product project check: FAIL")
+            print(f"production document intelligence missing pipeline stage {stage}")
+            return 1
+    source_ids_for_documents = {row.get("source_id") for row in production_document_intelligence.get("source_records", [])}
+    for source_id in ("cbsa-ci1-canada-customs-invoice", "india-dgft-appendices-anf", "vietnam-customs-portal", "owasp-file-upload"):
+        if source_id not in source_ids_for_documents:
+            print("Product project check: FAIL")
+            print(f"production document intelligence missing source record {source_id}")
+            return 1
+    document_sample_levels = {row.get("sample_level") for row in production_document_intelligence.get("document_records", [])}
+    for sample_level in ("official_pdf_downloaded", "synthetic_parser_fixture"):
+        if sample_level not in document_sample_levels:
+            print("Product project check: FAIL")
+            print(f"production document intelligence missing document sample level {sample_level}")
+            return 1
+    expected_document_classes = {
+        "commercial_invoice",
+        "packing_list",
+        "certificate_of_origin",
+        "bill_of_lading",
+        "airway_bill",
+        "product_specification",
+        "lab_certificate",
+        "phytosanitary_or_health_certificate",
+        "purchase_order",
+        "contract",
+        "inspection_report",
+    }
+    document_classes = {row.get("classification", {}).get("type") for row in production_document_intelligence.get("document_records", [])}
+    if not expected_document_classes.issubset(document_classes):
+        print("Product project check: FAIL")
+        print("production document intelligence does not cover every expected document class")
+        return 1
+    for field in production_document_intelligence.get("extracted_fields", []):
+        if field.get("supports_claims") != []:
+            print("Product project check: FAIL")
+            print("production document extracted fields must not support claims directly")
+            return 1
+        for key in ("document_id", "page_or_section", "extracted_value", "confidence", "provenance", "user_confirmation_status", "claim_boundary"):
+            if key not in field:
+                print("Product project check: FAIL")
+                print(f"production document extracted field missing {key}")
+                return 1
     external_validation_pdf = PROJECT / "output" / "pdf" / "external_validation_requirements.pdf"
     if not external_validation_pdf.exists() or not external_validation_pdf.read_bytes().startswith(b"%PDF"):
         print("Product project check: FAIL")

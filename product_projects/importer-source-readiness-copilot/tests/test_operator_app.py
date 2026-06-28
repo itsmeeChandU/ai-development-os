@@ -323,6 +323,101 @@ class OperatorAppTests(unittest.TestCase):
                 else:
                     path.write_bytes(content)
 
+    def test_public_quick_check_accepts_no_document_intake(self) -> None:
+        generated_paths = [
+            *MUTABLE_GENERATED_PATHS,
+            ROOT / "system_review_graph" / "expert_review_packet_packet-no-document-browser-check.md",
+        ]
+        backups = {path: path.read_bytes() if path.exists() else None for path in generated_paths}
+        upload_root = ROOT / "system_review_graph" / "public_uploads"
+        with tempfile.TemporaryDirectory() as tmp:
+            upload_backup = Path(tmp) / "public_uploads"
+            if upload_root.exists():
+                shutil.copytree(upload_root, upload_backup)
+            try:
+                boundary = "----ISRNoDocumentBoundary"
+                fields = {
+                    "accept_notice": "accepted",
+                    "trade_direction": "export",
+                    "product_name": "No document browser check",
+                    "product_category": "Food, agri, or seafood",
+                    "origin_country": "India",
+                    "destination_country": "Canada",
+                    "exporter_name": "Example Exporter Pvt Ltd",
+                    "buyer_name": "",
+                    "importer_of_record": "unknown",
+                    "incoterms_if_known": "unknown",
+                    "product_documents": "",
+                    "commercial_documents": "",
+                    "certificates": "",
+                }
+                parts: list[bytes] = []
+                for key, value in fields.items():
+                    parts.append(
+                        (
+                            f"--{boundary}\r\n"
+                            f'Content-Disposition: form-data; name="{key}"\r\n\r\n'
+                            f"{value}\r\n"
+                        ).encode("utf-8")
+                    )
+                parts.append(f"--{boundary}--\r\n".encode("utf-8"))
+                request = Request(
+                    f"{self.base_url}/api/public/quick-check",
+                    data=b"".join(parts),
+                    method="POST",
+                    headers={"Content-Type": f"multipart/form-data; boundary={boundary}"},
+                )
+
+                class NoRedirect(HTTPRedirectHandler):
+                    def redirect_request(self, req, fp, code, msg, headers, newurl):  # type: ignore[no-untyped-def]
+                        return None
+
+                opener = build_opener(NoRedirect)
+                with self.assertRaises(HTTPError) as ctx:
+                    opener.open(request, timeout=5)
+                self.assertEqual(ctx.exception.code, 303)
+                location = ctx.exception.headers["Location"]
+                self.assertEqual(location, "/public/packets/packet-no-document-browser-check/result")
+
+                with urlopen(f"{self.base_url}{location}", timeout=5) as response:
+                    result_html = response.read().decode("utf-8")
+                self.assertIn("Export-to-Canada Packet", result_html)
+                self.assertIn("Blocked - not ready for shipment decision", result_html)
+                self.assertIn("Document Evidence", result_html)
+                self.assertIn("No uploaded documents yet.", result_html)
+                self.assertIn("Missing Evidence PDF", result_html)
+                self.assertIn("Starter Checklist", result_html)
+                self.assertIn("Generate Buyer Packet", result_html)
+                self.assertIn("Upload PDFs", result_html)
+                self.assertNotIn("Confirm Extracted Fields", result_html)
+                self.assertNotIn("Delete Uploaded Files", result_html)
+
+                manifest = json.loads((ROOT / "system_review_graph" / "public_upload_manifest.json").read_text(encoding="utf-8"))
+                packet_manifest = next(row for row in manifest["packets"] if row["packet_id"] == "packet-no-document-browser-check")
+                self.assertEqual(packet_manifest["file_count"], 0)
+                self.assertEqual(packet_manifest["parser_sandbox_status"], "not_run_no_documents_uploaded")
+                self.assertEqual(packet_manifest["shareable_status"], "blocked_until_evidence_or_review")
+                self.assertEqual(packet_manifest["delete_route"], "")
+                self.assertIn("public_no_document_quick_check_created", packet_manifest["audit_events"])
+
+                workflow = json.loads((ROOT / "system_review_graph" / "customer_readiness_report.json").read_text(encoding="utf-8"))
+                evidence = next(
+                    row
+                    for row in workflow["evidence_ledger"]["rows"]
+                    if row["packet_id"] == "packet-no-document-browser-check"
+                )
+                self.assertEqual(evidence["evidence_type"], "customer_uploaded_reference")
+                self.assertEqual(evidence["claim_boundary"], "No document evidence was uploaded; this supports missing-evidence planning only.")
+            finally:
+                for path, content in backups.items():
+                    if content is None:
+                        path.unlink(missing_ok=True)
+                    else:
+                        path.write_bytes(content)
+                shutil.rmtree(upload_root, ignore_errors=True)
+                if upload_backup.exists():
+                    shutil.copytree(upload_backup, upload_root)
+
     def test_public_tool_selection_and_quick_check_upload_pdf_flow(self) -> None:
         generated_paths = [
             *MUTABLE_GENERATED_PATHS,

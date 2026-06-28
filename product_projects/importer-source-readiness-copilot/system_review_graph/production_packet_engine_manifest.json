@@ -2,7 +2,7 @@
   "claim_gate_count": 13,
   "claims_opened": false,
   "external_effects_created": false,
-  "generated_at": "2026-06-28T12:36:45+00:00",
+  "generated_at": "2026-06-28T13:51:09+00:00",
   "hosted_private_beta_ready": false,
   "live_payment_ready": false,
   "official_source_purposes": [
@@ -205,7 +205,7 @@
           "packet_id": "packet-frozen-tuna-canada-001",
           "product": "Frozen tuna fillet",
           "score_count": 6,
-          "source_route_count": 14,
+          "source_route_count": 15,
           "view_status": "ready",
           "view_type": "starter_packet"
         },
@@ -230,7 +230,7 @@
           "packet_id": "packet-frozen-tuna-canada-001",
           "product": "Frozen tuna fillet",
           "score_count": 6,
-          "source_route_count": 14,
+          "source_route_count": 15,
           "view_status": "reference_only",
           "view_type": "market_research_packet"
         },
@@ -255,7 +255,7 @@
           "packet_id": "packet-frozen-tuna-canada-001",
           "product": "Frozen tuna fillet",
           "score_count": 6,
-          "source_route_count": 14,
+          "source_route_count": 15,
           "view_status": "blocked_claims_visible",
           "view_type": "buyer_ready_packet"
         },
@@ -284,7 +284,7 @@
           "packet_id": "packet-frozen-tuna-canada-001",
           "product": "Frozen tuna fillet",
           "score_count": 6,
-          "source_route_count": 14,
+          "source_route_count": 15,
           "view_status": "evidence_collection_ready",
           "view_type": "supplier_request_packet"
         },
@@ -313,7 +313,7 @@
           "packet_id": "packet-frozen-tuna-canada-001",
           "product": "Frozen tuna fillet",
           "score_count": 6,
-          "source_route_count": 14,
+          "source_route_count": 15,
           "view_status": "ready_for_scoped_review",
           "view_type": "broker_review_packet"
         },
@@ -338,7 +338,7 @@
           "packet_id": "packet-frozen-tuna-canada-001",
           "product": "Frozen tuna fillet",
           "score_count": 6,
-          "source_route_count": 14,
+          "source_route_count": 15,
           "view_status": "ready",
           "view_type": "operator_packet"
         },
@@ -363,7 +363,7 @@
           "packet_id": "packet-frozen-tuna-canada-001",
           "product": "Frozen tuna fillet",
           "score_count": 6,
-          "source_route_count": 14,
+          "source_route_count": 15,
           "view_status": "internal_decision_prep_only",
           "view_type": "executive_decision_packet"
         },
@@ -388,7 +388,7 @@
           "packet_id": "packet-frozen-tuna-canada-001",
           "product": "Frozen tuna fillet",
           "score_count": 6,
-          "source_route_count": 14,
+          "source_route_count": 15,
           "view_status": "ready",
           "view_type": "blocked_claims_packet"
         }
@@ -548,7 +548,7 @@
           "score": "decision_safety_score"
         }
       ],
-      "source_route_count": 14,
+      "source_route_count": 15,
       "source_routes": [
         {
           "blocked_claims": [
@@ -653,6 +653,32 @@
           "supports_claims": [],
           "terms_status": "must_check_before_fetch",
           "url": "https://inspection.canada.ca/en/importing-food-plants-animals/airs"
+        },
+        {
+          "blocked_claims": [
+            "tariff_confirmed",
+            "cfia_compliant",
+            "supplier_recommended",
+            "buyer_validated",
+            "ready_to_import",
+            "ready_to_export_to_canada",
+            "canadian_importer_confirmed",
+            "export_documentation_complete",
+            "trade_agreement_preference_confirmed",
+            "public_launch_ready",
+            "customs_or_tariff_advice_ready",
+            "legal_or_compliance_approved",
+            "ready_to_ship"
+          ],
+          "claim_boundary": "Reference source only; official sample form only; it does not prove CFIA clearance, admissibility, or compliance.",
+          "evidence_role": "official CFIA documentation-review form for regulated-product parser orientation",
+          "jurisdiction": "Canada",
+          "name": "CFIA 5272 Request for Documentation Review",
+          "route_status": "reference_route_only",
+          "source_id": "cfia-5272-documentation-review-request",
+          "supports_claims": [],
+          "terms_status": "must_check_before_fetch",
+          "url": "https://inspection.canada.ca/sites/default/files/legacy/DAM/DAM-form-forme/STAGING/text-texte/c5272_re_1369400657637_eng.pdf"
         },
         {
           "blocked_claims": [

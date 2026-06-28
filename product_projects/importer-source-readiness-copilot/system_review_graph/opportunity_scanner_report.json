@@ -21,7 +21,7 @@
     "tool": "create_trade_packet"
   },
   "create_packet_route": "/packets/new",
-  "generated_at": "2026-06-28T12:36:44+00:00",
+  "generated_at": "2026-06-28T13:51:09+00:00",
   "proof_boundary": "Opportunity rows are signals and research prompts only, not recommendations, demand proof, margin proof, or buyer validation.",
   "signal_count": 1,
   "signals": [
@@ -31,15 +31,15 @@
       "confidence": {
         "claim_confidence": "blocked_until_buyer_source_logistics_and_expert_evidence",
         "confidence_reason": "Local packet and source references can seed research, but no buyer, demand, margin, route, or qualified-review evidence is attached.",
-        "coverage_tier": 1,
+        "coverage_tier": 2,
         "evidence_confidence": "reference_only",
         "logistics_confidence": "unknown_requires_forwarder_inputs",
         "market_confidence": "unknown_requires_external_research",
-        "source_provenance_count": 12
+        "source_provenance_count": 16
       },
       "confidence_level": "low",
       "country": "Canada",
-      "coverage_confidence": 1,
+      "coverage_confidence": 2,
       "create_packet_hint": {
         "agent_tool": "create_trade_packet",
         "api_route": "/api/agent-tools/create_trade_packet",
@@ -108,6 +108,36 @@
           "url": "https://inspection.canada.ca/en/importing-food-plants-animals/airs"
         },
         {
+          "accessed_at": "2026-06-28",
+          "claim_boundary": "Reference source only; official sample form only; it is not customer evidence, customs approval, accounting proof, or shipment readiness.",
+          "evidence_role": "official Canada customs invoice sample form for document parser orientation",
+          "jurisdiction": "Canada",
+          "name": "CBSA CI1 Canada Customs Invoice",
+          "provenance_type": "official_source_registry",
+          "source_id": "cbsa-ci1-canada-customs-invoice",
+          "url": "https://www.cbsa-asfc.gc.ca/publications/forms-formulaires/ci1.pdf"
+        },
+        {
+          "accessed_at": "2026-06-28",
+          "claim_boundary": "Reference source only; official sample form only; it does not prove cargo release, transport readiness, customs accounting, or compliance.",
+          "evidence_role": "official cargo control sample form for transport-document parser orientation",
+          "jurisdiction": "Canada",
+          "name": "CBSA A8A(B) Cargo Control Document",
+          "provenance_type": "official_source_registry",
+          "source_id": "cbsa-a8a-b-cargo-control-document",
+          "url": "https://www.cbsa-asfc.gc.ca/publications/forms-formulaires/a8a-b.pdf"
+        },
+        {
+          "accessed_at": "2026-06-28",
+          "claim_boundary": "Reference source only; official sample form only; it does not prove CFIA clearance, admissibility, or compliance.",
+          "evidence_role": "official CFIA documentation-review form for regulated-product parser orientation",
+          "jurisdiction": "Canada",
+          "name": "CFIA 5272 Request for Documentation Review",
+          "provenance_type": "official_source_registry",
+          "source_id": "cfia-5272-documentation-review-request",
+          "url": "https://inspection.canada.ca/sites/default/files/legacy/DAM/DAM-form-forme/STAGING/text-texte/c5272_re_1369400657637_eng.pdf"
+        },
+        {
           "accessed_at": "2026-06-25",
           "claim_boundary": "Reference source only; does not prove whether a specific product requires an import permit.",
           "evidence_role": "import control and permit orientation",
@@ -159,6 +189,16 @@
         },
         {
           "accessed_at": "2026-06-28",
+          "claim_boundary": "Reference source only; no stable local PDF sample was verified in this pass and Vietnam customs/export claims require current source review.",
+          "evidence_role": "official Vietnam customs source route for origin/demo lane document lookup",
+          "jurisdiction": "Vietnam",
+          "name": "General Department of Vietnam Customs Portal",
+          "provenance_type": "official_source_registry",
+          "source_id": "vietnam-customs-portal",
+          "url": "https://www.customs.gov.vn/"
+        },
+        {
+          "accessed_at": "2026-06-28",
           "claim_boundary": "Reference source only; does not prove sanctions clearance, restricted-party screening, or permission to trade.",
           "evidence_role": "sanctions and restricted-country routing",
           "jurisdiction": "Canada",
@@ -178,7 +218,7 @@
           "url": "https://www.priv.gc.ca/en/privacy-topics/privacy-laws-in-canada/the-personal-information-protection-and-electronic-documents-act-pipeda/"
         }
       ],
-      "source_provenance_count": 12,
+      "source_provenance_count": 16,
       "supply_or_surplus_signal": "unknown_requires_external_research",
       "trade_growth_signal": "unknown_requires_dataset",
       "transport_complexity": "unknown_until_dimensions_mode_and_temperature_requirements_known",

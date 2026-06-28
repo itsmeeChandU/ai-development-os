@@ -1,0 +1,3414 @@
+{
+  "ai_analysis_policy": {
+    "ai_optional": true,
+    "ai_outputs_can_open_gates": false,
+    "manual_no_ai_supported": true,
+    "prompt_injection_review_required": true,
+    "provider_review_required": true,
+    "redaction_categories": [
+      "person_names",
+      "emails",
+      "phone_numbers",
+      "addresses",
+      "supplier_names",
+      "buyer_names",
+      "prices",
+      "bank_details",
+      "contract_terms",
+      "signatures",
+      "ids",
+      "sensitive_notes"
+    ]
+  },
+  "blocked_claims": [
+    "document_authenticity_verified",
+    "document_complete",
+    "customs_ready",
+    "tariff_confirmed",
+    "cfia_approved",
+    "origin_confirmed",
+    "buyer_validated",
+    "supplier_verified",
+    "shipment_approved"
+  ],
+  "category_coverage": [
+    "airway_bill",
+    "bill_of_lading",
+    "certificate_of_origin",
+    "commercial_invoice",
+    "contract",
+    "inspection_report",
+    "lab_certificate",
+    "packing_list",
+    "phytosanitary_or_health_certificate",
+    "product_specification",
+    "purchase_order",
+    "supplier_profile",
+    "unknown_trade_document"
+  ],
+  "claims_opened": false,
+  "document_class_count": 11,
+  "document_record_count": 18,
+  "document_records": [
+    {
+      "blocked_claims": [
+        "document_authenticity_verified",
+        "document_complete",
+        "customs_ready",
+        "tariff_confirmed",
+        "cfia_approved",
+        "origin_confirmed",
+        "buyer_validated",
+        "supplier_verified",
+        "shipment_approved"
+      ],
+      "can_support_customer_claims": false,
+      "claim_boundary": "A document filename in a packet is not evidence. The actual file, provenance, scan result, extraction, confirmation, and review are required.",
+      "classification": {
+        "confidence": "medium",
+        "expected_fields": [
+          "supplier_or_exporter",
+          "business_registration",
+          "export_registration_or_license",
+          "product_description",
+          "commercial_reference"
+        ],
+        "label": "Supplier profile",
+        "signals": [
+          "filename"
+        ],
+        "type": "supplier_profile"
+      },
+      "document_id": "document:packet-frozen-tuna-canada-001:supplier-profile-placeholder-pdf",
+      "document_processing_mode": "not_available",
+      "extraction_status": "declared_missing_file",
+      "field_count": 0,
+      "field_gaps": [
+        "supplier_or_exporter",
+        "business_registration",
+        "export_registration_or_license",
+        "product_description",
+        "commercial_reference"
+      ],
+      "file_signature_status": "not_available",
+      "filename": "supplier-profile-placeholder.pdf",
+      "local_path": "",
+      "malware_scan_status": "not_proven_external_gate_required",
+      "next_valid_move": "Attach the actual document file, then run signature, scan, quarantine, extraction, and user confirmation.",
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "parser_outputs_are_draft": true,
+      "quarantine_status": "missing_not_quarantined",
+      "source_id": "",
+      "source_kind": "packet_declared_document",
+      "source_url": "",
+      "storage_status": "declared_missing_file",
+      "user_confirmation_required": true
+    },
+    {
+      "blocked_claims": [
+        "document_authenticity_verified",
+        "document_complete",
+        "customs_ready",
+        "tariff_confirmed",
+        "cfia_approved",
+        "origin_confirmed",
+        "buyer_validated",
+        "supplier_verified",
+        "shipment_approved"
+      ],
+      "can_support_customer_claims": false,
+      "claim_boundary": "A document filename in a packet is not evidence. The actual file, provenance, scan result, extraction, confirmation, and review are required.",
+      "classification": {
+        "confidence": "medium",
+        "expected_fields": [
+          "product_description",
+          "composition",
+          "intended_use",
+          "hs_code"
+        ],
+        "label": "Product specification",
+        "signals": [
+          "filename"
+        ],
+        "type": "product_specification"
+      },
+      "document_id": "document:packet-frozen-tuna-canada-001:product-spec-placeholder-pdf",
+      "document_processing_mode": "not_available",
+      "extraction_status": "declared_missing_file",
+      "field_count": 0,
+      "field_gaps": [
+        "product_description",
+        "composition",
+        "intended_use",
+        "hs_code"
+      ],
+      "file_signature_status": "not_available",
+      "filename": "product-spec-placeholder.pdf",
+      "local_path": "",
+      "malware_scan_status": "not_proven_external_gate_required",
+      "next_valid_move": "Attach the actual document file, then run signature, scan, quarantine, extraction, and user confirmation.",
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "parser_outputs_are_draft": true,
+      "quarantine_status": "missing_not_quarantined",
+      "source_id": "",
+      "source_kind": "packet_declared_document",
+      "source_url": "",
+      "storage_status": "declared_missing_file",
+      "user_confirmation_required": true
+    },
+    {
+      "blocked_claims": [
+        "document_authenticity_verified",
+        "document_complete",
+        "customs_ready",
+        "tariff_confirmed",
+        "cfia_approved",
+        "origin_confirmed",
+        "buyer_validated",
+        "supplier_verified",
+        "shipment_approved"
+      ],
+      "can_support_customer_claims": false,
+      "claim_boundary": "Document parsing organizes draft evidence only. It does not prove authenticity, completeness, customs/tariff correctness, CFIA clearance, buyer validation, supplier verification, or shipment approval.",
+      "classification": {
+        "confidence": "low",
+        "expected_fields": [
+          "hs_code",
+          "origin_country",
+          "destination_country",
+          "buyer_or_importer",
+          "supplier_or_exporter"
+        ],
+        "label": "Unknown trade document",
+        "signals": [],
+        "type": "unknown_trade_document"
+      },
+      "delete_route": "/api/public/packets/packet-organic-turmeric-powder/delete-files",
+      "document_id": "document:packet-organic-turmeric-powder:complete-transformation-blueprint-pdf",
+      "document_processing_mode": "native_text",
+      "expires_at": "2026-06-27T16:35:53+00:00",
+      "extraction_status": "native_text_extracted_needs_confirmation",
+      "field_count": 0,
+      "field_gaps": [
+        "hs_code",
+        "origin_country",
+        "destination_country",
+        "buyer_or_importer",
+        "supplier_or_exporter"
+      ],
+      "file_signature_status": "not_pdf_or_not_available",
+      "filename": "Complete-Transformation-Blueprint.pdf",
+      "local_path": "system_review_graph/public_uploads/packet-organic-turmeric-powder/quarantine/document-001.pdf",
+      "malware_scan_status": "not_proven_external_gate_required",
+      "next_valid_move": "Attach the actual document file or obtain a searchable copy before extraction can support packet review.",
+      "packet_id": "packet-organic-turmeric-powder",
+      "parser_outputs_are_draft": true,
+      "quarantine_status": "quarantined_local_metadata",
+      "source_id": "",
+      "source_kind": "public_upload_manifest",
+      "source_url": "",
+      "storage_status": "public_upload_manifest_metadata_only_file_not_present",
+      "user_confirmation_required": true
+    },
+    {
+      "blocked_claims": [
+        "document_authenticity_verified",
+        "document_complete",
+        "customs_ready",
+        "tariff_confirmed",
+        "cfia_approved",
+        "origin_confirmed",
+        "buyer_validated",
+        "supplier_verified",
+        "shipment_approved"
+      ],
+      "can_support_customer_claims": false,
+      "claim_boundary": "Document parsing organizes draft evidence only. It does not prove authenticity, completeness, customs/tariff correctness, CFIA clearance, buyer validation, supplier verification, or shipment approval.",
+      "classification": {
+        "confidence": "high",
+        "expected_fields": [
+          "invoice_or_reference",
+          "hs_code",
+          "origin_country",
+          "destination_country",
+          "buyer_or_importer",
+          "supplier_or_exporter",
+          "amounts"
+        ],
+        "label": "Commercial invoice",
+        "signals": [
+          "commercial invoice",
+          "invoice number",
+          "buyer"
+        ],
+        "type": "commercial_invoice"
+      },
+      "delete_route": "/api/public/packets/packet-demo-turmeric-invoice/delete-files",
+      "document_id": "document:packet-demo-turmeric-invoice:demo-commercial-invoice-pdf",
+      "document_processing_mode": "native_text",
+      "expires_at": "2026-06-27T16:49:50+00:00",
+      "extraction_status": "native_text_extracted_needs_confirmation",
+      "field_count": 0,
+      "field_gaps": [
+        "invoice_or_reference",
+        "hs_code",
+        "origin_country",
+        "destination_country",
+        "buyer_or_importer",
+        "supplier_or_exporter",
+        "amounts"
+      ],
+      "file_signature_status": "not_pdf_or_not_available",
+      "filename": "demo-commercial-invoice.pdf",
+      "local_path": "system_review_graph/public_uploads/packet-demo-turmeric-invoice/quarantine/document-001.pdf",
+      "malware_scan_status": "not_proven_external_gate_required",
+      "next_valid_move": "Attach the actual document file or obtain a searchable copy before extraction can support packet review.",
+      "packet_id": "packet-demo-turmeric-invoice",
+      "parser_outputs_are_draft": true,
+      "quarantine_status": "quarantined_local_metadata",
+      "source_id": "",
+      "source_kind": "public_upload_manifest",
+      "source_url": "",
+      "storage_status": "public_upload_manifest_metadata_only_file_not_present",
+      "user_confirmation_required": true
+    },
+    {
+      "blocked_claims": [
+        "document_authenticity_verified",
+        "document_complete",
+        "customs_ready",
+        "tariff_confirmed",
+        "cfia_approved",
+        "origin_confirmed",
+        "buyer_validated",
+        "supplier_verified",
+        "shipment_approved"
+      ],
+      "can_support_customer_claims": false,
+      "claim_boundary": "Document parsing organizes draft evidence only. It does not prove authenticity, completeness, customs/tariff correctness, CFIA clearance, buyer validation, supplier verification, or shipment approval.",
+      "classification": {
+        "confidence": "high",
+        "expected_fields": [
+          "invoice_or_reference",
+          "buyer_or_importer",
+          "supplier_or_exporter",
+          "origin_country",
+          "destination_country",
+          "amounts"
+        ],
+        "label": "Commercial invoice",
+        "signals": [
+          "official_sample_document_class"
+        ],
+        "type": "commercial_invoice"
+      },
+      "country_code": "CA",
+      "document_id": "document:official-sample-ca-commercial-invoice:cbsa-ci1-canada-customs-invoice-pdf",
+      "document_processing_mode": "native_text",
+      "extraction_status": "native_text_extracted_needs_confirmation",
+      "field_count": 2,
+      "field_gaps": [
+        "buyer_or_importer",
+        "supplier_or_exporter",
+        "origin_country",
+        "destination_country"
+      ],
+      "file_signature_status": "pdf_signature_checked",
+      "filename": "cbsa-ci1-canada-customs-invoice.pdf",
+      "local_path": "data/official_sample_documents/canada/cbsa-ci1-canada-customs-invoice.pdf",
+      "malware_scan_status": "not_proven_external_gate_required",
+      "next_valid_move": "Use this official sample only to improve classification and reviewer questions; do not treat it as customer evidence.",
+      "packet_id": "official-sample-ca-commercial-invoice",
+      "parser_outputs_are_draft": true,
+      "quarantine_status": "sample_reference",
+      "sample_form_only": true,
+      "sample_level": "official_pdf_downloaded",
+      "source_id": "cbsa-ci1-canada-customs-invoice",
+      "source_kind": "official_sample_form",
+      "source_owner": "CBSA CI1 Canada Customs Invoice",
+      "source_url": "https://www.cbsa-asfc.gc.ca/publications/forms-formulaires/ci1.pdf",
+      "storage_status": "local_official_sample_form_downloaded",
+      "user_confirmation_required": true
+    },
+    {
+      "blocked_claims": [
+        "document_authenticity_verified",
+        "document_complete",
+        "customs_ready",
+        "tariff_confirmed",
+        "cfia_approved",
+        "origin_confirmed",
+        "buyer_validated",
+        "supplier_verified",
+        "shipment_approved"
+      ],
+      "can_support_customer_claims": false,
+      "claim_boundary": "Document parsing organizes draft evidence only. It does not prove authenticity, completeness, customs/tariff correctness, CFIA clearance, buyer validation, supplier verification, or shipment approval.",
+      "classification": {
+        "confidence": "high",
+        "expected_fields": [
+          "carrier",
+          "port_of_loading",
+          "port_of_discharge",
+          "buyer_or_importer",
+          "supplier_or_exporter"
+        ],
+        "label": "Bill of lading",
+        "signals": [
+          "official_sample_document_class"
+        ],
+        "type": "bill_of_lading"
+      },
+      "country_code": "CA",
+      "document_id": "document:official-sample-ca-bill-of-lading:cbsa-a8a-b-cargo-control-document-pdf",
+      "document_processing_mode": "ocr_required",
+      "extraction_status": "no_extractable_text_needs_confirmation",
+      "field_count": 0,
+      "field_gaps": [
+        "carrier",
+        "port_of_loading",
+        "port_of_discharge",
+        "buyer_or_importer",
+        "supplier_or_exporter"
+      ],
+      "file_signature_status": "pdf_signature_checked",
+      "filename": "cbsa-a8a-b-cargo-control-document.pdf",
+      "local_path": "data/official_sample_documents/canada/cbsa-a8a-b-cargo-control-document.pdf",
+      "malware_scan_status": "not_proven_external_gate_required",
+      "next_valid_move": "Use this official sample only to improve classification and reviewer questions; do not treat it as customer evidence.",
+      "packet_id": "official-sample-ca-bill-of-lading",
+      "parser_outputs_are_draft": true,
+      "quarantine_status": "sample_reference",
+      "sample_form_only": true,
+      "sample_level": "official_pdf_downloaded",
+      "source_id": "cbsa-a8a-b-cargo-control-document",
+      "source_kind": "official_sample_form",
+      "source_owner": "CBSA A8A(B) Cargo Control Document",
+      "source_url": "https://www.cbsa-asfc.gc.ca/publications/forms-formulaires/a8a-b.pdf",
+      "storage_status": "local_official_sample_form_downloaded",
+      "user_confirmation_required": true
+    },
+    {
+      "blocked_claims": [
+        "document_authenticity_verified",
+        "document_complete",
+        "customs_ready",
+        "tariff_confirmed",
+        "cfia_approved",
+        "origin_confirmed",
+        "buyer_validated",
+        "supplier_verified",
+        "shipment_approved"
+      ],
+      "can_support_customer_claims": false,
+      "claim_boundary": "Document parsing organizes draft evidence only. It does not prove authenticity, completeness, customs/tariff correctness, CFIA clearance, buyer validation, supplier verification, or shipment approval.",
+      "classification": {
+        "confidence": "high",
+        "expected_fields": [
+          "issuing_authority",
+          "product",
+          "origin_country",
+          "certificate_number"
+        ],
+        "label": "Phytosanitary or health certificate",
+        "signals": [
+          "official_sample_document_class"
+        ],
+        "type": "phytosanitary_or_health_certificate"
+      },
+      "country_code": "CA",
+      "document_id": "document:official-sample-ca-phytosanitary-or-health-certificate:cfia-5272-documentation-review-request-pdf",
+      "document_processing_mode": "native_text",
+      "extraction_status": "blocked_encrypted_pdf",
+      "field_count": 1,
+      "field_gaps": [
+        "issuing_authority",
+        "product",
+        "origin_country",
+        "certificate_number"
+      ],
+      "file_signature_status": "pdf_signature_checked",
+      "filename": "cfia-5272-documentation-review-request.pdf",
+      "local_path": "data/official_sample_documents/canada/cfia-5272-documentation-review-request.pdf",
+      "malware_scan_status": "not_proven_external_gate_required",
+      "next_valid_move": "Use this official sample only to improve classification and reviewer questions; do not treat it as customer evidence.",
+      "packet_id": "official-sample-ca-phytosanitary-or-health-certificate",
+      "parser_outputs_are_draft": true,
+      "quarantine_status": "sample_reference",
+      "sample_form_only": true,
+      "sample_level": "official_pdf_downloaded",
+      "source_id": "cfia-5272-documentation-review-request",
+      "source_kind": "official_sample_form",
+      "source_owner": "CFIA 5272 Request for Documentation Review",
+      "source_url": "https://inspection.canada.ca/sites/default/files/legacy/DAM/DAM-form-forme/STAGING/text-texte/c5272_re_1369400657637_eng.pdf",
+      "storage_status": "local_official_sample_form_downloaded",
+      "user_confirmation_required": true
+    },
+    {
+      "blocked_claims": [
+        "document_authenticity_verified",
+        "document_complete",
+        "customs_ready",
+        "tariff_confirmed",
+        "cfia_approved",
+        "origin_confirmed",
+        "buyer_validated",
+        "supplier_verified",
+        "shipment_approved"
+      ],
+      "can_support_customer_claims": false,
+      "claim_boundary": "Document parsing organizes draft evidence only. It does not prove authenticity, completeness, customs/tariff correctness, CFIA clearance, buyer validation, supplier verification, or shipment approval.",
+      "classification": {
+        "confidence": "high",
+        "expected_fields": [
+          "invoice_or_reference",
+          "buyer_or_importer",
+          "supplier_or_exporter",
+          "origin_country",
+          "destination_country",
+          "amounts"
+        ],
+        "label": "Commercial invoice",
+        "signals": [
+          "synthetic_parser_fixture_class"
+        ],
+        "type": "commercial_invoice"
+      },
+      "country_code": "CA",
+      "declared_document_class": "commercial_invoice",
+      "document_id": "document:parser-qa-ca-commercial-invoice:synthetic-commercial-invoice-canada-pdf",
+      "document_processing_mode": "native_text",
+      "extraction_status": "native_text_extracted_needs_confirmation",
+      "field_count": 9,
+      "field_gaps": [],
+      "file_signature_status": "pdf_signature_checked",
+      "filename": "synthetic-commercial-invoice-canada.pdf",
+      "local_path": "data/parser_qa_documents/synthetic-commercial-invoice-canada.pdf",
+      "malware_scan_status": "not_proven_external_gate_required",
+      "next_valid_move": "Use this filled sample only for parser QA; replace with real user evidence and review before customer use.",
+      "packet_id": "parser-qa-ca-commercial-invoice",
+      "parser_outputs_are_draft": true,
+      "quarantine_status": "not_quarantined",
+      "sample_level": "synthetic_parser_fixture",
+      "source_id": "",
+      "source_kind": "synthetic_parser_fixture",
+      "source_url": "",
+      "storage_status": "local_synthetic_parser_fixture",
+      "user_confirmation_required": true
+    },
+    {
+      "blocked_claims": [
+        "document_authenticity_verified",
+        "document_complete",
+        "customs_ready",
+        "tariff_confirmed",
+        "cfia_approved",
+        "origin_confirmed",
+        "buyer_validated",
+        "supplier_verified",
+        "shipment_approved"
+      ],
+      "can_support_customer_claims": false,
+      "claim_boundary": "Document parsing organizes draft evidence only. It does not prove authenticity, completeness, customs/tariff correctness, CFIA clearance, buyer validation, supplier verification, or shipment approval.",
+      "classification": {
+        "confidence": "high",
+        "expected_fields": [
+          "quantities",
+          "weights",
+          "packages",
+          "product_description"
+        ],
+        "label": "Packing list",
+        "signals": [
+          "synthetic_parser_fixture_class"
+        ],
+        "type": "packing_list"
+      },
+      "country_code": "IN",
+      "declared_document_class": "packing_list",
+      "document_id": "document:parser-qa-in-packing-list:synthetic-packing-list-india-export-pdf",
+      "document_processing_mode": "native_text",
+      "extraction_status": "native_text_extracted_needs_confirmation",
+      "field_count": 5,
+      "field_gaps": [
+        "weights",
+        "packages"
+      ],
+      "file_signature_status": "pdf_signature_checked",
+      "filename": "synthetic-packing-list-india-export.pdf",
+      "local_path": "data/parser_qa_documents/synthetic-packing-list-india-export.pdf",
+      "malware_scan_status": "not_proven_external_gate_required",
+      "next_valid_move": "Use this filled sample only for parser QA; replace with real user evidence and review before customer use.",
+      "packet_id": "parser-qa-in-packing-list",
+      "parser_outputs_are_draft": true,
+      "quarantine_status": "not_quarantined",
+      "sample_level": "synthetic_parser_fixture",
+      "source_id": "",
+      "source_kind": "synthetic_parser_fixture",
+      "source_url": "",
+      "storage_status": "local_synthetic_parser_fixture",
+      "user_confirmation_required": true
+    },
+    {
+      "blocked_claims": [
+        "document_authenticity_verified",
+        "document_complete",
+        "customs_ready",
+        "tariff_confirmed",
+        "cfia_approved",
+        "origin_confirmed",
+        "buyer_validated",
+        "supplier_verified",
+        "shipment_approved"
+      ],
+      "can_support_customer_claims": false,
+      "claim_boundary": "Document parsing organizes draft evidence only. It does not prove authenticity, completeness, customs/tariff correctness, CFIA clearance, buyer validation, supplier verification, or shipment approval.",
+      "classification": {
+        "confidence": "high",
+        "expected_fields": [
+          "origin_country",
+          "hs_code",
+          "supplier_or_exporter"
+        ],
+        "label": "Certificate of origin",
+        "signals": [
+          "synthetic_parser_fixture_class"
+        ],
+        "type": "certificate_of_origin"
+      },
+      "country_code": "IN",
+      "declared_document_class": "certificate_of_origin",
+      "document_id": "document:parser-qa-in-certificate-of-origin:synthetic-certificate-of-origin-india-pdf",
+      "document_processing_mode": "native_text",
+      "extraction_status": "native_text_extracted_needs_confirmation",
+      "field_count": 4,
+      "field_gaps": [],
+      "file_signature_status": "pdf_signature_checked",
+      "filename": "synthetic-certificate-of-origin-india.pdf",
+      "local_path": "data/parser_qa_documents/synthetic-certificate-of-origin-india.pdf",
+      "malware_scan_status": "not_proven_external_gate_required",
+      "next_valid_move": "Use this filled sample only for parser QA; replace with real user evidence and review before customer use.",
+      "packet_id": "parser-qa-in-certificate-of-origin",
+      "parser_outputs_are_draft": true,
+      "quarantine_status": "not_quarantined",
+      "sample_level": "synthetic_parser_fixture",
+      "source_id": "",
+      "source_kind": "synthetic_parser_fixture",
+      "source_url": "",
+      "storage_status": "local_synthetic_parser_fixture",
+      "user_confirmation_required": true
+    },
+    {
+      "blocked_claims": [
+        "document_authenticity_verified",
+        "document_complete",
+        "customs_ready",
+        "tariff_confirmed",
+        "cfia_approved",
+        "origin_confirmed",
+        "buyer_validated",
+        "supplier_verified",
+        "shipment_approved"
+      ],
+      "can_support_customer_claims": false,
+      "claim_boundary": "Document parsing organizes draft evidence only. It does not prove authenticity, completeness, customs/tariff correctness, CFIA clearance, buyer validation, supplier verification, or shipment approval.",
+      "classification": {
+        "confidence": "high",
+        "expected_fields": [
+          "carrier",
+          "port_of_loading",
+          "port_of_discharge",
+          "buyer_or_importer",
+          "supplier_or_exporter"
+        ],
+        "label": "Bill of lading",
+        "signals": [
+          "synthetic_parser_fixture_class"
+        ],
+        "type": "bill_of_lading"
+      },
+      "country_code": "VN",
+      "declared_document_class": "bill_of_lading",
+      "document_id": "document:parser-qa-vn-bill-of-lading:synthetic-bill-of-lading-vietnam-pdf",
+      "document_processing_mode": "native_text",
+      "extraction_status": "native_text_extracted_needs_confirmation",
+      "field_count": 4,
+      "field_gaps": [
+        "carrier",
+        "port_of_loading",
+        "port_of_discharge"
+      ],
+      "file_signature_status": "pdf_signature_checked",
+      "filename": "synthetic-bill-of-lading-vietnam.pdf",
+      "local_path": "data/parser_qa_documents/synthetic-bill-of-lading-vietnam.pdf",
+      "malware_scan_status": "not_proven_external_gate_required",
+      "next_valid_move": "Use this filled sample only for parser QA; replace with real user evidence and review before customer use.",
+      "packet_id": "parser-qa-vn-bill-of-lading",
+      "parser_outputs_are_draft": true,
+      "quarantine_status": "not_quarantined",
+      "sample_level": "synthetic_parser_fixture",
+      "source_id": "",
+      "source_kind": "synthetic_parser_fixture",
+      "source_url": "",
+      "storage_status": "local_synthetic_parser_fixture",
+      "user_confirmation_required": true
+    },
+    {
+      "blocked_claims": [
+        "document_authenticity_verified",
+        "document_complete",
+        "customs_ready",
+        "tariff_confirmed",
+        "cfia_approved",
+        "origin_confirmed",
+        "buyer_validated",
+        "supplier_verified",
+        "shipment_approved"
+      ],
+      "can_support_customer_claims": false,
+      "claim_boundary": "Document parsing organizes draft evidence only. It does not prove authenticity, completeness, customs/tariff correctness, CFIA clearance, buyer validation, supplier verification, or shipment approval.",
+      "classification": {
+        "confidence": "high",
+        "expected_fields": [
+          "carrier",
+          "origin_country",
+          "destination_country",
+          "shipper",
+          "consignee"
+        ],
+        "label": "Airway bill",
+        "signals": [
+          "synthetic_parser_fixture_class"
+        ],
+        "type": "airway_bill"
+      },
+      "country_code": "GENERIC",
+      "declared_document_class": "airway_bill",
+      "document_id": "document:parser-qa-generic-airway-bill:synthetic-airway-bill-generic-pdf",
+      "document_processing_mode": "native_text",
+      "extraction_status": "native_text_extracted_needs_confirmation",
+      "field_count": 4,
+      "field_gaps": [
+        "carrier",
+        "shipper",
+        "consignee"
+      ],
+      "file_signature_status": "pdf_signature_checked",
+      "filename": "synthetic-airway-bill-generic.pdf",
+      "local_path": "data/parser_qa_documents/synthetic-airway-bill-generic.pdf",
+      "malware_scan_status": "not_proven_external_gate_required",
+      "next_valid_move": "Use this filled sample only for parser QA; replace with real user evidence and review before customer use.",
+      "packet_id": "parser-qa-generic-airway-bill",
+      "parser_outputs_are_draft": true,
+      "quarantine_status": "not_quarantined",
+      "sample_level": "synthetic_parser_fixture",
+      "source_id": "",
+      "source_kind": "synthetic_parser_fixture",
+      "source_url": "",
+      "storage_status": "local_synthetic_parser_fixture",
+      "user_confirmation_required": true
+    },
+    {
+      "blocked_claims": [
+        "document_authenticity_verified",
+        "document_complete",
+        "customs_ready",
+        "tariff_confirmed",
+        "cfia_approved",
+        "origin_confirmed",
+        "buyer_validated",
+        "supplier_verified",
+        "shipment_approved"
+      ],
+      "can_support_customer_claims": false,
+      "claim_boundary": "Document parsing organizes draft evidence only. It does not prove authenticity, completeness, customs/tariff correctness, CFIA clearance, buyer validation, supplier verification, or shipment approval.",
+      "classification": {
+        "confidence": "high",
+        "expected_fields": [
+          "product_description",
+          "composition",
+          "intended_use",
+          "hs_code"
+        ],
+        "label": "Product specification",
+        "signals": [
+          "synthetic_parser_fixture_class"
+        ],
+        "type": "product_specification"
+      },
+      "country_code": "VN",
+      "declared_document_class": "product_specification",
+      "document_id": "document:parser-qa-vn-product-specification:synthetic-product-specification-vietnam-seafood-pdf",
+      "document_processing_mode": "native_text",
+      "extraction_status": "native_text_extracted_needs_confirmation",
+      "field_count": 4,
+      "field_gaps": [
+        "composition",
+        "intended_use"
+      ],
+      "file_signature_status": "pdf_signature_checked",
+      "filename": "synthetic-product-specification-vietnam-seafood.pdf",
+      "local_path": "data/parser_qa_documents/synthetic-product-specification-vietnam-seafood.pdf",
+      "malware_scan_status": "not_proven_external_gate_required",
+      "next_valid_move": "Use this filled sample only for parser QA; replace with real user evidence and review before customer use.",
+      "packet_id": "parser-qa-vn-product-specification",
+      "parser_outputs_are_draft": true,
+      "quarantine_status": "not_quarantined",
+      "sample_level": "synthetic_parser_fixture",
+      "source_id": "",
+      "source_kind": "synthetic_parser_fixture",
+      "source_url": "",
+      "storage_status": "local_synthetic_parser_fixture",
+      "user_confirmation_required": true
+    },
+    {
+      "blocked_claims": [
+        "document_authenticity_verified",
+        "document_complete",
+        "customs_ready",
+        "tariff_confirmed",
+        "cfia_approved",
+        "origin_confirmed",
+        "buyer_validated",
+        "supplier_verified",
+        "shipment_approved"
+      ],
+      "can_support_customer_claims": false,
+      "claim_boundary": "Document parsing organizes draft evidence only. It does not prove authenticity, completeness, customs/tariff correctness, CFIA clearance, buyer validation, supplier verification, or shipment approval.",
+      "classification": {
+        "confidence": "high",
+        "expected_fields": [
+          "test_method",
+          "result",
+          "lab_name",
+          "sample_date"
+        ],
+        "label": "Lab certificate",
+        "signals": [
+          "synthetic_parser_fixture_class"
+        ],
+        "type": "lab_certificate"
+      },
+      "country_code": "GENERIC",
+      "declared_document_class": "lab_certificate",
+      "document_id": "document:parser-qa-generic-lab-certificate:synthetic-lab-certificate-food-pdf",
+      "document_processing_mode": "native_text",
+      "extraction_status": "native_text_extracted_needs_confirmation",
+      "field_count": 2,
+      "field_gaps": [
+        "test_method",
+        "result",
+        "lab_name",
+        "sample_date"
+      ],
+      "file_signature_status": "pdf_signature_checked",
+      "filename": "synthetic-lab-certificate-food.pdf",
+      "local_path": "data/parser_qa_documents/synthetic-lab-certificate-food.pdf",
+      "malware_scan_status": "not_proven_external_gate_required",
+      "next_valid_move": "Use this filled sample only for parser QA; replace with real user evidence and review before customer use.",
+      "packet_id": "parser-qa-generic-lab-certificate",
+      "parser_outputs_are_draft": true,
+      "quarantine_status": "not_quarantined",
+      "sample_level": "synthetic_parser_fixture",
+      "source_id": "",
+      "source_kind": "synthetic_parser_fixture",
+      "source_url": "",
+      "storage_status": "local_synthetic_parser_fixture",
+      "user_confirmation_required": true
+    },
+    {
+      "blocked_claims": [
+        "document_authenticity_verified",
+        "document_complete",
+        "customs_ready",
+        "tariff_confirmed",
+        "cfia_approved",
+        "origin_confirmed",
+        "buyer_validated",
+        "supplier_verified",
+        "shipment_approved"
+      ],
+      "can_support_customer_claims": false,
+      "claim_boundary": "Document parsing organizes draft evidence only. It does not prove authenticity, completeness, customs/tariff correctness, CFIA clearance, buyer validation, supplier verification, or shipment approval.",
+      "classification": {
+        "confidence": "high",
+        "expected_fields": [
+          "issuing_authority",
+          "product",
+          "origin_country",
+          "certificate_number"
+        ],
+        "label": "Phytosanitary or health certificate",
+        "signals": [
+          "synthetic_parser_fixture_class"
+        ],
+        "type": "phytosanitary_or_health_certificate"
+      },
+      "country_code": "VN",
+      "declared_document_class": "phytosanitary_or_health_certificate",
+      "document_id": "document:parser-qa-vn-phytosanitary-or-health-certificate:synthetic-health-certificate-vietnam-pdf",
+      "document_processing_mode": "native_text",
+      "extraction_status": "native_text_extracted_needs_confirmation",
+      "field_count": 3,
+      "field_gaps": [
+        "issuing_authority",
+        "product",
+        "certificate_number"
+      ],
+      "file_signature_status": "pdf_signature_checked",
+      "filename": "synthetic-health-certificate-vietnam.pdf",
+      "local_path": "data/parser_qa_documents/synthetic-health-certificate-vietnam.pdf",
+      "malware_scan_status": "not_proven_external_gate_required",
+      "next_valid_move": "Use this filled sample only for parser QA; replace with real user evidence and review before customer use.",
+      "packet_id": "parser-qa-vn-phytosanitary-or-health-certificate",
+      "parser_outputs_are_draft": true,
+      "quarantine_status": "not_quarantined",
+      "sample_level": "synthetic_parser_fixture",
+      "source_id": "",
+      "source_kind": "synthetic_parser_fixture",
+      "source_url": "",
+      "storage_status": "local_synthetic_parser_fixture",
+      "user_confirmation_required": true
+    },
+    {
+      "blocked_claims": [
+        "document_authenticity_verified",
+        "document_complete",
+        "customs_ready",
+        "tariff_confirmed",
+        "cfia_approved",
+        "origin_confirmed",
+        "buyer_validated",
+        "supplier_verified",
+        "shipment_approved"
+      ],
+      "can_support_customer_claims": false,
+      "claim_boundary": "Document parsing organizes draft evidence only. It does not prove authenticity, completeness, customs/tariff correctness, CFIA clearance, buyer validation, supplier verification, or shipment approval.",
+      "classification": {
+        "confidence": "high",
+        "expected_fields": [
+          "buyer_or_importer",
+          "supplier_or_exporter",
+          "product_description",
+          "amounts"
+        ],
+        "label": "Purchase order",
+        "signals": [
+          "synthetic_parser_fixture_class"
+        ],
+        "type": "purchase_order"
+      },
+      "country_code": "CA",
+      "declared_document_class": "purchase_order",
+      "document_id": "document:parser-qa-ca-purchase-order:synthetic-purchase-order-canada-buyer-pdf",
+      "document_processing_mode": "native_text",
+      "extraction_status": "native_text_extracted_needs_confirmation",
+      "field_count": 6,
+      "field_gaps": [],
+      "file_signature_status": "pdf_signature_checked",
+      "filename": "synthetic-purchase-order-canada-buyer.pdf",
+      "local_path": "data/parser_qa_documents/synthetic-purchase-order-canada-buyer.pdf",
+      "malware_scan_status": "not_proven_external_gate_required",
+      "next_valid_move": "Use this filled sample only for parser QA; replace with real user evidence and review before customer use.",
+      "packet_id": "parser-qa-ca-purchase-order",
+      "parser_outputs_are_draft": true,
+      "quarantine_status": "not_quarantined",
+      "sample_level": "synthetic_parser_fixture",
+      "source_id": "",
+      "source_kind": "synthetic_parser_fixture",
+      "source_url": "",
+      "storage_status": "local_synthetic_parser_fixture",
+      "user_confirmation_required": true
+    },
+    {
+      "blocked_claims": [
+        "document_authenticity_verified",
+        "document_complete",
+        "customs_ready",
+        "tariff_confirmed",
+        "cfia_approved",
+        "origin_confirmed",
+        "buyer_validated",
+        "supplier_verified",
+        "shipment_approved"
+      ],
+      "can_support_customer_claims": false,
+      "claim_boundary": "Document parsing organizes draft evidence only. It does not prove authenticity, completeness, customs/tariff correctness, CFIA clearance, buyer validation, supplier verification, or shipment approval.",
+      "classification": {
+        "confidence": "high",
+        "expected_fields": [
+          "parties",
+          "incoterms",
+          "payment_terms",
+          "governing_terms"
+        ],
+        "label": "Contract",
+        "signals": [
+          "synthetic_parser_fixture_class"
+        ],
+        "type": "contract"
+      },
+      "country_code": "GENERIC",
+      "declared_document_class": "contract",
+      "document_id": "document:parser-qa-generic-contract:synthetic-contract-incoterms-pdf",
+      "document_processing_mode": "native_text",
+      "extraction_status": "native_text_extracted_needs_confirmation",
+      "field_count": 6,
+      "field_gaps": [
+        "parties",
+        "payment_terms",
+        "governing_terms"
+      ],
+      "file_signature_status": "pdf_signature_checked",
+      "filename": "synthetic-contract-incoterms.pdf",
+      "local_path": "data/parser_qa_documents/synthetic-contract-incoterms.pdf",
+      "malware_scan_status": "not_proven_external_gate_required",
+      "next_valid_move": "Use this filled sample only for parser QA; replace with real user evidence and review before customer use.",
+      "packet_id": "parser-qa-generic-contract",
+      "parser_outputs_are_draft": true,
+      "quarantine_status": "not_quarantined",
+      "sample_level": "synthetic_parser_fixture",
+      "source_id": "",
+      "source_kind": "synthetic_parser_fixture",
+      "source_url": "",
+      "storage_status": "local_synthetic_parser_fixture",
+      "user_confirmation_required": true
+    },
+    {
+      "blocked_claims": [
+        "document_authenticity_verified",
+        "document_complete",
+        "customs_ready",
+        "tariff_confirmed",
+        "cfia_approved",
+        "origin_confirmed",
+        "buyer_validated",
+        "supplier_verified",
+        "shipment_approved"
+      ],
+      "can_support_customer_claims": false,
+      "claim_boundary": "Document parsing organizes draft evidence only. It does not prove authenticity, completeness, customs/tariff correctness, CFIA clearance, buyer validation, supplier verification, or shipment approval.",
+      "classification": {
+        "confidence": "high",
+        "expected_fields": [
+          "inspection_body",
+          "inspection_date",
+          "result",
+          "product_description"
+        ],
+        "label": "Inspection report",
+        "signals": [
+          "synthetic_parser_fixture_class"
+        ],
+        "type": "inspection_report"
+      },
+      "country_code": "GENERIC",
+      "declared_document_class": "inspection_report",
+      "document_id": "document:parser-qa-generic-inspection-report:synthetic-inspection-report-supplier-pdf",
+      "document_processing_mode": "native_text",
+      "extraction_status": "native_text_extracted_needs_confirmation",
+      "field_count": 2,
+      "field_gaps": [
+        "inspection_body",
+        "inspection_date",
+        "result",
+        "product_description"
+      ],
+      "file_signature_status": "pdf_signature_checked",
+      "filename": "synthetic-inspection-report-supplier.pdf",
+      "local_path": "data/parser_qa_documents/synthetic-inspection-report-supplier.pdf",
+      "malware_scan_status": "not_proven_external_gate_required",
+      "next_valid_move": "Use this filled sample only for parser QA; replace with real user evidence and review before customer use.",
+      "packet_id": "parser-qa-generic-inspection-report",
+      "parser_outputs_are_draft": true,
+      "quarantine_status": "not_quarantined",
+      "sample_level": "synthetic_parser_fixture",
+      "source_id": "",
+      "source_kind": "synthetic_parser_fixture",
+      "source_url": "",
+      "storage_status": "local_synthetic_parser_fixture",
+      "user_confirmation_required": true
+    }
+  ],
+  "evidence_record_count": 18,
+  "evidence_records": [
+    {
+      "blocked_claims": [
+        "document_authenticity_verified",
+        "document_complete",
+        "customs_ready",
+        "tariff_confirmed",
+        "cfia_approved",
+        "origin_confirmed",
+        "buyer_validated",
+        "supplier_verified",
+        "shipment_approved"
+      ],
+      "claim_boundary": "A document filename in a packet is not evidence. The actual file, provenance, scan result, extraction, confirmation, and review are required.",
+      "document_id": "document:packet-frozen-tuna-canada-001:supplier-profile-placeholder-pdf",
+      "evidence_id": "evidence:document:packet-frozen-tuna-canada-001:supplier-profile-placeholder-pdf",
+      "freshness": "unknown",
+      "next_valid_move": "Attach the actual document file, then run signature, scan, quarantine, extraction, and user confirmation.",
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "provenance": "user_declared_filename_only",
+      "review_required": true,
+      "supports_claims": [],
+      "type": "document_gap"
+    },
+    {
+      "blocked_claims": [
+        "document_authenticity_verified",
+        "document_complete",
+        "customs_ready",
+        "tariff_confirmed",
+        "cfia_approved",
+        "origin_confirmed",
+        "buyer_validated",
+        "supplier_verified",
+        "shipment_approved"
+      ],
+      "claim_boundary": "A document filename in a packet is not evidence. The actual file, provenance, scan result, extraction, confirmation, and review are required.",
+      "document_id": "document:packet-frozen-tuna-canada-001:product-spec-placeholder-pdf",
+      "evidence_id": "evidence:document:packet-frozen-tuna-canada-001:product-spec-placeholder-pdf",
+      "freshness": "unknown",
+      "next_valid_move": "Attach the actual document file, then run signature, scan, quarantine, extraction, and user confirmation.",
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "provenance": "user_declared_filename_only",
+      "review_required": true,
+      "supports_claims": [],
+      "type": "document_gap"
+    },
+    {
+      "blocked_claims": [
+        "document_authenticity_verified",
+        "document_complete",
+        "customs_ready",
+        "tariff_confirmed",
+        "cfia_approved",
+        "origin_confirmed",
+        "buyer_validated",
+        "supplier_verified",
+        "shipment_approved"
+      ],
+      "claim_boundary": "Document parsing organizes draft evidence only. It does not prove authenticity, completeness, customs/tariff correctness, CFIA clearance, buyer validation, supplier verification, or shipment approval.",
+      "document_id": "document:packet-organic-turmeric-powder:complete-transformation-blueprint-pdf",
+      "evidence_id": "evidence:document:packet-organic-turmeric-powder:complete-transformation-blueprint-pdf",
+      "freshness": "unknown",
+      "next_valid_move": "Attach the actual document file or obtain a searchable copy before extraction can support packet review.",
+      "packet_id": "packet-organic-turmeric-powder",
+      "provenance": "parser_draft",
+      "review_required": true,
+      "supports_claims": [],
+      "type": "document"
+    },
+    {
+      "blocked_claims": [
+        "document_authenticity_verified",
+        "document_complete",
+        "customs_ready",
+        "tariff_confirmed",
+        "cfia_approved",
+        "origin_confirmed",
+        "buyer_validated",
+        "supplier_verified",
+        "shipment_approved"
+      ],
+      "claim_boundary": "Document parsing organizes draft evidence only. It does not prove authenticity, completeness, customs/tariff correctness, CFIA clearance, buyer validation, supplier verification, or shipment approval.",
+      "document_id": "document:packet-demo-turmeric-invoice:demo-commercial-invoice-pdf",
+      "evidence_id": "evidence:document:packet-demo-turmeric-invoice:demo-commercial-invoice-pdf",
+      "freshness": "unknown",
+      "next_valid_move": "Attach the actual document file or obtain a searchable copy before extraction can support packet review.",
+      "packet_id": "packet-demo-turmeric-invoice",
+      "provenance": "parser_draft",
+      "review_required": true,
+      "supports_claims": [],
+      "type": "document"
+    },
+    {
+      "blocked_claims": [
+        "document_authenticity_verified",
+        "document_complete",
+        "customs_ready",
+        "tariff_confirmed",
+        "cfia_approved",
+        "origin_confirmed",
+        "buyer_validated",
+        "supplier_verified",
+        "shipment_approved"
+      ],
+      "claim_boundary": "Document parsing organizes draft evidence only. It does not prove authenticity, completeness, customs/tariff correctness, CFIA clearance, buyer validation, supplier verification, or shipment approval.",
+      "document_id": "document:official-sample-ca-commercial-invoice:cbsa-ci1-canada-customs-invoice-pdf",
+      "evidence_id": "evidence:document:official-sample-ca-commercial-invoice:cbsa-ci1-canada-customs-invoice-pdf",
+      "freshness": "current_reference_checked_locally",
+      "next_valid_move": "Use this official sample only to improve classification and reviewer questions; do not treat it as customer evidence.",
+      "packet_id": "official-sample-ca-commercial-invoice",
+      "provenance": "official_sample_form_reference",
+      "review_required": true,
+      "supports_claims": [],
+      "type": "official_sample_document"
+    },
+    {
+      "blocked_claims": [
+        "document_authenticity_verified",
+        "document_complete",
+        "customs_ready",
+        "tariff_confirmed",
+        "cfia_approved",
+        "origin_confirmed",
+        "buyer_validated",
+        "supplier_verified",
+        "shipment_approved"
+      ],
+      "claim_boundary": "Document parsing organizes draft evidence only. It does not prove authenticity, completeness, customs/tariff correctness, CFIA clearance, buyer validation, supplier verification, or shipment approval.",
+      "document_id": "document:official-sample-ca-bill-of-lading:cbsa-a8a-b-cargo-control-document-pdf",
+      "evidence_id": "evidence:document:official-sample-ca-bill-of-lading:cbsa-a8a-b-cargo-control-document-pdf",
+      "freshness": "current_reference_checked_locally",
+      "next_valid_move": "Use this official sample only to improve classification and reviewer questions; do not treat it as customer evidence.",
+      "packet_id": "official-sample-ca-bill-of-lading",
+      "provenance": "official_sample_form_reference",
+      "review_required": true,
+      "supports_claims": [],
+      "type": "official_sample_document"
+    },
+    {
+      "blocked_claims": [
+        "document_authenticity_verified",
+        "document_complete",
+        "customs_ready",
+        "tariff_confirmed",
+        "cfia_approved",
+        "origin_confirmed",
+        "buyer_validated",
+        "supplier_verified",
+        "shipment_approved"
+      ],
+      "claim_boundary": "Document parsing organizes draft evidence only. It does not prove authenticity, completeness, customs/tariff correctness, CFIA clearance, buyer validation, supplier verification, or shipment approval.",
+      "document_id": "document:official-sample-ca-phytosanitary-or-health-certificate:cfia-5272-documentation-review-request-pdf",
+      "evidence_id": "evidence:document:official-sample-ca-phytosanitary-or-health-certificate:cfia-5272-documentation-review-request-pdf",
+      "freshness": "current_reference_checked_locally",
+      "next_valid_move": "Use this official sample only to improve classification and reviewer questions; do not treat it as customer evidence.",
+      "packet_id": "official-sample-ca-phytosanitary-or-health-certificate",
+      "provenance": "official_sample_form_reference",
+      "review_required": true,
+      "supports_claims": [],
+      "type": "official_sample_document"
+    },
+    {
+      "blocked_claims": [
+        "document_authenticity_verified",
+        "document_complete",
+        "customs_ready",
+        "tariff_confirmed",
+        "cfia_approved",
+        "origin_confirmed",
+        "buyer_validated",
+        "supplier_verified",
+        "shipment_approved"
+      ],
+      "claim_boundary": "Document parsing organizes draft evidence only. It does not prove authenticity, completeness, customs/tariff correctness, CFIA clearance, buyer validation, supplier verification, or shipment approval.",
+      "document_id": "document:parser-qa-ca-commercial-invoice:synthetic-commercial-invoice-canada-pdf",
+      "evidence_id": "evidence:document:parser-qa-ca-commercial-invoice:synthetic-commercial-invoice-canada-pdf",
+      "freshness": "unknown",
+      "next_valid_move": "Use this filled sample only for parser QA; replace with real user evidence and review before customer use.",
+      "packet_id": "parser-qa-ca-commercial-invoice",
+      "provenance": "parser_draft",
+      "review_required": true,
+      "supports_claims": [],
+      "type": "document"
+    },
+    {
+      "blocked_claims": [
+        "document_authenticity_verified",
+        "document_complete",
+        "customs_ready",
+        "tariff_confirmed",
+        "cfia_approved",
+        "origin_confirmed",
+        "buyer_validated",
+        "supplier_verified",
+        "shipment_approved"
+      ],
+      "claim_boundary": "Document parsing organizes draft evidence only. It does not prove authenticity, completeness, customs/tariff correctness, CFIA clearance, buyer validation, supplier verification, or shipment approval.",
+      "document_id": "document:parser-qa-in-packing-list:synthetic-packing-list-india-export-pdf",
+      "evidence_id": "evidence:document:parser-qa-in-packing-list:synthetic-packing-list-india-export-pdf",
+      "freshness": "unknown",
+      "next_valid_move": "Use this filled sample only for parser QA; replace with real user evidence and review before customer use.",
+      "packet_id": "parser-qa-in-packing-list",
+      "provenance": "parser_draft",
+      "review_required": true,
+      "supports_claims": [],
+      "type": "document"
+    },
+    {
+      "blocked_claims": [
+        "document_authenticity_verified",
+        "document_complete",
+        "customs_ready",
+        "tariff_confirmed",
+        "cfia_approved",
+        "origin_confirmed",
+        "buyer_validated",
+        "supplier_verified",
+        "shipment_approved"
+      ],
+      "claim_boundary": "Document parsing organizes draft evidence only. It does not prove authenticity, completeness, customs/tariff correctness, CFIA clearance, buyer validation, supplier verification, or shipment approval.",
+      "document_id": "document:parser-qa-in-certificate-of-origin:synthetic-certificate-of-origin-india-pdf",
+      "evidence_id": "evidence:document:parser-qa-in-certificate-of-origin:synthetic-certificate-of-origin-india-pdf",
+      "freshness": "unknown",
+      "next_valid_move": "Use this filled sample only for parser QA; replace with real user evidence and review before customer use.",
+      "packet_id": "parser-qa-in-certificate-of-origin",
+      "provenance": "parser_draft",
+      "review_required": true,
+      "supports_claims": [],
+      "type": "document"
+    },
+    {
+      "blocked_claims": [
+        "document_authenticity_verified",
+        "document_complete",
+        "customs_ready",
+        "tariff_confirmed",
+        "cfia_approved",
+        "origin_confirmed",
+        "buyer_validated",
+        "supplier_verified",
+        "shipment_approved"
+      ],
+      "claim_boundary": "Document parsing organizes draft evidence only. It does not prove authenticity, completeness, customs/tariff correctness, CFIA clearance, buyer validation, supplier verification, or shipment approval.",
+      "document_id": "document:parser-qa-vn-bill-of-lading:synthetic-bill-of-lading-vietnam-pdf",
+      "evidence_id": "evidence:document:parser-qa-vn-bill-of-lading:synthetic-bill-of-lading-vietnam-pdf",
+      "freshness": "unknown",
+      "next_valid_move": "Use this filled sample only for parser QA; replace with real user evidence and review before customer use.",
+      "packet_id": "parser-qa-vn-bill-of-lading",
+      "provenance": "parser_draft",
+      "review_required": true,
+      "supports_claims": [],
+      "type": "document"
+    },
+    {
+      "blocked_claims": [
+        "document_authenticity_verified",
+        "document_complete",
+        "customs_ready",
+        "tariff_confirmed",
+        "cfia_approved",
+        "origin_confirmed",
+        "buyer_validated",
+        "supplier_verified",
+        "shipment_approved"
+      ],
+      "claim_boundary": "Document parsing organizes draft evidence only. It does not prove authenticity, completeness, customs/tariff correctness, CFIA clearance, buyer validation, supplier verification, or shipment approval.",
+      "document_id": "document:parser-qa-generic-airway-bill:synthetic-airway-bill-generic-pdf",
+      "evidence_id": "evidence:document:parser-qa-generic-airway-bill:synthetic-airway-bill-generic-pdf",
+      "freshness": "unknown",
+      "next_valid_move": "Use this filled sample only for parser QA; replace with real user evidence and review before customer use.",
+      "packet_id": "parser-qa-generic-airway-bill",
+      "provenance": "parser_draft",
+      "review_required": true,
+      "supports_claims": [],
+      "type": "document"
+    },
+    {
+      "blocked_claims": [
+        "document_authenticity_verified",
+        "document_complete",
+        "customs_ready",
+        "tariff_confirmed",
+        "cfia_approved",
+        "origin_confirmed",
+        "buyer_validated",
+        "supplier_verified",
+        "shipment_approved"
+      ],
+      "claim_boundary": "Document parsing organizes draft evidence only. It does not prove authenticity, completeness, customs/tariff correctness, CFIA clearance, buyer validation, supplier verification, or shipment approval.",
+      "document_id": "document:parser-qa-vn-product-specification:synthetic-product-specification-vietnam-seafood-pdf",
+      "evidence_id": "evidence:document:parser-qa-vn-product-specification:synthetic-product-specification-vietnam-seafood-pdf",
+      "freshness": "unknown",
+      "next_valid_move": "Use this filled sample only for parser QA; replace with real user evidence and review before customer use.",
+      "packet_id": "parser-qa-vn-product-specification",
+      "provenance": "parser_draft",
+      "review_required": true,
+      "supports_claims": [],
+      "type": "document"
+    },
+    {
+      "blocked_claims": [
+        "document_authenticity_verified",
+        "document_complete",
+        "customs_ready",
+        "tariff_confirmed",
+        "cfia_approved",
+        "origin_confirmed",
+        "buyer_validated",
+        "supplier_verified",
+        "shipment_approved"
+      ],
+      "claim_boundary": "Document parsing organizes draft evidence only. It does not prove authenticity, completeness, customs/tariff correctness, CFIA clearance, buyer validation, supplier verification, or shipment approval.",
+      "document_id": "document:parser-qa-generic-lab-certificate:synthetic-lab-certificate-food-pdf",
+      "evidence_id": "evidence:document:parser-qa-generic-lab-certificate:synthetic-lab-certificate-food-pdf",
+      "freshness": "unknown",
+      "next_valid_move": "Use this filled sample only for parser QA; replace with real user evidence and review before customer use.",
+      "packet_id": "parser-qa-generic-lab-certificate",
+      "provenance": "parser_draft",
+      "review_required": true,
+      "supports_claims": [],
+      "type": "document"
+    },
+    {
+      "blocked_claims": [
+        "document_authenticity_verified",
+        "document_complete",
+        "customs_ready",
+        "tariff_confirmed",
+        "cfia_approved",
+        "origin_confirmed",
+        "buyer_validated",
+        "supplier_verified",
+        "shipment_approved"
+      ],
+      "claim_boundary": "Document parsing organizes draft evidence only. It does not prove authenticity, completeness, customs/tariff correctness, CFIA clearance, buyer validation, supplier verification, or shipment approval.",
+      "document_id": "document:parser-qa-vn-phytosanitary-or-health-certificate:synthetic-health-certificate-vietnam-pdf",
+      "evidence_id": "evidence:document:parser-qa-vn-phytosanitary-or-health-certificate:synthetic-health-certificate-vietnam-pdf",
+      "freshness": "unknown",
+      "next_valid_move": "Use this filled sample only for parser QA; replace with real user evidence and review before customer use.",
+      "packet_id": "parser-qa-vn-phytosanitary-or-health-certificate",
+      "provenance": "parser_draft",
+      "review_required": true,
+      "supports_claims": [],
+      "type": "document"
+    },
+    {
+      "blocked_claims": [
+        "document_authenticity_verified",
+        "document_complete",
+        "customs_ready",
+        "tariff_confirmed",
+        "cfia_approved",
+        "origin_confirmed",
+        "buyer_validated",
+        "supplier_verified",
+        "shipment_approved"
+      ],
+      "claim_boundary": "Document parsing organizes draft evidence only. It does not prove authenticity, completeness, customs/tariff correctness, CFIA clearance, buyer validation, supplier verification, or shipment approval.",
+      "document_id": "document:parser-qa-ca-purchase-order:synthetic-purchase-order-canada-buyer-pdf",
+      "evidence_id": "evidence:document:parser-qa-ca-purchase-order:synthetic-purchase-order-canada-buyer-pdf",
+      "freshness": "unknown",
+      "next_valid_move": "Use this filled sample only for parser QA; replace with real user evidence and review before customer use.",
+      "packet_id": "parser-qa-ca-purchase-order",
+      "provenance": "parser_draft",
+      "review_required": true,
+      "supports_claims": [],
+      "type": "document"
+    },
+    {
+      "blocked_claims": [
+        "document_authenticity_verified",
+        "document_complete",
+        "customs_ready",
+        "tariff_confirmed",
+        "cfia_approved",
+        "origin_confirmed",
+        "buyer_validated",
+        "supplier_verified",
+        "shipment_approved"
+      ],
+      "claim_boundary": "Document parsing organizes draft evidence only. It does not prove authenticity, completeness, customs/tariff correctness, CFIA clearance, buyer validation, supplier verification, or shipment approval.",
+      "document_id": "document:parser-qa-generic-contract:synthetic-contract-incoterms-pdf",
+      "evidence_id": "evidence:document:parser-qa-generic-contract:synthetic-contract-incoterms-pdf",
+      "freshness": "unknown",
+      "next_valid_move": "Use this filled sample only for parser QA; replace with real user evidence and review before customer use.",
+      "packet_id": "parser-qa-generic-contract",
+      "provenance": "parser_draft",
+      "review_required": true,
+      "supports_claims": [],
+      "type": "document"
+    },
+    {
+      "blocked_claims": [
+        "document_authenticity_verified",
+        "document_complete",
+        "customs_ready",
+        "tariff_confirmed",
+        "cfia_approved",
+        "origin_confirmed",
+        "buyer_validated",
+        "supplier_verified",
+        "shipment_approved"
+      ],
+      "claim_boundary": "Document parsing organizes draft evidence only. It does not prove authenticity, completeness, customs/tariff correctness, CFIA clearance, buyer validation, supplier verification, or shipment approval.",
+      "document_id": "document:parser-qa-generic-inspection-report:synthetic-inspection-report-supplier-pdf",
+      "evidence_id": "evidence:document:parser-qa-generic-inspection-report:synthetic-inspection-report-supplier-pdf",
+      "freshness": "unknown",
+      "next_valid_move": "Use this filled sample only for parser QA; replace with real user evidence and review before customer use.",
+      "packet_id": "parser-qa-generic-inspection-report",
+      "provenance": "parser_draft",
+      "review_required": true,
+      "supports_claims": [],
+      "type": "document"
+    }
+  ],
+  "external_effects_created": false,
+  "extracted_field_count": 52,
+  "extracted_fields": [
+    {
+      "blocked_claims": [
+        "document_authenticity_verified",
+        "document_complete",
+        "customs_ready",
+        "tariff_confirmed",
+        "cfia_approved",
+        "origin_confirmed",
+        "buyer_validated",
+        "supplier_verified",
+        "shipment_approved"
+      ],
+      "claim_boundary": "Document parsing organizes draft evidence only. It does not prove authenticity, completeness, customs/tariff correctness, CFIA clearance, buyer validation, supplier verification, or shipment approval.",
+      "confidence": "medium",
+      "document_id": "document:official-sample-ca-commercial-invoice:cbsa-ci1-canada-customs-invoice-pdf",
+      "extracted_value": "total",
+      "field_id": "field:document:official-sample-ca-commercial-invoice:cbsa-ci1-canada-customs-invoice-pdf:invoice_or_reference",
+      "field_name": "invoice_or_reference",
+      "packet_id": "official-sample-ca-commercial-invoice",
+      "page_or_section": "document_text_or_metadata",
+      "provenance": "official_sample_form_reference",
+      "redaction_categories": [
+        "ids"
+      ],
+      "supports_claims": [],
+      "user_confirmation_status": "sample_form_not_user_evidence"
+    },
+    {
+      "blocked_claims": [
+        "document_authenticity_verified",
+        "document_complete",
+        "customs_ready",
+        "tariff_confirmed",
+        "cfia_approved",
+        "origin_confirmed",
+        "buyer_validated",
+        "supplier_verified",
+        "shipment_approved"
+      ],
+      "claim_boundary": "Document parsing organizes draft evidence only. It does not prove authenticity, completeness, customs/tariff correctness, CFIA clearance, buyer validation, supplier verification, or shipment approval.",
+      "confidence": "medium",
+      "document_id": "document:official-sample-ca-commercial-invoice:cbsa-ci1-canada-customs-invoice-pdf",
+      "extracted_value": [
+        "$2"
+      ],
+      "field_id": "field:document:official-sample-ca-commercial-invoice:cbsa-ci1-canada-customs-invoice-pdf:amounts",
+      "field_name": "amounts",
+      "packet_id": "official-sample-ca-commercial-invoice",
+      "page_or_section": "document_text_or_metadata",
+      "provenance": "official_sample_form_reference",
+      "redaction_categories": [
+        "prices"
+      ],
+      "supports_claims": [],
+      "user_confirmation_status": "sample_form_not_user_evidence"
+    },
+    {
+      "blocked_claims": [
+        "document_authenticity_verified",
+        "document_complete",
+        "customs_ready",
+        "tariff_confirmed",
+        "cfia_approved",
+        "origin_confirmed",
+        "buyer_validated",
+        "supplier_verified",
+        "shipment_approved"
+      ],
+      "claim_boundary": "Document parsing organizes draft evidence only. It does not prove authenticity, completeness, customs/tariff correctness, CFIA clearance, buyer validation, supplier verification, or shipment approval.",
+      "confidence": "medium",
+      "document_id": "document:official-sample-ca-phytosanitary-or-health-certificate:cfia-5272-documentation-review-request-pdf",
+      "extracted_value": [
+        "CIP"
+      ],
+      "field_id": "field:document:official-sample-ca-phytosanitary-or-health-certificate:cfia-5272-documentation-review-request-pdf:incoterms",
+      "field_name": "incoterms",
+      "packet_id": "official-sample-ca-phytosanitary-or-health-certificate",
+      "page_or_section": "document_text_or_metadata",
+      "provenance": "official_sample_form_reference",
+      "redaction_categories": [],
+      "supports_claims": [],
+      "user_confirmation_status": "sample_form_not_user_evidence"
+    },
+    {
+      "blocked_claims": [
+        "document_authenticity_verified",
+        "document_complete",
+        "customs_ready",
+        "tariff_confirmed",
+        "cfia_approved",
+        "origin_confirmed",
+        "buyer_validated",
+        "supplier_verified",
+        "shipment_approved"
+      ],
+      "claim_boundary": "Document parsing organizes draft evidence only. It does not prove authenticity, completeness, customs/tariff correctness, CFIA clearance, buyer validation, supplier verification, or shipment approval.",
+      "confidence": "medium",
+      "document_id": "document:parser-qa-ca-commercial-invoice:synthetic-commercial-invoice-canada-pdf",
+      "extracted_value": "0902.30",
+      "field_id": "field:document:parser-qa-ca-commercial-invoice:synthetic-commercial-invoice-canada-pdf:hs_code",
+      "field_name": "hs_code",
+      "packet_id": "parser-qa-ca-commercial-invoice",
+      "page_or_section": "document_text_or_metadata",
+      "provenance": "parser_draft",
+      "redaction_categories": [],
+      "supports_claims": [],
+      "user_confirmation_status": "needs_user_confirmation"
+    },
+    {
+      "blocked_claims": [
+        "document_authenticity_verified",
+        "document_complete",
+        "customs_ready",
+        "tariff_confirmed",
+        "cfia_approved",
+        "origin_confirmed",
+        "buyer_validated",
+        "supplier_verified",
+        "shipment_approved"
+      ],
+      "claim_boundary": "Document parsing organizes draft evidence only. It does not prove authenticity, completeness, customs/tariff correctness, CFIA clearance, buyer validation, supplier verification, or shipment approval.",
+      "confidence": "medium",
+      "document_id": "document:parser-qa-ca-commercial-invoice:synthetic-commercial-invoice-canada-pdf",
+      "extracted_value": "INV-QA-001",
+      "field_id": "field:document:parser-qa-ca-commercial-invoice:synthetic-commercial-invoice-canada-pdf:invoice_or_reference",
+      "field_name": "invoice_or_reference",
+      "packet_id": "parser-qa-ca-commercial-invoice",
+      "page_or_section": "document_text_or_metadata",
+      "provenance": "parser_draft",
+      "redaction_categories": [
+        "ids"
+      ],
+      "supports_claims": [],
+      "user_confirmation_status": "needs_user_confirmation"
+    },
+    {
+      "blocked_claims": [
+        "document_authenticity_verified",
+        "document_complete",
+        "customs_ready",
+        "tariff_confirmed",
+        "cfia_approved",
+        "origin_confirmed",
+        "buyer_validated",
+        "supplier_verified",
+        "shipment_approved"
+      ],
+      "claim_boundary": "Document parsing organizes draft evidence only. It does not prove authenticity, completeness, customs/tariff correctness, CFIA clearance, buyer validation, supplier verification, or shipment approval.",
+      "confidence": "medium",
+      "document_id": "document:parser-qa-ca-commercial-invoice:synthetic-commercial-invoice-canada-pdf",
+      "extracted_value": [
+        "Canada",
+        "India"
+      ],
+      "field_id": "field:document:parser-qa-ca-commercial-invoice:synthetic-commercial-invoice-canada-pdf:country_mentions",
+      "field_name": "country_mentions",
+      "packet_id": "parser-qa-ca-commercial-invoice",
+      "page_or_section": "document_text_or_metadata",
+      "provenance": "parser_draft",
+      "redaction_categories": [],
+      "supports_claims": [],
+      "user_confirmation_status": "needs_user_confirmation"
+    },
+    {
+      "blocked_claims": [
+        "document_authenticity_verified",
+        "document_complete",
+        "customs_ready",
+        "tariff_confirmed",
+        "cfia_approved",
+        "origin_confirmed",
+        "buyer_validated",
+        "supplier_verified",
+        "shipment_approved"
+      ],
+      "claim_boundary": "Document parsing organizes draft evidence only. It does not prove authenticity, completeness, customs/tariff correctness, CFIA clearance, buyer validation, supplier verification, or shipment approval.",
+      "confidence": "medium",
+      "document_id": "document:parser-qa-ca-commercial-invoice:synthetic-commercial-invoice-canada-pdf",
+      "extracted_value": "Example Exporter Pvt Ltd",
+      "field_id": "field:document:parser-qa-ca-commercial-invoice:synthetic-commercial-invoice-canada-pdf:supplier_or_exporter",
+      "field_name": "supplier_or_exporter",
+      "packet_id": "parser-qa-ca-commercial-invoice",
+      "page_or_section": "document_text_or_metadata",
+      "provenance": "parser_draft",
+      "redaction_categories": [
+        "supplier_names"
+      ],
+      "supports_claims": [],
+      "user_confirmation_status": "needs_user_confirmation"
+    },
+    {
+      "blocked_claims": [
+        "document_authenticity_verified",
+        "document_complete",
+        "customs_ready",
+        "tariff_confirmed",
+        "cfia_approved",
+        "origin_confirmed",
+        "buyer_validated",
+        "supplier_verified",
+        "shipment_approved"
+      ],
+      "claim_boundary": "Document parsing organizes draft evidence only. It does not prove authenticity, completeness, customs/tariff correctness, CFIA clearance, buyer validation, supplier verification, or shipment approval.",
+      "confidence": "medium",
+      "document_id": "document:parser-qa-ca-commercial-invoice:synthetic-commercial-invoice-canada-pdf",
+      "extracted_value": "Maple Import Foods Inc",
+      "field_id": "field:document:parser-qa-ca-commercial-invoice:synthetic-commercial-invoice-canada-pdf:buyer_or_importer",
+      "field_name": "buyer_or_importer",
+      "packet_id": "parser-qa-ca-commercial-invoice",
+      "page_or_section": "document_text_or_metadata",
+      "provenance": "parser_draft",
+      "redaction_categories": [
+        "buyer_names"
+      ],
+      "supports_claims": [],
+      "user_confirmation_status": "needs_user_confirmation"
+    },
+    {
+      "blocked_claims": [
+        "document_authenticity_verified",
+        "document_complete",
+        "customs_ready",
+        "tariff_confirmed",
+        "cfia_approved",
+        "origin_confirmed",
+        "buyer_validated",
+        "supplier_verified",
+        "shipment_approved"
+      ],
+      "claim_boundary": "Document parsing organizes draft evidence only. It does not prove authenticity, completeness, customs/tariff correctness, CFIA clearance, buyer validation, supplier verification, or shipment approval.",
+      "confidence": "medium",
+      "document_id": "document:parser-qa-ca-commercial-invoice:synthetic-commercial-invoice-canada-pdf",
+      "extracted_value": [
+        "FOB"
+      ],
+      "field_id": "field:document:parser-qa-ca-commercial-invoice:synthetic-commercial-invoice-canada-pdf:incoterms",
+      "field_name": "incoterms",
+      "packet_id": "parser-qa-ca-commercial-invoice",
+      "page_or_section": "document_text_or_metadata",
+      "provenance": "parser_draft",
+      "redaction_categories": [],
+      "supports_claims": [],
+      "user_confirmation_status": "needs_user_confirmation"
+    },
+    {
+      "blocked_claims": [
+        "document_authenticity_verified",
+        "document_complete",
+        "customs_ready",
+        "tariff_confirmed",
+        "cfia_approved",
+        "origin_confirmed",
+        "buyer_validated",
+        "supplier_verified",
+        "shipment_approved"
+      ],
+      "claim_boundary": "Document parsing organizes draft evidence only. It does not prove authenticity, completeness, customs/tariff correctness, CFIA clearance, buyer validation, supplier verification, or shipment approval.",
+      "confidence": "medium",
+      "document_id": "document:parser-qa-ca-commercial-invoice:synthetic-commercial-invoice-canada-pdf",
+      "extracted_value": [
+        "2026-06-28"
+      ],
+      "field_id": "field:document:parser-qa-ca-commercial-invoice:synthetic-commercial-invoice-canada-pdf:dates",
+      "field_name": "dates",
+      "packet_id": "parser-qa-ca-commercial-invoice",
+      "page_or_section": "document_text_or_metadata",
+      "provenance": "parser_draft",
+      "redaction_categories": [
+        "sensitive_notes"
+      ],
+      "supports_claims": [],
+      "user_confirmation_status": "needs_user_confirmation"
+    },
+    {
+      "blocked_claims": [
+        "document_authenticity_verified",
+        "document_complete",
+        "customs_ready",
+        "tariff_confirmed",
+        "cfia_approved",
+        "origin_confirmed",
+        "buyer_validated",
+        "supplier_verified",
+        "shipment_approved"
+      ],
+      "claim_boundary": "Document parsing organizes draft evidence only. It does not prove authenticity, completeness, customs/tariff correctness, CFIA clearance, buyer validation, supplier verification, or shipment approval.",
+      "confidence": "medium",
+      "document_id": "document:parser-qa-ca-commercial-invoice:synthetic-commercial-invoice-canada-pdf",
+      "extracted_value": [
+        "USD 12500"
+      ],
+      "field_id": "field:document:parser-qa-ca-commercial-invoice:synthetic-commercial-invoice-canada-pdf:amounts",
+      "field_name": "amounts",
+      "packet_id": "parser-qa-ca-commercial-invoice",
+      "page_or_section": "document_text_or_metadata",
+      "provenance": "parser_draft",
+      "redaction_categories": [
+        "prices"
+      ],
+      "supports_claims": [],
+      "user_confirmation_status": "needs_user_confirmation"
+    },
+    {
+      "blocked_claims": [
+        "document_authenticity_verified",
+        "document_complete",
+        "customs_ready",
+        "tariff_confirmed",
+        "cfia_approved",
+        "origin_confirmed",
+        "buyer_validated",
+        "supplier_verified",
+        "shipment_approved"
+      ],
+      "claim_boundary": "Document parsing organizes draft evidence only. It does not prove authenticity, completeness, customs/tariff correctness, CFIA clearance, buyer validation, supplier verification, or shipment approval.",
+      "confidence": "medium",
+      "document_id": "document:parser-qa-ca-commercial-invoice:synthetic-commercial-invoice-canada-pdf",
+      "extracted_value": "Organic turmeric powder date 2026-06-28",
+      "field_id": "field:document:parser-qa-ca-commercial-invoice:synthetic-commercial-invoice-canada-pdf:product_description",
+      "field_name": "product_description",
+      "packet_id": "parser-qa-ca-commercial-invoice",
+      "page_or_section": "document_text_or_metadata",
+      "provenance": "parser_draft",
+      "redaction_categories": [
+        "sensitive_notes"
+      ],
+      "supports_claims": [],
+      "user_confirmation_status": "needs_user_confirmation"
+    },
+    {
+      "blocked_claims": [
+        "document_authenticity_verified",
+        "document_complete",
+        "customs_ready",
+        "tariff_confirmed",
+        "cfia_approved",
+        "origin_confirmed",
+        "buyer_validated",
+        "supplier_verified",
+        "shipment_approved"
+      ],
+      "claim_boundary": "Document parsing organizes draft evidence only. It does not prove authenticity, completeness, customs/tariff correctness, CFIA clearance, buyer validation, supplier verification, or shipment approval.",
+      "confidence": "medium",
+      "document_id": "document:parser-qa-in-packing-list:synthetic-packing-list-india-export-pdf",
+      "extracted_value": [
+        "Canada",
+        "India"
+      ],
+      "field_id": "field:document:parser-qa-in-packing-list:synthetic-packing-list-india-export-pdf:country_mentions",
+      "field_name": "country_mentions",
+      "packet_id": "parser-qa-in-packing-list",
+      "page_or_section": "document_text_or_metadata",
+      "provenance": "parser_draft",
+      "redaction_categories": [],
+      "supports_claims": [],
+      "user_confirmation_status": "needs_user_confirmation"
+    },
+    {
+      "blocked_claims": [
+        "document_authenticity_verified",
+        "document_complete",
+        "customs_ready",
+        "tariff_confirmed",
+        "cfia_approved",
+        "origin_confirmed",
+        "buyer_validated",
+        "supplier_verified",
+        "shipment_approved"
+      ],
+      "claim_boundary": "Document parsing organizes draft evidence only. It does not prove authenticity, completeness, customs/tariff correctness, CFIA clearance, buyer validation, supplier verification, or shipment approval.",
+      "confidence": "medium",
+      "document_id": "document:parser-qa-in-packing-list:synthetic-packing-list-india-export-pdf",
+      "extracted_value": "Example Exporter Pvt Ltd",
+      "field_id": "field:document:parser-qa-in-packing-list:synthetic-packing-list-india-export-pdf:supplier_or_exporter",
+      "field_name": "supplier_or_exporter",
+      "packet_id": "parser-qa-in-packing-list",
+      "page_or_section": "document_text_or_metadata",
+      "provenance": "parser_draft",
+      "redaction_categories": [
+        "supplier_names"
+      ],
+      "supports_claims": [],
+      "user_confirmation_status": "needs_user_confirmation"
+    },
+    {
+      "blocked_claims": [
+        "document_authenticity_verified",
+        "document_complete",
+        "customs_ready",
+        "tariff_confirmed",
+        "cfia_approved",
+        "origin_confirmed",
+        "buyer_validated",
+        "supplier_verified",
+        "shipment_approved"
+      ],
+      "claim_boundary": "Document parsing organizes draft evidence only. It does not prove authenticity, completeness, customs/tariff correctness, CFIA clearance, buyer validation, supplier verification, or shipment approval.",
+      "confidence": "medium",
+      "document_id": "document:parser-qa-in-packing-list:synthetic-packing-list-india-export-pdf",
+      "extracted_value": "Maple Import Foods Inc",
+      "field_id": "field:document:parser-qa-in-packing-list:synthetic-packing-list-india-export-pdf:buyer_or_importer",
+      "field_name": "buyer_or_importer",
+      "packet_id": "parser-qa-in-packing-list",
+      "page_or_section": "document_text_or_metadata",
+      "provenance": "parser_draft",
+      "redaction_categories": [
+        "buyer_names"
+      ],
+      "supports_claims": [],
+      "user_confirmation_status": "needs_user_confirmation"
+    },
+    {
+      "blocked_claims": [
+        "document_authenticity_verified",
+        "document_complete",
+        "customs_ready",
+        "tariff_confirmed",
+        "cfia_approved",
+        "origin_confirmed",
+        "buyer_validated",
+        "supplier_verified",
+        "shipment_approved"
+      ],
+      "claim_boundary": "Document parsing organizes draft evidence only. It does not prove authenticity, completeness, customs/tariff correctness, CFIA clearance, buyer validation, supplier verification, or shipment approval.",
+      "confidence": "medium",
+      "document_id": "document:parser-qa-in-packing-list:synthetic-packing-list-india-export-pdf",
+      "extracted_value": [
+        "100 cartons",
+        "1100 kg",
+        "1200 kg"
+      ],
+      "field_id": "field:document:parser-qa-in-packing-list:synthetic-packing-list-india-export-pdf:quantities",
+      "field_name": "quantities",
+      "packet_id": "parser-qa-in-packing-list",
+      "page_or_section": "document_text_or_metadata",
+      "provenance": "parser_draft",
+      "redaction_categories": [],
+      "supports_claims": [],
+      "user_confirmation_status": "needs_user_confirmation"
+    },
+    {
+      "blocked_claims": [
+        "document_authenticity_verified",
+        "document_complete",
+        "customs_ready",
+        "tariff_confirmed",
+        "cfia_approved",
+        "origin_confirmed",
+        "buyer_validated",
+        "supplier_verified",
+        "shipment_approved"
+      ],
+      "claim_boundary": "Document parsing organizes draft evidence only. It does not prove authenticity, completeness, customs/tariff correctness, CFIA clearance, buyer validation, supplier verification, or shipment approval.",
+      "confidence": "medium",
+      "document_id": "document:parser-qa-in-packing-list:synthetic-packing-list-india-export-pdf",
+      "extracted_value": "Organic turmeric powder quantity 100 cartons gross weight 1200 kg net weight 110",
+      "field_id": "field:document:parser-qa-in-packing-list:synthetic-packing-list-india-export-pdf:product_description",
+      "field_name": "product_description",
+      "packet_id": "parser-qa-in-packing-list",
+      "page_or_section": "document_text_or_metadata",
+      "provenance": "parser_draft",
+      "redaction_categories": [
+        "sensitive_notes"
+      ],
+      "supports_claims": [],
+      "user_confirmation_status": "needs_user_confirmation"
+    },
+    {
+      "blocked_claims": [
+        "document_authenticity_verified",
+        "document_complete",
+        "customs_ready",
+        "tariff_confirmed",
+        "cfia_approved",
+        "origin_confirmed",
+        "buyer_validated",
+        "supplier_verified",
+        "shipment_approved"
+      ],
+      "claim_boundary": "Document parsing organizes draft evidence only. It does not prove authenticity, completeness, customs/tariff correctness, CFIA clearance, buyer validation, supplier verification, or shipment approval.",
+      "confidence": "medium",
+      "document_id": "document:parser-qa-in-certificate-of-origin:synthetic-certificate-of-origin-india-pdf",
+      "extracted_value": "0910.30",
+      "field_id": "field:document:parser-qa-in-certificate-of-origin:synthetic-certificate-of-origin-india-pdf:hs_code",
+      "field_name": "hs_code",
+      "packet_id": "parser-qa-in-certificate-of-origin",
+      "page_or_section": "document_text_or_metadata",
+      "provenance": "parser_draft",
+      "redaction_categories": [],
+      "supports_claims": [],
+      "user_confirmation_status": "needs_user_confirmation"
+    },
+    {
+      "blocked_claims": [
+        "document_authenticity_verified",
+        "document_complete",
+        "customs_ready",
+        "tariff_confirmed",
+        "cfia_approved",
+        "origin_confirmed",
+        "buyer_validated",
+        "supplier_verified",
+        "shipment_approved"
+      ],
+      "claim_boundary": "Document parsing organizes draft evidence only. It does not prove authenticity, completeness, customs/tariff correctness, CFIA clearance, buyer validation, supplier verification, or shipment approval.",
+      "confidence": "medium",
+      "document_id": "document:parser-qa-in-certificate-of-origin:synthetic-certificate-of-origin-india-pdf",
+      "extracted_value": [
+        "Canada",
+        "number CO-QA-003"
+      ],
+      "field_id": "field:document:parser-qa-in-certificate-of-origin:synthetic-certificate-of-origin-india-pdf:country_mentions",
+      "field_name": "country_mentions",
+      "packet_id": "parser-qa-in-certificate-of-origin",
+      "page_or_section": "document_text_or_metadata",
+      "provenance": "parser_draft",
+      "redaction_categories": [],
+      "supports_claims": [],
+      "user_confirmation_status": "needs_user_confirmation"
+    },
+    {
+      "blocked_claims": [
+        "document_authenticity_verified",
+        "document_complete",
+        "customs_ready",
+        "tariff_confirmed",
+        "cfia_approved",
+        "origin_confirmed",
+        "buyer_validated",
+        "supplier_verified",
+        "shipment_approved"
+      ],
+      "claim_boundary": "Document parsing organizes draft evidence only. It does not prove authenticity, completeness, customs/tariff correctness, CFIA clearance, buyer validation, supplier verification, or shipment approval.",
+      "confidence": "medium",
+      "document_id": "document:parser-qa-in-certificate-of-origin:synthetic-certificate-of-origin-india-pdf",
+      "extracted_value": "Example Exporter Pvt Ltd",
+      "field_id": "field:document:parser-qa-in-certificate-of-origin:synthetic-certificate-of-origin-india-pdf:supplier_or_exporter",
+      "field_name": "supplier_or_exporter",
+      "packet_id": "parser-qa-in-certificate-of-origin",
+      "page_or_section": "document_text_or_metadata",
+      "provenance": "parser_draft",
+      "redaction_categories": [
+        "supplier_names"
+      ],
+      "supports_claims": [],
+      "user_confirmation_status": "needs_user_confirmation"
+    },
+    {
+      "blocked_claims": [
+        "document_authenticity_verified",
+        "document_complete",
+        "customs_ready",
+        "tariff_confirmed",
+        "cfia_approved",
+        "origin_confirmed",
+        "buyer_validated",
+        "supplier_verified",
+        "shipment_approved"
+      ],
+      "claim_boundary": "Document parsing organizes draft evidence only. It does not prove authenticity, completeness, customs/tariff correctness, CFIA clearance, buyer validation, supplier verification, or shipment approval.",
+      "confidence": "medium",
+      "document_id": "document:parser-qa-in-certificate-of-origin:synthetic-certificate-of-origin-india-pdf",
+      "extracted_value": "Maple Import Foods Inc",
+      "field_id": "field:document:parser-qa-in-certificate-of-origin:synthetic-certificate-of-origin-india-pdf:buyer_or_importer",
+      "field_name": "buyer_or_importer",
+      "packet_id": "parser-qa-in-certificate-of-origin",
+      "page_or_section": "document_text_or_metadata",
+      "provenance": "parser_draft",
+      "redaction_categories": [
+        "buyer_names"
+      ],
+      "supports_claims": [],
+      "user_confirmation_status": "needs_user_confirmation"
+    },
+    {
+      "blocked_claims": [
+        "document_authenticity_verified",
+        "document_complete",
+        "customs_ready",
+        "tariff_confirmed",
+        "cfia_approved",
+        "origin_confirmed",
+        "buyer_validated",
+        "supplier_verified",
+        "shipment_approved"
+      ],
+      "claim_boundary": "Document parsing organizes draft evidence only. It does not prove authenticity, completeness, customs/tariff correctness, CFIA clearance, buyer validation, supplier verification, or shipment approval.",
+      "confidence": "medium",
+      "document_id": "document:parser-qa-vn-bill-of-lading:synthetic-bill-of-lading-vietnam-pdf",
+      "extracted_value": [
+        "Canada",
+        "Vietnam"
+      ],
+      "field_id": "field:document:parser-qa-vn-bill-of-lading:synthetic-bill-of-lading-vietnam-pdf:country_mentions",
+      "field_name": "country_mentions",
+      "packet_id": "parser-qa-vn-bill-of-lading",
+      "page_or_section": "document_text_or_metadata",
+      "provenance": "parser_draft",
+      "redaction_categories": [],
+      "supports_claims": [],
+      "user_confirmation_status": "needs_user_confirmation"
+    },
+    {
+      "blocked_claims": [
+        "document_authenticity_verified",
+        "document_complete",
+        "customs_ready",
+        "tariff_confirmed",
+        "cfia_approved",
+        "origin_confirmed",
+        "buyer_validated",
+        "supplier_verified",
+        "shipment_approved"
+      ],
+      "claim_boundary": "Document parsing organizes draft evidence only. It does not prove authenticity, completeness, customs/tariff correctness, CFIA clearance, buyer validation, supplier verification, or shipment approval.",
+      "confidence": "medium",
+      "document_id": "document:parser-qa-vn-bill-of-lading:synthetic-bill-of-lading-vietnam-pdf",
+      "extracted_value": "Example Seafood Supplier",
+      "field_id": "field:document:parser-qa-vn-bill-of-lading:synthetic-bill-of-lading-vietnam-pdf:supplier_or_exporter",
+      "field_name": "supplier_or_exporter",
+      "packet_id": "parser-qa-vn-bill-of-lading",
+      "page_or_section": "document_text_or_metadata",
+      "provenance": "parser_draft",
+      "redaction_categories": [
+        "supplier_names"
+      ],
+      "supports_claims": [],
+      "user_confirmation_status": "needs_user_confirmation"
+    },
+    {
+      "blocked_claims": [
+        "document_authenticity_verified",
+        "document_complete",
+        "customs_ready",
+        "tariff_confirmed",
+        "cfia_approved",
+        "origin_confirmed",
+        "buyer_validated",
+        "supplier_verified",
+        "shipment_approved"
+      ],
+      "claim_boundary": "Document parsing organizes draft evidence only. It does not prove authenticity, completeness, customs/tariff correctness, CFIA clearance, buyer validation, supplier verification, or shipment approval.",
+      "confidence": "medium",
+      "document_id": "document:parser-qa-vn-bill-of-lading:synthetic-bill-of-lading-vietnam-pdf",
+      "extracted_value": "Maple Import Foods Inc quantity 40 cartons",
+      "field_id": "field:document:parser-qa-vn-bill-of-lading:synthetic-bill-of-lading-vietnam-pdf:buyer_or_importer",
+      "field_name": "buyer_or_importer",
+      "packet_id": "parser-qa-vn-bill-of-lading",
+      "page_or_section": "document_text_or_metadata",
+      "provenance": "parser_draft",
+      "redaction_categories": [
+        "buyer_names"
+      ],
+      "supports_claims": [],
+      "user_confirmation_status": "needs_user_confirmation"
+    },
+    {
+      "blocked_claims": [
+        "document_authenticity_verified",
+        "document_complete",
+        "customs_ready",
+        "tariff_confirmed",
+        "cfia_approved",
+        "origin_confirmed",
+        "buyer_validated",
+        "supplier_verified",
+        "shipment_approved"
+      ],
+      "claim_boundary": "Document parsing organizes draft evidence only. It does not prove authenticity, completeness, customs/tariff correctness, CFIA clearance, buyer validation, supplier verification, or shipment approval.",
+      "confidence": "medium",
+      "document_id": "document:parser-qa-vn-bill-of-lading:synthetic-bill-of-lading-vietnam-pdf",
+      "extracted_value": [
+        "40 cartons"
+      ],
+      "field_id": "field:document:parser-qa-vn-bill-of-lading:synthetic-bill-of-lading-vietnam-pdf:quantities",
+      "field_name": "quantities",
+      "packet_id": "parser-qa-vn-bill-of-lading",
+      "page_or_section": "document_text_or_metadata",
+      "provenance": "parser_draft",
+      "redaction_categories": [],
+      "supports_claims": [],
+      "user_confirmation_status": "needs_user_confirmation"
+    },
+    {
+      "blocked_claims": [
+        "document_authenticity_verified",
+        "document_complete",
+        "customs_ready",
+        "tariff_confirmed",
+        "cfia_approved",
+        "origin_confirmed",
+        "buyer_validated",
+        "supplier_verified",
+        "shipment_approved"
+      ],
+      "claim_boundary": "Document parsing organizes draft evidence only. It does not prove authenticity, completeness, customs/tariff correctness, CFIA clearance, buyer validation, supplier verification, or shipment approval.",
+      "confidence": "medium",
+      "document_id": "document:parser-qa-generic-airway-bill:synthetic-airway-bill-generic-pdf",
+      "extracted_value": [
+        "Canada",
+        "India"
+      ],
+      "field_id": "field:document:parser-qa-generic-airway-bill:synthetic-airway-bill-generic-pdf:country_mentions",
+      "field_name": "country_mentions",
+      "packet_id": "parser-qa-generic-airway-bill",
+      "page_or_section": "document_text_or_metadata",
+      "provenance": "parser_draft",
+      "redaction_categories": [],
+      "supports_claims": [],
+      "user_confirmation_status": "needs_user_confirmation"
+    },
+    {
+      "blocked_claims": [
+        "document_authenticity_verified",
+        "document_complete",
+        "customs_ready",
+        "tariff_confirmed",
+        "cfia_approved",
+        "origin_confirmed",
+        "buyer_validated",
+        "supplier_verified",
+        "shipment_approved"
+      ],
+      "claim_boundary": "Document parsing organizes draft evidence only. It does not prove authenticity, completeness, customs/tariff correctness, CFIA clearance, buyer validation, supplier verification, or shipment approval.",
+      "confidence": "medium",
+      "document_id": "document:parser-qa-generic-airway-bill:synthetic-airway-bill-generic-pdf",
+      "extracted_value": "Maple Import Foods Inc",
+      "field_id": "field:document:parser-qa-generic-airway-bill:synthetic-airway-bill-generic-pdf:buyer_or_importer",
+      "field_name": "buyer_or_importer",
+      "packet_id": "parser-qa-generic-airway-bill",
+      "page_or_section": "document_text_or_metadata",
+      "provenance": "parser_draft",
+      "redaction_categories": [
+        "buyer_names"
+      ],
+      "supports_claims": [],
+      "user_confirmation_status": "needs_user_confirmation"
+    },
+    {
+      "blocked_claims": [
+        "document_authenticity_verified",
+        "document_complete",
+        "customs_ready",
+        "tariff_confirmed",
+        "cfia_approved",
+        "origin_confirmed",
+        "buyer_validated",
+        "supplier_verified",
+        "shipment_approved"
+      ],
+      "claim_boundary": "Document parsing organizes draft evidence only. It does not prove authenticity, completeness, customs/tariff correctness, CFIA clearance, buyer validation, supplier verification, or shipment approval.",
+      "confidence": "medium",
+      "document_id": "document:parser-qa-generic-airway-bill:synthetic-airway-bill-generic-pdf",
+      "extracted_value": [
+        "12 boxes"
+      ],
+      "field_id": "field:document:parser-qa-generic-airway-bill:synthetic-airway-bill-generic-pdf:quantities",
+      "field_name": "quantities",
+      "packet_id": "parser-qa-generic-airway-bill",
+      "page_or_section": "document_text_or_metadata",
+      "provenance": "parser_draft",
+      "redaction_categories": [],
+      "supports_claims": [],
+      "user_confirmation_status": "needs_user_confirmation"
+    },
+    {
+      "blocked_claims": [
+        "document_authenticity_verified",
+        "document_complete",
+        "customs_ready",
+        "tariff_confirmed",
+        "cfia_approved",
+        "origin_confirmed",
+        "buyer_validated",
+        "supplier_verified",
+        "shipment_approved"
+      ],
+      "claim_boundary": "Document parsing organizes draft evidence only. It does not prove authenticity, completeness, customs/tariff correctness, CFIA clearance, buyer validation, supplier verification, or shipment approval.",
+      "confidence": "medium",
+      "document_id": "document:parser-qa-generic-airway-bill:synthetic-airway-bill-generic-pdf",
+      "extracted_value": "Sample spices quantity 12 boxes",
+      "field_id": "field:document:parser-qa-generic-airway-bill:synthetic-airway-bill-generic-pdf:product_description",
+      "field_name": "product_description",
+      "packet_id": "parser-qa-generic-airway-bill",
+      "page_or_section": "document_text_or_metadata",
+      "provenance": "parser_draft",
+      "redaction_categories": [
+        "sensitive_notes"
+      ],
+      "supports_claims": [],
+      "user_confirmation_status": "needs_user_confirmation"
+    },
+    {
+      "blocked_claims": [
+        "document_authenticity_verified",
+        "document_complete",
+        "customs_ready",
+        "tariff_confirmed",
+        "cfia_approved",
+        "origin_confirmed",
+        "buyer_validated",
+        "supplier_verified",
+        "shipment_approved"
+      ],
+      "claim_boundary": "Document parsing organizes draft evidence only. It does not prove authenticity, completeness, customs/tariff correctness, CFIA clearance, buyer validation, supplier verification, or shipment approval.",
+      "confidence": "medium",
+      "document_id": "document:parser-qa-vn-product-specification:synthetic-product-specification-vietnam-seafood-pdf",
+      "extracted_value": "030487",
+      "field_id": "field:document:parser-qa-vn-product-specification:synthetic-product-specification-vietnam-seafood-pdf:hs_code",
+      "field_name": "hs_code",
+      "packet_id": "parser-qa-vn-product-specification",
+      "page_or_section": "document_text_or_metadata",
+      "provenance": "parser_draft",
+      "redaction_categories": [],
+      "supports_claims": [],
+      "user_confirmation_status": "needs_user_confirmation"
+    },
+    {
+      "blocked_claims": [
+        "document_authenticity_verified",
+        "document_complete",
+        "customs_ready",
+        "tariff_confirmed",
+        "cfia_approved",
+        "origin_confirmed",
+        "buyer_validated",
+        "supplier_verified",
+        "shipment_approved"
+      ],
+      "claim_boundary": "Document parsing organizes draft evidence only. It does not prove authenticity, completeness, customs/tariff correctness, CFIA clearance, buyer validation, supplier verification, or shipment approval.",
+      "confidence": "medium",
+      "document_id": "document:parser-qa-vn-product-specification:synthetic-product-specification-vietnam-seafood-pdf",
+      "extracted_value": [
+        "Canada",
+        "Vietnam"
+      ],
+      "field_id": "field:document:parser-qa-vn-product-specification:synthetic-product-specification-vietnam-seafood-pdf:country_mentions",
+      "field_name": "country_mentions",
+      "packet_id": "parser-qa-vn-product-specification",
+      "page_or_section": "document_text_or_metadata",
+      "provenance": "parser_draft",
+      "redaction_categories": [],
+      "supports_claims": [],
+      "user_confirmation_status": "needs_user_confirmation"
+    },
+    {
+      "blocked_claims": [
+        "document_authenticity_verified",
+        "document_complete",
+        "customs_ready",
+        "tariff_confirmed",
+        "cfia_approved",
+        "origin_confirmed",
+        "buyer_validated",
+        "supplier_verified",
+        "shipment_approved"
+      ],
+      "claim_boundary": "Document parsing organizes draft evidence only. It does not prove authenticity, completeness, customs/tariff correctness, CFIA clearance, buyer validation, supplier verification, or shipment approval.",
+      "confidence": "medium",
+      "document_id": "document:parser-qa-vn-product-specification:synthetic-product-specification-vietnam-seafood-pdf",
+      "extracted_value": [
+        "10 kg"
+      ],
+      "field_id": "field:document:parser-qa-vn-product-specification:synthetic-product-specification-vietnam-seafood-pdf:quantities",
+      "field_name": "quantities",
+      "packet_id": "parser-qa-vn-product-specification",
+      "page_or_section": "document_text_or_metadata",
+      "provenance": "parser_draft",
+      "redaction_categories": [],
+      "supports_claims": [],
+      "user_confirmation_status": "needs_user_confirmation"
+    },
+    {
+      "blocked_claims": [
+        "document_authenticity_verified",
+        "document_complete",
+        "customs_ready",
+        "tariff_confirmed",
+        "cfia_approved",
+        "origin_confirmed",
+        "buyer_validated",
+        "supplier_verified",
+        "shipment_approved"
+      ],
+      "claim_boundary": "Document parsing organizes draft evidence only. It does not prove authenticity, completeness, customs/tariff correctness, CFIA clearance, buyer validation, supplier verification, or shipment approval.",
+      "confidence": "medium",
+      "document_id": "document:parser-qa-vn-product-specification:synthetic-product-specification-vietnam-seafood-pdf",
+      "extracted_value": "Specification",
+      "field_id": "field:document:parser-qa-vn-product-specification:synthetic-product-specification-vietnam-seafood-pdf:product_description",
+      "field_name": "product_description",
+      "packet_id": "parser-qa-vn-product-specification",
+      "page_or_section": "document_text_or_metadata",
+      "provenance": "parser_draft",
+      "redaction_categories": [
+        "sensitive_notes"
+      ],
+      "supports_claims": [],
+      "user_confirmation_status": "needs_user_confirmation"
+    },
+    {
+      "blocked_claims": [
+        "document_authenticity_verified",
+        "document_complete",
+        "customs_ready",
+        "tariff_confirmed",
+        "cfia_approved",
+        "origin_confirmed",
+        "buyer_validated",
+        "supplier_verified",
+        "shipment_approved"
+      ],
+      "claim_boundary": "Document parsing organizes draft evidence only. It does not prove authenticity, completeness, customs/tariff correctness, CFIA clearance, buyer validation, supplier verification, or shipment approval.",
+      "confidence": "medium",
+      "document_id": "document:parser-qa-generic-lab-certificate:synthetic-lab-certificate-food-pdf",
+      "extracted_value": [
+        "Vietnam"
+      ],
+      "field_id": "field:document:parser-qa-generic-lab-certificate:synthetic-lab-certificate-food-pdf:country_mentions",
+      "field_name": "country_mentions",
+      "packet_id": "parser-qa-generic-lab-certificate",
+      "page_or_section": "document_text_or_metadata",
+      "provenance": "parser_draft",
+      "redaction_categories": [],
+      "supports_claims": [],
+      "user_confirmation_status": "needs_user_confirmation"
+    },
+    {
+      "blocked_claims": [
+        "document_authenticity_verified",
+        "document_complete",
+        "customs_ready",
+        "tariff_confirmed",
+        "cfia_approved",
+        "origin_confirmed",
+        "buyer_validated",
+        "supplier_verified",
+        "shipment_approved"
+      ],
+      "claim_boundary": "Document parsing organizes draft evidence only. It does not prove authenticity, completeness, customs/tariff correctness, CFIA clearance, buyer validation, supplier verification, or shipment approval.",
+      "confidence": "medium",
+      "document_id": "document:parser-qa-generic-lab-certificate:synthetic-lab-certificate-food-pdf",
+      "extracted_value": [
+        "2026-06-28"
+      ],
+      "field_id": "field:document:parser-qa-generic-lab-certificate:synthetic-lab-certificate-food-pdf:dates",
+      "field_name": "dates",
+      "packet_id": "parser-qa-generic-lab-certificate",
+      "page_or_section": "document_text_or_metadata",
+      "provenance": "parser_draft",
+      "redaction_categories": [
+        "sensitive_notes"
+      ],
+      "supports_claims": [],
+      "user_confirmation_status": "needs_user_confirmation"
+    },
+    {
+      "blocked_claims": [
+        "document_authenticity_verified",
+        "document_complete",
+        "customs_ready",
+        "tariff_confirmed",
+        "cfia_approved",
+        "origin_confirmed",
+        "buyer_validated",
+        "supplier_verified",
+        "shipment_approved"
+      ],
+      "claim_boundary": "Document parsing organizes draft evidence only. It does not prove authenticity, completeness, customs/tariff correctness, CFIA clearance, buyer validation, supplier verification, or shipment approval.",
+      "confidence": "medium",
+      "document_id": "document:parser-qa-vn-phytosanitary-or-health-certificate:synthetic-health-certificate-vietnam-pdf",
+      "extracted_value": [
+        "Canada",
+        "Vietnam"
+      ],
+      "field_id": "field:document:parser-qa-vn-phytosanitary-or-health-certificate:synthetic-health-certificate-vietnam-pdf:country_mentions",
+      "field_name": "country_mentions",
+      "packet_id": "parser-qa-vn-phytosanitary-or-health-certificate",
+      "page_or_section": "document_text_or_metadata",
+      "provenance": "parser_draft",
+      "redaction_categories": [],
+      "supports_claims": [],
+      "user_confirmation_status": "needs_user_confirmation"
+    },
+    {
+      "blocked_claims": [
+        "document_authenticity_verified",
+        "document_complete",
+        "customs_ready",
+        "tariff_confirmed",
+        "cfia_approved",
+        "origin_confirmed",
+        "buyer_validated",
+        "supplier_verified",
+        "shipment_approved"
+      ],
+      "claim_boundary": "Document parsing organizes draft evidence only. It does not prove authenticity, completeness, customs/tariff correctness, CFIA clearance, buyer validation, supplier verification, or shipment approval.",
+      "confidence": "medium",
+      "document_id": "document:parser-qa-vn-phytosanitary-or-health-certificate:synthetic-health-certificate-vietnam-pdf",
+      "extracted_value": "Example Seafood Supplier",
+      "field_id": "field:document:parser-qa-vn-phytosanitary-or-health-certificate:synthetic-health-certificate-vietnam-pdf:supplier_or_exporter",
+      "field_name": "supplier_or_exporter",
+      "packet_id": "parser-qa-vn-phytosanitary-or-health-certificate",
+      "page_or_section": "document_text_or_metadata",
+      "provenance": "parser_draft",
+      "redaction_categories": [
+        "supplier_names"
+      ],
+      "supports_claims": [],
+      "user_confirmation_status": "needs_user_confirmation"
+    },
+    {
+      "blocked_claims": [
+        "document_authenticity_verified",
+        "document_complete",
+        "customs_ready",
+        "tariff_confirmed",
+        "cfia_approved",
+        "origin_confirmed",
+        "buyer_validated",
+        "supplier_verified",
+        "shipment_approved"
+      ],
+      "claim_boundary": "Document parsing organizes draft evidence only. It does not prove authenticity, completeness, customs/tariff correctness, CFIA clearance, buyer validation, supplier verification, or shipment approval.",
+      "confidence": "medium",
+      "document_id": "document:parser-qa-vn-phytosanitary-or-health-certificate:synthetic-health-certificate-vietnam-pdf",
+      "extracted_value": "Frozen tuna fillet",
+      "field_id": "field:document:parser-qa-vn-phytosanitary-or-health-certificate:synthetic-health-certificate-vietnam-pdf:product_description",
+      "field_name": "product_description",
+      "packet_id": "parser-qa-vn-phytosanitary-or-health-certificate",
+      "page_or_section": "document_text_or_metadata",
+      "provenance": "parser_draft",
+      "redaction_categories": [
+        "sensitive_notes"
+      ],
+      "supports_claims": [],
+      "user_confirmation_status": "needs_user_confirmation"
+    },
+    {
+      "blocked_claims": [
+        "document_authenticity_verified",
+        "document_complete",
+        "customs_ready",
+        "tariff_confirmed",
+        "cfia_approved",
+        "origin_confirmed",
+        "buyer_validated",
+        "supplier_verified",
+        "shipment_approved"
+      ],
+      "claim_boundary": "Document parsing organizes draft evidence only. It does not prove authenticity, completeness, customs/tariff correctness, CFIA clearance, buyer validation, supplier verification, or shipment approval.",
+      "confidence": "medium",
+      "document_id": "document:parser-qa-ca-purchase-order:synthetic-purchase-order-canada-buyer-pdf",
+      "extracted_value": [
+        "Canada"
+      ],
+      "field_id": "field:document:parser-qa-ca-purchase-order:synthetic-purchase-order-canada-buyer-pdf:country_mentions",
+      "field_name": "country_mentions",
+      "packet_id": "parser-qa-ca-purchase-order",
+      "page_or_section": "document_text_or_metadata",
+      "provenance": "parser_draft",
+      "redaction_categories": [],
+      "supports_claims": [],
+      "user_confirmation_status": "needs_user_confirmation"
+    },
+    {
+      "blocked_claims": [
+        "document_authenticity_verified",
+        "document_complete",
+        "customs_ready",
+        "tariff_confirmed",
+        "cfia_approved",
+        "origin_confirmed",
+        "buyer_validated",
+        "supplier_verified",
+        "shipment_approved"
+      ],
+      "claim_boundary": "Document parsing organizes draft evidence only. It does not prove authenticity, completeness, customs/tariff correctness, CFIA clearance, buyer validation, supplier verification, or shipment approval.",
+      "confidence": "medium",
+      "document_id": "document:parser-qa-ca-purchase-order:synthetic-purchase-order-canada-buyer-pdf",
+      "extracted_value": "Example Exporter Pvt Ltd",
+      "field_id": "field:document:parser-qa-ca-purchase-order:synthetic-purchase-order-canada-buyer-pdf:supplier_or_exporter",
+      "field_name": "supplier_or_exporter",
+      "packet_id": "parser-qa-ca-purchase-order",
+      "page_or_section": "document_text_or_metadata",
+      "provenance": "parser_draft",
+      "redaction_categories": [
+        "supplier_names"
+      ],
+      "supports_claims": [],
+      "user_confirmation_status": "needs_user_confirmation"
+    },
+    {
+      "blocked_claims": [
+        "document_authenticity_verified",
+        "document_complete",
+        "customs_ready",
+        "tariff_confirmed",
+        "cfia_approved",
+        "origin_confirmed",
+        "buyer_validated",
+        "supplier_verified",
+        "shipment_approved"
+      ],
+      "claim_boundary": "Document parsing organizes draft evidence only. It does not prove authenticity, completeness, customs/tariff correctness, CFIA clearance, buyer validation, supplier verification, or shipment approval.",
+      "confidence": "medium",
+      "document_id": "document:parser-qa-ca-purchase-order:synthetic-purchase-order-canada-buyer-pdf",
+      "extracted_value": "Maple Import Foods Inc",
+      "field_id": "field:document:parser-qa-ca-purchase-order:synthetic-purchase-order-canada-buyer-pdf:buyer_or_importer",
+      "field_name": "buyer_or_importer",
+      "packet_id": "parser-qa-ca-purchase-order",
+      "page_or_section": "document_text_or_metadata",
+      "provenance": "parser_draft",
+      "redaction_categories": [
+        "buyer_names"
+      ],
+      "supports_claims": [],
+      "user_confirmation_status": "needs_user_confirmation"
+    },
+    {
+      "blocked_claims": [
+        "document_authenticity_verified",
+        "document_complete",
+        "customs_ready",
+        "tariff_confirmed",
+        "cfia_approved",
+        "origin_confirmed",
+        "buyer_validated",
+        "supplier_verified",
+        "shipment_approved"
+      ],
+      "claim_boundary": "Document parsing organizes draft evidence only. It does not prove authenticity, completeness, customs/tariff correctness, CFIA clearance, buyer validation, supplier verification, or shipment approval.",
+      "confidence": "medium",
+      "document_id": "document:parser-qa-ca-purchase-order:synthetic-purchase-order-canada-buyer-pdf",
+      "extracted_value": [
+        "CAD 18000"
+      ],
+      "field_id": "field:document:parser-qa-ca-purchase-order:synthetic-purchase-order-canada-buyer-pdf:amounts",
+      "field_name": "amounts",
+      "packet_id": "parser-qa-ca-purchase-order",
+      "page_or_section": "document_text_or_metadata",
+      "provenance": "parser_draft",
+      "redaction_categories": [
+        "prices"
+      ],
+      "supports_claims": [],
+      "user_confirmation_status": "needs_user_confirmation"
+    },
+    {
+      "blocked_claims": [
+        "document_authenticity_verified",
+        "document_complete",
+        "customs_ready",
+        "tariff_confirmed",
+        "cfia_approved",
+        "origin_confirmed",
+        "buyer_validated",
+        "supplier_verified",
+        "shipment_approved"
+      ],
+      "claim_boundary": "Document parsing organizes draft evidence only. It does not prove authenticity, completeness, customs/tariff correctness, CFIA clearance, buyer validation, supplier verification, or shipment approval.",
+      "confidence": "medium",
+      "document_id": "document:parser-qa-ca-purchase-order:synthetic-purchase-order-canada-buyer-pdf",
+      "extracted_value": [
+        "100 cartons"
+      ],
+      "field_id": "field:document:parser-qa-ca-purchase-order:synthetic-purchase-order-canada-buyer-pdf:quantities",
+      "field_name": "quantities",
+      "packet_id": "parser-qa-ca-purchase-order",
+      "page_or_section": "document_text_or_metadata",
+      "provenance": "parser_draft",
+      "redaction_categories": [],
+      "supports_claims": [],
+      "user_confirmation_status": "needs_user_confirmation"
+    },
+    {
+      "blocked_claims": [
+        "document_authenticity_verified",
+        "document_complete",
+        "customs_ready",
+        "tariff_confirmed",
+        "cfia_approved",
+        "origin_confirmed",
+        "buyer_validated",
+        "supplier_verified",
+        "shipment_approved"
+      ],
+      "claim_boundary": "Document parsing organizes draft evidence only. It does not prove authenticity, completeness, customs/tariff correctness, CFIA clearance, buyer validation, supplier verification, or shipment approval.",
+      "confidence": "medium",
+      "document_id": "document:parser-qa-ca-purchase-order:synthetic-purchase-order-canada-buyer-pdf",
+      "extracted_value": "Organic turmeric powder quantity 100 cartons amount CAD 18000",
+      "field_id": "field:document:parser-qa-ca-purchase-order:synthetic-purchase-order-canada-buyer-pdf:product_description",
+      "field_name": "product_description",
+      "packet_id": "parser-qa-ca-purchase-order",
+      "page_or_section": "document_text_or_metadata",
+      "provenance": "parser_draft",
+      "redaction_categories": [
+        "sensitive_notes"
+      ],
+      "supports_claims": [],
+      "user_confirmation_status": "needs_user_confirmation"
+    },
+    {
+      "blocked_claims": [
+        "document_authenticity_verified",
+        "document_complete",
+        "customs_ready",
+        "tariff_confirmed",
+        "cfia_approved",
+        "origin_confirmed",
+        "buyer_validated",
+        "supplier_verified",
+        "shipment_approved"
+      ],
+      "claim_boundary": "Document parsing organizes draft evidence only. It does not prove authenticity, completeness, customs/tariff correctness, CFIA clearance, buyer validation, supplier verification, or shipment approval.",
+      "confidence": "medium",
+      "document_id": "document:parser-qa-generic-contract:synthetic-contract-incoterms-pdf",
+      "extracted_value": "Example Exporter Pvt Ltd",
+      "field_id": "field:document:parser-qa-generic-contract:synthetic-contract-incoterms-pdf:supplier_or_exporter",
+      "field_name": "supplier_or_exporter",
+      "packet_id": "parser-qa-generic-contract",
+      "page_or_section": "document_text_or_metadata",
+      "provenance": "parser_draft",
+      "redaction_categories": [
+        "supplier_names"
+      ],
+      "supports_claims": [],
+      "user_confirmation_status": "needs_user_confirmation"
+    },
+    {
+      "blocked_claims": [
+        "document_authenticity_verified",
+        "document_complete",
+        "customs_ready",
+        "tariff_confirmed",
+        "cfia_approved",
+        "origin_confirmed",
+        "buyer_validated",
+        "supplier_verified",
+        "shipment_approved"
+      ],
+      "claim_boundary": "Document parsing organizes draft evidence only. It does not prove authenticity, completeness, customs/tariff correctness, CFIA clearance, buyer validation, supplier verification, or shipment approval.",
+      "confidence": "medium",
+      "document_id": "document:parser-qa-generic-contract:synthetic-contract-incoterms-pdf",
+      "extracted_value": "Maple Import Foods Inc",
+      "field_id": "field:document:parser-qa-generic-contract:synthetic-contract-incoterms-pdf:buyer_or_importer",
+      "field_name": "buyer_or_importer",
+      "packet_id": "parser-qa-generic-contract",
+      "page_or_section": "document_text_or_metadata",
+      "provenance": "parser_draft",
+      "redaction_categories": [
+        "buyer_names"
+      ],
+      "supports_claims": [],
+      "user_confirmation_status": "needs_user_confirmation"
+    },
+    {
+      "blocked_claims": [
+        "document_authenticity_verified",
+        "document_complete",
+        "customs_ready",
+        "tariff_confirmed",
+        "cfia_approved",
+        "origin_confirmed",
+        "buyer_validated",
+        "supplier_verified",
+        "shipment_approved"
+      ],
+      "claim_boundary": "Document parsing organizes draft evidence only. It does not prove authenticity, completeness, customs/tariff correctness, CFIA clearance, buyer validation, supplier verification, or shipment approval.",
+      "confidence": "medium",
+      "document_id": "document:parser-qa-generic-contract:synthetic-contract-incoterms-pdf",
+      "extracted_value": [
+        "FOB"
+      ],
+      "field_id": "field:document:parser-qa-generic-contract:synthetic-contract-incoterms-pdf:incoterms",
+      "field_name": "incoterms",
+      "packet_id": "parser-qa-generic-contract",
+      "page_or_section": "document_text_or_metadata",
+      "provenance": "parser_draft",
+      "redaction_categories": [],
+      "supports_claims": [],
+      "user_confirmation_status": "needs_user_confirmation"
+    },
+    {
+      "blocked_claims": [
+        "document_authenticity_verified",
+        "document_complete",
+        "customs_ready",
+        "tariff_confirmed",
+        "cfia_approved",
+        "origin_confirmed",
+        "buyer_validated",
+        "supplier_verified",
+        "shipment_approved"
+      ],
+      "claim_boundary": "Document parsing organizes draft evidence only. It does not prove authenticity, completeness, customs/tariff correctness, CFIA clearance, buyer validation, supplier verification, or shipment approval.",
+      "confidence": "medium",
+      "document_id": "document:parser-qa-generic-contract:synthetic-contract-incoterms-pdf",
+      "extracted_value": [
+        "2026-06-28"
+      ],
+      "field_id": "field:document:parser-qa-generic-contract:synthetic-contract-incoterms-pdf:dates",
+      "field_name": "dates",
+      "packet_id": "parser-qa-generic-contract",
+      "page_or_section": "document_text_or_metadata",
+      "provenance": "parser_draft",
+      "redaction_categories": [
+        "sensitive_notes"
+      ],
+      "supports_claims": [],
+      "user_confirmation_status": "needs_user_confirmation"
+    },
+    {
+      "blocked_claims": [
+        "document_authenticity_verified",
+        "document_complete",
+        "customs_ready",
+        "tariff_confirmed",
+        "cfia_approved",
+        "origin_confirmed",
+        "buyer_validated",
+        "supplier_verified",
+        "shipment_approved"
+      ],
+      "claim_boundary": "Document parsing organizes draft evidence only. It does not prove authenticity, completeness, customs/tariff correctness, CFIA clearance, buyer validation, supplier verification, or shipment approval.",
+      "confidence": "medium",
+      "document_id": "document:parser-qa-generic-contract:synthetic-contract-incoterms-pdf",
+      "extracted_value": [
+        "USD 12500"
+      ],
+      "field_id": "field:document:parser-qa-generic-contract:synthetic-contract-incoterms-pdf:amounts",
+      "field_name": "amounts",
+      "packet_id": "parser-qa-generic-contract",
+      "page_or_section": "document_text_or_metadata",
+      "provenance": "parser_draft",
+      "redaction_categories": [
+        "prices"
+      ],
+      "supports_claims": [],
+      "user_confirmation_status": "needs_user_confirmation"
+    },
+    {
+      "blocked_claims": [
+        "document_authenticity_verified",
+        "document_complete",
+        "customs_ready",
+        "tariff_confirmed",
+        "cfia_approved",
+        "origin_confirmed",
+        "buyer_validated",
+        "supplier_verified",
+        "shipment_approved"
+      ],
+      "claim_boundary": "Document parsing organizes draft evidence only. It does not prove authenticity, completeness, customs/tariff correctness, CFIA clearance, buyer validation, supplier verification, or shipment approval.",
+      "confidence": "medium",
+      "document_id": "document:parser-qa-generic-contract:synthetic-contract-incoterms-pdf",
+      "extracted_value": "Organic turmeric powder",
+      "field_id": "field:document:parser-qa-generic-contract:synthetic-contract-incoterms-pdf:product_description",
+      "field_name": "product_description",
+      "packet_id": "parser-qa-generic-contract",
+      "page_or_section": "document_text_or_metadata",
+      "provenance": "parser_draft",
+      "redaction_categories": [
+        "sensitive_notes"
+      ],
+      "supports_claims": [],
+      "user_confirmation_status": "needs_user_confirmation"
+    },
+    {
+      "blocked_claims": [
+        "document_authenticity_verified",
+        "document_complete",
+        "customs_ready",
+        "tariff_confirmed",
+        "cfia_approved",
+        "origin_confirmed",
+        "buyer_validated",
+        "supplier_verified",
+        "shipment_approved"
+      ],
+      "claim_boundary": "Document parsing organizes draft evidence only. It does not prove authenticity, completeness, customs/tariff correctness, CFIA clearance, buyer validation, supplier verification, or shipment approval.",
+      "confidence": "medium",
+      "document_id": "document:parser-qa-generic-inspection-report:synthetic-inspection-report-supplier-pdf",
+      "extracted_value": "Example Seafood Supplier",
+      "field_id": "field:document:parser-qa-generic-inspection-report:synthetic-inspection-report-supplier-pdf:supplier_or_exporter",
+      "field_name": "supplier_or_exporter",
+      "packet_id": "parser-qa-generic-inspection-report",
+      "page_or_section": "document_text_or_metadata",
+      "provenance": "parser_draft",
+      "redaction_categories": [
+        "supplier_names"
+      ],
+      "supports_claims": [],
+      "user_confirmation_status": "needs_user_confirmation"
+    },
+    {
+      "blocked_claims": [
+        "document_authenticity_verified",
+        "document_complete",
+        "customs_ready",
+        "tariff_confirmed",
+        "cfia_approved",
+        "origin_confirmed",
+        "buyer_validated",
+        "supplier_verified",
+        "shipment_approved"
+      ],
+      "claim_boundary": "Document parsing organizes draft evidence only. It does not prove authenticity, completeness, customs/tariff correctness, CFIA clearance, buyer validation, supplier verification, or shipment approval.",
+      "confidence": "medium",
+      "document_id": "document:parser-qa-generic-inspection-report:synthetic-inspection-report-supplier-pdf",
+      "extracted_value": [
+        "2026-06-28"
+      ],
+      "field_id": "field:document:parser-qa-generic-inspection-report:synthetic-inspection-report-supplier-pdf:dates",
+      "field_name": "dates",
+      "packet_id": "parser-qa-generic-inspection-report",
+      "page_or_section": "document_text_or_metadata",
+      "provenance": "parser_draft",
+      "redaction_categories": [
+        "sensitive_notes"
+      ],
+      "supports_claims": [],
+      "user_confirmation_status": "needs_user_confirmation"
+    }
+  ],
+  "generated_at": "2026-06-28T13:51:10+00:00",
+  "malware_scan_proven": false,
+  "object_storage_ready": false,
+  "official_sample_document_count": 3,
+  "parser_outputs_are_draft": true,
+  "pipeline_policy": {
+    "accepted_file_types": [
+      "application/pdf"
+    ],
+    "ai_policy_status": "ai_data_policy_ready",
+    "claim_boundary": "Document controls are local proof only; hosted upload, AI, and storage readiness require security/privacy review.",
+    "direct_file_serving": false,
+    "external_effects_created": false,
+    "generated_storage_names": true,
+    "hosted_uploads_enabled": false,
+    "manual_no_ai_supported": true,
+    "max_bytes": 5242880,
+    "max_pages_per_pdf": 25,
+    "ocr_cost_gate": {
+      "estimated_credits_per_page": 2,
+      "external_charge_created": false,
+      "requires_user_approval": true
+    },
+    "real_uploads_enabled": false
+  },
+  "pipeline_stage_count": 16,
+  "pipeline_stages": [
+    {
+      "control": "PDF-only intake with user notice and local rate-limit policy",
+      "gate": "real_uploads_blocked_until_hosted_security_privacy_review",
+      "stage": "upload_intake",
+      "status": "local_policy_ready_hosted_auth_required"
+    },
+    {
+      "control": "Allowlisted PDF extension and content-type policy",
+      "gate": "hosted_validation_must_repeat_server_side",
+      "stage": "extension_allowlist",
+      "status": "local_policy_ready"
+    },
+    {
+      "control": "PDF magic-byte and EOF checks through bounded parser",
+      "gate": "signature_check_is_not_malware_scan",
+      "stage": "file_signature_check",
+      "status": "local_parser_ready"
+    },
+    {
+      "control": "Generated quarantine names instead of direct user filenames",
+      "gate": "private_object_storage_required_for_real_files",
+      "stage": "generated_filename",
+      "status": "local_policy_ready"
+    },
+    {
+      "control": "5 MB and 25-page public quick-check limits",
+      "gate": "limits_need_hosted_enforcement",
+      "stage": "size_and_page_limit",
+      "status": "local_policy_ready"
+    },
+    {
+      "control": "No direct file serving from quarantine paths",
+      "gate": "object_storage_and_access_policy_not_proven",
+      "stage": "quarantine",
+      "status": "local_policy_ready"
+    },
+    {
+      "control": "Malware scan is required before real customer-file handling",
+      "gate": "real_uploads_blocked_until_malware_scanner_proof",
+      "stage": "malware_scan",
+      "status": "external_gate_required_not_proven"
+    },
+    {
+      "control": "Native text extraction first; OCR requires explicit approval and cost gate",
+      "gate": "ocr_outputs_are_draft",
+      "stage": "ocr_text_extraction",
+      "status": "local_parser_ready_ocr_external_gate_closed"
+    },
+    {
+      "control": "Document type detection from text and filename signals",
+      "gate": "classification_is_not_authenticity_or_compliance_proof",
+      "stage": "document_classification",
+      "status": "local_classifier_ready_draft_only"
+    },
+    {
+      "control": "Extracted field rows with provenance and confidence",
+      "gate": "parser_extraction_is_draft_evidence",
+      "stage": "field_extraction",
+      "status": "local_extractor_ready_draft_only"
+    },
+    {
+      "control": "Parser confidence score and field confidence labels",
+      "gate": "confidence_score_cannot_open_claims",
+      "stage": "confidence_scoring",
+      "status": "local_scoring_ready"
+    },
+    {
+      "control": "All user-facing extracted fields require confirmation before packet use",
+      "gate": "unconfirmed_fields_block_claims",
+      "stage": "user_confirmation",
+      "status": "local_confirmation_gate_ready"
+    },
+    {
+      "control": "Each document becomes a bounded EvidenceItem-style record",
+      "gate": "evidence_mapping_does_not_verify_document",
+      "stage": "evidence_ledger_mapping",
+      "status": "local_mapping_ready"
+    },
+    {
+      "control": "Sensitive field categories are named before AI or sharing",
+      "gate": "production_redaction_requires_review",
+      "stage": "redaction_preview",
+      "status": "local_redaction_preview_ready"
+    },
+    {
+      "control": "AI is optional, labeled, policy-bound, and unable to open gates",
+      "gate": "ai_cannot_open_document_claims",
+      "stage": "ai_optional_analysis",
+      "status": "policy_ready_external_provider_review_required"
+    },
+    {
+      "control": "Reports carry draft/review/final watermarks and blocked-claim sections",
+      "gate": "reports_must_keep_blocked_claims_visible",
+      "stage": "report_usage",
+      "status": "local_report_route_ready"
+    }
+  ],
+  "product": "Trade Readiness Copilot",
+  "proof_boundary": "Document intelligence now has a production-shaped local pipeline, official sample-form routing, document records, extracted field provenance, evidence mapping, redaction previews, and closed gates. It still does not prove hosted upload security, malware scanning, private object storage, AI-provider safety, document authenticity, customs/tariff correctness, CFIA clearance, buyer validation, supplier verification, shipment approval, or public launch readiness.",
+  "public_launch_ready": false,
+  "real_uploads_enabled": false,
+  "redaction_preview_count": 18,
+  "redaction_previews": [
+    {
+      "document_id": "document:packet-frozen-tuna-canada-001:supplier-profile-placeholder-pdf",
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "production_redaction_proven": false,
+      "redaction_categories": [],
+      "redaction_required": false,
+      "redaction_status": "not_required"
+    },
+    {
+      "document_id": "document:packet-frozen-tuna-canada-001:product-spec-placeholder-pdf",
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "production_redaction_proven": false,
+      "redaction_categories": [],
+      "redaction_required": false,
+      "redaction_status": "not_required"
+    },
+    {
+      "document_id": "document:packet-organic-turmeric-powder:complete-transformation-blueprint-pdf",
+      "packet_id": "packet-organic-turmeric-powder",
+      "production_redaction_proven": false,
+      "redaction_categories": [],
+      "redaction_required": false,
+      "redaction_status": "not_required"
+    },
+    {
+      "document_id": "document:packet-demo-turmeric-invoice:demo-commercial-invoice-pdf",
+      "packet_id": "packet-demo-turmeric-invoice",
+      "production_redaction_proven": false,
+      "redaction_categories": [],
+      "redaction_required": false,
+      "redaction_status": "not_required"
+    },
+    {
+      "document_id": "document:official-sample-ca-commercial-invoice:cbsa-ci1-canada-customs-invoice-pdf",
+      "packet_id": "official-sample-ca-commercial-invoice",
+      "production_redaction_proven": false,
+      "redaction_categories": [
+        "ids",
+        "prices"
+      ],
+      "redaction_required": true,
+      "redaction_status": "preview_required_before_ai_or_sharing"
+    },
+    {
+      "document_id": "document:official-sample-ca-bill-of-lading:cbsa-a8a-b-cargo-control-document-pdf",
+      "packet_id": "official-sample-ca-bill-of-lading",
+      "production_redaction_proven": false,
+      "redaction_categories": [],
+      "redaction_required": false,
+      "redaction_status": "not_required"
+    },
+    {
+      "document_id": "document:official-sample-ca-phytosanitary-or-health-certificate:cfia-5272-documentation-review-request-pdf",
+      "packet_id": "official-sample-ca-phytosanitary-or-health-certificate",
+      "production_redaction_proven": false,
+      "redaction_categories": [],
+      "redaction_required": false,
+      "redaction_status": "not_required"
+    },
+    {
+      "document_id": "document:parser-qa-ca-commercial-invoice:synthetic-commercial-invoice-canada-pdf",
+      "packet_id": "parser-qa-ca-commercial-invoice",
+      "production_redaction_proven": false,
+      "redaction_categories": [
+        "buyer_names",
+        "ids",
+        "prices",
+        "sensitive_notes",
+        "supplier_names"
+      ],
+      "redaction_required": true,
+      "redaction_status": "preview_required_before_ai_or_sharing"
+    },
+    {
+      "document_id": "document:parser-qa-in-packing-list:synthetic-packing-list-india-export-pdf",
+      "packet_id": "parser-qa-in-packing-list",
+      "production_redaction_proven": false,
+      "redaction_categories": [
+        "buyer_names",
+        "sensitive_notes",
+        "supplier_names"
+      ],
+      "redaction_required": true,
+      "redaction_status": "preview_required_before_ai_or_sharing"
+    },
+    {
+      "document_id": "document:parser-qa-in-certificate-of-origin:synthetic-certificate-of-origin-india-pdf",
+      "packet_id": "parser-qa-in-certificate-of-origin",
+      "production_redaction_proven": false,
+      "redaction_categories": [
+        "buyer_names",
+        "supplier_names"
+      ],
+      "redaction_required": true,
+      "redaction_status": "preview_required_before_ai_or_sharing"
+    },
+    {
+      "document_id": "document:parser-qa-vn-bill-of-lading:synthetic-bill-of-lading-vietnam-pdf",
+      "packet_id": "parser-qa-vn-bill-of-lading",
+      "production_redaction_proven": false,
+      "redaction_categories": [
+        "buyer_names",
+        "supplier_names"
+      ],
+      "redaction_required": true,
+      "redaction_status": "preview_required_before_ai_or_sharing"
+    },
+    {
+      "document_id": "document:parser-qa-generic-airway-bill:synthetic-airway-bill-generic-pdf",
+      "packet_id": "parser-qa-generic-airway-bill",
+      "production_redaction_proven": false,
+      "redaction_categories": [
+        "buyer_names",
+        "sensitive_notes"
+      ],
+      "redaction_required": true,
+      "redaction_status": "preview_required_before_ai_or_sharing"
+    },
+    {
+      "document_id": "document:parser-qa-vn-product-specification:synthetic-product-specification-vietnam-seafood-pdf",
+      "packet_id": "parser-qa-vn-product-specification",
+      "production_redaction_proven": false,
+      "redaction_categories": [
+        "sensitive_notes"
+      ],
+      "redaction_required": true,
+      "redaction_status": "preview_required_before_ai_or_sharing"
+    },
+    {
+      "document_id": "document:parser-qa-generic-lab-certificate:synthetic-lab-certificate-food-pdf",
+      "packet_id": "parser-qa-generic-lab-certificate",
+      "production_redaction_proven": false,
+      "redaction_categories": [
+        "sensitive_notes"
+      ],
+      "redaction_required": true,
+      "redaction_status": "preview_required_before_ai_or_sharing"
+    },
+    {
+      "document_id": "document:parser-qa-vn-phytosanitary-or-health-certificate:synthetic-health-certificate-vietnam-pdf",
+      "packet_id": "parser-qa-vn-phytosanitary-or-health-certificate",
+      "production_redaction_proven": false,
+      "redaction_categories": [
+        "sensitive_notes",
+        "supplier_names"
+      ],
+      "redaction_required": true,
+      "redaction_status": "preview_required_before_ai_or_sharing"
+    },
+    {
+      "document_id": "document:parser-qa-ca-purchase-order:synthetic-purchase-order-canada-buyer-pdf",
+      "packet_id": "parser-qa-ca-purchase-order",
+      "production_redaction_proven": false,
+      "redaction_categories": [
+        "buyer_names",
+        "prices",
+        "sensitive_notes",
+        "supplier_names"
+      ],
+      "redaction_required": true,
+      "redaction_status": "preview_required_before_ai_or_sharing"
+    },
+    {
+      "document_id": "document:parser-qa-generic-contract:synthetic-contract-incoterms-pdf",
+      "packet_id": "parser-qa-generic-contract",
+      "production_redaction_proven": false,
+      "redaction_categories": [
+        "buyer_names",
+        "prices",
+        "sensitive_notes",
+        "supplier_names"
+      ],
+      "redaction_required": true,
+      "redaction_status": "preview_required_before_ai_or_sharing"
+    },
+    {
+      "document_id": "document:parser-qa-generic-inspection-report:synthetic-inspection-report-supplier-pdf",
+      "packet_id": "parser-qa-generic-inspection-report",
+      "production_redaction_proven": false,
+      "redaction_categories": [
+        "sensitive_notes",
+        "supplier_names"
+      ],
+      "redaction_required": true,
+      "redaction_status": "preview_required_before_ai_or_sharing"
+    }
+  ],
+  "required_trade_document_classes": [
+    {
+      "document_class": "commercial_invoice",
+      "expected_fields": [
+        "invoice_or_reference",
+        "buyer_or_importer",
+        "supplier_or_exporter",
+        "origin_country",
+        "destination_country",
+        "amounts"
+      ],
+      "label": "Commercial invoice",
+      "source_basis": "CBSA CI1 official sample form and common trade-document requirements"
+    },
+    {
+      "document_class": "packing_list",
+      "expected_fields": [
+        "quantities",
+        "weights",
+        "packages",
+        "product_description"
+      ],
+      "label": "Packing list",
+      "source_basis": "Common shipment-document package"
+    },
+    {
+      "document_class": "certificate_of_origin",
+      "expected_fields": [
+        "origin_country",
+        "hs_code",
+        "supplier_or_exporter"
+      ],
+      "label": "Certificate of origin",
+      "source_basis": "Origin evidence route; not proof without review"
+    },
+    {
+      "document_class": "bill_of_lading",
+      "expected_fields": [
+        "carrier",
+        "port_of_loading",
+        "port_of_discharge",
+        "buyer_or_importer",
+        "supplier_or_exporter"
+      ],
+      "label": "Bill of lading",
+      "source_basis": "Transport-document route"
+    },
+    {
+      "document_class": "airway_bill",
+      "expected_fields": [
+        "carrier",
+        "origin_country",
+        "destination_country",
+        "shipper",
+        "consignee"
+      ],
+      "label": "Airway bill",
+      "source_basis": "Transport-document route"
+    },
+    {
+      "document_class": "product_specification",
+      "expected_fields": [
+        "product_description",
+        "composition",
+        "intended_use",
+        "hs_code"
+      ],
+      "label": "Product specification",
+      "source_basis": "Product-document route"
+    },
+    {
+      "document_class": "lab_certificate",
+      "expected_fields": [
+        "test_method",
+        "result",
+        "lab_name",
+        "sample_date"
+      ],
+      "label": "Lab certificate",
+      "source_basis": "Product testing evidence route"
+    },
+    {
+      "document_class": "phytosanitary_or_health_certificate",
+      "expected_fields": [
+        "issuing_authority",
+        "product",
+        "origin_country",
+        "certificate_number"
+      ],
+      "label": "Phytosanitary or health certificate",
+      "source_basis": "CFIA-regulated product evidence route"
+    },
+    {
+      "document_class": "purchase_order",
+      "expected_fields": [
+        "buyer_or_importer",
+        "supplier_or_exporter",
+        "product_description",
+        "amounts"
+      ],
+      "label": "Purchase order",
+      "source_basis": "Buyer evidence route"
+    },
+    {
+      "document_class": "contract",
+      "expected_fields": [
+        "parties",
+        "incoterms",
+        "payment_terms",
+        "governing_terms"
+      ],
+      "label": "Contract",
+      "source_basis": "Commercial responsibility evidence route"
+    },
+    {
+      "document_class": "inspection_report",
+      "expected_fields": [
+        "inspection_body",
+        "inspection_date",
+        "result",
+        "product_description"
+      ],
+      "label": "Inspection report",
+      "source_basis": "Supplier/product evidence route"
+    }
+  ],
+  "source_records": [
+    {
+      "claim_boundary": "Reference source only; official sample form only; it is not customer evidence, customs approval, accounting proof, or shipment readiness.",
+      "country_code": "CA",
+      "document_class": "commercial_invoice",
+      "product_use": "classifier and reviewer-question reference only",
+      "sample_level": "official_pdf_downloaded",
+      "source_id": "cbsa-ci1-canada-customs-invoice",
+      "source_kind": "official_sample_form",
+      "source_name": "CBSA CI1 Canada Customs Invoice",
+      "url": "https://www.cbsa-asfc.gc.ca/publications/forms-formulaires/ci1.pdf"
+    },
+    {
+      "claim_boundary": "Reference source only; official sample form only; it does not prove cargo release, transport readiness, customs accounting, or compliance.",
+      "country_code": "CA",
+      "document_class": "bill_of_lading",
+      "product_use": "classifier and reviewer-question reference only",
+      "sample_level": "official_pdf_downloaded",
+      "source_id": "cbsa-a8a-b-cargo-control-document",
+      "source_kind": "official_sample_form",
+      "source_name": "CBSA A8A(B) Cargo Control Document",
+      "url": "https://www.cbsa-asfc.gc.ca/publications/forms-formulaires/a8a-b.pdf"
+    },
+    {
+      "claim_boundary": "Reference source only; official sample form only; it does not prove CFIA clearance, admissibility, or compliance.",
+      "country_code": "CA",
+      "document_class": "phytosanitary_or_health_certificate",
+      "product_use": "classifier and reviewer-question reference only",
+      "sample_level": "official_pdf_downloaded",
+      "source_id": "cfia-5272-documentation-review-request",
+      "source_kind": "official_sample_form",
+      "source_name": "CFIA 5272 Request for Documentation Review",
+      "url": "https://inspection.canada.ca/sites/default/files/legacy/DAM/DAM-form-forme/STAGING/text-texte/c5272_re_1369400657637_eng.pdf"
+    },
+    {
+      "availability_status": "dynamic_page_no_stable_pdf_download_verified",
+      "claim_boundary": "Reference source only; no stable local PDF sample was verified in this pass and India export claims require current source review.",
+      "country_code": "IN",
+      "document_class": "certificate_of_origin",
+      "product_use": "country source routing and future sample-form lookup",
+      "sample_level": "official_source_route_only",
+      "source_id": "india-dgft-appendices-anf",
+      "source_kind": "official_source_route_only",
+      "source_name": "India DGFT Appendices and Aayat Niryat Forms",
+      "url": "https://www.dgft.gov.in/CP/?opt=appendices-and-anf"
+    },
+    {
+      "availability_status": "official_route_recorded_pdf_download_not_verified",
+      "claim_boundary": "Reference source only; no stable local PDF sample was verified in this pass and customs readiness claims remain blocked.",
+      "country_code": "IN",
+      "document_class": "shipping_bill_or_bill_of_entry",
+      "product_use": "country source routing and future sample-form lookup",
+      "sample_level": "official_source_route_only",
+      "source_id": "india-cbic-customs-forms",
+      "source_kind": "official_source_route_only",
+      "source_name": "India CBIC Customs Forms Route",
+      "url": "https://www.cbic.gov.in/"
+    },
+    {
+      "availability_status": "official_portal_recorded_pdf_download_not_verified",
+      "claim_boundary": "Reference source only; no stable local PDF sample was verified in this pass and Vietnam customs/export claims require current source review.",
+      "country_code": "VN",
+      "document_class": "customs_declaration_route",
+      "product_use": "country source routing and future sample-form lookup",
+      "sample_level": "official_source_route_only",
+      "source_id": "vietnam-customs-portal",
+      "source_kind": "official_source_route_only",
+      "source_name": "General Department of Vietnam Customs Portal",
+      "url": "https://www.customs.gov.vn/"
+    },
+    {
+      "availability_status": "current_forms_menu_comments_out_b3b_pdf_row",
+      "claim_boundary": "Source route only; no local official sample PDF was verified.",
+      "country_code": "CA",
+      "document_class": "customs_coding_form_route",
+      "product_use": "country source routing and future sample-form lookup",
+      "sample_level": "official_source_route_only",
+      "source_id": "cbsa-b3b-commented-menu-route",
+      "source_kind": "official_source_route_only",
+      "source_name": "Canada Border Services Agency",
+      "url": "https://www.cbsa-asfc.gc.ca/publications/forms-formulaires/menu-eng.html"
+    },
+    {
+      "claim_boundary": "Reference source only; hosted upload readiness requires product-specific security controls, scans, storage isolation, and review evidence.",
+      "product_use": "upload pipeline and hosted-control gate reference",
+      "source_id": "owasp-file-upload",
+      "source_kind": "security_control_reference",
+      "source_name": "OWASP File Upload Cheat Sheet",
+      "url": "https://cheatsheetseries.owasp.org/cheatsheets/File_Upload_Cheat_Sheet.html"
+    }
+  ],
+  "source_route_only_sample_count": 4,
+  "status": "production_document_intelligence_engine_ready_local_pipeline_security_gates_closed",
+  "synthetic_parser_fixture_count": 11
+}

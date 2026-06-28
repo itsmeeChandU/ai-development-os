@@ -50,11 +50,18 @@ The next production slices now write the packet and country/source engines:
 `system_review_graph/production_market_intelligence_manifest.json`,
 `system_review_graph/production_market_signals.json`,
 `system_review_graph/production_market_dataset_connectors.json`, and
-`docs/PRODUCTION_MARKET_INTELLIGENCE_ENGINE.md`. These engines evaluate the
-real local fixture packet into production packet states/views/scores, turn the
-official source registry plus source-refresh records into reference-only
-country packs, and create source-routed market signal records without demand
-or profitability claims.
+`docs/PRODUCTION_MARKET_INTELLIGENCE_ENGINE.md`. The document slice writes
+`system_review_graph/production_document_intelligence_manifest.json`,
+`system_review_graph/production_document_pipeline.json`,
+`system_review_graph/production_document_extracted_fields.json`,
+`docs/PRODUCTION_DOCUMENT_INTELLIGENCE_ENGINE.md`,
+downloaded official CBSA/CFIA sample PDFs, and filled parser QA PDFs for the
+expected trade-document set. These engines evaluate the real local fixture
+packet into production packet states/views/scores, turn the official source
+registry plus source-refresh records into reference-only country packs, create
+source-routed market signal records without demand or profitability claims,
+and map documents into draft evidence records without authenticity or
+compliance claims.
 Those stages are backed by an executable local operations engine in
 `src/importer_source_readiness/product_operations.py` and
 `scripts/run_product_operations.py`. The engine creates/updates packet intake
@@ -149,6 +156,10 @@ security/privacy/human review gates are completed.
 - production market intelligence engine with source-routed metric records,
   dataset connector states, capped market score, and blocked demand/profit
   claims
+- production document intelligence engine with a local upload pipeline,
+  official CBSA/CFIA sample forms, India/Vietnam source routes, filled parser
+  QA samples, extracted-field provenance, redaction previews, and closed
+  upload/security/document claims
 - production research anchor registry for CBSA, CFIA, Global Affairs Canada,
   ISED, DGFT, WITS, ITC, WCO, ICC, OPC/PIPEDA, OWASP, NIST, and Stripe source
   routing
@@ -299,6 +310,27 @@ for HS candidate routing, import value, trend, top origins, unit value, market
 concentration, import replacement hypothesis, access barriers, and importer
 lead routes. It still does not prove market size, demand, profitability, buyer
 validation, tariff advantage, or market-entry approval.
+
+## Ready For Production Document Intelligence Review
+
+- document intelligence status:
+  `production_document_intelligence_engine_ready_local_pipeline_security_gates_closed`
+- machine manifest:
+  `system_review_graph/production_document_intelligence_manifest.json`
+- pipeline artifact: `system_review_graph/production_document_pipeline.json`
+- extracted fields:
+  `system_review_graph/production_document_extracted_fields.json`
+- official sample PDFs: `data/official_sample_documents/canada/*.pdf`
+- parser QA PDFs: `data/parser_qa_documents/*.pdf`
+- reviewer-readable doc: `docs/PRODUCTION_DOCUMENT_INTELLIGENCE_ENGINE.md`
+- proof command: `python3 scripts/run_production_document_intelligence_engine.py`
+
+This means the document layer can show what a business owner uploaded or still
+needs, classify expected document types, extract draft fields, and prepare the
+right questions for a buyer, supplier, broker, or reviewer. It still does not
+prove document authenticity, customs readiness, tariff treatment, CFIA
+clearance, malware scanning, private object storage, buyer validation, or
+supplier verification.
 
 ## Ready For Internal Source-Packet Review
 

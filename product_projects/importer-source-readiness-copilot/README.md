@@ -71,6 +71,7 @@ python3 scripts/run_production_data_model.py
 python3 scripts/run_production_packet_engine.py
 python3 scripts/run_production_country_source_engine.py
 python3 scripts/run_production_market_intelligence_engine.py
+python3 scripts/run_production_document_intelligence_engine.py
 python3 scripts/audit_external_package.py --root .
 python3 scripts/check_product.py
 ```
@@ -131,8 +132,13 @@ system_review_graph/production_source_lifecycle.json
 system_review_graph/production_market_intelligence_manifest.json
 system_review_graph/production_market_signals.json
 system_review_graph/production_market_dataset_connectors.json
+system_review_graph/production_document_intelligence_manifest.json
+system_review_graph/production_document_pipeline.json
+system_review_graph/production_document_extracted_fields.json
 system_review_graph/production_redevelopment_plan.json
 system_review_graph/production_research_anchors.json
+data/official_sample_documents/canada/*.pdf
+data/parser_qa_documents/*.pdf
 external_review_findings/EXTERNAL_REVIEW_SUMMARY.json
 EXTERNAL_REVIEW_SUMMARY.md
 docs/EXTERNAL_REVIEW_PROCESS.md
@@ -287,6 +293,19 @@ That means market metrics, source routes, dataset connector states, capped
 market signal score, limitations, and blocked demand/profit/buyer claims are
 generated from the packet and official source registry. It still does not prove
 market size, buyer demand, profitability, or market-entry approval.
+
+The expected production document intelligence status is:
+
+```text
+production_document_intelligence_engine_ready_local_pipeline_security_gates_closed
+```
+
+That means the local product has a document pipeline, downloaded official
+CBSA/CFIA sample PDFs, India/Vietnam source routes, filled parser QA samples,
+extracted-field provenance, evidence mapping, and redaction previews. It still
+does not prove real upload security, malware scanning, private storage,
+document authenticity, customs readiness, CFIA clearance, buyer validation, or
+supplier verification.
 
 The expected customer source-packet status is:
 

@@ -177,6 +177,7 @@ def _status_context() -> dict[str, Any]:
     product_ops = _load_json(GRAPH / "product_operations_report.json")
     final_go_live = _load_json(GRAPH / "final_go_live_decision_report.json")
     external_validation = _load_json(GRAPH / "external_validation_requirements_report.json")
+    production_document = _load_json(GRAPH / "production_document_intelligence_manifest.json")
     row = business["packet_rows"][0]
     return {
         "today": date.today().isoformat(),
@@ -184,6 +185,7 @@ def _status_context() -> dict[str, Any]:
         "product_ops": product_ops,
         "final_go_live": final_go_live,
         "external_validation": external_validation,
+        "production_document": production_document,
         "packet": row,
     }
 
@@ -191,6 +193,7 @@ def _status_context() -> dict[str, Any]:
 def _functional(ctx: dict[str, Any]) -> ReviewerDocument:
     packet = ctx["packet"]
     ops = ctx["product_ops"]
+    document = ctx["production_document"]
     return ReviewerDocument(
         title="Functional Requirements For External Review",
         filename="functional_requirements_for_review.md",
@@ -221,6 +224,8 @@ def _functional(ctx: dict[str, Any]) -> ReviewerDocument:
                 bullets=(
                     "Create or inspect a Trade Readiness Packet.",
                     "Support a beginner flow with little or no documentation.",
+                    "Support a no-document quick check that creates a missing-evidence packet without showing upload-only actions.",
+                    "Support uploaded PDF triage with quarantine metadata, draft field extraction, user confirmation, delete-file action, and blocked-claim boundaries.",
                     "Record product, origin, destination, buyer/importer, supplier, Incoterms, HS-code candidate, source, and evidence details.",
                     "Maintain an evidence ledger and mark evidence as missing, reference-only, stale, or needing review.",
                     "Route users to official-source references without treating those references as approval.",
@@ -234,9 +239,31 @@ def _functional(ctx: dict[str, Any]) -> ReviewerDocument:
                 bullets=(
                     "Quick check: user gives product and country details, optionally adds documents, then receives missing evidence and next safe action.",
                     "Packet workspace: user reviews the packet, evidence, official-source routes, unresolved items, and report outputs.",
+                    "Document intelligence: product separates official samples, synthetic parser QA fixtures, no-document intake, and customer-uploaded evidence.",
                     "Business decision preparation: product runs the decision tree, scores, source freshness check, buyer/supplier evidence ladder, and allowed/blocked action matrix.",
                     "Expert routing: product prepares a scoped packet for a human reviewer; AI cannot approve the lane.",
                     "Local operations: product can refresh source records, generate reports, create work orders, reserve billing internally, and record audit events without external effects.",
+                ),
+            ),
+            Section(
+                "Document Intelligence Implemented",
+                bullets=(
+                    f"Pipeline status: `{document['status']}`.",
+                    f"Expected document classes: `{len(document.get('required_trade_document_classes', []))}`.",
+                    f"Official sample PDFs downloaded: `{document.get('official_sample_document_count')}`.",
+                    f"Synthetic parser QA PDFs generated: `{document.get('synthetic_parser_fixture_count')}`.",
+                    "Parser output is draft evidence only and requires user confirmation before sharing.",
+                    "No document parser output opens customs, tariff, CFIA, buyer, supplier, shipment, payment, legal, or launch gates.",
+                ),
+            ),
+            Section(
+                "Enterprise And Advisor Use Cases",
+                bullets=(
+                    "Broker or trade advisor can manage multiple client packets and export missing-evidence or broker-review packets.",
+                    "Enterprise sourcing team can compare lanes while seeing which country/source paths are full, partial, reference-only, or generic.",
+                    "Compliance or legal reviewer can inspect blocked claims, source routes, evidence provenance, and the exact scope of requested review.",
+                    "Security or privacy reviewer can inspect upload, AI, deletion, audit, and retention controls before real-user data is accepted.",
+                    "Finance or billing reviewer can confirm that paid scope is preparation only and live checkout remains disabled until payment gates pass.",
                 ),
             ),
             Section(
@@ -278,6 +305,7 @@ def _functional(ctx: dict[str, Any]) -> ReviewerDocument:
 def _business_logic(ctx: dict[str, Any]) -> ReviewerDocument:
     business = ctx["business"]
     packet = ctx["packet"]
+    document = ctx["production_document"]
     buyer_supplier = packet["buyer_supplier_evidence"]
     gate = packet["business_gate_decision"]
     market = packet["market_intelligence"]["market_signal_evaluation"]
@@ -318,6 +346,21 @@ def _business_logic(ctx: dict[str, Any]) -> ReviewerDocument:
                     "Buyer/supplier evidence: uses evidence ladders and blocks buyer-validated and supplier-verified language.",
                     "Business gate decision: allows local drafts and reports while blocking outreach, payment, approvals, and shipment decisions.",
                     "Phase coverage: exposes 13 business phase surfaces, while phase 0 remains the business identity lock.",
+                ),
+            ),
+            Section(
+                "Document Logic Implemented Now",
+                body=(
+                    "Document logic is now part of the packet decision system. The product accepts no-document intake as a valid beginner path and accepts PDFs as draft evidence only when upload checks pass.",
+                ),
+                bullets=(
+                    "No-document intake creates a missing-evidence packet and does not show extracted-field confirmation or delete-uploaded-files actions.",
+                    "Uploaded-document intake creates quarantine metadata, draft extraction rows, user-confirmation status, and deletion actions.",
+                    f"Expected document classes covered locally: `{len(document.get('required_trade_document_classes', []))}`.",
+                    f"Official sample PDFs stored for parser orientation: `{document.get('official_sample_document_count')}`.",
+                    f"Synthetic filled parser QA PDFs stored for local parser testing: `{document.get('synthetic_parser_fixture_count')}`.",
+                    "Official samples and synthetic QA files do not count as customer proof.",
+                    "Every extracted field has provenance, confidence, user-confirmation status, claim boundary, supported claims, and blocked claims.",
                 ),
             ),
             Section(
@@ -371,6 +414,7 @@ def _business_logic(ctx: dict[str, Any]) -> ReviewerDocument:
 
 
 def _non_functional(ctx: dict[str, Any]) -> ReviewerDocument:
+    document = ctx["production_document"]
     return ReviewerDocument(
         title="Non-Functional Requirements For External Review",
         filename="non_functional_requirements_for_review.md",
@@ -390,14 +434,29 @@ def _non_functional(ctx: dict[str, Any]) -> ReviewerDocument:
                 "Security And Access",
                 bullets=(
                     "Implemented locally: role model, organization boundary model, scoped review links, admin/gate/health surfaces, and audit event records.",
-                    "Required before hosted beta: real authentication, secure sessions, CSRF where needed, rate limits, upload scanning, secret management, and security review signoff.",
+                    "Implemented locally for uploads: generated filenames, PDF signature checks, page limits, quarantine metadata, direct-file-serving blocks, and delete-file actions for uploaded quick-check files.",
+                    "Required before hosted beta: real authentication, secure sessions, CSRF where needed, rate limits, malware scanning, private object storage, secret management, and security review signoff.",
                 ),
             ),
             Section(
                 "Privacy And Data Governance",
                 bullets=(
                     "Implemented locally: AI-use policy, per-evidence AI permission concept, redaction preview, no-AI/manual fallback, deletion request tracking, and public upload notice.",
+                    "Official sample PDFs, synthetic parser QA files, and customer-uploaded evidence are separated so test fixtures are not mistaken for customer proof.",
                     "Required before real user data: privacy notice, terms, retention/deletion approval, breach process, provider inventory, and review of whether any file content may be sent to AI providers.",
+                ),
+            ),
+            Section(
+                "Document Handling Boundary",
+                body=(
+                    "The document engine is ready for local review and parser QA. It is not yet approved for unrestricted real customer files in production.",
+                ),
+                bullets=(
+                    f"Document pipeline status: `{document['status']}`.",
+                    f"Pipeline stages tracked: `{document.get('pipeline_stage_count')}`.",
+                    f"Official sample PDFs: `{document.get('official_sample_document_count')}`.",
+                    f"Synthetic parser QA PDFs: `{document.get('synthetic_parser_fixture_count')}`.",
+                    "Real file uploads remain blocked until hosted auth, private storage, malware scanning, retention/deletion approval, privacy/legal review, security review, monitoring, and incident response are proven.",
                 ),
             ),
             Section(

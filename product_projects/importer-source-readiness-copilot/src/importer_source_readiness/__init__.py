@@ -18,6 +18,11 @@ from .production_country_source_engine import (
     write_production_country_source_engine_artifacts,
 )
 from .production_data_model import build_production_data_model, write_production_data_model_artifacts
+from .production_document_intelligence_engine import (
+    build_production_document_intelligence_engine,
+    ensure_parser_qa_documents,
+    write_production_document_intelligence_engine_artifacts,
+)
 from .production_market_intelligence_engine import (
     build_production_market_intelligence_engine,
     write_production_market_intelligence_engine_artifacts,
@@ -36,6 +41,7 @@ __all__ = [
     "build_operator_workflow",
     "build_production_country_source_engine",
     "build_production_data_model",
+    "build_production_document_intelligence_engine",
     "build_production_market_intelligence_engine",
     "build_production_packet_engine",
     "build_production_redevelopment_plan",
@@ -43,6 +49,7 @@ __all__ = [
     "build_screenshot_manifest",
     "build_vc_pitch_readiness",
     "evaluate_cards",
+    "ensure_parser_qa_documents",
     "inspect_customer_store",
     "load_cards",
     "load_json",
@@ -54,6 +61,7 @@ __all__ = [
     "write_operator_workflow",
     "write_production_country_source_engine_artifacts",
     "write_production_data_model_artifacts",
+    "write_production_document_intelligence_engine_artifacts",
     "write_production_market_intelligence_engine_artifacts",
     "write_production_packet_engine_artifacts",
     "write_production_redevelopment_artifacts",

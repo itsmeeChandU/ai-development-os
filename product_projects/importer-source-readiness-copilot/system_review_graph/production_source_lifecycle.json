@@ -1,7 +1,7 @@
 {
   "claims_opened": false,
   "external_effects_created": false,
-  "generated_at": "2026-06-28T12:36:45+00:00",
+  "generated_at": "2026-06-28T13:51:10+00:00",
   "packet_source_impacts": [
     {
       "blocked_claims": [
@@ -19,6 +19,8 @@
         "cbsa-import-commercial-goods",
         "cbsa-customs-tariff-2026",
         "cfia-airs",
+        "cbsa-a8a-b-cargo-control-document",
+        "cfia-5272-documentation-review-request",
         "gac-import-controls",
         "justice-import-control-list",
         "canada-sanctions",
@@ -48,6 +50,8 @@
       "review_required_source_ids": [
         "cbsa-carm",
         "cbsa-customs-tariff-2026",
+        "cbsa-a8a-b-cargo-control-document",
+        "cfia-5272-documentation-review-request",
         "gac-import-controls",
         "justice-import-control-list",
         "canada-sanctions",
@@ -61,6 +65,8 @@
       "unchecked_source_ids": [
         "cbsa-carm",
         "cbsa-customs-tariff-2026",
+        "cbsa-a8a-b-cargo-control-document",
+        "cfia-5272-documentation-review-request",
         "gac-import-controls",
         "justice-import-control-list",
         "canada-sanctions",
@@ -170,7 +176,7 @@
       "country_code": "CA",
       "http_status": 200,
       "jurisdiction": "Canada",
-      "last_checked_at": "2026-06-28T12:36:39+00:00",
+      "last_checked_at": "2026-06-28T13:51:04+00:00",
       "name": "CBSA Import Commercial Goods Into Canada",
       "packet_impact_rule": "If source changes or is not checked for the packet date, affected packet claims stay blocked.",
       "parser_method": "metadata_hash_then_source_specific_parser_when_allowed",
@@ -286,7 +292,7 @@
       "country_code": "CA",
       "http_status": 200,
       "jurisdiction": "Canada",
-      "last_checked_at": "2026-06-28T12:36:39+00:00",
+      "last_checked_at": "2026-06-28T13:51:04+00:00",
       "name": "CFIA Automated Import Reference System (AIRS)",
       "packet_impact_rule": "If source changes or is not checked for the packet date, affected packet claims stay blocked.",
       "parser_method": "metadata_hash_then_source_specific_parser_when_allowed",
@@ -304,6 +310,180 @@
       "terms_status": "not_checked_before_automation",
       "usable_facts": [
         "CFIA AIRS is a reference route for food, plant, animal, and other CFIA-regulated import requirements."
+      ]
+    },
+    {
+      "allowed_automation": "manual_or_approved_loader_only",
+      "allowed_change_types": [
+        "cosmetic",
+        "date_change",
+        "source_unavailable",
+        "material_regulatory_or_tariff_change",
+        "new_requirement",
+        "removed_requirement",
+        "baseline_registered"
+      ],
+      "allowed_states": [
+        "not_checked",
+        "checked_current_reference_only",
+        "changed_minor",
+        "changed_material",
+        "source_unavailable",
+        "stale",
+        "review_required"
+      ],
+      "authority_level": "official",
+      "blocked_claims": [
+        "current_law_confirmed",
+        "tariff_confirmed",
+        "cfia_approved",
+        "sanctions_clear",
+        "buyer_validated",
+        "supplier_verified",
+        "ready_to_import",
+        "ready_to_export"
+      ],
+      "canonical_url": "https://www.cbsa-asfc.gc.ca/publications/forms-formulaires/ci1.pdf",
+      "change_type": "baseline_registered",
+      "claim_boundary": "Reference source only; official sample form only; it is not customer evidence, customs approval, accounting proof, or shipment readiness.",
+      "content_hash": "",
+      "country_code": "CA",
+      "http_status": "",
+      "jurisdiction": "Canada",
+      "last_checked_at": "2026-06-28",
+      "name": "CBSA CI1 Canada Customs Invoice",
+      "packet_impact_rule": "If source changes or is not checked for the packet date, affected packet claims stay blocked.",
+      "parser_method": "metadata_hash_then_source_specific_parser_when_allowed",
+      "refresh_cadence": "before_packet_generation_or_paid_review",
+      "review_required_if_material_change": true,
+      "robots_status": "not_checked_before_automation",
+      "source_area": "official_reference",
+      "source_areas": [
+        "official_reference"
+      ],
+      "source_id": "cbsa-ci1-canada-customs-invoice",
+      "source_state": "not_checked",
+      "source_type": "official_or_primary_reference",
+      "supports_claims": [],
+      "terms_status": "not_checked_before_automation",
+      "usable_facts": [
+        "official Canada customs invoice sample form for document parser orientation"
+      ]
+    },
+    {
+      "allowed_automation": "manual_or_approved_loader_only",
+      "allowed_change_types": [
+        "cosmetic",
+        "date_change",
+        "source_unavailable",
+        "material_regulatory_or_tariff_change",
+        "new_requirement",
+        "removed_requirement",
+        "baseline_registered"
+      ],
+      "allowed_states": [
+        "not_checked",
+        "checked_current_reference_only",
+        "changed_minor",
+        "changed_material",
+        "source_unavailable",
+        "stale",
+        "review_required"
+      ],
+      "authority_level": "official",
+      "blocked_claims": [
+        "current_law_confirmed",
+        "tariff_confirmed",
+        "cfia_approved",
+        "sanctions_clear",
+        "buyer_validated",
+        "supplier_verified",
+        "ready_to_import",
+        "ready_to_export"
+      ],
+      "canonical_url": "https://www.cbsa-asfc.gc.ca/publications/forms-formulaires/a8a-b.pdf",
+      "change_type": "baseline_registered",
+      "claim_boundary": "Reference source only; official sample form only; it does not prove cargo release, transport readiness, customs accounting, or compliance.",
+      "content_hash": "",
+      "country_code": "CA",
+      "http_status": "",
+      "jurisdiction": "Canada",
+      "last_checked_at": "2026-06-28",
+      "name": "CBSA A8A(B) Cargo Control Document",
+      "packet_impact_rule": "If source changes or is not checked for the packet date, affected packet claims stay blocked.",
+      "parser_method": "metadata_hash_then_source_specific_parser_when_allowed",
+      "refresh_cadence": "before_packet_generation_or_paid_review",
+      "review_required_if_material_change": true,
+      "robots_status": "not_checked_before_automation",
+      "source_area": "import_controls",
+      "source_areas": [
+        "import_controls"
+      ],
+      "source_id": "cbsa-a8a-b-cargo-control-document",
+      "source_state": "not_checked",
+      "source_type": "official_or_primary_reference",
+      "supports_claims": [],
+      "terms_status": "not_checked_before_automation",
+      "usable_facts": [
+        "official cargo control sample form for transport-document parser orientation"
+      ]
+    },
+    {
+      "allowed_automation": "manual_or_approved_loader_only",
+      "allowed_change_types": [
+        "cosmetic",
+        "date_change",
+        "source_unavailable",
+        "material_regulatory_or_tariff_change",
+        "new_requirement",
+        "removed_requirement",
+        "baseline_registered"
+      ],
+      "allowed_states": [
+        "not_checked",
+        "checked_current_reference_only",
+        "changed_minor",
+        "changed_material",
+        "source_unavailable",
+        "stale",
+        "review_required"
+      ],
+      "authority_level": "official",
+      "blocked_claims": [
+        "current_law_confirmed",
+        "tariff_confirmed",
+        "cfia_approved",
+        "sanctions_clear",
+        "buyer_validated",
+        "supplier_verified",
+        "ready_to_import",
+        "ready_to_export"
+      ],
+      "canonical_url": "https://inspection.canada.ca/sites/default/files/legacy/DAM/DAM-form-forme/STAGING/text-texte/c5272_re_1369400657637_eng.pdf",
+      "change_type": "baseline_registered",
+      "claim_boundary": "Reference source only; official sample form only; it does not prove CFIA clearance, admissibility, or compliance.",
+      "content_hash": "",
+      "country_code": "CA",
+      "http_status": "",
+      "jurisdiction": "Canada",
+      "last_checked_at": "2026-06-28",
+      "name": "CFIA 5272 Request for Documentation Review",
+      "packet_impact_rule": "If source changes or is not checked for the packet date, affected packet claims stay blocked.",
+      "parser_method": "metadata_hash_then_source_specific_parser_when_allowed",
+      "refresh_cadence": "before_packet_generation_or_paid_review",
+      "review_required_if_material_change": true,
+      "robots_status": "not_checked_before_automation",
+      "source_area": "regulated_goods",
+      "source_areas": [
+        "regulated_goods"
+      ],
+      "source_id": "cfia-5272-documentation-review-request",
+      "source_state": "not_checked",
+      "source_type": "official_or_primary_reference",
+      "supports_claims": [],
+      "terms_status": "not_checked_before_automation",
+      "usable_facts": [
+        "official CFIA documentation-review form for regulated-product parser orientation"
       ]
     },
     {
@@ -576,7 +756,7 @@
       "country_code": "CA",
       "http_status": 200,
       "jurisdiction": "Canada",
-      "last_checked_at": "2026-06-28T12:36:39+00:00",
+      "last_checked_at": "2026-06-28T13:51:04+00:00",
       "name": "Canadian Importers Database",
       "packet_impact_rule": "If source changes or is not checked for the packet date, affected packet claims stay blocked.",
       "parser_method": "metadata_hash_then_source_specific_parser_when_allowed",
@@ -805,6 +985,64 @@
         "ready_to_import",
         "ready_to_export"
       ],
+      "canonical_url": "https://www.dgft.gov.in/CP/?opt=appendices-and-anf",
+      "change_type": "baseline_registered",
+      "claim_boundary": "Reference source only; no stable local PDF sample was verified in this pass and India export claims require current source review.",
+      "content_hash": "",
+      "country_code": "IN",
+      "http_status": "",
+      "jurisdiction": "India",
+      "last_checked_at": "2026-06-28",
+      "name": "India DGFT Appendices and Aayat Niryat Forms",
+      "packet_impact_rule": "If source changes or is not checked for the packet date, affected packet claims stay blocked.",
+      "parser_method": "metadata_hash_then_source_specific_parser_when_allowed",
+      "refresh_cadence": "before_packet_generation_or_paid_review",
+      "review_required_if_material_change": true,
+      "robots_status": "not_checked_before_automation",
+      "source_area": "official_reference",
+      "source_areas": [
+        "official_reference"
+      ],
+      "source_id": "india-dgft-appendices-anf",
+      "source_state": "not_checked",
+      "source_type": "official_or_primary_reference",
+      "supports_claims": [],
+      "terms_status": "not_checked_before_automation",
+      "usable_facts": [
+        "official DGFT form/source route for India exporter document requirements and future sample-form lookup"
+      ]
+    },
+    {
+      "allowed_automation": "manual_or_approved_loader_only",
+      "allowed_change_types": [
+        "cosmetic",
+        "date_change",
+        "source_unavailable",
+        "material_regulatory_or_tariff_change",
+        "new_requirement",
+        "removed_requirement",
+        "baseline_registered"
+      ],
+      "allowed_states": [
+        "not_checked",
+        "checked_current_reference_only",
+        "changed_minor",
+        "changed_material",
+        "source_unavailable",
+        "stale",
+        "review_required"
+      ],
+      "authority_level": "official",
+      "blocked_claims": [
+        "current_law_confirmed",
+        "tariff_confirmed",
+        "cfia_approved",
+        "sanctions_clear",
+        "buyer_validated",
+        "supplier_verified",
+        "ready_to_import",
+        "ready_to_export"
+      ],
       "canonical_url": "https://www.cbic.gov.in/",
       "change_type": "baseline_registered",
       "claim_boundary": "Customs and duty treatment remains blocked until qualified review.",
@@ -830,6 +1068,122 @@
       "terms_status": "not_checked_before_automation",
       "usable_facts": [
         "CBIC is the India customs-reference route."
+      ]
+    },
+    {
+      "allowed_automation": "manual_or_approved_loader_only",
+      "allowed_change_types": [
+        "cosmetic",
+        "date_change",
+        "source_unavailable",
+        "material_regulatory_or_tariff_change",
+        "new_requirement",
+        "removed_requirement",
+        "baseline_registered"
+      ],
+      "allowed_states": [
+        "not_checked",
+        "checked_current_reference_only",
+        "changed_minor",
+        "changed_material",
+        "source_unavailable",
+        "stale",
+        "review_required"
+      ],
+      "authority_level": "official",
+      "blocked_claims": [
+        "current_law_confirmed",
+        "tariff_confirmed",
+        "cfia_approved",
+        "sanctions_clear",
+        "buyer_validated",
+        "supplier_verified",
+        "ready_to_import",
+        "ready_to_export"
+      ],
+      "canonical_url": "https://www.cbic.gov.in/",
+      "change_type": "baseline_registered",
+      "claim_boundary": "Reference source only; no stable local PDF sample was verified in this pass and customs readiness claims remain blocked.",
+      "content_hash": "",
+      "country_code": "IN",
+      "http_status": "",
+      "jurisdiction": "India",
+      "last_checked_at": "2026-06-28",
+      "name": "India CBIC Customs Forms Route",
+      "packet_impact_rule": "If source changes or is not checked for the packet date, affected packet claims stay blocked.",
+      "parser_method": "metadata_hash_then_source_specific_parser_when_allowed",
+      "refresh_cadence": "before_packet_generation_or_paid_review",
+      "review_required_if_material_change": true,
+      "robots_status": "not_checked_before_automation",
+      "source_area": "official_reference",
+      "source_areas": [
+        "official_reference"
+      ],
+      "source_id": "india-cbic-customs-forms",
+      "source_state": "not_checked",
+      "source_type": "official_or_primary_reference",
+      "supports_claims": [],
+      "terms_status": "not_checked_before_automation",
+      "usable_facts": [
+        "official CBIC source route for customs form lookup and future sample-form attachment"
+      ]
+    },
+    {
+      "allowed_automation": "manual_or_approved_loader_only",
+      "allowed_change_types": [
+        "cosmetic",
+        "date_change",
+        "source_unavailable",
+        "material_regulatory_or_tariff_change",
+        "new_requirement",
+        "removed_requirement",
+        "baseline_registered"
+      ],
+      "allowed_states": [
+        "not_checked",
+        "checked_current_reference_only",
+        "changed_minor",
+        "changed_material",
+        "source_unavailable",
+        "stale",
+        "review_required"
+      ],
+      "authority_level": "primary_reference",
+      "blocked_claims": [
+        "current_law_confirmed",
+        "tariff_confirmed",
+        "cfia_approved",
+        "sanctions_clear",
+        "buyer_validated",
+        "supplier_verified",
+        "ready_to_import",
+        "ready_to_export"
+      ],
+      "canonical_url": "https://www.customs.gov.vn/",
+      "change_type": "baseline_registered",
+      "claim_boundary": "Reference source only; no stable local PDF sample was verified in this pass and Vietnam customs/export claims require current source review.",
+      "content_hash": "",
+      "country_code": "VN",
+      "http_status": "",
+      "jurisdiction": "Vietnam",
+      "last_checked_at": "2026-06-28",
+      "name": "General Department of Vietnam Customs Portal",
+      "packet_impact_rule": "If source changes or is not checked for the packet date, affected packet claims stay blocked.",
+      "parser_method": "metadata_hash_then_source_specific_parser_when_allowed",
+      "refresh_cadence": "before_packet_generation_or_paid_review",
+      "review_required_if_material_change": true,
+      "robots_status": "not_checked_before_automation",
+      "source_area": "official_reference",
+      "source_areas": [
+        "official_reference"
+      ],
+      "source_id": "vietnam-customs-portal",
+      "source_state": "not_checked",
+      "source_type": "official_or_primary_reference",
+      "supports_claims": [],
+      "terms_status": "not_checked_before_automation",
+      "usable_facts": [
+        "official Vietnam customs source route for origin/demo lane document lookup"
       ]
     },
     {
@@ -1413,6 +1767,6 @@
       ]
     }
   ],
-  "source_lifecycle_count": 23,
+  "source_lifecycle_count": 29,
   "status": "production_source_lifecycle_ready_reference_only_claims_closed"
 }

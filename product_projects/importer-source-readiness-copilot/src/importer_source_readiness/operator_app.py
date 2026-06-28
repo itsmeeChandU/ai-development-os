@@ -251,7 +251,10 @@ def _parse_multipart(content_type: str, raw: bytes) -> tuple[dict[str, Any], lis
         content_type_match = re.search(r"Content-Type:\s*([^\r\n]+)", header_text, flags=re.IGNORECASE)
         payload = data.rstrip(b"\r\n")
         if filename_match:
-            filename = _safe_filename(filename_match.group(1))
+            raw_filename = filename_match.group(1).strip()
+            if not raw_filename:
+                continue
+            filename = _safe_filename(raw_filename)
             if filename:
                 files.append(
                     {
@@ -538,6 +541,8 @@ def _render_page(title: str, body: str) -> str:
       --warn-bg: #fff6dd;
       --warn-line: #e3c46e;
       --ok-bg: #e7f7ef;
+      --blue-soft: #eaf2ff;
+      --blue-line: #bfd2f2;
       --radius: 8px;
       --shadow: 0 18px 45px rgba(25, 45, 41, .08);
     }}
@@ -557,12 +562,24 @@ def _render_page(title: str, body: str) -> str:
     main {{ width: 100%; max-width: 1180px; min-width: 0; padding: 26px; }}
     .page {{ display: grid; gap: 18px; min-width: 0; }}
     .page > * {{ min-width: 0; max-width: 100%; }}
+    .hero {{ display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(280px, .75fr); gap: 22px; align-items: center; padding: 28px; border: 1px solid #cbd8d4; border-radius: var(--radius); background: linear-gradient(135deg, #ffffff 0%, #edf7f3 100%); box-shadow: var(--shadow); overflow: hidden; }}
+    .hero h1 {{ font-size: 38px; max-width: 760px; }}
+    .section-kicker {{ color: var(--accent); font-size: 12px; font-weight: 850; text-transform: uppercase; letter-spacing: 0; margin-bottom: 8px; }}
+    .trust-strip {{ display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }}
+    .trust-pill {{ display: inline-flex; align-items: center; gap: 7px; border: 1px solid #b9d3cd; background: #f7fffd; border-radius: 999px; padding: 7px 10px; color: #224743; font-size: 13px; font-weight: 800; }}
+    .document-visual {{ display: grid; gap: 10px; min-width: 0; }}
+    .doc-sheet {{ border: 1px solid #c9d8d4; background: #fff; border-radius: 8px; padding: 14px; box-shadow: 0 10px 25px rgba(25, 45, 41, .08); }}
+    .doc-sheet strong {{ display: block; margin-bottom: 6px; }}
+    .doc-line {{ display: block; height: 7px; border-radius: 999px; background: #d7e4e0; margin: 7px 0; }}
+    .doc-line.short {{ width: 58%; }}
+    .doc-line.mid {{ width: 76%; }}
     .surface {{ background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); padding: 18px; min-width: 0; overflow-x: auto; }}
     h1 {{ margin: 0 0 8px; font-size: 30px; line-height: 1.12; letter-spacing: 0; }}
     h2 {{ margin: 24px 0 10px; font-size: 20px; letter-spacing: 0; }}
     p {{ line-height: 1.55; }}
     .lede {{ color: var(--muted); max-width: 72ch; }}
     .note {{ border: 1px solid var(--warn-line); background: var(--warn-bg); border-radius: var(--radius); padding: 12px; }}
+    .assurance {{ border: 1px solid var(--blue-line); background: var(--blue-soft); border-radius: var(--radius); padding: 12px; }}
     .grid {{ display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; min-width: 0; }}
     .grid > *, .split > * {{ min-width: 0; }}
     .grid-3 {{ grid-template-columns: repeat(3, minmax(0, 1fr)); }}
@@ -589,6 +606,16 @@ def _render_page(title: str, body: str) -> str:
     .value {{ font-weight: 850; margin-top: 5px; overflow-wrap: anywhere; }}
     .actions {{ display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0; align-items: end; }}
     .actions form {{ margin: 0; }}
+    .action-row {{ display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }}
+    .action-tile {{ border: 1px solid var(--line); border-radius: var(--radius); background: #fff; padding: 14px; min-height: 132px; display: flex; flex-direction: column; justify-content: space-between; }}
+    .action-tile .button-link {{ width: fit-content; }}
+    .upload-zone {{ border: 2px dashed #9fb8b2; border-radius: var(--radius); background: #f8fcfb; padding: 16px; margin: 12px 0; }}
+    .upload-zone input {{ background: #fff; }}
+    .help-row {{ display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin-top: 12px; }}
+    .help-box {{ border-left: 3px solid var(--brand); background: #f8fcfb; padding: 10px 12px; }}
+    .help-box strong {{ display: block; }}
+    .document-checklist {{ columns: 2; padding-left: 20px; }}
+    .document-checklist li {{ break-inside: avoid; margin: 4px 0; }}
     .stepper {{ display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; padding: 0; margin: 0; list-style: none; }}
     .stepper li {{ border: 1px solid var(--line); border-radius: 999px; padding: 8px 10px; text-align: center; font-size: 13px; font-weight: 800; background: #fff; }}
     .stepper .done {{ background: var(--ok-bg); border-color: #a9dbc0; }}
@@ -601,7 +628,7 @@ def _render_page(title: str, body: str) -> str:
       .side-nav {{ display: none; }}
       .topbar {{ display: flex; }}
       main {{ padding: 16px; }}
-      .grid, .grid-3, .split {{ grid-template-columns: 1fr; }}
+      .grid, .grid-3, .split, .hero, .action-row, .help-row {{ grid-template-columns: 1fr; }}
       .stepper {{ grid-template-columns: 1fr; }}
       th, td {{ min-width: 136px; }}
     }}
@@ -785,33 +812,46 @@ def _document_intelligence_rows(packet: dict[str, Any]) -> str:
 
 def _render_landing() -> str:
     body = f"""
-<section class="surface split">
+<section class="hero">
   <div>
+    <div class="section-kicker">Trade documents and PDF Triage, organized for review</div>
     {_status_badge("Local private-beta product", "ok")}
     <h1>{escape(PUBLIC_PRODUCT_NAME)}</h1>
-    <p class="lede">{escape(PUBLIC_PRODUCT_PROMISE)} Start with no documents or upload PDFs, then get a missing-evidence packet, safe summary, and next valid moves.</p>
+    <p class="lede">{escape(PUBLIC_PRODUCT_PROMISE)} Start with no documents or upload PDFs, then get a clear packet: what is known, what is missing, which official sources matter, and who should review next.</p>
     <div class="actions">
       {_button_link("/start", "Start without documents", "sparkles")}
       {_button_link("/trade-check", "Upload PDFs", "upload", tone="secondary")}
       {_button_link("/workspace", "Open workspace", "database", tone="secondary")}
     </div>
+    <div class="trust-strip">
+      <span class="trust-pill">{_icon("shield")} Draft-only claim gates</span>
+      <span class="trust-pill">{_icon("file-text")} Official source routing</span>
+      <span class="trust-pill">{_icon("check")} Human review ready</span>
+    </div>
   </div>
-  <aside class="note">{escape(PRODUCT_BOUNDARY)}</aside>
+  <aside class="document-visual" aria-label="Document packet preview">
+    <div class="doc-sheet"><strong>Trade Readiness Packet</strong><span class="doc-line"></span><span class="doc-line mid"></span><span class="doc-line short"></span></div>
+    <div class="doc-sheet"><strong>Documents to confirm</strong><span class="doc-line mid"></span><span class="doc-line"></span><span class="doc-line short"></span></div>
+    <div class="assurance">{escape(PRODUCT_BOUNDARY)}</div>
+  </aside>
 </section>
 <section class="surface">
   {_workflow_steps("start")}
-  <div class="grid grid-3">
-    {_metric_card("Beginner Start", "No-documents mode", "Capture unknowns and get a starter checklist.")}
-    {_metric_card("PDF Triage", f"PDF limit {MAX_PUBLIC_PDF_PAGES} pages", "Native text extraction or OCR-needed routing.")}
-    {_metric_card("Policy Monitor", "Intelligence Hub contract", "Source snapshots, hashes, stale-packet blockers.")}
+  <h2>Choose the path that matches where you are</h2>
+  <div class="action-row">
+    <div class="action-tile"><div><div class="label">Explore</div><div class="value">I need a market and evidence checklist.</div></div>{_button_link("/start", "Explore a market", "sparkles", tone="secondary")}</div>
+    <div class="action-tile"><div><div class="label">Buyer Packet</div><div class="value">I want better questions before speaking with a buyer.</div></div>{_button_link("/tools/buyer-broker-packet", "Prepare buyer packet", "file-text", tone="secondary")}</div>
+    <div class="action-tile"><div><div class="label">Documents</div><div class="value">I have PDFs and want to know what they say.</div></div>{_button_link("/trade-check", "Check my documents", "upload")}</div>
+    <div class="action-tile"><div><div class="label">Expert Review</div><div class="value">I need a clean packet for a broker or reviewer.</div></div>{_button_link("/trade-check", "Prepare review packet", "check", tone="secondary")}</div>
   </div>
 </section>
 <section class="surface">
-  <h2>Boundaries</h2>
-  <ul>
-    <li>Does not claim import/export approval, tariff confirmation, CFIA clearance, legal advice, customs advice, supplier recommendation, buyer validation, or launch readiness.</li>
-    <li>Does not replace a licensed customs broker, qualified compliance expert, lawyer, accountant, or buyer validation process.</li>
-  </ul>
+  <h2>How this protects the decision</h2>
+  <div class="grid grid-3">
+    {_metric_card("No Guessing", "Source-backed", "Official routes and sample documents are separated from customer evidence.")}
+    {_metric_card("No False Approval", "Claims stay closed", "The product prepares review packets; it does not approve shipments.")}
+    {_metric_card("Clear Next Step", "One packet", "Every path ends with missing evidence, questions, and a safe next move.")}
+  </div>
 </section>
 """
     return _render_page(PUBLIC_PRODUCT_NAME, body)
@@ -881,7 +921,7 @@ def _render_start_page() -> str:
   <form method="post" action="/api/public/starter">
     <div class="grid">
       <div><label>What are you trying to move?</label><input name="product_name" value="Organic turmeric powder"></div>
-      <div><label>Product category</label><input name="product_category" value="food_import"></div>
+      <div><label>Product category</label><input name="product_category" value="Food, agri, or seafood"></div>
       <div><label>Origin country</label><input name="origin_country" value="India"></div>
       <div><label>Destination country</label><input name="destination_country" value="Canada"></div>
       <div><label>Trade direction</label><select name="trade_direction">{_select_options(["export", "import", "both", "unknown"], "export")}</select></div>
@@ -938,28 +978,63 @@ def _render_public_trade_check(default_direction: str = "export") -> str:
     incoterms_options = _select_options(["unknown", "EXW", "FOB", "CIF", "DAP", "DDP"], "unknown")
     importer_options = _select_options(["unknown", "buyer", "importer", "exporter", "broker"], "unknown")
     body = f"""
-<h1>Quick Trade Readiness Check</h1>
-<p class="note">Upload at least one PDF. The draft report shows missing evidence and blocked claims; it is not approval, advice, or a shipment decision.</p>
-<form method="post" action="/api/public/quick-check" enctype="multipart/form-data">
-  <div class="grid">
-    <div><label>Trade direction</label><select name="trade_direction">{direction_options}</select></div>
-    <div><label>Product or category</label><input name="product_name" value="Organic turmeric powder"></div>
-    <div><label>Product category</label><input name="product_category" value="food_import"></div>
-    <div><label>HS code if known</label><input name="hs_code_if_known" value=""></div>
-    <div><label>Origin country</label><input name="origin_country" value="India"></div>
-    <div><label>Destination country</label><input name="destination_country" value="Canada"></div>
-    <div><label>Exporter business name</label><input name="exporter_name" value="Example Exporter Pvt Ltd"></div>
-    <div><label>Canadian buyer/importer</label><input name="buyer_name" value=""></div>
-    <div><label>Importer of record</label><select name="importer_of_record">{importer_options}</select></div>
-    <div><label>Incoterms if known</label><select name="incoterms_if_known">{incoterms_options}</select></div>
+<section class="hero">
+  <div>
+    <div class="section-kicker">Secure document intake</div>
+    <h1>Quick Trade Readiness Check</h1>
+    <p class="lede">Upload trade PDFs or start with the details you know. The packet will show what was found, what is missing, and which review path is safest.</p>
+    <div class="trust-strip">
+      <span class="trust-pill">{_icon("shield")} Quarantine metadata</span>
+      <span class="trust-pill">{_icon("file-text")} Draft field extraction</span>
+      <span class="trust-pill">{_icon("check")} User confirmation required</span>
+    </div>
   </div>
-  <label>Documents (PDF)</label><input type="file" name="documents" accept="application/pdf,.pdf" multiple>
-  <label>Product documents already available</label><input name="product_documents" value="product spec PDF">
-  <label>Commercial documents already available</label><input name="commercial_documents" value="">
-  <label>Certificates / proof of origin</label><input name="certificates" value="">
-  <label><input type="checkbox" name="accept_notice" value="accepted" checked> I understand this is a draft AI-assisted evidence check, files are local test artifacts, and missing evidence/approval claims stay blocked.</label>
-  <button type="submit">Run Quick Check</button>
+  <aside class="assurance">The draft report shows missing evidence and blocked claims. It is not approval, advice, or a shipment decision.</aside>
+</section>
+<form method="post" action="/api/public/quick-check" enctype="multipart/form-data">
+  <section class="surface">
+    {_workflow_steps("documents")}
+    <h2>Trade path</h2>
+    <div class="grid">
+      <div><label>Trade direction</label><select name="trade_direction">{direction_options}</select></div>
+      <div><label>Product or category</label><input name="product_name" value="Organic turmeric powder"></div>
+      <div><label>Product category</label><input name="product_category" value="Food, agri, or seafood"></div>
+      <div><label>HS code if known</label><input name="hs_code_if_known" value=""></div>
+      <div><label>Origin country</label><input name="origin_country" value="India"></div>
+      <div><label>Destination country</label><input name="destination_country" value="Canada"></div>
+      <div><label>Exporter business name</label><input name="exporter_name" value="Example Exporter Pvt Ltd"></div>
+      <div><label>Canadian buyer/importer</label><input name="buyer_name" value=""></div>
+      <div><label>Importer of record</label><select name="importer_of_record">{importer_options}</select></div>
+      <div><label>Incoterms if known</label><select name="incoterms_if_known">{incoterms_options}</select></div>
+    </div>
+  </section>
+  <section class="surface">
+    <h2>Documents</h2>
+    <p class="lede">You can upload invoices, packing lists, certificates, product specs, shipping documents, purchase orders, contracts, or inspection reports. We will show draft fields and ask you to confirm them.</p>
+    <div class="upload-zone">
+      <label>Documents (PDF)</label><input type="file" name="documents" accept="application/pdf,.pdf" multiple>
+      <p class="lede">PDF only, up to {MAX_PUBLIC_PDF_PAGES} pages per file in this local quick check.</p>
+    </div>
+    <div class="grid">
+      <div><label>Product documents already available</label><input name="product_documents" value=""></div>
+      <div><label>Commercial documents already available</label><input name="commercial_documents" value=""></div>
+      <div><label>Certificates / proof of origin</label><input name="certificates" value=""></div>
+    </div>
+    <div class="help-row">
+      <div class="help-box"><strong>What we extract</strong> document type, dates, names, quantities, amounts, HS candidates, origin, destination, and Incoterms when visible.</div>
+      <div class="help-box"><strong>What stays blocked</strong> authenticity, tariff confirmation, CFIA clearance, buyer validation, supplier verification, and shipment approval.</div>
+      <div class="help-box"><strong>What you get</strong> missing evidence, safe summary, reviewer questions, and draft PDF packets.</div>
+    </div>
+    <label><input type="checkbox" name="accept_notice" value="accepted" checked> I understand this is a draft AI-assisted evidence check, files are local test artifacts, and missing evidence/approval claims stay blocked.</label>
+    <button type="submit">{_icon("arrow-right")}Run Quick Check</button>
+  </section>
 </form>
+<section class="surface">
+  <h2>Common documents we expect</h2>
+  <ul class="document-checklist">
+    <li>Commercial invoice</li><li>Packing list</li><li>Certificate of origin</li><li>Bill of lading</li><li>Airway bill</li><li>Product specification</li><li>Lab certificate</li><li>Phytosanitary or health certificate</li><li>Purchase order</li><li>Contract</li><li>Inspection report</li>
+  </ul>
+</section>
 """
     return _render_page("Quick Trade Check", body)
 
@@ -1550,27 +1625,60 @@ def _render_public_result(workflow: dict[str, Any], packet: dict[str, Any]) -> s
         for lane in packet.get("readiness_lanes", [])
     )
     document_rows = _document_intelligence_rows(packet)
+    has_uploaded_documents = any(
+        evidence.get("evidence_type") == "customer_uploaded_document"
+        for evidence in packet.get("evidence_items", [])
+    )
     missing = _list_items(packet.get("evidence_summary", {}).get("missing_items", []))
     questions = _list_items(packet.get("buyer_broker_questions", []))
+    first_action_tile = (
+        f'<div class="action-tile"><div><div class="label">Confirm</div><div class="value">Review extracted fields before sharing the packet.</div></div>'
+        f'{_button_link(f"/public/packets/{packet_id}/confirm", "Confirm Extracted Fields", "check")}</div>'
+        if has_uploaded_documents
+        else f'<div class="action-tile"><div><div class="label">Add Documents</div><div class="value">Upload PDFs when invoices, certificates, or shipping papers are ready.</div></div>'
+        f'{_button_link("/trade-check", "Upload PDFs", "upload", tone="secondary")}</div>'
+    )
+    delete_uploads_action = (
+        f'<form method="post" action="/api/public/packets/{packet_id}/delete-files"><button class="button-danger" type="submit">{_icon("trash")}Delete Uploaded Files</button></form>'
+        if has_uploaded_documents
+        else ""
+    )
+    document_heading = "Uploaded Document Intelligence" if has_uploaded_documents else "Document Evidence"
+    retention_note = (
+        "Create a free account to save history, add reviewers, and keep an operator workspace. Public quick checks are draft-only and should delete or expire uploaded files."
+        if has_uploaded_documents
+        else "Create a free account to save history, add reviewers, and keep an operator workspace. No files are attached to this draft packet yet."
+    )
     actions = f"""
-<div class="actions">
-  <a class="button-link" href="/trade-check">Upload Documents</a>
-  <a class="button-link" href="/public/packets/{packet_id}/confirm">Confirm Extracted Fields</a>
-  <a class="button-link" href="/tools/canadian-references">Check Canadian References</a>
-  <a class="button-link" href="/api/public/packets/{packet_id}/reports/starter.pdf">Starter Checklist</a>
-  <form method="post" action="/api/public/packets/{packet_id}/refresh-official-sources"><button type="submit">Refresh Official Sources</button></form>
-  <a class="button-link" href="/api/public/packets/{packet_id}/chatgpt-safe-summary">ChatGPT-Safe Summary</a>
-  <a class="button-link" href="/api/public/packets/{packet_id}/reports/buyer.pdf">Generate Buyer Packet</a>
-  <a class="button-link" href="/api/public/packets/{packet_id}/reports/broker.pdf">Generate Broker Review Packet</a>
-  <a class="button-link" href="/api/public/packets/{packet_id}/reports/missing.pdf">Missing Evidence PDF</a>
-  <a class="button-link" href="/api/public/packets/{packet_id}/reports/draft.pdf">Export Readiness Report</a>
-  <form method="post" action="/api/public/packets/{packet_id}/delete-files"><button type="submit">Delete Uploaded Files</button></form>
-</div>
+<section class="surface">
+  <div class="section-kicker">Recommended next steps</div>
+  <div class="action-row">
+    {first_action_tile}
+    <div class="action-tile"><div><div class="label">Missing Evidence</div><div class="value">Download a clean checklist for your team or supplier.</div></div>{_button_link(f"/api/public/packets/{packet_id}/reports/missing.pdf", "Missing Evidence PDF", "download", tone="secondary")}</div>
+    <div class="action-tile"><div><div class="label">Broker Review</div><div class="value">Prepare a bounded packet for qualified review.</div></div>{_button_link(f"/api/public/packets/{packet_id}/reports/broker.pdf", "Broker packet", "file-text", tone="secondary")}</div>
+    <div class="action-tile"><div><div class="label">Safe Summary</div><div class="value">Copy a non-private summary for drafting questions.</div></div>{_button_link(f"/api/public/packets/{packet_id}/chatgpt-safe-summary", "Safe summary", "shield", tone="secondary")}</div>
+  </div>
+  <div class="actions">
+    {_button_link("/trade-check", "Upload more documents", "upload", tone="secondary")}
+    {_button_link("/tools/canadian-references", "Check Canadian references", "database", tone="secondary")}
+    {_button_link(f"/api/public/packets/{packet_id}/reports/starter.pdf", "Starter Checklist", "download", tone="secondary")}
+    {_button_link(f"/api/public/packets/{packet_id}/reports/buyer.pdf", "Generate Buyer Packet", "file-text", tone="secondary")}
+    {_button_link(f"/api/public/packets/{packet_id}/reports/draft.pdf", "Readiness report", "download", tone="secondary")}
+    <form method="post" action="/api/public/packets/{packet_id}/refresh-official-sources"><button type="submit">{_icon("database")}Refresh sources</button></form>
+    {delete_uploads_action}
+  </div>
+</section>
 """
     body = f"""
-<h1>{escape(str(summary.get('title') or 'Trade Readiness Packet'))}</h1>
-<p><span class="status">{escape(str(summary.get('status') or packet.get('readiness_status_label')))}</span></p>
-<p class="note">{escape(str(packet.get('safe_summary')))}</p>
+<section class="hero">
+  <div>
+    <div class="section-kicker">Packet result</div>
+    <h1>{escape(str(summary.get('title') or 'Trade Readiness Packet'))}</h1>
+    <p><span class="status">{escape(str(summary.get('status') or packet.get('readiness_status_label')))}</span></p>
+    <p class="lede">{escape(str(packet.get('safe_summary')))}</p>
+  </div>
+  <aside class="assurance">This packet organizes evidence and next questions. It is not a customs, tariff, CFIA, legal, buyer, supplier, or shipment approval.</aside>
+</section>
 {_workflow_steps("report")}
 {actions}
 <section class="grid">
@@ -1589,7 +1697,7 @@ def _render_public_result(workflow: dict[str, Any], packet: dict[str, Any]) -> s
   <thead><tr><th>Lane</th><th>Scope</th><th>Status</th><th>Next</th></tr></thead>
   <tbody>{lanes}</tbody>
 </table>
-<h2>Uploaded Document Intelligence</h2>
+<h2>{document_heading}</h2>
 <table>
   <thead><tr><th>Document</th><th>Detected Type</th><th>Facts Used</th><th>Still Missing Or Unconfirmed</th><th>Next</th></tr></thead>
   <tbody>{document_rows or '<tr><td colspan="5">No uploaded documents yet.</td></tr>'}</tbody>
@@ -1600,7 +1708,7 @@ def _render_public_result(workflow: dict[str, Any], packet: dict[str, Any]) -> s
 <ul>{questions}</ul>
 <h2>Blocked Claims</h2>
 <ul>{_list_items(packet.get('blocked_claims_display', []))}</ul>
-<p class="note">Create a free account to save history, add reviewers, and keep an operator workspace. Public quick checks are draft-only and should delete or expire uploaded files.</p>
+<p class="note">{retention_note}</p>
 <p><a class="button-link" href="/signup">Create Account</a> <a class="button-link" href="/support">Request Review</a></p>
 """
     return _render_page("Trade Readiness Result", body)
@@ -2919,8 +3027,8 @@ def build_operator_app_handler(repo_root: Path) -> type[BaseHTTPRequestHandler]:
                     or str(file.get("content_type") or "").lower() == "application/pdf"
                 )
             ]
-            if not pdf_files:
-                self.send_error(HTTPStatus.BAD_REQUEST, "Upload at least one PDF document")
+            if files and not pdf_files:
+                self.send_error(HTTPStatus.BAD_REQUEST, "Upload PDFs only, or leave the document field empty to start without files")
                 return
             now = datetime.now(timezone.utc).replace(microsecond=0)
             expires_at = (now + timedelta(hours=24)).isoformat()
@@ -2939,11 +3047,63 @@ def build_operator_app_handler(repo_root: Path) -> type[BaseHTTPRequestHandler]:
                 }
             )
             packet_id = str(packet["packet_id"])
-            upload_dir = repo_root / "system_review_graph" / "public_uploads" / packet_id / "quarantine"
-            upload_dir.mkdir(parents=True, exist_ok=True)
             saved_files: list[dict[str, Any]] = []
             evidence_rows: list[dict[str, Any]] = []
             audit_events: list[dict[str, Any]] = []
+            if not pdf_files:
+                evidence_rows.append(
+                    {
+                        "evidence_id": f"evidence-{packet_id}-no-document-intake",
+                        "packet_id": packet_id,
+                        "organization_id": packet_org_id(packet),
+                        "title": "No-document quick check intake",
+                        "description": "Customer submitted trade path details without attaching PDFs.",
+                        "evidence_type": "customer_uploaded_reference",
+                        "source_url": "",
+                        "file_path": "",
+                        "source_owner": fields.get("exporter_name") or "public quick-check user",
+                        "uploaded_by": "public_quick_check",
+                        "created_at": now.isoformat(),
+                        "accessed_at": now.isoformat(),
+                        "last_verified_at": "",
+                        "expires_at": "",
+                        "rights_status": "blocked",
+                        "freshness_status": "needs_current_refresh_before_claims",
+                        "claim_supported": "User provided product, country, and responsibility context only.",
+                        "claim_boundary": "No document evidence was uploaded; this supports missing-evidence planning only.",
+                        "sensitivity_level": "internal",
+                        "ai_processing_mode": "metadata_only",
+                        "ai_processing_permission": "metadata_only",
+                        "ai_processing_allowed": True,
+                        "redaction_required": False,
+                        "review_required": True,
+                        "human_review_status": "not_reviewed",
+                    }
+                )
+                audit_events.append(
+                    {
+                        "event_id": f"{packet_id}:public_no_document_quick_check_created:{now.isoformat()}",
+                        "event_type": "public_no_document_quick_check_created",
+                        "packet_id": packet_id,
+                        "organization_id": packet_org_id(packet),
+                        "actor_type": "customer",
+                        "actor_user_id": actor.get("id"),
+                        "entity_type": "PublicQuickCheck",
+                        "entity_id": packet_id,
+                        "ip_address": "local-dev",
+                        "user_agent": self.headers.get("User-Agent") or "local-app",
+                        "created_at": now.isoformat(),
+                        "after_json": {
+                            "file_count": 0,
+                            "product_name": packet.get("product_name"),
+                            "origin_country": packet.get("origin_country"),
+                            "destination_country": packet.get("destination_country"),
+                        },
+                    }
+                )
+            upload_dir = repo_root / "system_review_graph" / "public_uploads" / packet_id / "quarantine"
+            if pdf_files:
+                upload_dir.mkdir(parents=True, exist_ok=True)
             for index, file in enumerate(pdf_files, start=1):
                 original_filename = _safe_filename(str(file["filename"]))
                 filename = f"document-{index:03d}.pdf"
@@ -3123,6 +3283,7 @@ def build_operator_app_handler(repo_root: Path) -> type[BaseHTTPRequestHandler]:
                     "direct_file_serving": False,
                 },
                 "audit_event_types": [
+                    "public_no_document_quick_check_created",
                     "public_upload_received",
                     "public_pdf_triaged",
                     "public_upload_quarantined",
@@ -3144,12 +3305,24 @@ def build_operator_app_handler(repo_root: Path) -> type[BaseHTTPRequestHandler]:
                     "expires_at": expires_at,
                     "file_count": len(saved_files),
                     "files": saved_files,
-                    "delete_route": f"/api/public/packets/{packet_id}/delete-files",
-                    "parser_sandbox_status": "local_bounded_parser_complete",
+                    "delete_route": f"/api/public/packets/{packet_id}/delete-files" if saved_files else "",
+                    "parser_sandbox_status": (
+                        "local_bounded_parser_complete"
+                        if saved_files
+                        else "not_run_no_documents_uploaded"
+                    ),
                     "rate_limit_bucket": "public_quick_check",
                     "audit_events": [event["event_type"] for event in audit_events],
-                    "shareable_status": "blocked_until_user_confirmation",
-                    "retention_notice": "Public quick-check uploads are local draft artifacts and should be deleted or expired after processing.",
+                    "shareable_status": (
+                        "blocked_until_user_confirmation"
+                        if saved_files
+                        else "blocked_until_evidence_or_review"
+                    ),
+                    "retention_notice": (
+                        "Public quick-check uploads are local draft artifacts and should be deleted or expired after processing."
+                        if saved_files
+                        else "No customer files are attached to this quick-check packet."
+                    ),
                 }
             )
             write_json(manifest, manifest_path)

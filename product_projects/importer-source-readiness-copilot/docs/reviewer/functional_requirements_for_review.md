@@ -20,6 +20,8 @@ The current product is usable for local review and controlled preparation. It do
 
 - Create or inspect a Trade Readiness Packet.
 - Support a beginner flow with little or no documentation.
+- Support a no-document quick check that creates a missing-evidence packet without showing upload-only actions.
+- Support uploaded PDF triage with quarantine metadata, draft field extraction, user confirmation, delete-file action, and blocked-claim boundaries.
 - Record product, origin, destination, buyer/importer, supplier, Incoterms, HS-code candidate, source, and evidence details.
 - Maintain an evidence ledger and mark evidence as missing, reference-only, stale, or needing review.
 - Route users to official-source references without treating those references as approval.
@@ -31,9 +33,27 @@ The current product is usable for local review and controlled preparation. It do
 
 - Quick check: user gives product and country details, optionally adds documents, then receives missing evidence and next safe action.
 - Packet workspace: user reviews the packet, evidence, official-source routes, unresolved items, and report outputs.
+- Document intelligence: product separates official samples, synthetic parser QA fixtures, no-document intake, and customer-uploaded evidence.
 - Business decision preparation: product runs the decision tree, scores, source freshness check, buyer/supplier evidence ladder, and allowed/blocked action matrix.
 - Expert routing: product prepares a scoped packet for a human reviewer; AI cannot approve the lane.
 - Local operations: product can refresh source records, generate reports, create work orders, reserve billing internally, and record audit events without external effects.
+
+## Document Intelligence Implemented
+
+- Pipeline status: `production_document_intelligence_engine_ready_local_pipeline_security_gates_closed`.
+- Expected document classes: `11`.
+- Official sample PDFs downloaded: `3`.
+- Synthetic parser QA PDFs generated: `11`.
+- Parser output is draft evidence only and requires user confirmation before sharing.
+- No document parser output opens customs, tariff, CFIA, buyer, supplier, shipment, payment, legal, or launch gates.
+
+## Enterprise And Advisor Use Cases
+
+- Broker or trade advisor can manage multiple client packets and export missing-evidence or broker-review packets.
+- Enterprise sourcing team can compare lanes while seeing which country/source paths are full, partial, reference-only, or generic.
+- Compliance or legal reviewer can inspect blocked claims, source routes, evidence provenance, and the exact scope of requested review.
+- Security or privacy reviewer can inspect upload, AI, deletion, audit, and retention controls before real-user data is accepted.
+- Finance or billing reviewer can confirm that paid scope is preparation only and live checkout remains disabled until payment gates pass.
 
 ## Current Product Proof
 

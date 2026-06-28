@@ -78,8 +78,8 @@ Refresh official sources and keep claims reference-only until qualified review.
 - CBSA Import Commercial Goods Into Canada: Reference source only; does not replace CBSA, broker, customs, or legal review.
 - CBSA Customs Tariff 2026: Reference source only; classification and tariff treatment require qualified review.
 - CFIA Automated Import Reference System (AIRS): Reference source only; product-specific food import compliance requires qualified review and source verification.
-- Global Affairs Canada Import Controls and Import Permits: Reference source only; does not prove whether a specific product requires an import permit.
-- Justice Laws Import Control List: Reference source only; legal interpretation and product applicability require qualified review.
+- CBSA CI1 Canada Customs Invoice: Reference source only; official sample form only; it is not customer evidence, customs approval, accounting proof, or shipment readiness.
+- CBSA A8A(B) Cargo Control Document: Reference source only; official sample form only; it does not prove cargo release, transport readiness, customs accounting, or compliance.
 
 ## Review Required
 

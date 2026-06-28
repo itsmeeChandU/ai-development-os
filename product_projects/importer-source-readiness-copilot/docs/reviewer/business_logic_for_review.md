@@ -28,6 +28,18 @@ The logic deliberately does not approve trade action. It blocks stronger claims 
 - Business gate decision: allows local drafts and reports while blocking outreach, payment, approvals, and shipment decisions.
 - Phase coverage: exposes 13 business phase surfaces, while phase 0 remains the business identity lock.
 
+## Document Logic Implemented Now
+
+Document logic is now part of the packet decision system. The product accepts no-document intake as a valid beginner path and accepts PDFs as draft evidence only when upload checks pass.
+
+- No-document intake creates a missing-evidence packet and does not show extracted-field confirmation or delete-uploaded-files actions.
+- Uploaded-document intake creates quarantine metadata, draft extraction rows, user-confirmation status, and deletion actions.
+- Expected document classes covered locally: `11`.
+- Official sample PDFs stored for parser orientation: `3`.
+- Synthetic filled parser QA PDFs stored for local parser testing: `11`.
+- Official samples and synthetic QA files do not count as customer proof.
+- Every extracted field has provenance, confidence, user-confirmation status, claim boundary, supported claims, and blocked claims.
+
 ## Current Sample Packet Result
 
 - Packet reviewed: `packet-frozen-tuna-canada-001`.

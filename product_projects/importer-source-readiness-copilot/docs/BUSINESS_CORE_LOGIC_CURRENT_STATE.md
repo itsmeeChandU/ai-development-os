@@ -102,6 +102,45 @@ The current example packet is at document stage because it has evidence, but imp
 | 12. Payments | implemented as paid scope, forbidden paid scope, review prerequisites, and live-checkout-disabled gate |
 | 13. Public launch | implemented as safe initial public scope, blocked public scope, approval prerequisites, and public-launch-ready false |
 
+## Document Intelligence Business Logic
+
+Document handling is now part of the business core, not a loose upload utility.
+The product supports two valid public quick-check paths:
+
+- no-document intake: creates a packet from product, country, party, and
+  responsibility context; records a no-document evidence row; produces missing
+  evidence, starter checklist, buyer packet, broker packet, safe summary, and
+  blocked claims.
+- uploaded-document intake: creates quarantine metadata, draft extracted
+  fields, document-intelligence rows, user-confirmation actions, deletion
+  actions, and report outputs.
+
+The production document engine recognizes these expected document classes:
+
+- commercial invoice
+- packing list
+- certificate of origin
+- bill of lading
+- airway bill
+- product specification
+- lab certificate
+- phytosanitary or health certificate
+- purchase order
+- contract
+- inspection report
+
+Official sample documents and synthetic parser QA files are used only for parser
+orientation and local QA. They are not customer proof, government approval, or
+evidence that a shipment is ready.
+
+Every extracted field must carry document ID, page or section, extracted value,
+confidence, provenance, user-confirmation status, claim boundary, supported
+claims, and blocked claims.
+
+Parser output is always `parser_extracted_draft`. It can help the user review
+documents faster, but it cannot open customs, tariff, CFIA, origin, buyer,
+supplier, shipment, payment, legal, or launch gates.
+
 ## Decision Tree
 
 The current decision tree asks 12 questions:
@@ -273,7 +312,7 @@ Payments remain downstream. Live checkout stays disabled until scope, support, r
 | 7 | Human review gates | local review-lane contract ready, external evidence required | reviewer lanes, decision templates, and required evidence fields | real reviewer records |
 | 8 | Metadata-only beta | metadata-only beta contract ready, real users required | beta scope and outcome capture requirements | 5-10 real user outcomes |
 | 9 | Hosted beta infrastructure | hosted control contract ready, hosted proof required | auth, DB, storage, logs, backups, AI routing, observability, and payment-gate checklist | hosted platform proof |
-| 10 | Controlled real-file beta | real-file beta contract ready, hosted review required | consent, redaction, deletion, audit, and AI-use requirements | supervised real-file beta results |
+| 10 | Controlled real-file beta | local document-intelligence pipeline ready, hosted review required | consent, redaction, deletion, audit, AI-use requirements, sample library, parser QA fixtures, and draft extraction provenance | supervised real-file beta results plus upload security/privacy proof |
 | 11 | Buyer/supplier evidence | local executable ladders, real evidence required | buyer/supplier evidence levels and language boundaries | dated buyer and supplier evidence for stronger claims |
 | 12 | Payments | local contract complete, live checkout disabled | paid scope and required reviews | pricing, tax, support, webhook, payment review |
 | 13 | Public launch | launch contract ready, public launch blocked | safe initial launch scope and blocked launch scope | named launch owner approval and all external gates |
@@ -287,6 +326,9 @@ Payments remain downstream. Live checkout stays disabled until scope, support, r
 | Local operation wiring | `src/importer_source_readiness/product_operations.py` |
 | Business phase report | `system_review_graph/business_logic_phase_report.json` |
 | Business decision report | `system_review_graph/generated_reports/business_decision_packet-frozen-tuna-canada-001.json` |
+| Production document intelligence | `system_review_graph/production_document_intelligence_manifest.json` |
+| Production document pipeline | `system_review_graph/production_document_pipeline.json` |
+| Extracted-field proof | `system_review_graph/production_document_extracted_fields.json` |
 | Tests | `tests/test_business_logic.py`, `tests/test_completion_platform.py` |
 | Product proof | `python3 scripts/check_product.py` |
 | Root proof | `python3 scripts/product_project_check.py` |
@@ -299,6 +341,9 @@ Payments remain downstream. Live checkout stays disabled until scope, support, r
 - canonical Trade Readiness Packet contract
 - field-level provenance
 - executable starter flow
+- no-document quick-check packet path
+- production document-intelligence pipeline for expected trade document classes
+- official sample document library and synthetic parser QA fixtures for local parser validation
 - Canada/Vietnam/India/Generic country-pack rows with route checks
 - source-monitor contract with source metadata and executable evidence freshness evaluation
 - buyer/supplier evidence ladders

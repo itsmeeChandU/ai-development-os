@@ -450,6 +450,16 @@ def build_redevelopment_phases() -> list[dict[str, Any]]:
             "source_track": ["owasp-file-upload"],
             "evidence_track": ["document id", "page/section", "extracted value", "confidence", "provenance", "confirmation status", "claim boundary"],
             "gate_track": ["parser_extraction_is_draft_evidence", "real_uploads_blocked_until_security_privacy_controls"],
+            "implementation_status": "local_document_pipeline_sample_library_ready_security_gates_closed",
+            "artifacts": [
+                "data/official_sample_documents/",
+                "data/parser_qa_documents/",
+                "system_review_graph/production_document_intelligence_manifest.json",
+                "system_review_graph/production_document_pipeline.json",
+                "system_review_graph/production_document_extracted_fields.json",
+                "docs/PRODUCTION_DOCUMENT_INTELLIGENCE_ENGINE.md",
+            ],
+            "proof": "Production document intelligence now maps declared document gaps, downloaded official sample forms, source-route-only country samples, synthetic filled parser QA documents, extracted-field provenance, redaction previews, and evidence records while keeping real upload/security/AI/document claims closed.",
         },
         {
             "phase": 11,
@@ -820,6 +830,15 @@ def render_production_redevelopment_markdown(payload: dict[str, Any]) -> str:
                 "",
             ]
         )
+        if phase.get("implementation_status"):
+            lines.extend(
+                [
+                    f"- Implementation status: `{phase['implementation_status']}`",
+                    f"- Implementation artifacts: {', '.join(phase.get('artifacts', []))}.",
+                    f"- Implementation proof: {phase.get('proof', '')}",
+                    "",
+                ]
+            )
     lines.extend(["", "## Permanent Research Intelligence Entities", ""])
     research_entities = {
         "ResearchIntake",

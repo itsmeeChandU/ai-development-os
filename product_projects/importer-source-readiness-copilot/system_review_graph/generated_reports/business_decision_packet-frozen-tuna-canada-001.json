@@ -532,6 +532,15 @@
             "url": "https://inspection.canada.ca/en/importing-food-plants-animals/airs"
           },
           {
+            "accessed_at": "2026-06-28",
+            "claim_boundary": "Reference source only; official sample form only; it does not prove CFIA clearance, admissibility, or compliance.",
+            "evidence_role": "official CFIA documentation-review form for regulated-product parser orientation",
+            "jurisdiction": "Canada",
+            "name": "CFIA 5272 Request for Documentation Review",
+            "source_id": "cfia-5272-documentation-review-request",
+            "url": "https://inspection.canada.ca/sites/default/files/legacy/DAM/DAM-form-forme/STAGING/text-texte/c5272_re_1369400657637_eng.pdf"
+          },
+          {
             "accessed_at": "2026-06-25",
             "claim_boundary": "Reference source only; does not prove whether a specific product requires an import permit.",
             "evidence_role": "import control and permit orientation",
@@ -595,6 +604,24 @@
             "name": "CFIA Automated Import Reference System (AIRS)",
             "source_id": "cfia-airs",
             "url": "https://inspection.canada.ca/en/importing-food-plants-animals/airs"
+          },
+          {
+            "accessed_at": "2026-06-28",
+            "claim_boundary": "Reference source only; official sample form only; it is not customer evidence, customs approval, accounting proof, or shipment readiness.",
+            "evidence_role": "official Canada customs invoice sample form for document parser orientation",
+            "jurisdiction": "Canada",
+            "name": "CBSA CI1 Canada Customs Invoice",
+            "source_id": "cbsa-ci1-canada-customs-invoice",
+            "url": "https://www.cbsa-asfc.gc.ca/publications/forms-formulaires/ci1.pdf"
+          },
+          {
+            "accessed_at": "2026-06-28",
+            "claim_boundary": "Reference source only; official sample form only; it does not prove cargo release, transport readiness, customs accounting, or compliance.",
+            "evidence_role": "official cargo control sample form for transport-document parser orientation",
+            "jurisdiction": "Canada",
+            "name": "CBSA A8A(B) Cargo Control Document",
+            "source_id": "cbsa-a8a-b-cargo-control-document",
+            "url": "https://www.cbsa-asfc.gc.ca/publications/forms-formulaires/a8a-b.pdf"
           },
           {
             "accessed_at": "2026-06-25",
@@ -698,7 +725,7 @@
             "url": "https://www.international.gc.ca/world-monde/international_relations-relations_internationales/sanctions/index.aspx?lang=eng"
           }
         ],
-        "source_count": 12,
+        "source_count": 15,
         "status": "country_pack_ready_reference_only",
         "tariff_sources": [
           {
@@ -751,10 +778,30 @@
           "qualified review and source refresh are required before country-specific claims"
         ],
         "country": "Vietnam",
-        "coverage_check_status": "missing_required_source_routes",
-        "export_sources": [],
+        "coverage_check_status": "reference_routes_complete_review_required",
+        "export_sources": [
+          {
+            "accessed_at": "2026-06-28",
+            "claim_boundary": "Reference source only; no stable local PDF sample was verified in this pass and Vietnam customs/export claims require current source review.",
+            "evidence_role": "official Vietnam customs source route for origin/demo lane document lookup",
+            "jurisdiction": "Vietnam",
+            "name": "General Department of Vietnam Customs Portal",
+            "source_id": "vietnam-customs-portal",
+            "url": "https://www.customs.gov.vn/"
+          }
+        ],
         "food_plant_animal_sources": [],
-        "import_sources": [],
+        "import_sources": [
+          {
+            "accessed_at": "2026-06-28",
+            "claim_boundary": "Reference source only; no stable local PDF sample was verified in this pass and Vietnam customs/export claims require current source review.",
+            "evidence_role": "official Vietnam customs source route for origin/demo lane document lookup",
+            "jurisdiction": "Vietnam",
+            "name": "General Department of Vietnam Customs Portal",
+            "source_id": "vietnam-customs-portal",
+            "url": "https://www.customs.gov.vn/"
+          }
+        ],
         "missing_required_routes": [],
         "permitted_automation_methods": [
           "manual_review",
@@ -767,7 +814,7 @@
             "id": "import_or_customs_route",
             "next_valid_move": "Add official import/customs route source.",
             "required": false,
-            "satisfied": false
+            "satisfied": true
           },
           {
             "id": "tariff_or_market_access_route",
@@ -801,8 +848,8 @@
         ],
         "role": "origin_export_pack",
         "sanctions_sources": [],
-        "source_count": 0,
-        "status": "country_pack_required",
+        "source_count": 1,
+        "status": "country_pack_ready_reference_only",
         "tariff_sources": [],
         "tax_vat_duty_sources": [],
         "trade_data_sources": []
@@ -828,6 +875,15 @@
           },
           {
             "accessed_at": "2026-06-28",
+            "claim_boundary": "Reference source only; no stable local PDF sample was verified in this pass and India export claims require current source review.",
+            "evidence_role": "official DGFT form/source route for India exporter document requirements and future sample-form lookup",
+            "jurisdiction": "India",
+            "name": "India DGFT Appendices and Aayat Niryat Forms",
+            "source_id": "india-dgft-appendices-anf",
+            "url": "https://www.dgft.gov.in/CP/?opt=appendices-and-anf"
+          },
+          {
+            "accessed_at": "2026-06-28",
             "claim_boundary": "Reference source only; does not prove tariff classification, export/import duty treatment, or customs compliance.",
             "evidence_role": "India customs and tariff reference orientation",
             "jurisdiction": "India",
@@ -845,6 +901,15 @@
             "jurisdiction": "India",
             "name": "India Central Board of Indirect Taxes and Customs",
             "source_id": "india-cbic-customs",
+            "url": "https://www.cbic.gov.in/"
+          },
+          {
+            "accessed_at": "2026-06-28",
+            "claim_boundary": "Reference source only; no stable local PDF sample was verified in this pass and customs readiness claims remain blocked.",
+            "evidence_role": "official CBIC source route for customs form lookup and future sample-form attachment",
+            "jurisdiction": "India",
+            "name": "India CBIC Customs Forms Route",
+            "source_id": "india-cbic-customs-forms",
             "url": "https://www.cbic.gov.in/"
           }
         ],
@@ -894,7 +959,7 @@
         ],
         "role": "strategic_next_origin_pack",
         "sanctions_sources": [],
-        "source_count": 2,
+        "source_count": 4,
         "status": "country_pack_ready_reference_only",
         "tariff_sources": [
           {
@@ -1073,7 +1138,7 @@
         "step": 10
       },
       {
-        "answer": "cbsa-carm, cbsa-import-commercial-goods, cbsa-customs-tariff-2026, cfia-airs, gac-import-controls, justice-import-control-list, canada-sanctions, ised-trade-data-online",
+        "answer": "cbsa-carm, cbsa-import-commercial-goods, cbsa-customs-tariff-2026, cfia-airs, cbsa-ci1-canada-customs-invoice, cbsa-a8a-b-cargo-control-document, cfia-5272-documentation-review-request, gac-import-controls",
         "answer_state": "needs_user_confirmation",
         "question": "What official sources must be checked?",
         "status": "source_routes_ready_reference_only",
@@ -1221,11 +1286,11 @@
         "market_access_approved"
       ],
       "competitor_source_countries": [
-        "United States",
         "Mexico",
-        "European Union",
+        "Vietnam",
+        "United States",
         "China",
-        "Vietnam"
+        "European Union"
       ],
       "destination": "Canada",
       "exporter_origin": "Vietnam",
@@ -1463,7 +1528,7 @@
       "user sees recheck required",
       "old output remains blocked until refreshed evidence and review are attached"
     ],
-    "source_count": 20,
+    "source_count": 24,
     "sources": [
       {
         "accessed_at": "2026-06-25",
@@ -1612,6 +1677,117 @@
         "source_type": "regulated_product_requirements",
         "terms_status": "must_check_before_fetch",
         "url": "https://inspection.canada.ca/en/importing-food-plants-animals/airs"
+      },
+      {
+        "accessed_at": "2026-06-28",
+        "auth_required": "unknown_until_source_review",
+        "cadence": "before_packet_decision_or_when_source_changes",
+        "canonical_url": "https://www.cbsa-asfc.gc.ca/publications/forms-formulaires/ci1.pdf",
+        "claim_boundary": "Reference source only; official sample form only; it is not customer evidence, customs approval, accounting proof, or shipment readiness.",
+        "content_hash": "",
+        "content_hash_required": true,
+        "diff_classifier": [
+          "wording_change",
+          "date_change",
+          "tariff_or_regulatory_change",
+          "source_unavailable"
+        ],
+        "diff_strategy": "hash_then_classify_material_change_before_claim_update",
+        "evidence_role": "official Canada customs invoice sample form for document parser orientation",
+        "fetch_mode": "registered_reference_manual_refresh",
+        "freshness_status": "not_checked",
+        "jurisdiction": "Canada",
+        "name": "CBSA CI1 Canada Customs Invoice",
+        "packet_impact_logic": "critical source changes mark affected packet outputs stale until refreshed evidence and reviewer review are attached",
+        "packet_stale_alert": "create stale-source blocker if source content changes or freshness expires",
+        "packet_tags": [
+          "packet-frozen-tuna-canada-001",
+          "Vietnam",
+          "Canada",
+          "food_import"
+        ],
+        "parser_contract": "extract date/status/hash and classify change type before packet impact",
+        "parser_type": "metadata_hash_or_structured_export_when_allowed",
+        "refresh_method": "manual_or_permitted_fetch_after_terms_check",
+        "robots_status": "must_check_before_fetch",
+        "source_id": "cbsa-ci1-canada-customs-invoice",
+        "source_type": "official_reference",
+        "terms_status": "must_check_before_fetch",
+        "url": "https://www.cbsa-asfc.gc.ca/publications/forms-formulaires/ci1.pdf"
+      },
+      {
+        "accessed_at": "2026-06-28",
+        "auth_required": "unknown_until_source_review",
+        "cadence": "before_packet_decision_or_when_source_changes",
+        "canonical_url": "https://www.cbsa-asfc.gc.ca/publications/forms-formulaires/a8a-b.pdf",
+        "claim_boundary": "Reference source only; official sample form only; it does not prove cargo release, transport readiness, customs accounting, or compliance.",
+        "content_hash": "",
+        "content_hash_required": true,
+        "diff_classifier": [
+          "wording_change",
+          "date_change",
+          "tariff_or_regulatory_change",
+          "source_unavailable"
+        ],
+        "diff_strategy": "hash_then_classify_material_change_before_claim_update",
+        "evidence_role": "official cargo control sample form for transport-document parser orientation",
+        "fetch_mode": "registered_reference_manual_refresh",
+        "freshness_status": "not_checked",
+        "jurisdiction": "Canada",
+        "name": "CBSA A8A(B) Cargo Control Document",
+        "packet_impact_logic": "critical source changes mark affected packet outputs stale until refreshed evidence and reviewer review are attached",
+        "packet_stale_alert": "create stale-source blocker if source content changes or freshness expires",
+        "packet_tags": [
+          "packet-frozen-tuna-canada-001",
+          "Vietnam",
+          "Canada",
+          "food_import"
+        ],
+        "parser_contract": "extract date/status/hash and classify change type before packet impact",
+        "parser_type": "metadata_hash_or_structured_export_when_allowed",
+        "refresh_method": "manual_or_permitted_fetch_after_terms_check",
+        "robots_status": "must_check_before_fetch",
+        "source_id": "cbsa-a8a-b-cargo-control-document",
+        "source_type": "official_reference",
+        "terms_status": "must_check_before_fetch",
+        "url": "https://www.cbsa-asfc.gc.ca/publications/forms-formulaires/a8a-b.pdf"
+      },
+      {
+        "accessed_at": "2026-06-28",
+        "auth_required": "unknown_until_source_review",
+        "cadence": "before_packet_decision_or_when_source_changes",
+        "canonical_url": "https://inspection.canada.ca/sites/default/files/legacy/DAM/DAM-form-forme/STAGING/text-texte/c5272_re_1369400657637_eng.pdf",
+        "claim_boundary": "Reference source only; official sample form only; it does not prove CFIA clearance, admissibility, or compliance.",
+        "content_hash": "",
+        "content_hash_required": true,
+        "diff_classifier": [
+          "wording_change",
+          "date_change",
+          "tariff_or_regulatory_change",
+          "source_unavailable"
+        ],
+        "diff_strategy": "hash_then_classify_material_change_before_claim_update",
+        "evidence_role": "official CFIA documentation-review form for regulated-product parser orientation",
+        "fetch_mode": "registered_reference_manual_refresh",
+        "freshness_status": "not_checked",
+        "jurisdiction": "Canada",
+        "name": "CFIA 5272 Request for Documentation Review",
+        "packet_impact_logic": "critical source changes mark affected packet outputs stale until refreshed evidence and reviewer review are attached",
+        "packet_stale_alert": "create stale-source blocker if source content changes or freshness expires",
+        "packet_tags": [
+          "packet-frozen-tuna-canada-001",
+          "Vietnam",
+          "Canada",
+          "food_import"
+        ],
+        "parser_contract": "extract date/status/hash and classify change type before packet impact",
+        "parser_type": "metadata_hash_or_structured_export_when_allowed",
+        "refresh_method": "manual_or_permitted_fetch_after_terms_check",
+        "robots_status": "must_check_before_fetch",
+        "source_id": "cfia-5272-documentation-review-request",
+        "source_type": "regulated_product_requirements",
+        "terms_status": "must_check_before_fetch",
+        "url": "https://inspection.canada.ca/sites/default/files/legacy/DAM/DAM-form-forme/STAGING/text-texte/c5272_re_1369400657637_eng.pdf"
       },
       {
         "accessed_at": "2026-06-25",
@@ -1871,6 +2047,43 @@
         "source_type": "tariff_or_market_access",
         "terms_status": "must_check_before_fetch",
         "url": "https://www.macmap.org/"
+      },
+      {
+        "accessed_at": "2026-06-28",
+        "auth_required": "unknown_until_source_review",
+        "cadence": "before_packet_decision_or_when_source_changes",
+        "canonical_url": "https://www.customs.gov.vn/",
+        "claim_boundary": "Reference source only; no stable local PDF sample was verified in this pass and Vietnam customs/export claims require current source review.",
+        "content_hash": "",
+        "content_hash_required": true,
+        "diff_classifier": [
+          "wording_change",
+          "date_change",
+          "tariff_or_regulatory_change",
+          "source_unavailable"
+        ],
+        "diff_strategy": "hash_then_classify_material_change_before_claim_update",
+        "evidence_role": "official Vietnam customs source route for origin/demo lane document lookup",
+        "fetch_mode": "registered_reference_manual_refresh",
+        "freshness_status": "not_checked",
+        "jurisdiction": "Vietnam",
+        "name": "General Department of Vietnam Customs Portal",
+        "packet_impact_logic": "critical source changes mark affected packet outputs stale until refreshed evidence and reviewer review are attached",
+        "packet_stale_alert": "create stale-source blocker if source content changes or freshness expires",
+        "packet_tags": [
+          "packet-frozen-tuna-canada-001",
+          "Vietnam",
+          "Canada",
+          "food_import"
+        ],
+        "parser_contract": "extract date/status/hash and classify change type before packet impact",
+        "parser_type": "metadata_hash_or_structured_export_when_allowed",
+        "refresh_method": "manual_or_permitted_fetch_after_terms_check",
+        "robots_status": "must_check_before_fetch",
+        "source_id": "vietnam-customs-portal",
+        "source_type": "official_reference",
+        "terms_status": "must_check_before_fetch",
+        "url": "https://www.customs.gov.vn/"
       },
       {
         "accessed_at": "2026-06-28",

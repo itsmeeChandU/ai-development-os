@@ -134,6 +134,7 @@ def main() -> int:
         [sys.executable, "scripts/run_production_packet_engine.py"],
         [sys.executable, "scripts/run_production_country_source_engine.py"],
         [sys.executable, "scripts/run_production_market_intelligence_engine.py"],
+        [sys.executable, "scripts/run_production_document_intelligence_engine.py"],
         [sys.executable, "scripts/audit_external_package.py", "--root", "."],
     ]
     for command in commands:
@@ -200,6 +201,7 @@ def main() -> int:
     production_packet_engine = _load_json(ROOT / "system_review_graph" / "production_packet_engine_manifest.json")
     production_country_source_engine = _load_json(ROOT / "system_review_graph" / "production_country_source_engine_manifest.json")
     production_market_intelligence = _load_json(ROOT / "system_review_graph" / "production_market_intelligence_manifest.json")
+    production_document_intelligence = _load_json(ROOT / "system_review_graph" / "production_document_intelligence_manifest.json")
     official_source_registry = _load_json(ROOT / "data" / "official_source_registry.json")
     business_core_doc = (ROOT / "docs" / "BUSINESS_CORE_LOGIC_CURRENT_STATE.md").read_text(encoding="utf-8")
     functional_doc = (ROOT / "docs" / "FUNCTIONAL_REQUIREMENTS_CURRENT_STATE.md").read_text(encoding="utf-8")
@@ -266,6 +268,7 @@ def main() -> int:
         "src/importer_source_readiness/external_validation_research.py",
         "src/importer_source_readiness/production_country_source_engine.py",
         "src/importer_source_readiness/production_data_model.py",
+        "src/importer_source_readiness/production_document_intelligence_engine.py",
         "src/importer_source_readiness/production_market_intelligence_engine.py",
         "src/importer_source_readiness/production_packet_engine.py",
         "src/importer_source_readiness/production_redevelopment.py",
@@ -279,6 +282,7 @@ def main() -> int:
         "tests/test_external_validation_research.py",
         "tests/test_production_country_source_engine.py",
         "tests/test_production_data_model.py",
+        "tests/test_production_document_intelligence_engine.py",
         "tests/test_production_market_intelligence_engine.py",
         "tests/test_production_packet_engine.py",
         "tests/test_production_redevelopment.py",
@@ -292,6 +296,7 @@ def main() -> int:
         "scripts/run_external_validation_requirements.py",
         "scripts/run_production_country_source_engine.py",
         "scripts/run_production_data_model.py",
+        "scripts/run_production_document_intelligence_engine.py",
         "scripts/run_production_market_intelligence_engine.py",
         "scripts/run_production_packet_engine.py",
         "scripts/run_production_redevelopment.py",
@@ -316,6 +321,7 @@ def main() -> int:
         "docs/GO_LIVE_INPUT_REQUESTS.md",
         "docs/PRODUCTION_COUNTRY_SOURCE_ENGINE.md",
         "docs/PRODUCTION_DATA_MODEL.md",
+        "docs/PRODUCTION_DOCUMENT_INTELLIGENCE_ENGINE.md",
         "docs/PRODUCTION_MARKET_INTELLIGENCE_ENGINE.md",
         "docs/PRODUCTION_PACKET_ENGINE.md",
         "docs/PRODUCTION_REDEVELOPMENT.md",
@@ -384,6 +390,23 @@ def main() -> int:
         "system_review_graph/production_market_intelligence_manifest.json",
         "system_review_graph/production_market_signals.json",
         "system_review_graph/production_market_dataset_connectors.json",
+        "system_review_graph/production_document_intelligence_manifest.json",
+        "system_review_graph/production_document_pipeline.json",
+        "system_review_graph/production_document_extracted_fields.json",
+        "data/official_sample_documents/canada/cbsa-ci1-canada-customs-invoice.pdf",
+        "data/official_sample_documents/canada/cbsa-a8a-b-cargo-control-document.pdf",
+        "data/official_sample_documents/canada/cfia-5272-documentation-review-request.pdf",
+        "data/parser_qa_documents/synthetic-commercial-invoice-canada.pdf",
+        "data/parser_qa_documents/synthetic-packing-list-india-export.pdf",
+        "data/parser_qa_documents/synthetic-certificate-of-origin-india.pdf",
+        "data/parser_qa_documents/synthetic-bill-of-lading-vietnam.pdf",
+        "data/parser_qa_documents/synthetic-airway-bill-generic.pdf",
+        "data/parser_qa_documents/synthetic-product-specification-vietnam-seafood.pdf",
+        "data/parser_qa_documents/synthetic-lab-certificate-food.pdf",
+        "data/parser_qa_documents/synthetic-health-certificate-vietnam.pdf",
+        "data/parser_qa_documents/synthetic-purchase-order-canada-buyer.pdf",
+        "data/parser_qa_documents/synthetic-contract-incoterms.pdf",
+        "data/parser_qa_documents/synthetic-inspection-report-supplier.pdf",
         "system_review_graph/production_packet_engine_manifest.json",
         "system_review_graph/production_packet_events.json",
         "system_review_graph/production_packet_views/packet-frozen-tuna-canada-001/starter_packet.json",
@@ -739,6 +762,67 @@ def main() -> int:
             failures.append("market packet must not claim profitability")
         if market_packet.get("can_claim_buyer_validation") is not False:
             failures.append("market packet must not claim buyer validation")
+    if production_document_intelligence.get("status") != "production_document_intelligence_engine_ready_local_pipeline_security_gates_closed":
+        failures.append(
+            "production document intelligence status expected production_document_intelligence_engine_ready_local_pipeline_security_gates_closed, "
+            f"got {production_document_intelligence.get('status')!r}"
+        )
+    if production_document_intelligence.get("pipeline_stage_count", 0) < 16:
+        failures.append("production document intelligence should expose the full upload/document pipeline")
+    if production_document_intelligence.get("document_class_count") != 11:
+        failures.append("production document intelligence should cover the eleven expected trade-document classes")
+    if production_document_intelligence.get("official_sample_document_count", 0) < 3:
+        failures.append("production document intelligence should include downloaded official CBSA/CFIA samples")
+    if production_document_intelligence.get("source_route_only_sample_count", 0) < 3:
+        failures.append("production document intelligence should include source-route-only India/Vietnam sample rows")
+    if production_document_intelligence.get("synthetic_parser_fixture_count") != 11:
+        failures.append("production document intelligence should include one synthetic parser fixture per expected document class")
+    if production_document_intelligence.get("extracted_field_count", 0) < 20:
+        failures.append("production document intelligence should extract parser QA field rows")
+    for key in ("real_uploads_enabled", "malware_scan_proven", "object_storage_ready", "external_effects_created", "claims_opened", "public_launch_ready"):
+        if production_document_intelligence.get(key) is not False:
+            failures.append(f"production document intelligence expected {key}=false")
+    if production_document_intelligence.get("parser_outputs_are_draft") is not True:
+        failures.append("production document intelligence parser outputs must remain draft")
+    for blocked_claim in ("document_authenticity_verified", "customs_ready", "tariff_confirmed", "cfia_approved", "supplier_verified"):
+        if blocked_claim not in production_document_intelligence.get("blocked_claims", []):
+            failures.append(f"production document intelligence should block {blocked_claim}")
+    document_stages = {row.get("stage") for row in production_document_intelligence.get("pipeline_stages", [])}
+    for stage in ("malware_scan", "document_classification", "field_extraction", "evidence_ledger_mapping", "redaction_preview", "ai_optional_analysis"):
+        if stage not in document_stages:
+            failures.append(f"production document intelligence missing pipeline stage {stage}")
+    source_ids_for_documents = {row.get("source_id") for row in production_document_intelligence.get("source_records", [])}
+    for source_id in ("cbsa-ci1-canada-customs-invoice", "india-dgft-appendices-anf", "vietnam-customs-portal", "owasp-file-upload"):
+        if source_id not in source_ids_for_documents:
+            failures.append(f"production document intelligence missing source record {source_id}")
+    document_sample_levels = {row.get("sample_level") for row in production_document_intelligence.get("document_records", [])}
+    for sample_level in ("official_pdf_downloaded", "synthetic_parser_fixture"):
+        if sample_level not in document_sample_levels:
+            failures.append(f"production document intelligence missing document sample level {sample_level}")
+    expected_document_classes = {
+        "commercial_invoice",
+        "packing_list",
+        "certificate_of_origin",
+        "bill_of_lading",
+        "airway_bill",
+        "product_specification",
+        "lab_certificate",
+        "phytosanitary_or_health_certificate",
+        "purchase_order",
+        "contract",
+        "inspection_report",
+    }
+    document_classes = {row.get("classification", {}).get("type") for row in production_document_intelligence.get("document_records", [])}
+    if not expected_document_classes.issubset(document_classes):
+        failures.append("production document intelligence does not cover every expected document class")
+    for field in production_document_intelligence.get("extracted_fields", []):
+        for key in ("document_id", "page_or_section", "extracted_value", "confidence", "provenance", "user_confirmation_status", "claim_boundary"):
+            if key not in field:
+                failures.append(f"production document extracted field missing {key}")
+                break
+        if field.get("supports_claims") != []:
+            failures.append("production document extracted fields must not support claims directly")
+            break
     if not screenshot_manifest_path.exists():
         failures.append("operator screenshot manifest was not generated")
     if screenshot_manifest.get("status") != "screenshots_ready":

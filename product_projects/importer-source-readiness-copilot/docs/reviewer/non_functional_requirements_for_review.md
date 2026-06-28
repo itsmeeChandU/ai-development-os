@@ -11,12 +11,24 @@ The product is not ready for unrestricted real files, live payments, public laun
 ## Security And Access
 
 - Implemented locally: role model, organization boundary model, scoped review links, admin/gate/health surfaces, and audit event records.
-- Required before hosted beta: real authentication, secure sessions, CSRF where needed, rate limits, upload scanning, secret management, and security review signoff.
+- Implemented locally for uploads: generated filenames, PDF signature checks, page limits, quarantine metadata, direct-file-serving blocks, and delete-file actions for uploaded quick-check files.
+- Required before hosted beta: real authentication, secure sessions, CSRF where needed, rate limits, malware scanning, private object storage, secret management, and security review signoff.
 
 ## Privacy And Data Governance
 
 - Implemented locally: AI-use policy, per-evidence AI permission concept, redaction preview, no-AI/manual fallback, deletion request tracking, and public upload notice.
+- Official sample PDFs, synthetic parser QA files, and customer-uploaded evidence are separated so test fixtures are not mistaken for customer proof.
 - Required before real user data: privacy notice, terms, retention/deletion approval, breach process, provider inventory, and review of whether any file content may be sent to AI providers.
+
+## Document Handling Boundary
+
+The document engine is ready for local review and parser QA. It is not yet approved for unrestricted real customer files in production.
+
+- Document pipeline status: `production_document_intelligence_engine_ready_local_pipeline_security_gates_closed`.
+- Pipeline stages tracked: `16`.
+- Official sample PDFs: `3`.
+- Synthetic parser QA PDFs: `11`.
+- Real file uploads remain blocked until hosted auth, private storage, malware scanning, retention/deletion approval, privacy/legal review, security review, monitoring, and incident response are proven.
 
 ## AI Safety
 

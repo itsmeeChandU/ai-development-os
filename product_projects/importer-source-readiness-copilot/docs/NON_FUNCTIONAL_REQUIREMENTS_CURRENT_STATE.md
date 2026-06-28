@@ -21,7 +21,7 @@ This document describes the current non-functional requirements and boundaries f
 | Database and object storage | Managed Postgres for packet state; private object storage for files |
 | AI provider policy | Default no-AI/manual unless user explicitly permits AI use for evidence |
 | Required reviewers | UX/Product, Security/Public Upload, Privacy/Legal, AI Safety, DevOps, Trade-Boundary/Customs, Freight/Logistics, Report Language, Billing/Payment |
-| File handling | Small PDFs only, explicit expiry, deletion support, no indefinite retention until reviewed |
+| File handling | Small PDFs only, generated filenames, file-signature checks, quarantine metadata, explicit expiry, deletion support, no indefinite retention until reviewed |
 | Payments | Disabled through private beta unless payment gates and reviews pass |
 
 | ID | Requirement | Current State | Evidence |
@@ -42,6 +42,8 @@ This document describes the current non-functional requirements and boundaries f
 | NFR-14 | Keep launch controls explicit | Implemented locally | `launch_operations_report.json` |
 | NFR-15 | Provide deployment shell without claiming hosted proof | Implemented locally | `Dockerfile`, `compose.yaml`, `deployment_readiness_report.json` |
 | NFR-16 | Provide proof commands and generated reports | Implemented locally | `check_product.py`, root check scripts |
+| NFR-17 | Keep production document intelligence gated | Implemented locally; real-file production use blocked | `production_document_intelligence_manifest.json`, `production_document_pipeline.json` |
+| NFR-18 | Separate official samples, synthetic QA fixtures, and customer evidence | Implemented locally | `official_sample_documents/`, `parser_qa_documents/` |
 
 ## Security
 
@@ -53,6 +55,8 @@ Implemented now:
 - scoped expert review token concept
 - public upload policy
 - direct serving block for upload quarantine paths
+- generated filenames and local quarantine metadata for public quick-check uploads
+- PDF signature and page-limit checks for local upload intake
 - audit event records
 - deletion request records
 - admin health and gate surfaces
@@ -79,6 +83,7 @@ Implemented now:
 - no-AI/manual fallback
 - data deletion request tracking
 - public upload notice and expiry policy
+- clear separation between official sample PDFs, synthetic parser QA files, and customer-submitted evidence
 
 Still required before hosted private beta:
 
@@ -105,6 +110,7 @@ Still required:
 - prompt-injection review for uploaded documents
 - production model/provider routing decision
 - redaction behavior verification on real examples
+- real-file parser safety review before AI-assisted document analysis is enabled for hosted users
 - incident process for unsafe AI output
 - reviewer approval of customer-facing AI language
 
@@ -175,6 +181,8 @@ Implemented now:
 - generated operator dashboard
 - customer route contract
 - public quick-check route contract
+- polished public landing and document-intake screens with clear next actions
+- separate no-document and uploaded-document result actions
 - plain-language blockers and next valid moves
 
 Still required:
@@ -193,6 +201,7 @@ Implemented now:
 - blocked legal/customs/tariff/CFIA/supplier/buyer claims
 - reviewer lanes for trade-boundary, legal/privacy/security, report language, freight/logistics, and billing/payment
 - final rule: no reviewer lane, no claim lane
+- parser extraction is draft evidence only and cannot open approval gates
 
 Still required:
 
@@ -201,6 +210,24 @@ Still required:
 - report-language review
 - freight/logistics review
 - public launch owner approval
+
+## Document Handling Boundary
+
+Current document handling is acceptable for local review and parser QA only.
+The product has official sample PDFs, source-route-only rows, and synthetic
+filled parser fixtures so parser behavior can be tested without pretending that
+customer proof exists.
+
+Real customer file handling remains blocked until these are proven in the
+hosted environment:
+
+- managed authentication and organization access control
+- private object storage outside the webroot
+- malware scanning or sandbox review
+- file type validation beyond browser-provided Content-Type
+- retention/deletion policy approval
+- privacy/legal/security review of upload and AI-use language
+- monitoring, incident handling, and backup/restore proof
 
 ## Payment And Billing Safety
 

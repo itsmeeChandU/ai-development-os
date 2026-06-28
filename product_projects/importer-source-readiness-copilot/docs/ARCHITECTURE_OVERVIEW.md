@@ -25,6 +25,7 @@ src/importer_source_readiness/policy_intelligence.py
 src/importer_source_readiness/completion_platform.py
 src/importer_source_readiness/production_country_source_engine.py
 src/importer_source_readiness/production_data_model.py
+src/importer_source_readiness/production_document_intelligence_engine.py
 src/importer_source_readiness/production_market_intelligence_engine.py
 src/importer_source_readiness/production_packet_engine.py
 src/importer_source_readiness/production_redevelopment.py
@@ -61,11 +62,17 @@ system_review_graph/production_source_lifecycle.json
 system_review_graph/production_market_intelligence_manifest.json
 system_review_graph/production_market_signals.json
 system_review_graph/production_market_dataset_connectors.json
+system_review_graph/production_document_intelligence_manifest.json
+system_review_graph/production_document_pipeline.json
+system_review_graph/production_document_extracted_fields.json
 system_review_graph/production_redevelopment_plan.json
 system_review_graph/production_research_anchors.json
+data/official_sample_documents/canada/*.pdf
+data/parser_qa_documents/*.pdf
 docs/PRODUCTION_DATA_MODEL.md
 docs/PRODUCTION_PACKET_ENGINE.md
 docs/PRODUCTION_COUNTRY_SOURCE_ENGINE.md
+docs/PRODUCTION_DOCUMENT_INTELLIGENCE_ENGINE.md
 docs/PRODUCTION_MARKET_INTELLIGENCE_ENGINE.md
 docs/PRODUCTION_REDEVELOPMENT.md
 migrations/0002_production_domain_model.sql
@@ -97,6 +104,7 @@ board/*.md
 | `src/importer_source_readiness/completion_platform.py` | completion-stage contracts for opportunities, country coverage, transport readiness, billing, agent/API, and traffic pages |
 | `src/importer_source_readiness/production_country_source_engine.py` | production country/source engine for country packs, source lifecycle states, source refresh evidence, packet impacts, and closed claim gates |
 | `src/importer_source_readiness/production_data_model.py` | first production rebuild package: PostgreSQL migration, domain-event list, tenant RLS contract, seed fixture, and JSON-to-table migration map |
+| `src/importer_source_readiness/production_document_intelligence_engine.py` | production document intelligence engine for official sample forms, synthetic parser QA samples, document records, extracted-field provenance, evidence mapping, redaction previews, and closed upload/security/document gates |
 | `src/importer_source_readiness/production_market_intelligence_engine.py` | production market intelligence engine for metric records, source routes, dataset connector states, score caps, and blocked demand/profit claims |
 | `src/importer_source_readiness/production_packet_engine.py` | production packet engine for 12 packet states, packet event proof, eight packet views, six scores, blocked claims, and next valid moves |
 | `src/importer_source_readiness/production_redevelopment.py` | full-scale production redevelopment contract with 14 layers, phases 0-20, research/source/evidence/gate tracks, permanent research entities, and closed external gates |
@@ -111,6 +119,7 @@ board/*.md
 | `scripts/run_completion_platform.py` | completion-stage artifact writer |
 | `scripts/run_production_country_source_engine.py` | production country/source engine manifest and source lifecycle writer |
 | `scripts/run_production_data_model.py` | production data model migration and manifest writer |
+| `scripts/run_production_document_intelligence_engine.py` | production document intelligence sample library, pipeline, and extracted-field writer |
 | `scripts/run_production_market_intelligence_engine.py` | production market intelligence signal and dataset connector writer |
 | `scripts/run_production_packet_engine.py` | production packet engine manifest, event, and packet-view writer |
 | `scripts/run_production_redevelopment.py` | production redevelopment contract and research-anchor writer |
@@ -124,6 +133,7 @@ board/*.md
 | `tests/test_production_data_model.py` | proof that the first rebuild package has production tables, relationships, RLS policies, domain events, and closed external gates |
 | `tests/test_production_packet_engine.py` | proof that the packet engine evaluates real local packet artifacts into states, views, scores, events, blockers, and closed external gates |
 | `tests/test_production_country_source_engine.py` | proof that country packs, source lifecycle rows, and packet source impacts are generated from the official source registry and refresh records |
+| `tests/test_production_document_intelligence_engine.py` | proof that official samples, country source routes, parser QA fixtures, field provenance, and closed document/security gates are generated |
 | `tests/test_production_market_intelligence_engine.py` | proof that market metrics are source-routed without invented values, demand claims, profitability claims, or buyer validation |
 | `tests/test_production_redevelopment.py` | proof that every redevelopment phase has build, research, source, evidence, and gate tracks backed by known source IDs |
 | `system_review_graph/` | generated packets, reports, blockers, handoff evidence |
@@ -171,7 +181,11 @@ board/*.md
 22. Generate the production market intelligence engine package: source-routed
     metric records, dataset connector states, capped market signal score, and
     blocked demand/profit/buyer claims.
-23. Generate the production redevelopment contract and research anchors for
+23. Generate the production document intelligence package: downloaded official
+    sample forms, India/Vietnam source-route rows, synthetic filled parser QA
+    samples, upload pipeline controls, document/evidence records, extracted
+    fields, redaction previews, and closed upload/security/document claims.
+24. Generate the production redevelopment contract and research anchors for
     the full-scale build: 14 production layers, phases 0-20, permanent source
     registry links, evidence requirements, and launch gates that remain closed.
 
@@ -230,6 +244,15 @@ The expected production market intelligence status is
 It means market metric rows and dataset connector states exist locally. It
 does not mean market size, buyer demand, profitability, tariff advantage, or
 market-entry approval is proven.
+
+The expected production document intelligence status is
+`production_document_intelligence_engine_ready_local_pipeline_security_gates_closed`.
+It means local document pipeline proof, official sample-form references,
+parser QA samples, extracted-field provenance, evidence mapping, and redaction
+previews exist locally. It does not mean real uploads, malware scanning,
+private object storage, AI provider safety, document authenticity, customs
+readiness, CFIA clearance, buyer validation, or supplier verification are
+approved.
 
 ## Proof Boundary
 

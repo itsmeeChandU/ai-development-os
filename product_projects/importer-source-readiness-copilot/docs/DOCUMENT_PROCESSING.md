@@ -25,5 +25,24 @@ The document pipeline is PDF-first and fail-closed. It helps users understand wh
 - `system_review_graph/public_upload_policy.json`
 - `system_review_graph/public_upload_manifest.json`
 - `system_review_graph/public_report_types.json`
+- `system_review_graph/production_document_intelligence_manifest.json`
+- `system_review_graph/production_document_pipeline.json`
+- `system_review_graph/production_document_extracted_fields.json`
+- `data/official_sample_documents/canada/*.pdf`
+- `data/parser_qa_documents/*.pdf`
+
+## Expected Document Set
+
+The production document engine tracks the common trade-document set a business
+owner may need to collect: commercial invoice, packing list, certificate of
+origin, bill of lading, airway bill, product specification, lab certificate,
+phytosanitary or health certificate, purchase order, contract, and inspection
+report.
+
+Official CBSA/CFIA sample PDFs are used only to orient the parser and reviewer
+questions. Filled parser QA PDFs are synthetic test documents only. Neither
+official samples nor synthetic fixtures are customer evidence, authenticity
+proof, customs approval, CFIA clearance, buyer validation, or supplier
+verification.
 
 Proof boundary: document processing does not verify authenticity, classify tariffs, clear CFIA/customs requirements, validate buyers, or approve shipments.
