@@ -13,6 +13,7 @@ from .source_packet_workflow import build_customer_workflow, build_evidence_ledg
 from .product_runtime import build_runtime_state, write_runtime_artifacts
 from .completion_platform import build_completion_platform, write_completion_platform_artifacts
 from .business_logic import build_business_logic_phases
+from .production_redevelopment import build_production_redevelopment_plan, write_production_redevelopment_artifacts
 
 __all__ = [
     "build_continuation_plan",
@@ -23,6 +24,7 @@ __all__ = [
     "build_evidence_ledger",
     "build_external_gate_report",
     "build_operator_workflow",
+    "build_production_redevelopment_plan",
     "build_runtime_state",
     "build_screenshot_manifest",
     "build_vc_pitch_readiness",
@@ -36,6 +38,7 @@ __all__ = [
     "write_completion_platform_artifacts",
     "write_json",
     "write_operator_workflow",
+    "write_production_redevelopment_artifacts",
     "write_runtime_artifacts",
     "write_report",
     "write_screenshot_manifest",

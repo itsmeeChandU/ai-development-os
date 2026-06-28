@@ -130,7 +130,7 @@
       "generated_at": "2026-06-25T00:00:00+00:00",
       "human_gate": "required_before_external_claims",
       "human_review_required": true,
-      "input_snapshot_hash": "411e3fd49b79038dede9b4d846bb8cbb7382a98b85f0a867a6bd570ba29bfda5",
+      "input_snapshot_hash": "9827af3f8ca8a75076e48e8465143f2da710593ac8d56044fe84b70df890ca6d",
       "model_mode": "metadata_only",
       "model_name": "deterministic-safety-rules",
       "model_name_or_endpoint": "local_rule_simulator",
@@ -427,7 +427,17 @@
         "cbsa-licensed-customs-brokers",
         "itc-market-access-map",
         "india-dgft-foreign-trade-policy",
-        "india-cbic-customs"
+        "india-cbic-customs",
+        "gac-sanctions",
+        "world-bank-wits",
+        "itc-trade-map",
+        "wco-harmonized-system",
+        "icc-incoterms-2020",
+        "opc-pipeda-principles",
+        "owasp-file-upload",
+        "owasp-llm01-prompt-injection",
+        "nist-ai-rmf",
+        "stripe-go-live"
       ],
       "status": "simulated_review_complete_human_gates_closed",
       "validation_result": {
@@ -799,6 +809,96 @@
       "jurisdiction": "IN",
       "name": "India Central Board of Indirect Taxes and Customs",
       "url": "https://www.cbic.gov.in/"
+    },
+    {
+      "accessed_at": "2026-06-28",
+      "claim_boundary": "Reference source only; does not prove sanctions clearance, restricted-party screening, or permission to trade.",
+      "evidence_role": "sanctions and restricted-country routing",
+      "id": "gac-sanctions",
+      "jurisdiction": "CA",
+      "name": "Global Affairs Canada sanctions",
+      "url": "https://www.international.gc.ca/world-monde/international_relations-relations_internationales/sanctions/index.aspx?lang=eng"
+    },
+    {
+      "accessed_at": "2026-06-28",
+      "claim_boundary": "Reference source only; does not prove buyer demand, profitability, market entry approval, or compliance.",
+      "evidence_role": "global trade, tariff, and non-tariff-measure research source",
+      "id": "world-bank-wits",
+      "jurisdiction": "International",
+      "name": "World Bank World Integrated Trade Solution",
+      "url": "https://wits.worldbank.org/"
+    },
+    {
+      "accessed_at": "2026-06-28",
+      "claim_boundary": "Reference source only; company or market rows are research signals and lead routes, not buyer validation or demand proof.",
+      "evidence_role": "global import/export values, volumes, growth, market-share, and company-directory research source",
+      "id": "itc-trade-map",
+      "jurisdiction": "International",
+      "name": "International Trade Centre Trade Map",
+      "url": "https://www.trademap.org/"
+    },
+    {
+      "accessed_at": "2026-06-28",
+      "claim_boundary": "Reference source only; HS candidates are not tariff classification confirmation.",
+      "evidence_role": "HS-code structure and commodity-classification doctrine source",
+      "id": "wco-harmonized-system",
+      "jurisdiction": "International",
+      "name": "World Customs Organization Harmonized System",
+      "url": "https://www.wcoomd.org/en/topics/nomenclature/overview/what-is-the-harmonized-system.aspx"
+    },
+    {
+      "accessed_at": "2026-06-28",
+      "claim_boundary": "Reference source only; responsibility guidance requires user confirmation and qualified review where legal or contract interpretation is needed.",
+      "evidence_role": "buyer/seller responsibility, task, cost, and risk allocation source",
+      "id": "icc-incoterms-2020",
+      "jurisdiction": "International",
+      "name": "ICC Incoterms 2020",
+      "url": "https://iccwbo.org/business-solutions/incoterms-rules/incoterms-2020/"
+    },
+    {
+      "accessed_at": "2026-06-28",
+      "claim_boundary": "Reference source only; does not prove privacy compliance, legal approval, or production data-processing readiness.",
+      "evidence_role": "privacy notice, consent, retention, deletion, safeguards, and access-rights design source",
+      "id": "opc-pipeda-principles",
+      "jurisdiction": "CA",
+      "name": "Office of the Privacy Commissioner of Canada PIPEDA principles",
+      "url": "https://www.priv.gc.ca/en/privacy-topics/privacy-laws-in-canada/the-personal-information-protection-and-electronic-documents-act-pipeda/"
+    },
+    {
+      "accessed_at": "2026-06-28",
+      "claim_boundary": "Reference source only; hosted upload readiness requires product-specific security controls, scans, storage isolation, and review evidence.",
+      "evidence_role": "secure upload architecture and file-handling control source",
+      "id": "owasp-file-upload",
+      "jurisdiction": "International",
+      "name": "OWASP File Upload Cheat Sheet",
+      "url": "https://cheatsheetseries.owasp.org/cheatsheets/File_Upload_Cheat_Sheet.html"
+    },
+    {
+      "accessed_at": "2026-06-28",
+      "claim_boundary": "Reference source only; does not prove AI safety, document safety, or model-output reliability.",
+      "evidence_role": "AI prompt-injection and external-content risk source",
+      "id": "owasp-llm01-prompt-injection",
+      "jurisdiction": "International",
+      "name": "OWASP GenAI prompt injection guidance",
+      "url": "https://genai.owasp.org/llmrisk/llm01-prompt-injection/"
+    },
+    {
+      "accessed_at": "2026-06-28",
+      "claim_boundary": "Reference source only; does not certify the product or authorize AI to open compliance, customs, payment, privacy, or launch gates.",
+      "evidence_role": "AI risk-management and trustworthy-AI governance source",
+      "id": "nist-ai-rmf",
+      "jurisdiction": "US",
+      "name": "NIST AI Risk Management Framework",
+      "url": "https://www.nist.gov/itl/ai-risk-management-framework"
+    },
+    {
+      "accessed_at": "2026-06-28",
+      "claim_boundary": "Reference source only; does not prove live payment readiness, tax review, refund/support readiness, webhook safety, or secure key handling.",
+      "evidence_role": "live payment launch checklist source",
+      "id": "stripe-go-live",
+      "jurisdiction": "International",
+      "name": "Stripe go-live checklist",
+      "url": "https://docs.stripe.com/get-started/checklist/go-live"
     }
   ],
   "operator_display_status": "Operator workbench usable for internal review",
@@ -973,7 +1073,7 @@
       "blockers": [
         {
           "claim_blocked": "Source Freshness",
-          "created_at": "2026-06-28T04:37:31+00:00",
+          "created_at": "2026-06-28T08:55:14+00:00",
           "evidence": "source packet packet-frozen-tuna-canada-001",
           "evidence_required": "Fresh official-source refresh record with accessed_at, last_verified_at, content_hash, HTTP status, and reviewer boundary.",
           "gate": "closed",
@@ -1004,7 +1104,7 @@
         },
         {
           "claim_blocked": "Source Freshness",
-          "created_at": "2026-06-28T04:37:31+00:00",
+          "created_at": "2026-06-28T08:55:14+00:00",
           "evidence": "source packet packet-frozen-tuna-canada-001",
           "evidence_required": "Fresh official-source refresh record with accessed_at, last_verified_at, content_hash, HTTP status, and reviewer boundary.",
           "gate": "closed",
@@ -1035,7 +1135,7 @@
         },
         {
           "claim_blocked": "Source Freshness",
-          "created_at": "2026-06-28T04:37:31+00:00",
+          "created_at": "2026-06-28T08:55:14+00:00",
           "evidence": "source packet packet-frozen-tuna-canada-001",
           "evidence_required": "Fresh official-source refresh record with accessed_at, last_verified_at, content_hash, HTTP status, and reviewer boundary.",
           "gate": "closed",
@@ -1066,7 +1166,7 @@
         },
         {
           "claim_blocked": "Compliance Review",
-          "created_at": "2026-06-28T04:37:31+00:00",
+          "created_at": "2026-06-28T08:55:14+00:00",
           "evidence": "source packet packet-frozen-tuna-canada-001",
           "evidence_required": "Dated restricted-party screening record with source and reviewer boundary.",
           "gate": "closed",
@@ -1097,7 +1197,7 @@
         },
         {
           "claim_blocked": "Compliance Review",
-          "created_at": "2026-06-28T04:37:31+00:00",
+          "created_at": "2026-06-28T08:55:14+00:00",
           "evidence": "source packet packet-frozen-tuna-canada-001",
           "evidence_required": "Scoped Canadian import/export, food, customs, or broker review finding.",
           "gate": "closed",
@@ -1128,7 +1228,7 @@
         },
         {
           "claim_blocked": "Buyer Validation",
-          "created_at": "2026-06-28T04:37:31+00:00",
+          "created_at": "2026-06-28T08:55:14+00:00",
           "evidence": "source packet packet-frozen-tuna-canada-001",
           "evidence_required": "Dated buyer/operator feedback tied to the packet and intended use.",
           "gate": "closed",
@@ -1159,7 +1259,7 @@
         },
         {
           "claim_blocked": "Source Rights / Contract",
-          "created_at": "2026-06-28T04:37:31+00:00",
+          "created_at": "2026-06-28T08:55:14+00:00",
           "evidence": "source packet packet-frozen-tuna-canada-001",
           "evidence_required": "Signed source-rights, data-rights, or commercial terms record.",
           "gate": "closed",
@@ -1382,7 +1482,7 @@
         "Trade agreement preference claim",
         "Public launch claim"
       ],
-      "official_reference_count": 13,
+      "official_reference_count": 23,
       "offline_evidence_only": false,
       "organization_id": "org-importer-demo",
       "origin_country": "Vietnam",

@@ -85,6 +85,7 @@ def main() -> int:
         PROJECT / "src" / "importer_source_readiness" / "external_review.py",
         PROJECT / "src" / "importer_source_readiness" / "final_go_live.py",
         PROJECT / "src" / "importer_source_readiness" / "external_validation_research.py",
+        PROJECT / "src" / "importer_source_readiness" / "production_redevelopment.py",
         PROJECT / "tests" / "test_readiness.py",
         PROJECT / "tests" / "test_external_gates.py",
         PROJECT / "tests" / "test_continuation.py",
@@ -102,6 +103,7 @@ def main() -> int:
         PROJECT / "tests" / "test_external_review_workflow.py",
         PROJECT / "tests" / "test_final_go_live.py",
         PROJECT / "tests" / "test_external_validation_research.py",
+        PROJECT / "tests" / "test_production_redevelopment.py",
         PROJECT / "scripts" / "run_readiness.py",
         PROJECT / "scripts" / "run_external_gates.py",
         PROJECT / "scripts" / "export_operator_dashboard.py",
@@ -118,6 +120,7 @@ def main() -> int:
         PROJECT / "scripts" / "audit_external_package.py",
         PROJECT / "scripts" / "run_final_go_live_review.py",
         PROJECT / "scripts" / "run_external_validation_requirements.py",
+        PROJECT / "scripts" / "run_production_redevelopment.py",
         PROJECT / "scripts" / "package_external_review.py",
         PROJECT / "scripts" / "check_product.py",
         PROJECT / "docs" / "PRODUCT_AUTOMATION_RUNBOOK.md",
@@ -137,6 +140,7 @@ def main() -> int:
         PROJECT / "docs" / "EXTERNAL_VALIDATION_REQUIREMENTS.md",
         PROJECT / "docs" / "EXTERNAL_VALIDATION_REVIEWER_BRIEF.md",
         PROJECT / "docs" / "GO_LIVE_INPUT_REQUESTS.md",
+        PROJECT / "docs" / "PRODUCTION_REDEVELOPMENT.md",
         PROJECT / "docs" / "BUSINESS_CORE_LOGIC_CURRENT_STATE.md",
         PROJECT / "docs" / "FUNCTIONAL_REQUIREMENTS_CURRENT_STATE.md",
         PROJECT / "docs" / "NON_FUNCTIONAL_REQUIREMENTS_CURRENT_STATE.md",
@@ -202,6 +206,8 @@ def main() -> int:
         PROJECT / "system_review_graph" / "external_validation_evidence_requirements.json",
         PROJECT / "system_review_graph" / "go_live_input_templates.json",
         PROJECT / "system_review_graph" / "go_live_input_readiness_report.json",
+        PROJECT / "system_review_graph" / "production_redevelopment_plan.json",
+        PROJECT / "system_review_graph" / "production_research_anchors.json",
         PROJECT / "system_review_graph" / "reviewer_wave_execution_plan.json",
         PROJECT / "system_review_graph" / "private_beta_smoke_test_plan.json",
         PROJECT / "system_review_graph" / "external_review_findings_report.json",
@@ -304,6 +310,7 @@ def main() -> int:
         ["python3", "scripts/run_product_operations.py"],
         ["python3", "scripts/run_final_go_live_review.py"],
         ["python3", "scripts/run_external_validation_requirements.py"],
+        ["python3", "scripts/run_production_redevelopment.py"],
         ["python3", "scripts/build_external_review_packet.py"],
         ["python3", "scripts/export_operator_dashboard.py"],
         ["python3", "scripts/audit_external_package.py", "--root", "."],
@@ -499,6 +506,15 @@ def main() -> int:
     )
     go_live_input_templates = json.loads(
         (PROJECT / "system_review_graph" / "go_live_input_templates.json").read_text(encoding="utf-8")
+    )
+    production_redevelopment = json.loads(
+        (PROJECT / "system_review_graph" / "production_redevelopment_plan.json").read_text(encoding="utf-8")
+    )
+    production_research = json.loads(
+        (PROJECT / "system_review_graph" / "production_research_anchors.json").read_text(encoding="utf-8")
+    )
+    official_source_registry = json.loads(
+        (PROJECT / "data" / "official_source_registry.json").read_text(encoding="utf-8")
     )
     go_live_input_readiness = json.loads(
         (PROJECT / "system_review_graph" / "go_live_input_readiness_report.json").read_text(encoding="utf-8")
@@ -1228,6 +1244,72 @@ def main() -> int:
         print("Product project check: FAIL")
         print("external validation evidence requirements are missing or inconsistent")
         return 1
+    if (
+        production_redevelopment.get("status") != "production_redevelopment_contract_ready_with_external_build_gates"
+        or production_redevelopment.get("production_layer_count") != 14
+        or production_redevelopment.get("phase_count") != 21
+        or production_redevelopment.get("research_anchor_count") != 18
+        or production_redevelopment.get("domain_entity_count", 0) < 39
+        or production_redevelopment.get("external_claims_opened") is not False
+        or production_redevelopment.get("public_launch_ready") is not False
+        or production_redevelopment.get("hosted_production_ready") is not False
+        or production_redevelopment.get("live_payment_ready") is not False
+    ):
+        print("Product project check: FAIL")
+        print("production redevelopment contract must cover 14 layers, phases 0-20, research anchors, and closed launch gates")
+        return 1
+    if production_research.get("source_count") != production_redevelopment.get("research_anchor_count"):
+        print("Product project check: FAIL")
+        print("production research anchors must match the redevelopment source count")
+        return 1
+    official_source_ids = {row.get("id") for row in official_source_registry}
+    research_source_ids = {row.get("id") for row in production_redevelopment.get("research_anchors", [])}
+    required_production_source_ids = {
+        "cbsa-import-commercial-goods",
+        "cbsa-customs-tariff-2026",
+        "cbsa-licensed-customs-brokers",
+        "cfia-airs",
+        "gac-sanctions",
+        "ised-trade-data-online",
+        "canada-cid",
+        "india-dgft-foreign-trade-policy",
+        "world-bank-wits",
+        "itc-trade-map",
+        "itc-market-access-map",
+        "wco-harmonized-system",
+        "icc-incoterms-2020",
+        "opc-pipeda-principles",
+        "owasp-file-upload",
+        "owasp-llm01-prompt-injection",
+        "nist-ai-rmf",
+        "stripe-go-live",
+    }
+    if not required_production_source_ids.issubset(official_source_ids | research_source_ids):
+        print("Product project check: FAIL")
+        print("production source registry is missing required source IDs")
+        return 1
+    allowed_non_registry_source_ids = {
+        "official_source_registry",
+        "user_research_required",
+        "enterprise_user_validation_required",
+        "reviewer_findings",
+        "user_validation_records",
+    }
+    allowed_source_ids = official_source_ids | research_source_ids | allowed_non_registry_source_ids
+    for phase in production_redevelopment.get("redevelopment_phases", []):
+        for track in ("build_track", "research_track", "source_track", "evidence_track", "gate_track"):
+            if not phase.get(track):
+                print("Product project check: FAIL")
+                print(f"production phase {phase.get('phase')} missing {track}")
+                return 1
+        if any(layer_id < 1 or layer_id > 14 for layer_id in phase.get("layers", [])):
+            print("Product project check: FAIL")
+            print(f"production phase {phase.get('phase')} references a non-existent production layer")
+            return 1
+        if any(source_id not in allowed_source_ids for source_id in phase.get("source_track", [])):
+            print("Product project check: FAIL")
+            print(f"production phase {phase.get('phase')} references an unknown source ID")
+            return 1
     external_validation_pdf = PROJECT / "output" / "pdf" / "external_validation_requirements.pdf"
     if not external_validation_pdf.exists() or not external_validation_pdf.read_bytes().startswith(b"%PDF"):
         print("Product project check: FAIL")
@@ -1488,6 +1570,10 @@ def main() -> int:
     print(f"external_validation_status={external_validation['status']}")
     print(f"external_validation_gates={external_validation['gate_count']}")
     print(f"external_validation_evidence_requirements={external_validation['evidence_requirement_count']}")
+    print(f"production_redevelopment_status={production_redevelopment['status']}")
+    print(f"production_redevelopment_layers={production_redevelopment['production_layer_count']}")
+    print(f"production_redevelopment_phases={production_redevelopment['phase_count']}")
+    print(f"production_redevelopment_sources={production_redevelopment['research_anchor_count']}")
     print(f"external_validation_pdf={external_validation_pdf.relative_to(PROJECT)}")
     print(f"external_validation_reviewer_brief_pdf={external_validation_reviewer_brief_pdf.relative_to(PROJECT)}")
     print(f"go_live_input_status={go_live_input_readiness['status']}")

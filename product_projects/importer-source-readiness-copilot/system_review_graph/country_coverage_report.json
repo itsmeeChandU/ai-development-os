@@ -14,7 +14,7 @@
       "coverage_label": "monitored sources",
       "coverage_tier": 3,
       "next_valid_move": "Add current monitored official sources, category templates, and qualified review before country-specific claims.",
-      "source_count": 10,
+      "source_count": 12,
       "source_provenance": [
         {
           "accessed_at": "2026-06-25",
@@ -115,6 +115,26 @@
           "provenance_type": "official_source_registry",
           "source_id": "cbsa-licensed-customs-brokers",
           "url": "https://www.cbsa-asfc.gc.ca/services/cb-cd/cb-cd-eng.html"
+        },
+        {
+          "accessed_at": "2026-06-28",
+          "claim_boundary": "Reference source only; does not prove sanctions clearance, restricted-party screening, or permission to trade.",
+          "evidence_role": "sanctions and restricted-country routing",
+          "jurisdiction": "Canada",
+          "name": "Global Affairs Canada sanctions",
+          "provenance_type": "official_source_registry",
+          "source_id": "gac-sanctions",
+          "url": "https://www.international.gc.ca/world-monde/international_relations-relations_internationales/sanctions/index.aspx?lang=eng"
+        },
+        {
+          "accessed_at": "2026-06-28",
+          "claim_boundary": "Reference source only; does not prove privacy compliance, legal approval, or production data-processing readiness.",
+          "evidence_role": "privacy notice, consent, retention, deletion, safeguards, and access-rights design source",
+          "jurisdiction": "Canada",
+          "name": "Office of the Privacy Commissioner of Canada PIPEDA principles",
+          "provenance_type": "official_source_registry",
+          "source_id": "opc-pipeda-principles",
+          "url": "https://www.priv.gc.ca/en/privacy-topics/privacy-laws-in-canada/the-personal-information-protection-and-electronic-documents-act-pipeda/"
         }
       ],
       "unsupported_country_specific_claims": [
@@ -229,11 +249,22 @@
         "required_tier": 5,
         "status": "blocked_unsupported_country_specific_claims"
       },
-      "coverage_label": "generic starter checklist",
-      "coverage_tier": 1,
+      "coverage_label": "reference sources catalogued",
+      "coverage_tier": 2,
       "next_valid_move": "Add current monitored official sources, category templates, and qualified review before country-specific claims.",
-      "source_count": 0,
-      "source_provenance": [],
+      "source_count": 1,
+      "source_provenance": [
+        {
+          "accessed_at": "2026-06-28",
+          "claim_boundary": "Reference source only; does not certify the product or authorize AI to open compliance, customs, payment, privacy, or launch gates.",
+          "evidence_role": "AI risk-management and trustworthy-AI governance source",
+          "jurisdiction": "United States",
+          "name": "NIST AI Risk Management Framework",
+          "provenance_type": "official_source_registry",
+          "source_id": "nist-ai-rmf",
+          "url": "https://www.nist.gov/itl/ai-risk-management-framework"
+        }
+      ],
       "unsupported_country_specific_claims": [
         "customs_or_tariff_correctness",
         "country_rules_current",
@@ -282,7 +313,7 @@
     "4": "category template support",
     "5": "expert-reviewed templates"
   },
-  "generated_at": "2026-06-28T04:37:31+00:00",
+  "generated_at": "2026-06-28T08:55:13+00:00",
   "packet_coverage": [
     {
       "blocked_country_specific_claims": [

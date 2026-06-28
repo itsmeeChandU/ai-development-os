@@ -1,0 +1,254 @@
+{
+  "generated_at": "2026-06-28T08:55:14+00:00",
+  "proof_boundary": "Research anchors route product work; they do not approve external claims.",
+  "source_count": 18,
+  "sources": [
+    {
+      "checked_on": "2026-06-28",
+      "claim_boundary": "Supports research routing only; it does not validate buyer demand or profitability.",
+      "id": "ised-trade-data-online",
+      "source_area": "Canada market intelligence",
+      "source_name": "ISED Trade Data Online",
+      "supports_phases": [
+        4,
+        5
+      ],
+      "url": "https://ised-isde.canada.ca/site/trade-data-online/en/overview",
+      "usable_fact": "Trade Data Online is the Canada trade data route for import/export market and competition research."
+    },
+    {
+      "checked_on": "2026-06-28",
+      "claim_boundary": "Supports market-access comparison routing only; qualified review is required before tariff or market-access claims.",
+      "id": "itc-market-access-map",
+      "source_area": "Market access comparison",
+      "source_name": "International Trade Centre Market Access Map",
+      "supports_phases": [
+        4,
+        5
+      ],
+      "url": "https://www.macmap.org/",
+      "usable_fact": "Market Access Map is the market-access route for tariffs, trade measures, regulatory requirements, and preference comparisons."
+    },
+    {
+      "checked_on": "2026-06-28",
+      "claim_boundary": "Routes users to official and qualified review paths; the product does not replace CBSA or a customs professional.",
+      "id": "cbsa-import-commercial-goods",
+      "source_area": "Canada import process",
+      "source_name": "Canada Border Services Agency commercial import guidance",
+      "supports_phases": [
+        0,
+        5,
+        7,
+        20
+      ],
+      "url": "https://www.cbsa-asfc.gc.ca/import/menu-eng.html",
+      "usable_fact": "CBSA is the official routing source for commercial importing topics such as business/import accounts, tariff resources, other government requirements, origin, rulings, and accounting."
+    },
+    {
+      "checked_on": "2026-06-28",
+      "claim_boundary": "Reference route only; importers and reviewers must confirm current requirements for the exact product and import time.",
+      "id": "cfia-airs",
+      "source_area": "CFIA regulated food, plant, animal",
+      "source_name": "CFIA Automated Import Reference System",
+      "supports_phases": [
+        0,
+        5,
+        20
+      ],
+      "url": "https://inspection.canada.ca/en/importing-food-plants-animals/airs",
+      "usable_fact": "AIRS is the CFIA reference route for food, plant, animal, and regulated-commodity import requirements."
+    },
+    {
+      "checked_on": "2026-06-28",
+      "claim_boundary": "Security implementation guidance; hosted readiness still requires product-specific security review.",
+      "id": "owasp-file-upload",
+      "source_area": "Upload security",
+      "source_name": "OWASP File Upload Cheat Sheet",
+      "supports_phases": [
+        10,
+        19
+      ],
+      "url": "https://cheatsheetseries.owasp.org/cheatsheets/File_Upload_Cheat_Sheet.html",
+      "usable_fact": "File-upload security needs defense in depth: extension/type validation, generated filenames, size limits, authorization, isolated storage, malware checks, updated libraries, and CSRF protection."
+    },
+    {
+      "checked_on": "2026-06-28",
+      "claim_boundary": "Governance reference only; it does not certify the product or approve AI outputs.",
+      "id": "nist-ai-rmf",
+      "source_area": "AI safety",
+      "source_name": "NIST AI Risk Management Framework",
+      "supports_phases": [
+        13,
+        19
+      ],
+      "url": "https://www.nist.gov/itl/ai-risk-management-framework",
+      "usable_fact": "NIST AI RMF is the AI governance route for trustworthy AI design, development, use, and evaluation."
+    },
+    {
+      "checked_on": "2026-06-28",
+      "claim_boundary": "Payment implementation reference only; live checkout remains disabled until payment review and production setup are complete.",
+      "id": "stripe-go-live",
+      "source_area": "Payments",
+      "source_name": "Stripe go-live checklist",
+      "supports_phases": [
+        18,
+        20
+      ],
+      "url": "https://docs.stripe.com/get-started/checklist/go-live",
+      "usable_fact": "Payment launch must cover live/test mode differences, API keys, live-mode objects, webhooks, edge cases, logging, and duplicate/delayed/out-of-order events."
+    },
+    {
+      "checked_on": "2026-06-28",
+      "claim_boundary": "Privacy design input only; legal/privacy approval requires qualified review for the product and data flows.",
+      "id": "opc-pipeda-principles",
+      "source_area": "Privacy",
+      "source_name": "Office of the Privacy Commissioner of Canada PIPEDA principles",
+      "supports_phases": [
+        19,
+        20
+      ],
+      "url": "https://www.priv.gc.ca/en/privacy-topics/privacy-laws-in-canada/the-personal-information-protection-and-electronic-documents-act-pipeda/",
+      "usable_fact": "Canada privacy governance should account for accountability, purpose identification, consent, limiting collection/use/retention, safeguards, openness, access, and challenge rights."
+    },
+    {
+      "checked_on": "2026-06-28",
+      "claim_boundary": "Tariff classification and treatment remain blocked until qualified review or authoritative ruling evidence exists.",
+      "id": "cbsa-customs-tariff-2026",
+      "source_area": "Canada tariff orientation",
+      "source_name": "CBSA Canadian Customs Tariff 2026",
+      "supports_phases": [
+        0,
+        1,
+        4,
+        5,
+        7,
+        11
+      ],
+      "url": "https://www.cbsa-asfc.gc.ca/trade-commerce/tariff-tarif/2026/menu-eng.html",
+      "usable_fact": "The Canadian Customs Tariff is the source route for Canadian tariff orientation and HS candidate research."
+    },
+    {
+      "checked_on": "2026-06-28",
+      "claim_boundary": "The product must not act as a customs broker or imply a broker relationship/signoff.",
+      "id": "cbsa-licensed-customs-brokers",
+      "source_area": "Broker boundary",
+      "source_name": "CBSA Licensed Customs Brokers",
+      "supports_phases": [
+        0,
+        7,
+        14
+      ],
+      "url": "https://www.cbsa-asfc.gc.ca/services/cb-cd/cb-cd-eng.html",
+      "usable_fact": "Licensed broker routing is the human-review path for customs broker work and importer responsibility boundaries."
+    },
+    {
+      "checked_on": "2026-06-28",
+      "claim_boundary": "Sanctions screening claims require dated searches and reviewer signoff before action.",
+      "id": "gac-sanctions",
+      "source_area": "Sanctions and restricted countries",
+      "source_name": "Global Affairs Canada sanctions",
+      "supports_phases": [
+        0,
+        5,
+        6,
+        20
+      ],
+      "url": "https://www.international.gc.ca/world-monde/international_relations-relations_internationales/sanctions/index.aspx?lang=eng",
+      "usable_fact": "Global Affairs Canada is the sanctions/restricted-country routing source for Canada-focused screening warnings."
+    },
+    {
+      "checked_on": "2026-06-28",
+      "claim_boundary": "A listed importer is a possible lead only; it is not buyer validation.",
+      "id": "canada-cid",
+      "source_area": "Canadian buyer/importer discovery",
+      "source_name": "Canadian Importers Database",
+      "supports_phases": [
+        4,
+        8
+      ],
+      "url": "https://ised-isde.canada.ca/site/ised/en/research-and-business-intelligence/canadian-importers-database",
+      "usable_fact": "The Canadian Importers Database is a lead-discovery route for companies importing goods into Canada."
+    },
+    {
+      "checked_on": "2026-06-28",
+      "claim_boundary": "India export permission, licensing, incentives, and product-specific compliance require current source review and qualified advice.",
+      "id": "india-dgft-foreign-trade-policy",
+      "source_area": "India exporter origin pack",
+      "source_name": "India Directorate General of Foreign Trade",
+      "supports_phases": [
+        1,
+        5,
+        7
+      ],
+      "url": "https://www.dgft.gov.in/",
+      "usable_fact": "DGFT is the India origin export-policy route for IEC, export/import policy, certificates, SCOMET, trade stats, and export management topics."
+    },
+    {
+      "checked_on": "2026-06-28",
+      "claim_boundary": "Global trade data supports research signals only; it does not prove buyer demand, margin, or compliance.",
+      "id": "world-bank-wits",
+      "source_area": "Global trade data",
+      "source_name": "World Bank World Integrated Trade Solution",
+      "supports_phases": [
+        4
+      ],
+      "url": "https://wits.worldbank.org/",
+      "usable_fact": "WITS is a route for international merchandise trade, tariff, and non-tariff measures data."
+    },
+    {
+      "checked_on": "2026-06-28",
+      "claim_boundary": "Trade Map supports research and lead routing only; it does not validate demand or buyers.",
+      "id": "itc-trade-map",
+      "source_area": "Global trade data",
+      "source_name": "International Trade Centre Trade Map",
+      "supports_phases": [
+        4
+      ],
+      "url": "https://www.trademap.org/",
+      "usable_fact": "Trade Map is a route for import/export values, volumes, growth, market share, and company-directory research."
+    },
+    {
+      "checked_on": "2026-06-28",
+      "claim_boundary": "HS candidate generation is not classification confirmation.",
+      "id": "wco-harmonized-system",
+      "source_area": "HS-code doctrine",
+      "source_name": "World Customs Organization Harmonized System",
+      "supports_phases": [
+        0,
+        1,
+        4,
+        11
+      ],
+      "url": "https://www.wcoomd.org/en/topics/nomenclature/overview/what-is-the-harmonized-system.aspx",
+      "usable_fact": "The HS is the global commodity-description and coding route for HS candidate logic."
+    },
+    {
+      "checked_on": "2026-06-28",
+      "claim_boundary": "Responsibility-path guidance requires user confirmation and, where needed, broker/legal review.",
+      "id": "icc-incoterms-2020",
+      "source_area": "Incoterms and responsibility",
+      "source_name": "ICC Incoterms 2020",
+      "supports_phases": [
+        1,
+        7,
+        12
+      ],
+      "url": "https://iccwbo.org/business-solutions/incoterms-rules/incoterms-2020/",
+      "usable_fact": "Incoterms are the responsibility-path route for tasks, costs, and risks between sellers and buyers."
+    },
+    {
+      "checked_on": "2026-06-28",
+      "claim_boundary": "AI safety controls require implementation evidence and review before real document use.",
+      "id": "owasp-llm01-prompt-injection",
+      "source_area": "AI safety",
+      "source_name": "OWASP GenAI prompt injection guidance",
+      "supports_phases": [
+        13,
+        19
+      ],
+      "url": "https://genai.owasp.org/llmrisk/llm01-prompt-injection/",
+      "usable_fact": "Indirect prompt injection can come from external files or websites and can manipulate outputs, leak information, or affect decisions."
+    }
+  ],
+  "status": "production_research_anchors_ready"
+}

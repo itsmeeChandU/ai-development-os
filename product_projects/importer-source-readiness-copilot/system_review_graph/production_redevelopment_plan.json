@@ -1,0 +1,2683 @@
+{
+  "api_contracts": [
+    {
+      "external_effects_allowed": false,
+      "forbidden": [
+        "approval",
+        "claim_gate_override",
+        "external_outreach",
+        "live_charge"
+      ],
+      "method": "POST",
+      "path": "/packets",
+      "purpose": "create packet draft"
+    },
+    {
+      "external_effects_allowed": false,
+      "forbidden": [
+        "approval",
+        "claim_gate_override",
+        "external_outreach",
+        "live_charge"
+      ],
+      "method": "GET",
+      "path": "/packets/{id}",
+      "purpose": "read packet"
+    },
+    {
+      "external_effects_allowed": false,
+      "forbidden": [
+        "approval",
+        "claim_gate_override",
+        "external_outreach",
+        "live_charge"
+      ],
+      "method": "POST",
+      "path": "/packets/{id}/evidence",
+      "purpose": "attach evidence"
+    },
+    {
+      "external_effects_allowed": false,
+      "forbidden": [
+        "approval",
+        "claim_gate_override",
+        "external_outreach",
+        "live_charge"
+      ],
+      "method": "POST",
+      "path": "/documents/upload",
+      "purpose": "quarantine upload"
+    },
+    {
+      "external_effects_allowed": false,
+      "forbidden": [
+        "approval",
+        "claim_gate_override",
+        "external_outreach",
+        "live_charge"
+      ],
+      "method": "POST",
+      "path": "/documents/{id}/extract",
+      "purpose": "extract draft fields"
+    },
+    {
+      "external_effects_allowed": false,
+      "forbidden": [
+        "approval",
+        "claim_gate_override",
+        "external_outreach",
+        "live_charge"
+      ],
+      "method": "GET",
+      "path": "/country-packs/{country}",
+      "purpose": "read country pack"
+    },
+    {
+      "external_effects_allowed": false,
+      "forbidden": [
+        "approval",
+        "claim_gate_override",
+        "external_outreach",
+        "live_charge"
+      ],
+      "method": "POST",
+      "path": "/sources/refresh",
+      "purpose": "record source refresh request"
+    },
+    {
+      "external_effects_allowed": false,
+      "forbidden": [
+        "approval",
+        "claim_gate_override",
+        "external_outreach",
+        "live_charge"
+      ],
+      "method": "GET",
+      "path": "/packets/{id}/scores",
+      "purpose": "read decision scores"
+    },
+    {
+      "external_effects_allowed": false,
+      "forbidden": [
+        "approval",
+        "claim_gate_override",
+        "external_outreach",
+        "live_charge"
+      ],
+      "method": "GET",
+      "path": "/packets/{id}/blocked-claims",
+      "purpose": "read blocked claims"
+    },
+    {
+      "external_effects_allowed": false,
+      "forbidden": [
+        "approval",
+        "claim_gate_override",
+        "external_outreach",
+        "live_charge"
+      ],
+      "method": "POST",
+      "path": "/reviews",
+      "purpose": "create review request"
+    },
+    {
+      "external_effects_allowed": false,
+      "forbidden": [
+        "approval",
+        "claim_gate_override",
+        "external_outreach",
+        "live_charge"
+      ],
+      "method": "POST",
+      "path": "/reports",
+      "purpose": "generate safe report"
+    },
+    {
+      "external_effects_allowed": false,
+      "forbidden": [
+        "approval",
+        "claim_gate_override",
+        "external_outreach",
+        "live_charge"
+      ],
+      "method": "POST",
+      "path": "/ai/safe-summary",
+      "purpose": "generate AI-labeled draft summary"
+    },
+    {
+      "external_effects_allowed": false,
+      "forbidden": [
+        "approval",
+        "claim_gate_override",
+        "external_outreach",
+        "live_charge"
+      ],
+      "method": "POST",
+      "path": "/billing/quote",
+      "purpose": "reserve quote without live charge"
+    }
+  ],
+  "api_route_count": 13,
+  "buyer_supplier_validation_complete": false,
+  "current_repo_role": "business_rule_reference_implementation_and_proof_engine",
+  "domain_entities": [
+    {
+      "entity": "Organization",
+      "production_status": "schema_contract_ready",
+      "required_fields": [
+        "organization_id",
+        "name",
+        "billing_account_id",
+        "retention_policy_id"
+      ]
+    },
+    {
+      "entity": "User",
+      "production_status": "schema_contract_ready",
+      "required_fields": [
+        "user_id",
+        "organization_id",
+        "email",
+        "status"
+      ]
+    },
+    {
+      "entity": "Role",
+      "production_status": "schema_contract_ready",
+      "required_fields": [
+        "role_id",
+        "organization_id",
+        "permissions"
+      ]
+    },
+    {
+      "entity": "Workspace",
+      "production_status": "schema_contract_ready",
+      "required_fields": [
+        "workspace_id",
+        "organization_id",
+        "name",
+        "client_id"
+      ]
+    },
+    {
+      "entity": "TradeReadinessPacket",
+      "production_status": "schema_contract_ready",
+      "required_fields": [
+        "packet_id",
+        "workspace_id",
+        "trade_lane_id",
+        "state",
+        "claim_boundary_status"
+      ]
+    },
+    {
+      "entity": "TradeLane",
+      "production_status": "schema_contract_ready",
+      "required_fields": [
+        "trade_lane_id",
+        "origin_country",
+        "destination_country",
+        "direction",
+        "incoterm_id"
+      ]
+    },
+    {
+      "entity": "ProductProfile",
+      "production_status": "schema_contract_ready",
+      "required_fields": [
+        "product_profile_id",
+        "packet_id",
+        "name",
+        "category",
+        "intended_use"
+      ]
+    },
+    {
+      "entity": "CountryPack",
+      "production_status": "schema_contract_ready",
+      "required_fields": [
+        "country_pack_id",
+        "country_code",
+        "direction",
+        "coverage_level",
+        "reviewer_required"
+      ]
+    },
+    {
+      "entity": "SourceRecord",
+      "production_status": "schema_contract_ready",
+      "required_fields": [
+        "source_id",
+        "country_pack_id",
+        "canonical_url",
+        "source_type",
+        "allowed_use"
+      ]
+    },
+    {
+      "entity": "SourceSnapshot",
+      "production_status": "schema_contract_ready",
+      "required_fields": [
+        "snapshot_id",
+        "source_id",
+        "content_hash",
+        "fetched_at",
+        "diff_status"
+      ]
+    },
+    {
+      "entity": "EvidenceItem",
+      "production_status": "schema_contract_ready",
+      "required_fields": [
+        "evidence_id",
+        "packet_id",
+        "type",
+        "provenance",
+        "confidence",
+        "freshness"
+      ]
+    },
+    {
+      "entity": "Document",
+      "production_status": "schema_contract_ready",
+      "required_fields": [
+        "document_id",
+        "packet_id",
+        "storage_key",
+        "quarantine_status",
+        "classification"
+      ]
+    },
+    {
+      "entity": "ExtractedField",
+      "production_status": "schema_contract_ready",
+      "required_fields": [
+        "field_id",
+        "document_id",
+        "field_name",
+        "value",
+        "confidence",
+        "confirmation_status"
+      ]
+    },
+    {
+      "entity": "FieldProvenance",
+      "production_status": "schema_contract_ready",
+      "required_fields": [
+        "field_id",
+        "mode",
+        "source_reference",
+        "reviewer_id"
+      ]
+    },
+    {
+      "entity": "BuyerProfile",
+      "production_status": "schema_contract_ready",
+      "required_fields": [
+        "buyer_profile_id",
+        "packet_id",
+        "evidence_level",
+        "claim_status"
+      ]
+    },
+    {
+      "entity": "SupplierProfile",
+      "production_status": "schema_contract_ready",
+      "required_fields": [
+        "supplier_profile_id",
+        "packet_id",
+        "evidence_level",
+        "claim_status"
+      ]
+    },
+    {
+      "entity": "ResponsibilityPath",
+      "production_status": "schema_contract_ready",
+      "required_fields": [
+        "responsibility_path_id",
+        "packet_id",
+        "importer_of_record",
+        "incoterms",
+        "warnings"
+      ]
+    },
+    {
+      "entity": "IncotermRecord",
+      "production_status": "schema_contract_ready",
+      "required_fields": [
+        "incoterm_id",
+        "code",
+        "responsibility_summary",
+        "confirmation_status"
+      ]
+    },
+    {
+      "entity": "MarketSignal",
+      "production_status": "schema_contract_ready",
+      "required_fields": [
+        "market_signal_id",
+        "packet_id",
+        "signal_level",
+        "confidence",
+        "source_refs"
+      ]
+    },
+    {
+      "entity": "OpportunitySignal",
+      "production_status": "schema_contract_ready",
+      "required_fields": [
+        "opportunity_signal_id",
+        "packet_id",
+        "research_signal",
+        "claim_boundary"
+      ]
+    },
+    {
+      "entity": "BlockedClaim",
+      "production_status": "schema_contract_ready",
+      "required_fields": [
+        "blocked_claim_id",
+        "packet_id",
+        "claim",
+        "reason",
+        "required_evidence"
+      ]
+    },
+    {
+      "entity": "DecisionScore",
+      "production_status": "schema_contract_ready",
+      "required_fields": [
+        "score_id",
+        "packet_id",
+        "score_name",
+        "label",
+        "reason",
+        "next_action"
+      ]
+    },
+    {
+      "entity": "ReviewerLane",
+      "production_status": "schema_contract_ready",
+      "required_fields": [
+        "reviewer_lane_id",
+        "scope",
+        "required_credentials",
+        "gate_can_open"
+      ]
+    },
+    {
+      "entity": "ReviewRequest",
+      "production_status": "schema_contract_ready",
+      "required_fields": [
+        "review_request_id",
+        "packet_id",
+        "reviewer_lane_id",
+        "status",
+        "scope"
+      ]
+    },
+    {
+      "entity": "ReviewFinding",
+      "production_status": "schema_contract_ready",
+      "required_fields": [
+        "finding_id",
+        "review_request_id",
+        "severity",
+        "decision",
+        "required_changes"
+      ]
+    },
+    {
+      "entity": "Report",
+      "production_status": "schema_contract_ready",
+      "required_fields": [
+        "report_id",
+        "packet_id",
+        "report_type",
+        "watermark",
+        "version"
+      ]
+    },
+    {
+      "entity": "AuditEvent",
+      "production_status": "schema_contract_ready",
+      "required_fields": [
+        "audit_event_id",
+        "actor_id",
+        "event_type",
+        "packet_id",
+        "created_at"
+      ]
+    },
+    {
+      "entity": "BillingAccount",
+      "production_status": "schema_contract_ready",
+      "required_fields": [
+        "billing_account_id",
+        "organization_id",
+        "processor_customer_id",
+        "live_mode_enabled"
+      ]
+    },
+    {
+      "entity": "Subscription",
+      "production_status": "schema_contract_ready",
+      "required_fields": [
+        "subscription_id",
+        "billing_account_id",
+        "tier",
+        "status"
+      ]
+    },
+    {
+      "entity": "UsageRecord",
+      "production_status": "schema_contract_ready",
+      "required_fields": [
+        "usage_record_id",
+        "billing_account_id",
+        "meter",
+        "quantity",
+        "external_charge_created"
+      ]
+    },
+    {
+      "entity": "ResearchIntake",
+      "production_status": "schema_contract_ready",
+      "required_fields": [
+        "research_intake_id",
+        "phase",
+        "question",
+        "required_depth",
+        "owner"
+      ]
+    },
+    {
+      "entity": "SourceRegistry",
+      "production_status": "schema_contract_ready",
+      "required_fields": [
+        "source_registry_id",
+        "source_id",
+        "source_area",
+        "authority_level",
+        "allowed_use"
+      ]
+    },
+    {
+      "entity": "DatasetConnector",
+      "production_status": "schema_contract_ready",
+      "required_fields": [
+        "dataset_connector_id",
+        "source_id",
+        "access_mode",
+        "license_status",
+        "credential_status"
+      ]
+    },
+    {
+      "entity": "CountryPackSource",
+      "production_status": "schema_contract_ready",
+      "required_fields": [
+        "country_pack_source_id",
+        "country_pack_id",
+        "source_id",
+        "source_area",
+        "claim_boundary"
+      ]
+    },
+    {
+      "entity": "MarketSignalSource",
+      "production_status": "schema_contract_ready",
+      "required_fields": [
+        "market_signal_source_id",
+        "market_signal_id",
+        "source_id",
+        "metric",
+        "limitation"
+      ]
+    },
+    {
+      "entity": "LegalBoundarySource",
+      "production_status": "schema_contract_ready",
+      "required_fields": [
+        "legal_boundary_source_id",
+        "claim",
+        "source_id",
+        "required_reviewer_lane"
+      ]
+    },
+    {
+      "entity": "ExpertFindingSource",
+      "production_status": "schema_contract_ready",
+      "required_fields": [
+        "expert_finding_source_id",
+        "finding_id",
+        "source_id",
+        "review_scope"
+      ]
+    },
+    {
+      "entity": "EvidenceMapper",
+      "production_status": "schema_contract_ready",
+      "required_fields": [
+        "evidence_mapper_id",
+        "evidence_id",
+        "supports_claim",
+        "blocks_claim"
+      ]
+    },
+    {
+      "entity": "ClaimGateMapper",
+      "production_status": "schema_contract_ready",
+      "required_fields": [
+        "claim_gate_mapper_id",
+        "claim_type",
+        "required_evidence",
+        "required_source_ids",
+        "required_reviewer_lane"
+      ]
+    }
+  ],
+  "domain_entity_count": 39,
+  "external_claims_opened": false,
+  "first_five_rebuild_work_packages": [
+    {
+      "current_repo_basis": [
+        "business_logic_phase_report.json",
+        "customer_source_packets.json",
+        "evidence_ledger.json"
+      ],
+      "id": "production_data_model",
+      "must_build": [
+        "TradeReadinessPacket",
+        "EvidenceItem",
+        "SourceRecord",
+        "CountryPack",
+        "DecisionScore",
+        "BlockedClaim",
+        "ReviewRequest",
+        "Report"
+      ],
+      "phase": 1,
+      "proof": "entity schema contract plus migration map is present in production_redevelopment_plan.json"
+    },
+    {
+      "current_repo_basis": [
+        "source_packet_workflow.py",
+        "product_operations.py",
+        "business_logic.py"
+      ],
+      "id": "packet_engine",
+      "must_build": [
+        "create packet",
+        "update packet",
+        "score packet",
+        "block claims",
+        "generate packet views",
+        "export packet"
+      ],
+      "phase": 2,
+      "proof": "packet state machine and packet view requirements are machine-readable"
+    },
+    {
+      "current_repo_basis": [
+        "official_source_registry.json",
+        "policy_intelligence.py",
+        "country_coverage_report.json"
+      ],
+      "id": "country_source_engine",
+      "must_build": [
+        "Canada pack",
+        "India origin pack",
+        "source registry",
+        "source snapshots",
+        "source freshness",
+        "stale packet logic"
+      ],
+      "phase": 6,
+      "proof": "country/source phases are linked to CBSA, CFIA, ISED, and ITC research anchors"
+    },
+    {
+      "current_repo_basis": [
+        "opportunity_scanner_report.json",
+        "business_logic.py"
+      ],
+      "id": "market_intelligence_engine",
+      "must_build": [
+        "product/HS discovery",
+        "trade data signal",
+        "competitor countries",
+        "market access comparison",
+        "buyer/importer lead routes",
+        "confidence labels"
+      ],
+      "phase": 4,
+      "proof": "market signal remains research-only and source-backed"
+    },
+    {
+      "current_repo_basis": [
+        "report_exports.json",
+        "generated_reports",
+        "output/pdf"
+      ],
+      "id": "report_engine",
+      "must_build": [
+        "starter packet",
+        "market brief",
+        "buyer-ready packet",
+        "broker packet",
+        "missing evidence report",
+        "blocked claims report",
+        "executive decision report"
+      ],
+      "phase": 15,
+      "proof": "report requirements keep claim boundaries, citations, evidence links, versions, and watermarks"
+    }
+  ],
+  "first_rebuild_package_count": 5,
+  "generated_at": "2026-06-28T08:55:14+00:00",
+  "hosted_production_ready": false,
+  "launch_control_plane": {
+    "gate_count": 12,
+    "gates": [
+      {
+        "allowed_states": [
+          "not_started",
+          "in_progress",
+          "needs_changes",
+          "blocked",
+          "approved_for_scope",
+          "expired"
+        ],
+        "gate": "business_gate",
+        "state": "blocked",
+        "unsafe_to_bypass": true
+      },
+      {
+        "allowed_states": [
+          "not_started",
+          "in_progress",
+          "needs_changes",
+          "blocked",
+          "approved_for_scope",
+          "expired"
+        ],
+        "gate": "security_gate",
+        "state": "blocked",
+        "unsafe_to_bypass": true
+      },
+      {
+        "allowed_states": [
+          "not_started",
+          "in_progress",
+          "needs_changes",
+          "blocked",
+          "approved_for_scope",
+          "expired"
+        ],
+        "gate": "privacy_gate",
+        "state": "blocked",
+        "unsafe_to_bypass": true
+      },
+      {
+        "allowed_states": [
+          "not_started",
+          "in_progress",
+          "needs_changes",
+          "blocked",
+          "approved_for_scope",
+          "expired"
+        ],
+        "gate": "ai_safety_gate",
+        "state": "blocked",
+        "unsafe_to_bypass": true
+      },
+      {
+        "allowed_states": [
+          "not_started",
+          "in_progress",
+          "needs_changes",
+          "blocked",
+          "approved_for_scope",
+          "expired"
+        ],
+        "gate": "trade_language_gate",
+        "state": "blocked",
+        "unsafe_to_bypass": true
+      },
+      {
+        "allowed_states": [
+          "not_started",
+          "in_progress",
+          "needs_changes",
+          "blocked",
+          "approved_for_scope",
+          "expired"
+        ],
+        "gate": "source_freshness_gate",
+        "state": "blocked",
+        "unsafe_to_bypass": true
+      },
+      {
+        "allowed_states": [
+          "not_started",
+          "in_progress",
+          "needs_changes",
+          "blocked",
+          "approved_for_scope",
+          "expired"
+        ],
+        "gate": "country_pack_gate",
+        "state": "blocked",
+        "unsafe_to_bypass": true
+      },
+      {
+        "allowed_states": [
+          "not_started",
+          "in_progress",
+          "needs_changes",
+          "blocked",
+          "approved_for_scope",
+          "expired"
+        ],
+        "gate": "payment_gate",
+        "state": "blocked",
+        "unsafe_to_bypass": true
+      },
+      {
+        "allowed_states": [
+          "not_started",
+          "in_progress",
+          "needs_changes",
+          "blocked",
+          "approved_for_scope",
+          "expired"
+        ],
+        "gate": "user_validation_gate",
+        "state": "blocked",
+        "unsafe_to_bypass": true
+      },
+      {
+        "allowed_states": [
+          "not_started",
+          "in_progress",
+          "needs_changes",
+          "blocked",
+          "approved_for_scope",
+          "expired"
+        ],
+        "gate": "expert_review_gate",
+        "state": "blocked",
+        "unsafe_to_bypass": true
+      },
+      {
+        "allowed_states": [
+          "not_started",
+          "in_progress",
+          "needs_changes",
+          "blocked",
+          "approved_for_scope",
+          "expired"
+        ],
+        "gate": "production_infrastructure_gate",
+        "state": "blocked",
+        "unsafe_to_bypass": true
+      },
+      {
+        "allowed_states": [
+          "not_started",
+          "in_progress",
+          "needs_changes",
+          "blocked",
+          "approved_for_scope",
+          "expired"
+        ],
+        "gate": "final_launch_owner_gate",
+        "state": "blocked",
+        "unsafe_to_bypass": true
+      }
+    ],
+    "hosted_production_ready": false,
+    "live_payment_ready": false,
+    "public_launch_ready": false,
+    "status": "launch_control_plane_contract_ready_public_launch_blocked"
+  },
+  "live_payment_ready": false,
+  "packet_state_machine": {
+    "claim_rule": "State progress never opens customs, tariff, buyer, supplier, shipment, legal, payment, or public-launch claims without evidence gates.",
+    "state_count": 12,
+    "states": [
+      "draft",
+      "starter_ready",
+      "research_ready",
+      "evidence_collecting",
+      "document_reviewing",
+      "source_checking",
+      "decision_preparing",
+      "reviewer_ready",
+      "expert_reviewing",
+      "customer_report_ready",
+      "paid_packet_ready",
+      "archived"
+    ],
+    "status": "packet_state_machine_contract_ready",
+    "terminal_states": [
+      "paid_packet_ready",
+      "archived"
+    ]
+  },
+  "phase_count": 21,
+  "platform_architecture": "modular_monolith_first",
+  "product": "Trade Readiness Copilot",
+  "production_layer_count": 14,
+  "production_layers": [
+    {
+      "current_basis": [
+        "PRODUCT_DOCTRINE.md",
+        "business_identity_lock"
+      ],
+      "layer_id": 1,
+      "name": "Product doctrine",
+      "production_outputs": [
+        "claim boundary policy",
+        "commercial wedge statement"
+      ],
+      "purpose": "Lock what the product is and is not.",
+      "status": "production_layer_contract_ready"
+    },
+    {
+      "current_basis": [
+        "Trade Readiness Packet contract",
+        "field provenance"
+      ],
+      "layer_id": 2,
+      "name": "Domain model",
+      "production_outputs": [
+        "production ERD",
+        "type contracts",
+        "migration map"
+      ],
+      "purpose": "Make all product behavior map to durable entities.",
+      "status": "production_layer_contract_ready"
+    },
+    {
+      "current_basis": [
+        "customer_workflow.sqlite",
+        "generated JSON artifacts"
+      ],
+      "layer_id": 3,
+      "name": "Data platform",
+      "production_outputs": [
+        "Postgres schema",
+        "object storage contract",
+        "source lineage tables"
+      ],
+      "purpose": "Move JSON/SQLite proof into governed production persistence.",
+      "status": "production_layer_contract_ready"
+    },
+    {
+      "current_basis": [
+        "packet stages",
+        "product operations log"
+      ],
+      "layer_id": 4,
+      "name": "Workflow engine",
+      "production_outputs": [
+        "packet state machine",
+        "domain events",
+        "work queues"
+      ],
+      "purpose": "Run packets through explicit lifecycle states and review gates.",
+      "status": "production_layer_contract_ready"
+    },
+    {
+      "current_basis": [
+        "Canada/Vietnam/India/Generic packs"
+      ],
+      "layer_id": 5,
+      "name": "Country-pack engine",
+      "production_outputs": [
+        "country pack registry",
+        "coverage levels",
+        "reviewer requirements"
+      ],
+      "purpose": "Scale country-specific routing and claim boundaries.",
+      "status": "production_layer_contract_ready"
+    },
+    {
+      "current_basis": [
+        "source monitoring contract",
+        "policy monitor"
+      ],
+      "layer_id": 6,
+      "name": "Source intelligence engine",
+      "production_outputs": [
+        "source snapshots",
+        "diff classifier",
+        "stale packet logic"
+      ],
+      "purpose": "Track official-source permissions, freshness, diffs, and packet impact.",
+      "status": "production_layer_contract_ready"
+    },
+    {
+      "current_basis": [
+        "bounded market signal score"
+      ],
+      "layer_id": 7,
+      "name": "Market intelligence engine",
+      "production_outputs": [
+        "trade data signals",
+        "market access comparison",
+        "buyer/importer lead routes"
+      ],
+      "purpose": "Produce source-backed research signals without demand claims.",
+      "status": "production_layer_contract_ready"
+    },
+    {
+      "current_basis": [
+        "document processing",
+        "evidence ledger"
+      ],
+      "layer_id": 8,
+      "name": "Evidence and document intelligence engine",
+      "production_outputs": [
+        "upload pipeline",
+        "field extraction",
+        "user confirmation trail"
+      ],
+      "purpose": "Extract, confirm, and govern evidence from files.",
+      "status": "production_layer_contract_ready"
+    },
+    {
+      "current_basis": [
+        "six business scores",
+        "business gate decision"
+      ],
+      "layer_id": 9,
+      "name": "Decision and rules engine",
+      "production_outputs": [
+        "claim gate engine",
+        "score reason contract",
+        "next action rules"
+      ],
+      "purpose": "Explain capped scores and blocked claims.",
+      "status": "production_layer_contract_ready"
+    },
+    {
+      "current_basis": [
+        "AI data policy",
+        "model router",
+        "manual no-AI workflow"
+      ],
+      "layer_id": 10,
+      "name": "AI copilot layer",
+      "production_outputs": [
+        "AI output labels",
+        "redaction checks",
+        "review work-order drafting"
+      ],
+      "purpose": "Use AI for assistance, never approval.",
+      "status": "production_layer_contract_ready"
+    },
+    {
+      "current_basis": [
+        "reviewer lanes",
+        "expert work orders"
+      ],
+      "layer_id": 11,
+      "name": "Expert review network",
+      "production_outputs": [
+        "reviewer profiles",
+        "scoped links",
+        "finding decisions"
+      ],
+      "purpose": "Turn human review into product workflow.",
+      "status": "production_layer_contract_ready"
+    },
+    {
+      "current_basis": [
+        "public tools",
+        "workspace",
+        "review routes",
+        "admin routes"
+      ],
+      "layer_id": 12,
+      "name": "User portals",
+      "production_outputs": [
+        "public/exporter/importer/reviewer/admin/enterprise portals"
+      ],
+      "purpose": "Give each user type a complete workflow.",
+      "status": "production_layer_contract_ready"
+    },
+    {
+      "current_basis": [
+        "auth/RBAC matrix",
+        "team workspace",
+        "agent API"
+      ],
+      "layer_id": 13,
+      "name": "Enterprise platform",
+      "production_outputs": [
+        "organizations",
+        "workspaces",
+        "API keys",
+        "audit exports"
+      ],
+      "purpose": "Support firms, teams, clients, APIs, audit, and retention controls.",
+      "status": "production_layer_contract_ready"
+    },
+    {
+      "current_basis": [
+        "launch operations",
+        "final go-live report"
+      ],
+      "layer_id": 14,
+      "name": "Production operations and go-live system",
+      "production_outputs": [
+        "environment control plane",
+        "approval gates",
+        "incident and rollback runbooks"
+      ],
+      "purpose": "Operate only approved scopes with observable controls.",
+      "status": "production_layer_contract_ready"
+    }
+  ],
+  "proof_boundary": "This artifact completes the local production redevelopment contract. It does not prove production deployment, legal/privacy/security approval, qualified customs/trade review, buyer/supplier validation, live payments, real user outcomes, or public go/no-go approval.",
+  "public_launch_ready": false,
+  "qualified_review_complete": false,
+  "real_user_validation_complete": false,
+  "redevelopment_decision": "preserve_business_logic_rebuild_platform_around_it",
+  "redevelopment_phases": [
+    {
+      "build_track": [
+        "ClaimPolicy module contract",
+        "allowed/blocked claims list",
+        "report-language rules",
+        "source-citation rules"
+      ],
+      "claim_state": "external_claims_closed",
+      "deliverables": [
+        "ClaimPolicy module contract",
+        "allowed/blocked claims list",
+        "report-language rules",
+        "source-citation rules"
+      ],
+      "evidence_track": [
+        "claim policy row with required evidence",
+        "reviewer lane assignment",
+        "user-facing explanation"
+      ],
+      "external_gates": [
+        "approved",
+        "compliant",
+        "ready_to_ship",
+        "tariff_confirmed",
+        "cfia_approved",
+        "buyer_validated",
+        "supplier_verified"
+      ],
+      "gate_track": [
+        "approved",
+        "compliant",
+        "ready_to_ship",
+        "tariff_confirmed",
+        "cfia_approved",
+        "buyer_validated",
+        "supplier_verified"
+      ],
+      "layers": [
+        1
+      ],
+      "local_status": "phase_research_build_source_evidence_gate_tracks_ready",
+      "name": "Product doctrine and claim boundary",
+      "next_valid_move": "Build the production implementation for this phase and attach the listed evidence before any gated claim can open.",
+      "phase": 0,
+      "research_track": [
+        "customs broker boundary",
+        "importer responsibility",
+        "CFIA reference-only language",
+        "tariff classification limits",
+        "sanctions routing limits",
+        "AI output limits"
+      ],
+      "source_track": [
+        "cbsa-import-commercial-goods",
+        "cbsa-licensed-customs-brokers",
+        "cbsa-customs-tariff-2026",
+        "cfia-airs",
+        "gac-sanctions",
+        "wco-harmonized-system"
+      ]
+    },
+    {
+      "build_track": [
+        "production entity schema",
+        "domain event list",
+        "entity lifecycle rules",
+        "JSON to Postgres migration map"
+      ],
+      "claim_state": "external_claims_closed",
+      "deliverables": [
+        "production entity schema",
+        "domain event list",
+        "entity lifecycle rules",
+        "JSON to Postgres migration map"
+      ],
+      "evidence_track": [
+        "field provenance",
+        "source snapshot references",
+        "audit event for every business action"
+      ],
+      "external_gates": [
+        "field_presence_is_not_proof",
+        "parser_draft_is_not_confirmation"
+      ],
+      "gate_track": [
+        "field_presence_is_not_proof",
+        "parser_draft_is_not_confirmation"
+      ],
+      "layers": [
+        2,
+        3
+      ],
+      "local_status": "phase_research_build_source_evidence_gate_tracks_ready",
+      "name": "Production domain model",
+      "next_valid_move": "Build the production implementation for this phase and attach the listed evidence before any gated claim can open.",
+      "phase": 1,
+      "research_track": [
+        "WCO HS structure",
+        "Incoterms responsibility fields",
+        "Canada import data requirements",
+        "India IEC/export fields",
+        "source metadata requirements"
+      ],
+      "source_track": [
+        "wco-harmonized-system",
+        "icc-incoterms-2020",
+        "cbsa-import-commercial-goods",
+        "india-dgft-foreign-trade-policy"
+      ]
+    },
+    {
+      "build_track": [
+        "packet state machine",
+        "starter/market/buyer/supplier/broker/operator/executive/blocked-claim packet views"
+      ],
+      "claim_state": "external_claims_closed",
+      "deliverables": [
+        "packet state machine",
+        "starter/market/buyer/supplier/broker/operator/executive/blocked-claim packet views"
+      ],
+      "evidence_track": [
+        "packet state transition log",
+        "packet view export",
+        "blocked-claims packet"
+      ],
+      "external_gates": [
+        "reviewer_ready_not_approved",
+        "packet_complete_not_trade_ready"
+      ],
+      "gate_track": [
+        "reviewer_ready_not_approved",
+        "packet_complete_not_trade_ready"
+      ],
+      "layers": [
+        4,
+        9
+      ],
+      "local_status": "phase_research_build_source_evidence_gate_tracks_ready",
+      "name": "Trade Readiness Packet engine",
+      "next_valid_move": "Build the production implementation for this phase and attach the listed evidence before any gated claim can open.",
+      "phase": 2,
+      "research_track": [
+        "required fields by direction",
+        "required fields by product class",
+        "regulated-product question set"
+      ],
+      "source_track": [
+        "cbsa-import-commercial-goods",
+        "cfia-airs",
+        "gac-import-controls"
+      ]
+    },
+    {
+      "build_track": [
+        "explore/import/export intake",
+        "starter packet",
+        "market checklist",
+        "source map",
+        "buyer/supplier/broker questions"
+      ],
+      "claim_state": "external_claims_closed",
+      "deliverables": [
+        "explore/import/export intake",
+        "starter packet",
+        "market checklist",
+        "source map",
+        "buyer/supplier/broker questions"
+      ],
+      "evidence_track": [
+        "no-document starter packet",
+        "research plan",
+        "blocked claims",
+        "next safe move"
+      ],
+      "external_gates": [
+        "research_plan_not_market_conclusion",
+        "no_documents_no_external_claims"
+      ],
+      "gate_track": [
+        "research_plan_not_market_conclusion",
+        "no_documents_no_external_claims"
+      ],
+      "layers": [
+        4,
+        9,
+        12
+      ],
+      "local_status": "phase_research_build_source_evidence_gate_tracks_ready",
+      "name": "No-document beginner intelligence",
+      "next_valid_move": "Build the production implementation for this phase and attach the listed evidence before any gated claim can open.",
+      "phase": 3,
+      "research_track": [
+        "market data availability",
+        "HS candidate lookup methods",
+        "country-pack coverage",
+        "common beginner mistakes"
+      ],
+      "source_track": [
+        "ised-trade-data-online",
+        "wco-harmonized-system",
+        "itc-market-access-map",
+        "cbsa-import-commercial-goods"
+      ]
+    },
+    {
+      "build_track": [
+        "HS candidate route",
+        "destination import value",
+        "3-5 year trend",
+        "top origin countries",
+        "unit value",
+        "market access barriers",
+        "lead routes"
+      ],
+      "claim_state": "external_claims_closed",
+      "deliverables": [
+        "HS candidate route",
+        "destination import value",
+        "3-5 year trend",
+        "top origin countries",
+        "unit value",
+        "market access barriers",
+        "lead routes"
+      ],
+      "evidence_track": [
+        "MarketSignal record per metric",
+        "source period",
+        "confidence",
+        "limitation",
+        "next validation"
+      ],
+      "external_gates": [
+        "no_profitable_market_claim",
+        "no_guaranteed_demand_claim",
+        "buyer_validation_required"
+      ],
+      "gate_track": [
+        "no_profitable_market_claim",
+        "no_guaranteed_demand_claim",
+        "buyer_validation_required"
+      ],
+      "layers": [
+        7
+      ],
+      "local_status": "phase_research_build_source_evidence_gate_tracks_ready",
+      "name": "Market intelligence engine",
+      "next_valid_move": "Build the production implementation for this phase and attach the listed evidence before any gated claim can open.",
+      "phase": 4,
+      "research_track": [
+        "ISED TDO",
+        "Canadian Importers Database",
+        "WITS",
+        "ITC Trade Map",
+        "Market Access Map",
+        "UN Comtrade if API access is needed",
+        "dataset licensing and terms"
+      ],
+      "source_track": [
+        "ised-trade-data-online",
+        "canada-cid",
+        "world-bank-wits",
+        "itc-trade-map",
+        "itc-market-access-map"
+      ]
+    },
+    {
+      "build_track": [
+        "country pack schema",
+        "Canada destination pack",
+        "India origin pack",
+        "Vietnam sample pack",
+        "Generic fallback",
+        "US/UK/EU/UAE queue"
+      ],
+      "claim_state": "external_claims_closed",
+      "deliverables": [
+        "country pack schema",
+        "Canada destination pack",
+        "India origin pack",
+        "Vietnam sample pack",
+        "Generic fallback",
+        "US/UK/EU/UAE queue"
+      ],
+      "evidence_track": [
+        "coverage level",
+        "claim boundary",
+        "last checked",
+        "reviewer required",
+        "unsupported areas"
+      ],
+      "external_gates": [
+        "unsupported_country_generic_research_only",
+        "country_claim_requires_full_coverage_and_review"
+      ],
+      "gate_track": [
+        "unsupported_country_generic_research_only",
+        "country_claim_requires_full_coverage_and_review"
+      ],
+      "layers": [
+        5,
+        6
+      ],
+      "local_status": "phase_research_build_source_evidence_gate_tracks_ready",
+      "name": "Country-pack platform",
+      "next_valid_move": "Build the production implementation for this phase and attach the listed evidence before any gated claim can open.",
+      "phase": 5,
+      "research_track": [
+        "Canada import sources",
+        "India export sources",
+        "Vietnam proof sources",
+        "expansion-country source availability"
+      ],
+      "source_track": [
+        "cbsa-import-commercial-goods",
+        "cbsa-customs-tariff-2026",
+        "cfia-airs",
+        "gac-sanctions",
+        "india-dgft-foreign-trade-policy"
+      ]
+    },
+    {
+      "build_track": [
+        "source lifecycle",
+        "robots/terms/license fields",
+        "source states",
+        "diff classification",
+        "packet impact calculation"
+      ],
+      "claim_state": "external_claims_closed",
+      "deliverables": [
+        "source lifecycle",
+        "robots/terms/license fields",
+        "source states",
+        "diff classification",
+        "packet impact calculation"
+      ],
+      "evidence_track": [
+        "SourceRecord",
+        "SourceSnapshot",
+        "content hash",
+        "diff classification",
+        "packet stale event"
+      ],
+      "external_gates": [
+        "source_route_not_current_law",
+        "material_change_requires_reviewer"
+      ],
+      "gate_track": [
+        "source_route_not_current_law",
+        "material_change_requires_reviewer"
+      ],
+      "layers": [
+        6
+      ],
+      "local_status": "phase_research_build_source_evidence_gate_tracks_ready",
+      "name": "Official-source intelligence and monitoring",
+      "next_valid_move": "Build the production implementation for this phase and attach the listed evidence before any gated claim can open.",
+      "phase": 6,
+      "research_track": [
+        "robots status",
+        "terms",
+        "data license",
+        "update cadence",
+        "source owner",
+        "allowed automation",
+        "manual-only restrictions"
+      ],
+      "source_track": [
+        "official_source_registry"
+      ]
+    },
+    {
+      "build_track": [
+        "ExportPathEngine",
+        "ImportPathEngine",
+        "ResponsibilityPathEngine",
+        "broker/expert routing"
+      ],
+      "claim_state": "external_claims_closed",
+      "deliverables": [
+        "ExportPathEngine",
+        "ImportPathEngine",
+        "ResponsibilityPathEngine",
+        "broker/expert routing"
+      ],
+      "evidence_track": [
+        "responsibility path",
+        "import/export unresolved questions",
+        "review route"
+      ],
+      "external_gates": [
+        "cannot_say_you_can_import",
+        "cannot_say_you_can_export"
+      ],
+      "gate_track": [
+        "cannot_say_you_can_import",
+        "cannot_say_you_can_export"
+      ],
+      "layers": [
+        4,
+        5,
+        9
+      ],
+      "local_status": "phase_research_build_source_evidence_gate_tracks_ready",
+      "name": "Import/export workflow engine",
+      "next_valid_move": "Build the production implementation for this phase and attach the listed evidence before any gated claim can open.",
+      "phase": 7,
+      "research_track": [
+        "Canada import process",
+        "India export process",
+        "Incoterms",
+        "broker responsibility",
+        "regulated goods",
+        "origin export controls"
+      ],
+      "source_track": [
+        "cbsa-import-commercial-goods",
+        "india-dgft-foreign-trade-policy",
+        "icc-incoterms-2020",
+        "cbsa-licensed-customs-brokers",
+        "cfia-airs"
+      ]
+    },
+    {
+      "build_track": [
+        "buyer evidence ladder",
+        "possible importer list",
+        "buyer questions",
+        "outreach preparation",
+        "buyer packet",
+        "validation gap"
+      ],
+      "claim_state": "external_claims_closed",
+      "deliverables": [
+        "buyer evidence ladder",
+        "possible importer list",
+        "buyer questions",
+        "outreach preparation",
+        "buyer packet",
+        "validation gap"
+      ],
+      "evidence_track": [
+        "lead source",
+        "contact evidence",
+        "reply evidence",
+        "meeting notes",
+        "LOI/PO/paid order evidence"
+      ],
+      "external_gates": [
+        "database_record_is_lead_not_validation",
+        "never_say_buyer_validated_without_threshold_evidence"
+      ],
+      "gate_track": [
+        "database_record_is_lead_not_validation",
+        "never_say_buyer_validated_without_threshold_evidence"
+      ],
+      "layers": [
+        7,
+        8,
+        9
+      ],
+      "local_status": "phase_research_build_source_evidence_gate_tracks_ready",
+      "name": "Buyer discovery and buyer-evidence engine",
+      "next_valid_move": "Build the production implementation for this phase and attach the listed evidence before any gated claim can open.",
+      "phase": 8,
+      "research_track": [
+        "Canadian Importers Database",
+        "public importer directories",
+        "trade fairs",
+        "industry associations",
+        "anti-spam rules"
+      ],
+      "source_track": [
+        "canada-cid"
+      ]
+    },
+    {
+      "build_track": [
+        "supplier evidence ladder",
+        "supplier document request",
+        "risk questions",
+        "missing evidence",
+        "reviewer packet"
+      ],
+      "claim_state": "external_claims_closed",
+      "deliverables": [
+        "supplier evidence ladder",
+        "supplier document request",
+        "risk questions",
+        "missing evidence",
+        "reviewer packet"
+      ],
+      "evidence_track": [
+        "registration",
+        "export ability",
+        "product docs",
+        "certificates",
+        "inspection",
+        "prior shipment",
+        "commercial reference",
+        "reviewer assessment"
+      ],
+      "external_gates": [
+        "supplier_evidence_collected_not_supplier_verified"
+      ],
+      "gate_track": [
+        "supplier_evidence_collected_not_supplier_verified"
+      ],
+      "layers": [
+        8,
+        9
+      ],
+      "local_status": "phase_research_build_source_evidence_gate_tracks_ready",
+      "name": "Supplier evidence engine",
+      "next_valid_move": "Build the production implementation for this phase and attach the listed evidence before any gated claim can open.",
+      "phase": 9,
+      "research_track": [
+        "company registries",
+        "export licenses",
+        "product certificates",
+        "food/agri/seafood certifications",
+        "inspection body standards",
+        "fraud indicators"
+      ],
+      "source_track": [
+        "india-dgft-foreign-trade-policy",
+        "cfia-airs"
+      ]
+    },
+    {
+      "build_track": [
+        "upload",
+        "malware scan",
+        "file signature check",
+        "quarantine",
+        "OCR/text extraction",
+        "classification",
+        "field extraction",
+        "redaction preview"
+      ],
+      "claim_state": "external_claims_closed",
+      "deliverables": [
+        "upload",
+        "malware scan",
+        "file signature check",
+        "quarantine",
+        "OCR/text extraction",
+        "classification",
+        "field extraction",
+        "redaction preview"
+      ],
+      "evidence_track": [
+        "document id",
+        "page/section",
+        "extracted value",
+        "confidence",
+        "provenance",
+        "confirmation status",
+        "claim boundary"
+      ],
+      "external_gates": [
+        "parser_extraction_is_draft_evidence",
+        "real_uploads_blocked_until_security_privacy_controls"
+      ],
+      "gate_track": [
+        "parser_extraction_is_draft_evidence",
+        "real_uploads_blocked_until_security_privacy_controls"
+      ],
+      "layers": [
+        8,
+        14
+      ],
+      "local_status": "phase_research_build_source_evidence_gate_tracks_ready",
+      "name": "Document intelligence platform",
+      "next_valid_move": "Build the production implementation for this phase and attach the listed evidence before any gated claim can open.",
+      "phase": 10,
+      "research_track": [
+        "trade document templates",
+        "commercial invoice",
+        "packing list",
+        "certificate of origin",
+        "bill of lading",
+        "PO/contract",
+        "inspection report",
+        "upload security"
+      ],
+      "source_track": [
+        "owasp-file-upload"
+      ]
+    },
+    {
+      "build_track": [
+        "EvidenceItem schema",
+        "can_show_claim(claim_type, packet_id)",
+        "supports/blocks claim map",
+        "stale evidence blocking"
+      ],
+      "claim_state": "external_claims_closed",
+      "deliverables": [
+        "EvidenceItem schema",
+        "can_show_claim(claim_type, packet_id)",
+        "supports/blocks claim map",
+        "stale evidence blocking"
+      ],
+      "evidence_track": [
+        "claim reason",
+        "evidence trail",
+        "source snapshot",
+        "reviewer requirement"
+      ],
+      "external_gates": [
+        "no_evidence_no_claim",
+        "stale_evidence_blocks_claim"
+      ],
+      "gate_track": [
+        "no_evidence_no_claim",
+        "stale_evidence_blocks_claim"
+      ],
+      "layers": [
+        8,
+        9
+      ],
+      "local_status": "phase_research_build_source_evidence_gate_tracks_ready",
+      "name": "Evidence ledger and claim-gate engine",
+      "next_valid_move": "Build the production implementation for this phase and attach the listed evidence before any gated claim can open.",
+      "phase": 11,
+      "research_track": [
+        "evidence requirements by claim type",
+        "HS candidate",
+        "tariff route",
+        "CFIA relevance",
+        "buyer/supplier evidence",
+        "origin claim",
+        "Incoterms",
+        "market signal"
+      ],
+      "source_track": [
+        "cbsa-customs-tariff-2026",
+        "cfia-airs",
+        "wco-harmonized-system",
+        "icc-incoterms-2020",
+        "ised-trade-data-online"
+      ]
+    },
+    {
+      "build_track": [
+        "six permanent scores",
+        "score reason",
+        "blocking fields",
+        "next action",
+        "cap policy"
+      ],
+      "claim_state": "external_claims_closed",
+      "deliverables": [
+        "six permanent scores",
+        "score reason",
+        "blocking fields",
+        "next action",
+        "cap policy"
+      ],
+      "evidence_track": [
+        "score output record",
+        "cap reason",
+        "next action"
+      ],
+      "external_gates": [
+        "no_single_global_readiness_score",
+        "no_approval_language"
+      ],
+      "gate_track": [
+        "no_single_global_readiness_score",
+        "no_approval_language"
+      ],
+      "layers": [
+        9
+      ],
+      "local_status": "phase_research_build_source_evidence_gate_tracks_ready",
+      "name": "Decision and scoring engine",
+      "next_valid_move": "Build the production implementation for this phase and attach the listed evidence before any gated claim can open.",
+      "phase": 12,
+      "research_track": [
+        "thresholds by packet stage",
+        "country coverage",
+        "product category",
+        "evidence strength",
+        "source freshness",
+        "reviewer status"
+      ],
+      "source_track": [
+        "official_source_registry"
+      ]
+    },
+    {
+      "build_track": [
+        "intake assistant",
+        "document assistant",
+        "source summarizer",
+        "market research assistant",
+        "packet writer",
+        "review work-order drafter",
+        "redaction assistant",
+        "QA assistant"
+      ],
+      "claim_state": "external_claims_closed",
+      "deliverables": [
+        "intake assistant",
+        "document assistant",
+        "source summarizer",
+        "market research assistant",
+        "packet writer",
+        "review work-order drafter",
+        "redaction assistant",
+        "QA assistant"
+      ],
+      "evidence_track": [
+        "AI output label",
+        "permission record",
+        "prompt-injection test result",
+        "redaction result"
+      ],
+      "external_gates": [
+        "ai_cannot_open_any_external_gate"
+      ],
+      "gate_track": [
+        "ai_cannot_open_any_external_gate"
+      ],
+      "layers": [
+        10,
+        14
+      ],
+      "local_status": "phase_research_build_source_evidence_gate_tracks_ready",
+      "name": "AI copilot layer",
+      "next_valid_move": "Build the production implementation for this phase and attach the listed evidence before any gated claim can open.",
+      "phase": 13,
+      "research_track": [
+        "AI provider data-use terms",
+        "retention settings",
+        "no-training guarantees",
+        "redaction tests",
+        "prompt-injection tests",
+        "model routing",
+        "human review"
+      ],
+      "source_track": [
+        "owasp-llm01-prompt-injection",
+        "nist-ai-rmf"
+      ]
+    },
+    {
+      "build_track": [
+        "reviewer profile",
+        "credentials",
+        "scope",
+        "packet review link",
+        "finding form",
+        "severity",
+        "decision values",
+        "audit trail"
+      ],
+      "claim_state": "external_claims_closed",
+      "deliverables": [
+        "reviewer profile",
+        "credentials",
+        "scope",
+        "packet review link",
+        "finding form",
+        "severity",
+        "decision values",
+        "audit trail"
+      ],
+      "evidence_track": [
+        "review finding",
+        "required changes",
+        "approved scope",
+        "evidence attachment"
+      ],
+      "external_gates": [
+        "no_reviewer_lane_no_claim_lane",
+        "scope_limited_approval_only"
+      ],
+      "gate_track": [
+        "no_reviewer_lane_no_claim_lane",
+        "scope_limited_approval_only"
+      ],
+      "layers": [
+        11
+      ],
+      "local_status": "phase_research_build_source_evidence_gate_tracks_ready",
+      "name": "Expert review network",
+      "next_valid_move": "Build the production implementation for this phase and attach the listed evidence before any gated claim can open.",
+      "phase": 14,
+      "research_track": [
+        "customs broker qualifications",
+        "trade consultant categories",
+        "freight expert scope",
+        "privacy/legal/security/AI/payment reviewer criteria"
+      ],
+      "source_track": [
+        "cbsa-licensed-customs-brokers"
+      ]
+    },
+    {
+      "build_track": [
+        "starter packet",
+        "market brief",
+        "buyer-ready packet",
+        "supplier request",
+        "broker packet",
+        "missing evidence",
+        "blocked claims",
+        "country source map",
+        "source freshness",
+        "expert summary",
+        "executive report",
+        "audit export"
+      ],
+      "claim_state": "external_claims_closed",
+      "deliverables": [
+        "starter packet",
+        "market brief",
+        "buyer-ready packet",
+        "supplier request",
+        "broker packet",
+        "missing evidence",
+        "blocked claims",
+        "country source map",
+        "source freshness",
+        "expert summary",
+        "executive report",
+        "audit export"
+      ],
+      "evidence_track": [
+        "HTML preview",
+        "PDF export",
+        "JSON export",
+        "citations",
+        "version history",
+        "watermark",
+        "review status"
+      ],
+      "external_gates": [
+        "reports_must_keep_blocked_claims_visible"
+      ],
+      "gate_track": [
+        "reports_must_keep_blocked_claims_visible"
+      ],
+      "layers": [
+        9,
+        12,
+        13
+      ],
+      "local_status": "phase_research_build_source_evidence_gate_tracks_ready",
+      "name": "Reports and deliverables engine",
+      "next_valid_move": "Build the production implementation for this phase and attach the listed evidence before any gated claim can open.",
+      "phase": 15,
+      "research_track": [
+        "beginner exporter needs",
+        "experienced exporter needs",
+        "Canadian importer needs",
+        "broker/supplier/buyer/operator/reviewer report needs"
+      ],
+      "source_track": [
+        "official_source_registry"
+      ]
+    },
+    {
+      "build_track": [
+        "public portal",
+        "exporter portal",
+        "importer portal",
+        "reviewer portal",
+        "admin/operator portal",
+        "enterprise portal"
+      ],
+      "claim_state": "external_claims_closed",
+      "deliverables": [
+        "public portal",
+        "exporter portal",
+        "importer portal",
+        "reviewer portal",
+        "admin/operator portal",
+        "enterprise portal"
+      ],
+      "evidence_track": [
+        "workflow smoke result",
+        "terminology feedback",
+        "accessibility result"
+      ],
+      "external_gates": [
+        "public_no_unrestricted_uploads",
+        "public_no_live_payment",
+        "public_no_strong_claims"
+      ],
+      "gate_track": [
+        "public_no_unrestricted_uploads",
+        "public_no_live_payment",
+        "public_no_strong_claims"
+      ],
+      "layers": [
+        12
+      ],
+      "local_status": "phase_research_build_source_evidence_gate_tracks_ready",
+      "name": "User portals and workflows",
+      "next_valid_move": "Build the production implementation for this phase and attach the listed evidence before any gated claim can open.",
+      "phase": 16,
+      "research_track": [
+        "exporter/importer UX testing",
+        "accessibility",
+        "terminology",
+        "mobile review",
+        "blocked vs approved confusion testing"
+      ],
+      "source_track": [
+        "user_research_required"
+      ]
+    },
+    {
+      "build_track": [
+        "organizations",
+        "workspaces",
+        "RBAC",
+        "client accounts",
+        "multi-packet dashboard",
+        "comments",
+        "review assignment",
+        "audit export",
+        "API keys",
+        "webhooks",
+        "usage limits",
+        "white-label reports"
+      ],
+      "claim_state": "external_claims_closed",
+      "deliverables": [
+        "organizations",
+        "workspaces",
+        "RBAC",
+        "client accounts",
+        "multi-packet dashboard",
+        "comments",
+        "review assignment",
+        "audit export",
+        "API keys",
+        "webhooks",
+        "usage limits",
+        "white-label reports"
+      ],
+      "evidence_track": [
+        "API contract",
+        "RBAC test",
+        "audit export",
+        "retention policy"
+      ],
+      "external_gates": [
+        "api_outputs_follow_same_claim_gate_engine"
+      ],
+      "gate_track": [
+        "api_outputs_follow_same_claim_gate_engine"
+      ],
+      "layers": [
+        13
+      ],
+      "local_status": "phase_research_build_source_evidence_gate_tracks_ready",
+      "name": "Enterprise SaaS and API platform",
+      "next_valid_move": "Build the production implementation for this phase and attach the listed evidence before any gated claim can open.",
+      "phase": 17,
+      "research_track": [
+        "broker/advisor workflow",
+        "enterprise retention",
+        "API use cases",
+        "audit requirements",
+        "multi-client permissions",
+        "white-label needs"
+      ],
+      "source_track": [
+        "enterprise_user_validation_required"
+      ]
+    },
+    {
+      "build_track": [
+        "free quick check",
+        "starter packet",
+        "pro workspace",
+        "expert review add-on",
+        "broker/advisor workspace",
+        "enterprise",
+        "API/data access"
+      ],
+      "claim_state": "external_claims_closed",
+      "deliverables": [
+        "free quick check",
+        "starter packet",
+        "pro workspace",
+        "expert review add-on",
+        "broker/advisor workspace",
+        "enterprise",
+        "API/data access"
+      ],
+      "evidence_track": [
+        "pricing approval",
+        "refund/support policy",
+        "tax review",
+        "webhook test",
+        "payment security review",
+        "claim-language review"
+      ],
+      "external_gates": [
+        "charge_for_preparation_not_approval",
+        "live_checkout_disabled_until_review"
+      ],
+      "gate_track": [
+        "charge_for_preparation_not_approval",
+        "live_checkout_disabled_until_review"
+      ],
+      "layers": [
+        13,
+        14
+      ],
+      "local_status": "phase_research_build_source_evidence_gate_tracks_ready",
+      "name": "Payments and monetization",
+      "next_valid_move": "Build the production implementation for this phase and attach the listed evidence before any gated claim can open.",
+      "phase": 18,
+      "research_track": [
+        "Stripe live-mode requirements",
+        "refund/support policy",
+        "tax/accounting review",
+        "price testing",
+        "willingness to pay",
+        "payment wording"
+      ],
+      "source_track": [
+        "stripe-go-live"
+      ]
+    },
+    {
+      "build_track": [
+        "managed auth",
+        "admin MFA",
+        "org RBAC",
+        "secure sessions",
+        "CSRF",
+        "rate limits",
+        "private object storage",
+        "malware scanning",
+        "audit logs",
+        "deletion",
+        "retention",
+        "vendor register",
+        "backup/restore",
+        "monitoring",
+        "incident runbooks"
+      ],
+      "claim_state": "external_claims_closed",
+      "deliverables": [
+        "managed auth",
+        "admin MFA",
+        "org RBAC",
+        "secure sessions",
+        "CSRF",
+        "rate limits",
+        "private object storage",
+        "malware scanning",
+        "audit logs",
+        "deletion",
+        "retention",
+        "vendor register",
+        "backup/restore",
+        "monitoring",
+        "incident runbooks"
+      ],
+      "evidence_track": [
+        "auth proof",
+        "upload security proof",
+        "privacy review",
+        "vendor inventory",
+        "backup restore test",
+        "incident runbook"
+      ],
+      "external_gates": [
+        "real_file_uploads_blocked_until_controls_proven"
+      ],
+      "gate_track": [
+        "real_file_uploads_blocked_until_controls_proven"
+      ],
+      "layers": [
+        8,
+        10,
+        14
+      ],
+      "local_status": "phase_research_build_source_evidence_gate_tracks_ready",
+      "name": "Security, privacy, reliability, and production trust",
+      "next_valid_move": "Build the production implementation for this phase and attach the listed evidence before any gated claim can open.",
+      "phase": 19,
+      "research_track": [
+        "PIPEDA",
+        "data residency",
+        "AI vendor terms",
+        "upload threat model",
+        "retention periods",
+        "breach process",
+        "security findings"
+      ],
+      "source_track": [
+        "opc-pipeda-principles",
+        "owasp-file-upload",
+        "owasp-llm01-prompt-injection",
+        "nist-ai-rmf"
+      ]
+    },
+    {
+      "build_track": [
+        "business logic gate",
+        "country-pack gate",
+        "source freshness gate",
+        "market-data gate",
+        "security gate",
+        "privacy gate",
+        "AI safety gate",
+        "trade-language gate",
+        "expert-review gate",
+        "payment gate",
+        "real-user evidence gate",
+        "production infrastructure gate",
+        "final owner gate"
+      ],
+      "claim_state": "external_claims_closed",
+      "deliverables": [
+        "business logic gate",
+        "country-pack gate",
+        "source freshness gate",
+        "market-data gate",
+        "security gate",
+        "privacy gate",
+        "AI safety gate",
+        "trade-language gate",
+        "expert-review gate",
+        "payment gate",
+        "real-user evidence gate",
+        "production infrastructure gate",
+        "final owner gate"
+      ],
+      "evidence_track": [
+        "gate state",
+        "approved scope",
+        "expiry",
+        "owner approval"
+      ],
+      "external_gates": [
+        "launch_only_for_exact_approved_scope"
+      ],
+      "gate_track": [
+        "launch_only_for_exact_approved_scope"
+      ],
+      "layers": [
+        14
+      ],
+      "local_status": "phase_research_build_source_evidence_gate_tracks_ready",
+      "name": "Launch control plane",
+      "next_valid_move": "Build the production implementation for this phase and attach the listed evidence before any gated claim can open.",
+      "phase": 20,
+      "research_track": [
+        "public copy review",
+        "source refresh proof",
+        "reviewer signoffs",
+        "user outcomes",
+        "hosted proof",
+        "payment proof"
+      ],
+      "source_track": [
+        "official_source_registry",
+        "reviewer_findings",
+        "user_validation_records"
+      ]
+    }
+  ],
+  "research_anchor_count": 18,
+  "research_anchors": [
+    {
+      "checked_on": "2026-06-28",
+      "claim_boundary": "Supports research routing only; it does not validate buyer demand or profitability.",
+      "id": "ised-trade-data-online",
+      "source_area": "Canada market intelligence",
+      "source_name": "ISED Trade Data Online",
+      "supports_phases": [
+        4,
+        5
+      ],
+      "url": "https://ised-isde.canada.ca/site/trade-data-online/en/overview",
+      "usable_fact": "Trade Data Online is the Canada trade data route for import/export market and competition research."
+    },
+    {
+      "checked_on": "2026-06-28",
+      "claim_boundary": "Supports market-access comparison routing only; qualified review is required before tariff or market-access claims.",
+      "id": "itc-market-access-map",
+      "source_area": "Market access comparison",
+      "source_name": "International Trade Centre Market Access Map",
+      "supports_phases": [
+        4,
+        5
+      ],
+      "url": "https://www.macmap.org/",
+      "usable_fact": "Market Access Map is the market-access route for tariffs, trade measures, regulatory requirements, and preference comparisons."
+    },
+    {
+      "checked_on": "2026-06-28",
+      "claim_boundary": "Routes users to official and qualified review paths; the product does not replace CBSA or a customs professional.",
+      "id": "cbsa-import-commercial-goods",
+      "source_area": "Canada import process",
+      "source_name": "Canada Border Services Agency commercial import guidance",
+      "supports_phases": [
+        0,
+        5,
+        7,
+        20
+      ],
+      "url": "https://www.cbsa-asfc.gc.ca/import/menu-eng.html",
+      "usable_fact": "CBSA is the official routing source for commercial importing topics such as business/import accounts, tariff resources, other government requirements, origin, rulings, and accounting."
+    },
+    {
+      "checked_on": "2026-06-28",
+      "claim_boundary": "Reference route only; importers and reviewers must confirm current requirements for the exact product and import time.",
+      "id": "cfia-airs",
+      "source_area": "CFIA regulated food, plant, animal",
+      "source_name": "CFIA Automated Import Reference System",
+      "supports_phases": [
+        0,
+        5,
+        20
+      ],
+      "url": "https://inspection.canada.ca/en/importing-food-plants-animals/airs",
+      "usable_fact": "AIRS is the CFIA reference route for food, plant, animal, and regulated-commodity import requirements."
+    },
+    {
+      "checked_on": "2026-06-28",
+      "claim_boundary": "Security implementation guidance; hosted readiness still requires product-specific security review.",
+      "id": "owasp-file-upload",
+      "source_area": "Upload security",
+      "source_name": "OWASP File Upload Cheat Sheet",
+      "supports_phases": [
+        10,
+        19
+      ],
+      "url": "https://cheatsheetseries.owasp.org/cheatsheets/File_Upload_Cheat_Sheet.html",
+      "usable_fact": "File-upload security needs defense in depth: extension/type validation, generated filenames, size limits, authorization, isolated storage, malware checks, updated libraries, and CSRF protection."
+    },
+    {
+      "checked_on": "2026-06-28",
+      "claim_boundary": "Governance reference only; it does not certify the product or approve AI outputs.",
+      "id": "nist-ai-rmf",
+      "source_area": "AI safety",
+      "source_name": "NIST AI Risk Management Framework",
+      "supports_phases": [
+        13,
+        19
+      ],
+      "url": "https://www.nist.gov/itl/ai-risk-management-framework",
+      "usable_fact": "NIST AI RMF is the AI governance route for trustworthy AI design, development, use, and evaluation."
+    },
+    {
+      "checked_on": "2026-06-28",
+      "claim_boundary": "Payment implementation reference only; live checkout remains disabled until payment review and production setup are complete.",
+      "id": "stripe-go-live",
+      "source_area": "Payments",
+      "source_name": "Stripe go-live checklist",
+      "supports_phases": [
+        18,
+        20
+      ],
+      "url": "https://docs.stripe.com/get-started/checklist/go-live",
+      "usable_fact": "Payment launch must cover live/test mode differences, API keys, live-mode objects, webhooks, edge cases, logging, and duplicate/delayed/out-of-order events."
+    },
+    {
+      "checked_on": "2026-06-28",
+      "claim_boundary": "Privacy design input only; legal/privacy approval requires qualified review for the product and data flows.",
+      "id": "opc-pipeda-principles",
+      "source_area": "Privacy",
+      "source_name": "Office of the Privacy Commissioner of Canada PIPEDA principles",
+      "supports_phases": [
+        19,
+        20
+      ],
+      "url": "https://www.priv.gc.ca/en/privacy-topics/privacy-laws-in-canada/the-personal-information-protection-and-electronic-documents-act-pipeda/",
+      "usable_fact": "Canada privacy governance should account for accountability, purpose identification, consent, limiting collection/use/retention, safeguards, openness, access, and challenge rights."
+    },
+    {
+      "checked_on": "2026-06-28",
+      "claim_boundary": "Tariff classification and treatment remain blocked until qualified review or authoritative ruling evidence exists.",
+      "id": "cbsa-customs-tariff-2026",
+      "source_area": "Canada tariff orientation",
+      "source_name": "CBSA Canadian Customs Tariff 2026",
+      "supports_phases": [
+        0,
+        1,
+        4,
+        5,
+        7,
+        11
+      ],
+      "url": "https://www.cbsa-asfc.gc.ca/trade-commerce/tariff-tarif/2026/menu-eng.html",
+      "usable_fact": "The Canadian Customs Tariff is the source route for Canadian tariff orientation and HS candidate research."
+    },
+    {
+      "checked_on": "2026-06-28",
+      "claim_boundary": "The product must not act as a customs broker or imply a broker relationship/signoff.",
+      "id": "cbsa-licensed-customs-brokers",
+      "source_area": "Broker boundary",
+      "source_name": "CBSA Licensed Customs Brokers",
+      "supports_phases": [
+        0,
+        7,
+        14
+      ],
+      "url": "https://www.cbsa-asfc.gc.ca/services/cb-cd/cb-cd-eng.html",
+      "usable_fact": "Licensed broker routing is the human-review path for customs broker work and importer responsibility boundaries."
+    },
+    {
+      "checked_on": "2026-06-28",
+      "claim_boundary": "Sanctions screening claims require dated searches and reviewer signoff before action.",
+      "id": "gac-sanctions",
+      "source_area": "Sanctions and restricted countries",
+      "source_name": "Global Affairs Canada sanctions",
+      "supports_phases": [
+        0,
+        5,
+        6,
+        20
+      ],
+      "url": "https://www.international.gc.ca/world-monde/international_relations-relations_internationales/sanctions/index.aspx?lang=eng",
+      "usable_fact": "Global Affairs Canada is the sanctions/restricted-country routing source for Canada-focused screening warnings."
+    },
+    {
+      "checked_on": "2026-06-28",
+      "claim_boundary": "A listed importer is a possible lead only; it is not buyer validation.",
+      "id": "canada-cid",
+      "source_area": "Canadian buyer/importer discovery",
+      "source_name": "Canadian Importers Database",
+      "supports_phases": [
+        4,
+        8
+      ],
+      "url": "https://ised-isde.canada.ca/site/ised/en/research-and-business-intelligence/canadian-importers-database",
+      "usable_fact": "The Canadian Importers Database is a lead-discovery route for companies importing goods into Canada."
+    },
+    {
+      "checked_on": "2026-06-28",
+      "claim_boundary": "India export permission, licensing, incentives, and product-specific compliance require current source review and qualified advice.",
+      "id": "india-dgft-foreign-trade-policy",
+      "source_area": "India exporter origin pack",
+      "source_name": "India Directorate General of Foreign Trade",
+      "supports_phases": [
+        1,
+        5,
+        7
+      ],
+      "url": "https://www.dgft.gov.in/",
+      "usable_fact": "DGFT is the India origin export-policy route for IEC, export/import policy, certificates, SCOMET, trade stats, and export management topics."
+    },
+    {
+      "checked_on": "2026-06-28",
+      "claim_boundary": "Global trade data supports research signals only; it does not prove buyer demand, margin, or compliance.",
+      "id": "world-bank-wits",
+      "source_area": "Global trade data",
+      "source_name": "World Bank World Integrated Trade Solution",
+      "supports_phases": [
+        4
+      ],
+      "url": "https://wits.worldbank.org/",
+      "usable_fact": "WITS is a route for international merchandise trade, tariff, and non-tariff measures data."
+    },
+    {
+      "checked_on": "2026-06-28",
+      "claim_boundary": "Trade Map supports research and lead routing only; it does not validate demand or buyers.",
+      "id": "itc-trade-map",
+      "source_area": "Global trade data",
+      "source_name": "International Trade Centre Trade Map",
+      "supports_phases": [
+        4
+      ],
+      "url": "https://www.trademap.org/",
+      "usable_fact": "Trade Map is a route for import/export values, volumes, growth, market share, and company-directory research."
+    },
+    {
+      "checked_on": "2026-06-28",
+      "claim_boundary": "HS candidate generation is not classification confirmation.",
+      "id": "wco-harmonized-system",
+      "source_area": "HS-code doctrine",
+      "source_name": "World Customs Organization Harmonized System",
+      "supports_phases": [
+        0,
+        1,
+        4,
+        11
+      ],
+      "url": "https://www.wcoomd.org/en/topics/nomenclature/overview/what-is-the-harmonized-system.aspx",
+      "usable_fact": "The HS is the global commodity-description and coding route for HS candidate logic."
+    },
+    {
+      "checked_on": "2026-06-28",
+      "claim_boundary": "Responsibility-path guidance requires user confirmation and, where needed, broker/legal review.",
+      "id": "icc-incoterms-2020",
+      "source_area": "Incoterms and responsibility",
+      "source_name": "ICC Incoterms 2020",
+      "supports_phases": [
+        1,
+        7,
+        12
+      ],
+      "url": "https://iccwbo.org/business-solutions/incoterms-rules/incoterms-2020/",
+      "usable_fact": "Incoterms are the responsibility-path route for tasks, costs, and risks between sellers and buyers."
+    },
+    {
+      "checked_on": "2026-06-28",
+      "claim_boundary": "AI safety controls require implementation evidence and review before real document use.",
+      "id": "owasp-llm01-prompt-injection",
+      "source_area": "AI safety",
+      "source_name": "OWASP GenAI prompt injection guidance",
+      "supports_phases": [
+        13,
+        19
+      ],
+      "url": "https://genai.owasp.org/llmrisk/llm01-prompt-injection/",
+      "usable_fact": "Indirect prompt injection can come from external files or websites and can manipulate outputs, leak information, or affect decisions."
+    }
+  ],
+  "service_boundaries": [
+    {
+      "architecture_choice": "modular_monolith_first",
+      "module_path": "/app/packets",
+      "owns_entities": [
+        "TradeReadinessPacket",
+        "TradeLane",
+        "ProductProfile"
+      ],
+      "responsibilities": [
+        "create packet",
+        "update packet",
+        "export views"
+      ],
+      "service": "Packet service"
+    },
+    {
+      "architecture_choice": "modular_monolith_first",
+      "module_path": "/app/evidence",
+      "owns_entities": [
+        "EvidenceItem",
+        "BlockedClaim"
+      ],
+      "responsibilities": [
+        "evidence ledger",
+        "claim support map"
+      ],
+      "service": "Evidence service"
+    },
+    {
+      "architecture_choice": "modular_monolith_first",
+      "module_path": "/app/documents",
+      "owns_entities": [
+        "Document",
+        "ExtractedField"
+      ],
+      "responsibilities": [
+        "quarantine",
+        "extract",
+        "confirm fields"
+      ],
+      "service": "Document intelligence service"
+    },
+    {
+      "architecture_choice": "modular_monolith_first",
+      "module_path": "/app/sources",
+      "owns_entities": [
+        "SourceRecord",
+        "SourceSnapshot"
+      ],
+      "responsibilities": [
+        "permission check",
+        "snapshot",
+        "diff",
+        "packet stale logic"
+      ],
+      "service": "Source intelligence service"
+    },
+    {
+      "architecture_choice": "modular_monolith_first",
+      "module_path": "/app/market_intelligence",
+      "owns_entities": [
+        "MarketSignal",
+        "OpportunitySignal"
+      ],
+      "responsibilities": [
+        "trade data signal",
+        "market access comparison"
+      ],
+      "service": "Market intelligence service"
+    },
+    {
+      "architecture_choice": "modular_monolith_first",
+      "module_path": "/app/country_packs",
+      "owns_entities": [
+        "CountryPack"
+      ],
+      "responsibilities": [
+        "coverage levels",
+        "source routing"
+      ],
+      "service": "Country-pack service"
+    },
+    {
+      "architecture_choice": "modular_monolith_first",
+      "module_path": "/app/decision_engine",
+      "owns_entities": [
+        "DecisionScore",
+        "BlockedClaim"
+      ],
+      "responsibilities": [
+        "score caps",
+        "safe next moves"
+      ],
+      "service": "Decision/rules engine"
+    },
+    {
+      "architecture_choice": "modular_monolith_first",
+      "module_path": "/app/ai",
+      "owns_entities": [
+        "AuditEvent",
+        "EvidenceItem"
+      ],
+      "responsibilities": [
+        "safe summary",
+        "draft extraction",
+        "review work order"
+      ],
+      "service": "AI orchestration service"
+    },
+    {
+      "architecture_choice": "modular_monolith_first",
+      "module_path": "/app/reviews",
+      "owns_entities": [
+        "ReviewerLane",
+        "ReviewRequest",
+        "ReviewFinding"
+      ],
+      "responsibilities": [
+        "queue",
+        "finding submission",
+        "claim gate update"
+      ],
+      "service": "Expert review service"
+    },
+    {
+      "architecture_choice": "modular_monolith_first",
+      "module_path": "/app/reports",
+      "owns_entities": [
+        "Report"
+      ],
+      "responsibilities": [
+        "HTML preview",
+        "PDF export",
+        "JSON export"
+      ],
+      "service": "Report generation service"
+    },
+    {
+      "architecture_choice": "modular_monolith_first",
+      "module_path": "/app/billing",
+      "owns_entities": [
+        "BillingAccount",
+        "Subscription",
+        "UsageRecord"
+      ],
+      "responsibilities": [
+        "quote",
+        "entitlement",
+        "usage reservation"
+      ],
+      "service": "Billing/entitlement service"
+    },
+    {
+      "architecture_choice": "modular_monolith_first",
+      "module_path": "/app/audit",
+      "owns_entities": [
+        "AuditEvent"
+      ],
+      "responsibilities": [
+        "audit trail",
+        "retention",
+        "incident export"
+      ],
+      "service": "Audit/compliance service"
+    }
+  ],
+  "service_boundary_count": 12,
+  "status": "production_redevelopment_contract_ready_with_external_build_gates"
+}

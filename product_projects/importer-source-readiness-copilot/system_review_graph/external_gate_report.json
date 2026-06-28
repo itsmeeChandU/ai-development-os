@@ -253,6 +253,76 @@
       "id": "india-cbic-customs",
       "name": "India Central Board of Indirect Taxes and Customs",
       "url": "https://www.cbic.gov.in/"
+    },
+    {
+      "accessed_at": "2026-06-28",
+      "claim_boundary": "Reference source only; does not prove sanctions clearance, restricted-party screening, or permission to trade.",
+      "id": "gac-sanctions",
+      "name": "Global Affairs Canada sanctions",
+      "url": "https://www.international.gc.ca/world-monde/international_relations-relations_internationales/sanctions/index.aspx?lang=eng"
+    },
+    {
+      "accessed_at": "2026-06-28",
+      "claim_boundary": "Reference source only; does not prove buyer demand, profitability, market entry approval, or compliance.",
+      "id": "world-bank-wits",
+      "name": "World Bank World Integrated Trade Solution",
+      "url": "https://wits.worldbank.org/"
+    },
+    {
+      "accessed_at": "2026-06-28",
+      "claim_boundary": "Reference source only; company or market rows are research signals and lead routes, not buyer validation or demand proof.",
+      "id": "itc-trade-map",
+      "name": "International Trade Centre Trade Map",
+      "url": "https://www.trademap.org/"
+    },
+    {
+      "accessed_at": "2026-06-28",
+      "claim_boundary": "Reference source only; HS candidates are not tariff classification confirmation.",
+      "id": "wco-harmonized-system",
+      "name": "World Customs Organization Harmonized System",
+      "url": "https://www.wcoomd.org/en/topics/nomenclature/overview/what-is-the-harmonized-system.aspx"
+    },
+    {
+      "accessed_at": "2026-06-28",
+      "claim_boundary": "Reference source only; responsibility guidance requires user confirmation and qualified review where legal or contract interpretation is needed.",
+      "id": "icc-incoterms-2020",
+      "name": "ICC Incoterms 2020",
+      "url": "https://iccwbo.org/business-solutions/incoterms-rules/incoterms-2020/"
+    },
+    {
+      "accessed_at": "2026-06-28",
+      "claim_boundary": "Reference source only; does not prove privacy compliance, legal approval, or production data-processing readiness.",
+      "id": "opc-pipeda-principles",
+      "name": "Office of the Privacy Commissioner of Canada PIPEDA principles",
+      "url": "https://www.priv.gc.ca/en/privacy-topics/privacy-laws-in-canada/the-personal-information-protection-and-electronic-documents-act-pipeda/"
+    },
+    {
+      "accessed_at": "2026-06-28",
+      "claim_boundary": "Reference source only; hosted upload readiness requires product-specific security controls, scans, storage isolation, and review evidence.",
+      "id": "owasp-file-upload",
+      "name": "OWASP File Upload Cheat Sheet",
+      "url": "https://cheatsheetseries.owasp.org/cheatsheets/File_Upload_Cheat_Sheet.html"
+    },
+    {
+      "accessed_at": "2026-06-28",
+      "claim_boundary": "Reference source only; does not prove AI safety, document safety, or model-output reliability.",
+      "id": "owasp-llm01-prompt-injection",
+      "name": "OWASP GenAI prompt injection guidance",
+      "url": "https://genai.owasp.org/llmrisk/llm01-prompt-injection/"
+    },
+    {
+      "accessed_at": "2026-06-28",
+      "claim_boundary": "Reference source only; does not certify the product or authorize AI to open compliance, customs, payment, privacy, or launch gates.",
+      "id": "nist-ai-rmf",
+      "name": "NIST AI Risk Management Framework",
+      "url": "https://www.nist.gov/itl/ai-risk-management-framework"
+    },
+    {
+      "accessed_at": "2026-06-28",
+      "claim_boundary": "Reference source only; does not prove live payment readiness, tax review, refund/support readiness, webhook safety, or secure key handling.",
+      "id": "stripe-go-live",
+      "name": "Stripe go-live checklist",
+      "url": "https://docs.stripe.com/get-started/checklist/go-live"
     }
   ],
   "proof_boundary": "This report proves the local product can route external gates. It does not prove legal, customs, tariff, supplier, buyer, logistics, or launch readiness.",

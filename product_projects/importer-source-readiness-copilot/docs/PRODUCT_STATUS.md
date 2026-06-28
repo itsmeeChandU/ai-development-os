@@ -25,6 +25,12 @@ It now also writes completion-stage contracts for opportunity scanning,
 country coverage tiers, transport readiness, billing/credit controls, agent
 API rules, traffic-first checklist pages, research execution, expert network,
 team workspace, local agent gateway, billing usage, and launch operations.
+It also writes the production redevelopment contract:
+`system_review_graph/production_redevelopment_plan.json`,
+`system_review_graph/production_research_anchors.json`, and
+`docs/PRODUCTION_REDEVELOPMENT.md`. That contract converts the full-scale
+plan into 14 production layers and phases 0-20, with build, research, source,
+evidence, and gate tracks for every phase.
 Those stages are backed by an executable local operations engine in
 `src/importer_source_readiness/product_operations.py` and
 `scripts/run_product_operations.py`. The engine creates/updates packet intake
@@ -107,6 +113,11 @@ security/privacy/human review gates are completed.
 - billing usage ledger with local reservations and no live charges
 - agent API gateway with local executor and no external effects
 - launch operations controls and local launch-control event records
+- production redevelopment contract with phases 0-20 and permanent
+  research/source/evidence/gate tracks
+- production research anchor registry for CBSA, CFIA, Global Affairs Canada,
+  ISED, DGFT, WITS, ITC, WCO, ICC, OPC/PIPEDA, OWASP, NIST, and Stripe source
+  routing
 - evidence ledger with proof boundaries
 - blocked-safe customer readiness report
 - source-packet export routes
@@ -170,6 +181,23 @@ launch approval, production deployment approval, legal advice, financial advice,
 customs/tariff advice, CFIA compliance approval, buyer validation, or revenue
 proof. The AI-built system has completed simulated expert review lanes and
 keeps real human approvals explicit.
+
+## Ready For Production Redevelopment Execution
+
+- redevelopment status:
+  `production_redevelopment_contract_ready_with_external_build_gates`
+- production layers: 14
+- redevelopment phases: 21, including phase 0 through phase 20
+- permanent source anchors: 18 dated source routes
+- machine plan: `system_review_graph/production_redevelopment_plan.json`
+- source map: `system_review_graph/production_research_anchors.json`
+- reviewer-readable plan: `docs/PRODUCTION_REDEVELOPMENT.md`
+- proof command: `python3 scripts/run_production_redevelopment.py`
+
+This means the full-scale rebuild is specified and source-backed. It does not
+mean production deployment is complete, live payments are active, real users
+have validated the product, a customs/trade expert has approved it, or public
+launch is approved.
 
 ## Ready For Internal Source-Packet Review
 

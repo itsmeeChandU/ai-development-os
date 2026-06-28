@@ -548,6 +548,15 @@
             "name": "Global Affairs Canada Consolidated Canadian Autonomous Sanctions List",
             "source_id": "canada-sanctions",
             "url": "https://www.international.gc.ca/world-monde/international_relations-relations_internationales/sanctions/consolidated-consolide.aspx?lang=eng"
+          },
+          {
+            "accessed_at": "2026-06-28",
+            "claim_boundary": "Reference source only; does not prove sanctions clearance, restricted-party screening, or permission to trade.",
+            "evidence_role": "sanctions and restricted-country routing",
+            "jurisdiction": "Canada",
+            "name": "Global Affairs Canada sanctions",
+            "source_id": "gac-sanctions",
+            "url": "https://www.international.gc.ca/world-monde/international_relations-relations_internationales/sanctions/index.aspx?lang=eng"
           }
         ],
         "import_sources": [
@@ -678,9 +687,18 @@
             "name": "Global Affairs Canada Consolidated Canadian Autonomous Sanctions List",
             "source_id": "canada-sanctions",
             "url": "https://www.international.gc.ca/world-monde/international_relations-relations_internationales/sanctions/consolidated-consolide.aspx?lang=eng"
+          },
+          {
+            "accessed_at": "2026-06-28",
+            "claim_boundary": "Reference source only; does not prove sanctions clearance, restricted-party screening, or permission to trade.",
+            "evidence_role": "sanctions and restricted-country routing",
+            "jurisdiction": "Canada",
+            "name": "Global Affairs Canada sanctions",
+            "source_id": "gac-sanctions",
+            "url": "https://www.international.gc.ca/world-monde/international_relations-relations_internationales/sanctions/index.aspx?lang=eng"
           }
         ],
-        "source_count": 10,
+        "source_count": 12,
         "status": "country_pack_ready_reference_only",
         "tariff_sources": [
           {
@@ -1204,10 +1222,10 @@
       ],
       "competitor_source_countries": [
         "Vietnam",
-        "Mexico",
+        "China",
         "United States",
         "European Union",
-        "China"
+        "Mexico"
       ],
       "destination": "Canada",
       "exporter_origin": "Vietnam",
@@ -1238,6 +1256,24 @@
           "name": "India Central Board of Indirect Taxes and Customs",
           "source_id": "india-cbic-customs",
           "url": "https://www.cbic.gov.in/"
+        },
+        {
+          "accessed_at": "2026-06-28",
+          "claim_boundary": "Reference source only; does not prove buyer demand, profitability, market entry approval, or compliance.",
+          "evidence_role": "global trade, tariff, and non-tariff-measure research source",
+          "jurisdiction": "International",
+          "name": "World Bank World Integrated Trade Solution",
+          "source_id": "world-bank-wits",
+          "url": "https://wits.worldbank.org/"
+        },
+        {
+          "accessed_at": "2026-06-28",
+          "claim_boundary": "Reference source only; HS candidates are not tariff classification confirmation.",
+          "evidence_role": "HS-code structure and commodity-classification doctrine source",
+          "jurisdiction": "International",
+          "name": "World Customs Organization Harmonized System",
+          "source_id": "wco-harmonized-system",
+          "url": "https://www.wcoomd.org/en/topics/nomenclature/overview/what-is-the-harmonized-system.aspx"
         }
       ],
       "status": "research_required_not_preference_claim"
@@ -1427,7 +1463,7 @@
       "user sees recheck required",
       "old output remains blocked until refreshed evidence and review are attached"
     ],
-    "source_count": 11,
+    "source_count": 20,
     "sources": [
       {
         "accessed_at": "2026-06-25",
@@ -1835,6 +1871,339 @@
         "source_type": "tariff_or_market_access",
         "terms_status": "must_check_before_fetch",
         "url": "https://www.macmap.org/"
+      },
+      {
+        "accessed_at": "2026-06-28",
+        "auth_required": "unknown_until_source_review",
+        "cadence": "before_packet_decision_or_when_source_changes",
+        "canonical_url": "https://www.international.gc.ca/world-monde/international_relations-relations_internationales/sanctions/index.aspx?lang=eng",
+        "claim_boundary": "Reference source only; does not prove sanctions clearance, restricted-party screening, or permission to trade.",
+        "content_hash": "",
+        "content_hash_required": true,
+        "diff_classifier": [
+          "wording_change",
+          "date_change",
+          "tariff_or_regulatory_change",
+          "source_unavailable"
+        ],
+        "diff_strategy": "hash_then_classify_material_change_before_claim_update",
+        "evidence_role": "sanctions and restricted-country routing",
+        "fetch_mode": "registered_reference_manual_refresh",
+        "freshness_status": "not_checked",
+        "jurisdiction": "Canada",
+        "name": "Global Affairs Canada sanctions",
+        "packet_impact_logic": "critical source changes mark affected packet outputs stale until refreshed evidence and reviewer review are attached",
+        "packet_stale_alert": "create stale-source blocker if source content changes or freshness expires",
+        "packet_tags": [
+          "packet-frozen-tuna-canada-001",
+          "Vietnam",
+          "Canada",
+          "food_import"
+        ],
+        "parser_contract": "extract date/status/hash and classify change type before packet impact",
+        "parser_type": "metadata_hash_or_structured_export_when_allowed",
+        "refresh_method": "manual_or_permitted_fetch_after_terms_check",
+        "robots_status": "must_check_before_fetch",
+        "source_id": "gac-sanctions",
+        "source_type": "restricted_party_or_control",
+        "terms_status": "must_check_before_fetch",
+        "url": "https://www.international.gc.ca/world-monde/international_relations-relations_internationales/sanctions/index.aspx?lang=eng"
+      },
+      {
+        "accessed_at": "2026-06-28",
+        "auth_required": "unknown_until_source_review",
+        "cadence": "before_packet_decision_or_when_source_changes",
+        "canonical_url": "https://wits.worldbank.org/",
+        "claim_boundary": "Reference source only; does not prove buyer demand, profitability, market entry approval, or compliance.",
+        "content_hash": "",
+        "content_hash_required": true,
+        "diff_classifier": [
+          "wording_change",
+          "date_change",
+          "tariff_or_regulatory_change",
+          "source_unavailable"
+        ],
+        "diff_strategy": "hash_then_classify_material_change_before_claim_update",
+        "evidence_role": "global trade, tariff, and non-tariff-measure research source",
+        "fetch_mode": "registered_reference_manual_refresh",
+        "freshness_status": "not_checked",
+        "jurisdiction": "International",
+        "name": "World Bank World Integrated Trade Solution",
+        "packet_impact_logic": "critical source changes mark affected packet outputs stale until refreshed evidence and reviewer review are attached",
+        "packet_stale_alert": "create stale-source blocker if source content changes or freshness expires",
+        "packet_tags": [
+          "packet-frozen-tuna-canada-001",
+          "Vietnam",
+          "Canada",
+          "food_import"
+        ],
+        "parser_contract": "extract date/status/hash and classify change type before packet impact",
+        "parser_type": "metadata_hash_or_structured_export_when_allowed",
+        "refresh_method": "manual_or_permitted_fetch_after_terms_check",
+        "robots_status": "must_check_before_fetch",
+        "source_id": "world-bank-wits",
+        "source_type": "tariff_or_market_access",
+        "terms_status": "must_check_before_fetch",
+        "url": "https://wits.worldbank.org/"
+      },
+      {
+        "accessed_at": "2026-06-28",
+        "auth_required": "unknown_until_source_review",
+        "cadence": "before_packet_decision_or_when_source_changes",
+        "canonical_url": "https://www.trademap.org/",
+        "claim_boundary": "Reference source only; company or market rows are research signals and lead routes, not buyer validation or demand proof.",
+        "content_hash": "",
+        "content_hash_required": true,
+        "diff_classifier": [
+          "wording_change",
+          "date_change",
+          "tariff_or_regulatory_change",
+          "source_unavailable"
+        ],
+        "diff_strategy": "hash_then_classify_material_change_before_claim_update",
+        "evidence_role": "global import/export values, volumes, growth, market-share, and company-directory research source",
+        "fetch_mode": "registered_reference_manual_refresh",
+        "freshness_status": "not_checked",
+        "jurisdiction": "International",
+        "name": "International Trade Centre Trade Map",
+        "packet_impact_logic": "critical source changes mark affected packet outputs stale until refreshed evidence and reviewer review are attached",
+        "packet_stale_alert": "create stale-source blocker if source content changes or freshness expires",
+        "packet_tags": [
+          "packet-frozen-tuna-canada-001",
+          "Vietnam",
+          "Canada",
+          "food_import"
+        ],
+        "parser_contract": "extract date/status/hash and classify change type before packet impact",
+        "parser_type": "metadata_hash_or_structured_export_when_allowed",
+        "refresh_method": "manual_or_permitted_fetch_after_terms_check",
+        "robots_status": "must_check_before_fetch",
+        "source_id": "itc-trade-map",
+        "source_type": "official_reference",
+        "terms_status": "must_check_before_fetch",
+        "url": "https://www.trademap.org/"
+      },
+      {
+        "accessed_at": "2026-06-28",
+        "auth_required": "unknown_until_source_review",
+        "cadence": "before_packet_decision_or_when_source_changes",
+        "canonical_url": "https://www.wcoomd.org/en/topics/nomenclature/overview/what-is-the-harmonized-system.aspx",
+        "claim_boundary": "Reference source only; HS candidates are not tariff classification confirmation.",
+        "content_hash": "",
+        "content_hash_required": true,
+        "diff_classifier": [
+          "wording_change",
+          "date_change",
+          "tariff_or_regulatory_change",
+          "source_unavailable"
+        ],
+        "diff_strategy": "hash_then_classify_material_change_before_claim_update",
+        "evidence_role": "HS-code structure and commodity-classification doctrine source",
+        "fetch_mode": "registered_reference_manual_refresh",
+        "freshness_status": "not_checked",
+        "jurisdiction": "International",
+        "name": "World Customs Organization Harmonized System",
+        "packet_impact_logic": "critical source changes mark affected packet outputs stale until refreshed evidence and reviewer review are attached",
+        "packet_stale_alert": "create stale-source blocker if source content changes or freshness expires",
+        "packet_tags": [
+          "packet-frozen-tuna-canada-001",
+          "Vietnam",
+          "Canada",
+          "food_import"
+        ],
+        "parser_contract": "extract date/status/hash and classify change type before packet impact",
+        "parser_type": "metadata_hash_or_structured_export_when_allowed",
+        "refresh_method": "manual_or_permitted_fetch_after_terms_check",
+        "robots_status": "must_check_before_fetch",
+        "source_id": "wco-harmonized-system",
+        "source_type": "tariff_or_market_access",
+        "terms_status": "must_check_before_fetch",
+        "url": "https://www.wcoomd.org/en/topics/nomenclature/overview/what-is-the-harmonized-system.aspx"
+      },
+      {
+        "accessed_at": "2026-06-28",
+        "auth_required": "unknown_until_source_review",
+        "cadence": "before_packet_decision_or_when_source_changes",
+        "canonical_url": "https://iccwbo.org/business-solutions/incoterms-rules/incoterms-2020/",
+        "claim_boundary": "Reference source only; responsibility guidance requires user confirmation and qualified review where legal or contract interpretation is needed.",
+        "content_hash": "",
+        "content_hash_required": true,
+        "diff_classifier": [
+          "wording_change",
+          "date_change",
+          "tariff_or_regulatory_change",
+          "source_unavailable"
+        ],
+        "diff_strategy": "hash_then_classify_material_change_before_claim_update",
+        "evidence_role": "buyer/seller responsibility, task, cost, and risk allocation source",
+        "fetch_mode": "registered_reference_manual_refresh",
+        "freshness_status": "not_checked",
+        "jurisdiction": "International",
+        "name": "ICC Incoterms 2020",
+        "packet_impact_logic": "critical source changes mark affected packet outputs stale until refreshed evidence and reviewer review are attached",
+        "packet_stale_alert": "create stale-source blocker if source content changes or freshness expires",
+        "packet_tags": [
+          "packet-frozen-tuna-canada-001",
+          "Vietnam",
+          "Canada",
+          "food_import"
+        ],
+        "parser_contract": "extract date/status/hash and classify change type before packet impact",
+        "parser_type": "metadata_hash_or_structured_export_when_allowed",
+        "refresh_method": "manual_or_permitted_fetch_after_terms_check",
+        "robots_status": "must_check_before_fetch",
+        "source_id": "icc-incoterms-2020",
+        "source_type": "official_reference",
+        "terms_status": "must_check_before_fetch",
+        "url": "https://iccwbo.org/business-solutions/incoterms-rules/incoterms-2020/"
+      },
+      {
+        "accessed_at": "2026-06-28",
+        "auth_required": "unknown_until_source_review",
+        "cadence": "before_packet_decision_or_when_source_changes",
+        "canonical_url": "https://www.priv.gc.ca/en/privacy-topics/privacy-laws-in-canada/the-personal-information-protection-and-electronic-documents-act-pipeda/",
+        "claim_boundary": "Reference source only; does not prove privacy compliance, legal approval, or production data-processing readiness.",
+        "content_hash": "",
+        "content_hash_required": true,
+        "diff_classifier": [
+          "wording_change",
+          "date_change",
+          "tariff_or_regulatory_change",
+          "source_unavailable"
+        ],
+        "diff_strategy": "hash_then_classify_material_change_before_claim_update",
+        "evidence_role": "privacy notice, consent, retention, deletion, safeguards, and access-rights design source",
+        "fetch_mode": "registered_reference_manual_refresh",
+        "freshness_status": "not_checked",
+        "jurisdiction": "Canada",
+        "name": "Office of the Privacy Commissioner of Canada PIPEDA principles",
+        "packet_impact_logic": "critical source changes mark affected packet outputs stale until refreshed evidence and reviewer review are attached",
+        "packet_stale_alert": "create stale-source blocker if source content changes or freshness expires",
+        "packet_tags": [
+          "packet-frozen-tuna-canada-001",
+          "Vietnam",
+          "Canada",
+          "food_import"
+        ],
+        "parser_contract": "extract date/status/hash and classify change type before packet impact",
+        "parser_type": "metadata_hash_or_structured_export_when_allowed",
+        "refresh_method": "manual_or_permitted_fetch_after_terms_check",
+        "robots_status": "must_check_before_fetch",
+        "source_id": "opc-pipeda-principles",
+        "source_type": "official_reference",
+        "terms_status": "must_check_before_fetch",
+        "url": "https://www.priv.gc.ca/en/privacy-topics/privacy-laws-in-canada/the-personal-information-protection-and-electronic-documents-act-pipeda/"
+      },
+      {
+        "accessed_at": "2026-06-28",
+        "auth_required": "unknown_until_source_review",
+        "cadence": "before_packet_decision_or_when_source_changes",
+        "canonical_url": "https://cheatsheetseries.owasp.org/cheatsheets/File_Upload_Cheat_Sheet.html",
+        "claim_boundary": "Reference source only; hosted upload readiness requires product-specific security controls, scans, storage isolation, and review evidence.",
+        "content_hash": "",
+        "content_hash_required": true,
+        "diff_classifier": [
+          "wording_change",
+          "date_change",
+          "tariff_or_regulatory_change",
+          "source_unavailable"
+        ],
+        "diff_strategy": "hash_then_classify_material_change_before_claim_update",
+        "evidence_role": "secure upload architecture and file-handling control source",
+        "fetch_mode": "registered_reference_manual_refresh",
+        "freshness_status": "not_checked",
+        "jurisdiction": "International",
+        "name": "OWASP File Upload Cheat Sheet",
+        "packet_impact_logic": "critical source changes mark affected packet outputs stale until refreshed evidence and reviewer review are attached",
+        "packet_stale_alert": "create stale-source blocker if source content changes or freshness expires",
+        "packet_tags": [
+          "packet-frozen-tuna-canada-001",
+          "Vietnam",
+          "Canada",
+          "food_import"
+        ],
+        "parser_contract": "extract date/status/hash and classify change type before packet impact",
+        "parser_type": "metadata_hash_or_structured_export_when_allowed",
+        "refresh_method": "manual_or_permitted_fetch_after_terms_check",
+        "robots_status": "must_check_before_fetch",
+        "source_id": "owasp-file-upload",
+        "source_type": "official_reference",
+        "terms_status": "must_check_before_fetch",
+        "url": "https://cheatsheetseries.owasp.org/cheatsheets/File_Upload_Cheat_Sheet.html"
+      },
+      {
+        "accessed_at": "2026-06-28",
+        "auth_required": "unknown_until_source_review",
+        "cadence": "before_packet_decision_or_when_source_changes",
+        "canonical_url": "https://genai.owasp.org/llmrisk/llm01-prompt-injection/",
+        "claim_boundary": "Reference source only; does not prove AI safety, document safety, or model-output reliability.",
+        "content_hash": "",
+        "content_hash_required": true,
+        "diff_classifier": [
+          "wording_change",
+          "date_change",
+          "tariff_or_regulatory_change",
+          "source_unavailable"
+        ],
+        "diff_strategy": "hash_then_classify_material_change_before_claim_update",
+        "evidence_role": "AI prompt-injection and external-content risk source",
+        "fetch_mode": "registered_reference_manual_refresh",
+        "freshness_status": "not_checked",
+        "jurisdiction": "International",
+        "name": "OWASP GenAI prompt injection guidance",
+        "packet_impact_logic": "critical source changes mark affected packet outputs stale until refreshed evidence and reviewer review are attached",
+        "packet_stale_alert": "create stale-source blocker if source content changes or freshness expires",
+        "packet_tags": [
+          "packet-frozen-tuna-canada-001",
+          "Vietnam",
+          "Canada",
+          "food_import"
+        ],
+        "parser_contract": "extract date/status/hash and classify change type before packet impact",
+        "parser_type": "metadata_hash_or_structured_export_when_allowed",
+        "refresh_method": "manual_or_permitted_fetch_after_terms_check",
+        "robots_status": "must_check_before_fetch",
+        "source_id": "owasp-llm01-prompt-injection",
+        "source_type": "official_reference",
+        "terms_status": "must_check_before_fetch",
+        "url": "https://genai.owasp.org/llmrisk/llm01-prompt-injection/"
+      },
+      {
+        "accessed_at": "2026-06-28",
+        "auth_required": "unknown_until_source_review",
+        "cadence": "before_packet_decision_or_when_source_changes",
+        "canonical_url": "https://docs.stripe.com/get-started/checklist/go-live",
+        "claim_boundary": "Reference source only; does not prove live payment readiness, tax review, refund/support readiness, webhook safety, or secure key handling.",
+        "content_hash": "",
+        "content_hash_required": true,
+        "diff_classifier": [
+          "wording_change",
+          "date_change",
+          "tariff_or_regulatory_change",
+          "source_unavailable"
+        ],
+        "diff_strategy": "hash_then_classify_material_change_before_claim_update",
+        "evidence_role": "live payment launch checklist source",
+        "fetch_mode": "registered_reference_manual_refresh",
+        "freshness_status": "not_checked",
+        "jurisdiction": "International",
+        "name": "Stripe go-live checklist",
+        "packet_impact_logic": "critical source changes mark affected packet outputs stale until refreshed evidence and reviewer review are attached",
+        "packet_stale_alert": "create stale-source blocker if source content changes or freshness expires",
+        "packet_tags": [
+          "packet-frozen-tuna-canada-001",
+          "Vietnam",
+          "Canada",
+          "food_import"
+        ],
+        "parser_contract": "extract date/status/hash and classify change type before packet impact",
+        "parser_type": "metadata_hash_or_structured_export_when_allowed",
+        "refresh_method": "manual_or_permitted_fetch_after_terms_check",
+        "robots_status": "must_check_before_fetch",
+        "source_id": "stripe-go-live",
+        "source_type": "official_reference",
+        "terms_status": "must_check_before_fetch",
+        "url": "https://docs.stripe.com/get-started/checklist/go-live"
       }
     ],
     "status": "source_monitoring_contract_ready_no_live_fetch_claim"

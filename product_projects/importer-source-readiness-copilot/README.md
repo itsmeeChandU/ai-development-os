@@ -66,6 +66,7 @@ python3 scripts/export_operator_dashboard.py
 python3 scripts/build_external_review_packet.py
 python3 scripts/run_external_validation_requirements.py
 python3 scripts/run_external_validation_requirements.py --input-dir external_inputs
+python3 scripts/run_production_redevelopment.py
 python3 scripts/audit_external_package.py --root .
 python3 scripts/check_product.py
 ```
@@ -115,12 +116,15 @@ system_review_graph/external_validation_requirements_report.json
 system_review_graph/external_validation_evidence_requirements.json
 system_review_graph/go_live_input_templates.json
 system_review_graph/go_live_input_readiness_report.json
+system_review_graph/production_redevelopment_plan.json
+system_review_graph/production_research_anchors.json
 external_review_findings/EXTERNAL_REVIEW_SUMMARY.json
 EXTERNAL_REVIEW_SUMMARY.md
 docs/EXTERNAL_REVIEW_PROCESS.md
 docs/EXTERNAL_VALIDATION_REQUIREMENTS.md
 docs/EXTERNAL_VALIDATION_REVIEWER_BRIEF.md
 docs/GO_LIVE_INPUT_REQUESTS.md
+docs/PRODUCTION_REDEVELOPMENT.md
 output/pdf/external_validation_reviewer_brief.pdf
 output/pdf/external_validation_requirements.pdf
 output/pdf/go_live_input_requests.pdf
@@ -207,6 +211,18 @@ review lanes, plus a Canadian tool registry and launch controls. It still
 requires human approval before public launch, production deployment,
 legal/financial/customs/tariff/CFIA claims, buyer validation, or spend
 commitments.
+
+The expected production redevelopment status is:
+
+```text
+production_redevelopment_contract_ready_with_external_build_gates
+```
+
+That means the full-scale rebuild has a machine-checkable contract: 14
+production layers, phases 0-20, and build/research/source/evidence/gate tracks
+for every phase. It still does not prove production deployment, legal/privacy
+approval, security approval, customs/trade approval, live payment activation,
+real buyer/supplier validation, real user outcomes, or public go/no-go approval.
 
 The expected customer source-packet status is:
 

@@ -1,7 +1,7 @@
 # No Scaffold Audit Report
 
 Status: `pass_no_scaffold_completion_claims`
-Head: `ceb6101ba82bf0ac809155fc8521d04fccd69623`
+Head: `78a5f214b97d6b23b9d524710359af8f334bb7fb`
 Policy: `docs/NO_SCAFFOLD_DELIVERY_POLICY.md`
 
 ## Prior Delivery Audit
@@ -27,7 +27,7 @@ Verdict: Prior delivery produced a real audit/evaluator package and shareable re
 
 ## Scan Summary
 
-- Scanned files: `2554`
+- Scanned files: `2560`
 - Scaffold-like findings: `514`
 - Disallowed findings: `0`
 

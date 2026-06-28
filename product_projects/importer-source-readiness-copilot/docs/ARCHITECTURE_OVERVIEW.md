@@ -23,6 +23,7 @@ src/importer_source_readiness/operator_screenshots.py
 src/importer_source_readiness/document_processing.py
 src/importer_source_readiness/policy_intelligence.py
 src/importer_source_readiness/completion_platform.py
+src/importer_source_readiness/production_redevelopment.py
         |
         v
 system_review_graph/readiness_report.json
@@ -45,6 +46,9 @@ system_review_graph/transport_readiness_report.json
 system_review_graph/billing_credit_controls.json
 system_review_graph/agent_api_manifest.json
 system_review_graph/traffic_pages_manifest.json
+system_review_graph/production_redevelopment_plan.json
+system_review_graph/production_research_anchors.json
+docs/PRODUCTION_REDEVELOPMENT.md
 investor/*.md
 board/*.md
 ```
@@ -71,6 +75,7 @@ board/*.md
 | `src/importer_source_readiness/document_processing.py` | triage public PDF uploads, native text extraction, OCR decision, hashes, and confirmation requirement |
 | `src/importer_source_readiness/policy_intelligence.py` | database-style Intelligence Hub source monitoring contract, source snapshots, packet impacts, and stale-source blockers |
 | `src/importer_source_readiness/completion_platform.py` | completion-stage contracts for opportunities, country coverage, transport readiness, billing, agent/API, and traffic pages |
+| `src/importer_source_readiness/production_redevelopment.py` | full-scale production redevelopment contract with 14 layers, phases 0-20, research/source/evidence/gate tracks, permanent research entities, and closed external gates |
 | `scripts/run_readiness.py` | CLI entrypoint and report writer |
 | `scripts/run_external_gates.py` | external-gate report writer |
 | `scripts/export_operator_dashboard.py` | dashboard exporter |
@@ -80,6 +85,7 @@ board/*.md
 | `scripts/run_operator_workflow.py` | operator work queue writer |
 | `scripts/run_policy_intelligence.py` | Intelligence Hub policy/source monitor artifact writer |
 | `scripts/run_completion_platform.py` | completion-stage artifact writer |
+| `scripts/run_production_redevelopment.py` | production redevelopment contract and research-anchor writer |
 | `tests/test_readiness.py` | proof for blocked-safe behavior |
 | `tests/test_external_gates.py` | proof for external-gate and dashboard behavior |
 | `tests/test_continuation.py` | proof that externally gated status keeps work in progress |
@@ -87,6 +93,7 @@ board/*.md
 | `tests/test_board_go_live.py` | proof that Canada board/go-live candidate status keeps human approval gates visible |
 | `tests/test_operator_workflow.py` | proof that the product has an operator work queue with Canadian tool references and closed claims |
 | `tests/test_operator_screenshots.py` | proof that screenshot artifacts are indexed and rendered without replacing generated truth |
+| `tests/test_production_redevelopment.py` | proof that every redevelopment phase has build, research, source, evidence, and gate tracks backed by known source IDs |
 | `system_review_graph/` | generated packets, reports, blockers, handoff evidence |
 
 ## Data Flow
@@ -119,6 +126,9 @@ board/*.md
 18. Generate completion-stage platform artifacts for opportunity signals,
     country coverage, transport questions, billing/credit gates, agent/API
     rules, and traffic-first pages.
+19. Generate the production redevelopment contract and research anchors for
+    the full-scale build: 14 production layers, phases 0-20, permanent source
+    registry links, evidence requirements, and launch gates that remain closed.
 
 ## Status Rules
 
@@ -142,6 +152,13 @@ The expected board status is
 implementation can be placed in front of a board for controlled-private-beta
 decisioning. It does not mean public launch, production deployment, customs,
 tariff, CFIA, legal, financial, buyer, revenue, or PMF proof.
+
+The expected production redevelopment status is
+`production_redevelopment_contract_ready_with_external_build_gates`. It means
+the next full-scale build contract exists and every phase has build, research,
+source, evidence, and gate tracks. It does not mean production deployment,
+legal/privacy/security approval, customs/trade approval, live payments, real
+buyer/supplier validation, or public go/no-go approval.
 
 ## Proof Boundary
 

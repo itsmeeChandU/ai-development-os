@@ -13,7 +13,7 @@
     "country/product/HS mapping",
     "packet stale-source blocker routing"
   ],
-  "monitored_source_count": 13,
+  "monitored_source_count": 23,
   "monitored_sources": [
     {
       "accessed_at": "2026-06-25",
@@ -303,6 +303,225 @@
       ],
       "terms_status": "not_checked_local_contract",
       "url": "https://www.cbic.gov.in/"
+    },
+    {
+      "accessed_at": "2026-06-28",
+      "claim_boundary": "Reference source only; does not prove sanctions clearance, restricted-party screening, or permission to trade.",
+      "evidence_role": "sanctions and restricted-country routing",
+      "fetch_cadence": "weekly_for_registry_metadata",
+      "jurisdiction": "CA",
+      "live_fetch_allowed": false,
+      "loader": "intelligence_hub.official_source_registry",
+      "manual_only": false,
+      "name": "Global Affairs Canada sanctions",
+      "permission_boundary": "Local contract only. Check robots, terms, official API/download rules, and qualified source policy before enabling hosted live fetches.",
+      "refresh_mode": "external_refresh_required_before_claims",
+      "robots_status": "not_checked_local_contract",
+      "scheduled_fetch_job": "source-monitor:gac-sanctions:metadata-refresh",
+      "source_id": "gac-sanctions",
+      "tags": [
+        "food_import",
+        "official_reference",
+        "restricted_party_screening"
+      ],
+      "terms_status": "not_checked_local_contract",
+      "url": "https://www.international.gc.ca/world-monde/international_relations-relations_internationales/sanctions/index.aspx?lang=eng"
+    },
+    {
+      "accessed_at": "2026-06-28",
+      "claim_boundary": "Reference source only; does not prove buyer demand, profitability, market entry approval, or compliance.",
+      "evidence_role": "global trade, tariff, and non-tariff-measure research source",
+      "fetch_cadence": "manual_review_before_fetch",
+      "jurisdiction": "International",
+      "live_fetch_allowed": false,
+      "loader": "intelligence_hub.official_source_registry",
+      "manual_only": true,
+      "name": "World Bank World Integrated Trade Solution",
+      "permission_boundary": "Local contract only. Check robots, terms, official API/download rules, and qualified source policy before enabling hosted live fetches.",
+      "refresh_mode": "external_refresh_required_before_claims",
+      "robots_status": "not_checked_local_contract",
+      "scheduled_fetch_job": "source-monitor:world-bank-wits:metadata-refresh",
+      "source_id": "world-bank-wits",
+      "tags": [
+        "buyer_importer_discovery",
+        "official_reference",
+        "tariff"
+      ],
+      "terms_status": "not_checked_local_contract",
+      "url": "https://wits.worldbank.org/"
+    },
+    {
+      "accessed_at": "2026-06-28",
+      "claim_boundary": "Reference source only; company or market rows are research signals and lead routes, not buyer validation or demand proof.",
+      "evidence_role": "global import/export values, volumes, growth, market-share, and company-directory research source",
+      "fetch_cadence": "manual_review_before_fetch",
+      "jurisdiction": "International",
+      "live_fetch_allowed": false,
+      "loader": "intelligence_hub.official_source_registry",
+      "manual_only": true,
+      "name": "International Trade Centre Trade Map",
+      "permission_boundary": "Local contract only. Check robots, terms, official API/download rules, and qualified source policy before enabling hosted live fetches.",
+      "refresh_mode": "external_refresh_required_before_claims",
+      "robots_status": "not_checked_local_contract",
+      "scheduled_fetch_job": "source-monitor:itc-trade-map:metadata-refresh",
+      "source_id": "itc-trade-map",
+      "tags": [
+        "buyer_importer_discovery",
+        "official_reference"
+      ],
+      "terms_status": "not_checked_local_contract",
+      "url": "https://www.trademap.org/"
+    },
+    {
+      "accessed_at": "2026-06-28",
+      "claim_boundary": "Reference source only; HS candidates are not tariff classification confirmation.",
+      "evidence_role": "HS-code structure and commodity-classification doctrine source",
+      "fetch_cadence": "manual_review_before_fetch",
+      "jurisdiction": "International",
+      "live_fetch_allowed": false,
+      "loader": "intelligence_hub.official_source_registry",
+      "manual_only": true,
+      "name": "World Customs Organization Harmonized System",
+      "permission_boundary": "Local contract only. Check robots, terms, official API/download rules, and qualified source policy before enabling hosted live fetches.",
+      "refresh_mode": "external_refresh_required_before_claims",
+      "robots_status": "not_checked_local_contract",
+      "scheduled_fetch_job": "source-monitor:wco-harmonized-system:metadata-refresh",
+      "source_id": "wco-harmonized-system",
+      "tags": [
+        "official_reference",
+        "tariff"
+      ],
+      "terms_status": "not_checked_local_contract",
+      "url": "https://www.wcoomd.org/en/topics/nomenclature/overview/what-is-the-harmonized-system.aspx"
+    },
+    {
+      "accessed_at": "2026-06-28",
+      "claim_boundary": "Reference source only; responsibility guidance requires user confirmation and qualified review where legal or contract interpretation is needed.",
+      "evidence_role": "buyer/seller responsibility, task, cost, and risk allocation source",
+      "fetch_cadence": "manual_review_before_fetch",
+      "jurisdiction": "International",
+      "live_fetch_allowed": false,
+      "loader": "intelligence_hub.official_source_registry",
+      "manual_only": true,
+      "name": "ICC Incoterms 2020",
+      "permission_boundary": "Local contract only. Check robots, terms, official API/download rules, and qualified source policy before enabling hosted live fetches.",
+      "refresh_mode": "external_refresh_required_before_claims",
+      "robots_status": "not_checked_local_contract",
+      "scheduled_fetch_job": "source-monitor:icc-incoterms-2020:metadata-refresh",
+      "source_id": "icc-incoterms-2020",
+      "tags": [
+        "buyer_importer_discovery",
+        "official_reference"
+      ],
+      "terms_status": "not_checked_local_contract",
+      "url": "https://iccwbo.org/business-solutions/incoterms-rules/incoterms-2020/"
+    },
+    {
+      "accessed_at": "2026-06-28",
+      "claim_boundary": "Reference source only; does not prove privacy compliance, legal approval, or production data-processing readiness.",
+      "evidence_role": "privacy notice, consent, retention, deletion, safeguards, and access-rights design source",
+      "fetch_cadence": "weekly_for_registry_metadata",
+      "jurisdiction": "CA",
+      "live_fetch_allowed": false,
+      "loader": "intelligence_hub.official_source_registry",
+      "manual_only": false,
+      "name": "Office of the Privacy Commissioner of Canada PIPEDA principles",
+      "permission_boundary": "Local contract only. Check robots, terms, official API/download rules, and qualified source policy before enabling hosted live fetches.",
+      "refresh_mode": "external_refresh_required_before_claims",
+      "robots_status": "not_checked_local_contract",
+      "scheduled_fetch_job": "source-monitor:opc-pipeda-principles:metadata-refresh",
+      "source_id": "opc-pipeda-principles",
+      "tags": [
+        "official_reference",
+        "trade_data"
+      ],
+      "terms_status": "not_checked_local_contract",
+      "url": "https://www.priv.gc.ca/en/privacy-topics/privacy-laws-in-canada/the-personal-information-protection-and-electronic-documents-act-pipeda/"
+    },
+    {
+      "accessed_at": "2026-06-28",
+      "claim_boundary": "Reference source only; hosted upload readiness requires product-specific security controls, scans, storage isolation, and review evidence.",
+      "evidence_role": "secure upload architecture and file-handling control source",
+      "fetch_cadence": "manual_review_before_fetch",
+      "jurisdiction": "International",
+      "live_fetch_allowed": false,
+      "loader": "intelligence_hub.official_source_registry",
+      "manual_only": true,
+      "name": "OWASP File Upload Cheat Sheet",
+      "permission_boundary": "Local contract only. Check robots, terms, official API/download rules, and qualified source policy before enabling hosted live fetches.",
+      "refresh_mode": "external_refresh_required_before_claims",
+      "robots_status": "not_checked_local_contract",
+      "scheduled_fetch_job": "source-monitor:owasp-file-upload:metadata-refresh",
+      "source_id": "owasp-file-upload",
+      "tags": [
+        "import_controls",
+        "official_reference"
+      ],
+      "terms_status": "not_checked_local_contract",
+      "url": "https://cheatsheetseries.owasp.org/cheatsheets/File_Upload_Cheat_Sheet.html"
+    },
+    {
+      "accessed_at": "2026-06-28",
+      "claim_boundary": "Reference source only; does not prove AI safety, document safety, or model-output reliability.",
+      "evidence_role": "AI prompt-injection and external-content risk source",
+      "fetch_cadence": "manual_review_before_fetch",
+      "jurisdiction": "International",
+      "live_fetch_allowed": false,
+      "loader": "intelligence_hub.official_source_registry",
+      "manual_only": true,
+      "name": "OWASP GenAI prompt injection guidance",
+      "permission_boundary": "Local contract only. Check robots, terms, official API/download rules, and qualified source policy before enabling hosted live fetches.",
+      "refresh_mode": "external_refresh_required_before_claims",
+      "robots_status": "not_checked_local_contract",
+      "scheduled_fetch_job": "source-monitor:owasp-llm01-prompt-injection:metadata-refresh",
+      "source_id": "owasp-llm01-prompt-injection",
+      "tags": [
+        "official_reference"
+      ],
+      "terms_status": "not_checked_local_contract",
+      "url": "https://genai.owasp.org/llmrisk/llm01-prompt-injection/"
+    },
+    {
+      "accessed_at": "2026-06-28",
+      "claim_boundary": "Reference source only; does not certify the product or authorize AI to open compliance, customs, payment, privacy, or launch gates.",
+      "evidence_role": "AI risk-management and trustworthy-AI governance source",
+      "fetch_cadence": "manual_review_before_fetch",
+      "jurisdiction": "US",
+      "live_fetch_allowed": false,
+      "loader": "intelligence_hub.official_source_registry",
+      "manual_only": true,
+      "name": "NIST AI Risk Management Framework",
+      "permission_boundary": "Local contract only. Check robots, terms, official API/download rules, and qualified source policy before enabling hosted live fetches.",
+      "refresh_mode": "external_refresh_required_before_claims",
+      "robots_status": "not_checked_local_contract",
+      "scheduled_fetch_job": "source-monitor:nist-ai-rmf:metadata-refresh",
+      "source_id": "nist-ai-rmf",
+      "tags": [
+        "official_reference"
+      ],
+      "terms_status": "not_checked_local_contract",
+      "url": "https://www.nist.gov/itl/ai-risk-management-framework"
+    },
+    {
+      "accessed_at": "2026-06-28",
+      "claim_boundary": "Reference source only; does not prove live payment readiness, tax review, refund/support readiness, webhook safety, or secure key handling.",
+      "evidence_role": "live payment launch checklist source",
+      "fetch_cadence": "manual_review_before_fetch",
+      "jurisdiction": "International",
+      "live_fetch_allowed": false,
+      "loader": "intelligence_hub.official_source_registry",
+      "manual_only": true,
+      "name": "Stripe go-live checklist",
+      "permission_boundary": "Local contract only. Check robots, terms, official API/download rules, and qualified source policy before enabling hosted live fetches.",
+      "refresh_mode": "external_refresh_required_before_claims",
+      "robots_status": "not_checked_local_contract",
+      "scheduled_fetch_job": "source-monitor:stripe-go-live:metadata-refresh",
+      "source_id": "stripe-go-live",
+      "tags": [
+        "official_reference"
+      ],
+      "terms_status": "not_checked_local_contract",
+      "url": "https://docs.stripe.com/get-started/checklist/go-live"
     }
   ],
   "packet_impact_count": 1,
@@ -319,8 +538,10 @@
         "cbsa-licensed-customs-brokers",
         "cfia-airs",
         "gac-import-controls",
+        "gac-sanctions",
         "ised-trade-data-online",
-        "justice-import-control-list"
+        "justice-import-control-list",
+        "opc-pipeda-principles"
       ],
       "matched_tag_ids": [
         "buyer_importer_discovery",
@@ -468,6 +689,106 @@
       "manual_only": true,
       "next_valid_move": "Review robots/terms/API permissions, then enable the loader in Intelligence Hub with audit logging.",
       "source_id": "india-cbic-customs",
+      "status": "defined_not_enabled"
+    },
+    {
+      "cadence": "weekly_for_registry_metadata",
+      "job_id": "source-monitor:gac-sanctions:metadata-refresh",
+      "jurisdiction": "CA",
+      "live_fetch_allowed": false,
+      "manual_only": false,
+      "next_valid_move": "Review robots/terms/API permissions, then enable the loader in Intelligence Hub with audit logging.",
+      "source_id": "gac-sanctions",
+      "status": "defined_not_enabled"
+    },
+    {
+      "cadence": "manual_review_before_fetch",
+      "job_id": "source-monitor:world-bank-wits:metadata-refresh",
+      "jurisdiction": "International",
+      "live_fetch_allowed": false,
+      "manual_only": true,
+      "next_valid_move": "Review robots/terms/API permissions, then enable the loader in Intelligence Hub with audit logging.",
+      "source_id": "world-bank-wits",
+      "status": "defined_not_enabled"
+    },
+    {
+      "cadence": "manual_review_before_fetch",
+      "job_id": "source-monitor:itc-trade-map:metadata-refresh",
+      "jurisdiction": "International",
+      "live_fetch_allowed": false,
+      "manual_only": true,
+      "next_valid_move": "Review robots/terms/API permissions, then enable the loader in Intelligence Hub with audit logging.",
+      "source_id": "itc-trade-map",
+      "status": "defined_not_enabled"
+    },
+    {
+      "cadence": "manual_review_before_fetch",
+      "job_id": "source-monitor:wco-harmonized-system:metadata-refresh",
+      "jurisdiction": "International",
+      "live_fetch_allowed": false,
+      "manual_only": true,
+      "next_valid_move": "Review robots/terms/API permissions, then enable the loader in Intelligence Hub with audit logging.",
+      "source_id": "wco-harmonized-system",
+      "status": "defined_not_enabled"
+    },
+    {
+      "cadence": "manual_review_before_fetch",
+      "job_id": "source-monitor:icc-incoterms-2020:metadata-refresh",
+      "jurisdiction": "International",
+      "live_fetch_allowed": false,
+      "manual_only": true,
+      "next_valid_move": "Review robots/terms/API permissions, then enable the loader in Intelligence Hub with audit logging.",
+      "source_id": "icc-incoterms-2020",
+      "status": "defined_not_enabled"
+    },
+    {
+      "cadence": "weekly_for_registry_metadata",
+      "job_id": "source-monitor:opc-pipeda-principles:metadata-refresh",
+      "jurisdiction": "CA",
+      "live_fetch_allowed": false,
+      "manual_only": false,
+      "next_valid_move": "Review robots/terms/API permissions, then enable the loader in Intelligence Hub with audit logging.",
+      "source_id": "opc-pipeda-principles",
+      "status": "defined_not_enabled"
+    },
+    {
+      "cadence": "manual_review_before_fetch",
+      "job_id": "source-monitor:owasp-file-upload:metadata-refresh",
+      "jurisdiction": "International",
+      "live_fetch_allowed": false,
+      "manual_only": true,
+      "next_valid_move": "Review robots/terms/API permissions, then enable the loader in Intelligence Hub with audit logging.",
+      "source_id": "owasp-file-upload",
+      "status": "defined_not_enabled"
+    },
+    {
+      "cadence": "manual_review_before_fetch",
+      "job_id": "source-monitor:owasp-llm01-prompt-injection:metadata-refresh",
+      "jurisdiction": "International",
+      "live_fetch_allowed": false,
+      "manual_only": true,
+      "next_valid_move": "Review robots/terms/API permissions, then enable the loader in Intelligence Hub with audit logging.",
+      "source_id": "owasp-llm01-prompt-injection",
+      "status": "defined_not_enabled"
+    },
+    {
+      "cadence": "manual_review_before_fetch",
+      "job_id": "source-monitor:nist-ai-rmf:metadata-refresh",
+      "jurisdiction": "US",
+      "live_fetch_allowed": false,
+      "manual_only": true,
+      "next_valid_move": "Review robots/terms/API permissions, then enable the loader in Intelligence Hub with audit logging.",
+      "source_id": "nist-ai-rmf",
+      "status": "defined_not_enabled"
+    },
+    {
+      "cadence": "manual_review_before_fetch",
+      "job_id": "source-monitor:stripe-go-live:metadata-refresh",
+      "jurisdiction": "International",
+      "live_fetch_allowed": false,
+      "manual_only": true,
+      "next_valid_move": "Review robots/terms/API permissions, then enable the loader in Intelligence Hub with audit logging.",
+      "source_id": "stripe-go-live",
       "status": "defined_not_enabled"
     }
   ],
@@ -669,6 +990,155 @@
       "scheduled_fetch_job": "source-monitor:india-cbic-customs:metadata-refresh",
       "severity": "watch",
       "source_id": "india-cbic-customs"
+    },
+    {
+      "affected_tags": [
+        "food_import",
+        "official_reference",
+        "restricted_party_screening"
+      ],
+      "change_type": "baseline_registered",
+      "classification_id": "classification:gac-sanctions:f46bf617e2e6",
+      "human_review_required": true,
+      "live_fetch_allowed": false,
+      "next_valid_move": "Run the live source loader, compare hashes, classify the diff, and route affected packets for qualified review.",
+      "requires_packet_recheck": true,
+      "scheduled_fetch_job": "source-monitor:gac-sanctions:metadata-refresh",
+      "severity": "watch",
+      "source_id": "gac-sanctions"
+    },
+    {
+      "affected_tags": [
+        "buyer_importer_discovery",
+        "official_reference",
+        "tariff"
+      ],
+      "change_type": "baseline_registered",
+      "classification_id": "classification:world-bank-wits:9178de2c44c0",
+      "human_review_required": true,
+      "live_fetch_allowed": false,
+      "next_valid_move": "Run the live source loader, compare hashes, classify the diff, and route affected packets for qualified review.",
+      "requires_packet_recheck": true,
+      "scheduled_fetch_job": "source-monitor:world-bank-wits:metadata-refresh",
+      "severity": "watch",
+      "source_id": "world-bank-wits"
+    },
+    {
+      "affected_tags": [
+        "buyer_importer_discovery",
+        "official_reference"
+      ],
+      "change_type": "baseline_registered",
+      "classification_id": "classification:itc-trade-map:9b03f9cbe3b1",
+      "human_review_required": true,
+      "live_fetch_allowed": false,
+      "next_valid_move": "Run the live source loader, compare hashes, classify the diff, and route affected packets for qualified review.",
+      "requires_packet_recheck": true,
+      "scheduled_fetch_job": "source-monitor:itc-trade-map:metadata-refresh",
+      "severity": "watch",
+      "source_id": "itc-trade-map"
+    },
+    {
+      "affected_tags": [
+        "official_reference",
+        "tariff"
+      ],
+      "change_type": "baseline_registered",
+      "classification_id": "classification:wco-harmonized-system:9b39e498c3e1",
+      "human_review_required": true,
+      "live_fetch_allowed": false,
+      "next_valid_move": "Run the live source loader, compare hashes, classify the diff, and route affected packets for qualified review.",
+      "requires_packet_recheck": true,
+      "scheduled_fetch_job": "source-monitor:wco-harmonized-system:metadata-refresh",
+      "severity": "watch",
+      "source_id": "wco-harmonized-system"
+    },
+    {
+      "affected_tags": [
+        "buyer_importer_discovery",
+        "official_reference"
+      ],
+      "change_type": "baseline_registered",
+      "classification_id": "classification:icc-incoterms-2020:616f2dba1cc6",
+      "human_review_required": true,
+      "live_fetch_allowed": false,
+      "next_valid_move": "Run the live source loader, compare hashes, classify the diff, and route affected packets for qualified review.",
+      "requires_packet_recheck": true,
+      "scheduled_fetch_job": "source-monitor:icc-incoterms-2020:metadata-refresh",
+      "severity": "watch",
+      "source_id": "icc-incoterms-2020"
+    },
+    {
+      "affected_tags": [
+        "official_reference",
+        "trade_data"
+      ],
+      "change_type": "baseline_registered",
+      "classification_id": "classification:opc-pipeda-principles:67a78b30850f",
+      "human_review_required": true,
+      "live_fetch_allowed": false,
+      "next_valid_move": "Run the live source loader, compare hashes, classify the diff, and route affected packets for qualified review.",
+      "requires_packet_recheck": true,
+      "scheduled_fetch_job": "source-monitor:opc-pipeda-principles:metadata-refresh",
+      "severity": "watch",
+      "source_id": "opc-pipeda-principles"
+    },
+    {
+      "affected_tags": [
+        "import_controls",
+        "official_reference"
+      ],
+      "change_type": "baseline_registered",
+      "classification_id": "classification:owasp-file-upload:a9269581ec39",
+      "human_review_required": true,
+      "live_fetch_allowed": false,
+      "next_valid_move": "Run the live source loader, compare hashes, classify the diff, and route affected packets for qualified review.",
+      "requires_packet_recheck": true,
+      "scheduled_fetch_job": "source-monitor:owasp-file-upload:metadata-refresh",
+      "severity": "watch",
+      "source_id": "owasp-file-upload"
+    },
+    {
+      "affected_tags": [
+        "official_reference"
+      ],
+      "change_type": "baseline_registered",
+      "classification_id": "classification:owasp-llm01-prompt-injection:87441c939ff8",
+      "human_review_required": true,
+      "live_fetch_allowed": false,
+      "next_valid_move": "Run the live source loader, compare hashes, classify the diff, and route affected packets for qualified review.",
+      "requires_packet_recheck": true,
+      "scheduled_fetch_job": "source-monitor:owasp-llm01-prompt-injection:metadata-refresh",
+      "severity": "watch",
+      "source_id": "owasp-llm01-prompt-injection"
+    },
+    {
+      "affected_tags": [
+        "official_reference"
+      ],
+      "change_type": "baseline_registered",
+      "classification_id": "classification:nist-ai-rmf:9904dd6f444d",
+      "human_review_required": true,
+      "live_fetch_allowed": false,
+      "next_valid_move": "Run the live source loader, compare hashes, classify the diff, and route affected packets for qualified review.",
+      "requires_packet_recheck": true,
+      "scheduled_fetch_job": "source-monitor:nist-ai-rmf:metadata-refresh",
+      "severity": "watch",
+      "source_id": "nist-ai-rmf"
+    },
+    {
+      "affected_tags": [
+        "official_reference"
+      ],
+      "change_type": "baseline_registered",
+      "classification_id": "classification:stripe-go-live:9d2991d6b192",
+      "human_review_required": true,
+      "live_fetch_allowed": false,
+      "next_valid_move": "Run the live source loader, compare hashes, classify the diff, and route affected packets for qualified review.",
+      "requires_packet_recheck": true,
+      "scheduled_fetch_job": "source-monitor:stripe-go-live:metadata-refresh",
+      "severity": "watch",
+      "source_id": "stripe-go-live"
     }
   ],
   "source_snapshots": [
@@ -879,6 +1349,166 @@
       "source_id": "india-cbic-customs",
       "terms_status": "not_checked_local_contract",
       "url": "https://www.cbic.gov.in/"
+    },
+    {
+      "content_mode": "registry_metadata_only",
+      "fetch_cadence": "weekly_for_registry_metadata",
+      "freshness_status": "monitoring_contract_ready_requires_live_refresh",
+      "live_fetch_performed": false,
+      "manual_only": false,
+      "observed_at": "2026-06-25T00:00:00+00:00",
+      "proof_boundary": "Registry metadata proves which source to monitor, not current legal or compliance truth.",
+      "rights_status": "official_reference_url_only",
+      "robots_status": "not_checked_local_contract",
+      "snapshot_hash": "f46bf617e2e60d2b8dc07f9910a34e9137f9b5416780976d0ca006511890e86b",
+      "snapshot_id": "snapshot:gac-sanctions:f46bf617e2e6",
+      "source_id": "gac-sanctions",
+      "terms_status": "not_checked_local_contract",
+      "url": "https://www.international.gc.ca/world-monde/international_relations-relations_internationales/sanctions/index.aspx?lang=eng"
+    },
+    {
+      "content_mode": "registry_metadata_only",
+      "fetch_cadence": "manual_review_before_fetch",
+      "freshness_status": "monitoring_contract_ready_requires_live_refresh",
+      "live_fetch_performed": false,
+      "manual_only": true,
+      "observed_at": "2026-06-25T00:00:00+00:00",
+      "proof_boundary": "Registry metadata proves which source to monitor, not current legal or compliance truth.",
+      "rights_status": "official_reference_url_only",
+      "robots_status": "not_checked_local_contract",
+      "snapshot_hash": "9178de2c44c0ae6ff985e8ca35ef584e54aa8cd054b03fd55288fc750cf5c572",
+      "snapshot_id": "snapshot:world-bank-wits:9178de2c44c0",
+      "source_id": "world-bank-wits",
+      "terms_status": "not_checked_local_contract",
+      "url": "https://wits.worldbank.org/"
+    },
+    {
+      "content_mode": "registry_metadata_only",
+      "fetch_cadence": "manual_review_before_fetch",
+      "freshness_status": "monitoring_contract_ready_requires_live_refresh",
+      "live_fetch_performed": false,
+      "manual_only": true,
+      "observed_at": "2026-06-25T00:00:00+00:00",
+      "proof_boundary": "Registry metadata proves which source to monitor, not current legal or compliance truth.",
+      "rights_status": "official_reference_url_only",
+      "robots_status": "not_checked_local_contract",
+      "snapshot_hash": "9b03f9cbe3b181945a391e6a692483dbfcd6f1c138aaab635bad47528c6aa565",
+      "snapshot_id": "snapshot:itc-trade-map:9b03f9cbe3b1",
+      "source_id": "itc-trade-map",
+      "terms_status": "not_checked_local_contract",
+      "url": "https://www.trademap.org/"
+    },
+    {
+      "content_mode": "registry_metadata_only",
+      "fetch_cadence": "manual_review_before_fetch",
+      "freshness_status": "monitoring_contract_ready_requires_live_refresh",
+      "live_fetch_performed": false,
+      "manual_only": true,
+      "observed_at": "2026-06-25T00:00:00+00:00",
+      "proof_boundary": "Registry metadata proves which source to monitor, not current legal or compliance truth.",
+      "rights_status": "official_reference_url_only",
+      "robots_status": "not_checked_local_contract",
+      "snapshot_hash": "9b39e498c3e15889641541c140e9bb79347efe501904bfaa784f1f7063149083",
+      "snapshot_id": "snapshot:wco-harmonized-system:9b39e498c3e1",
+      "source_id": "wco-harmonized-system",
+      "terms_status": "not_checked_local_contract",
+      "url": "https://www.wcoomd.org/en/topics/nomenclature/overview/what-is-the-harmonized-system.aspx"
+    },
+    {
+      "content_mode": "registry_metadata_only",
+      "fetch_cadence": "manual_review_before_fetch",
+      "freshness_status": "monitoring_contract_ready_requires_live_refresh",
+      "live_fetch_performed": false,
+      "manual_only": true,
+      "observed_at": "2026-06-25T00:00:00+00:00",
+      "proof_boundary": "Registry metadata proves which source to monitor, not current legal or compliance truth.",
+      "rights_status": "official_reference_url_only",
+      "robots_status": "not_checked_local_contract",
+      "snapshot_hash": "616f2dba1cc66d8386cd89538ca05a28e52ff9bcf3c6cfa527a475c196dc8f11",
+      "snapshot_id": "snapshot:icc-incoterms-2020:616f2dba1cc6",
+      "source_id": "icc-incoterms-2020",
+      "terms_status": "not_checked_local_contract",
+      "url": "https://iccwbo.org/business-solutions/incoterms-rules/incoterms-2020/"
+    },
+    {
+      "content_mode": "registry_metadata_only",
+      "fetch_cadence": "weekly_for_registry_metadata",
+      "freshness_status": "monitoring_contract_ready_requires_live_refresh",
+      "live_fetch_performed": false,
+      "manual_only": false,
+      "observed_at": "2026-06-25T00:00:00+00:00",
+      "proof_boundary": "Registry metadata proves which source to monitor, not current legal or compliance truth.",
+      "rights_status": "official_reference_url_only",
+      "robots_status": "not_checked_local_contract",
+      "snapshot_hash": "67a78b30850f9e62a42643b1dab98aa1c7c790c838d737d23a2cdb5d6eeb5e7e",
+      "snapshot_id": "snapshot:opc-pipeda-principles:67a78b30850f",
+      "source_id": "opc-pipeda-principles",
+      "terms_status": "not_checked_local_contract",
+      "url": "https://www.priv.gc.ca/en/privacy-topics/privacy-laws-in-canada/the-personal-information-protection-and-electronic-documents-act-pipeda/"
+    },
+    {
+      "content_mode": "registry_metadata_only",
+      "fetch_cadence": "manual_review_before_fetch",
+      "freshness_status": "monitoring_contract_ready_requires_live_refresh",
+      "live_fetch_performed": false,
+      "manual_only": true,
+      "observed_at": "2026-06-25T00:00:00+00:00",
+      "proof_boundary": "Registry metadata proves which source to monitor, not current legal or compliance truth.",
+      "rights_status": "official_reference_url_only",
+      "robots_status": "not_checked_local_contract",
+      "snapshot_hash": "a9269581ec39535187e4f6bcf014d82db46b1a76844cd18e488151b91afbc6da",
+      "snapshot_id": "snapshot:owasp-file-upload:a9269581ec39",
+      "source_id": "owasp-file-upload",
+      "terms_status": "not_checked_local_contract",
+      "url": "https://cheatsheetseries.owasp.org/cheatsheets/File_Upload_Cheat_Sheet.html"
+    },
+    {
+      "content_mode": "registry_metadata_only",
+      "fetch_cadence": "manual_review_before_fetch",
+      "freshness_status": "monitoring_contract_ready_requires_live_refresh",
+      "live_fetch_performed": false,
+      "manual_only": true,
+      "observed_at": "2026-06-25T00:00:00+00:00",
+      "proof_boundary": "Registry metadata proves which source to monitor, not current legal or compliance truth.",
+      "rights_status": "official_reference_url_only",
+      "robots_status": "not_checked_local_contract",
+      "snapshot_hash": "87441c939ff8438cf26d8b3aa8ac4b1175824908fa13ca3360d8639ae71a542e",
+      "snapshot_id": "snapshot:owasp-llm01-prompt-injection:87441c939ff8",
+      "source_id": "owasp-llm01-prompt-injection",
+      "terms_status": "not_checked_local_contract",
+      "url": "https://genai.owasp.org/llmrisk/llm01-prompt-injection/"
+    },
+    {
+      "content_mode": "registry_metadata_only",
+      "fetch_cadence": "manual_review_before_fetch",
+      "freshness_status": "monitoring_contract_ready_requires_live_refresh",
+      "live_fetch_performed": false,
+      "manual_only": true,
+      "observed_at": "2026-06-25T00:00:00+00:00",
+      "proof_boundary": "Registry metadata proves which source to monitor, not current legal or compliance truth.",
+      "rights_status": "official_reference_url_only",
+      "robots_status": "not_checked_local_contract",
+      "snapshot_hash": "9904dd6f444db63bdf1833cd434c5256971aea1409c4c20983287c1cf665e033",
+      "snapshot_id": "snapshot:nist-ai-rmf:9904dd6f444d",
+      "source_id": "nist-ai-rmf",
+      "terms_status": "not_checked_local_contract",
+      "url": "https://www.nist.gov/itl/ai-risk-management-framework"
+    },
+    {
+      "content_mode": "registry_metadata_only",
+      "fetch_cadence": "manual_review_before_fetch",
+      "freshness_status": "monitoring_contract_ready_requires_live_refresh",
+      "live_fetch_performed": false,
+      "manual_only": true,
+      "observed_at": "2026-06-25T00:00:00+00:00",
+      "proof_boundary": "Registry metadata proves which source to monitor, not current legal or compliance truth.",
+      "rights_status": "official_reference_url_only",
+      "robots_status": "not_checked_local_contract",
+      "snapshot_hash": "9d2991d6b1920e311c63e691e69ec2a8a788a9a1f2c1f954c66f7aa23c12b8e6",
+      "snapshot_id": "snapshot:stripe-go-live:9d2991d6b192",
+      "source_id": "stripe-go-live",
+      "terms_status": "not_checked_local_contract",
+      "url": "https://docs.stripe.com/get-started/checklist/go-live"
     }
   ],
   "stale_source_blocker_count": 1,
@@ -902,8 +1532,10 @@
         "cbsa-licensed-customs-brokers",
         "cfia-airs",
         "gac-import-controls",
+        "gac-sanctions",
         "ised-trade-data-online",
-        "justice-import-control-list"
+        "justice-import-control-list",
+        "opc-pipeda-principles"
       ],
       "status": "open",
       "unsafe_to_bypass": true

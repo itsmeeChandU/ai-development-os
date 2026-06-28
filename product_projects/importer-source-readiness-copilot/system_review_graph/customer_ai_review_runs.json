@@ -129,7 +129,7 @@
     "generated_at": "2026-06-25T00:00:00+00:00",
     "human_gate": "required_before_external_claims",
     "human_review_required": true,
-    "input_snapshot_hash": "411e3fd49b79038dede9b4d846bb8cbb7382a98b85f0a867a6bd570ba29bfda5",
+    "input_snapshot_hash": "9827af3f8ca8a75076e48e8465143f2da710593ac8d56044fe84b70df890ca6d",
     "model_mode": "metadata_only",
     "model_name": "deterministic-safety-rules",
     "model_name_or_endpoint": "local_rule_simulator",
@@ -426,7 +426,17 @@
       "cbsa-licensed-customs-brokers",
       "itc-market-access-map",
       "india-dgft-foreign-trade-policy",
-      "india-cbic-customs"
+      "india-cbic-customs",
+      "gac-sanctions",
+      "world-bank-wits",
+      "itc-trade-map",
+      "wco-harmonized-system",
+      "icc-incoterms-2020",
+      "opc-pipeda-principles",
+      "owasp-file-upload",
+      "owasp-llm01-prompt-injection",
+      "nist-ai-rmf",
+      "stripe-go-live"
     ],
     "status": "simulated_review_complete_human_gates_closed",
     "validation_result": {
