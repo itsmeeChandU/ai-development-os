@@ -5,7 +5,7 @@
       "artifacts": [
         {
           "artifact": "business_logic_phase_report.json",
-          "bytes": 165075,
+          "bytes": 173216,
           "exists": true
         },
         {
@@ -31,12 +31,12 @@
       "artifacts": [
         {
           "artifact": "production_country_source_engine_manifest.json",
-          "bytes": 72506,
+          "bytes": 79073,
           "exists": true
         },
         {
           "artifact": "production_country_packs.json",
-          "bytes": 5903,
+          "bytes": 5926,
           "exists": true
         }
       ],
@@ -57,7 +57,7 @@
       "artifacts": [
         {
           "artifact": "production_source_lifecycle.json",
-          "bytes": 65700,
+          "bytes": 72244,
           "exists": true
         },
         {

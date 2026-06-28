@@ -20,6 +20,14 @@ The product is not ready for unrestricted real files, live payments, public laun
 - Official sample PDFs, synthetic parser QA files, and customer-uploaded evidence are separated so test fixtures are not mistaken for customer proof.
 - Required before real user data: privacy notice, terms, retention/deletion approval, breach process, provider inventory, and review of whether any file content may be sent to AI providers.
 
+## Trade Discovery Boundary
+
+- Discovery status: `production_trade_discovery_engine_ready_beginner_research_routed_no_opportunity_claims`.
+- Discovery is source-routed, not recommendation-driven.
+- No trade value is shown unless a dated dataset row is ingested and cited.
+- No country lane is presented as best, safest, profitable, approved, or buyer-validated.
+- The UI must keep beginner language plain enough for business owners and conservative enough for external review.
+
 ## Document Handling Boundary
 
 The document engine is ready for local review and parser QA. It is not yet approved for unrestricted real customer files in production.

@@ -130,6 +130,7 @@ class OperatorAppTests(unittest.TestCase):
 
     def test_completion_stage_public_pages_and_api_exist(self) -> None:
         routes = {
+            "/trade-discovery": "Trade Discovery",
             "/opportunities": "Opportunity Signals",
             "/country-coverage": "Country Coverage",
             "/transport-readiness": "Transport Readiness",
@@ -158,6 +159,7 @@ class OperatorAppTests(unittest.TestCase):
                 self.assertIn(expected, body)
 
         api_routes = {
+            "/api/trade-discovery": "production_trade_discovery_engine_ready_beginner_research_routed_no_opportunity_claims",
             "/api/opportunities": "opportunity_scanner_ready_with_research_gates",
             "/api/country-coverage": "country_coverage_ready_with_claim_gates",
             "/api/billing/controls": "billing_credit_controls_ready_local_no_live_checkout",

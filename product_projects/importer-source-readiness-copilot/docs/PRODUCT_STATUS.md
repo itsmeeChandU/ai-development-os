@@ -456,6 +456,32 @@ refresh records. It still does not prove current law, tariff treatment, CFIA
 approval, sanctions clearance, buyer validation, supplier verification, hosted
 readiness, or launch approval.
 
+## Ready For Production Trade Discovery Review
+
+- trade discovery status:
+  `production_trade_discovery_engine_ready_beginner_research_routed_no_opportunity_claims`
+- machine manifest:
+  `system_review_graph/production_trade_discovery_manifest.json`
+- category map:
+  `system_review_graph/production_trade_discovery_category_map.json`
+- country lanes:
+  `system_review_graph/production_trade_discovery_country_lanes.json`
+- beginner flows:
+  `system_review_graph/production_trade_discovery_beginner_flows.json`
+- source registry:
+  `system_review_graph/production_trade_discovery_source_registry.json`
+- requirement audit:
+  `system_review_graph/production_trade_discovery_requirement_audit.json`
+- reviewer-readable doc: `docs/PRODUCTION_TRADE_DISCOVERY_ENGINE.md`
+- proof command: `python3 scripts/run_production_trade_discovery_engine.py`
+
+This means beginner users can browse Canada import/export directions,
+source-routed product families, country lanes into Canada, Canada export lanes,
+regulated-goods warnings, and no-document flows before they know an HS code or
+have files. It still does not recommend products, prove demand, prove profit,
+validate buyers, verify suppliers, approve customs/CFIA status, or prove
+shipment readiness.
+
 ## Ready For Production Market Intelligence Review
 
 - market intelligence status:

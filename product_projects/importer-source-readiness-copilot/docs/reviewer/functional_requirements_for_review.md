@@ -19,6 +19,7 @@ The current product is usable for local review and controlled preparation. It do
 ## Core Functions Implemented Now
 
 - Create or inspect a Trade Readiness Packet.
+- Let beginners browse Canada import/export directions, product families, and country lanes before they know an HS code or have files.
 - Support a beginner flow with little or no documentation.
 - Support a no-document quick check that creates a missing-evidence packet without showing upload-only actions.
 - Support uploaded PDF triage with quarantine metadata, draft field extraction, user confirmation, delete-file action, and blocked-claim boundaries.
@@ -32,11 +33,21 @@ The current product is usable for local review and controlled preparation. It do
 ## Main Workflows
 
 - Quick check: user gives product and country details, optionally adds documents, then receives missing evidence and next safe action.
+- Trade discovery: user browses source-routed product families and country lanes, then chooses a safe next research move or starter packet.
 - Packet workspace: user reviews the packet, evidence, official-source routes, unresolved items, and report outputs.
 - Document intelligence: product separates official samples, synthetic parser QA fixtures, no-document intake, and customer-uploaded evidence.
 - Business decision preparation: product runs the decision tree, scores, source freshness check, buyer/supplier evidence ladder, and allowed/blocked action matrix.
 - Expert routing: product prepares a scoped packet for a human reviewer; AI cannot approve the lane.
 - Local operations: product can refresh source records, generate reports, create work orders, reserve billing internally, and record audit events without external effects.
+
+## Trade Discovery Implemented
+
+- Discovery status: `production_trade_discovery_engine_ready_beginner_research_routed_no_opportunity_claims`.
+- Category families: `13`.
+- Country lanes: `14`.
+- Beginner flows: `8`.
+- Users can browse Canada import/export research paths before choosing a product, HS code, buyer, supplier, or documents.
+- The product does not recommend products, prove demand, prove profit, validate buyers, verify suppliers, approve customs/CFIA status, or prove shipment readiness.
 
 ## Document Intelligence Implemented
 

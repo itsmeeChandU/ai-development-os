@@ -60,7 +60,7 @@
   "external_review_status": "external_review_ready_findings_pending",
   "final_go_live_status": "local_go_live_contract_complete_public_launch_blocked",
   "final_owner_approval_recorded": false,
-  "generated_at": "2026-06-28T16:26:22+00:00",
+  "generated_at": "2026-06-28T17:33:59+00:00",
   "hosted_private_beta_ready": false,
   "launch_gate_count": 13,
   "launch_gates": [
@@ -69,7 +69,7 @@
       "artifacts": [
         {
           "artifact": "business_logic_phase_report.json",
-          "bytes": 165075,
+          "bytes": 173216,
           "exists": true
         },
         {
@@ -95,12 +95,12 @@
       "artifacts": [
         {
           "artifact": "production_country_source_engine_manifest.json",
-          "bytes": 72506,
+          "bytes": 79073,
           "exists": true
         },
         {
           "artifact": "production_country_packs.json",
-          "bytes": 5903,
+          "bytes": 5926,
           "exists": true
         }
       ],
@@ -121,7 +121,7 @@
       "artifacts": [
         {
           "artifact": "production_source_lifecycle.json",
-          "bytes": 65700,
+          "bytes": 72244,
           "exists": true
         },
         {

@@ -94,10 +94,28 @@ RESEARCHED_SOURCE_FACTS: tuple[dict[str, Any], ...] = (
         "claim_boundary": "Trade data is a research signal only, not demand, margin, or buyer validation.",
     },
     {
+        "source_id": "statcan-wds",
+        "source_area": "trade_data",
+        "usable_fact": "Statistics Canada Web Data Service routes machine-readable Canadian data tables after table and license review.",
+        "claim_boundary": "A data-service route does not prove a current trade value until a dated dataset row is ingested and cited.",
+    },
+    {
         "source_id": "canada-cid",
         "source_area": "buyer_importer_discovery",
         "usable_fact": "Canadian Importers Database lists companies importing goods into Canada by product, city, and origin.",
         "claim_boundary": "Importer rows are lead-discovery only and never buyer validation.",
+    },
+    {
+        "source_id": "canada-trade-commissioner-export-guide",
+        "source_area": "export_policy",
+        "usable_fact": "Government of Canada export guidance routes Canadian exporters to export-planning questions.",
+        "claim_boundary": "General guidance does not prove a specific exporter, product, destination, or shipment is export-ready.",
+    },
+    {
+        "source_id": "gac-export-controls",
+        "source_area": "origin_export_controls",
+        "usable_fact": "Global Affairs Canada export controls route controlled-goods, destination, and permit questions.",
+        "claim_boundary": "Export-control routing does not prove permit status, destination permission, or compliance.",
     },
     {
         "source_id": "cbsa-licensed-customs-brokers",

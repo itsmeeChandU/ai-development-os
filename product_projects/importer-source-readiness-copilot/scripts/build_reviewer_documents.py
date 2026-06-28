@@ -188,6 +188,7 @@ def _status_context() -> dict[str, Any]:
     production_payments = _load_json(GRAPH / "production_payment_monetization_manifest.json")
     production_trust = _load_json(GRAPH / "production_security_privacy_reliability_manifest.json")
     production_launch = _load_json(GRAPH / "production_launch_control_plane_manifest.json")
+    production_trade_discovery = _load_json(GRAPH / "production_trade_discovery_manifest.json")
     row = business["packet_rows"][0]
     return {
         "today": date.today().isoformat(),
@@ -206,6 +207,7 @@ def _status_context() -> dict[str, Any]:
         "production_payments": production_payments,
         "production_trust": production_trust,
         "production_launch": production_launch,
+        "production_trade_discovery": production_trade_discovery,
         "packet": row,
     }
 
@@ -224,6 +226,7 @@ def _functional(ctx: dict[str, Any]) -> ReviewerDocument:
     payments = ctx["production_payments"]
     trust = ctx["production_trust"]
     launch = ctx["production_launch"]
+    discovery = ctx["production_trade_discovery"]
     return ReviewerDocument(
         title="Functional Requirements For External Review",
         filename="functional_requirements_for_review.md",
@@ -253,6 +256,7 @@ def _functional(ctx: dict[str, Any]) -> ReviewerDocument:
                 "Core Functions Implemented Now",
                 bullets=(
                     "Create or inspect a Trade Readiness Packet.",
+                    "Let beginners browse Canada import/export directions, product families, and country lanes before they know an HS code or have files.",
                     "Support a beginner flow with little or no documentation.",
                     "Support a no-document quick check that creates a missing-evidence packet without showing upload-only actions.",
                     "Support uploaded PDF triage with quarantine metadata, draft field extraction, user confirmation, delete-file action, and blocked-claim boundaries.",
@@ -268,11 +272,23 @@ def _functional(ctx: dict[str, Any]) -> ReviewerDocument:
                 "Main Workflows",
                 bullets=(
                     "Quick check: user gives product and country details, optionally adds documents, then receives missing evidence and next safe action.",
+                    "Trade discovery: user browses source-routed product families and country lanes, then chooses a safe next research move or starter packet.",
                     "Packet workspace: user reviews the packet, evidence, official-source routes, unresolved items, and report outputs.",
                     "Document intelligence: product separates official samples, synthetic parser QA fixtures, no-document intake, and customer-uploaded evidence.",
                     "Business decision preparation: product runs the decision tree, scores, source freshness check, buyer/supplier evidence ladder, and allowed/blocked action matrix.",
                     "Expert routing: product prepares a scoped packet for a human reviewer; AI cannot approve the lane.",
                     "Local operations: product can refresh source records, generate reports, create work orders, reserve billing internally, and record audit events without external effects.",
+                ),
+            ),
+            Section(
+                "Trade Discovery Implemented",
+                bullets=(
+                    f"Discovery status: `{discovery['status']}`.",
+                    f"Category families: `{discovery.get('category_count')}`.",
+                    f"Country lanes: `{discovery.get('country_lane_count')}`.",
+                    f"Beginner flows: `{discovery.get('beginner_flow_count')}`.",
+                    "Users can browse Canada import/export research paths before choosing a product, HS code, buyer, supplier, or documents.",
+                    "The product does not recommend products, prove demand, prove profit, validate buyers, verify suppliers, approve customs/CFIA status, or prove shipment readiness.",
                 ),
             ),
             Section(
@@ -456,6 +472,7 @@ def _business_logic(ctx: dict[str, Any]) -> ReviewerDocument:
     payments = ctx["production_payments"]
     trust = ctx["production_trust"]
     launch = ctx["production_launch"]
+    discovery = ctx["production_trade_discovery"]
     buyer_supplier = packet["buyer_supplier_evidence"]
     gate = packet["business_gate_decision"]
     market = packet["market_intelligence"]["market_signal_evaluation"]
@@ -482,6 +499,7 @@ def _business_logic(ctx: dict[str, Any]) -> ReviewerDocument:
                     "First categories: food, seafood, agri, and general goods.",
                     "First persona: beginner-to-intermediate exporter.",
                     "Country path: Canada destination, Vietnam demo origin, India strategic next origin, Generic fallback.",
+                    "Beginner discovery: users can browse Canada import/export categories and country lanes as research routes before a packet exists.",
                     "Core object: Trade Readiness Packet.",
                 ),
             ),
@@ -489,6 +507,7 @@ def _business_logic(ctx: dict[str, Any]) -> ReviewerDocument:
                 "Implemented Business Rules",
                 bullets=(
                     "12-question decision tree: trade direction, product, origin, destination, HS code, buyer/importer, importer of record, Incoterms, documents, regulated-product risk, official sources, and next safe move.",
+                    "Trade discovery: supports pre-packet category browsing, Canada import/export lanes, regulated-goods warnings, official source routes, and no-document starter packet handoff.",
                     "Starter flow: checks minimum inputs and allows a starter packet when product, country, direction, intended use, and source routes exist.",
                     "Market signal: computes a bounded local signal from source routes and evidence, capped before real demand proof.",
                     "Country packs: checks whether required import, tariff, regulated-product, restricted-party, and market/buyer source routes exist.",
@@ -496,6 +515,20 @@ def _business_logic(ctx: dict[str, Any]) -> ReviewerDocument:
                     "Buyer/supplier evidence: uses evidence ladders and blocks buyer-validated and supplier-verified language.",
                     "Business gate decision: allows local drafts and reports while blocking outreach, payment, approvals, and shipment decisions.",
                     "Phase coverage: exposes 13 business phase surfaces, while phase 0 remains the business identity lock.",
+                ),
+            ),
+            Section(
+                "Trade Discovery Logic Implemented Now",
+                body=(
+                    "The discovery layer helps users who do not yet know what to import, export, or research. It is designed to make exploration useful without turning research prompts into advice or promises.",
+                ),
+                bullets=(
+                    f"Discovery status: `{discovery['status']}`.",
+                    f"Category families: `{discovery.get('category_count')}`.",
+                    f"Country lanes: `{discovery.get('country_lane_count')}`.",
+                    f"Beginner flows: `{discovery.get('beginner_flow_count')}`.",
+                    "Discovery rows are reference-only and source-routed.",
+                    "Best product, demand, profitability, buyer validation, supplier verification, customs approval, CFIA approval, and shipment readiness claims remain blocked.",
                 ),
             ),
             Section(
@@ -713,6 +746,7 @@ def _non_functional(ctx: dict[str, Any]) -> ReviewerDocument:
     payments = ctx["production_payments"]
     trust = ctx["production_trust"]
     launch = ctx["production_launch"]
+    discovery = ctx["production_trade_discovery"]
     return ReviewerDocument(
         title="Non-Functional Requirements For External Review",
         filename="non_functional_requirements_for_review.md",
@@ -742,6 +776,16 @@ def _non_functional(ctx: dict[str, Any]) -> ReviewerDocument:
                     "Implemented locally: AI-use policy, per-evidence AI permission concept, redaction preview, no-AI/manual fallback, deletion request tracking, and public upload notice.",
                     "Official sample PDFs, synthetic parser QA files, and customer-uploaded evidence are separated so test fixtures are not mistaken for customer proof.",
                     "Required before real user data: privacy notice, terms, retention/deletion approval, breach process, provider inventory, and review of whether any file content may be sent to AI providers.",
+                ),
+            ),
+            Section(
+                "Trade Discovery Boundary",
+                bullets=(
+                    f"Discovery status: `{discovery['status']}`.",
+                    "Discovery is source-routed, not recommendation-driven.",
+                    "No trade value is shown unless a dated dataset row is ingested and cited.",
+                    "No country lane is presented as best, safest, profitable, approved, or buyer-validated.",
+                    "The UI must keep beginner language plain enough for business owners and conservative enough for external review.",
                 ),
             ),
             Section(

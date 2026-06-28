@@ -68,6 +68,7 @@ API_ROUTES = {
     "/api/board-go-live": "system_review_graph/board_go_live_readiness_report.json",
     "/api/operator-workflow": "system_review_graph/operator_workflow_report.json",
     "/api/operator-screenshots": "system_review_graph/operator_screenshot_manifest.json",
+    "/api/trade-discovery": "system_review_graph/production_trade_discovery_manifest.json",
     "/api/opportunities": "system_review_graph/opportunity_scanner_report.json",
     "/api/country-coverage": "system_review_graph/country_coverage_report.json",
     "/api/billing/controls": "system_review_graph/billing_credit_controls.json",
@@ -949,6 +950,7 @@ def _render_start_page() -> str:
 
 def _render_tool_selection() -> str:
     tools = [
+        ("Trade Discovery", "/trade-discovery", "Browse Canada import/export categories and country lanes before choosing a product."),
         ("Opportunity Scanner", "/opportunities", "Find possible opportunity signals and route them into research-gated packets."),
         ("Import Readiness Checker", "/tools/import-readiness", "Check Canada-side importer/source readiness gaps."),
         ("Export Readiness Checker", "/tools/export-readiness", "Build an Export-to-Canada packet for a foreign exporter."),
@@ -1066,6 +1068,7 @@ def _render_canadian_references(workflow: dict[str, Any]) -> str:
 
 def _render_opportunities(repo_root: Path, workflow: dict[str, Any]) -> str:
     opportunity = _load_graph_json(repo_root, "opportunity_scanner_report.json")
+    discovery = _load_graph_json(repo_root, "production_trade_discovery_manifest.json", {})
     coverage = _load_graph_json(repo_root, "country_coverage_report.json")
     signal_rows = "".join(
         "<tr>"
@@ -1099,8 +1102,18 @@ def _render_opportunities(repo_root: Path, workflow: dict[str, Any]) -> str:
     {_metric_card("Coverage", coverage.get("status"), "Country-specific claims stay blocked.")}
   </div>
   <div class="actions">
+    {_button_link("/trade-discovery", "Browse trade discovery", "compass", tone="secondary")}
     {_button_link("/start", "Start packet", "sparkles")}
     {_button_link("/trade-check", "Upload documents", "upload", tone="secondary")}
+  </div>
+</section>
+<section class="surface">
+  <h2>Beginner Discovery</h2>
+  <p class="note">Discovery lets users browse categories and lanes before they know the exact product, HS code, or documents. It does not recommend products or prove demand.</p>
+  <div class="grid grid-3">
+    {_metric_card("Categories", discovery.get("category_count", 0), "Product families to research.")}
+    {_metric_card("Country lanes", discovery.get("country_lane_count", 0), "Reference-only import/export lanes.")}
+    {_metric_card("Beginner flows", discovery.get("beginner_flow_count", 0), "No-document paths into packets.")}
   </div>
 </section>
 <section class="surface">
@@ -1119,6 +1132,75 @@ def _render_opportunities(repo_root: Path, workflow: dict[str, Any]) -> str:
 </section>
 """
     return _render_page("Opportunity Signals", body)
+
+
+def _render_trade_discovery(repo_root: Path) -> str:
+    discovery = _load_graph_json(repo_root, "production_trade_discovery_manifest.json", {})
+    category_rows = "".join(
+        "<tr>"
+        f"<td>{escape(str(row.get('label')))}</td>"
+        f"<td>{escape(', '.join(row.get('directions', [])))}</td>"
+        f"<td>{escape(', '.join(row.get('regulated_risk_tags', [])))}</td>"
+        f"<td>{escape(str(row.get('claim_boundary')))}</td>"
+        "</tr>"
+        for row in discovery.get("category_families", [])
+    )
+    lane_rows = "".join(
+        "<tr>"
+        f"<td>{escape(str(row.get('origin_country')))} to {escape(str(row.get('destination_country')))}</td>"
+        f"<td>{escape(str(row.get('direction')))}</td>"
+        f"<td>{escape(str(row.get('coverage_level')))}</td>"
+        f"<td>{escape(str(row.get('claim_boundary')))}</td>"
+        "</tr>"
+        for row in discovery.get("country_lanes", [])
+    )
+    flow_rows = "".join(
+        "<tr>"
+        f"<td>{escape(str(row.get('label')))}</td>"
+        f"<td>{escape(str(row.get('plain_language_goal')))}</td>"
+        f"<td>{escape(str(row.get('safe_user_copy')))}</td>"
+        "</tr>"
+        for row in discovery.get("beginner_flows", [])
+    )
+    body = f"""
+<section class="surface">
+  <h1>Trade Discovery</h1>
+  <p class="lede">Browse what to research before choosing a product, country lane, HS candidate, buyer, supplier, or document path.</p>
+  <p class="note">{escape(str(discovery.get('proof_boundary') or PRODUCT_BOUNDARY))}</p>
+  <div class="grid grid-3">
+    {_metric_card("Categories", discovery.get("category_count", 0), "Browse product families, not recommendations.")}
+    {_metric_card("Country lanes", discovery.get("country_lane_count", 0), "Diverse lanes remain reference-only.")}
+    {_metric_card("Sources", discovery.get("source_record_count", 0), "Official and reference routes.")}
+  </div>
+  <div class="actions">
+    {_button_link("/start", "Create starter packet", "sparkles")}
+    {_button_link("/opportunities", "View opportunity signals", "search", tone="secondary")}
+    {_button_link("/tools/canadian-references", "View sources", "book-open", tone="secondary")}
+  </div>
+</section>
+<section class="surface">
+  <h2>Beginner Flows</h2>
+  <table>
+    <thead><tr><th>Flow</th><th>Purpose</th><th>Boundary</th></tr></thead>
+    <tbody>{flow_rows or '<tr><td colspan="3">Run scripts/run_production_trade_discovery_engine.py to generate discovery flows.</td></tr>'}</tbody>
+  </table>
+</section>
+<section class="surface">
+  <h2>Category Families</h2>
+  <table>
+    <thead><tr><th>Category</th><th>Directions</th><th>Risk Tags</th><th>Boundary</th></tr></thead>
+    <tbody>{category_rows or '<tr><td colspan="4">Discovery category map not generated yet.</td></tr>'}</tbody>
+  </table>
+</section>
+<section class="surface">
+  <h2>Country Lanes</h2>
+  <table>
+    <thead><tr><th>Lane</th><th>Direction</th><th>Coverage</th><th>Boundary</th></tr></thead>
+    <tbody>{lane_rows or '<tr><td colspan="4">Discovery country lanes not generated yet.</td></tr>'}</tbody>
+  </table>
+</section>
+"""
+    return _render_page("Trade Discovery", body)
 
 
 def _render_country_coverage(repo_root: Path) -> str:
@@ -2487,6 +2569,7 @@ def _index_payload(repo_root: Path) -> dict[str, Any]:
                 "/tools/buyer-broker-packet",
                 "/tools/document-check",
                 "/tools/canadian-references",
+                "/trade-discovery",
                 "/opportunities",
                 "/country-coverage",
                 "/transport-readiness",
@@ -2634,6 +2717,9 @@ def build_operator_app_handler(repo_root: Path) -> type[BaseHTTPRequestHandler]:
                 return
             if path == "/opportunities":
                 self._send_html(_render_opportunities(repo_root, workflow))
+                return
+            if path == "/trade-discovery":
+                self._send_html(_render_trade_discovery(repo_root))
                 return
             if path == "/country-coverage":
                 self._send_html(_render_country_coverage(repo_root))

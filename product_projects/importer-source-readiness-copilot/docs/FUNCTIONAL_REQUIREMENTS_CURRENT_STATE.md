@@ -62,6 +62,7 @@ The product helps users prepare trade readiness packets, organize evidence, revi
 | FR-34 | Provide payment monetization contract without live checkout | Implemented locally with pricing tiers, paid-scope boundaries, checkout controls, webhook controls, and payment gates | `production_payment_monetization_manifest.json`, `production_checkout_gate_controls.json` |
 | FR-35 | Provide production trust control plane without accepting real files | Implemented locally with trust controls, vendor register, incident runbooks, local backup/restore hash drill, and closed hosted/real-file gates | `production_security_privacy_reliability_manifest.json`, `production_trust_control_matrix.json` |
 | FR-36 | Provide exact-scope launch control plane without activation | Implemented locally with 13 launch gates, candidate public scope, blocked public scope, and public launch approval false | `production_launch_control_plane_manifest.json`, `production_launch_scope_matrix.json` |
+| FR-37 | Provide beginner trade discovery before packet creation | Implemented locally with Canada import/export browsing, category families, diverse country lanes, source routes, and no-document flows; recommendations and opportunity claims remain blocked | `production_trade_discovery_manifest.json`, `production_trade_discovery_category_map.json`, `production_trade_discovery_country_lanes.json` |
 
 ## Current Main Workflows
 
@@ -118,6 +119,22 @@ qualified reviewer checks the relevant scope.
 6. Product calculates six separate business scores.
 7. Product generates a business decision report.
 8. Product keeps approval, tariff, buyer, supplier, shipment, and launch claims blocked.
+
+### Beginner Trade Discovery
+
+1. User can browse Canada import and export directions before knowing an HS code.
+2. Product shows source-routed product families such as food/agri/seafood,
+   textiles, machinery, electronics, cosmetics, chemicals, building materials,
+   and general consumer goods.
+3. Product shows diverse origin-to-Canada lanes and Canada export lanes as
+   reference-only research paths.
+4. Product shows regulated-product warnings and source routes for CFIA, CBSA,
+   sanctions, trade data, market access, and importer-lead research.
+5. Product can turn a selected category and lane into a starter packet with
+   missing evidence and next safe moves.
+6. Product does not recommend products, prove demand, prove profit, validate
+   buyers, verify suppliers, approve customs/CFIA status, or prove shipment
+   readiness.
 
 ### Production Document Intelligence
 
@@ -250,8 +267,8 @@ blocked.
 
 The runtime contract currently includes:
 
-- 49 customer UI routes
-- 55 API routes
+- 50 customer UI routes
+- 56 API routes
 - scoped expert review route
 - admin/source/gate/audit/health routes
 - public start, tool, result, confirmation, and report routes

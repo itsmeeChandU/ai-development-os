@@ -1,0 +1,38 @@
+{
+  "blocked_claims": [
+    "best_product_to_import",
+    "best_product_to_export",
+    "profitable_market",
+    "guaranteed_demand",
+    "buyer_validated",
+    "supplier_verified",
+    "tariff_confirmed",
+    "cfia_approved",
+    "customs_approved",
+    "ready_to_ship",
+    "public_launch_ready"
+  ],
+  "generated_at": "2026-06-28T17:33:58+00:00",
+  "proof_boundary": "Trade discovery is browse-and-prepare logic. It can show source-routed categories, country lanes, questions, and evidence gaps. It cannot tell a user what product is best, prove demand, confirm profit, validate buyers, verify suppliers, approve customs/CFIA status, or make shipment decisions.",
+  "requirement_audit": {
+    "audited_gap": "Existing market intelligence starts after a product/packet exists; beginner users also need product, country, and import/export browsing before packet creation.",
+    "implemented_now": [
+      "beginner import/export discovery flows",
+      "Canada import and export source routes",
+      "diverse origin-to-Canada country lanes",
+      "category-family map with regulated-risk warnings",
+      "dataset route records with no invented values",
+      "claim gates that block recommendations, demand, profitability, buyer validation, supplier verification, customs/CFIA approval, and shipment readiness"
+    ],
+    "status": "gap_closed_for_local_research_routed_discovery",
+    "still_external_or_data_gated": [
+      "dated trade dataset ingestion",
+      "automated connector terms/licensing review",
+      "real buyer replies or orders",
+      "real supplier evidence review",
+      "qualified customs/trade review",
+      "hosted UX testing with business owners"
+    ]
+  },
+  "status": "gap_closed_for_local_research_routed_discovery"
+}

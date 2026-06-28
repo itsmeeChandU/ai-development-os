@@ -21,7 +21,7 @@
         "paid_review": "check before paid/expert review"
       },
       "reviewer_required": true,
-      "source_count": 16,
+      "source_count": 17,
       "source_ids": [
         "cbsa-carm",
         "cbsa-import-commercial-goods",
@@ -33,6 +33,7 @@
         "justice-import-control-list",
         "canada-sanctions",
         "ised-trade-data-online",
+        "statcan-wds",
         "canada-cid",
         "cbsa-licensed-customs-brokers",
         "gac-sanctions",
@@ -167,6 +168,6 @@
     }
   ],
   "external_effects_created": false,
-  "generated_at": "2026-06-28T16:26:21+00:00",
+  "generated_at": "2026-06-28T17:33:58+00:00",
   "status": "production_country_packs_ready_reference_only_claims_closed"
 }

@@ -2,7 +2,7 @@
   "claim_gate_count": 13,
   "claims_opened": false,
   "external_effects_created": false,
-  "generated_at": "2026-06-28T16:26:21+00:00",
+  "generated_at": "2026-06-28T17:33:58+00:00",
   "hosted_private_beta_ready": false,
   "live_payment_ready": false,
   "official_source_purposes": [
@@ -205,7 +205,7 @@
           "packet_id": "packet-frozen-tuna-canada-001",
           "product": "Frozen tuna fillet",
           "score_count": 6,
-          "source_route_count": 15,
+          "source_route_count": 16,
           "view_status": "ready",
           "view_type": "starter_packet"
         },
@@ -230,7 +230,7 @@
           "packet_id": "packet-frozen-tuna-canada-001",
           "product": "Frozen tuna fillet",
           "score_count": 6,
-          "source_route_count": 15,
+          "source_route_count": 16,
           "view_status": "reference_only",
           "view_type": "market_research_packet"
         },
@@ -255,7 +255,7 @@
           "packet_id": "packet-frozen-tuna-canada-001",
           "product": "Frozen tuna fillet",
           "score_count": 6,
-          "source_route_count": 15,
+          "source_route_count": 16,
           "view_status": "blocked_claims_visible",
           "view_type": "buyer_ready_packet"
         },
@@ -284,7 +284,7 @@
           "packet_id": "packet-frozen-tuna-canada-001",
           "product": "Frozen tuna fillet",
           "score_count": 6,
-          "source_route_count": 15,
+          "source_route_count": 16,
           "view_status": "evidence_collection_ready",
           "view_type": "supplier_request_packet"
         },
@@ -313,7 +313,7 @@
           "packet_id": "packet-frozen-tuna-canada-001",
           "product": "Frozen tuna fillet",
           "score_count": 6,
-          "source_route_count": 15,
+          "source_route_count": 16,
           "view_status": "ready_for_scoped_review",
           "view_type": "broker_review_packet"
         },
@@ -338,7 +338,7 @@
           "packet_id": "packet-frozen-tuna-canada-001",
           "product": "Frozen tuna fillet",
           "score_count": 6,
-          "source_route_count": 15,
+          "source_route_count": 16,
           "view_status": "ready",
           "view_type": "operator_packet"
         },
@@ -363,7 +363,7 @@
           "packet_id": "packet-frozen-tuna-canada-001",
           "product": "Frozen tuna fillet",
           "score_count": 6,
-          "source_route_count": 15,
+          "source_route_count": 16,
           "view_status": "internal_decision_prep_only",
           "view_type": "executive_decision_packet"
         },
@@ -388,7 +388,7 @@
           "packet_id": "packet-frozen-tuna-canada-001",
           "product": "Frozen tuna fillet",
           "score_count": 6,
-          "source_route_count": 15,
+          "source_route_count": 16,
           "view_status": "ready",
           "view_type": "blocked_claims_packet"
         }
@@ -548,7 +548,7 @@
           "score": "decision_safety_score"
         }
       ],
-      "source_route_count": 15,
+      "source_route_count": 16,
       "source_routes": [
         {
           "blocked_claims": [
@@ -783,6 +783,32 @@
           "supports_claims": [],
           "terms_status": "must_check_before_fetch",
           "url": "https://ised-isde.canada.ca/site/ised/en/research-and-business-intelligence/canadian-importers-database"
+        },
+        {
+          "blocked_claims": [
+            "tariff_confirmed",
+            "cfia_compliant",
+            "supplier_recommended",
+            "buyer_validated",
+            "ready_to_import",
+            "ready_to_export_to_canada",
+            "canadian_importer_confirmed",
+            "export_documentation_complete",
+            "trade_agreement_preference_confirmed",
+            "public_launch_ready",
+            "customs_or_tariff_advice_ready",
+            "legal_or_compliance_approved",
+            "ready_to_ship"
+          ],
+          "claim_boundary": "Reference source only; does not prove export-control classification, permit status, destination permission, or legal compliance.",
+          "evidence_role": "Canada export-control and permit routing",
+          "jurisdiction": "Canada",
+          "name": "Global Affairs Canada Export Controls",
+          "route_status": "reference_route_only",
+          "source_id": "gac-export-controls",
+          "supports_claims": [],
+          "terms_status": "must_check_before_fetch",
+          "url": "https://www.international.gc.ca/controls-controles/index.aspx?lang=eng"
         },
         {
           "blocked_claims": [

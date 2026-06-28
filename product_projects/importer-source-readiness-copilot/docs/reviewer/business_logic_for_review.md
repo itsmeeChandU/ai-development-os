@@ -15,11 +15,13 @@ The logic deliberately does not approve trade action. It blocks stronger claims 
 - First categories: food, seafood, agri, and general goods.
 - First persona: beginner-to-intermediate exporter.
 - Country path: Canada destination, Vietnam demo origin, India strategic next origin, Generic fallback.
+- Beginner discovery: users can browse Canada import/export categories and country lanes as research routes before a packet exists.
 - Core object: Trade Readiness Packet.
 
 ## Implemented Business Rules
 
 - 12-question decision tree: trade direction, product, origin, destination, HS code, buyer/importer, importer of record, Incoterms, documents, regulated-product risk, official sources, and next safe move.
+- Trade discovery: supports pre-packet category browsing, Canada import/export lanes, regulated-goods warnings, official source routes, and no-document starter packet handoff.
 - Starter flow: checks minimum inputs and allows a starter packet when product, country, direction, intended use, and source routes exist.
 - Market signal: computes a bounded local signal from source routes and evidence, capped before real demand proof.
 - Country packs: checks whether required import, tariff, regulated-product, restricted-party, and market/buyer source routes exist.
@@ -27,6 +29,17 @@ The logic deliberately does not approve trade action. It blocks stronger claims 
 - Buyer/supplier evidence: uses evidence ladders and blocks buyer-validated and supplier-verified language.
 - Business gate decision: allows local drafts and reports while blocking outreach, payment, approvals, and shipment decisions.
 - Phase coverage: exposes 13 business phase surfaces, while phase 0 remains the business identity lock.
+
+## Trade Discovery Logic Implemented Now
+
+The discovery layer helps users who do not yet know what to import, export, or research. It is designed to make exploration useful without turning research prompts into advice or promises.
+
+- Discovery status: `production_trade_discovery_engine_ready_beginner_research_routed_no_opportunity_claims`.
+- Category families: `13`.
+- Country lanes: `14`.
+- Beginner flows: `8`.
+- Discovery rows are reference-only and source-routed.
+- Best product, demand, profitability, buyer validation, supplier verification, customs approval, CFIA approval, and shipment readiness claims remain blocked.
 
 ## Document Logic Implemented Now
 

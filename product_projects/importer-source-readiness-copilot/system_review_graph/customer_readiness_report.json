@@ -130,7 +130,7 @@
       "generated_at": "2026-06-25T00:00:00+00:00",
       "human_gate": "required_before_external_claims",
       "human_review_required": true,
-      "input_snapshot_hash": "41d3b2fe823e40c9e40979be80b2f9c9726acbea77befe3c4121306c2baadeb8",
+      "input_snapshot_hash": "1776405856d017caa32e73cf26530c0708c9c3c4d8bad1fcf9fbe6e01ac6fb4d",
       "model_mode": "metadata_only",
       "model_name": "deterministic-safety-rules",
       "model_name_or_endpoint": "local_rule_simulator",
@@ -426,7 +426,10 @@
         "justice-import-control-list",
         "canada-sanctions",
         "ised-trade-data-online",
+        "statcan-wds",
         "canada-cid",
+        "canada-trade-commissioner-export-guide",
+        "gac-export-controls",
         "cbsa-licensed-customs-brokers",
         "itc-market-access-map",
         "india-dgft-foreign-trade-policy",
@@ -799,6 +802,15 @@
       "url": "https://ised-isde.canada.ca/site/trade-data-online/en/overview"
     },
     {
+      "accessed_at": "2026-06-28",
+      "claim_boundary": "Reference source only; a data-service route does not prove a current trade value until a dated dataset row is ingested and cited.",
+      "evidence_role": "machine-readable Canadian data-service route for trade tables after table and license review",
+      "id": "statcan-wds",
+      "jurisdiction": "CA",
+      "name": "Statistics Canada Web Data Service",
+      "url": "https://www.statcan.gc.ca/en/developers/wds/user-guide"
+    },
+    {
       "accessed_at": "2026-06-25",
       "claim_boundary": "Reference source only; does not prove buyer validation, supplier fit, customs advice, or freshness of a specific product row.",
       "evidence_role": "importer discovery orientation",
@@ -806,6 +818,24 @@
       "jurisdiction": "CA",
       "name": "Canadian Importers Database",
       "url": "https://ised-isde.canada.ca/site/ised/en/research-and-business-intelligence/canadian-importers-database"
+    },
+    {
+      "accessed_at": "2026-06-28",
+      "claim_boundary": "Reference source only; does not prove a specific exporter, product, destination, permit, or shipment is export-ready.",
+      "evidence_role": "Canada export-planning guidance and beginner exporter orientation",
+      "id": "canada-trade-commissioner-export-guide",
+      "jurisdiction": "CA",
+      "name": "Government of Canada Export Guide",
+      "url": "https://www.tradecommissioner.gc.ca/guides/exporter-exportateurs/index.aspx?lang=eng"
+    },
+    {
+      "accessed_at": "2026-06-28",
+      "claim_boundary": "Reference source only; does not prove export-control classification, permit status, destination permission, or legal compliance.",
+      "evidence_role": "Canada export-control and permit routing",
+      "id": "gac-export-controls",
+      "jurisdiction": "CA",
+      "name": "Global Affairs Canada Export Controls",
+      "url": "https://www.international.gc.ca/controls-controles/index.aspx?lang=eng"
     },
     {
       "accessed_at": "2026-06-25",
@@ -1133,7 +1163,7 @@
       "blockers": [
         {
           "claim_blocked": "Source Freshness",
-          "created_at": "2026-06-28T16:26:20+00:00",
+          "created_at": "2026-06-28T17:33:57+00:00",
           "evidence": "source packet packet-frozen-tuna-canada-001",
           "evidence_required": "Fresh official-source refresh record with accessed_at, last_verified_at, content_hash, HTTP status, and reviewer boundary.",
           "gate": "closed",
@@ -1164,7 +1194,7 @@
         },
         {
           "claim_blocked": "Source Freshness",
-          "created_at": "2026-06-28T16:26:20+00:00",
+          "created_at": "2026-06-28T17:33:57+00:00",
           "evidence": "source packet packet-frozen-tuna-canada-001",
           "evidence_required": "Fresh official-source refresh record with accessed_at, last_verified_at, content_hash, HTTP status, and reviewer boundary.",
           "gate": "closed",
@@ -1195,7 +1225,7 @@
         },
         {
           "claim_blocked": "Source Freshness",
-          "created_at": "2026-06-28T16:26:20+00:00",
+          "created_at": "2026-06-28T17:33:57+00:00",
           "evidence": "source packet packet-frozen-tuna-canada-001",
           "evidence_required": "Fresh official-source refresh record with accessed_at, last_verified_at, content_hash, HTTP status, and reviewer boundary.",
           "gate": "closed",
@@ -1226,7 +1256,7 @@
         },
         {
           "claim_blocked": "Compliance Review",
-          "created_at": "2026-06-28T16:26:20+00:00",
+          "created_at": "2026-06-28T17:33:57+00:00",
           "evidence": "source packet packet-frozen-tuna-canada-001",
           "evidence_required": "Dated restricted-party screening record with source and reviewer boundary.",
           "gate": "closed",
@@ -1257,7 +1287,7 @@
         },
         {
           "claim_blocked": "Compliance Review",
-          "created_at": "2026-06-28T16:26:20+00:00",
+          "created_at": "2026-06-28T17:33:57+00:00",
           "evidence": "source packet packet-frozen-tuna-canada-001",
           "evidence_required": "Scoped Canadian import/export, food, customs, or broker review finding.",
           "gate": "closed",
@@ -1288,7 +1318,7 @@
         },
         {
           "claim_blocked": "Buyer Validation",
-          "created_at": "2026-06-28T16:26:20+00:00",
+          "created_at": "2026-06-28T17:33:57+00:00",
           "evidence": "source packet packet-frozen-tuna-canada-001",
           "evidence_required": "Dated buyer/operator feedback tied to the packet and intended use.",
           "gate": "closed",
@@ -1319,7 +1349,7 @@
         },
         {
           "claim_blocked": "Source Rights / Contract",
-          "created_at": "2026-06-28T16:26:20+00:00",
+          "created_at": "2026-06-28T17:33:57+00:00",
           "evidence": "source packet packet-frozen-tuna-canada-001",
           "evidence_required": "Signed source-rights, data-rights, or commercial terms record.",
           "gate": "closed",
@@ -1542,7 +1572,7 @@
         "Trade agreement preference claim",
         "Public launch claim"
       ],
-      "official_reference_count": 29,
+      "official_reference_count": 32,
       "offline_evidence_only": false,
       "organization_id": "org-importer-demo",
       "origin_country": "Vietnam",

@@ -30,7 +30,7 @@ This is a real local packet state/view/gate engine. It does not prove hosted pro
 - Current state: `reviewer_ready`
 - Product class: `seafood`
 - View count: 8
-- Source routes: 15
+- Source routes: 16
 - Blocked claims: 15
 - Scores: 6
 - Reviewer-ready is approved: false

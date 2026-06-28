@@ -13,7 +13,7 @@
     "country/product/HS mapping",
     "packet stale-source blocker routing"
   ],
-  "monitored_source_count": 29,
+  "monitored_source_count": 32,
   "monitored_sources": [
     {
       "accessed_at": "2026-06-25",
@@ -260,6 +260,28 @@
       "url": "https://ised-isde.canada.ca/site/trade-data-online/en/overview"
     },
     {
+      "accessed_at": "2026-06-28",
+      "claim_boundary": "Reference source only; a data-service route does not prove a current trade value until a dated dataset row is ingested and cited.",
+      "evidence_role": "machine-readable Canadian data-service route for trade tables after table and license review",
+      "fetch_cadence": "weekly_for_registry_metadata",
+      "jurisdiction": "CA",
+      "live_fetch_allowed": false,
+      "loader": "intelligence_hub.official_source_registry",
+      "manual_only": false,
+      "name": "Statistics Canada Web Data Service",
+      "permission_boundary": "Local contract only. Check robots, terms, official API/download rules, and qualified source policy before enabling hosted live fetches.",
+      "refresh_mode": "external_refresh_required_before_claims",
+      "robots_status": "not_checked_local_contract",
+      "scheduled_fetch_job": "source-monitor:statcan-wds:metadata-refresh",
+      "source_id": "statcan-wds",
+      "tags": [
+        "official_reference",
+        "trade_data"
+      ],
+      "terms_status": "not_checked_local_contract",
+      "url": "https://www.statcan.gc.ca/en/developers/wds/user-guide"
+    },
+    {
       "accessed_at": "2026-06-25",
       "claim_boundary": "Reference source only; does not prove buyer validation, supplier fit, customs advice, or freshness of a specific product row.",
       "evidence_role": "importer discovery orientation",
@@ -281,6 +303,51 @@
       ],
       "terms_status": "not_checked_local_contract",
       "url": "https://ised-isde.canada.ca/site/ised/en/research-and-business-intelligence/canadian-importers-database"
+    },
+    {
+      "accessed_at": "2026-06-28",
+      "claim_boundary": "Reference source only; does not prove a specific exporter, product, destination, permit, or shipment is export-ready.",
+      "evidence_role": "Canada export-planning guidance and beginner exporter orientation",
+      "fetch_cadence": "weekly_for_registry_metadata",
+      "jurisdiction": "CA",
+      "live_fetch_allowed": false,
+      "loader": "intelligence_hub.official_source_registry",
+      "manual_only": false,
+      "name": "Government of Canada Export Guide",
+      "permission_boundary": "Local contract only. Check robots, terms, official API/download rules, and qualified source policy before enabling hosted live fetches.",
+      "refresh_mode": "external_refresh_required_before_claims",
+      "robots_status": "not_checked_local_contract",
+      "scheduled_fetch_job": "source-monitor:canada-trade-commissioner-export-guide:metadata-refresh",
+      "source_id": "canada-trade-commissioner-export-guide",
+      "tags": [
+        "import_controls",
+        "official_reference"
+      ],
+      "terms_status": "not_checked_local_contract",
+      "url": "https://www.tradecommissioner.gc.ca/guides/exporter-exportateurs/index.aspx?lang=eng"
+    },
+    {
+      "accessed_at": "2026-06-28",
+      "claim_boundary": "Reference source only; does not prove export-control classification, permit status, destination permission, or legal compliance.",
+      "evidence_role": "Canada export-control and permit routing",
+      "fetch_cadence": "weekly_for_registry_metadata",
+      "jurisdiction": "CA",
+      "live_fetch_allowed": false,
+      "loader": "intelligence_hub.official_source_registry",
+      "manual_only": false,
+      "name": "Global Affairs Canada Export Controls",
+      "permission_boundary": "Local contract only. Check robots, terms, official API/download rules, and qualified source policy before enabling hosted live fetches.",
+      "refresh_mode": "external_refresh_required_before_claims",
+      "robots_status": "not_checked_local_contract",
+      "scheduled_fetch_job": "source-monitor:gac-export-controls:metadata-refresh",
+      "source_id": "gac-export-controls",
+      "tags": [
+        "food_import",
+        "import_controls",
+        "official_reference"
+      ],
+      "terms_status": "not_checked_local_contract",
+      "url": "https://www.international.gc.ca/controls-controles/index.aspx?lang=eng"
     },
     {
       "accessed_at": "2026-06-25",
@@ -660,6 +727,7 @@
       "matched_source_ids": [
         "canada-cid",
         "canada-sanctions",
+        "canada-trade-commissioner-export-guide",
         "cbsa-a8a-b-cargo-control-document",
         "cbsa-carm",
         "cbsa-ci1-canada-customs-invoice",
@@ -668,11 +736,13 @@
         "cbsa-licensed-customs-brokers",
         "cfia-5272-documentation-review-request",
         "cfia-airs",
+        "gac-export-controls",
         "gac-import-controls",
         "gac-sanctions",
         "ised-trade-data-online",
         "justice-import-control-list",
-        "opc-pipeda-principles"
+        "opc-pipeda-principles",
+        "statcan-wds"
       ],
       "matched_tag_ids": [
         "buyer_importer_discovery",
@@ -804,12 +874,42 @@
     },
     {
       "cadence": "weekly_for_registry_metadata",
+      "job_id": "source-monitor:statcan-wds:metadata-refresh",
+      "jurisdiction": "CA",
+      "live_fetch_allowed": false,
+      "manual_only": false,
+      "next_valid_move": "Review robots/terms/API permissions, then enable the loader in Intelligence Hub with audit logging.",
+      "source_id": "statcan-wds",
+      "status": "defined_not_enabled"
+    },
+    {
+      "cadence": "weekly_for_registry_metadata",
       "job_id": "source-monitor:canada-cid:metadata-refresh",
       "jurisdiction": "CA",
       "live_fetch_allowed": false,
       "manual_only": false,
       "next_valid_move": "Review robots/terms/API permissions, then enable the loader in Intelligence Hub with audit logging.",
       "source_id": "canada-cid",
+      "status": "defined_not_enabled"
+    },
+    {
+      "cadence": "weekly_for_registry_metadata",
+      "job_id": "source-monitor:canada-trade-commissioner-export-guide:metadata-refresh",
+      "jurisdiction": "CA",
+      "live_fetch_allowed": false,
+      "manual_only": false,
+      "next_valid_move": "Review robots/terms/API permissions, then enable the loader in Intelligence Hub with audit logging.",
+      "source_id": "canada-trade-commissioner-export-guide",
+      "status": "defined_not_enabled"
+    },
+    {
+      "cadence": "weekly_for_registry_metadata",
+      "job_id": "source-monitor:gac-export-controls:metadata-refresh",
+      "jurisdiction": "CA",
+      "live_fetch_allowed": false,
+      "manual_only": false,
+      "next_valid_move": "Review robots/terms/API permissions, then enable the loader in Intelligence Hub with audit logging.",
+      "source_id": "gac-export-controls",
       "status": "defined_not_enabled"
     },
     {
@@ -1153,6 +1253,21 @@
     },
     {
       "affected_tags": [
+        "official_reference",
+        "trade_data"
+      ],
+      "change_type": "baseline_registered",
+      "classification_id": "classification:statcan-wds:42434b9aa1cb",
+      "human_review_required": true,
+      "live_fetch_allowed": false,
+      "next_valid_move": "Run the live source loader, compare hashes, classify the diff, and route affected packets for qualified review.",
+      "requires_packet_recheck": true,
+      "scheduled_fetch_job": "source-monitor:statcan-wds:metadata-refresh",
+      "severity": "watch",
+      "source_id": "statcan-wds"
+    },
+    {
+      "affected_tags": [
         "buyer_importer_discovery",
         "official_reference",
         "trade_data"
@@ -1166,6 +1281,37 @@
       "scheduled_fetch_job": "source-monitor:canada-cid:metadata-refresh",
       "severity": "watch",
       "source_id": "canada-cid"
+    },
+    {
+      "affected_tags": [
+        "import_controls",
+        "official_reference"
+      ],
+      "change_type": "baseline_registered",
+      "classification_id": "classification:canada-trade-commissioner-export-guide:6f5d632004bd",
+      "human_review_required": true,
+      "live_fetch_allowed": false,
+      "next_valid_move": "Run the live source loader, compare hashes, classify the diff, and route affected packets for qualified review.",
+      "requires_packet_recheck": true,
+      "scheduled_fetch_job": "source-monitor:canada-trade-commissioner-export-guide:metadata-refresh",
+      "severity": "watch",
+      "source_id": "canada-trade-commissioner-export-guide"
+    },
+    {
+      "affected_tags": [
+        "food_import",
+        "import_controls",
+        "official_reference"
+      ],
+      "change_type": "baseline_registered",
+      "classification_id": "classification:gac-export-controls:f6d9a7b9d503",
+      "human_review_required": true,
+      "live_fetch_allowed": false,
+      "next_valid_move": "Run the live source loader, compare hashes, classify the diff, and route affected packets for qualified review.",
+      "requires_packet_recheck": true,
+      "scheduled_fetch_job": "source-monitor:gac-export-controls:metadata-refresh",
+      "severity": "watch",
+      "source_id": "gac-export-controls"
     },
     {
       "affected_tags": [
@@ -1605,11 +1751,59 @@
       "proof_boundary": "Registry metadata proves which source to monitor, not current legal or compliance truth.",
       "rights_status": "official_reference_url_only",
       "robots_status": "not_checked_local_contract",
+      "snapshot_hash": "42434b9aa1cb806b07d66f283dd46b37fa604a966bfd56bc484dd33fc0cfb1b4",
+      "snapshot_id": "snapshot:statcan-wds:42434b9aa1cb",
+      "source_id": "statcan-wds",
+      "terms_status": "not_checked_local_contract",
+      "url": "https://www.statcan.gc.ca/en/developers/wds/user-guide"
+    },
+    {
+      "content_mode": "registry_metadata_only",
+      "fetch_cadence": "weekly_for_registry_metadata",
+      "freshness_status": "monitoring_contract_ready_requires_live_refresh",
+      "live_fetch_performed": false,
+      "manual_only": false,
+      "observed_at": "2026-06-25T00:00:00+00:00",
+      "proof_boundary": "Registry metadata proves which source to monitor, not current legal or compliance truth.",
+      "rights_status": "official_reference_url_only",
+      "robots_status": "not_checked_local_contract",
       "snapshot_hash": "bc87c47aa027b7aa54ec6e923de63f57d4f43fa562cf09a0f27273e2c1c8cd74",
       "snapshot_id": "snapshot:canada-cid:bc87c47aa027",
       "source_id": "canada-cid",
       "terms_status": "not_checked_local_contract",
       "url": "https://ised-isde.canada.ca/site/ised/en/research-and-business-intelligence/canadian-importers-database"
+    },
+    {
+      "content_mode": "registry_metadata_only",
+      "fetch_cadence": "weekly_for_registry_metadata",
+      "freshness_status": "monitoring_contract_ready_requires_live_refresh",
+      "live_fetch_performed": false,
+      "manual_only": false,
+      "observed_at": "2026-06-25T00:00:00+00:00",
+      "proof_boundary": "Registry metadata proves which source to monitor, not current legal or compliance truth.",
+      "rights_status": "official_reference_url_only",
+      "robots_status": "not_checked_local_contract",
+      "snapshot_hash": "6f5d632004bdbbf84a53cd754f94a11ab937727907c5491776d2f141da694a91",
+      "snapshot_id": "snapshot:canada-trade-commissioner-export-guide:6f5d632004bd",
+      "source_id": "canada-trade-commissioner-export-guide",
+      "terms_status": "not_checked_local_contract",
+      "url": "https://www.tradecommissioner.gc.ca/guides/exporter-exportateurs/index.aspx?lang=eng"
+    },
+    {
+      "content_mode": "registry_metadata_only",
+      "fetch_cadence": "weekly_for_registry_metadata",
+      "freshness_status": "monitoring_contract_ready_requires_live_refresh",
+      "live_fetch_performed": false,
+      "manual_only": false,
+      "observed_at": "2026-06-25T00:00:00+00:00",
+      "proof_boundary": "Registry metadata proves which source to monitor, not current legal or compliance truth.",
+      "rights_status": "official_reference_url_only",
+      "robots_status": "not_checked_local_contract",
+      "snapshot_hash": "f6d9a7b9d5034dedf64c0843c7883f0ae286685080fcd32dd4c30a6c9879b22f",
+      "snapshot_id": "snapshot:gac-export-controls:f6d9a7b9d503",
+      "source_id": "gac-export-controls",
+      "terms_status": "not_checked_local_contract",
+      "url": "https://www.international.gc.ca/controls-controles/index.aspx?lang=eng"
     },
     {
       "content_mode": "registry_metadata_only",
@@ -1899,6 +2093,7 @@
       "source_ids": [
         "canada-cid",
         "canada-sanctions",
+        "canada-trade-commissioner-export-guide",
         "cbsa-a8a-b-cargo-control-document",
         "cbsa-carm",
         "cbsa-ci1-canada-customs-invoice",
@@ -1907,11 +2102,13 @@
         "cbsa-licensed-customs-brokers",
         "cfia-5272-documentation-review-request",
         "cfia-airs",
+        "gac-export-controls",
         "gac-import-controls",
         "gac-sanctions",
         "ised-trade-data-online",
         "justice-import-control-list",
-        "opc-pipeda-principles"
+        "opc-pipeda-principles",
+        "statcan-wds"
       ],
       "status": "open",
       "unsafe_to_bypass": true

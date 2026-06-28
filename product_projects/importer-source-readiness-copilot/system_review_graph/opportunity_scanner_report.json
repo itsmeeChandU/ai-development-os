@@ -21,7 +21,7 @@
     "tool": "create_trade_packet"
   },
   "create_packet_route": "/packets/new",
-  "generated_at": "2026-06-28T16:26:20+00:00",
+  "generated_at": "2026-06-28T17:33:57+00:00",
   "proof_boundary": "Opportunity rows are signals and research prompts only, not recommendations, demand proof, margin proof, or buyer validation.",
   "signal_count": 1,
   "signals": [
@@ -35,7 +35,7 @@
         "evidence_confidence": "reference_only",
         "logistics_confidence": "unknown_requires_forwarder_inputs",
         "market_confidence": "unknown_requires_external_research",
-        "source_provenance_count": 16
+        "source_provenance_count": 19
       },
       "confidence_level": "low",
       "country": "Canada",
@@ -178,6 +178,36 @@
           "url": "https://ised-isde.canada.ca/site/trade-data-online/en/overview"
         },
         {
+          "accessed_at": "2026-06-28",
+          "claim_boundary": "Reference source only; a data-service route does not prove a current trade value until a dated dataset row is ingested and cited.",
+          "evidence_role": "machine-readable Canadian data-service route for trade tables after table and license review",
+          "jurisdiction": "Canada",
+          "name": "Statistics Canada Web Data Service",
+          "provenance_type": "official_source_registry",
+          "source_id": "statcan-wds",
+          "url": "https://www.statcan.gc.ca/en/developers/wds/user-guide"
+        },
+        {
+          "accessed_at": "2026-06-28",
+          "claim_boundary": "Reference source only; does not prove a specific exporter, product, destination, permit, or shipment is export-ready.",
+          "evidence_role": "Canada export-planning guidance and beginner exporter orientation",
+          "jurisdiction": "Canada",
+          "name": "Government of Canada Export Guide",
+          "provenance_type": "official_source_registry",
+          "source_id": "canada-trade-commissioner-export-guide",
+          "url": "https://www.tradecommissioner.gc.ca/guides/exporter-exportateurs/index.aspx?lang=eng"
+        },
+        {
+          "accessed_at": "2026-06-28",
+          "claim_boundary": "Reference source only; does not prove export-control classification, permit status, destination permission, or legal compliance.",
+          "evidence_role": "Canada export-control and permit routing",
+          "jurisdiction": "Canada",
+          "name": "Global Affairs Canada Export Controls",
+          "provenance_type": "official_source_registry",
+          "source_id": "gac-export-controls",
+          "url": "https://www.international.gc.ca/controls-controles/index.aspx?lang=eng"
+        },
+        {
           "accessed_at": "2026-06-25",
           "claim_boundary": "Reference source only; does not prove a broker relationship, review, or signoff.",
           "evidence_role": "qualified broker discovery source",
@@ -218,7 +248,7 @@
           "url": "https://www.priv.gc.ca/en/privacy-topics/privacy-laws-in-canada/the-personal-information-protection-and-electronic-documents-act-pipeda/"
         }
       ],
-      "source_provenance_count": 16,
+      "source_provenance_count": 19,
       "supply_or_surplus_signal": "unknown_requires_external_research",
       "trade_growth_signal": "unknown_requires_dataset",
       "transport_complexity": "unknown_until_dimensions_mode_and_temperature_requirements_known",

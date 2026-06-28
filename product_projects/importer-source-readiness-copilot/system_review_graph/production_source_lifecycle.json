@@ -1,7 +1,7 @@
 {
   "claims_opened": false,
   "external_effects_created": false,
-  "generated_at": "2026-06-28T16:26:21+00:00",
+  "generated_at": "2026-06-28T17:33:58+00:00",
   "packet_source_impacts": [
     {
       "blocked_claims": [
@@ -25,6 +25,7 @@
         "justice-import-control-list",
         "canada-sanctions",
         "ised-trade-data-online",
+        "statcan-wds",
         "canada-cid",
         "cbsa-licensed-customs-brokers",
         "gac-sanctions",
@@ -56,6 +57,7 @@
         "justice-import-control-list",
         "canada-sanctions",
         "ised-trade-data-online",
+        "statcan-wds",
         "cbsa-licensed-customs-brokers",
         "gac-sanctions",
         "itc-trade-map",
@@ -71,6 +73,7 @@
         "justice-import-control-list",
         "canada-sanctions",
         "ised-trade-data-online",
+        "statcan-wds",
         "cbsa-licensed-customs-brokers",
         "gac-sanctions",
         "itc-trade-map",
@@ -176,7 +179,7 @@
       "country_code": "CA",
       "http_status": 200,
       "jurisdiction": "Canada",
-      "last_checked_at": "2026-06-28T16:26:16+00:00",
+      "last_checked_at": "2026-06-28T17:33:52+00:00",
       "name": "CBSA Import Commercial Goods Into Canada",
       "packet_impact_rule": "If source changes or is not checked for the packet date, affected packet claims stay blocked.",
       "parser_method": "metadata_hash_then_source_specific_parser_when_allowed",
@@ -292,7 +295,7 @@
       "country_code": "CA",
       "http_status": 200,
       "jurisdiction": "Canada",
-      "last_checked_at": "2026-06-28T16:26:16+00:00",
+      "last_checked_at": "2026-06-28T17:33:52+00:00",
       "name": "CFIA Automated Import Reference System (AIRS)",
       "packet_impact_rule": "If source changes or is not checked for the packet date, affected packet claims stay blocked.",
       "parser_method": "metadata_hash_then_source_specific_parser_when_allowed",
@@ -749,6 +752,64 @@
         "ready_to_import",
         "ready_to_export"
       ],
+      "canonical_url": "https://www.statcan.gc.ca/en/developers/wds/user-guide",
+      "change_type": "baseline_registered",
+      "claim_boundary": "A data-service route does not prove a current trade value until a dated dataset row is ingested and cited.",
+      "content_hash": "",
+      "country_code": "CA",
+      "http_status": "",
+      "jurisdiction": "Canada",
+      "last_checked_at": "2026-06-28",
+      "name": "Statistics Canada Web Data Service",
+      "packet_impact_rule": "If source changes or is not checked for the packet date, affected packet claims stay blocked.",
+      "parser_method": "metadata_hash_then_source_specific_parser_when_allowed",
+      "refresh_cadence": "before_packet_generation_or_paid_review",
+      "review_required_if_material_change": true,
+      "robots_status": "not_checked_before_automation",
+      "source_area": "trade_data",
+      "source_areas": [
+        "trade_data"
+      ],
+      "source_id": "statcan-wds",
+      "source_state": "not_checked",
+      "source_type": "official_or_primary_reference",
+      "supports_claims": [],
+      "terms_status": "not_checked_before_automation",
+      "usable_facts": [
+        "Statistics Canada Web Data Service routes machine-readable Canadian data tables after table and license review."
+      ]
+    },
+    {
+      "allowed_automation": "manual_or_approved_loader_only",
+      "allowed_change_types": [
+        "cosmetic",
+        "date_change",
+        "source_unavailable",
+        "material_regulatory_or_tariff_change",
+        "new_requirement",
+        "removed_requirement",
+        "baseline_registered"
+      ],
+      "allowed_states": [
+        "not_checked",
+        "checked_current_reference_only",
+        "changed_minor",
+        "changed_material",
+        "source_unavailable",
+        "stale",
+        "review_required"
+      ],
+      "authority_level": "official",
+      "blocked_claims": [
+        "current_law_confirmed",
+        "tariff_confirmed",
+        "cfia_approved",
+        "sanctions_clear",
+        "buyer_validated",
+        "supplier_verified",
+        "ready_to_import",
+        "ready_to_export"
+      ],
       "canonical_url": "https://ised-isde.canada.ca/site/ised/en/research-and-business-intelligence/canadian-importers-database",
       "change_type": "date_change",
       "claim_boundary": "Importer rows are lead-discovery only and never buyer validation.",
@@ -756,7 +817,7 @@
       "country_code": "CA",
       "http_status": 200,
       "jurisdiction": "Canada",
-      "last_checked_at": "2026-06-28T16:26:16+00:00",
+      "last_checked_at": "2026-06-28T17:33:52+00:00",
       "name": "Canadian Importers Database",
       "packet_impact_rule": "If source changes or is not checked for the packet date, affected packet claims stay blocked.",
       "parser_method": "metadata_hash_then_source_specific_parser_when_allowed",
@@ -774,6 +835,122 @@
       "terms_status": "not_checked_before_automation",
       "usable_facts": [
         "Canadian Importers Database lists companies importing goods into Canada by product, city, and origin."
+      ]
+    },
+    {
+      "allowed_automation": "manual_or_approved_loader_only",
+      "allowed_change_types": [
+        "cosmetic",
+        "date_change",
+        "source_unavailable",
+        "material_regulatory_or_tariff_change",
+        "new_requirement",
+        "removed_requirement",
+        "baseline_registered"
+      ],
+      "allowed_states": [
+        "not_checked",
+        "checked_current_reference_only",
+        "changed_minor",
+        "changed_material",
+        "source_unavailable",
+        "stale",
+        "review_required"
+      ],
+      "authority_level": "official",
+      "blocked_claims": [
+        "current_law_confirmed",
+        "tariff_confirmed",
+        "cfia_approved",
+        "sanctions_clear",
+        "buyer_validated",
+        "supplier_verified",
+        "ready_to_import",
+        "ready_to_export"
+      ],
+      "canonical_url": "https://www.tradecommissioner.gc.ca/guides/exporter-exportateurs/index.aspx?lang=eng",
+      "change_type": "baseline_registered",
+      "claim_boundary": "General guidance does not prove a specific exporter, product, destination, or shipment is export-ready.",
+      "content_hash": "",
+      "country_code": "CA",
+      "http_status": "",
+      "jurisdiction": "Canada",
+      "last_checked_at": "2026-06-28",
+      "name": "Government of Canada Export Guide",
+      "packet_impact_rule": "If source changes or is not checked for the packet date, affected packet claims stay blocked.",
+      "parser_method": "metadata_hash_then_source_specific_parser_when_allowed",
+      "refresh_cadence": "before_packet_generation_or_paid_review",
+      "review_required_if_material_change": true,
+      "robots_status": "not_checked_before_automation",
+      "source_area": "export_policy",
+      "source_areas": [
+        "export_policy"
+      ],
+      "source_id": "canada-trade-commissioner-export-guide",
+      "source_state": "not_checked",
+      "source_type": "official_or_primary_reference",
+      "supports_claims": [],
+      "terms_status": "not_checked_before_automation",
+      "usable_facts": [
+        "Government of Canada export guidance routes Canadian exporters to export-planning questions."
+      ]
+    },
+    {
+      "allowed_automation": "manual_or_approved_loader_only",
+      "allowed_change_types": [
+        "cosmetic",
+        "date_change",
+        "source_unavailable",
+        "material_regulatory_or_tariff_change",
+        "new_requirement",
+        "removed_requirement",
+        "baseline_registered"
+      ],
+      "allowed_states": [
+        "not_checked",
+        "checked_current_reference_only",
+        "changed_minor",
+        "changed_material",
+        "source_unavailable",
+        "stale",
+        "review_required"
+      ],
+      "authority_level": "official",
+      "blocked_claims": [
+        "current_law_confirmed",
+        "tariff_confirmed",
+        "cfia_approved",
+        "sanctions_clear",
+        "buyer_validated",
+        "supplier_verified",
+        "ready_to_import",
+        "ready_to_export"
+      ],
+      "canonical_url": "https://www.international.gc.ca/controls-controles/index.aspx?lang=eng",
+      "change_type": "baseline_registered",
+      "claim_boundary": "Export-control routing does not prove permit status, destination permission, or compliance.",
+      "content_hash": "",
+      "country_code": "CA",
+      "http_status": "",
+      "jurisdiction": "Canada",
+      "last_checked_at": "2026-06-28",
+      "name": "Global Affairs Canada Export Controls",
+      "packet_impact_rule": "If source changes or is not checked for the packet date, affected packet claims stay blocked.",
+      "parser_method": "metadata_hash_then_source_specific_parser_when_allowed",
+      "refresh_cadence": "before_packet_generation_or_paid_review",
+      "review_required_if_material_change": true,
+      "robots_status": "not_checked_before_automation",
+      "source_area": "origin_export_controls",
+      "source_areas": [
+        "origin_export_controls"
+      ],
+      "source_id": "gac-export-controls",
+      "source_state": "not_checked",
+      "source_type": "official_or_primary_reference",
+      "supports_claims": [],
+      "terms_status": "not_checked_before_automation",
+      "usable_facts": [
+        "Global Affairs Canada export controls route controlled-goods, destination, and permit questions."
       ]
     },
     {
@@ -1767,6 +1944,6 @@
       ]
     }
   ],
-  "source_lifecycle_count": 29,
+  "source_lifecycle_count": 32,
   "status": "production_source_lifecycle_ready_reference_only_claims_closed"
 }

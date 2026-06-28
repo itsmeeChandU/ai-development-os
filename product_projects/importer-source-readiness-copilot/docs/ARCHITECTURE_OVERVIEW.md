@@ -33,6 +33,7 @@ src/importer_source_readiness/production_enterprise_api_platform.py
 src/importer_source_readiness/production_expert_review_network.py
 src/importer_source_readiness/production_launch_control_plane.py
 src/importer_source_readiness/production_market_intelligence_engine.py
+src/importer_source_readiness/production_trade_discovery_engine.py
 src/importer_source_readiness/production_packet_engine.py
 src/importer_source_readiness/production_payment_monetization_engine.py
 src/importer_source_readiness/production_portal_workflow_engine.py
@@ -69,6 +70,12 @@ system_review_graph/production_packet_views/packet-frozen-tuna-canada-001/*.json
 system_review_graph/production_country_source_engine_manifest.json
 system_review_graph/production_country_packs.json
 system_review_graph/production_source_lifecycle.json
+system_review_graph/production_trade_discovery_manifest.json
+system_review_graph/production_trade_discovery_category_map.json
+system_review_graph/production_trade_discovery_country_lanes.json
+system_review_graph/production_trade_discovery_beginner_flows.json
+system_review_graph/production_trade_discovery_source_registry.json
+system_review_graph/production_trade_discovery_requirement_audit.json
 system_review_graph/production_market_intelligence_manifest.json
 system_review_graph/production_market_signals.json
 system_review_graph/production_market_dataset_connectors.json
@@ -122,6 +129,7 @@ docs/PRODUCTION_ENTERPRISE_API_PLATFORM.md
 docs/PRODUCTION_DECISION_SCORING_ENGINE.md
 docs/PRODUCTION_AI_COPILOT_ENGINE.md
 docs/PRODUCTION_MARKET_INTELLIGENCE_ENGINE.md
+docs/PRODUCTION_TRADE_DISCOVERY_ENGINE.md
 docs/PRODUCTION_PORTAL_WORKFLOWS.md
 docs/PRODUCTION_REDEVELOPMENT.md
 docs/PRODUCTION_REPORTS_ENGINE.md
@@ -162,6 +170,7 @@ board/*.md
 | `src/importer_source_readiness/production_expert_review_network.py` | production expert review network for reviewer lanes, credential requirements, scoped review requests, finding templates, gate impacts, and no completed signoff recorded |
 | `src/importer_source_readiness/production_launch_control_plane.py` | production launch control plane for 13 launch gates, exact candidate public scope, blocked public scope, and public-launch false decision |
 | `src/importer_source_readiness/production_market_intelligence_engine.py` | production market intelligence engine for metric records, source routes, dataset connector states, score caps, and blocked demand/profit claims |
+| `src/importer_source_readiness/production_trade_discovery_engine.py` | production beginner trade discovery engine for Canada import/export browsing, product-family maps, diverse country lanes, source routes, and blocked recommendation/demand/approval claims |
 | `src/importer_source_readiness/production_packet_engine.py` | production packet engine for 12 packet states, packet event proof, eight packet views, six scores, blocked claims, and next valid moves |
 | `src/importer_source_readiness/production_payment_monetization_engine.py` | production payment monetization engine for pricing tiers, paid-scope boundaries, checkout controls, webhook controls, payment gates, and live-checkout closure |
 | `src/importer_source_readiness/production_portal_workflow_engine.py` | production portal workflow engine that maps six user portals and the default business-owner first screen to real local UI/API routes while keeping UX/accessibility/mobile/hosted/payment/public-launch gates closed |
@@ -187,6 +196,7 @@ board/*.md
 | `scripts/run_production_expert_review_network.py` | production expert review profile, request, finding-template, gate-impact, and audit writer |
 | `scripts/run_production_launch_control_plane.py` | production launch-control manifest, gate-state, exact-scope, and public decision writer |
 | `scripts/run_production_market_intelligence_engine.py` | production market intelligence signal and dataset connector writer |
+| `scripts/run_production_trade_discovery_engine.py` | production trade discovery category, country-lane, beginner-flow, source-route, and requirement-audit writer |
 | `scripts/run_production_packet_engine.py` | production packet engine manifest, event, and packet-view writer |
 | `scripts/run_production_payment_monetization_engine.py` | production payment pricing, paid-scope, checkout-gate, webhook-control, research, and review doc writer |
 | `scripts/run_production_portal_workflow_engine.py` | production portal workflow manifest, route matrix, UX check, gate-control, and review doc writer |
@@ -212,6 +222,7 @@ board/*.md
 | `tests/test_production_expert_review_network.py` | proof that reviewer lanes require real credentials and findings while keeping local requests draft-only and gates closed |
 | `tests/test_production_launch_control_plane.py` | proof that 13 launch gates, candidate public scope, blocked public scope, and final owner gate keep public launch blocked |
 | `tests/test_production_market_intelligence_engine.py` | proof that market metrics are source-routed without invented values, demand claims, profitability claims, or buyer validation |
+| `tests/test_production_trade_discovery_engine.py` | proof that beginner discovery covers Canada import/export flows, country lanes, category browsing, source routes, and no recommendation or opportunity claims |
 | `tests/test_production_portal_workflow_engine.py` | proof that public, exporter, importer, expert reviewer, operator/admin, and enterprise portals have route coverage, plain first-screen choices, UX review hooks, and closed gates |
 | `tests/test_production_payment_monetization_engine.py` | proof that monetization charges only for preparation and keeps live checkout, external charges, and payment claims closed |
 | `tests/test_production_redevelopment.py` | proof that every redevelopment phase has build, research, source, evidence, and gate tracks backed by known source IDs |

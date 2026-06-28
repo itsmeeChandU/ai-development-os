@@ -1524,7 +1524,7 @@
   ],
   "external_effects_created": false,
   "forbidden_external_claim_count": 6,
-  "generated_at": "2026-06-28T16:26:21+00:00",
+  "generated_at": "2026-06-28T17:33:58+00:00",
   "live_payment_ready": false,
   "packet_count": 1,
   "packet_ids": [
@@ -1535,6 +1535,6 @@
   "public_launch_ready": false,
   "safe_research_claim_count": 7,
   "source_refresh_record_count": 3,
-  "source_route_count": 29,
+  "source_route_count": 32,
   "status": "production_evidence_claim_gate_engine_ready_claims_fail_closed"
 }

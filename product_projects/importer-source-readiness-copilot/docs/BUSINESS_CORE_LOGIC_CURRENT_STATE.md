@@ -38,10 +38,19 @@ Current example flow: Vietnam origin to Canada destination for a food import pac
 | Supplier evidence language | Use evidence collected; do not say supplier verified |
 | Source freshness promise | Checked before packet generation or paid review, not continuous legal freshness |
 | Outreach policy | Questions only for initial controlled scope; no automatic sending |
+| Beginner discovery policy | Browse product families and country lanes as source-routed research only; do not recommend products or claim demand |
 
 ## Core Business Object
 
 The core business object is the Trade Readiness Packet.
+
+Before a packet exists, the product can create a Trade Discovery record. That
+record helps a beginner browse product families, Canada import/export
+directions, diverse origin-to-Canada lanes, Canada export lanes, regulated-risk
+questions, and official source routes. It is explicitly pre-decision research:
+it can create a starter packet and missing-evidence list, but it cannot say a
+product is best, profitable, in demand, customs-approved, CFIA-approved,
+buyer-validated, supplier-verified, or ready to ship.
 
 The packet carries:
 
@@ -90,7 +99,7 @@ The current example packet is at document stage because it has evidence, but imp
 | --- | --- |
 | 1. Business logic runtime | implemented as 12 packet questions, canonical packet stage, provenance, six scores, blocked claims, and allowed/blocked local actions |
 | 2. No-document beginner flow | implemented as executable starter input checks, source routes, starter outputs, buyer packet draft, and questions-only outreach policy |
-| 3. Market intelligence | implemented as bounded local signal scoring, importer/buyer discovery routes, and demand-claim blocks |
+| 3. Trade discovery and market intelligence | implemented as pre-packet category/country browsing, Canada import/export source routes, bounded local signal scoring, importer/buyer discovery routes, and demand-claim blocks |
 | 4. Country packs | implemented for destination, origin, strategic India, and generic fallback packs with required route checks |
 | 5. Source monitoring | implemented as source registry rows, refresh cadence, stale-source impact rules, and packet evidence freshness evaluation |
 | 6. Packet outputs | implemented as beginner, exporter, importer, operator, supplier, buyer/broker, expert, missing-evidence, and blocked-claim output sections |
@@ -159,6 +168,25 @@ The current decision tree asks 12 questions:
 12. What is the next safe move?
 
 The current packet blocks or routes to review on HS code, buyer/importer, importer of record, Incoterms, regulated product review, and official source review.
+
+## Trade Discovery Business Logic
+
+The discovery layer exists for users who do not know what to import, export, or
+research yet.
+
+1. User may start without knowing a product, HS code, buyer, supplier, or files.
+2. Product presents Canada import/export browse choices, product-family routes,
+   country-lane routes, regulated-goods warning tags, and official source
+   routes.
+3. Product records discovery rows as reference-only research, not product or
+   market recommendations.
+4. Product requires dated trade-data rows, buyer/supplier evidence, source
+   snapshots, and scoped human review before any stronger statement can be used.
+5. Product can move a chosen category and lane into a starter Trade Readiness
+   Packet with missing evidence, source map, blocked claims, and next safe move.
+6. Product keeps best-product, demand, profitability, buyer validation,
+   supplier verification, customs approval, CFIA approval, and shipment
+   readiness claims closed.
 
 ## Business Scores
 

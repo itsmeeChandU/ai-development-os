@@ -40,6 +40,7 @@
     "document_mode": "Quarantines uploaded PDFs, triages native text/OCR need, and requires user confirmation.",
     "opportunity_scanner": "Shows possible opportunity signals and research prompts only.",
     "saved_workspace": "Local SQLite/artifact workspace with account CTA and external hosting gates.",
+    "trade_discovery": "Lets beginner users browse Canada import/export categories and country lanes as source-routed research only.",
     "transport_readiness": "Creates freight-forwarder questions and blocks route/cost/shipment claims."
   },
   "promise": "Before you import or export, know what is missing. Turn a messy trade idea into an evidence-backed readiness packet that shows what is known, what is missing, which claims are blocked, and what review is required before moving forward.",
@@ -129,6 +130,7 @@
       "/api/public/packets/:id/reports/buyer.pdf",
       "/api/public/packets/:id/reports/broker.pdf",
       "/api/public/packets/:id/delete-files",
+      "/api/trade-discovery",
       "/api/opportunities",
       "/api/country-coverage",
       "/api/billing/controls",
@@ -148,6 +150,7 @@
       "/start",
       "/tools",
       "/trade-check",
+      "/trade-discovery",
       "/tools/import-readiness",
       "/tools/export-readiness",
       "/tools/buyer-broker-packet",

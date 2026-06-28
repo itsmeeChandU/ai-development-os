@@ -60,7 +60,10 @@ This engine turns researched official-source routes into country/source logic. I
 - `justice-import-control-list`: import_controls / `not_checked`.
 - `canada-sanctions`: sanctions_restricted_party / `not_checked`.
 - `ised-trade-data-online`: trade_data / `not_checked`.
+- `statcan-wds`: trade_data / `not_checked`.
 - `canada-cid`: buyer_importer_discovery / `checked_current_reference_only`.
+- `canada-trade-commissioner-export-guide`: export_policy / `not_checked`.
+- `gac-export-controls`: origin_export_controls / `not_checked`.
 - `cbsa-licensed-customs-brokers`: broker_directory / `not_checked`.
 - `itc-market-access-map`: market_access_comparison / `not_checked`.
 - `india-dgft-foreign-trade-policy`: export_policy, import_export_code, origin_export_controls / `not_checked`.

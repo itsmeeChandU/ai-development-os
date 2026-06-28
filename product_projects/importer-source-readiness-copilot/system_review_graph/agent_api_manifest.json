@@ -177,7 +177,7 @@
     "submit_government_form",
     "send_report_externally_without_confirmation"
   ],
-  "generated_at": "2026-06-28T16:26:20+00:00",
+  "generated_at": "2026-06-28T17:33:57+00:00",
   "proof_boundary": "This is a local API/MCP contract. It does not expose a live public API gateway or payment integration.",
   "safety_rules": [
     "Agents can create packets and reports only through backend claim/blocker rules.",

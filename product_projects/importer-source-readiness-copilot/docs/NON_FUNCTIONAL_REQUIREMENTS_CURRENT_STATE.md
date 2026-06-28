@@ -54,6 +54,7 @@ This document describes the current non-functional requirements and boundaries f
 | NFR-26 | Keep payment monetization preparation-only and live-checkout closed | Implemented locally; live Stripe mode, external charges, webhook delivery, refund/support approval, tax review, and payment security signoff remain external gates | `production_payment_monetization_manifest.json`, `production_payment_webhook_controls.json` |
 | NFR-27 | Keep production trust controls evidence-based and real-file gates closed | Implemented locally; managed auth, MFA, private storage, malware scanning, vendor approval, monitoring, incident rehearsal, and production backup restore remain external gates | `production_security_privacy_reliability_manifest.json`, `production_backup_restore_drill.json` |
 | NFR-28 | Keep launch activation exact-scope and owner-gated | Implemented locally; public launch, activation, hosted private beta, real-user evidence, payment activation, and final owner approval remain false | `production_launch_control_plane_manifest.json`, `production_public_launch_decision.json` |
+| NFR-29 | Keep beginner trade discovery source-routed and non-recommendatory | Implemented locally; product/category/country browsing remains research-only and cannot claim demand, profit, buyer validation, supplier verification, customs/CFIA approval, or shipment readiness | `production_trade_discovery_manifest.json`, `production_trade_discovery_requirement_audit.json` |
 
 ## Security
 

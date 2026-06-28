@@ -133,6 +133,7 @@ def main() -> int:
         [sys.executable, "scripts/run_production_data_model.py"],
         [sys.executable, "scripts/run_production_packet_engine.py"],
         [sys.executable, "scripts/run_production_country_source_engine.py"],
+        [sys.executable, "scripts/run_production_trade_discovery_engine.py"],
         [sys.executable, "scripts/run_production_market_intelligence_engine.py"],
         [sys.executable, "scripts/run_production_document_intelligence_engine.py"],
         [sys.executable, "scripts/run_production_evidence_claim_gate_engine.py"],
@@ -210,6 +211,7 @@ def main() -> int:
     production_data_model = _load_json(ROOT / "system_review_graph" / "production_data_model_manifest.json")
     production_packet_engine = _load_json(ROOT / "system_review_graph" / "production_packet_engine_manifest.json")
     production_country_source_engine = _load_json(ROOT / "system_review_graph" / "production_country_source_engine_manifest.json")
+    production_trade_discovery = _load_json(ROOT / "system_review_graph" / "production_trade_discovery_manifest.json")
     production_market_intelligence = _load_json(ROOT / "system_review_graph" / "production_market_intelligence_manifest.json")
     production_document_intelligence = _load_json(ROOT / "system_review_graph" / "production_document_intelligence_manifest.json")
     production_evidence_claim_gate = _load_json(ROOT / "system_review_graph" / "production_evidence_claim_gate_manifest.json")
@@ -295,6 +297,7 @@ def main() -> int:
         "src/importer_source_readiness/production_enterprise_api_platform.py",
         "src/importer_source_readiness/production_expert_review_network.py",
         "src/importer_source_readiness/production_market_intelligence_engine.py",
+        "src/importer_source_readiness/production_trade_discovery_engine.py",
         "src/importer_source_readiness/production_launch_control_plane.py",
         "src/importer_source_readiness/production_packet_engine.py",
         "src/importer_source_readiness/production_payment_monetization_engine.py",
@@ -319,6 +322,7 @@ def main() -> int:
         "tests/test_production_enterprise_api_platform.py",
         "tests/test_production_expert_review_network.py",
         "tests/test_production_market_intelligence_engine.py",
+        "tests/test_production_trade_discovery_engine.py",
         "tests/test_production_launch_control_plane.py",
         "tests/test_production_packet_engine.py",
         "tests/test_production_payment_monetization_engine.py",
@@ -343,6 +347,7 @@ def main() -> int:
         "scripts/run_production_enterprise_api_platform.py",
         "scripts/run_production_expert_review_network.py",
         "scripts/run_production_market_intelligence_engine.py",
+        "scripts/run_production_trade_discovery_engine.py",
         "scripts/run_production_launch_control_plane.py",
         "scripts/run_production_packet_engine.py",
         "scripts/run_production_payment_monetization_engine.py",
@@ -378,6 +383,7 @@ def main() -> int:
         "docs/PRODUCTION_ENTERPRISE_API_PLATFORM.md",
         "docs/PRODUCTION_EXPERT_REVIEW_NETWORK.md",
         "docs/PRODUCTION_MARKET_INTELLIGENCE_ENGINE.md",
+        "docs/PRODUCTION_TRADE_DISCOVERY_ENGINE.md",
         "docs/PRODUCTION_LAUNCH_CONTROL_PLANE.md",
         "docs/PRODUCTION_PACKET_ENGINE.md",
         "docs/PRODUCTION_PAYMENT_MONETIZATION_ENGINE.md",
@@ -456,6 +462,12 @@ def main() -> int:
         "system_review_graph/production_market_intelligence_manifest.json",
         "system_review_graph/production_market_signals.json",
         "system_review_graph/production_market_dataset_connectors.json",
+        "system_review_graph/production_trade_discovery_manifest.json",
+        "system_review_graph/production_trade_discovery_category_map.json",
+        "system_review_graph/production_trade_discovery_country_lanes.json",
+        "system_review_graph/production_trade_discovery_beginner_flows.json",
+        "system_review_graph/production_trade_discovery_source_registry.json",
+        "system_review_graph/production_trade_discovery_requirement_audit.json",
         "system_review_graph/production_document_intelligence_manifest.json",
         "system_review_graph/production_document_pipeline.json",
         "system_review_graph/production_document_extracted_fields.json",
@@ -639,6 +651,9 @@ def main() -> int:
         "gac-sanctions",
         "ised-trade-data-online",
         "canada-cid",
+        "statcan-wds",
+        "canada-trade-commissioner-export-guide",
+        "gac-export-controls",
         "india-dgft-foreign-trade-policy",
         "world-bank-wits",
         "itc-trade-map",
@@ -822,6 +837,75 @@ def main() -> int:
             failures.append("packet source impact should block CFIA approval")
         if impact.get("external_claims_opened") is not False:
             failures.append("packet source impact must keep external claims closed")
+    if production_trade_discovery.get("status") != "production_trade_discovery_engine_ready_beginner_research_routed_no_opportunity_claims":
+        failures.append(
+            "production trade discovery status expected production_trade_discovery_engine_ready_beginner_research_routed_no_opportunity_claims, "
+            f"got {production_trade_discovery.get('status')!r}"
+        )
+    if production_trade_discovery.get("category_count", 0) < 12:
+        failures.append("production trade discovery should expose at least 12 beginner category families")
+    if production_trade_discovery.get("country_lane_count", 0) < 12:
+        failures.append("production trade discovery should expose diverse Canada import/export country lanes")
+    if production_trade_discovery.get("beginner_flow_count", 0) < 8:
+        failures.append("production trade discovery should expose beginner flows before packet creation")
+    if production_trade_discovery.get("dataset_route_count", 0) < 6:
+        failures.append("production trade discovery should register dataset routes for source-backed research")
+    if production_trade_discovery.get("missing_registry_sources"):
+        failures.append(
+            "production trade discovery references missing source registry ids: "
+            + ", ".join(production_trade_discovery.get("missing_registry_sources", []))
+        )
+    for key in (
+        "recommendation_claimed",
+        "market_opportunity_claimed",
+        "demand_claimed",
+        "profitability_claimed",
+        "buyer_validation_claimed",
+        "supplier_verification_claimed",
+        "customs_approval_claimed",
+        "cfia_approval_claimed",
+        "public_launch_ready",
+        "external_effects_created",
+        "claims_opened",
+    ):
+        if production_trade_discovery.get(key) is not False:
+            failures.append(f"production trade discovery expected {key}=false")
+    for blocked_claim in ("best_product_to_import", "guaranteed_demand", "buyer_validated", "supplier_verified", "cfia_approved"):
+        if blocked_claim not in production_trade_discovery.get("blocked_claims", []):
+            failures.append(f"production trade discovery should block {blocked_claim}")
+    discovery_source_ids = {row.get("source_id") for row in production_trade_discovery.get("source_records", [])}
+    for source_id in (
+        "ised-trade-data-online",
+        "canada-cid",
+        "statcan-wds",
+        "cbsa-import-commercial-goods",
+        "cfia-airs",
+        "gac-sanctions",
+        "canada-trade-commissioner-export-guide",
+        "gac-export-controls",
+        "world-bank-wits",
+        "itc-trade-map",
+        "itc-market-access-map",
+        "wco-harmonized-system",
+    ):
+        if source_id not in discovery_source_ids:
+            failures.append(f"production trade discovery missing source route {source_id}")
+    discovery_flow_ids = {row.get("flow_id") for row in production_trade_discovery.get("beginner_flows", [])}
+    for flow_id in ("browse_canada_imports", "browse_canada_exports", "compare_origin_lanes_to_canada", "check_regulated_goods_early"):
+        if flow_id not in discovery_flow_ids:
+            failures.append(f"production trade discovery missing beginner flow {flow_id}")
+    discovery_lane_ids = {row.get("lane_id") for row in production_trade_discovery.get("country_lanes", [])}
+    for lane_id in ("IN-to-CA", "VN-to-CA", "US-to-CA", "MX-to-CA", "CN-to-CA", "EU-to-CA", "CA-to-US", "GENERIC-to-CA"):
+        if lane_id not in discovery_lane_ids:
+            failures.append(f"production trade discovery missing country lane {lane_id}")
+    if any(row.get("trade_values_loaded") is not False for row in production_trade_discovery.get("country_lanes", [])):
+        failures.append("production trade discovery country lanes must not contain invented trade values")
+    if any(row.get("recommendation_claimed") is not False for row in production_trade_discovery.get("country_lanes", [])):
+        failures.append("production trade discovery country lanes must not claim recommendations")
+    if any(row.get("recommendation_claimed") is not False for row in production_trade_discovery.get("category_families", [])):
+        failures.append("production trade discovery categories must not claim recommendations")
+    if any(row.get("values_loaded") is not False for row in production_trade_discovery.get("dataset_routes", [])):
+        failures.append("production trade discovery dataset routes must not pretend values are loaded")
     if production_market_intelligence.get("status") != "production_market_intelligence_engine_ready_source_routed_no_demand_claims":
         failures.append(
             "production market intelligence status expected production_market_intelligence_engine_ready_source_routed_no_demand_claims, "
@@ -2281,6 +2365,10 @@ def main() -> int:
     print(f"production_country_source_engine_status={production_country_source_engine['status']}")
     print(f"production_country_packs={production_country_source_engine['country_pack_count']}")
     print(f"production_source_lifecycle_rows={production_country_source_engine['source_lifecycle_count']}")
+    print(f"production_trade_discovery_status={production_trade_discovery['status']}")
+    print(f"production_trade_discovery_categories={production_trade_discovery['category_count']}")
+    print(f"production_trade_discovery_country_lanes={production_trade_discovery['country_lane_count']}")
+    print(f"production_trade_discovery_beginner_flows={production_trade_discovery['beginner_flow_count']}")
     print(f"production_market_intelligence_status={production_market_intelligence['status']}")
     print(f"production_market_signals={production_market_intelligence['market_signal_count']}")
     print(f"production_market_dataset_connectors={production_market_intelligence['dataset_connector_count']}")

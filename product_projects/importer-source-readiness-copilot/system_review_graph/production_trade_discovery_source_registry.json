@@ -1,0 +1,360 @@
+{
+  "dataset_route_count": 6,
+  "dataset_routes": [
+    {
+      "cannot_support": [
+        "profitable_market",
+        "guaranteed_demand",
+        "buyer_validated"
+      ],
+      "claims_opened": false,
+      "data_access_status": "manual_query_or_connector_after_terms_review",
+      "dataset_route_id": "canada-import-export-browser",
+      "direction_support": [
+        "import_into_canada",
+        "export_from_canada"
+      ],
+      "external_effects_created": false,
+      "source_id": "ised-trade-data-online",
+      "source_route": {
+        "automation_status": "manual_or_terms_checked_connector_required",
+        "claim_boundary": "Trade rows can support research signals only; they do not prove demand, profit, or buyer intent.",
+        "evidence_required_before_claim": true,
+        "jurisdiction": "CA",
+        "name": "ISED Trade Data Online",
+        "registry_status": "registered",
+        "source_area": "canada_trade_browse",
+        "source_id": "ised-trade-data-online",
+        "url": "https://ised-isde.canada.ca/site/trade-data-online/en/overview",
+        "use": "dataset_route"
+      },
+      "supports_after_ingestion": [
+        "source_backed_trade_flow_signal",
+        "top_origin_country_signal",
+        "trend_signal"
+      ],
+      "values_loaded": false
+    },
+    {
+      "cannot_support": [
+        "buyer_validated",
+        "purchase_intent_confirmed"
+      ],
+      "claims_opened": false,
+      "data_access_status": "manual_query_or_connector_after_terms_review",
+      "dataset_route_id": "canada-importer-lead-browser",
+      "direction_support": [
+        "import_into_canada"
+      ],
+      "external_effects_created": false,
+      "source_id": "canada-cid",
+      "source_route": {
+        "automation_status": "manual_or_terms_checked_connector_required",
+        "claim_boundary": "Importer rows are lead sources only and never buyer validation.",
+        "evidence_required_before_claim": true,
+        "jurisdiction": "CA",
+        "name": "Canadian Importers Database",
+        "registry_status": "registered",
+        "source_area": "canada_importer_leads",
+        "source_id": "canada-cid",
+        "url": "https://ised-isde.canada.ca/site/ised/en/research-and-business-intelligence/canadian-importers-database",
+        "use": "dataset_route"
+      },
+      "supports_after_ingestion": [
+        "possible_importer_lead_route"
+      ],
+      "values_loaded": false
+    },
+    {
+      "cannot_support": [
+        "legal_currentness",
+        "profitability",
+        "buyer_demand"
+      ],
+      "claims_opened": false,
+      "data_access_status": "table_route_research_required_before_ingestion",
+      "dataset_route_id": "canada-merchandise-trade-wds",
+      "direction_support": [
+        "import_into_canada",
+        "export_from_canada"
+      ],
+      "external_effects_created": false,
+      "source_id": "statcan-wds",
+      "source_route": {
+        "automation_status": "manual_or_terms_checked_connector_required",
+        "claim_boundary": "A data-service route does not prove a value until a dated dataset row is ingested and cited.",
+        "evidence_required_before_claim": true,
+        "jurisdiction": "CA",
+        "name": "Statistics Canada Web Data Service",
+        "registry_status": "registered",
+        "source_area": "canada_trade_dataset_access",
+        "source_id": "statcan-wds",
+        "url": "https://www.statcan.gc.ca/en/developers/wds/user-guide",
+        "use": "dataset_route"
+      },
+      "supports_after_ingestion": [
+        "dated_canada_trade_table_row"
+      ],
+      "values_loaded": false
+    },
+    {
+      "cannot_support": [
+        "canada_import_approval",
+        "buyer_validation"
+      ],
+      "claims_opened": false,
+      "data_access_status": "manual_query_or_connector_after_terms_review",
+      "dataset_route_id": "global-trade-context",
+      "direction_support": [
+        "import_into_canada",
+        "export_from_canada",
+        "compare_other_markets"
+      ],
+      "external_effects_created": false,
+      "source_id": "world-bank-wits",
+      "source_route": {
+        "automation_status": "manual_or_terms_checked_connector_required",
+        "claim_boundary": "Global indicators are research context only.",
+        "evidence_required_before_claim": true,
+        "jurisdiction": "International",
+        "name": "World Bank World Integrated Trade Solution",
+        "registry_status": "registered",
+        "source_area": "global_trade_comparison",
+        "source_id": "world-bank-wits",
+        "url": "https://wits.worldbank.org/",
+        "use": "dataset_route"
+      },
+      "supports_after_ingestion": [
+        "global_trade_context_signal"
+      ],
+      "values_loaded": false
+    },
+    {
+      "cannot_support": [
+        "buyer_validation",
+        "guaranteed_demand"
+      ],
+      "claims_opened": false,
+      "data_access_status": "manual_query_or_connector_after_terms_review",
+      "dataset_route_id": "global-trade-map-context",
+      "direction_support": [
+        "import_into_canada",
+        "export_from_canada",
+        "compare_other_markets"
+      ],
+      "external_effects_created": false,
+      "source_id": "itc-trade-map",
+      "source_route": {
+        "automation_status": "manual_or_terms_checked_connector_required",
+        "claim_boundary": "Directory or trade rows do not validate buyers or demand.",
+        "evidence_required_before_claim": true,
+        "jurisdiction": "International",
+        "name": "International Trade Centre Trade Map",
+        "registry_status": "registered",
+        "source_area": "global_trade_and_company_directory",
+        "source_id": "itc-trade-map",
+        "url": "https://www.trademap.org/",
+        "use": "dataset_route"
+      },
+      "supports_after_ingestion": [
+        "trade_value_volume_growth_signal",
+        "company_directory_route"
+      ],
+      "values_loaded": false
+    },
+    {
+      "cannot_support": [
+        "tariff_confirmed",
+        "market_entry_approved"
+      ],
+      "claims_opened": false,
+      "data_access_status": "manual_query_or_connector_after_terms_review",
+      "dataset_route_id": "market-access-map-context",
+      "direction_support": [
+        "import_into_canada",
+        "export_from_canada",
+        "compare_other_markets"
+      ],
+      "external_effects_created": false,
+      "source_id": "itc-market-access-map",
+      "source_route": {
+        "automation_status": "manual_or_terms_checked_connector_required",
+        "claim_boundary": "Market-access routes do not confirm tariff treatment or market-entry approval.",
+        "evidence_required_before_claim": true,
+        "jurisdiction": "International",
+        "name": "ITC Market Access Map",
+        "registry_status": "registered",
+        "source_area": "market_access_comparison",
+        "source_id": "itc-market-access-map",
+        "url": "https://www.macmap.org/",
+        "use": "dataset_route"
+      },
+      "supports_after_ingestion": [
+        "market_access_issue_signal"
+      ],
+      "values_loaded": false
+    }
+  ],
+  "generated_at": "2026-06-28T17:33:58+00:00",
+  "missing_registry_sources": [],
+  "source_record_count": 13,
+  "source_records": [
+    {
+      "automation_status": "manual_or_terms_checked_connector_required",
+      "claim_boundary": "Trade rows can support research signals only; they do not prove demand, profit, or buyer intent.",
+      "evidence_required_before_claim": true,
+      "name": "ISED Trade Data Online",
+      "product_use": "Canada import/export category and country-lane research.",
+      "registry_status": "registered",
+      "source_area": "canada_trade_browse",
+      "source_id": "ised-trade-data-online",
+      "url": "https://ised-isde.canada.ca/site/trade-data-online/en/overview",
+      "usable_fact": "Browse Canada import and export reports by product, partner country, and period before choosing a lane."
+    },
+    {
+      "automation_status": "manual_or_terms_checked_connector_required",
+      "claim_boundary": "Importer rows are lead sources only and never buyer validation.",
+      "evidence_required_before_claim": true,
+      "name": "Canadian Importers Database",
+      "product_use": "Lead discovery after a product/category is chosen.",
+      "registry_status": "registered",
+      "source_area": "canada_importer_leads",
+      "source_id": "canada-cid",
+      "url": "https://ised-isde.canada.ca/site/ised/en/research-and-business-intelligence/canadian-importers-database",
+      "usable_fact": "Find possible Canadian importer leads by product, city, and country of origin."
+    },
+    {
+      "automation_status": "manual_or_terms_checked_connector_required",
+      "claim_boundary": "A data-service route does not prove a value until a dated dataset row is ingested and cited.",
+      "evidence_required_before_claim": true,
+      "name": "Statistics Canada Web Data Service",
+      "product_use": "Machine-readable Canada merchandise trade dataset route.",
+      "registry_status": "registered",
+      "source_area": "canada_trade_dataset_access",
+      "source_id": "statcan-wds",
+      "url": "https://www.statcan.gc.ca/en/developers/wds/user-guide",
+      "usable_fact": "Use Statistics Canada data service routes for Canadian international merchandise trade tables after table and license review."
+    },
+    {
+      "automation_status": "manual_or_terms_checked_connector_required",
+      "claim_boundary": "The product routes preparation only and does not act as CBSA, a broker, or legal adviser.",
+      "evidence_required_before_claim": true,
+      "name": "CBSA Import Commercial Goods Into Canada",
+      "product_use": "Import workflow, business number/RM, origin, rulings, and other government requirement prompts.",
+      "registry_status": "registered",
+      "source_area": "canada_import_workflow",
+      "source_id": "cbsa-import-commercial-goods",
+      "url": "https://www.cbsa-asfc.gc.ca/import/menu-eng.html",
+      "usable_fact": "Route Canada import preparation to CBSA commercial-import steps and importer responsibility questions."
+    },
+    {
+      "automation_status": "manual_or_terms_checked_connector_required",
+      "claim_boundary": "HS candidates are not classification or tariff confirmation.",
+      "evidence_required_before_claim": true,
+      "name": "CBSA Customs Tariff 2026",
+      "product_use": "HS candidate and tariff source routing.",
+      "registry_status": "registered",
+      "source_area": "canada_tariff_orientation",
+      "source_id": "cbsa-customs-tariff-2026",
+      "url": "https://www.cbsa-asfc.gc.ca/trade-commerce/tariff-tarif/2026/menu-eng.html",
+      "usable_fact": "Use the Canada tariff source route for HS candidate and tariff-orientation research."
+    },
+    {
+      "automation_status": "manual_or_terms_checked_connector_required",
+      "claim_boundary": "AIRS routing does not prove admissibility, CFIA approval, or current import compliance.",
+      "evidence_required_before_claim": true,
+      "name": "CFIA Automated Import Reference System (AIRS)",
+      "product_use": "Early regulated-goods warning before the user invests in a lane.",
+      "registry_status": "registered",
+      "source_area": "regulated_product_screening",
+      "source_id": "cfia-airs",
+      "url": "https://inspection.canada.ca/en/importing-food-plants-animals/airs",
+      "usable_fact": "Route food, plant, animal, seafood, and other CFIA-regulated suspicion to AIRS reference checks."
+    },
+    {
+      "automation_status": "manual_or_terms_checked_connector_required",
+      "claim_boundary": "Sanctions route presence does not prove screening is complete or clear.",
+      "evidence_required_before_claim": true,
+      "name": "Global Affairs Canada sanctions",
+      "product_use": "Country-lane and party-screening warning.",
+      "registry_status": "registered",
+      "source_area": "sanctions_country_screening",
+      "source_id": "gac-sanctions",
+      "url": "https://www.international.gc.ca/world-monde/international_relations-relations_internationales/sanctions/index.aspx?lang=eng",
+      "usable_fact": "Route restricted-country and sanctions questions to Global Affairs Canada sanctions records."
+    },
+    {
+      "automation_status": "manual_or_terms_checked_connector_required",
+      "claim_boundary": "Global indicators are research context only.",
+      "evidence_required_before_claim": true,
+      "name": "World Bank World Integrated Trade Solution",
+      "product_use": "Fallback global market research when Canada-specific rows need context.",
+      "registry_status": "registered",
+      "source_area": "global_trade_comparison",
+      "source_id": "world-bank-wits",
+      "url": "https://wits.worldbank.org/",
+      "usable_fact": "Compare global merchandise trade, tariff, and non-tariff-measure context."
+    },
+    {
+      "automation_status": "manual_or_terms_checked_connector_required",
+      "claim_boundary": "Directory or trade rows do not validate buyers or demand.",
+      "evidence_required_before_claim": true,
+      "name": "International Trade Centre Trade Map",
+      "product_use": "Compare markets and identify possible company-directory leads.",
+      "registry_status": "registered",
+      "source_area": "global_trade_and_company_directory",
+      "source_id": "itc-trade-map",
+      "url": "https://www.trademap.org/",
+      "usable_fact": "Route global import/export values, growth, market share, and company-directory research."
+    },
+    {
+      "automation_status": "manual_or_terms_checked_connector_required",
+      "claim_boundary": "Market-access routes do not confirm tariff treatment or market-entry approval.",
+      "evidence_required_before_claim": true,
+      "name": "ITC Market Access Map",
+      "product_use": "Market access issue spotting before a packet is sent to review.",
+      "registry_status": "registered",
+      "source_area": "market_access_comparison",
+      "source_id": "itc-market-access-map",
+      "url": "https://www.macmap.org/",
+      "usable_fact": "Route tariff, trade-remedy, regulatory, and preferential-access comparison."
+    },
+    {
+      "automation_status": "manual_or_terms_checked_connector_required",
+      "claim_boundary": "HS doctrine supports candidate research only, not classification confirmation.",
+      "evidence_required_before_claim": true,
+      "name": "World Customs Organization Harmonized System",
+      "product_use": "Beginner HS-candidate education and next questions.",
+      "registry_status": "registered",
+      "source_area": "hs_doctrine",
+      "source_id": "wco-harmonized-system",
+      "url": "https://www.wcoomd.org/en/topics/nomenclature/overview/what-is-the-harmonized-system.aspx",
+      "usable_fact": "Use HS structure to explain why product wording needs a classification candidate."
+    },
+    {
+      "automation_status": "manual_or_terms_checked_connector_required",
+      "claim_boundary": "General guidance does not prove a specific exporter, product, or destination is export-ready.",
+      "evidence_required_before_claim": true,
+      "name": "Government of Canada Export Guide",
+      "product_use": "Export-from-Canada beginner flow and export checklist prompts.",
+      "registry_status": "registered",
+      "source_area": "canada_export_beginner_guidance",
+      "source_id": "canada-trade-commissioner-export-guide",
+      "url": "https://www.tradecommissioner.gc.ca/guides/exporter-exportateurs/index.aspx?lang=eng",
+      "usable_fact": "Route Canadian exporters to Government of Canada export-planning guidance."
+    },
+    {
+      "automation_status": "manual_or_terms_checked_connector_required",
+      "claim_boundary": "Export-control routing does not prove permit status, destination permission, or compliance.",
+      "evidence_required_before_claim": true,
+      "name": "Global Affairs Canada Export Controls",
+      "product_use": "Export-from-Canada controlled-goods warning and review routing.",
+      "registry_status": "registered",
+      "source_area": "canada_export_controls",
+      "source_id": "gac-export-controls",
+      "url": "https://www.international.gc.ca/controls-controles/index.aspx?lang=eng",
+      "usable_fact": "Route Canadian export-control and permit questions to Global Affairs Canada controls."
+    }
+  ],
+  "status": "production_trade_discovery_sources_registered"
+}

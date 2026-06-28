@@ -266,7 +266,7 @@
     "status": "local_business_logic_implemented_external_gates_preserved"
   },
   "execution_report": "system_review_graph/product_operations_report.json",
-  "generated_at": "2026-06-28T16:26:20+00:00",
+  "generated_at": "2026-06-28T17:33:57+00:00",
   "hosted_beta_control_contract": {
     "controls": [
       {
@@ -382,7 +382,7 @@
         "next_valid_move": "Generate a starter packet with blocked claims and questions.",
         "outreach_policy": "questions_only_no_automatic_sending",
         "proof_boundary": "Starter flow prepares a research packet only; it never proves market demand, source freshness, or trade readiness.",
-        "source_route_count": 24,
+        "source_route_count": 27,
         "source_routes": [
           {
             "accessed_at": "2026-06-25",
@@ -1077,7 +1077,26 @@
             ],
             "country": "Canada",
             "coverage_check_status": "reference_routes_complete_review_required",
-            "export_sources": [],
+            "export_sources": [
+              {
+                "accessed_at": "2026-06-28",
+                "claim_boundary": "Reference source only; does not prove a specific exporter, product, destination, permit, or shipment is export-ready.",
+                "evidence_role": "Canada export-planning guidance and beginner exporter orientation",
+                "jurisdiction": "Canada",
+                "name": "Government of Canada Export Guide",
+                "source_id": "canada-trade-commissioner-export-guide",
+                "url": "https://www.tradecommissioner.gc.ca/guides/exporter-exportateurs/index.aspx?lang=eng"
+              },
+              {
+                "accessed_at": "2026-06-28",
+                "claim_boundary": "Reference source only; does not prove export-control classification, permit status, destination permission, or legal compliance.",
+                "evidence_role": "Canada export-control and permit routing",
+                "jurisdiction": "Canada",
+                "name": "Global Affairs Canada Export Controls",
+                "source_id": "gac-export-controls",
+                "url": "https://www.international.gc.ca/controls-controles/index.aspx?lang=eng"
+              }
+            ],
             "food_plant_animal_sources": [
               {
                 "accessed_at": "2026-06-25",
@@ -1114,6 +1133,15 @@
                 "name": "Global Affairs Canada Consolidated Canadian Autonomous Sanctions List",
                 "source_id": "canada-sanctions",
                 "url": "https://www.international.gc.ca/world-monde/international_relations-relations_internationales/sanctions/consolidated-consolide.aspx?lang=eng"
+              },
+              {
+                "accessed_at": "2026-06-28",
+                "claim_boundary": "Reference source only; does not prove export-control classification, permit status, destination permission, or legal compliance.",
+                "evidence_role": "Canada export-control and permit routing",
+                "jurisdiction": "Canada",
+                "name": "Global Affairs Canada Export Controls",
+                "source_id": "gac-export-controls",
+                "url": "https://www.international.gc.ca/controls-controles/index.aspx?lang=eng"
               },
               {
                 "accessed_at": "2026-06-28",
@@ -1282,7 +1310,7 @@
                 "url": "https://www.international.gc.ca/world-monde/international_relations-relations_internationales/sanctions/index.aspx?lang=eng"
               }
             ],
-            "source_count": 15,
+            "source_count": 18,
             "status": "country_pack_ready_reference_only",
             "tariff_sources": [
               {
@@ -1842,11 +1870,11 @@
             "market_access_approved"
           ],
           "competitor_source_countries": [
-            "China",
             "European Union",
             "Mexico",
             "United States",
-            "Vietnam"
+            "Vietnam",
+            "China"
           ],
           "destination": "Canada",
           "exporter_origin": "Vietnam",
@@ -2030,7 +2058,7 @@
         "fresh_or_refreshed_count": 3,
         "next_valid_move": "Run dated source refresh, store hash/status, and collect qualified review before current-source claims.",
         "proof_boundary": "Freshness evaluation is local and packet-specific; it does not prove current law, tariff, permit, or compliance status.",
-        "registered_source_count": 24,
+        "registered_source_count": 27,
         "reviewed_source_count": 0,
         "source_rows": [
           {
@@ -2039,7 +2067,7 @@
             "evidence_id": "evidence-frozen-tuna-cid-reference",
             "freshness_status": "source_fresh_reference_only",
             "human_review_status": "not_reviewed",
-            "last_verified_at": "2026-06-28T16:26:16+00:00",
+            "last_verified_at": "2026-06-28T17:33:52+00:00",
             "packet_impact": "blocks_current_source_claims",
             "source_url": "https://ised-isde.canada.ca/site/ised/en/research-and-business-intelligence/canadian-importers-database"
           },
@@ -2049,7 +2077,7 @@
             "evidence_id": "evidence-frozen-tuna-cbsa-import-workflow",
             "freshness_status": "source_fresh_reference_only",
             "human_review_status": "not_reviewed",
-            "last_verified_at": "2026-06-28T16:26:16+00:00",
+            "last_verified_at": "2026-06-28T17:33:52+00:00",
             "packet_impact": "blocks_current_source_claims",
             "source_url": "https://www.cbsa-asfc.gc.ca/import/menu-eng.html"
           },
@@ -2059,7 +2087,7 @@
             "evidence_id": "evidence-frozen-tuna-cfia-airs-reference",
             "freshness_status": "source_fresh_reference_only",
             "human_review_status": "not_reviewed",
-            "last_verified_at": "2026-06-28T16:26:16+00:00",
+            "last_verified_at": "2026-06-28T17:33:52+00:00",
             "packet_impact": "blocks_current_source_claims",
             "source_url": "https://inspection.canada.ca/en/importing-food-plants-animals/airs"
           }
@@ -2129,7 +2157,7 @@
           "user sees recheck required",
           "old output remains blocked until refreshed evidence and review are attached"
         ],
-        "source_count": 24,
+        "source_count": 27,
         "sources": [
           {
             "accessed_at": "2026-06-25",
@@ -2539,6 +2567,43 @@
             "url": "https://ised-isde.canada.ca/site/trade-data-online/en/overview"
           },
           {
+            "accessed_at": "2026-06-28",
+            "auth_required": "unknown_until_source_review",
+            "cadence": "before_packet_decision_or_when_source_changes",
+            "canonical_url": "https://www.statcan.gc.ca/en/developers/wds/user-guide",
+            "claim_boundary": "Reference source only; a data-service route does not prove a current trade value until a dated dataset row is ingested and cited.",
+            "content_hash": "",
+            "content_hash_required": true,
+            "diff_classifier": [
+              "wording_change",
+              "date_change",
+              "tariff_or_regulatory_change",
+              "source_unavailable"
+            ],
+            "diff_strategy": "hash_then_classify_material_change_before_claim_update",
+            "evidence_role": "machine-readable Canadian data-service route for trade tables after table and license review",
+            "fetch_mode": "registered_reference_manual_refresh",
+            "freshness_status": "not_checked",
+            "jurisdiction": "Canada",
+            "name": "Statistics Canada Web Data Service",
+            "packet_impact_logic": "critical source changes mark affected packet outputs stale until refreshed evidence and reviewer review are attached",
+            "packet_stale_alert": "create stale-source blocker if source content changes or freshness expires",
+            "packet_tags": [
+              "packet-frozen-tuna-canada-001",
+              "Vietnam",
+              "Canada",
+              "food_import"
+            ],
+            "parser_contract": "extract date/status/hash and classify change type before packet impact",
+            "parser_type": "metadata_hash_or_structured_export_when_allowed",
+            "refresh_method": "manual_or_permitted_fetch_after_terms_check",
+            "robots_status": "must_check_before_fetch",
+            "source_id": "statcan-wds",
+            "source_type": "official_reference",
+            "terms_status": "must_check_before_fetch",
+            "url": "https://www.statcan.gc.ca/en/developers/wds/user-guide"
+          },
+          {
             "accessed_at": "2026-06-25",
             "auth_required": "unknown_until_source_review",
             "cadence": "before_packet_decision_or_when_source_changes",
@@ -2574,6 +2639,80 @@
             "source_type": "market_or_buyer_research",
             "terms_status": "must_check_before_fetch",
             "url": "https://ised-isde.canada.ca/site/ised/en/research-and-business-intelligence/canadian-importers-database"
+          },
+          {
+            "accessed_at": "2026-06-28",
+            "auth_required": "unknown_until_source_review",
+            "cadence": "before_packet_decision_or_when_source_changes",
+            "canonical_url": "https://www.tradecommissioner.gc.ca/guides/exporter-exportateurs/index.aspx?lang=eng",
+            "claim_boundary": "Reference source only; does not prove a specific exporter, product, destination, permit, or shipment is export-ready.",
+            "content_hash": "",
+            "content_hash_required": true,
+            "diff_classifier": [
+              "wording_change",
+              "date_change",
+              "tariff_or_regulatory_change",
+              "source_unavailable"
+            ],
+            "diff_strategy": "hash_then_classify_material_change_before_claim_update",
+            "evidence_role": "Canada export-planning guidance and beginner exporter orientation",
+            "fetch_mode": "registered_reference_manual_refresh",
+            "freshness_status": "not_checked",
+            "jurisdiction": "Canada",
+            "name": "Government of Canada Export Guide",
+            "packet_impact_logic": "critical source changes mark affected packet outputs stale until refreshed evidence and reviewer review are attached",
+            "packet_stale_alert": "create stale-source blocker if source content changes or freshness expires",
+            "packet_tags": [
+              "packet-frozen-tuna-canada-001",
+              "Vietnam",
+              "Canada",
+              "food_import"
+            ],
+            "parser_contract": "extract date/status/hash and classify change type before packet impact",
+            "parser_type": "metadata_hash_or_structured_export_when_allowed",
+            "refresh_method": "manual_or_permitted_fetch_after_terms_check",
+            "robots_status": "must_check_before_fetch",
+            "source_id": "canada-trade-commissioner-export-guide",
+            "source_type": "official_reference",
+            "terms_status": "must_check_before_fetch",
+            "url": "https://www.tradecommissioner.gc.ca/guides/exporter-exportateurs/index.aspx?lang=eng"
+          },
+          {
+            "accessed_at": "2026-06-28",
+            "auth_required": "unknown_until_source_review",
+            "cadence": "before_packet_decision_or_when_source_changes",
+            "canonical_url": "https://www.international.gc.ca/controls-controles/index.aspx?lang=eng",
+            "claim_boundary": "Reference source only; does not prove export-control classification, permit status, destination permission, or legal compliance.",
+            "content_hash": "",
+            "content_hash_required": true,
+            "diff_classifier": [
+              "wording_change",
+              "date_change",
+              "tariff_or_regulatory_change",
+              "source_unavailable"
+            ],
+            "diff_strategy": "hash_then_classify_material_change_before_claim_update",
+            "evidence_role": "Canada export-control and permit routing",
+            "fetch_mode": "registered_reference_manual_refresh",
+            "freshness_status": "not_checked",
+            "jurisdiction": "Canada",
+            "name": "Global Affairs Canada Export Controls",
+            "packet_impact_logic": "critical source changes mark affected packet outputs stale until refreshed evidence and reviewer review are attached",
+            "packet_stale_alert": "create stale-source blocker if source content changes or freshness expires",
+            "packet_tags": [
+              "packet-frozen-tuna-canada-001",
+              "Vietnam",
+              "Canada",
+              "food_import"
+            ],
+            "parser_contract": "extract date/status/hash and classify change type before packet impact",
+            "parser_type": "metadata_hash_or_structured_export_when_allowed",
+            "refresh_method": "manual_or_permitted_fetch_after_terms_check",
+            "robots_status": "must_check_before_fetch",
+            "source_id": "gac-export-controls",
+            "source_type": "regulated_product_requirements",
+            "terms_status": "must_check_before_fetch",
+            "url": "https://www.international.gc.ca/controls-controles/index.aspx?lang=eng"
           },
           {
             "accessed_at": "2026-06-25",

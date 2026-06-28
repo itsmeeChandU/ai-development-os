@@ -70,6 +70,7 @@ python3 scripts/run_production_redevelopment.py
 python3 scripts/run_production_data_model.py
 python3 scripts/run_production_packet_engine.py
 python3 scripts/run_production_country_source_engine.py
+python3 scripts/run_production_trade_discovery_engine.py
 python3 scripts/run_production_market_intelligence_engine.py
 python3 scripts/run_production_document_intelligence_engine.py
 python3 scripts/run_production_evidence_claim_gate_engine.py
@@ -139,6 +140,12 @@ system_review_graph/production_packet_views/packet-frozen-tuna-canada-001/*.json
 system_review_graph/production_country_source_engine_manifest.json
 system_review_graph/production_country_packs.json
 system_review_graph/production_source_lifecycle.json
+system_review_graph/production_trade_discovery_manifest.json
+system_review_graph/production_trade_discovery_category_map.json
+system_review_graph/production_trade_discovery_country_lanes.json
+system_review_graph/production_trade_discovery_beginner_flows.json
+system_review_graph/production_trade_discovery_source_registry.json
+system_review_graph/production_trade_discovery_requirement_audit.json
 system_review_graph/production_market_intelligence_manifest.json
 system_review_graph/production_market_signals.json
 system_review_graph/production_market_dataset_connectors.json
@@ -419,6 +426,18 @@ That means market metrics, source routes, dataset connector states, capped
 market signal score, limitations, and blocked demand/profit/buyer claims are
 generated from the packet and official source registry. It still does not prove
 market size, buyer demand, profitability, or market-entry approval.
+
+The expected production trade discovery status is:
+
+```text
+production_trade_discovery_engine_ready_beginner_research_routed_no_opportunity_claims
+```
+
+That means beginner users can browse Canada import/export directions, product
+families, country lanes into Canada, Canada export lanes, source routes, and
+no-document starter flows before they know an HS code or have files. It still
+does not recommend products, prove market demand, validate buyers, verify
+suppliers, approve customs/CFIA status, or prove shipment readiness.
 
 The expected production document intelligence status is:
 

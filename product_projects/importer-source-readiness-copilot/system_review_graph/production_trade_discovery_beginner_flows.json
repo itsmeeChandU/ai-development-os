@@ -1,0 +1,815 @@
+{
+  "beginner_flow_count": 8,
+  "beginner_flows": [
+    {
+      "blocked_claims": [
+        "best_product_to_import",
+        "best_product_to_export",
+        "profitable_market",
+        "guaranteed_demand",
+        "buyer_validated",
+        "supplier_verified",
+        "tariff_confirmed",
+        "cfia_approved",
+        "customs_approved",
+        "ready_to_ship",
+        "public_launch_ready"
+      ],
+      "build_track": [
+        "show category families",
+        "show diverse origin lanes",
+        "show source routes",
+        "create starter packet"
+      ],
+      "creates_external_effects": false,
+      "evidence_track": [
+        "dated trade-data row",
+        "selected product family",
+        "origin country",
+        "buyer/importer lead evidence if available"
+      ],
+      "flow_id": "browse_canada_imports",
+      "gate_track": [
+        "no best-product claim",
+        "no demand claim",
+        "no buyer validation",
+        "no import approval"
+      ],
+      "label": "Browse goods Canada imports",
+      "opens_claims": false,
+      "plain_language_goal": "Help a user choose a product family and origin country to research before making a packet.",
+      "recommendation_claimed": false,
+      "research_track": [
+        "Canada import trade data",
+        "possible importer leads",
+        "CBSA import workflow",
+        "CFIA regulated-goods suspicion"
+      ],
+      "safe_user_copy": "Use this to choose what to research next. It does not decide what you should buy, sell, import, or export.",
+      "source_route_count": 5,
+      "source_routes": [
+        {
+          "automation_status": "manual_or_terms_checked_connector_required",
+          "claim_boundary": "Trade rows can support research signals only; they do not prove demand, profit, or buyer intent.",
+          "evidence_required_before_claim": true,
+          "jurisdiction": "CA",
+          "name": "ISED Trade Data Online",
+          "registry_status": "registered",
+          "source_area": "canada_trade_browse",
+          "source_id": "ised-trade-data-online",
+          "url": "https://ised-isde.canada.ca/site/trade-data-online/en/overview",
+          "use": "beginner_flow"
+        },
+        {
+          "automation_status": "manual_or_terms_checked_connector_required",
+          "claim_boundary": "Importer rows are lead sources only and never buyer validation.",
+          "evidence_required_before_claim": true,
+          "jurisdiction": "CA",
+          "name": "Canadian Importers Database",
+          "registry_status": "registered",
+          "source_area": "canada_importer_leads",
+          "source_id": "canada-cid",
+          "url": "https://ised-isde.canada.ca/site/ised/en/research-and-business-intelligence/canadian-importers-database",
+          "use": "beginner_flow"
+        },
+        {
+          "automation_status": "manual_or_terms_checked_connector_required",
+          "claim_boundary": "The product routes preparation only and does not act as CBSA, a broker, or legal adviser.",
+          "evidence_required_before_claim": true,
+          "jurisdiction": "CA",
+          "name": "CBSA Import Commercial Goods Into Canada",
+          "registry_status": "registered",
+          "source_area": "canada_import_workflow",
+          "source_id": "cbsa-import-commercial-goods",
+          "url": "https://www.cbsa-asfc.gc.ca/import/menu-eng.html",
+          "use": "beginner_flow"
+        },
+        {
+          "automation_status": "manual_or_terms_checked_connector_required",
+          "claim_boundary": "AIRS routing does not prove admissibility, CFIA approval, or current import compliance.",
+          "evidence_required_before_claim": true,
+          "jurisdiction": "CA",
+          "name": "CFIA Automated Import Reference System (AIRS)",
+          "registry_status": "registered",
+          "source_area": "regulated_product_screening",
+          "source_id": "cfia-airs",
+          "url": "https://inspection.canada.ca/en/importing-food-plants-animals/airs",
+          "use": "beginner_flow"
+        },
+        {
+          "automation_status": "manual_or_terms_checked_connector_required",
+          "claim_boundary": "Sanctions route presence does not prove screening is complete or clear.",
+          "evidence_required_before_claim": true,
+          "jurisdiction": "CA",
+          "name": "Global Affairs Canada sanctions",
+          "registry_status": "registered",
+          "source_area": "sanctions_country_screening",
+          "source_id": "gac-sanctions",
+          "url": "https://www.international.gc.ca/world-monde/international_relations-relations_internationales/sanctions/index.aspx?lang=eng",
+          "use": "beginner_flow"
+        }
+      ],
+      "source_track": [
+        "ised-trade-data-online",
+        "canada-cid",
+        "cbsa-import-commercial-goods",
+        "cfia-airs",
+        "gac-sanctions"
+      ],
+      "status": "beginner_flow_ready_local_source_routed"
+    },
+    {
+      "blocked_claims": [
+        "best_product_to_import",
+        "best_product_to_export",
+        "profitable_market",
+        "guaranteed_demand",
+        "buyer_validated",
+        "supplier_verified",
+        "tariff_confirmed",
+        "cfia_approved",
+        "customs_approved",
+        "ready_to_ship",
+        "public_launch_ready"
+      ],
+      "build_track": [
+        "show Canada export category families",
+        "show destination research routes",
+        "create export starter packet"
+      ],
+      "creates_external_effects": false,
+      "evidence_track": [
+        "dated export-data row",
+        "destination country",
+        "product identity",
+        "controlled-goods screen"
+      ],
+      "flow_id": "browse_canada_exports",
+      "gate_track": [
+        "no export-ready claim",
+        "no destination approval",
+        "no demand or profit claim"
+      ],
+      "label": "Browse goods Canada exports",
+      "opens_claims": false,
+      "plain_language_goal": "Help a Canadian exporter explore product families and destination markets safely.",
+      "recommendation_claimed": false,
+      "research_track": [
+        "Canada export trade data",
+        "export controls",
+        "destination-country source pack",
+        "market access comparison"
+      ],
+      "safe_user_copy": "Use this to choose what to research next. It does not decide what you should buy, sell, import, or export.",
+      "source_route_count": 4,
+      "source_routes": [
+        {
+          "automation_status": "manual_or_terms_checked_connector_required",
+          "claim_boundary": "Trade rows can support research signals only; they do not prove demand, profit, or buyer intent.",
+          "evidence_required_before_claim": true,
+          "jurisdiction": "CA",
+          "name": "ISED Trade Data Online",
+          "registry_status": "registered",
+          "source_area": "canada_trade_browse",
+          "source_id": "ised-trade-data-online",
+          "url": "https://ised-isde.canada.ca/site/trade-data-online/en/overview",
+          "use": "beginner_flow"
+        },
+        {
+          "automation_status": "manual_or_terms_checked_connector_required",
+          "claim_boundary": "General guidance does not prove a specific exporter, product, or destination is export-ready.",
+          "evidence_required_before_claim": true,
+          "jurisdiction": "CA",
+          "name": "Government of Canada Export Guide",
+          "registry_status": "registered",
+          "source_area": "canada_export_beginner_guidance",
+          "source_id": "canada-trade-commissioner-export-guide",
+          "url": "https://www.tradecommissioner.gc.ca/guides/exporter-exportateurs/index.aspx?lang=eng",
+          "use": "beginner_flow"
+        },
+        {
+          "automation_status": "manual_or_terms_checked_connector_required",
+          "claim_boundary": "Export-control routing does not prove permit status, destination permission, or compliance.",
+          "evidence_required_before_claim": true,
+          "jurisdiction": "CA",
+          "name": "Global Affairs Canada Export Controls",
+          "registry_status": "registered",
+          "source_area": "canada_export_controls",
+          "source_id": "gac-export-controls",
+          "url": "https://www.international.gc.ca/controls-controles/index.aspx?lang=eng",
+          "use": "beginner_flow"
+        },
+        {
+          "automation_status": "manual_or_terms_checked_connector_required",
+          "claim_boundary": "Market-access routes do not confirm tariff treatment or market-entry approval.",
+          "evidence_required_before_claim": true,
+          "jurisdiction": "International",
+          "name": "ITC Market Access Map",
+          "registry_status": "registered",
+          "source_area": "market_access_comparison",
+          "source_id": "itc-market-access-map",
+          "url": "https://www.macmap.org/",
+          "use": "beginner_flow"
+        }
+      ],
+      "source_track": [
+        "ised-trade-data-online",
+        "canada-trade-commissioner-export-guide",
+        "gac-export-controls",
+        "itc-market-access-map"
+      ],
+      "status": "beginner_flow_ready_local_source_routed"
+    },
+    {
+      "blocked_claims": [
+        "best_product_to_import",
+        "best_product_to_export",
+        "profitable_market",
+        "guaranteed_demand",
+        "buyer_validated",
+        "supplier_verified",
+        "tariff_confirmed",
+        "cfia_approved",
+        "customs_approved",
+        "ready_to_ship",
+        "public_launch_ready"
+      ],
+      "build_track": [
+        "show country lanes",
+        "show source coverage level",
+        "show missing evidence",
+        "route to packet"
+      ],
+      "creates_external_effects": false,
+      "evidence_track": [
+        "country selected",
+        "product family selected",
+        "source routes checked",
+        "supplier evidence if known"
+      ],
+      "flow_id": "compare_origin_lanes_to_canada",
+      "gate_track": [
+        "no country recommendation",
+        "no sanctions clearance",
+        "no supplier verification"
+      ],
+      "label": "Compare origin countries into Canada",
+      "opens_claims": false,
+      "plain_language_goal": "Show which origin-country lanes need official source and evidence checks before a user commits.",
+      "recommendation_claimed": false,
+      "research_track": [
+        "partner-country trade rows",
+        "sanctions/restricted-country checks",
+        "origin export rules",
+        "Canadian import rules"
+      ],
+      "safe_user_copy": "Use this to choose what to research next. It does not decide what you should buy, sell, import, or export.",
+      "source_route_count": 4,
+      "source_routes": [
+        {
+          "automation_status": "manual_or_terms_checked_connector_required",
+          "claim_boundary": "Trade rows can support research signals only; they do not prove demand, profit, or buyer intent.",
+          "evidence_required_before_claim": true,
+          "jurisdiction": "CA",
+          "name": "ISED Trade Data Online",
+          "registry_status": "registered",
+          "source_area": "canada_trade_browse",
+          "source_id": "ised-trade-data-online",
+          "url": "https://ised-isde.canada.ca/site/trade-data-online/en/overview",
+          "use": "beginner_flow"
+        },
+        {
+          "automation_status": "manual_or_terms_checked_connector_required",
+          "claim_boundary": "Sanctions route presence does not prove screening is complete or clear.",
+          "evidence_required_before_claim": true,
+          "jurisdiction": "CA",
+          "name": "Global Affairs Canada sanctions",
+          "registry_status": "registered",
+          "source_area": "sanctions_country_screening",
+          "source_id": "gac-sanctions",
+          "url": "https://www.international.gc.ca/world-monde/international_relations-relations_internationales/sanctions/index.aspx?lang=eng",
+          "use": "beginner_flow"
+        },
+        {
+          "automation_status": "manual_or_terms_checked_connector_required",
+          "claim_boundary": "Global indicators are research context only.",
+          "evidence_required_before_claim": true,
+          "jurisdiction": "International",
+          "name": "World Bank World Integrated Trade Solution",
+          "registry_status": "registered",
+          "source_area": "global_trade_comparison",
+          "source_id": "world-bank-wits",
+          "url": "https://wits.worldbank.org/",
+          "use": "beginner_flow"
+        },
+        {
+          "automation_status": "manual_or_terms_checked_connector_required",
+          "claim_boundary": "Directory or trade rows do not validate buyers or demand.",
+          "evidence_required_before_claim": true,
+          "jurisdiction": "International",
+          "name": "International Trade Centre Trade Map",
+          "registry_status": "registered",
+          "source_area": "global_trade_and_company_directory",
+          "source_id": "itc-trade-map",
+          "url": "https://www.trademap.org/",
+          "use": "beginner_flow"
+        }
+      ],
+      "source_track": [
+        "ised-trade-data-online",
+        "gac-sanctions",
+        "world-bank-wits",
+        "itc-trade-map"
+      ],
+      "status": "beginner_flow_ready_local_source_routed"
+    },
+    {
+      "blocked_claims": [
+        "best_product_to_import",
+        "best_product_to_export",
+        "profitable_market",
+        "guaranteed_demand",
+        "buyer_validated",
+        "supplier_verified",
+        "tariff_confirmed",
+        "cfia_approved",
+        "customs_approved",
+        "ready_to_ship",
+        "public_launch_ready"
+      ],
+      "build_track": [
+        "regulated-risk tags",
+        "official source route",
+        "document checklist",
+        "expert lane"
+      ],
+      "creates_external_effects": false,
+      "evidence_track": [
+        "product description",
+        "intended use",
+        "ingredient/material details",
+        "certificates if available"
+      ],
+      "flow_id": "check_regulated_goods_early",
+      "gate_track": [
+        "no CFIA approval",
+        "no import/export permission",
+        "no legal advice"
+      ],
+      "label": "Check if goods may be regulated",
+      "opens_claims": false,
+      "plain_language_goal": "Warn users early when food, plant, animal, seafood, health, chemical, or controlled goods need review.",
+      "recommendation_claimed": false,
+      "research_track": [
+        "CFIA AIRS",
+        "CBSA import workflow",
+        "Global Affairs controls",
+        "destination regulations"
+      ],
+      "safe_user_copy": "Use this to choose what to research next. It does not decide what you should buy, sell, import, or export.",
+      "source_route_count": 4,
+      "source_routes": [
+        {
+          "automation_status": "manual_or_terms_checked_connector_required",
+          "claim_boundary": "AIRS routing does not prove admissibility, CFIA approval, or current import compliance.",
+          "evidence_required_before_claim": true,
+          "jurisdiction": "CA",
+          "name": "CFIA Automated Import Reference System (AIRS)",
+          "registry_status": "registered",
+          "source_area": "regulated_product_screening",
+          "source_id": "cfia-airs",
+          "url": "https://inspection.canada.ca/en/importing-food-plants-animals/airs",
+          "use": "beginner_flow"
+        },
+        {
+          "automation_status": "manual_or_terms_checked_connector_required",
+          "claim_boundary": "The product routes preparation only and does not act as CBSA, a broker, or legal adviser.",
+          "evidence_required_before_claim": true,
+          "jurisdiction": "CA",
+          "name": "CBSA Import Commercial Goods Into Canada",
+          "registry_status": "registered",
+          "source_area": "canada_import_workflow",
+          "source_id": "cbsa-import-commercial-goods",
+          "url": "https://www.cbsa-asfc.gc.ca/import/menu-eng.html",
+          "use": "beginner_flow"
+        },
+        {
+          "automation_status": "manual_or_terms_checked_connector_required",
+          "claim_boundary": "Reference source only; does not prove whether a specific product requires an import permit.",
+          "evidence_required_before_claim": true,
+          "jurisdiction": "CA",
+          "name": "Global Affairs Canada Import Controls and Import Permits",
+          "registry_status": "registered",
+          "source_area": "source_route",
+          "source_id": "gac-import-controls",
+          "url": "https://www.international.gc.ca/controls-controles/about-a_propos/impor/permits-licences.aspx?lang=eng",
+          "use": "beginner_flow"
+        },
+        {
+          "automation_status": "manual_or_terms_checked_connector_required",
+          "claim_boundary": "Export-control routing does not prove permit status, destination permission, or compliance.",
+          "evidence_required_before_claim": true,
+          "jurisdiction": "CA",
+          "name": "Global Affairs Canada Export Controls",
+          "registry_status": "registered",
+          "source_area": "canada_export_controls",
+          "source_id": "gac-export-controls",
+          "url": "https://www.international.gc.ca/controls-controles/index.aspx?lang=eng",
+          "use": "beginner_flow"
+        }
+      ],
+      "source_track": [
+        "cfia-airs",
+        "cbsa-import-commercial-goods",
+        "gac-import-controls",
+        "gac-export-controls"
+      ],
+      "status": "beginner_flow_ready_local_source_routed"
+    },
+    {
+      "blocked_claims": [
+        "best_product_to_import",
+        "best_product_to_export",
+        "profitable_market",
+        "guaranteed_demand",
+        "buyer_validated",
+        "supplier_verified",
+        "tariff_confirmed",
+        "cfia_approved",
+        "customs_approved",
+        "ready_to_ship",
+        "public_launch_ready"
+      ],
+      "build_track": [
+        "buyer question set",
+        "importer-of-record prompt",
+        "Incoterms prompt",
+        "evidence ladder"
+      ],
+      "creates_external_effects": false,
+      "evidence_track": [
+        "buyer reply",
+        "meeting notes",
+        "sample request",
+        "LOI or PO if available"
+      ],
+      "flow_id": "prepare_buyer_questions",
+      "gate_track": [
+        "no buyer validation",
+        "no purchase intent unless evidence attached"
+      ],
+      "label": "Prepare buyer questions",
+      "opens_claims": false,
+      "plain_language_goal": "Help an exporter ask a potential buyer/importer the right readiness questions.",
+      "recommendation_claimed": false,
+      "research_track": [
+        "Canadian importer leads",
+        "responsibility path",
+        "buyer evidence ladder"
+      ],
+      "safe_user_copy": "Use this to choose what to research next. It does not decide what you should buy, sell, import, or export.",
+      "source_route_count": 3,
+      "source_routes": [
+        {
+          "automation_status": "manual_or_terms_checked_connector_required",
+          "claim_boundary": "Importer rows are lead sources only and never buyer validation.",
+          "evidence_required_before_claim": true,
+          "jurisdiction": "CA",
+          "name": "Canadian Importers Database",
+          "registry_status": "registered",
+          "source_area": "canada_importer_leads",
+          "source_id": "canada-cid",
+          "url": "https://ised-isde.canada.ca/site/ised/en/research-and-business-intelligence/canadian-importers-database",
+          "use": "beginner_flow"
+        },
+        {
+          "automation_status": "manual_or_terms_checked_connector_required",
+          "claim_boundary": "Reference source only; responsibility guidance requires user confirmation and qualified review where legal or contract interpretation is needed.",
+          "evidence_required_before_claim": true,
+          "jurisdiction": "International",
+          "name": "ICC Incoterms 2020",
+          "registry_status": "registered",
+          "source_area": "source_route",
+          "source_id": "icc-incoterms-2020",
+          "url": "https://iccwbo.org/business-solutions/incoterms-rules/incoterms-2020/",
+          "use": "beginner_flow"
+        },
+        {
+          "automation_status": "manual_or_terms_checked_connector_required",
+          "claim_boundary": "The product routes preparation only and does not act as CBSA, a broker, or legal adviser.",
+          "evidence_required_before_claim": true,
+          "jurisdiction": "CA",
+          "name": "CBSA Import Commercial Goods Into Canada",
+          "registry_status": "registered",
+          "source_area": "canada_import_workflow",
+          "source_id": "cbsa-import-commercial-goods",
+          "url": "https://www.cbsa-asfc.gc.ca/import/menu-eng.html",
+          "use": "beginner_flow"
+        }
+      ],
+      "source_track": [
+        "canada-cid",
+        "icc-incoterms-2020",
+        "cbsa-import-commercial-goods"
+      ],
+      "status": "beginner_flow_ready_local_source_routed"
+    },
+    {
+      "blocked_claims": [
+        "best_product_to_import",
+        "best_product_to_export",
+        "profitable_market",
+        "guaranteed_demand",
+        "buyer_validated",
+        "supplier_verified",
+        "tariff_confirmed",
+        "cfia_approved",
+        "customs_approved",
+        "ready_to_ship",
+        "public_launch_ready"
+      ],
+      "build_track": [
+        "supplier evidence checklist",
+        "document request",
+        "risk questions",
+        "reviewer packet"
+      ],
+      "creates_external_effects": false,
+      "evidence_track": [
+        "registration",
+        "export ability",
+        "product spec",
+        "certificate",
+        "inspection report"
+      ],
+      "flow_id": "prepare_supplier_questions",
+      "gate_track": [
+        "no supplier verification",
+        "no authenticity claim"
+      ],
+      "label": "Prepare supplier questions",
+      "opens_claims": false,
+      "plain_language_goal": "Help an importer or exporter request evidence from a supplier before relying on them.",
+      "recommendation_claimed": false,
+      "research_track": [
+        "origin-country export rules",
+        "company registry route",
+        "product certificate route"
+      ],
+      "safe_user_copy": "Use this to choose what to research next. It does not decide what you should buy, sell, import, or export.",
+      "source_route_count": 3,
+      "source_routes": [
+        {
+          "automation_status": "manual_or_terms_checked_connector_required",
+          "claim_boundary": "Reference source only; does not prove export permission, licensing status, incentive eligibility, or product-specific export compliance.",
+          "evidence_required_before_claim": true,
+          "jurisdiction": "IN",
+          "name": "India Directorate General of Foreign Trade",
+          "registry_status": "registered",
+          "source_area": "source_route",
+          "source_id": "india-dgft-foreign-trade-policy",
+          "url": "https://www.dgft.gov.in/",
+          "use": "beginner_flow"
+        },
+        {
+          "automation_status": "manual_or_terms_checked_connector_required",
+          "claim_boundary": "Reference source only; no stable local PDF sample was verified in this pass and Vietnam customs/export claims require current source review.",
+          "evidence_required_before_claim": true,
+          "jurisdiction": "VN",
+          "name": "General Department of Vietnam Customs Portal",
+          "registry_status": "registered",
+          "source_area": "source_route",
+          "source_id": "vietnam-customs-portal",
+          "url": "https://www.customs.gov.vn/",
+          "use": "beginner_flow"
+        },
+        {
+          "automation_status": "manual_or_terms_checked_connector_required",
+          "claim_boundary": "Global indicators are research context only.",
+          "evidence_required_before_claim": true,
+          "jurisdiction": "International",
+          "name": "World Bank World Integrated Trade Solution",
+          "registry_status": "registered",
+          "source_area": "global_trade_comparison",
+          "source_id": "world-bank-wits",
+          "url": "https://wits.worldbank.org/",
+          "use": "beginner_flow"
+        }
+      ],
+      "source_track": [
+        "india-dgft-foreign-trade-policy",
+        "vietnam-customs-portal",
+        "world-bank-wits"
+      ],
+      "status": "beginner_flow_ready_local_source_routed"
+    },
+    {
+      "blocked_claims": [
+        "best_product_to_import",
+        "best_product_to_export",
+        "profitable_market",
+        "guaranteed_demand",
+        "buyer_validated",
+        "supplier_verified",
+        "tariff_confirmed",
+        "cfia_approved",
+        "customs_approved",
+        "ready_to_ship",
+        "public_launch_ready"
+      ],
+      "build_track": [
+        "starter packet",
+        "missing evidence list",
+        "source map",
+        "next safe move"
+      ],
+      "creates_external_effects": false,
+      "evidence_track": [
+        "user input",
+        "source reference",
+        "blocked claims",
+        "review lane if needed"
+      ],
+      "flow_id": "create_no_document_starter_packet",
+      "gate_track": [
+        "no document authenticity claim",
+        "no market conclusion",
+        "no approval"
+      ],
+      "label": "Create a starter packet without documents",
+      "opens_claims": false,
+      "plain_language_goal": "Turn early browsing into a useful packet even when the user has no files.",
+      "recommendation_claimed": false,
+      "research_track": [
+        "product family",
+        "origin/destination",
+        "regulated suspicion",
+        "buyer/supplier known flags"
+      ],
+      "safe_user_copy": "Use this to choose what to research next. It does not decide what you should buy, sell, import, or export.",
+      "source_route_count": 4,
+      "source_routes": [
+        {
+          "automation_status": "manual_or_terms_checked_connector_required",
+          "claim_boundary": "HS doctrine supports candidate research only, not classification confirmation.",
+          "evidence_required_before_claim": true,
+          "jurisdiction": "International",
+          "name": "World Customs Organization Harmonized System",
+          "registry_status": "registered",
+          "source_area": "hs_doctrine",
+          "source_id": "wco-harmonized-system",
+          "url": "https://www.wcoomd.org/en/topics/nomenclature/overview/what-is-the-harmonized-system.aspx",
+          "use": "beginner_flow"
+        },
+        {
+          "automation_status": "manual_or_terms_checked_connector_required",
+          "claim_boundary": "Trade rows can support research signals only; they do not prove demand, profit, or buyer intent.",
+          "evidence_required_before_claim": true,
+          "jurisdiction": "CA",
+          "name": "ISED Trade Data Online",
+          "registry_status": "registered",
+          "source_area": "canada_trade_browse",
+          "source_id": "ised-trade-data-online",
+          "url": "https://ised-isde.canada.ca/site/trade-data-online/en/overview",
+          "use": "beginner_flow"
+        },
+        {
+          "automation_status": "manual_or_terms_checked_connector_required",
+          "claim_boundary": "The product routes preparation only and does not act as CBSA, a broker, or legal adviser.",
+          "evidence_required_before_claim": true,
+          "jurisdiction": "CA",
+          "name": "CBSA Import Commercial Goods Into Canada",
+          "registry_status": "registered",
+          "source_area": "canada_import_workflow",
+          "source_id": "cbsa-import-commercial-goods",
+          "url": "https://www.cbsa-asfc.gc.ca/import/menu-eng.html",
+          "use": "beginner_flow"
+        },
+        {
+          "automation_status": "manual_or_terms_checked_connector_required",
+          "claim_boundary": "AIRS routing does not prove admissibility, CFIA approval, or current import compliance.",
+          "evidence_required_before_claim": true,
+          "jurisdiction": "CA",
+          "name": "CFIA Automated Import Reference System (AIRS)",
+          "registry_status": "registered",
+          "source_area": "regulated_product_screening",
+          "source_id": "cfia-airs",
+          "url": "https://inspection.canada.ca/en/importing-food-plants-animals/airs",
+          "use": "beginner_flow"
+        }
+      ],
+      "source_track": [
+        "wco-harmonized-system",
+        "ised-trade-data-online",
+        "cbsa-import-commercial-goods",
+        "cfia-airs"
+      ],
+      "status": "beginner_flow_ready_local_source_routed"
+    },
+    {
+      "blocked_claims": [
+        "best_product_to_import",
+        "best_product_to_export",
+        "profitable_market",
+        "guaranteed_demand",
+        "buyer_validated",
+        "supplier_verified",
+        "tariff_confirmed",
+        "cfia_approved",
+        "customs_approved",
+        "ready_to_ship",
+        "public_launch_ready"
+      ],
+      "build_track": [
+        "broker questions",
+        "review scope",
+        "source citations",
+        "blocked claims"
+      ],
+      "creates_external_effects": false,
+      "evidence_track": [
+        "review request",
+        "source snapshots",
+        "documents",
+        "expert finding"
+      ],
+      "flow_id": "route_to_expert_or_broker",
+      "gate_track": [
+        "reviewer can approve only exact scoped language",
+        "no product-wide approval"
+      ],
+      "label": "Prepare for expert or broker review",
+      "opens_claims": false,
+      "plain_language_goal": "Package the unresolved questions so a broker, trade consultant, or reviewer can answer the exact scope.",
+      "recommendation_claimed": false,
+      "research_track": [
+        "broker boundary",
+        "country source pack",
+        "document requirements",
+        "claim-language limits"
+      ],
+      "safe_user_copy": "Use this to choose what to research next. It does not decide what you should buy, sell, import, or export.",
+      "source_route_count": 4,
+      "source_routes": [
+        {
+          "automation_status": "manual_or_terms_checked_connector_required",
+          "claim_boundary": "Reference source only; does not prove a broker relationship, review, or signoff.",
+          "evidence_required_before_claim": true,
+          "jurisdiction": "CA",
+          "name": "CBSA Licensed Customs Brokers",
+          "registry_status": "registered",
+          "source_area": "source_route",
+          "source_id": "cbsa-licensed-customs-brokers",
+          "url": "https://www.cbsa-asfc.gc.ca/services/cb-cd/cb-cd-eng.html",
+          "use": "beginner_flow"
+        },
+        {
+          "automation_status": "manual_or_terms_checked_connector_required",
+          "claim_boundary": "The product routes preparation only and does not act as CBSA, a broker, or legal adviser.",
+          "evidence_required_before_claim": true,
+          "jurisdiction": "CA",
+          "name": "CBSA Import Commercial Goods Into Canada",
+          "registry_status": "registered",
+          "source_area": "canada_import_workflow",
+          "source_id": "cbsa-import-commercial-goods",
+          "url": "https://www.cbsa-asfc.gc.ca/import/menu-eng.html",
+          "use": "beginner_flow"
+        },
+        {
+          "automation_status": "manual_or_terms_checked_connector_required",
+          "claim_boundary": "HS candidates are not classification or tariff confirmation.",
+          "evidence_required_before_claim": true,
+          "jurisdiction": "CA",
+          "name": "CBSA Customs Tariff 2026",
+          "registry_status": "registered",
+          "source_area": "canada_tariff_orientation",
+          "source_id": "cbsa-customs-tariff-2026",
+          "url": "https://www.cbsa-asfc.gc.ca/trade-commerce/tariff-tarif/2026/menu-eng.html",
+          "use": "beginner_flow"
+        },
+        {
+          "automation_status": "manual_or_terms_checked_connector_required",
+          "claim_boundary": "AIRS routing does not prove admissibility, CFIA approval, or current import compliance.",
+          "evidence_required_before_claim": true,
+          "jurisdiction": "CA",
+          "name": "CFIA Automated Import Reference System (AIRS)",
+          "registry_status": "registered",
+          "source_area": "regulated_product_screening",
+          "source_id": "cfia-airs",
+          "url": "https://inspection.canada.ca/en/importing-food-plants-animals/airs",
+          "use": "beginner_flow"
+        }
+      ],
+      "source_track": [
+        "cbsa-licensed-customs-brokers",
+        "cbsa-import-commercial-goods",
+        "cbsa-customs-tariff-2026",
+        "cfia-airs"
+      ],
+      "status": "beginner_flow_ready_local_source_routed"
+    }
+  ],
+  "claims_opened": false,
+  "generated_at": "2026-06-28T17:33:58+00:00",
+  "status": "production_trade_discovery_beginner_flows_ready"
+}

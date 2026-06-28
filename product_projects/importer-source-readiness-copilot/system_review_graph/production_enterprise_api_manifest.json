@@ -437,7 +437,7 @@
   "claim_gate_dependency_status": "production_evidence_claim_gate_engine_ready_claims_fail_closed",
   "claims_opened": false,
   "external_effects_created": false,
-  "generated_at": "2026-06-28T16:26:22+00:00",
+  "generated_at": "2026-06-28T17:33:59+00:00",
   "hosted_enterprise_ready": false,
   "live_api_keys_issued": false,
   "live_payment_ready": false,

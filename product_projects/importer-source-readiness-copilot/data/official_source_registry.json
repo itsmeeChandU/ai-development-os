@@ -99,6 +99,15 @@
     "claim_boundary": "Reference source only; does not prove market size, buyer demand, or revenue."
   },
   {
+    "id": "statcan-wds",
+    "name": "Statistics Canada Web Data Service",
+    "url": "https://www.statcan.gc.ca/en/developers/wds/user-guide",
+    "accessed_at": "2026-06-28",
+    "jurisdiction": "CA",
+    "evidence_role": "machine-readable Canadian data-service route for trade tables after table and license review",
+    "claim_boundary": "Reference source only; a data-service route does not prove a current trade value until a dated dataset row is ingested and cited."
+  },
+  {
     "id": "canada-cid",
     "name": "Canadian Importers Database",
     "url": "https://ised-isde.canada.ca/site/ised/en/research-and-business-intelligence/canadian-importers-database",
@@ -106,6 +115,24 @@
     "jurisdiction": "CA",
     "evidence_role": "importer discovery orientation",
     "claim_boundary": "Reference source only; does not prove buyer validation, supplier fit, customs advice, or freshness of a specific product row."
+  },
+  {
+    "id": "canada-trade-commissioner-export-guide",
+    "name": "Government of Canada Export Guide",
+    "url": "https://www.tradecommissioner.gc.ca/guides/exporter-exportateurs/index.aspx?lang=eng",
+    "accessed_at": "2026-06-28",
+    "jurisdiction": "CA",
+    "evidence_role": "Canada export-planning guidance and beginner exporter orientation",
+    "claim_boundary": "Reference source only; does not prove a specific exporter, product, destination, permit, or shipment is export-ready."
+  },
+  {
+    "id": "gac-export-controls",
+    "name": "Global Affairs Canada Export Controls",
+    "url": "https://www.international.gc.ca/controls-controles/index.aspx?lang=eng",
+    "accessed_at": "2026-06-28",
+    "jurisdiction": "CA",
+    "evidence_role": "Canada export-control and permit routing",
+    "claim_boundary": "Reference source only; does not prove export-control classification, permit status, destination permission, or legal compliance."
   },
   {
     "id": "cbsa-licensed-customs-brokers",
