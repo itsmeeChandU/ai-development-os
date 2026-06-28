@@ -1,0 +1,322 @@
+{
+  "generated_at": "2026-06-28T18:44:37+00:00",
+  "reviewer_brief_card_count": 8,
+  "reviewer_brief_cards": [
+    {
+      "claims_still_closed": [
+        "market_ready",
+        "public_launch_approved",
+        "hosted_private_beta_approved",
+        "live_payment_activated",
+        "legal_privacy_security_approved",
+        "customs_trade_approved",
+        "tariff_confirmed",
+        "cfia_approved",
+        "buyer_validated",
+        "supplier_verified",
+        "ready_to_ship"
+      ],
+      "minimum_input": [
+        "reviewer name",
+        "reviewed scope",
+        "decision",
+        "top issues",
+        "missing evidence",
+        "signed date"
+      ],
+      "plain_title": "Real External Expert Reviews",
+      "review_area": "real_external_expert_reviews",
+      "simple_question": "Have the right outside reviewers checked the right scope?",
+      "subject_line": "Scoped review input requested: Real External Expert Reviews",
+      "what_not_to_say": [
+        "Please approve the whole company.",
+        "The AI review already approved this.",
+        "This is ready to ship unless you object."
+      ],
+      "what_to_send": [
+        "external_validation_reviewer_brief.pdf",
+        "go_live_input_requests.pdf",
+        "the exact URL, commit, package hash, report, or packet scope being reviewed"
+      ],
+      "where_to_save_response": "external_inputs/real_external_expert_reviews.json",
+      "who_to_ask": "Product, security, privacy/legal, AI safety, operations, trade, and payment reviewers as relevant."
+    },
+    {
+      "claims_still_closed": [
+        "market_ready",
+        "public_launch_approved",
+        "hosted_private_beta_approved",
+        "live_payment_activated",
+        "legal_privacy_security_approved",
+        "customs_trade_approved",
+        "tariff_confirmed",
+        "cfia_approved",
+        "buyer_validated",
+        "supplier_verified",
+        "ready_to_ship"
+      ],
+      "minimum_input": [
+        "reviewer name",
+        "data/privacy scope",
+        "security scope",
+        "decision",
+        "missing evidence",
+        "signed date"
+      ],
+      "plain_title": "Legal, Privacy, And Security Approval",
+      "review_area": "legal_privacy_security_approval",
+      "simple_question": "Is customer data handling, security, AI use, retention, deletion, and incident handling acceptable for the launch scope?",
+      "subject_line": "Scoped review input requested: Legal, Privacy, And Security Approval",
+      "what_not_to_say": [
+        "Please approve the whole company.",
+        "The AI review already approved this.",
+        "This is ready to ship unless you object."
+      ],
+      "what_to_send": [
+        "external_validation_reviewer_brief.pdf",
+        "go_live_input_requests.pdf",
+        "the exact URL, commit, package hash, report, or packet scope being reviewed"
+      ],
+      "where_to_save_response": "external_inputs/legal_privacy_security_approval.json",
+      "who_to_ask": "Privacy/legal reviewer plus application security reviewer."
+    },
+    {
+      "claims_still_closed": [
+        "market_ready",
+        "public_launch_approved",
+        "hosted_private_beta_approved",
+        "live_payment_activated",
+        "legal_privacy_security_approved",
+        "customs_trade_approved",
+        "tariff_confirmed",
+        "cfia_approved",
+        "buyer_validated",
+        "supplier_verified",
+        "ready_to_ship"
+      ],
+      "minimum_input": [
+        "reviewer name",
+        "country/product scope",
+        "approved wording",
+        "wording to avoid",
+        "decision",
+        "signed date"
+      ],
+      "plain_title": "Qualified Customs And Trade Review",
+      "review_area": "qualified_customs_trade_review",
+      "simple_question": "Does the product avoid unsupported customs, tariff, CFIA, sanctions, and trade-readiness claims?",
+      "subject_line": "Scoped review input requested: Qualified Customs And Trade Review",
+      "what_not_to_say": [
+        "Please approve the whole company.",
+        "The AI review already approved this.",
+        "This is ready to ship unless you object."
+      ],
+      "what_to_send": [
+        "external_validation_reviewer_brief.pdf",
+        "go_live_input_requests.pdf",
+        "the exact URL, commit, package hash, report, or packet scope being reviewed"
+      ],
+      "where_to_save_response": "external_inputs/qualified_customs_trade_review.json",
+      "who_to_ask": "Licensed customs broker or qualified trade/compliance reviewer."
+    },
+    {
+      "claims_still_closed": [
+        "market_ready",
+        "public_launch_approved",
+        "hosted_private_beta_approved",
+        "live_payment_activated",
+        "legal_privacy_security_approved",
+        "customs_trade_approved",
+        "tariff_confirmed",
+        "cfia_approved",
+        "buyer_validated",
+        "supplier_verified",
+        "ready_to_ship"
+      ],
+      "minimum_input": [
+        "environment URL",
+        "commit/build",
+        "smoke result",
+        "monitoring",
+        "rollback owner",
+        "decision",
+        "signed date"
+      ],
+      "plain_title": "Hosted Staging And Production Proof",
+      "review_area": "hosted_staging_production_proof",
+      "simple_question": "Is there real hosted evidence for the launch scope, not only localhost?",
+      "subject_line": "Scoped review input requested: Hosted Staging And Production Proof",
+      "what_not_to_say": [
+        "Please approve the whole company.",
+        "The AI review already approved this.",
+        "This is ready to ship unless you object."
+      ],
+      "what_to_send": [
+        "external_validation_reviewer_brief.pdf",
+        "go_live_input_requests.pdf",
+        "the exact URL, commit, package hash, report, or packet scope being reviewed"
+      ],
+      "where_to_save_response": "external_inputs/hosted_staging_production_proof.json",
+      "who_to_ask": "DevOps, SRE, or operations owner."
+    },
+    {
+      "claims_still_closed": [
+        "market_ready",
+        "public_launch_approved",
+        "hosted_private_beta_approved",
+        "live_payment_activated",
+        "legal_privacy_security_approved",
+        "customs_trade_approved",
+        "tariff_confirmed",
+        "cfia_approved",
+        "buyer_validated",
+        "supplier_verified",
+        "ready_to_ship"
+      ],
+      "minimum_input": [
+        "payment scope",
+        "Stripe mode",
+        "webhook evidence",
+        "refund/support owner",
+        "decision",
+        "signed date"
+      ],
+      "plain_title": "Live Payment Activation",
+      "review_area": "live_payment_activation",
+      "simple_question": "Are live checkout, webhook, tax/refund/support, and billing wording ready, or is payment intentionally off for launch?",
+      "subject_line": "Scoped review input requested: Live Payment Activation",
+      "what_not_to_say": [
+        "Please approve the whole company.",
+        "The AI review already approved this.",
+        "This is ready to ship unless you object."
+      ],
+      "what_to_send": [
+        "external_validation_reviewer_brief.pdf",
+        "go_live_input_requests.pdf",
+        "the exact URL, commit, package hash, report, or packet scope being reviewed"
+      ],
+      "where_to_save_response": "external_inputs/live_payment_activation.json",
+      "who_to_ask": "Billing/payment owner, tax/accounting advisor if needed, and support owner."
+    },
+    {
+      "claims_still_closed": [
+        "market_ready",
+        "public_launch_approved",
+        "hosted_private_beta_approved",
+        "live_payment_activated",
+        "legal_privacy_security_approved",
+        "customs_trade_approved",
+        "tariff_confirmed",
+        "cfia_approved",
+        "buyer_validated",
+        "supplier_verified",
+        "ready_to_ship"
+      ],
+      "minimum_input": [
+        "participant count",
+        "segments",
+        "task results",
+        "top issues",
+        "what changed",
+        "decision",
+        "signed date"
+      ],
+      "plain_title": "Real Users And Private Beta Outcomes",
+      "review_area": "real_users_private_beta_outcomes",
+      "simple_question": "Have real target users used the product and understood what is and is not approved?",
+      "subject_line": "Scoped review input requested: Real Users And Private Beta Outcomes",
+      "what_not_to_say": [
+        "Please approve the whole company.",
+        "The AI review already approved this.",
+        "This is ready to ship unless you object."
+      ],
+      "what_to_send": [
+        "external_validation_reviewer_brief.pdf",
+        "go_live_input_requests.pdf",
+        "the exact URL, commit, package hash, report, or packet scope being reviewed"
+      ],
+      "where_to_save_response": "external_inputs/real_users_private_beta_outcomes.json",
+      "who_to_ask": "Product/UX owner or user research owner."
+    },
+    {
+      "claims_still_closed": [
+        "market_ready",
+        "public_launch_approved",
+        "hosted_private_beta_approved",
+        "live_payment_activated",
+        "legal_privacy_security_approved",
+        "customs_trade_approved",
+        "tariff_confirmed",
+        "cfia_approved",
+        "buyer_validated",
+        "supplier_verified",
+        "ready_to_ship"
+      ],
+      "minimum_input": [
+        "counterparty type",
+        "problem validated",
+        "evidence summary",
+        "permission scope",
+        "decision",
+        "signed date"
+      ],
+      "plain_title": "Buyer And Supplier Validation",
+      "review_area": "buyer_supplier_validation",
+      "simple_question": "Have real buyers, suppliers, importers, exporters, or advisors validated the problem and workflow?",
+      "subject_line": "Scoped review input requested: Buyer And Supplier Validation",
+      "what_not_to_say": [
+        "Please approve the whole company.",
+        "The AI review already approved this.",
+        "This is ready to ship unless you object."
+      ],
+      "what_to_send": [
+        "external_validation_reviewer_brief.pdf",
+        "go_live_input_requests.pdf",
+        "the exact URL, commit, package hash, report, or packet scope being reviewed"
+      ],
+      "where_to_save_response": "external_inputs/buyer_supplier_validation.json",
+      "who_to_ask": "Founder or commercial validation owner."
+    },
+    {
+      "claims_still_closed": [
+        "market_ready",
+        "public_launch_approved",
+        "hosted_private_beta_approved",
+        "live_payment_activated",
+        "legal_privacy_security_approved",
+        "customs_trade_approved",
+        "tariff_confirmed",
+        "cfia_approved",
+        "buyer_validated",
+        "supplier_verified",
+        "ready_to_ship"
+      ],
+      "minimum_input": [
+        "launch scope",
+        "production URL",
+        "remaining risks",
+        "support owner",
+        "rollback owner",
+        "decision",
+        "signed date"
+      ],
+      "plain_title": "Public Go/No-Go Approval",
+      "review_area": "public_go_no_go_approval",
+      "simple_question": "After all other inputs are in, is this launch approved for the exact stated scope?",
+      "subject_line": "Scoped review input requested: Public Go/No-Go Approval",
+      "what_not_to_say": [
+        "Please approve the whole company.",
+        "The AI review already approved this.",
+        "This is ready to ship unless you object."
+      ],
+      "what_to_send": [
+        "external_validation_reviewer_brief.pdf",
+        "go_live_input_requests.pdf",
+        "the exact URL, commit, package hash, report, or packet scope being reviewed"
+      ],
+      "where_to_save_response": "external_inputs/public_go_no_go_approval.json",
+      "who_to_ask": "Named launch owner."
+    }
+  ],
+  "status": "production_market_readiness_reviewer_brief_cards_ready"
+}

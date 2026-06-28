@@ -703,7 +703,7 @@
     }
   ],
   "first_rebuild_package_count": 5,
-  "generated_at": "2026-06-28T18:15:11+00:00",
+  "generated_at": "2026-06-28T18:44:35+00:00",
   "hosted_production_ready": false,
   "launch_control_plane": {
     "gate_count": 12,

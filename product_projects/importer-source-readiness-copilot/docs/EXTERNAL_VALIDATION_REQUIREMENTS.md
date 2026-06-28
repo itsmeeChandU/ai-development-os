@@ -2,7 +2,7 @@
 
 Status: `external_validation_requirements_ready_all_real_world_gates_blocked`
 
-Generated: `2026-06-28T18:15:11Z`
+Generated: `2026-06-28T18:44:35Z`
 
 Checked source date: `2026-06-27`
 

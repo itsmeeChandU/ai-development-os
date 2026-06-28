@@ -25,6 +25,16 @@ It now also writes completion-stage contracts for opportunity scanning,
 country coverage tiers, transport readiness, billing/credit controls, agent
 API rules, traffic-first checklist pages, research execution, expert network,
 team workspace, local agent gateway, billing usage, and launch operations.
+The market-readiness evidence room now writes
+`system_review_graph/production_market_readiness_evidence_room_manifest.json`,
+`system_review_graph/production_market_readiness_evidence_work_orders.json`,
+`system_review_graph/production_market_readiness_reviewer_brief_cards.json`,
+`system_review_graph/production_market_readiness_gate_status_matrix.json`, and
+`docs/PRODUCTION_MARKET_READINESS_EVIDENCE_ROOM.md`. It converts the eight real
+go-live input areas into operator work orders with reviewer asks, source
+anchors, `external_inputs/` drop paths, and closed-claim status. It does not
+approve market readiness, public launch, live payments, customs/trade language,
+legal/privacy/security, buyer validation, or supplier verification.
 It also writes the production redevelopment contract:
 `system_review_graph/production_redevelopment_plan.json`,
 `system_review_graph/production_research_anchors.json`, and
@@ -168,7 +178,8 @@ downloads, `/workspace`, `/dashboard`,
 `/reports/sample`, `/pricing`, `/billing`, `/ai-data-policy`, `/security`, and
 `/tools/document-check`. The all-stage routes are `/stages`, `/country-coverage`,
 `/transport-readiness`, `/billing/usage`, `/agent-api`, `/research-plan`,
-`/expert-network`, `/team-workspace`, and `/launch-operations`. The production
+`/expert-network`, `/team-workspace`, `/launch-operations`, and
+`/market-readiness`. The production
 portal workflow engine proves those routes cover six user portals and the
 default first-screen choices: Explore a market, Prepare a buyer packet, Check
 my documents, and Prepare for broker/expert review. It is hostable after real infrastructure and qualified
@@ -222,6 +233,8 @@ security/privacy/human review gates are completed.
 - billing usage ledger with local reservations and no live charges
 - agent API gateway with local executor and no external effects
 - launch operations controls and local launch-control event records
+- market-readiness evidence room with eight real input work orders and closed
+  market-ready/public-launch/payment/trade claims
 - production redevelopment contract with phases 0-20 and permanent
   research/source/evidence/gate tracks
 - production data model migration package with 40 production tables, foreign

@@ -95,6 +95,7 @@ def main() -> int:
         PROJECT / "src" / "importer_source_readiness" / "production_expert_review_network.py",
         PROJECT / "src" / "importer_source_readiness" / "production_launch_control_plane.py",
         PROJECT / "src" / "importer_source_readiness" / "production_market_intelligence_engine.py",
+        PROJECT / "src" / "importer_source_readiness" / "production_market_readiness_evidence_room.py",
         PROJECT / "src" / "importer_source_readiness" / "production_trade_discovery_engine.py",
         PROJECT / "src" / "importer_source_readiness" / "production_trade_data_catalog_engine.py",
         PROJECT / "src" / "importer_source_readiness" / "production_packet_engine.py",
@@ -130,6 +131,7 @@ def main() -> int:
         PROJECT / "tests" / "test_production_expert_review_network.py",
         PROJECT / "tests" / "test_production_launch_control_plane.py",
         PROJECT / "tests" / "test_production_market_intelligence_engine.py",
+        PROJECT / "tests" / "test_production_market_readiness_evidence_room.py",
         PROJECT / "tests" / "test_production_trade_discovery_engine.py",
         PROJECT / "tests" / "test_production_trade_data_catalog_engine.py",
         PROJECT / "tests" / "test_production_packet_engine.py",
@@ -164,6 +166,7 @@ def main() -> int:
         PROJECT / "scripts" / "run_production_expert_review_network.py",
         PROJECT / "scripts" / "run_production_launch_control_plane.py",
         PROJECT / "scripts" / "run_production_market_intelligence_engine.py",
+        PROJECT / "scripts" / "run_production_market_readiness_evidence_room.py",
         PROJECT / "scripts" / "run_production_trade_discovery_engine.py",
         PROJECT / "scripts" / "run_production_trade_data_catalog_engine.py",
         PROJECT / "scripts" / "run_production_packet_engine.py",
@@ -201,6 +204,7 @@ def main() -> int:
         PROJECT / "docs" / "PRODUCTION_EXPERT_REVIEW_NETWORK.md",
         PROJECT / "docs" / "PRODUCTION_LAUNCH_CONTROL_PLANE.md",
         PROJECT / "docs" / "PRODUCTION_MARKET_INTELLIGENCE_ENGINE.md",
+        PROJECT / "docs" / "PRODUCTION_MARKET_READINESS_EVIDENCE_ROOM.md",
         PROJECT / "docs" / "PRODUCTION_TRADE_DISCOVERY_ENGINE.md",
         PROJECT / "docs" / "PRODUCTION_TRADE_DATA_CATALOG_ENGINE.md",
         PROJECT / "docs" / "PRODUCTION_PACKET_ENGINE.md",
@@ -288,6 +292,10 @@ def main() -> int:
         PROJECT / "system_review_graph" / "production_market_intelligence_manifest.json",
         PROJECT / "system_review_graph" / "production_market_signals.json",
         PROJECT / "system_review_graph" / "production_market_dataset_connectors.json",
+        PROJECT / "system_review_graph" / "production_market_readiness_evidence_room_manifest.json",
+        PROJECT / "system_review_graph" / "production_market_readiness_evidence_work_orders.json",
+        PROJECT / "system_review_graph" / "production_market_readiness_reviewer_brief_cards.json",
+        PROJECT / "system_review_graph" / "production_market_readiness_gate_status_matrix.json",
         PROJECT / "system_review_graph" / "production_trade_discovery_manifest.json",
         PROJECT / "system_review_graph" / "production_trade_discovery_category_map.json",
         PROJECT / "system_review_graph" / "production_trade_discovery_country_lanes.json",
@@ -487,6 +495,7 @@ def main() -> int:
         ["python3", "scripts/run_production_payment_monetization_engine.py"],
         ["python3", "scripts/run_production_security_privacy_reliability_engine.py"],
         ["python3", "scripts/run_production_launch_control_plane.py"],
+        ["python3", "scripts/run_production_market_readiness_evidence_room.py"],
         ["python3", "scripts/build_external_review_packet.py"],
         ["python3", "scripts/export_operator_dashboard.py"],
         ["python3", "scripts/audit_external_package.py", "--root", "."],
@@ -706,6 +715,9 @@ def main() -> int:
     )
     production_market_intelligence = json.loads(
         (PROJECT / "system_review_graph" / "production_market_intelligence_manifest.json").read_text(encoding="utf-8")
+    )
+    production_market_readiness = json.loads(
+        (PROJECT / "system_review_graph" / "production_market_readiness_evidence_room_manifest.json").read_text(encoding="utf-8")
     )
     production_document_intelligence = json.loads(
         (PROJECT / "system_review_graph" / "production_document_intelligence_manifest.json").read_text(encoding="utf-8")
@@ -2562,6 +2574,48 @@ def main() -> int:
         print("Product project check: FAIL")
         print("go-live input request doc must explain how returned inputs are used")
         return 1
+    if (
+        production_market_readiness.get("status") != "production_market_readiness_evidence_room_ready_inputs_mapped_gates_closed"
+        or production_market_readiness.get("gate_count") != 8
+        or production_market_readiness.get("work_order_count") != 8
+        or production_market_readiness.get("reviewer_brief_card_count") != 8
+        or production_market_readiness.get("missing_input_count") != go_live_input_readiness.get("missing_input_count")
+        or production_market_readiness.get("source_anchor_count", 0) < 24
+    ):
+        print("Product project check: FAIL")
+        print("market readiness evidence room must map all real-world inputs, work orders, and source anchors")
+        return 1
+    for key in (
+        "public_launch_ready",
+        "hosted_private_beta_ready",
+        "live_payment_ready",
+        "launch_control_activation_allowed",
+        "exact_public_scope_approved",
+        "external_effects_created",
+        "claims_opened_by_room",
+        "market_ready_claim_allowed",
+    ):
+        if production_market_readiness.get(key) is not False:
+            print("Product project check: FAIL")
+            print(f"market readiness evidence room expected {key}=false")
+            return 1
+    market_work_orders = production_market_readiness.get("work_orders", [])
+    if {row.get("gate_id") for row in market_work_orders} != expected_external_validation_gates:
+        print("Product project check: FAIL")
+        print("market readiness evidence room missing expected work-order gate IDs")
+        return 1
+    if any(row.get("input_state") != "missing_real_input" for row in market_work_orders):
+        print("Product project check: FAIL")
+        print("market readiness evidence room should show current real inputs as missing")
+        return 1
+    if any(row.get("claims_opened_by_this_work_order") is not False for row in market_work_orders):
+        print("Product project check: FAIL")
+        print("market readiness work orders must not open claims")
+        return 1
+    if "market_ready" not in production_market_readiness.get("blocked_claims", []):
+        print("Product project check: FAIL")
+        print("market readiness evidence room must keep market_ready blocked")
+        return 1
     if reviewer_wave_plan.get("status") != "reviewer_wave_execution_plan_ready" or reviewer_wave_plan.get("wave_count") != 3:
         print("Product project check: FAIL")
         print("reviewer wave execution plan must include three gated waves")
@@ -2805,6 +2859,9 @@ def main() -> int:
     print(f"production_market_intelligence_status={production_market_intelligence['status']}")
     print(f"production_market_signals={production_market_intelligence['market_signal_count']}")
     print(f"production_market_dataset_connectors={production_market_intelligence['dataset_connector_count']}")
+    print(f"production_market_readiness_status={production_market_readiness['status']}")
+    print(f"production_market_readiness_work_orders={production_market_readiness['work_order_count']}")
+    print(f"production_market_readiness_missing_inputs={production_market_readiness['missing_input_count']}")
     print(f"production_evidence_claim_gate_status={production_evidence_claim_gate['status']}")
     print(f"production_evidence_claim_gate_decisions={production_evidence_claim_gate['claim_gate_decision_count']}")
     print(f"production_evidence_claim_gate_safe_claims={production_evidence_claim_gate['safe_research_claim_count']}")

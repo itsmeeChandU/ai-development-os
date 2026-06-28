@@ -144,6 +144,7 @@ class OperatorAppTests(unittest.TestCase):
             "/expert-network": "Expert Network",
             "/team-workspace": "Team Workspace",
             "/launch-operations": "Launch Operations",
+            "/market-readiness": "Market Readiness Evidence Room",
             "/reports/sample": "Sample Reports",
             "/ai-data-policy": "AI Data Policy",
             "/security": "Security And Privacy",
@@ -178,6 +179,7 @@ class OperatorAppTests(unittest.TestCase):
             "/api/team-workspace": "team_workspace_ready_local_with_approval_gates",
             "/api/launch-operations": "launch_operations_ready_for_private_beta_review",
             "/api/launch-control-plane": "production_launch_control_plane_ready_exact_scope_public_launch_blocked",
+            "/api/market-readiness": "production_market_readiness_evidence_room_ready_inputs_mapped_gates_closed",
         }
         for path, expected_status in api_routes.items():
             with self.subTest(path=path):

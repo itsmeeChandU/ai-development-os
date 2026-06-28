@@ -42,7 +42,7 @@
     "submit_government_form",
     "send_report_externally_without_confirmation"
   ],
-  "generated_at": "2026-06-28T18:15:10+00:00",
+  "generated_at": "2026-06-28T18:44:35+00:00",
   "operation_status": "agent_api_gateway_executed_local_no_external_effects",
   "proof_boundary": "The gateway executes local product operations with external effects disabled; it does not expose a live public API, credentials, payment integration, or claim-opening authority.",
   "status": "agent_api_gateway_ready_local_executor_no_external_effects",

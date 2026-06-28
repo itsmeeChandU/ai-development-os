@@ -147,6 +147,7 @@ def main() -> int:
         [sys.executable, "scripts/run_production_payment_monetization_engine.py"],
         [sys.executable, "scripts/run_production_security_privacy_reliability_engine.py"],
         [sys.executable, "scripts/run_production_launch_control_plane.py"],
+        [sys.executable, "scripts/run_production_market_readiness_evidence_room.py"],
         [sys.executable, "scripts/audit_external_package.py", "--root", "."],
     ]
     for command in commands:
@@ -215,6 +216,7 @@ def main() -> int:
     production_trade_discovery = _load_json(ROOT / "system_review_graph" / "production_trade_discovery_manifest.json")
     production_trade_data_catalog = _load_json(ROOT / "system_review_graph" / "production_trade_data_catalog_manifest.json")
     production_market_intelligence = _load_json(ROOT / "system_review_graph" / "production_market_intelligence_manifest.json")
+    production_market_readiness = _load_json(ROOT / "system_review_graph" / "production_market_readiness_evidence_room_manifest.json")
     production_document_intelligence = _load_json(ROOT / "system_review_graph" / "production_document_intelligence_manifest.json")
     production_evidence_claim_gate = _load_json(ROOT / "system_review_graph" / "production_evidence_claim_gate_manifest.json")
     production_decision_scoring = _load_json(ROOT / "system_review_graph" / "production_decision_scoring_manifest.json")
@@ -299,6 +301,7 @@ def main() -> int:
         "src/importer_source_readiness/production_enterprise_api_platform.py",
         "src/importer_source_readiness/production_expert_review_network.py",
         "src/importer_source_readiness/production_market_intelligence_engine.py",
+        "src/importer_source_readiness/production_market_readiness_evidence_room.py",
         "src/importer_source_readiness/production_trade_discovery_engine.py",
         "src/importer_source_readiness/production_trade_data_catalog_engine.py",
         "src/importer_source_readiness/production_launch_control_plane.py",
@@ -325,6 +328,7 @@ def main() -> int:
         "tests/test_production_enterprise_api_platform.py",
         "tests/test_production_expert_review_network.py",
         "tests/test_production_market_intelligence_engine.py",
+        "tests/test_production_market_readiness_evidence_room.py",
         "tests/test_production_trade_discovery_engine.py",
         "tests/test_production_trade_data_catalog_engine.py",
         "tests/test_production_launch_control_plane.py",
@@ -351,6 +355,7 @@ def main() -> int:
         "scripts/run_production_enterprise_api_platform.py",
         "scripts/run_production_expert_review_network.py",
         "scripts/run_production_market_intelligence_engine.py",
+        "scripts/run_production_market_readiness_evidence_room.py",
         "scripts/run_production_trade_discovery_engine.py",
         "scripts/run_production_trade_data_catalog_engine.py",
         "scripts/run_production_launch_control_plane.py",
@@ -388,6 +393,7 @@ def main() -> int:
         "docs/PRODUCTION_ENTERPRISE_API_PLATFORM.md",
         "docs/PRODUCTION_EXPERT_REVIEW_NETWORK.md",
         "docs/PRODUCTION_MARKET_INTELLIGENCE_ENGINE.md",
+        "docs/PRODUCTION_MARKET_READINESS_EVIDENCE_ROOM.md",
         "docs/PRODUCTION_TRADE_DISCOVERY_ENGINE.md",
         "docs/PRODUCTION_TRADE_DATA_CATALOG_ENGINE.md",
         "docs/PRODUCTION_LAUNCH_CONTROL_PLANE.md",
@@ -468,6 +474,10 @@ def main() -> int:
         "system_review_graph/production_market_intelligence_manifest.json",
         "system_review_graph/production_market_signals.json",
         "system_review_graph/production_market_dataset_connectors.json",
+        "system_review_graph/production_market_readiness_evidence_room_manifest.json",
+        "system_review_graph/production_market_readiness_evidence_work_orders.json",
+        "system_review_graph/production_market_readiness_reviewer_brief_cards.json",
+        "system_review_graph/production_market_readiness_gate_status_matrix.json",
         "system_review_graph/production_trade_discovery_manifest.json",
         "system_review_graph/production_trade_discovery_category_map.json",
         "system_review_graph/production_trade_discovery_country_lanes.json",
@@ -2172,6 +2182,44 @@ def main() -> int:
     input_md = (ROOT / "docs" / "GO_LIVE_INPUT_REQUESTS.md").read_text(encoding="utf-8")
     if "Once Inputs Are Received" not in input_md or "external_inputs/" not in input_md:
         failures.append("go-live input request doc should explain how returned inputs are used")
+    if production_market_readiness.get("status") != "production_market_readiness_evidence_room_ready_inputs_mapped_gates_closed":
+        failures.append("market readiness evidence room should be ready with gate-closed input mapping")
+    if production_market_readiness.get("gate_count") != 8:
+        failures.append("market readiness evidence room should cover the eight real-world gates")
+    if production_market_readiness.get("work_order_count") != 8:
+        failures.append("market readiness evidence room should generate one work order per real-world gate")
+    if production_market_readiness.get("reviewer_brief_card_count") != 8:
+        failures.append("market readiness evidence room should generate reviewer-facing brief cards")
+    if production_market_readiness.get("missing_input_count") != go_live_input_readiness.get("missing_input_count"):
+        failures.append("market readiness missing input count should match go-live input readiness")
+    for key in (
+        "public_launch_ready",
+        "hosted_private_beta_ready",
+        "live_payment_ready",
+        "launch_control_activation_allowed",
+        "exact_public_scope_approved",
+        "external_effects_created",
+        "claims_opened_by_room",
+        "market_ready_claim_allowed",
+    ):
+        if production_market_readiness.get(key) is not False:
+            failures.append(f"market readiness evidence room expected {key}=false")
+    if production_market_readiness.get("must_continue") is not True:
+        failures.append("market readiness evidence room should preserve the continuation requirement")
+    if production_market_readiness.get("source_anchor_count", 0) < 24:
+        failures.append("market readiness evidence room should carry researched source anchors into the work orders")
+    market_work_orders = production_market_readiness.get("work_orders", [])
+    market_gate_ids = {row.get("gate_id") for row in market_work_orders}
+    if market_gate_ids != expected_external_validation_gates:
+        failures.append("market readiness evidence room missing expected work-order gate IDs")
+    if any(row.get("input_state") != "missing_real_input" for row in market_work_orders):
+        failures.append("market readiness evidence room should show all current inputs as missing")
+    if any(not str(row.get("drop_path", "")).startswith("external_inputs/") for row in market_work_orders):
+        failures.append("market readiness evidence room work orders must show external input drop paths")
+    if any(row.get("claims_opened_by_this_work_order") is not False for row in market_work_orders):
+        failures.append("market readiness evidence room work orders must not open claims")
+    if "market_ready" not in production_market_readiness.get("blocked_claims", []):
+        failures.append("market readiness evidence room must keep market_ready claim blocked")
     if reviewer_wave_plan.get("status") != "reviewer_wave_execution_plan_ready":
         failures.append("reviewer wave execution plan should be ready")
     if reviewer_wave_plan.get("wave_count") != 3:
@@ -2435,6 +2483,9 @@ def main() -> int:
     print(f"production_market_intelligence_status={production_market_intelligence['status']}")
     print(f"production_market_signals={production_market_intelligence['market_signal_count']}")
     print(f"production_market_dataset_connectors={production_market_intelligence['dataset_connector_count']}")
+    print(f"production_market_readiness_status={production_market_readiness['status']}")
+    print(f"production_market_readiness_work_orders={production_market_readiness['work_order_count']}")
+    print(f"production_market_readiness_missing_inputs={production_market_readiness['missing_input_count']}")
     print(f"production_evidence_claim_gate_status={production_evidence_claim_gate['status']}")
     print(f"production_evidence_claim_gate_decisions={production_evidence_claim_gate['claim_gate_decision_count']}")
     print(f"production_evidence_claim_gate_safe_claims={production_evidence_claim_gate['safe_research_claim_count']}")

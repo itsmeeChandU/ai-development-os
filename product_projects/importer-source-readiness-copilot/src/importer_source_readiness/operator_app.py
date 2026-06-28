@@ -87,6 +87,7 @@ API_ROUTES = {
     "/api/team-workspace": "system_review_graph/team_workspace_report.json",
     "/api/launch-operations": "system_review_graph/launch_operations_report.json",
     "/api/launch-control-plane": "system_review_graph/production_launch_control_plane_manifest.json",
+    "/api/market-readiness": "system_review_graph/production_market_readiness_evidence_room_manifest.json",
     "/api/product-operations/report": "system_review_graph/product_operations_report.json",
 }
 
@@ -953,6 +954,7 @@ def _render_tool_selection() -> str:
     tools = [
         ("Trade Discovery", "/trade-discovery", "Browse Canada import/export categories and country lanes before choosing a product."),
         ("Trade Data Catalog", "/trade-data-catalog", "Turn discovery choices into official-source query plans without showing unverified values."),
+        ("Market Readiness Evidence Room", "/market-readiness", "Track real go-live inputs, reviewer asks, and closed launch claims."),
         ("Opportunity Scanner", "/opportunities", "Find possible opportunity signals and route them into research-gated packets."),
         ("Import Readiness Checker", "/tools/import-readiness", "Check Canada-side importer/source readiness gaps."),
         ("Export Readiness Checker", "/tools/export-readiness", "Build an Export-to-Canada packet for a foreign exporter."),
@@ -1594,6 +1596,67 @@ def _render_launch_operations(repo_root: Path) -> str:
 </section>
 """
     return _render_page("Launch Operations", body)
+
+
+def _render_market_readiness(repo_root: Path) -> str:
+    room = _load_graph_json(repo_root, "production_market_readiness_evidence_room_manifest.json")
+    matrix_rows = "".join(
+        "<tr>"
+        f"<td>{escape(str(row.get('gate_name')))}</td>"
+        f"<td>{escape(str(row.get('input_state')))}</td>"
+        f"<td>{escape(str(row.get('drop_path')))}</td>"
+        f"<td>{escape(str(row.get('source_anchor_count')))}</td>"
+        f"<td>{escape(str(row.get('next_valid_move')))}</td>"
+        "</tr>"
+        for row in room.get("gate_status_matrix", [])
+    )
+    work_rows = "".join(
+        "<tr>"
+        f"<td>{escape(str(row.get('gate_name')))}</td>"
+        f"<td>{escape(str(row.get('who_to_ask')))}</td>"
+        f"<td>{escape(', '.join(row.get('minimum_input', [])[:4]))}</td>"
+        f"<td>{escape(str(row.get('rerun_command')))}</td>"
+        "</tr>"
+        for row in room.get("work_orders", [])
+    )
+    blocked = _list_items(room.get("blocked_claims", []))
+    next_loop = _list_items(room.get("safe_next_loop", []))
+    body = f"""
+<section class="surface">
+  <h1>Market Readiness Evidence Room</h1>
+  <p class="lede">Use this as the operator workbench for real go-live inputs: outside review, privacy/security, customs/trade language, hosted proof, payments, user feedback, buyer/supplier validation, and final go/no-go.</p>
+  <p class="note">{escape(str(room.get('proof_boundary') or PRODUCT_BOUNDARY))}</p>
+  <div class="grid grid-3">
+    {_metric_card("Missing Inputs", room.get("missing_input_count"), "Real returned responses still needed.")}
+    {_metric_card("Ready Inputs", room.get("ready_input_count"), "Dated evidence accepted for this scope.")}
+    {_metric_card("Public Launch Ready", room.get("public_launch_ready"), "Must stay false until all real inputs return.")}
+  </div>
+  <div class="actions">
+    {_button_link("/launch-operations", "Launch operations", "shield", tone="secondary")}
+    {_button_link("/api/market-readiness", "Open JSON", "database", tone="secondary")}
+    {_button_link("/system_review_graph/production_market_readiness_evidence_work_orders.json", "Work orders", "file-text", tone="secondary")}
+  </div>
+</section>
+<section class="surface">
+  <h2>Gate Status</h2>
+  <table>
+    <thead><tr><th>Area</th><th>Input State</th><th>Save Response</th><th>Sources</th><th>Next</th></tr></thead>
+    <tbody>{matrix_rows or '<tr><td colspan="5">Run scripts/run_production_market_readiness_evidence_room.py to generate the evidence room.</td></tr>'}</tbody>
+  </table>
+</section>
+<section class="surface">
+  <h2>Reviewer Work Requests</h2>
+  <table>
+    <thead><tr><th>Area</th><th>Who To Ask</th><th>Minimum Input</th><th>After Input</th></tr></thead>
+    <tbody>{work_rows or '<tr><td colspan="4">No work orders generated yet.</td></tr>'}</tbody>
+  </table>
+</section>
+<section class="grid">
+  <div class="metric"><div class="label">Still Not Approved</div><ul>{blocked}</ul></div>
+  <div class="metric"><div class="label">Safe Next Loop</div><ul>{next_loop}</ul></div>
+</section>
+"""
+    return _render_page("Market Readiness Evidence Room", body)
 
 
 def _render_traffic_page(repo_root: Path, slug: str) -> str | None:
@@ -2657,6 +2720,7 @@ def _index_payload(repo_root: Path) -> dict[str, Any]:
                 "/expert-network",
                 "/team-workspace",
                 "/launch-operations",
+                "/market-readiness",
                 "/ai-data-policy",
                 "/security",
                 "/public/packets/:id/result",
@@ -2681,6 +2745,7 @@ def _index_payload(repo_root: Path) -> dict[str, Any]:
                 "/api/team-workspace",
                 "/api/launch-operations",
                 "/api/product-operations/report",
+                "/api/market-readiness",
                 "/api/product-operations/run",
                 "/api/agent-tools/:tool",
                 "/login",
@@ -2830,6 +2895,9 @@ def build_operator_app_handler(repo_root: Path) -> type[BaseHTTPRequestHandler]:
                 return
             if path == "/launch-operations":
                 self._send_html(_render_launch_operations(repo_root))
+                return
+            if path == "/market-readiness":
+                self._send_html(_render_market_readiness(repo_root))
                 return
             if path.startswith("/tools/"):
                 traffic_html = _render_traffic_page(repo_root, path.removeprefix("/tools/").strip("/"))

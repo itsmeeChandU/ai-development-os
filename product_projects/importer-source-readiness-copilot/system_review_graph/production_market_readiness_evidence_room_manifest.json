@@ -1,0 +1,1770 @@
+{
+  "all_required_inputs_received": false,
+  "blocked_claims": [
+    "market_ready",
+    "public_launch_approved",
+    "hosted_private_beta_approved",
+    "live_payment_activated",
+    "legal_privacy_security_approved",
+    "customs_trade_approved",
+    "tariff_confirmed",
+    "cfia_approved",
+    "buyer_validated",
+    "supplier_verified",
+    "ready_to_ship"
+  ],
+  "claims_opened_by_room": false,
+  "evidence_room_name": "Market Readiness Evidence Room",
+  "exact_public_scope_approved": false,
+  "external_effects_created": false,
+  "gate_count": 8,
+  "gate_status_matrix": [
+    {
+      "blocks_live_payment": true,
+      "blocks_private_beta": true,
+      "blocks_public_launch": true,
+      "blocks_trade_claims": true,
+      "drop_path": "external_inputs/real_external_expert_reviews.json",
+      "gate_id": "real_external_expert_reviews",
+      "gate_name": "Real External Expert Reviews",
+      "input_state": "missing_real_input",
+      "next_valid_move": "Send executive and technical packages to Wave 1 reviewers, record decisions, and convert every finding into a blocker row.",
+      "ready_for_area": false,
+      "source_anchor_count": 1
+    },
+    {
+      "blocks_live_payment": true,
+      "blocks_private_beta": true,
+      "blocks_public_launch": true,
+      "blocks_trade_claims": false,
+      "drop_path": "external_inputs/legal_privacy_security_approval.json",
+      "gate_id": "legal_privacy_security_approval",
+      "gate_name": "Legal, Privacy, And Security Approval",
+      "input_state": "missing_real_input",
+      "next_valid_move": "Assemble the data map, threat model, upload controls proof, incident process, privacy notice, and AI processor inventory for qualified review.",
+      "ready_for_area": false,
+      "source_anchor_count": 10
+    },
+    {
+      "blocks_live_payment": false,
+      "blocks_private_beta": false,
+      "blocks_public_launch": true,
+      "blocks_trade_claims": true,
+      "drop_path": "external_inputs/qualified_customs_trade_review.json",
+      "gate_id": "qualified_customs_trade_review",
+      "gate_name": "Qualified Customs And Trade Review",
+      "input_state": "missing_real_input",
+      "next_valid_move": "Prepare one dated broker packet per sample packet and request scoped language approval from a qualified customs/trade reviewer.",
+      "ready_for_area": false,
+      "source_anchor_count": 9
+    },
+    {
+      "blocks_live_payment": true,
+      "blocks_private_beta": true,
+      "blocks_public_launch": true,
+      "blocks_trade_claims": false,
+      "drop_path": "external_inputs/hosted_staging_production_proof.json",
+      "gate_id": "hosted_staging_production_proof",
+      "gate_name": "Hosted Staging And Production Proof",
+      "input_state": "missing_real_input",
+      "next_valid_move": "Provision staging, deploy exact commit, run smoke/security/upload/privacy/backup/rollback checks, and attach evidence.",
+      "ready_for_area": false,
+      "source_anchor_count": 7
+    },
+    {
+      "blocks_live_payment": true,
+      "blocks_private_beta": false,
+      "blocks_public_launch": true,
+      "blocks_trade_claims": false,
+      "drop_path": "external_inputs/live_payment_activation.json",
+      "gate_id": "live_payment_activation",
+      "gate_name": "Live Payment Activation",
+      "input_state": "missing_real_input",
+      "next_valid_move": "Keep live checkout disabled; complete Stripe live-mode configuration and payment policy proof after staged security/privacy approval.",
+      "ready_for_area": false,
+      "source_anchor_count": 4
+    },
+    {
+      "blocks_live_payment": false,
+      "blocks_private_beta": true,
+      "blocks_public_launch": true,
+      "blocks_trade_claims": false,
+      "drop_path": "external_inputs/real_users_private_beta_outcomes.json",
+      "gate_id": "real_users_private_beta_outcomes",
+      "gate_name": "Real Users And Private Beta Outcomes",
+      "input_state": "missing_real_input",
+      "next_valid_move": "After Wave 1 and staging proof, run five structured private-beta sessions and convert every issue into a blocker or fixed proof row.",
+      "ready_for_area": false,
+      "source_anchor_count": 5
+    },
+    {
+      "blocks_live_payment": false,
+      "blocks_private_beta": false,
+      "blocks_public_launch": true,
+      "blocks_trade_claims": true,
+      "drop_path": "external_inputs/buyer_supplier_validation.json",
+      "gate_id": "buyer_supplier_validation",
+      "gate_name": "Buyer And Supplier Validation",
+      "input_state": "missing_real_input",
+      "next_valid_move": "Run structured interviews with target importers/exporters/brokers and record the evidence without opening recommendation claims.",
+      "ready_for_area": false,
+      "source_anchor_count": 3
+    },
+    {
+      "blocks_live_payment": true,
+      "blocks_private_beta": false,
+      "blocks_public_launch": true,
+      "blocks_trade_claims": true,
+      "drop_path": "external_inputs/public_go_no_go_approval.json",
+      "gate_id": "public_go_no_go_approval",
+      "gate_name": "Public Go/No-Go Approval",
+      "input_state": "missing_real_input",
+      "next_valid_move": "Do not hold public go/no-go until the other seven gates have real evidence; keep launch state blocked-safe.",
+      "ready_for_area": false,
+      "source_anchor_count": 4
+    }
+  ],
+  "generated_at": "2026-06-28T18:44:37+00:00",
+  "go_live_input_status": "waiting_for_real_inputs_not_ready_yet",
+  "hosted_private_beta_ready": false,
+  "input_folder": "external_inputs/",
+  "launch_control_activation_allowed": false,
+  "launch_control_status": "production_launch_control_plane_ready_exact_scope_public_launch_blocked",
+  "live_payment_ready": false,
+  "market_ready_claim_allowed": false,
+  "missing_input_count": 8,
+  "must_continue": true,
+  "product": "Trade Readiness Copilot",
+  "proof_boundary": "The evidence room organizes real go-live inputs and review work orders. It is not approval, market readiness, payment activation, customs/trade approval, legal/privacy/security approval, buyer validation, supplier verification, or public launch permission.",
+  "public_launch_ready": false,
+  "ready_input_count": 0,
+  "real_world_external_evidence_received": false,
+  "required_input_count": 8,
+  "reviewer_brief_card_count": 8,
+  "reviewer_brief_cards": [
+    {
+      "claims_still_closed": [
+        "market_ready",
+        "public_launch_approved",
+        "hosted_private_beta_approved",
+        "live_payment_activated",
+        "legal_privacy_security_approved",
+        "customs_trade_approved",
+        "tariff_confirmed",
+        "cfia_approved",
+        "buyer_validated",
+        "supplier_verified",
+        "ready_to_ship"
+      ],
+      "minimum_input": [
+        "reviewer name",
+        "reviewed scope",
+        "decision",
+        "top issues",
+        "missing evidence",
+        "signed date"
+      ],
+      "plain_title": "Real External Expert Reviews",
+      "review_area": "real_external_expert_reviews",
+      "simple_question": "Have the right outside reviewers checked the right scope?",
+      "subject_line": "Scoped review input requested: Real External Expert Reviews",
+      "what_not_to_say": [
+        "Please approve the whole company.",
+        "The AI review already approved this.",
+        "This is ready to ship unless you object."
+      ],
+      "what_to_send": [
+        "external_validation_reviewer_brief.pdf",
+        "go_live_input_requests.pdf",
+        "the exact URL, commit, package hash, report, or packet scope being reviewed"
+      ],
+      "where_to_save_response": "external_inputs/real_external_expert_reviews.json",
+      "who_to_ask": "Product, security, privacy/legal, AI safety, operations, trade, and payment reviewers as relevant."
+    },
+    {
+      "claims_still_closed": [
+        "market_ready",
+        "public_launch_approved",
+        "hosted_private_beta_approved",
+        "live_payment_activated",
+        "legal_privacy_security_approved",
+        "customs_trade_approved",
+        "tariff_confirmed",
+        "cfia_approved",
+        "buyer_validated",
+        "supplier_verified",
+        "ready_to_ship"
+      ],
+      "minimum_input": [
+        "reviewer name",
+        "data/privacy scope",
+        "security scope",
+        "decision",
+        "missing evidence",
+        "signed date"
+      ],
+      "plain_title": "Legal, Privacy, And Security Approval",
+      "review_area": "legal_privacy_security_approval",
+      "simple_question": "Is customer data handling, security, AI use, retention, deletion, and incident handling acceptable for the launch scope?",
+      "subject_line": "Scoped review input requested: Legal, Privacy, And Security Approval",
+      "what_not_to_say": [
+        "Please approve the whole company.",
+        "The AI review already approved this.",
+        "This is ready to ship unless you object."
+      ],
+      "what_to_send": [
+        "external_validation_reviewer_brief.pdf",
+        "go_live_input_requests.pdf",
+        "the exact URL, commit, package hash, report, or packet scope being reviewed"
+      ],
+      "where_to_save_response": "external_inputs/legal_privacy_security_approval.json",
+      "who_to_ask": "Privacy/legal reviewer plus application security reviewer."
+    },
+    {
+      "claims_still_closed": [
+        "market_ready",
+        "public_launch_approved",
+        "hosted_private_beta_approved",
+        "live_payment_activated",
+        "legal_privacy_security_approved",
+        "customs_trade_approved",
+        "tariff_confirmed",
+        "cfia_approved",
+        "buyer_validated",
+        "supplier_verified",
+        "ready_to_ship"
+      ],
+      "minimum_input": [
+        "reviewer name",
+        "country/product scope",
+        "approved wording",
+        "wording to avoid",
+        "decision",
+        "signed date"
+      ],
+      "plain_title": "Qualified Customs And Trade Review",
+      "review_area": "qualified_customs_trade_review",
+      "simple_question": "Does the product avoid unsupported customs, tariff, CFIA, sanctions, and trade-readiness claims?",
+      "subject_line": "Scoped review input requested: Qualified Customs And Trade Review",
+      "what_not_to_say": [
+        "Please approve the whole company.",
+        "The AI review already approved this.",
+        "This is ready to ship unless you object."
+      ],
+      "what_to_send": [
+        "external_validation_reviewer_brief.pdf",
+        "go_live_input_requests.pdf",
+        "the exact URL, commit, package hash, report, or packet scope being reviewed"
+      ],
+      "where_to_save_response": "external_inputs/qualified_customs_trade_review.json",
+      "who_to_ask": "Licensed customs broker or qualified trade/compliance reviewer."
+    },
+    {
+      "claims_still_closed": [
+        "market_ready",
+        "public_launch_approved",
+        "hosted_private_beta_approved",
+        "live_payment_activated",
+        "legal_privacy_security_approved",
+        "customs_trade_approved",
+        "tariff_confirmed",
+        "cfia_approved",
+        "buyer_validated",
+        "supplier_verified",
+        "ready_to_ship"
+      ],
+      "minimum_input": [
+        "environment URL",
+        "commit/build",
+        "smoke result",
+        "monitoring",
+        "rollback owner",
+        "decision",
+        "signed date"
+      ],
+      "plain_title": "Hosted Staging And Production Proof",
+      "review_area": "hosted_staging_production_proof",
+      "simple_question": "Is there real hosted evidence for the launch scope, not only localhost?",
+      "subject_line": "Scoped review input requested: Hosted Staging And Production Proof",
+      "what_not_to_say": [
+        "Please approve the whole company.",
+        "The AI review already approved this.",
+        "This is ready to ship unless you object."
+      ],
+      "what_to_send": [
+        "external_validation_reviewer_brief.pdf",
+        "go_live_input_requests.pdf",
+        "the exact URL, commit, package hash, report, or packet scope being reviewed"
+      ],
+      "where_to_save_response": "external_inputs/hosted_staging_production_proof.json",
+      "who_to_ask": "DevOps, SRE, or operations owner."
+    },
+    {
+      "claims_still_closed": [
+        "market_ready",
+        "public_launch_approved",
+        "hosted_private_beta_approved",
+        "live_payment_activated",
+        "legal_privacy_security_approved",
+        "customs_trade_approved",
+        "tariff_confirmed",
+        "cfia_approved",
+        "buyer_validated",
+        "supplier_verified",
+        "ready_to_ship"
+      ],
+      "minimum_input": [
+        "payment scope",
+        "Stripe mode",
+        "webhook evidence",
+        "refund/support owner",
+        "decision",
+        "signed date"
+      ],
+      "plain_title": "Live Payment Activation",
+      "review_area": "live_payment_activation",
+      "simple_question": "Are live checkout, webhook, tax/refund/support, and billing wording ready, or is payment intentionally off for launch?",
+      "subject_line": "Scoped review input requested: Live Payment Activation",
+      "what_not_to_say": [
+        "Please approve the whole company.",
+        "The AI review already approved this.",
+        "This is ready to ship unless you object."
+      ],
+      "what_to_send": [
+        "external_validation_reviewer_brief.pdf",
+        "go_live_input_requests.pdf",
+        "the exact URL, commit, package hash, report, or packet scope being reviewed"
+      ],
+      "where_to_save_response": "external_inputs/live_payment_activation.json",
+      "who_to_ask": "Billing/payment owner, tax/accounting advisor if needed, and support owner."
+    },
+    {
+      "claims_still_closed": [
+        "market_ready",
+        "public_launch_approved",
+        "hosted_private_beta_approved",
+        "live_payment_activated",
+        "legal_privacy_security_approved",
+        "customs_trade_approved",
+        "tariff_confirmed",
+        "cfia_approved",
+        "buyer_validated",
+        "supplier_verified",
+        "ready_to_ship"
+      ],
+      "minimum_input": [
+        "participant count",
+        "segments",
+        "task results",
+        "top issues",
+        "what changed",
+        "decision",
+        "signed date"
+      ],
+      "plain_title": "Real Users And Private Beta Outcomes",
+      "review_area": "real_users_private_beta_outcomes",
+      "simple_question": "Have real target users used the product and understood what is and is not approved?",
+      "subject_line": "Scoped review input requested: Real Users And Private Beta Outcomes",
+      "what_not_to_say": [
+        "Please approve the whole company.",
+        "The AI review already approved this.",
+        "This is ready to ship unless you object."
+      ],
+      "what_to_send": [
+        "external_validation_reviewer_brief.pdf",
+        "go_live_input_requests.pdf",
+        "the exact URL, commit, package hash, report, or packet scope being reviewed"
+      ],
+      "where_to_save_response": "external_inputs/real_users_private_beta_outcomes.json",
+      "who_to_ask": "Product/UX owner or user research owner."
+    },
+    {
+      "claims_still_closed": [
+        "market_ready",
+        "public_launch_approved",
+        "hosted_private_beta_approved",
+        "live_payment_activated",
+        "legal_privacy_security_approved",
+        "customs_trade_approved",
+        "tariff_confirmed",
+        "cfia_approved",
+        "buyer_validated",
+        "supplier_verified",
+        "ready_to_ship"
+      ],
+      "minimum_input": [
+        "counterparty type",
+        "problem validated",
+        "evidence summary",
+        "permission scope",
+        "decision",
+        "signed date"
+      ],
+      "plain_title": "Buyer And Supplier Validation",
+      "review_area": "buyer_supplier_validation",
+      "simple_question": "Have real buyers, suppliers, importers, exporters, or advisors validated the problem and workflow?",
+      "subject_line": "Scoped review input requested: Buyer And Supplier Validation",
+      "what_not_to_say": [
+        "Please approve the whole company.",
+        "The AI review already approved this.",
+        "This is ready to ship unless you object."
+      ],
+      "what_to_send": [
+        "external_validation_reviewer_brief.pdf",
+        "go_live_input_requests.pdf",
+        "the exact URL, commit, package hash, report, or packet scope being reviewed"
+      ],
+      "where_to_save_response": "external_inputs/buyer_supplier_validation.json",
+      "who_to_ask": "Founder or commercial validation owner."
+    },
+    {
+      "claims_still_closed": [
+        "market_ready",
+        "public_launch_approved",
+        "hosted_private_beta_approved",
+        "live_payment_activated",
+        "legal_privacy_security_approved",
+        "customs_trade_approved",
+        "tariff_confirmed",
+        "cfia_approved",
+        "buyer_validated",
+        "supplier_verified",
+        "ready_to_ship"
+      ],
+      "minimum_input": [
+        "launch scope",
+        "production URL",
+        "remaining risks",
+        "support owner",
+        "rollback owner",
+        "decision",
+        "signed date"
+      ],
+      "plain_title": "Public Go/No-Go Approval",
+      "review_area": "public_go_no_go_approval",
+      "simple_question": "After all other inputs are in, is this launch approved for the exact stated scope?",
+      "subject_line": "Scoped review input requested: Public Go/No-Go Approval",
+      "what_not_to_say": [
+        "Please approve the whole company.",
+        "The AI review already approved this.",
+        "This is ready to ship unless you object."
+      ],
+      "what_to_send": [
+        "external_validation_reviewer_brief.pdf",
+        "go_live_input_requests.pdf",
+        "the exact URL, commit, package hash, report, or packet scope being reviewed"
+      ],
+      "where_to_save_response": "external_inputs/public_go_no_go_approval.json",
+      "who_to_ask": "Named launch owner."
+    }
+  ],
+  "safe_next_loop": [
+    "Collect the missing real-world input files in external_inputs/.",
+    "Rerun scripts/run_external_validation_requirements.py --input-dir external_inputs.",
+    "Rerun scripts/run_production_market_readiness_evidence_room.py.",
+    "Route any returned issue into external_review_blocker_ledger.jsonl before launch scope changes.",
+    "Use production_launch_control_plane_manifest.json for final activation state."
+  ],
+  "source_anchor_count": 43,
+  "status": "production_market_readiness_evidence_room_ready_inputs_mapped_gates_closed",
+  "template_status": "go_live_input_templates_ready",
+  "work_order_count": 8,
+  "work_orders": [
+    {
+      "allowed_decisions": [
+        "ready_for_my_area",
+        "not_ready_yet",
+        "need_more_evidence",
+        "not_my_area",
+        "send_to_different_reviewer",
+        "not_applicable_for_this_launch",
+        "go_for_public_launch"
+      ],
+      "blocked_claims": [
+        "market_ready",
+        "public_launch_approved",
+        "hosted_private_beta_approved",
+        "live_payment_activated",
+        "legal_privacy_security_approved",
+        "customs_trade_approved",
+        "tariff_confirmed",
+        "cfia_approved",
+        "buyer_validated",
+        "supplier_verified",
+        "ready_to_ship"
+      ],
+      "blocking_conditions": [
+        "AI-only review is the only evidence",
+        "reviewer identity or scope is missing",
+        "reviewed commit/package differs from production candidate",
+        "P0/P1 findings remain unresolved"
+      ],
+      "blocks_live_payment": true,
+      "blocks_private_beta": true,
+      "blocks_public_launch": true,
+      "blocks_trade_claims": true,
+      "cannot_claim_until": "External review complete, scoped approvals attached, and blocker ledger has no unresolved launch-blocking rows.",
+      "claims_opened_by_this_work_order": false,
+      "drop_path": "external_inputs/real_external_expert_reviews.json",
+      "external_effects_created": false,
+      "gate_id": "real_external_expert_reviews",
+      "gate_name": "Real External Expert Reviews",
+      "input_state": "missing_real_input",
+      "input_template": {
+        "claims_the_product_must_not_make": [],
+        "decision": "need_more_evidence",
+        "evidence_links_or_files": [],
+        "evidence_missing": [],
+        "review_area": "real_external_expert_reviews",
+        "reviewer_name": "",
+        "reviewer_role": "",
+        "scope_reviewed": "",
+        "signed_at": "",
+        "top_issues": [],
+        "what_would_make_this_ready": ""
+      },
+      "minimum_input": [
+        "reviewer name",
+        "reviewed scope",
+        "decision",
+        "top issues",
+        "missing evidence",
+        "signed date"
+      ],
+      "next_valid_move": "Send executive and technical packages to Wave 1 reviewers, record decisions, and convert every finding into a blocker row.",
+      "plain_question": "Have the right outside reviewers checked the right scope?",
+      "ready_for_area": false,
+      "required_data_fields": [
+        "reviewer_name",
+        "reviewer_role",
+        "qualification_basis",
+        "review_scope",
+        "commit_sha",
+        "package_sha256",
+        "environment_url_or_local_path",
+        "findings",
+        "decision",
+        "signed_at",
+        "expires_or_refresh_rule"
+      ],
+      "required_evidence": [
+        "reviewer identity, role, qualifications, and contact/channel record",
+        "review scope tied to exact commit, package hash, URL, environment, and artifacts reviewed",
+        "structured findings with severity, owner, required fix, retest command, and launch impact",
+        "explicit decision value: approve_within_scope, block, needs_more_evidence, out_of_scope, or wrong_reviewer_type",
+        "dated signoff or blocker record for each wave and role",
+        "resolution evidence for every P0/P1 or explicit decision to keep the gate blocked"
+      ],
+      "required_reviewers_or_owners": [
+        "UX/product usability reviewer",
+        "application security reviewer",
+        "privacy/legal reviewer",
+        "AI safety/prompt-injection reviewer",
+        "DevOps/production readiness reviewer",
+        "trade/customs language reviewer",
+        "freight/logistics reviewer when logistics claims are shown",
+        "billing/payment reviewer before monetization"
+      ],
+      "rerun_command": "python3 scripts/run_external_validation_requirements.py --input-dir external_inputs",
+      "review_area": "real_external_expert_reviews",
+      "safe_operator_instruction": "Ask for the minimum input, save the dated response at the drop path, rerun the external validation script, then route any issues into the blocker ledger before changing launch scope.",
+      "source_anchor_count": 1,
+      "source_anchors": [
+        {
+          "checked_at": "2026-06-27",
+          "does_not_support": "approval, legal advice, customs advice, payment activation, or launch approval",
+          "name": "LLM01: Prompt Injection",
+          "project_use": "Prompt-injection threat model, AI red-team evidence, and fail-closed AI output constraints.",
+          "publisher": "OWASP GenAI Security Project",
+          "source_id": "owasp-llm01-prompt-injection",
+          "source_type": "security_primary_guidance",
+          "supports": "source routing and review preparation only",
+          "url": "https://genai.owasp.org/llmrisk/llm01-prompt-injection/"
+        }
+      ],
+      "who_to_ask": "Product, security, privacy/legal, AI safety, operations, trade, and payment reviewers as relevant.",
+      "work_order_id": "market-readiness:real_external_expert_reviews"
+    },
+    {
+      "allowed_decisions": [
+        "ready_for_my_area",
+        "not_ready_yet",
+        "need_more_evidence",
+        "not_my_area",
+        "send_to_different_reviewer",
+        "not_applicable_for_this_launch",
+        "go_for_public_launch"
+      ],
+      "blocked_claims": [
+        "market_ready",
+        "public_launch_approved",
+        "hosted_private_beta_approved",
+        "live_payment_activated",
+        "legal_privacy_security_approved",
+        "customs_trade_approved",
+        "tariff_confirmed",
+        "cfia_approved",
+        "buyer_validated",
+        "supplier_verified",
+        "ready_to_ship"
+      ],
+      "blocking_conditions": [
+        "privacy notice does not match actual data flows",
+        "public upload malware/isolation/rate-limit proof missing",
+        "AI provider or retention behavior is unreviewed",
+        "incident/breach/deletion process has no owner",
+        "secrets, auth, or storage proof is missing"
+      ],
+      "blocks_live_payment": true,
+      "blocks_private_beta": true,
+      "blocks_public_launch": true,
+      "blocks_trade_claims": false,
+      "cannot_claim_until": "Qualified privacy/legal/security approvals are attached with exact scope and effective dates.",
+      "claims_opened_by_this_work_order": false,
+      "drop_path": "external_inputs/legal_privacy_security_approval.json",
+      "external_effects_created": false,
+      "gate_id": "legal_privacy_security_approval",
+      "gate_name": "Legal, Privacy, And Security Approval",
+      "input_state": "missing_real_input",
+      "input_template": {
+        "claims_the_product_must_not_make": [],
+        "decision": "need_more_evidence",
+        "evidence_links_or_files": [],
+        "evidence_missing": [],
+        "review_area": "legal_privacy_security_approval",
+        "reviewer_name": "",
+        "reviewer_role": "",
+        "scope_reviewed": "",
+        "signed_at": "",
+        "top_issues": [],
+        "what_would_make_this_ready": ""
+      },
+      "minimum_input": [
+        "reviewer name",
+        "data/privacy scope",
+        "security scope",
+        "decision",
+        "missing evidence",
+        "signed date"
+      ],
+      "next_valid_move": "Assemble the data map, threat model, upload controls proof, incident process, privacy notice, and AI processor inventory for qualified review.",
+      "plain_question": "Is customer data handling, security, AI use, retention, deletion, and incident handling acceptable for the launch scope?",
+      "ready_for_area": false,
+      "required_data_fields": [
+        "reviewer_name",
+        "law_or_standard_scope",
+        "data_inventory_version",
+        "privacy_notice_version",
+        "terms_version",
+        "processor_inventory",
+        "security_test_results",
+        "incident_response_owner",
+        "approval_decision",
+        "approval_limits",
+        "signed_at"
+      ],
+      "required_evidence": [
+        "privacy notice, terms/review-use terms, data retention/deletion policy, and AI data policy reviewed against actual flows",
+        "data inventory with personal, commercial, customs, supplier, buyer, file-upload, AI, log, and payment metadata fields",
+        "processor/subprocessor and vendor inventory with contracts or acceptance notes",
+        "threat model covering PDF upload, prompt injection, data leakage, auth/RBAC, API routes, file storage, logs, and payment boundaries",
+        "security scan results for dependencies, secrets, SAST/DAST/API checks, file upload controls, and auth/RBAC",
+        "incident response, breach triage, notification, backup/restore, and deletion request evidence",
+        "accessibility and safe-claims review for public pages and generated reports"
+      ],
+      "required_reviewers_or_owners": [
+        "privacy/legal reviewer familiar with Canada and target customer jurisdictions",
+        "application security reviewer",
+        "security operations owner",
+        "AI/data-processing owner"
+      ],
+      "rerun_command": "python3 scripts/run_external_validation_requirements.py --input-dir external_inputs",
+      "review_area": "legal_privacy_security_approval",
+      "safe_operator_instruction": "Ask for the minimum input, save the dated response at the drop path, rerun the external validation script, then route any issues into the blocker ledger before changing launch scope.",
+      "source_anchor_count": 10,
+      "source_anchors": [
+        {
+          "checked_at": "2026-06-27",
+          "does_not_support": "approval, legal advice, customs advice, payment activation, or launch approval",
+          "name": "PIPEDA fair information principles",
+          "project_use": "Privacy notice, consent, limiting collection/use/disclosure, safeguards, access, and accountability requirements.",
+          "publisher": "Office of the Privacy Commissioner of Canada",
+          "source_id": "opc-pipeda-principles",
+          "source_type": "official_government_source",
+          "supports": "source routing and review preparation only",
+          "url": "https://www.priv.gc.ca/en/privacy-topics/privacy-laws-in-canada/the-personal-information-protection-and-electronic-documents-act-pipeda/p_principle/"
+        },
+        {
+          "checked_at": "2026-06-27",
+          "does_not_support": "approval, legal advice, customs advice, payment activation, or launch approval",
+          "name": "Privacy breaches at your business",
+          "project_use": "Breach response, notification, safeguard, and recordkeeping evidence requirements.",
+          "publisher": "Office of the Privacy Commissioner of Canada",
+          "source_id": "opc-breach-reporting",
+          "source_type": "official_government_source",
+          "supports": "source routing and review preparation only",
+          "url": "https://www.priv.gc.ca/en/privacy-topics/business-privacy/breaches-and-safeguards/privacy-breaches-at-your-business/gd_pb_201810/"
+        },
+        {
+          "checked_at": "2026-06-27",
+          "does_not_support": "approval, legal advice, customs advice, payment activation, or launch approval",
+          "name": "Baseline cyber security controls for small and medium organizations",
+          "project_use": "Baseline security control, access, monitoring, backup, incident, and operations evidence requirements.",
+          "publisher": "Canadian Centre for Cyber Security",
+          "source_id": "cccs-baseline-controls",
+          "source_type": "official_government_source",
+          "supports": "source routing and review preparation only",
+          "url": "https://www.cyber.gc.ca/en/guidance/baseline-cyber-security-controls-small-and-medium-organizations"
+        },
+        {
+          "checked_at": "2026-06-27",
+          "does_not_support": "approval, legal advice, customs advice, payment activation, or launch approval",
+          "name": "Cybersecurity Framework",
+          "project_use": "Govern, identify, protect, detect, respond, and recover evidence structure.",
+          "publisher": "National Institute of Standards and Technology",
+          "source_id": "nist-csf-2",
+          "source_type": "official_standard_source",
+          "supports": "source routing and review preparation only",
+          "url": "https://www.nist.gov/cyberframework"
+        },
+        {
+          "checked_at": "2026-06-27",
+          "does_not_support": "approval, legal advice, customs advice, payment activation, or launch approval",
+          "name": "Secure by Design",
+          "project_use": "Secure-by-default product and manufacturer accountability evidence.",
+          "publisher": "Cybersecurity and Infrastructure Security Agency",
+          "source_id": "cisa-secure-by-design",
+          "source_type": "official_government_source",
+          "supports": "source routing and review preparation only",
+          "url": "https://www.cisa.gov/securebydesign"
+        },
+        {
+          "checked_at": "2026-06-27",
+          "does_not_support": "approval, legal advice, customs advice, payment activation, or launch approval",
+          "name": "File Upload Cheat Sheet",
+          "project_use": "Public upload allowlists, storage isolation, malware scanning, handler-mediated access, and size/rate-limit proof.",
+          "publisher": "OWASP",
+          "source_id": "owasp-file-upload",
+          "source_type": "security_primary_guidance",
+          "supports": "source routing and review preparation only",
+          "url": "https://cheatsheetseries.owasp.org/cheatsheets/File_Upload_Cheat_Sheet.html"
+        },
+        {
+          "checked_at": "2026-06-27",
+          "does_not_support": "approval, legal advice, customs advice, payment activation, or launch approval",
+          "name": "Application Security Verification Standard",
+          "project_use": "Application security review depth, authentication, authorization, validation, API, and deployment checks.",
+          "publisher": "OWASP",
+          "source_id": "owasp-asvs",
+          "source_type": "security_primary_guidance",
+          "supports": "source routing and review preparation only",
+          "url": "https://owasp.org/www-project-application-security-verification-standard/"
+        },
+        {
+          "checked_at": "2026-06-27",
+          "does_not_support": "approval, legal advice, customs advice, payment activation, or launch approval",
+          "name": "LLM01: Prompt Injection",
+          "project_use": "Prompt-injection threat model, AI red-team evidence, and fail-closed AI output constraints.",
+          "publisher": "OWASP GenAI Security Project",
+          "source_id": "owasp-llm01-prompt-injection",
+          "source_type": "security_primary_guidance",
+          "supports": "source routing and review preparation only",
+          "url": "https://genai.owasp.org/llmrisk/llm01-prompt-injection/"
+        },
+        {
+          "checked_at": "2026-06-27",
+          "does_not_support": "approval, legal advice, customs advice, payment activation, or launch approval",
+          "name": "Security at Stripe",
+          "project_use": "Payment security, PCI boundary, account access, and credential handling evidence.",
+          "publisher": "Stripe",
+          "source_id": "stripe-security",
+          "source_type": "vendor_primary_source",
+          "supports": "source routing and review preparation only",
+          "url": "https://docs.stripe.com/security"
+        },
+        {
+          "checked_at": "2026-06-27",
+          "does_not_support": "approval, legal advice, customs advice, payment activation, or launch approval",
+          "name": "California Consumer Privacy Act",
+          "project_use": "Future US/California user privacy expansion checklist; not a current approval substitute.",
+          "publisher": "California Department of Justice",
+          "source_id": "california-ccpa",
+          "source_type": "official_government_source",
+          "supports": "source routing and review preparation only",
+          "url": "https://oag.ca.gov/privacy/ccpa"
+        }
+      ],
+      "who_to_ask": "Privacy/legal reviewer plus application security reviewer.",
+      "work_order_id": "market-readiness:legal_privacy_security_approval"
+    },
+    {
+      "allowed_decisions": [
+        "ready_for_my_area",
+        "not_ready_yet",
+        "need_more_evidence",
+        "not_my_area",
+        "send_to_different_reviewer",
+        "not_applicable_for_this_launch",
+        "go_for_public_launch"
+      ],
+      "blocked_claims": [
+        "market_ready",
+        "public_launch_approved",
+        "hosted_private_beta_approved",
+        "live_payment_activated",
+        "legal_privacy_security_approved",
+        "customs_trade_approved",
+        "tariff_confirmed",
+        "cfia_approved",
+        "buyer_validated",
+        "supplier_verified",
+        "ready_to_ship"
+      ],
+      "blocking_conditions": [
+        "HS or tariff confidence is inferred by the app only",
+        "AIRS/CFIA/source refresh is stale or absent",
+        "restricted-party screening is missing",
+        "reviewer is not qualified for commodity or jurisdiction",
+        "report language implies customs advice or clearance"
+      ],
+      "blocks_live_payment": false,
+      "blocks_private_beta": false,
+      "blocks_public_launch": true,
+      "blocks_trade_claims": true,
+      "cannot_claim_until": "Broker/trade specialist approval exists for the exact product category, jurisdiction, and claim text.",
+      "claims_opened_by_this_work_order": false,
+      "drop_path": "external_inputs/qualified_customs_trade_review.json",
+      "external_effects_created": false,
+      "gate_id": "qualified_customs_trade_review",
+      "gate_name": "Qualified Customs And Trade Review",
+      "input_state": "missing_real_input",
+      "input_template": {
+        "claims_the_product_must_not_make": [],
+        "decision": "need_more_evidence",
+        "evidence_links_or_files": [],
+        "evidence_missing": [],
+        "review_area": "qualified_customs_trade_review",
+        "reviewer_name": "",
+        "reviewer_role": "",
+        "scope_reviewed": "",
+        "signed_at": "",
+        "top_issues": [],
+        "what_would_make_this_ready": ""
+      },
+      "minimum_input": [
+        "reviewer name",
+        "country/product scope",
+        "approved wording",
+        "wording to avoid",
+        "decision",
+        "signed date"
+      ],
+      "next_valid_move": "Prepare one dated broker packet per sample packet and request scoped language approval from a qualified customs/trade reviewer.",
+      "plain_question": "Does the product avoid unsupported customs, tariff, CFIA, sanctions, and trade-readiness claims?",
+      "ready_for_area": false,
+      "required_data_fields": [
+        "reviewer_name",
+        "credential_or_company",
+        "product_category",
+        "hs_code_candidate",
+        "origin_country",
+        "destination_country",
+        "official_sources_checked",
+        "party_screening_record",
+        "assumptions",
+        "approved_claim_language",
+        "blocked_claim_language",
+        "signed_at"
+      ],
+      "required_evidence": [
+        "product identity, composition, use, origin, seller/supplier, buyer, Incoterms, value, and documents reviewed",
+        "HS/tariff classification basis with source links, assumptions, and confidence limits",
+        "CBSA, CFIA AIRS, food licence, permit, quota, inspection, labelling, and country requirement checks where applicable",
+        "restricted-party/sanctions screening source, timestamp, exact party names, jurisdictions, and result",
+        "broker or qualified specialist decision on what the app may and may not say",
+        "claim-language approval for generated reports, buyer packets, broker packets, and public pages"
+      ],
+      "required_reviewers_or_owners": [
+        "licensed customs broker or qualified customs/trade compliance specialist",
+        "CFIA/commodity specialist for regulated food, plant, animal, or similar categories",
+        "sanctions/export-controls reviewer for restricted destinations or parties",
+        "freight/logistics reviewer for shipment or carrier claims"
+      ],
+      "rerun_command": "python3 scripts/run_external_validation_requirements.py --input-dir external_inputs",
+      "review_area": "qualified_customs_trade_review",
+      "safe_operator_instruction": "Ask for the minimum input, save the dated response at the drop path, rerun the external validation script, then route any issues into the blocker ledger before changing launch scope.",
+      "source_anchor_count": 9,
+      "source_anchors": [
+        {
+          "checked_at": "2026-06-27",
+          "does_not_support": "approval, legal advice, customs advice, payment activation, or launch approval",
+          "name": "Import commercial goods into Canada",
+          "project_use": "Import readiness language, importer obligations, accounting/release boundaries, and broker handoff scope.",
+          "publisher": "Canada Border Services Agency",
+          "source_id": "cbsa-commercial-import",
+          "source_type": "official_government_source",
+          "supports": "source routing and review preparation only",
+          "url": "https://www.cbsa-asfc.gc.ca/import/menu-eng.html"
+        },
+        {
+          "checked_at": "2026-06-27",
+          "does_not_support": "approval, legal advice, customs advice, payment activation, or launch approval",
+          "name": "Customs Tariff",
+          "project_use": "HS/tariff source refresh, classification evidence, and tariff-claim blocker boundaries.",
+          "publisher": "Canada Border Services Agency",
+          "source_id": "cbsa-customs-tariff",
+          "source_type": "official_government_source",
+          "supports": "source routing and review preparation only",
+          "url": "https://www.cbsa-asfc.gc.ca/trade-commerce/tariff-tarif/menu-eng.html"
+        },
+        {
+          "checked_at": "2026-06-27",
+          "does_not_support": "approval, legal advice, customs advice, payment activation, or launch approval",
+          "name": "Advance rulings for tariff classification",
+          "project_use": "Evidence boundary for products that need binding or qualified classification confirmation.",
+          "publisher": "Canada Border Services Agency",
+          "source_id": "cbsa-advance-rulings",
+          "source_type": "official_government_source",
+          "supports": "source routing and review preparation only",
+          "url": "https://www.cbsa-asfc.gc.ca/import/ar-da/menu-eng.html"
+        },
+        {
+          "checked_at": "2026-06-27",
+          "does_not_support": "approval, legal advice, customs advice, payment activation, or launch approval",
+          "name": "Importing food, plants or animals",
+          "project_use": "Food, plant, animal, and commodity-specific import requirement boundaries.",
+          "publisher": "Canadian Food Inspection Agency",
+          "source_id": "cfia-importing-food-plants-animals",
+          "source_type": "official_government_source",
+          "supports": "source routing and review preparation only",
+          "url": "https://inspection.canada.ca/en/importing-food-plants-animals"
+        },
+        {
+          "checked_at": "2026-06-27",
+          "does_not_support": "approval, legal advice, customs advice, payment activation, or launch approval",
+          "name": "Automated Import Reference System",
+          "project_use": "Current commodity requirement source for CFIA-regulated imports.",
+          "publisher": "Canadian Food Inspection Agency",
+          "source_id": "cfia-airs",
+          "source_type": "official_government_source",
+          "supports": "source routing and review preparation only",
+          "url": "https://inspection.canada.ca/en/importing-food-plants-animals/airs"
+        },
+        {
+          "checked_at": "2026-06-27",
+          "does_not_support": "approval, legal advice, customs advice, payment activation, or launch approval",
+          "name": "Food licences",
+          "project_use": "Safe Food for Canadians licence and regulated-food readiness boundaries.",
+          "publisher": "Canadian Food Inspection Agency",
+          "source_id": "cfia-food-licences",
+          "source_type": "official_government_source",
+          "supports": "source routing and review preparation only",
+          "url": "https://inspection.canada.ca/en/food-licences"
+        },
+        {
+          "checked_at": "2026-06-27",
+          "does_not_support": "approval, legal advice, customs advice, payment activation, or launch approval",
+          "name": "Canadian sanctions",
+          "project_use": "Sanctions/restricted-party screening blocker and export/import control boundary.",
+          "publisher": "Global Affairs Canada",
+          "source_id": "gac-sanctions",
+          "source_type": "official_government_source",
+          "supports": "source routing and review preparation only",
+          "url": "https://www.international.gc.ca/world-monde/international_relations-relations_internationales/sanctions/index.aspx?lang=eng"
+        },
+        {
+          "checked_at": "2026-06-27",
+          "does_not_support": "approval, legal advice, customs advice, payment activation, or launch approval",
+          "name": "Consolidated Canadian Autonomous Sanctions List",
+          "project_use": "Named-party screening evidence and refresh rule source.",
+          "publisher": "Global Affairs Canada",
+          "source_id": "gac-consolidated-sanctions-list",
+          "source_type": "official_government_source",
+          "supports": "source routing and review preparation only",
+          "url": "https://www.international.gc.ca/world-monde/international_relations-relations_internationales/sanctions/consolidated-consolide.aspx?lang=eng"
+        },
+        {
+          "checked_at": "2026-06-27",
+          "does_not_support": "approval, legal advice, customs advice, payment activation, or launch approval",
+          "name": "Export and import controls",
+          "project_use": "Permit/control boundary for controlled goods or destination-specific claims.",
+          "publisher": "Global Affairs Canada",
+          "source_id": "gac-trade-controls",
+          "source_type": "official_government_source",
+          "supports": "source routing and review preparation only",
+          "url": "https://www.international.gc.ca/controls-controles/index.aspx?lang=eng"
+        }
+      ],
+      "who_to_ask": "Licensed customs broker or qualified trade/compliance reviewer.",
+      "work_order_id": "market-readiness:qualified_customs_trade_review"
+    },
+    {
+      "allowed_decisions": [
+        "ready_for_my_area",
+        "not_ready_yet",
+        "need_more_evidence",
+        "not_my_area",
+        "send_to_different_reviewer",
+        "not_applicable_for_this_launch",
+        "go_for_public_launch"
+      ],
+      "blocked_claims": [
+        "market_ready",
+        "public_launch_approved",
+        "hosted_private_beta_approved",
+        "live_payment_activated",
+        "legal_privacy_security_approved",
+        "customs_trade_approved",
+        "tariff_confirmed",
+        "cfia_approved",
+        "buyer_validated",
+        "supplier_verified",
+        "ready_to_ship"
+      ],
+      "blocking_conditions": [
+        "only localhost proof exists",
+        "production secrets or storage isolation are unverified",
+        "uploads are publicly reachable or not quarantined",
+        "logs contain sensitive document content",
+        "backup/restore or rollback is untested"
+      ],
+      "blocks_live_payment": true,
+      "blocks_private_beta": true,
+      "blocks_public_launch": true,
+      "blocks_trade_claims": false,
+      "cannot_claim_until": "Staging and production-candidate proof exists with named human promotion and rollback approval.",
+      "claims_opened_by_this_work_order": false,
+      "drop_path": "external_inputs/hosted_staging_production_proof.json",
+      "external_effects_created": false,
+      "gate_id": "hosted_staging_production_proof",
+      "gate_name": "Hosted Staging And Production Proof",
+      "input_state": "missing_real_input",
+      "input_template": {
+        "claims_the_product_must_not_make": [],
+        "decision": "need_more_evidence",
+        "evidence_links_or_files": [],
+        "evidence_missing": [],
+        "review_area": "hosted_staging_production_proof",
+        "reviewer_name": "",
+        "reviewer_role": "",
+        "scope_reviewed": "",
+        "signed_at": "",
+        "top_issues": [],
+        "what_would_make_this_ready": ""
+      },
+      "minimum_input": [
+        "environment URL",
+        "commit/build",
+        "smoke result",
+        "monitoring",
+        "rollback owner",
+        "decision",
+        "signed date"
+      ],
+      "next_valid_move": "Provision staging, deploy exact commit, run smoke/security/upload/privacy/backup/rollback checks, and attach evidence.",
+      "plain_question": "Is there real hosted evidence for the launch scope, not only localhost?",
+      "ready_for_area": false,
+      "required_data_fields": [
+        "environment_name",
+        "public_url",
+        "commit_sha",
+        "build_digest",
+        "deployed_at",
+        "secrets_store",
+        "tls_evidence",
+        "storage_evidence",
+        "monitoring_links",
+        "backup_restore_result",
+        "rollback_result",
+        "approver"
+      ],
+      "required_evidence": [
+        "staging URL, commit SHA, image/build digest, deploy timestamp, environment variables inventory, and secret-source proof",
+        "TLS/domain proof, security headers, CORS/CSRF/session cookie settings, and route exposure map",
+        "database/storage isolation, upload quarantine, malware scanning, retention/deletion jobs, backup and restore drill",
+        "health checks, structured logs, audit logs, monitoring alerts, error tracking, and uptime/rollback runbook",
+        "load/rate-limit and abuse-path smoke tests for upload, public APIs, auth, reports, and deletion",
+        "production promotion checklist with human approver and rollback owner"
+      ],
+      "required_reviewers_or_owners": [
+        "DevOps/SRE reviewer",
+        "application security reviewer",
+        "privacy/security owner",
+        "support/incident owner"
+      ],
+      "rerun_command": "python3 scripts/run_external_validation_requirements.py --input-dir external_inputs",
+      "review_area": "hosted_staging_production_proof",
+      "safe_operator_instruction": "Ask for the minimum input, save the dated response at the drop path, rerun the external validation script, then route any issues into the blocker ledger before changing launch scope.",
+      "source_anchor_count": 7,
+      "source_anchors": [
+        {
+          "checked_at": "2026-06-27",
+          "does_not_support": "approval, legal advice, customs advice, payment activation, or launch approval",
+          "name": "Privacy breaches at your business",
+          "project_use": "Breach response, notification, safeguard, and recordkeeping evidence requirements.",
+          "publisher": "Office of the Privacy Commissioner of Canada",
+          "source_id": "opc-breach-reporting",
+          "source_type": "official_government_source",
+          "supports": "source routing and review preparation only",
+          "url": "https://www.priv.gc.ca/en/privacy-topics/business-privacy/breaches-and-safeguards/privacy-breaches-at-your-business/gd_pb_201810/"
+        },
+        {
+          "checked_at": "2026-06-27",
+          "does_not_support": "approval, legal advice, customs advice, payment activation, or launch approval",
+          "name": "Baseline cyber security controls for small and medium organizations",
+          "project_use": "Baseline security control, access, monitoring, backup, incident, and operations evidence requirements.",
+          "publisher": "Canadian Centre for Cyber Security",
+          "source_id": "cccs-baseline-controls",
+          "source_type": "official_government_source",
+          "supports": "source routing and review preparation only",
+          "url": "https://www.cyber.gc.ca/en/guidance/baseline-cyber-security-controls-small-and-medium-organizations"
+        },
+        {
+          "checked_at": "2026-06-27",
+          "does_not_support": "approval, legal advice, customs advice, payment activation, or launch approval",
+          "name": "Cybersecurity Framework",
+          "project_use": "Govern, identify, protect, detect, respond, and recover evidence structure.",
+          "publisher": "National Institute of Standards and Technology",
+          "source_id": "nist-csf-2",
+          "source_type": "official_standard_source",
+          "supports": "source routing and review preparation only",
+          "url": "https://www.nist.gov/cyberframework"
+        },
+        {
+          "checked_at": "2026-06-27",
+          "does_not_support": "approval, legal advice, customs advice, payment activation, or launch approval",
+          "name": "Secure by Design",
+          "project_use": "Secure-by-default product and manufacturer accountability evidence.",
+          "publisher": "Cybersecurity and Infrastructure Security Agency",
+          "source_id": "cisa-secure-by-design",
+          "source_type": "official_government_source",
+          "supports": "source routing and review preparation only",
+          "url": "https://www.cisa.gov/securebydesign"
+        },
+        {
+          "checked_at": "2026-06-27",
+          "does_not_support": "approval, legal advice, customs advice, payment activation, or launch approval",
+          "name": "File Upload Cheat Sheet",
+          "project_use": "Public upload allowlists, storage isolation, malware scanning, handler-mediated access, and size/rate-limit proof.",
+          "publisher": "OWASP",
+          "source_id": "owasp-file-upload",
+          "source_type": "security_primary_guidance",
+          "supports": "source routing and review preparation only",
+          "url": "https://cheatsheetseries.owasp.org/cheatsheets/File_Upload_Cheat_Sheet.html"
+        },
+        {
+          "checked_at": "2026-06-27",
+          "does_not_support": "approval, legal advice, customs advice, payment activation, or launch approval",
+          "name": "Application Security Verification Standard",
+          "project_use": "Application security review depth, authentication, authorization, validation, API, and deployment checks.",
+          "publisher": "OWASP",
+          "source_id": "owasp-asvs",
+          "source_type": "security_primary_guidance",
+          "supports": "source routing and review preparation only",
+          "url": "https://owasp.org/www-project-application-security-verification-standard/"
+        },
+        {
+          "checked_at": "2026-06-27",
+          "does_not_support": "approval, legal advice, customs advice, payment activation, or launch approval",
+          "name": "Webhooks",
+          "project_use": "Webhook endpoint, signing secret, retry, idempotency, and event log proof.",
+          "publisher": "Stripe",
+          "source_id": "stripe-webhooks",
+          "source_type": "vendor_primary_source",
+          "supports": "source routing and review preparation only",
+          "url": "https://docs.stripe.com/webhooks"
+        }
+      ],
+      "who_to_ask": "DevOps, SRE, or operations owner.",
+      "work_order_id": "market-readiness:hosted_staging_production_proof"
+    },
+    {
+      "allowed_decisions": [
+        "ready_for_my_area",
+        "not_ready_yet",
+        "need_more_evidence",
+        "not_my_area",
+        "send_to_different_reviewer",
+        "not_applicable_for_this_launch",
+        "go_for_public_launch"
+      ],
+      "blocked_claims": [
+        "market_ready",
+        "public_launch_approved",
+        "hosted_private_beta_approved",
+        "live_payment_activated",
+        "legal_privacy_security_approved",
+        "customs_trade_approved",
+        "tariff_confirmed",
+        "cfia_approved",
+        "buyer_validated",
+        "supplier_verified",
+        "ready_to_ship"
+      ],
+      "blocking_conditions": [
+        "test-mode only proof exists",
+        "webhook signing/retry/idempotency proof is missing",
+        "tax/refund/support terms are undecided",
+        "pricing implies legal/customs/trade outcome guarantees",
+        "payment account access controls are unreviewed"
+      ],
+      "blocks_live_payment": true,
+      "blocks_private_beta": false,
+      "blocks_public_launch": true,
+      "blocks_trade_claims": false,
+      "cannot_claim_until": "Live checkout, billing policy, tax/refund/support, and webhook proof are attached with a named activation approver.",
+      "claims_opened_by_this_work_order": false,
+      "drop_path": "external_inputs/live_payment_activation.json",
+      "external_effects_created": false,
+      "gate_id": "live_payment_activation",
+      "gate_name": "Live Payment Activation",
+      "input_state": "missing_real_input",
+      "input_template": {
+        "claims_the_product_must_not_make": [],
+        "decision": "need_more_evidence",
+        "evidence_links_or_files": [],
+        "evidence_missing": [],
+        "review_area": "live_payment_activation",
+        "reviewer_name": "",
+        "reviewer_role": "",
+        "scope_reviewed": "",
+        "signed_at": "",
+        "top_issues": [],
+        "what_would_make_this_ready": ""
+      },
+      "minimum_input": [
+        "payment scope",
+        "Stripe mode",
+        "webhook evidence",
+        "refund/support owner",
+        "decision",
+        "signed date"
+      ],
+      "next_valid_move": "Keep live checkout disabled; complete Stripe live-mode configuration and payment policy proof after staged security/privacy approval.",
+      "plain_question": "Are live checkout, webhook, tax/refund/support, and billing wording ready, or is payment intentionally off for launch?",
+      "ready_for_area": false,
+      "required_data_fields": [
+        "stripe_account_mode",
+        "product_ids",
+        "price_ids",
+        "checkout_urls",
+        "webhook_endpoint",
+        "webhook_event_log",
+        "tax_decision_record",
+        "refund_policy_version",
+        "support_contact",
+        "test_results",
+        "live_activation_approver",
+        "activated_at"
+      ],
+      "required_evidence": [
+        "Stripe live-mode account, business profile, domain, payment methods, product/price IDs, and checkout links reviewed",
+        "webhook endpoint, signing secret, event delivery, idempotency, retry, failure, refund, dispute, and cancellation tests",
+        "tax/VAT/GST/sales-tax decision record and invoice/receipt language",
+        "terms, refund policy, support contact, complaint handling, chargeback, and account access controls",
+        "test-mode proof followed by live penny/low-risk transaction or Stripe-approved live proof if appropriate",
+        "explicit monetization go/no-go decision that does not imply trade/customs/legal advice"
+      ],
+      "required_reviewers_or_owners": [
+        "billing/payment owner",
+        "privacy/security owner",
+        "tax/accounting reviewer where applicable",
+        "support/refund owner"
+      ],
+      "rerun_command": "python3 scripts/run_external_validation_requirements.py --input-dir external_inputs",
+      "review_area": "live_payment_activation",
+      "safe_operator_instruction": "Ask for the minimum input, save the dated response at the drop path, rerun the external validation script, then route any issues into the blocker ledger before changing launch scope.",
+      "source_anchor_count": 4,
+      "source_anchors": [
+        {
+          "checked_at": "2026-06-27",
+          "does_not_support": "approval, legal advice, customs advice, payment activation, or launch approval",
+          "name": "Go-live checklist",
+          "project_use": "Live mode, account, domain, webhook, payment method, tax, support, and operational payment evidence.",
+          "publisher": "Stripe",
+          "source_id": "stripe-go-live",
+          "source_type": "vendor_primary_source",
+          "supports": "source routing and review preparation only",
+          "url": "https://docs.stripe.com/get-started/checklist/go-live"
+        },
+        {
+          "checked_at": "2026-06-27",
+          "does_not_support": "approval, legal advice, customs advice, payment activation, or launch approval",
+          "name": "Webhooks",
+          "project_use": "Webhook endpoint, signing secret, retry, idempotency, and event log proof.",
+          "publisher": "Stripe",
+          "source_id": "stripe-webhooks",
+          "source_type": "vendor_primary_source",
+          "supports": "source routing and review preparation only",
+          "url": "https://docs.stripe.com/webhooks"
+        },
+        {
+          "checked_at": "2026-06-27",
+          "does_not_support": "approval, legal advice, customs advice, payment activation, or launch approval",
+          "name": "Testing",
+          "project_use": "Pre-live card, webhook, refund, dispute, and failure-path payment proof.",
+          "publisher": "Stripe",
+          "source_id": "stripe-testing",
+          "source_type": "vendor_primary_source",
+          "supports": "source routing and review preparation only",
+          "url": "https://docs.stripe.com/testing"
+        },
+        {
+          "checked_at": "2026-06-27",
+          "does_not_support": "approval, legal advice, customs advice, payment activation, or launch approval",
+          "name": "Security at Stripe",
+          "project_use": "Payment security, PCI boundary, account access, and credential handling evidence.",
+          "publisher": "Stripe",
+          "source_id": "stripe-security",
+          "source_type": "vendor_primary_source",
+          "supports": "source routing and review preparation only",
+          "url": "https://docs.stripe.com/security"
+        }
+      ],
+      "who_to_ask": "Billing/payment owner, tax/accounting advisor if needed, and support owner.",
+      "work_order_id": "market-readiness:live_payment_activation"
+    },
+    {
+      "allowed_decisions": [
+        "ready_for_my_area",
+        "not_ready_yet",
+        "need_more_evidence",
+        "not_my_area",
+        "send_to_different_reviewer",
+        "not_applicable_for_this_launch",
+        "go_for_public_launch"
+      ],
+      "blocked_claims": [
+        "market_ready",
+        "public_launch_approved",
+        "hosted_private_beta_approved",
+        "live_payment_activated",
+        "legal_privacy_security_approved",
+        "customs_trade_approved",
+        "tariff_confirmed",
+        "cfia_approved",
+        "buyer_validated",
+        "supplier_verified",
+        "ready_to_ship"
+      ],
+      "blocking_conditions": [
+        "no real users have used hosted staging/private beta",
+        "participants are not target users",
+        "user confusion causes customs/legal/payment overclaiming",
+        "P0/P1 product or trust issues remain unresolved",
+        "privacy/security consent and deletion proof is missing"
+      ],
+      "blocks_live_payment": false,
+      "blocks_private_beta": true,
+      "blocks_public_launch": true,
+      "blocks_trade_claims": false,
+      "cannot_claim_until": "Real user session evidence proves target users can complete the flow and understand its blocked-safe boundaries.",
+      "claims_opened_by_this_work_order": false,
+      "drop_path": "external_inputs/real_users_private_beta_outcomes.json",
+      "external_effects_created": false,
+      "gate_id": "real_users_private_beta_outcomes",
+      "gate_name": "Real Users And Private Beta Outcomes",
+      "input_state": "missing_real_input",
+      "input_template": {
+        "claims_the_product_must_not_make": [],
+        "decision": "need_more_evidence",
+        "evidence_links_or_files": [],
+        "evidence_missing": [],
+        "review_area": "real_users_private_beta_outcomes",
+        "reviewer_name": "",
+        "reviewer_role": "",
+        "scope_reviewed": "",
+        "signed_at": "",
+        "top_issues": [],
+        "what_would_make_this_ready": ""
+      },
+      "minimum_input": [
+        "participant count",
+        "segments",
+        "task results",
+        "top issues",
+        "what changed",
+        "decision",
+        "signed date"
+      ],
+      "next_valid_move": "After Wave 1 and staging proof, run five structured private-beta sessions and convert every issue into a blocker or fixed proof row.",
+      "plain_question": "Have real target users used the product and understood what is and is not approved?",
+      "ready_for_area": false,
+      "required_data_fields": [
+        "participant_id",
+        "segment",
+        "consent_record",
+        "tasks_attempted",
+        "task_completion",
+        "misunderstood_claims",
+        "issues_found",
+        "support_events",
+        "privacy_or_security_concerns",
+        "willingness_signal",
+        "retest_result",
+        "beta_decision"
+      ],
+      "required_evidence": [
+        "recruiting criteria, consent, participant segment, date, session notes, and task recordings/observations where permitted",
+        "at least five target-user task attempts covering no-document starter flow, PDF quick check, report download, blocked-claims comprehension, and deletion",
+        "critical issue list with severity, owner, fix, retest result, and launch impact",
+        "support/contact outcomes, misunderstood claims, privacy concerns, and trust objections",
+        "measured outcomes: task completion, time to first result, unsafe misunderstanding count, deletion success, report usefulness, and willingness-to-continue",
+        "private beta summary with go/no-go recommendation and unresolved blockers"
+      ],
+      "required_reviewers_or_owners": [
+        "product/UX research owner",
+        "support owner",
+        "privacy/security owner for beta data handling",
+        "founder or beta program owner"
+      ],
+      "rerun_command": "python3 scripts/run_external_validation_requirements.py --input-dir external_inputs",
+      "review_area": "real_users_private_beta_outcomes",
+      "safe_operator_instruction": "Ask for the minimum input, save the dated response at the drop path, rerun the external validation script, then route any issues into the blocker ledger before changing launch scope.",
+      "source_anchor_count": 5,
+      "source_anchors": [
+        {
+          "checked_at": "2026-06-27",
+          "does_not_support": "approval, legal advice, customs advice, payment activation, or launch approval",
+          "name": "User research",
+          "project_use": "Structured participant research, task evidence, and learning capture for private beta.",
+          "publisher": "GOV.UK Service Manual",
+          "source_id": "govuk-user-research",
+          "source_type": "official_service_delivery_guidance",
+          "supports": "source routing and review preparation only",
+          "url": "https://www.gov.uk/service-manual/user-research"
+        },
+        {
+          "checked_at": "2026-06-27",
+          "does_not_support": "approval, legal advice, customs advice, payment activation, or launch approval",
+          "name": "Service Standard",
+          "project_use": "User need, accessibility, security, operation, and improvement criteria for service readiness.",
+          "publisher": "GOV.UK Service Manual",
+          "source_id": "govuk-service-standard",
+          "source_type": "official_service_delivery_guidance",
+          "supports": "source routing and review preparation only",
+          "url": "https://www.gov.uk/service-manual/service-standard"
+        },
+        {
+          "checked_at": "2026-06-27",
+          "does_not_support": "approval, legal advice, customs advice, payment activation, or launch approval",
+          "name": "Why You Only Need to Test with 5 Users",
+          "project_use": "Minimum small-sample usability smoke threshold before a broader beta.",
+          "publisher": "Nielsen Norman Group",
+          "source_id": "nng-five-users",
+          "source_type": "industry_product_research_guidance",
+          "supports": "source routing and review preparation only",
+          "url": "https://www.nngroup.com/articles/why-you-only-need-to-test-with-5-users/"
+        },
+        {
+          "checked_at": "2026-06-27",
+          "does_not_support": "approval, legal advice, customs advice, payment activation, or launch approval",
+          "name": "How to Talk to Users",
+          "project_use": "Customer-discovery interview discipline and evidence capture for demand validation.",
+          "publisher": "Y Combinator",
+          "source_id": "yc-talk-to-users",
+          "source_type": "startup_product_validation_guidance",
+          "supports": "source routing and review preparation only",
+          "url": "https://www.ycombinator.com/library/gx-how-to-talk-to-users"
+        },
+        {
+          "checked_at": "2026-06-27",
+          "does_not_support": "approval, legal advice, customs advice, payment activation, or launch approval",
+          "name": "Web Content Accessibility Guidelines 2.2",
+          "project_use": "Accessibility review, keyboard/screen-reader checks, contrast, form errors, and report readability evidence.",
+          "publisher": "W3C",
+          "source_id": "w3c-wcag-22",
+          "source_type": "accessibility_standard_source",
+          "supports": "source routing and review preparation only",
+          "url": "https://www.w3.org/TR/WCAG22/"
+        }
+      ],
+      "who_to_ask": "Product/UX owner or user research owner.",
+      "work_order_id": "market-readiness:real_users_private_beta_outcomes"
+    },
+    {
+      "allowed_decisions": [
+        "ready_for_my_area",
+        "not_ready_yet",
+        "need_more_evidence",
+        "not_my_area",
+        "send_to_different_reviewer",
+        "not_applicable_for_this_launch",
+        "go_for_public_launch"
+      ],
+      "blocked_claims": [
+        "market_ready",
+        "public_launch_approved",
+        "hosted_private_beta_approved",
+        "live_payment_activated",
+        "legal_privacy_security_approved",
+        "customs_trade_approved",
+        "tariff_confirmed",
+        "cfia_approved",
+        "buyer_validated",
+        "supplier_verified",
+        "ready_to_ship"
+      ],
+      "blocking_conditions": [
+        "validation is hypothetical or AI-generated",
+        "no named target segment or counterparty exists",
+        "documents were used without permission",
+        "supplier or buyer is implied as verified without screening/review",
+        "no willingness, urgency, or follow-up signal is recorded"
+      ],
+      "blocks_live_payment": false,
+      "blocks_private_beta": false,
+      "blocks_public_launch": true,
+      "blocks_trade_claims": true,
+      "cannot_claim_until": "Real counterparties and design partners provide dated validation, with screening and claim boundaries attached.",
+      "claims_opened_by_this_work_order": false,
+      "drop_path": "external_inputs/buyer_supplier_validation.json",
+      "external_effects_created": false,
+      "gate_id": "buyer_supplier_validation",
+      "gate_name": "Buyer And Supplier Validation",
+      "input_state": "missing_real_input",
+      "input_template": {
+        "claims_the_product_must_not_make": [],
+        "decision": "need_more_evidence",
+        "evidence_links_or_files": [],
+        "evidence_missing": [],
+        "review_area": "buyer_supplier_validation",
+        "reviewer_name": "",
+        "reviewer_role": "",
+        "scope_reviewed": "",
+        "signed_at": "",
+        "top_issues": [],
+        "what_would_make_this_ready": ""
+      },
+      "minimum_input": [
+        "counterparty type",
+        "problem validated",
+        "evidence summary",
+        "permission scope",
+        "decision",
+        "signed date"
+      ],
+      "next_valid_move": "Run structured interviews with target importers/exporters/brokers and record the evidence without opening recommendation claims.",
+      "plain_question": "Have real buyers, suppliers, importers, exporters, or advisors validated the problem and workflow?",
+      "ready_for_area": false,
+      "required_data_fields": [
+        "counterparty_id",
+        "role",
+        "company_or_context",
+        "permission_scope",
+        "problem_statement",
+        "current_workaround",
+        "documents_shared",
+        "willingness_signal",
+        "price_signal",
+        "objections",
+        "screening_result",
+        "followup_commitment"
+      ],
+      "required_evidence": [
+        "customer/buyer/supplier interview notes tied to a segment, use case, urgency, current workaround, and willingness signal",
+        "named design partners or beta candidates with permission to store contact and validation outcome",
+        "source packet or document sample supplied by a real counterparty or explicitly anonymized with permission",
+        "buyer/supplier pain ranking, requested workflow, price/value signal, and objections",
+        "counterparty legitimacy and sanctions/restricted-party screening where any transaction/recommendation could be implied",
+        "clear separation between validation, recommendation, referral, and commercial matchmaking claims"
+      ],
+      "required_reviewers_or_owners": [
+        "founder or commercial validation owner",
+        "target importer/exporter buyer persona",
+        "supplier or broker/forwarder persona",
+        "trade compliance reviewer for claims made during validation"
+      ],
+      "rerun_command": "python3 scripts/run_external_validation_requirements.py --input-dir external_inputs",
+      "review_area": "buyer_supplier_validation",
+      "safe_operator_instruction": "Ask for the minimum input, save the dated response at the drop path, rerun the external validation script, then route any issues into the blocker ledger before changing launch scope.",
+      "source_anchor_count": 3,
+      "source_anchors": [
+        {
+          "checked_at": "2026-06-27",
+          "does_not_support": "approval, legal advice, customs advice, payment activation, or launch approval",
+          "name": "Canadian sanctions",
+          "project_use": "Sanctions/restricted-party screening blocker and export/import control boundary.",
+          "publisher": "Global Affairs Canada",
+          "source_id": "gac-sanctions",
+          "source_type": "official_government_source",
+          "supports": "source routing and review preparation only",
+          "url": "https://www.international.gc.ca/world-monde/international_relations-relations_internationales/sanctions/index.aspx?lang=eng"
+        },
+        {
+          "checked_at": "2026-06-27",
+          "does_not_support": "approval, legal advice, customs advice, payment activation, or launch approval",
+          "name": "Consolidated Canadian Autonomous Sanctions List",
+          "project_use": "Named-party screening evidence and refresh rule source.",
+          "publisher": "Global Affairs Canada",
+          "source_id": "gac-consolidated-sanctions-list",
+          "source_type": "official_government_source",
+          "supports": "source routing and review preparation only",
+          "url": "https://www.international.gc.ca/world-monde/international_relations-relations_internationales/sanctions/consolidated-consolide.aspx?lang=eng"
+        },
+        {
+          "checked_at": "2026-06-27",
+          "does_not_support": "approval, legal advice, customs advice, payment activation, or launch approval",
+          "name": "How to Talk to Users",
+          "project_use": "Customer-discovery interview discipline and evidence capture for demand validation.",
+          "publisher": "Y Combinator",
+          "source_id": "yc-talk-to-users",
+          "source_type": "startup_product_validation_guidance",
+          "supports": "source routing and review preparation only",
+          "url": "https://www.ycombinator.com/library/gx-how-to-talk-to-users"
+        }
+      ],
+      "who_to_ask": "Founder or commercial validation owner.",
+      "work_order_id": "market-readiness:buyer_supplier_validation"
+    },
+    {
+      "allowed_decisions": [
+        "ready_for_my_area",
+        "not_ready_yet",
+        "need_more_evidence",
+        "not_my_area",
+        "send_to_different_reviewer",
+        "not_applicable_for_this_launch",
+        "go_for_public_launch"
+      ],
+      "blocked_claims": [
+        "market_ready",
+        "public_launch_approved",
+        "hosted_private_beta_approved",
+        "live_payment_activated",
+        "legal_privacy_security_approved",
+        "customs_trade_approved",
+        "tariff_confirmed",
+        "cfia_approved",
+        "buyer_validated",
+        "supplier_verified",
+        "ready_to_ship"
+      ],
+      "blocking_conditions": [
+        "any required gate has missing or simulated-only evidence",
+        "launch owner is unnamed",
+        "support, rollback, incident, or deletion process is unstaffed",
+        "public pages or reports still imply blocked claims",
+        "payment, trade, privacy, or security approval scope is unclear"
+      ],
+      "blocks_live_payment": true,
+      "blocks_private_beta": false,
+      "blocks_public_launch": true,
+      "blocks_trade_claims": true,
+      "cannot_claim_until": "A named launch owner signs a dated go decision after reviewing all evidence and unresolved risks.",
+      "claims_opened_by_this_work_order": false,
+      "drop_path": "external_inputs/public_go_no_go_approval.json",
+      "external_effects_created": false,
+      "gate_id": "public_go_no_go_approval",
+      "gate_name": "Public Go/No-Go Approval",
+      "input_state": "missing_real_input",
+      "input_template": {
+        "claims_the_product_must_not_make": [],
+        "decision": "need_more_evidence",
+        "evidence_links_or_files": [],
+        "evidence_missing": [],
+        "review_area": "public_go_no_go_approval",
+        "reviewer_name": "",
+        "reviewer_role": "",
+        "scope_reviewed": "",
+        "signed_at": "",
+        "top_issues": [],
+        "what_would_make_this_ready": ""
+      },
+      "minimum_input": [
+        "launch scope",
+        "production URL",
+        "remaining risks",
+        "support owner",
+        "rollback owner",
+        "decision",
+        "signed date"
+      ],
+      "next_valid_move": "Do not hold public go/no-go until the other seven gates have real evidence; keep launch state blocked-safe.",
+      "plain_question": "After all other inputs are in, is this launch approved for the exact stated scope?",
+      "ready_for_area": false,
+      "required_data_fields": [
+        "release_candidate_commit",
+        "production_url",
+        "package_hashes",
+        "gate_statuses",
+        "unresolved_blockers",
+        "accepted_risks",
+        "rollback_owner",
+        "support_owner",
+        "launch_scope",
+        "decision",
+        "approver",
+        "decided_at"
+      ],
+      "required_evidence": [
+        "release candidate commit, deployment URL, package hashes, environment proof, and smoke results",
+        "all gate statuses with evidence links, unresolved blockers, accepted risks, and explicit no-go conditions",
+        "support runbook, incident response, refund/payment support, abuse handling, deletion request process, and owner rota",
+        "claims matrix proving public pages, reports, AI summaries, pricing, and packets do not overclaim",
+        "rollback plan, communications plan, monitoring dashboard, analytics/privacy setting, and launch freeze window",
+        "signed public go/no-go record with date, scope, owner, decision, caveats, and next review date"
+      ],
+      "required_reviewers_or_owners": [
+        "founder or accountable launch owner",
+        "privacy/legal approver",
+        "security/operations approver",
+        "product/beta approver",
+        "trade-claims approver",
+        "billing/support approver when monetization is enabled"
+      ],
+      "rerun_command": "python3 scripts/run_external_validation_requirements.py --input-dir external_inputs",
+      "review_area": "public_go_no_go_approval",
+      "safe_operator_instruction": "Ask for the minimum input, save the dated response at the drop path, rerun the external validation script, then route any issues into the blocker ledger before changing launch scope.",
+      "source_anchor_count": 4,
+      "source_anchors": [
+        {
+          "checked_at": "2026-06-27",
+          "does_not_support": "approval, legal advice, customs advice, payment activation, or launch approval",
+          "name": "Cybersecurity Framework",
+          "project_use": "Govern, identify, protect, detect, respond, and recover evidence structure.",
+          "publisher": "National Institute of Standards and Technology",
+          "source_id": "nist-csf-2",
+          "source_type": "official_standard_source",
+          "supports": "source routing and review preparation only",
+          "url": "https://www.nist.gov/cyberframework"
+        },
+        {
+          "checked_at": "2026-06-27",
+          "does_not_support": "approval, legal advice, customs advice, payment activation, or launch approval",
+          "name": "Service Standard",
+          "project_use": "User need, accessibility, security, operation, and improvement criteria for service readiness.",
+          "publisher": "GOV.UK Service Manual",
+          "source_id": "govuk-service-standard",
+          "source_type": "official_service_delivery_guidance",
+          "supports": "source routing and review preparation only",
+          "url": "https://www.gov.uk/service-manual/service-standard"
+        },
+        {
+          "checked_at": "2026-06-27",
+          "does_not_support": "approval, legal advice, customs advice, payment activation, or launch approval",
+          "name": "Service assessments",
+          "project_use": "Assessment-style go/no-go record, evidence pack, decision owner, and launch caveat structure.",
+          "publisher": "GOV.UK Service Manual",
+          "source_id": "govuk-service-assessments",
+          "source_type": "official_service_delivery_guidance",
+          "supports": "source routing and review preparation only",
+          "url": "https://www.gov.uk/service-manual/service-assessments"
+        },
+        {
+          "checked_at": "2026-06-27",
+          "does_not_support": "approval, legal advice, customs advice, payment activation, or launch approval",
+          "name": "Web Content Accessibility Guidelines 2.2",
+          "project_use": "Accessibility review, keyboard/screen-reader checks, contrast, form errors, and report readability evidence.",
+          "publisher": "W3C",
+          "source_id": "w3c-wcag-22",
+          "source_type": "accessibility_standard_source",
+          "supports": "source routing and review preparation only",
+          "url": "https://www.w3.org/TR/WCAG22/"
+        }
+      ],
+      "who_to_ask": "Named launch owner.",
+      "work_order_id": "market-readiness:public_go_no_go_approval"
+    }
+  ]
+}
