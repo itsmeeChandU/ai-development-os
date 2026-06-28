@@ -23,6 +23,7 @@ src/importer_source_readiness/operator_screenshots.py
 src/importer_source_readiness/document_processing.py
 src/importer_source_readiness/policy_intelligence.py
 src/importer_source_readiness/completion_platform.py
+src/importer_source_readiness/production_ai_copilot_engine.py
 src/importer_source_readiness/production_country_source_engine.py
 src/importer_source_readiness/production_data_model.py
 src/importer_source_readiness/production_decision_scoring_engine.py
@@ -73,6 +74,9 @@ system_review_graph/production_evidence_claim_mappers.json
 system_review_graph/production_decision_scoring_manifest.json
 system_review_graph/production_decision_score_records.json
 system_review_graph/production_score_cap_policy.json
+system_review_graph/production_ai_copilot_manifest.json
+system_review_graph/production_ai_output_contracts.json
+system_review_graph/production_ai_safety_checks.json
 system_review_graph/production_redevelopment_plan.json
 system_review_graph/production_research_anchors.json
 data/official_sample_documents/canada/*.pdf
@@ -83,6 +87,7 @@ docs/PRODUCTION_COUNTRY_SOURCE_ENGINE.md
 docs/PRODUCTION_DOCUMENT_INTELLIGENCE_ENGINE.md
 docs/PRODUCTION_EVIDENCE_CLAIM_GATE_ENGINE.md
 docs/PRODUCTION_DECISION_SCORING_ENGINE.md
+docs/PRODUCTION_AI_COPILOT_ENGINE.md
 docs/PRODUCTION_MARKET_INTELLIGENCE_ENGINE.md
 docs/PRODUCTION_REDEVELOPMENT.md
 migrations/0002_production_domain_model.sql
@@ -112,6 +117,7 @@ board/*.md
 | `src/importer_source_readiness/document_processing.py` | triage public PDF uploads, native text extraction, OCR decision, hashes, and confirmation requirement |
 | `src/importer_source_readiness/policy_intelligence.py` | database-style Intelligence Hub source monitoring contract, source snapshots, packet impacts, and stale-source blockers |
 | `src/importer_source_readiness/completion_platform.py` | completion-stage contracts for opportunities, country coverage, transport readiness, billing, agent/API, and traffic pages |
+| `src/importer_source_readiness/production_ai_copilot_engine.py` | production AI copilot engine for assistant roles, output labels, redaction/manual fallback rules, prompt-injection checks, and no gate opening |
 | `src/importer_source_readiness/production_country_source_engine.py` | production country/source engine for country packs, source lifecycle states, source refresh evidence, packet impacts, and closed claim gates |
 | `src/importer_source_readiness/production_data_model.py` | first production rebuild package: PostgreSQL migration, domain-event list, tenant RLS contract, seed fixture, and JSON-to-table migration map |
 | `src/importer_source_readiness/production_decision_scoring_engine.py` | production decision scoring engine for six separate capped scores, reasons, blocker fields, evidence references, and no global readiness score |
@@ -129,6 +135,7 @@ board/*.md
 | `scripts/run_operator_workflow.py` | operator work queue writer |
 | `scripts/run_policy_intelligence.py` | Intelligence Hub policy/source monitor artifact writer |
 | `scripts/run_completion_platform.py` | completion-stage artifact writer |
+| `scripts/run_production_ai_copilot_engine.py` | production AI role/output contract and safety-check writer |
 | `scripts/run_production_country_source_engine.py` | production country/source engine manifest and source lifecycle writer |
 | `scripts/run_production_data_model.py` | production data model migration and manifest writer |
 | `scripts/run_production_decision_scoring_engine.py` | production decision score records and cap-policy writer |
@@ -144,6 +151,7 @@ board/*.md
 | `tests/test_board_go_live.py` | proof that Canada board/go-live candidate status keeps human approval gates visible |
 | `tests/test_operator_workflow.py` | proof that the product has an operator work queue with Canadian tool references and closed claims |
 | `tests/test_operator_screenshots.py` | proof that screenshot artifacts are indexed and rendered without replacing generated truth |
+| `tests/test_production_ai_copilot_engine.py` | proof that AI roles are label-bound, prompt-injection checked, and cannot open product gates |
 | `tests/test_production_data_model.py` | proof that the first rebuild package has production tables, relationships, RLS policies, domain events, and closed external gates |
 | `tests/test_production_packet_engine.py` | proof that the packet engine evaluates real local packet artifacts into states, views, scores, events, blockers, and closed external gates |
 | `tests/test_production_country_source_engine.py` | proof that country packs, source lifecycle rows, and packet source impacts are generated from the official source registry and refresh records |
@@ -281,6 +289,12 @@ The expected production decision scoring status is
 six separate capped score records and cap policies exist locally. It does not
 mean the packet is approved, globally ready, commercially ready, or safe for
 shipment.
+
+The expected production AI copilot status is
+`production_ai_copilot_engine_ready_no_gate_opening`. It means AI role
+contracts, output labels, redaction/manual fallback rules, and prompt-injection
+checks exist locally. It does not mean live model calls, provider terms, AI
+safety approval, or AI authority over product gates are approved.
 
 ## Proof Boundary
 

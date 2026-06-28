@@ -74,6 +74,7 @@ python3 scripts/run_production_market_intelligence_engine.py
 python3 scripts/run_production_document_intelligence_engine.py
 python3 scripts/run_production_evidence_claim_gate_engine.py
 python3 scripts/run_production_decision_scoring_engine.py
+python3 scripts/run_production_ai_copilot_engine.py
 python3 scripts/audit_external_package.py --root .
 python3 scripts/check_product.py
 ```
@@ -143,6 +144,9 @@ system_review_graph/production_evidence_claim_mappers.json
 system_review_graph/production_decision_scoring_manifest.json
 system_review_graph/production_decision_score_records.json
 system_review_graph/production_score_cap_policy.json
+system_review_graph/production_ai_copilot_manifest.json
+system_review_graph/production_ai_output_contracts.json
+system_review_graph/production_ai_safety_checks.json
 system_review_graph/production_redevelopment_plan.json
 system_review_graph/production_research_anchors.json
 data/official_sample_documents/canada/*.pdf
@@ -159,6 +163,7 @@ docs/PRODUCTION_COUNTRY_SOURCE_ENGINE.md
 docs/PRODUCTION_DOCUMENT_INTELLIGENCE_ENGINE.md
 docs/PRODUCTION_EVIDENCE_CLAIM_GATE_ENGINE.md
 docs/PRODUCTION_DECISION_SCORING_ENGINE.md
+docs/PRODUCTION_AI_COPILOT_ENGINE.md
 docs/PRODUCTION_MARKET_INTELLIGENCE_ENGINE.md
 docs/PRODUCTION_REDEVELOPMENT.md
 output/pdf/external_validation_reviewer_brief.pdf
@@ -341,6 +346,18 @@ That means the product now writes six separate capped score records with
 reasons, blockers, evidence references, claim-gate dependencies, and next
 actions. It deliberately does not create one combined readiness score or
 approval label.
+
+The expected production AI copilot status is:
+
+```text
+production_ai_copilot_engine_ready_no_gate_opening
+```
+
+That means AI roles are defined for intake, document extraction, source
+summaries, market research, packet drafting, reviewer work orders, redaction,
+and QA. Outputs are labeled as draft, source-backed, confirmation-needed,
+expert-review-needed, or blocked. AI cannot open product gates, and live model
+calls remain disabled.
 
 The expected customer source-packet status is:
 

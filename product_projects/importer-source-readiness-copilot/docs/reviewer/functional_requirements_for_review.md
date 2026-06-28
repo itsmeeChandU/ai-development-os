@@ -64,6 +64,14 @@ The current product is usable for local review and controlled preparation. It do
 - The product does not create one combined readiness score or approval label.
 - Every score includes a reason, cap, blocker fields, claim-gate dependency, and next action.
 
+## AI Copilot Implemented
+
+- AI copilot status: `production_ai_copilot_engine_ready_no_gate_opening`.
+- AI roles: `8`.
+- AI can help draft, extract, summarize, prepare reviewer work orders, and flag wording risks.
+- AI outputs are labeled as draft, source-backed, needs user confirmation, needs expert review, or blocked.
+- Live model calls are disabled and AI cannot open product gates.
+
 ## Enterprise And Advisor Use Cases
 
 - Broker or trade advisor can manage multiple client packets and export missing-evidence or broker-review packets.

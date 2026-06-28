@@ -180,6 +180,7 @@ def _status_context() -> dict[str, Any]:
     production_document = _load_json(GRAPH / "production_document_intelligence_manifest.json")
     production_claim_gate = _load_json(GRAPH / "production_evidence_claim_gate_manifest.json")
     production_scoring = _load_json(GRAPH / "production_decision_scoring_manifest.json")
+    production_ai = _load_json(GRAPH / "production_ai_copilot_manifest.json")
     row = business["packet_rows"][0]
     return {
         "today": date.today().isoformat(),
@@ -190,6 +191,7 @@ def _status_context() -> dict[str, Any]:
         "production_document": production_document,
         "production_claim_gate": production_claim_gate,
         "production_scoring": production_scoring,
+        "production_ai": production_ai,
         "packet": row,
     }
 
@@ -200,6 +202,7 @@ def _functional(ctx: dict[str, Any]) -> ReviewerDocument:
     document = ctx["production_document"]
     claim_gate = ctx["production_claim_gate"]
     scoring = ctx["production_scoring"]
+    ai_copilot = ctx["production_ai"]
     return ReviewerDocument(
         title="Functional Requirements For External Review",
         filename="functional_requirements_for_review.md",
@@ -284,6 +287,16 @@ def _functional(ctx: dict[str, Any]) -> ReviewerDocument:
                 ),
             ),
             Section(
+                "AI Copilot Implemented",
+                bullets=(
+                    f"AI copilot status: `{ai_copilot['status']}`.",
+                    f"AI roles: `{ai_copilot.get('ai_role_count')}`.",
+                    "AI can help draft, extract, summarize, prepare reviewer work orders, and flag wording risks.",
+                    "AI outputs are labeled as draft, source-backed, needs user confirmation, needs expert review, or blocked.",
+                    "Live model calls are disabled and AI cannot open product gates.",
+                ),
+            ),
+            Section(
                 "Enterprise And Advisor Use Cases",
                 bullets=(
                     "Broker or trade advisor can manage multiple client packets and export missing-evidence or broker-review packets.",
@@ -335,6 +348,7 @@ def _business_logic(ctx: dict[str, Any]) -> ReviewerDocument:
     document = ctx["production_document"]
     claim_gate = ctx["production_claim_gate"]
     scoring = ctx["production_scoring"]
+    ai_copilot = ctx["production_ai"]
     buyer_supplier = packet["buyer_supplier_evidence"]
     gate = packet["business_gate_decision"]
     market = packet["market_intelligence"]["market_signal_evaluation"]
@@ -421,6 +435,19 @@ def _business_logic(ctx: dict[str, Any]) -> ReviewerDocument:
                 ),
             ),
             Section(
+                "AI Copilot Logic Implemented Now",
+                body=(
+                    "AI is treated as a drafting and organization helper, not as a decision maker. Deterministic rules decide what can be shown.",
+                ),
+                bullets=(
+                    f"AI role contracts generated: `{ai_copilot.get('ai_role_count')}`.",
+                    f"AI output contracts generated: `{ai_copilot.get('ai_output_contract_count')}`.",
+                    f"Prompt-injection checks generated: `{ai_copilot.get('prompt_injection_test_count')}`.",
+                    "AI can produce drafts, source summaries, confirmation tasks, reviewer work orders, redaction prompts, and QA findings.",
+                    "AI cannot approve customs, tariff, CFIA, buyer, supplier, payment, shipment, legal, or launch claims.",
+                ),
+            ),
+            Section(
                 "Current Sample Packet Result",
                 bullets=(
                     f"Packet reviewed: `{packet['packet_id']}`.",
@@ -474,6 +501,7 @@ def _non_functional(ctx: dict[str, Any]) -> ReviewerDocument:
     document = ctx["production_document"]
     claim_gate = ctx["production_claim_gate"]
     scoring = ctx["production_scoring"]
+    ai_copilot = ctx["production_ai"]
     return ReviewerDocument(
         title="Non-Functional Requirements For External Review",
         filename="non_functional_requirements_for_review.md",
@@ -524,6 +552,17 @@ def _non_functional(ctx: dict[str, Any]) -> ReviewerDocument:
                     "AI can summarize, structure, and create findings only when permitted.",
                     "AI cannot approve customs, tariff, CFIA, legal, buyer, supplier, payment, launch, or shipment claims.",
                     "Required before real documents: prompt-injection review, provider routing decision, redaction tests on real examples, incident process, and customer-facing AI-language review.",
+                ),
+            ),
+            Section(
+                "AI Copilot Controls",
+                bullets=(
+                    f"AI copilot status: `{ai_copilot['status']}`.",
+                    f"Output contracts: `{ai_copilot.get('ai_output_contract_count')}`.",
+                    f"Prompt-injection checks: `{ai_copilot.get('prompt_injection_test_count')}`.",
+                    "Live model calls remain disabled.",
+                    "Provider terms review and qualified AI safety review remain incomplete.",
+                    "AI output contracts cannot open product gates.",
                 ),
             ),
             Section(

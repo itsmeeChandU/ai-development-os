@@ -62,6 +62,16 @@ The product explains decisions with six separate capped scores. It does not coll
 - Buyer/supplier evidence score cannot say buyer validated or supplier verified.
 - Decision safety score remains red while forbidden external claims are blocked.
 
+## AI Copilot Logic Implemented Now
+
+AI is treated as a drafting and organization helper, not as a decision maker. Deterministic rules decide what can be shown.
+
+- AI role contracts generated: `8`.
+- AI output contracts generated: `8`.
+- Prompt-injection checks generated: `2`.
+- AI can produce drafts, source summaries, confirmation tasks, reviewer work orders, redaction prompts, and QA findings.
+- AI cannot approve customs, tariff, CFIA, buyer, supplier, payment, shipment, legal, or launch claims.
+
 ## Current Sample Packet Result
 
 - Packet reviewed: `packet-frozen-tuna-canada-001`.

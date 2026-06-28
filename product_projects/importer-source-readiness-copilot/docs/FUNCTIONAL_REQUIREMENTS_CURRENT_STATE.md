@@ -54,6 +54,7 @@ The product helps users prepare trade readiness packets, organize evidence, revi
 | FR-26 | Keep uploaded-document actions separate from no-document packets | Implemented locally | no-document quick-check regression test and public result route |
 | FR-27 | Decide which packet statements can be shown | Implemented locally with evidence trails and closed external claims | `production_evidence_claim_gate_manifest.json`, `production_claim_gate_decisions.json` |
 | FR-28 | Explain packet decisions with separate capped scores | Implemented locally without a single readiness score | `production_decision_scoring_manifest.json`, `production_decision_score_records.json` |
+| FR-29 | Provide AI assistance without authority | Implemented locally with role/output contracts and safety checks | `production_ai_copilot_manifest.json`, `production_ai_output_contracts.json` |
 
 ## Current Main Workflows
 

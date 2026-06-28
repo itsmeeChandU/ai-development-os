@@ -36,6 +36,15 @@ The document engine is ready for local review and parser QA. It is not yet appro
 - AI cannot approve customs, tariff, CFIA, legal, buyer, supplier, payment, launch, or shipment claims.
 - Required before real documents: prompt-injection review, provider routing decision, redaction tests on real examples, incident process, and customer-facing AI-language review.
 
+## AI Copilot Controls
+
+- AI copilot status: `production_ai_copilot_engine_ready_no_gate_opening`.
+- Output contracts: `8`.
+- Prompt-injection checks: `2`.
+- Live model calls remain disabled.
+- Provider terms review and qualified AI safety review remain incomplete.
+- AI output contracts cannot open product gates.
+
 ## Claim Safety
 
 - Evidence claim-gate status: `production_evidence_claim_gate_engine_ready_claims_fail_closed`.

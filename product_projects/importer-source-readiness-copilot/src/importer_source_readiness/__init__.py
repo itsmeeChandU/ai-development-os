@@ -13,6 +13,7 @@ from .source_packet_workflow import build_customer_workflow, build_evidence_ledg
 from .product_runtime import build_runtime_state, write_runtime_artifacts
 from .completion_platform import build_completion_platform, write_completion_platform_artifacts
 from .business_logic import build_business_logic_phases
+from .production_ai_copilot_engine import build_production_ai_copilot_engine, write_production_ai_copilot_engine_artifacts
 from .production_country_source_engine import (
     build_production_country_source_engine,
     write_production_country_source_engine_artifacts,
@@ -48,6 +49,7 @@ __all__ = [
     "build_evidence_ledger",
     "build_external_gate_report",
     "build_operator_workflow",
+    "build_production_ai_copilot_engine",
     "build_production_country_source_engine",
     "build_production_data_model",
     "build_production_decision_scoring_engine",
@@ -71,6 +73,7 @@ __all__ = [
     "write_completion_platform_artifacts",
     "write_json",
     "write_operator_workflow",
+    "write_production_ai_copilot_engine_artifacts",
     "write_production_country_source_engine_artifacts",
     "write_production_data_model_artifacts",
     "write_production_decision_scoring_engine_artifacts",

@@ -85,6 +85,7 @@ def main() -> int:
         PROJECT / "src" / "importer_source_readiness" / "external_review.py",
         PROJECT / "src" / "importer_source_readiness" / "final_go_live.py",
         PROJECT / "src" / "importer_source_readiness" / "external_validation_research.py",
+        PROJECT / "src" / "importer_source_readiness" / "production_ai_copilot_engine.py",
         PROJECT / "src" / "importer_source_readiness" / "production_country_source_engine.py",
         PROJECT / "src" / "importer_source_readiness" / "production_data_model.py",
         PROJECT / "src" / "importer_source_readiness" / "production_decision_scoring_engine.py",
@@ -110,6 +111,7 @@ def main() -> int:
         PROJECT / "tests" / "test_external_review_workflow.py",
         PROJECT / "tests" / "test_final_go_live.py",
         PROJECT / "tests" / "test_external_validation_research.py",
+        PROJECT / "tests" / "test_production_ai_copilot_engine.py",
         PROJECT / "tests" / "test_production_country_source_engine.py",
         PROJECT / "tests" / "test_production_data_model.py",
         PROJECT / "tests" / "test_production_decision_scoring_engine.py",
@@ -134,6 +136,7 @@ def main() -> int:
         PROJECT / "scripts" / "audit_external_package.py",
         PROJECT / "scripts" / "run_final_go_live_review.py",
         PROJECT / "scripts" / "run_external_validation_requirements.py",
+        PROJECT / "scripts" / "run_production_ai_copilot_engine.py",
         PROJECT / "scripts" / "run_production_country_source_engine.py",
         PROJECT / "scripts" / "run_production_data_model.py",
         PROJECT / "scripts" / "run_production_decision_scoring_engine.py",
@@ -161,6 +164,7 @@ def main() -> int:
         PROJECT / "docs" / "EXTERNAL_VALIDATION_REQUIREMENTS.md",
         PROJECT / "docs" / "EXTERNAL_VALIDATION_REVIEWER_BRIEF.md",
         PROJECT / "docs" / "GO_LIVE_INPUT_REQUESTS.md",
+        PROJECT / "docs" / "PRODUCTION_AI_COPILOT_ENGINE.md",
         PROJECT / "docs" / "PRODUCTION_COUNTRY_SOURCE_ENGINE.md",
         PROJECT / "docs" / "PRODUCTION_DATA_MODEL.md",
         PROJECT / "docs" / "PRODUCTION_DECISION_SCORING_ENGINE.md",
@@ -234,6 +238,9 @@ def main() -> int:
         PROJECT / "system_review_graph" / "external_validation_evidence_requirements.json",
         PROJECT / "system_review_graph" / "go_live_input_templates.json",
         PROJECT / "system_review_graph" / "go_live_input_readiness_report.json",
+        PROJECT / "system_review_graph" / "production_ai_copilot_manifest.json",
+        PROJECT / "system_review_graph" / "production_ai_output_contracts.json",
+        PROJECT / "system_review_graph" / "production_ai_safety_checks.json",
         PROJECT / "system_review_graph" / "production_country_source_engine_manifest.json",
         PROJECT / "system_review_graph" / "production_country_packs.json",
         PROJECT / "system_review_graph" / "production_source_lifecycle.json",
@@ -388,6 +395,7 @@ def main() -> int:
         ["python3", "scripts/run_production_document_intelligence_engine.py"],
         ["python3", "scripts/run_production_evidence_claim_gate_engine.py"],
         ["python3", "scripts/run_production_decision_scoring_engine.py"],
+        ["python3", "scripts/run_production_ai_copilot_engine.py"],
         ["python3", "scripts/build_external_review_packet.py"],
         ["python3", "scripts/export_operator_dashboard.py"],
         ["python3", "scripts/audit_external_package.py", "--root", "."],
@@ -610,6 +618,9 @@ def main() -> int:
     )
     production_decision_scoring = json.loads(
         (PROJECT / "system_review_graph" / "production_decision_scoring_manifest.json").read_text(encoding="utf-8")
+    )
+    production_ai_copilot = json.loads(
+        (PROJECT / "system_review_graph" / "production_ai_copilot_manifest.json").read_text(encoding="utf-8")
     )
     official_source_registry = json.loads(
         (PROJECT / "data" / "official_source_registry.json").read_text(encoding="utf-8")
@@ -1806,6 +1817,63 @@ def main() -> int:
         print("Product project check: FAIL")
         print("packet score summary must refuse a single global readiness score")
         return 1
+    if (
+        production_ai_copilot.get("status") != "production_ai_copilot_engine_ready_no_gate_opening"
+        or production_ai_copilot.get("ai_role_count") != 8
+        or production_ai_copilot.get("ai_output_contract_count") != 8
+        or production_ai_copilot.get("prompt_injection_test_count", 0) < 2
+        or production_ai_copilot.get("provider_terms_review_complete") is not False
+        or production_ai_copilot.get("qualified_ai_safety_review_complete") is not False
+        or production_ai_copilot.get("live_model_calls_enabled") is not False
+        or production_ai_copilot.get("can_open_customs_tariff_cfia_buyer_supplier_payment_legal_launch_gate") is not False
+        or production_ai_copilot.get("external_effects_created") is not False
+        or production_ai_copilot.get("claims_opened") is not False
+    ):
+        print("Product project check: FAIL")
+        print("production AI copilot should register AI roles while keeping live calls and gates closed")
+        return 1
+    expected_ai_roles = {
+        "intake_assistant",
+        "document_extraction_assistant",
+        "source_summarizer",
+        "market_research_assistant",
+        "packet_writer",
+        "reviewer_work_order_drafter",
+        "redaction_assistant",
+        "qa_assistant",
+    }
+    ai_roles = {row.get("role") for row in production_ai_copilot.get("role_contracts", [])}
+    if ai_roles != expected_ai_roles:
+        print("Product project check: FAIL")
+        print("production AI copilot role contracts are incomplete")
+        return 1
+    allowed_labels = {"draft", "source_backed", "needs_user_confirmation", "needs_expert_review", "blocked"}
+    for contract in production_ai_copilot.get("role_contracts", []):
+        if contract.get("output_label") not in allowed_labels:
+            print("Product project check: FAIL")
+            print(f"production AI role {contract.get('role')} has invalid output label")
+            return 1
+        if contract.get("can_open_gate") is not False:
+            print("Product project check: FAIL")
+            print(f"production AI role {contract.get('role')} must not open gates")
+            return 1
+        if "tariff_confirmed" not in contract.get("blocked_gates", []):
+            print("Product project check: FAIL")
+            print(f"production AI role {contract.get('role')} should block tariff_confirmed")
+            return 1
+    for contract in production_ai_copilot.get("output_contracts", []):
+        if (
+            contract.get("can_open_customs_tariff_cfia_buyer_supplier_payment_launch_gate") is not False
+            or contract.get("claims_opened") is not False
+        ):
+            print("Product project check: FAIL")
+            print(f"production AI output {contract.get('role')} must keep gates closed")
+            return 1
+    for result in production_ai_copilot.get("prompt_injection_results", []):
+        if result.get("result") != "blocked_output_no_gate_opened" or result.get("can_open_gate") is not False:
+            print("Product project check: FAIL")
+            print(f"prompt injection check {result.get('test_id')} should fail closed")
+            return 1
     external_validation_pdf = PROJECT / "output" / "pdf" / "external_validation_requirements.pdf"
     if not external_validation_pdf.exists() or not external_validation_pdf.read_bytes().startswith(b"%PDF"):
         print("Product project check: FAIL")
@@ -2090,6 +2158,9 @@ def main() -> int:
     print(f"production_decision_scoring_status={production_decision_scoring['status']}")
     print(f"production_decision_score_records={production_decision_scoring['decision_score_record_count']}")
     print(f"production_decision_single_global_score={production_decision_scoring['single_global_readiness_score_created']}")
+    print(f"production_ai_copilot_status={production_ai_copilot['status']}")
+    print(f"production_ai_roles={production_ai_copilot['ai_role_count']}")
+    print(f"production_ai_live_model_calls={production_ai_copilot['live_model_calls_enabled']}")
     print(f"external_validation_pdf={external_validation_pdf.relative_to(PROJECT)}")
     print(f"external_validation_reviewer_brief_pdf={external_validation_reviewer_brief_pdf.relative_to(PROJECT)}")
     print(f"go_live_input_status={go_live_input_readiness['status']}")

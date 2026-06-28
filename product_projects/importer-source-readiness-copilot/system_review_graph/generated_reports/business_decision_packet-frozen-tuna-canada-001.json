@@ -1286,11 +1286,11 @@
         "market_access_approved"
       ],
       "competitor_source_countries": [
-        "Vietnam",
-        "China",
-        "European Union",
+        "Mexico",
         "United States",
-        "Mexico"
+        "Vietnam",
+        "European Union",
+        "China"
       ],
       "destination": "Canada",
       "exporter_origin": "Vietnam",

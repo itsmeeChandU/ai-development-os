@@ -78,6 +78,13 @@ The decision scoring slice writes
 `docs/PRODUCTION_DECISION_SCORING_ENGINE.md`. It keeps the six scores separate,
 applies cap rules from packet stage, evidence strength, source freshness, and
 claim-gate state, and refuses a single global readiness score.
+The AI copilot slice writes
+`system_review_graph/production_ai_copilot_manifest.json`,
+`system_review_graph/production_ai_output_contracts.json`,
+`system_review_graph/production_ai_safety_checks.json`, and
+`docs/PRODUCTION_AI_COPILOT_ENGINE.md`. It defines eight AI roles, output
+labels, permission/redaction/manual fallback rules, prompt-injection checks,
+and blocked gates while keeping live model calls disabled.
 Those stages are backed by an executable local operations engine in
 `src/importer_source_readiness/product_operations.py` and
 `scripts/run_product_operations.py`. The engine creates/updates packet intake
@@ -382,6 +389,20 @@ completeness, source freshness, buyer/supplier evidence, responsibility
 clarity, and decision safety. Each score has a value, cap, reason, blocker
 fields, evidence references, claim-gate dependencies, and next action. It does
 not combine them into one readiness score or approval label.
+
+## Ready For Production AI Copilot Review
+
+- AI copilot status: `production_ai_copilot_engine_ready_no_gate_opening`
+- machine manifest: `system_review_graph/production_ai_copilot_manifest.json`
+- output contracts: `system_review_graph/production_ai_output_contracts.json`
+- safety checks: `system_review_graph/production_ai_safety_checks.json`
+- reviewer-readable doc: `docs/PRODUCTION_AI_COPILOT_ENGINE.md`
+- proof command: `python3 scripts/run_production_ai_copilot_engine.py`
+
+This means AI can help draft, summarize, extract, prepare reviewer work orders,
+and find wording risks. It cannot approve customs, tariff, CFIA, buyer,
+supplier, payment, legal, shipment, or launch claims. Live model calls,
+provider terms approval, and qualified AI safety signoff remain blocked.
 
 ## Ready For Internal Source-Packet Review
 
