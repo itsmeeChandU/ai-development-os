@@ -72,6 +72,15 @@ The current product is usable for local review and controlled preparation. It do
 - AI outputs are labeled as draft, source-backed, needs user confirmation, needs expert review, or blocked.
 - Live model calls are disabled and AI cannot open product gates.
 
+## Expert Review Network Implemented
+
+- Expert review status: `production_expert_review_network_ready_scope_limited_no_external_claims`.
+- Reviewer lanes: `10`.
+- Draft scoped review requests: `10`.
+- Finding templates: `10`.
+- The product records what a reviewer may review, which credentials are required, what evidence must be attached, and which claims remain out of scope.
+- No real reviewer signoff is recorded yet; review links are draft-only and no external claims are opened.
+
 ## Enterprise And Advisor Use Cases
 
 - Broker or trade advisor can manage multiple client packets and export missing-evidence or broker-review packets.

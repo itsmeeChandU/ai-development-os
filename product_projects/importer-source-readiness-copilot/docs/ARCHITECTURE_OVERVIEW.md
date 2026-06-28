@@ -29,6 +29,7 @@ src/importer_source_readiness/production_data_model.py
 src/importer_source_readiness/production_decision_scoring_engine.py
 src/importer_source_readiness/production_document_intelligence_engine.py
 src/importer_source_readiness/production_evidence_claim_gate_engine.py
+src/importer_source_readiness/production_expert_review_network.py
 src/importer_source_readiness/production_market_intelligence_engine.py
 src/importer_source_readiness/production_packet_engine.py
 src/importer_source_readiness/production_redevelopment.py
@@ -77,6 +78,10 @@ system_review_graph/production_score_cap_policy.json
 system_review_graph/production_ai_copilot_manifest.json
 system_review_graph/production_ai_output_contracts.json
 system_review_graph/production_ai_safety_checks.json
+system_review_graph/production_expert_review_network_manifest.json
+system_review_graph/production_reviewer_profiles.json
+system_review_graph/production_review_requests.json
+system_review_graph/production_review_finding_contracts.json
 system_review_graph/production_redevelopment_plan.json
 system_review_graph/production_research_anchors.json
 data/official_sample_documents/canada/*.pdf
@@ -123,6 +128,7 @@ board/*.md
 | `src/importer_source_readiness/production_decision_scoring_engine.py` | production decision scoring engine for six separate capped scores, reasons, blocker fields, evidence references, and no global readiness score |
 | `src/importer_source_readiness/production_document_intelligence_engine.py` | production document intelligence engine for official sample forms, synthetic parser QA samples, document records, extracted-field provenance, evidence mapping, redaction previews, and closed upload/security/document gates |
 | `src/importer_source_readiness/production_evidence_claim_gate_engine.py` | production evidence claim-gate engine for `can_show_claim`, required evidence types, evidence trails, mapper rows, and closed external claims |
+| `src/importer_source_readiness/production_expert_review_network.py` | production expert review network for reviewer lanes, credential requirements, scoped review requests, finding templates, gate impacts, and no completed signoff recorded |
 | `src/importer_source_readiness/production_market_intelligence_engine.py` | production market intelligence engine for metric records, source routes, dataset connector states, score caps, and blocked demand/profit claims |
 | `src/importer_source_readiness/production_packet_engine.py` | production packet engine for 12 packet states, packet event proof, eight packet views, six scores, blocked claims, and next valid moves |
 | `src/importer_source_readiness/production_redevelopment.py` | full-scale production redevelopment contract with 14 layers, phases 0-20, research/source/evidence/gate tracks, permanent research entities, and closed external gates |
@@ -141,6 +147,7 @@ board/*.md
 | `scripts/run_production_decision_scoring_engine.py` | production decision score records and cap-policy writer |
 | `scripts/run_production_document_intelligence_engine.py` | production document intelligence sample library, pipeline, and extracted-field writer |
 | `scripts/run_production_evidence_claim_gate_engine.py` | production evidence claim-gate decision, mapper, and review doc writer |
+| `scripts/run_production_expert_review_network.py` | production expert review profile, request, finding-template, gate-impact, and audit writer |
 | `scripts/run_production_market_intelligence_engine.py` | production market intelligence signal and dataset connector writer |
 | `scripts/run_production_packet_engine.py` | production packet engine manifest, event, and packet-view writer |
 | `scripts/run_production_redevelopment.py` | production redevelopment contract and research-anchor writer |
@@ -158,6 +165,7 @@ board/*.md
 | `tests/test_production_decision_scoring_engine.py` | proof that the six score records stay separate, capped, reasoned, and closed to approval language |
 | `tests/test_production_document_intelligence_engine.py` | proof that official samples, country source routes, parser QA fixtures, field provenance, and closed document/security gates are generated |
 | `tests/test_production_evidence_claim_gate_engine.py` | proof that can_show_claim separates safe preparation statements from blocked external claims with evidence mappers |
+| `tests/test_production_expert_review_network.py` | proof that reviewer lanes require real credentials and findings while keeping local requests draft-only and gates closed |
 | `tests/test_production_market_intelligence_engine.py` | proof that market metrics are source-routed without invented values, demand claims, profitability claims, or buyer validation |
 | `tests/test_production_redevelopment.py` | proof that every redevelopment phase has build, research, source, evidence, and gate tracks backed by known source IDs |
 | `system_review_graph/` | generated packets, reports, blockers, handoff evidence |
@@ -295,6 +303,13 @@ The expected production AI copilot status is
 contracts, output labels, redaction/manual fallback rules, and prompt-injection
 checks exist locally. It does not mean live model calls, provider terms, AI
 safety approval, or AI authority over product gates are approved.
+
+The expected production expert review network status is
+`production_expert_review_network_ready_scope_limited_no_external_claims`. It
+means reviewer lane contracts, credential requirements, scoped requests,
+finding templates, and gate-impact rows exist locally. It does not mean real
+reviewer credentials, signed findings, or scope-limited approval have been
+recorded.
 
 ## Proof Boundary
 

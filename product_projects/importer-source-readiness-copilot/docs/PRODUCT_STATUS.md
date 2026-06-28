@@ -85,6 +85,15 @@ The AI copilot slice writes
 `docs/PRODUCTION_AI_COPILOT_ENGINE.md`. It defines eight AI roles, output
 labels, permission/redaction/manual fallback rules, prompt-injection checks,
 and blocked gates while keeping live model calls disabled.
+The expert review network slice writes
+`system_review_graph/production_expert_review_network_manifest.json`,
+`system_review_graph/production_reviewer_profiles.json`,
+`system_review_graph/production_review_requests.json`,
+`system_review_graph/production_review_finding_contracts.json`, and
+`docs/PRODUCTION_EXPERT_REVIEW_NETWORK.md`. It defines ten reviewer lanes,
+credential requirements, scoped review requests, finding templates, gate-impact
+rows, and audit events while keeping real reviewer signoff and external claims
+closed.
 Those stages are backed by an executable local operations engine in
 `src/importer_source_readiness/product_operations.py` and
 `scripts/run_product_operations.py`. The engine creates/updates packet intake
@@ -183,6 +192,9 @@ security/privacy/human review gates are completed.
   official CBSA/CFIA sample forms, India/Vietnam source routes, filled parser
   QA samples, extracted-field provenance, redaction previews, and closed
   upload/security/document claims
+- production expert review network with credential-required reviewer profiles,
+scoped review requests, finding templates, gate-impact rows, and no completed
+reviewer approvals recorded
 - production research anchor registry for CBSA, CFIA, Global Affairs Canada,
   ISED, DGFT, WITS, ITC, WCO, ICC, OPC/PIPEDA, OWASP, NIST, and Stripe source
   routing
@@ -403,6 +415,22 @@ This means AI can help draft, summarize, extract, prepare reviewer work orders,
 and find wording risks. It cannot approve customs, tariff, CFIA, buyer,
 supplier, payment, legal, shipment, or launch claims. Live model calls,
 provider terms approval, and qualified AI safety signoff remain blocked.
+
+## Ready For Production Expert Review Network Review
+
+- expert review status: `production_expert_review_network_ready_scope_limited_no_external_claims`
+- machine manifest: `system_review_graph/production_expert_review_network_manifest.json`
+- reviewer profiles: `system_review_graph/production_reviewer_profiles.json`
+- scoped review requests: `system_review_graph/production_review_requests.json`
+- finding contracts: `system_review_graph/production_review_finding_contracts.json`
+- reviewer-readable doc: `docs/PRODUCTION_EXPERT_REVIEW_NETWORK.md`
+- proof command: `python3 scripts/run_production_expert_review_network.py`
+
+This means the product can prepare human-review work for customs/trade,
+regulated goods, freight, market/buyer evidence, supplier evidence, privacy,
+security, AI safety, report language, and payment/billing lanes. It does not
+record real approval until a qualified reviewer, credential basis, evidence
+attachments, sources checked, and dated scope-limited finding exist.
 
 ## Ready For Internal Source-Packet Review
 

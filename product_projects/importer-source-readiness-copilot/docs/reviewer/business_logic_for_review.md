@@ -72,6 +72,17 @@ AI is treated as a drafting and organization helper, not as a decision maker. De
 - AI can produce drafts, source summaries, confirmation tasks, reviewer work orders, redaction prompts, and QA findings.
 - AI cannot approve customs, tariff, CFIA, buyer, supplier, payment, shipment, legal, or launch claims.
 
+## Expert Review Logic Implemented Now
+
+Human review is now a product workflow with reviewer lanes, credential requirements, scoped requests, finding templates, and claim-gate impact records.
+
+- Reviewer lanes generated: `10`.
+- Profile requirement records: `10`.
+- Scoped review requests: `10`.
+- Gate-impact rows: `19`.
+- A reviewer can approve only the exact scope they reviewed, and only after credential evidence, artifacts reviewed, evidence attachments, source checks, and a dated finding are stored.
+- The local product does not record completed reviews or treat review routing as approval.
+
 ## Current Sample Packet Result
 
 - Packet reviewed: `packet-frozen-tuna-canada-001`.

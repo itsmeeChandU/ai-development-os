@@ -338,6 +338,10 @@ Payments remain downstream. Live checkout stays disabled until scope, support, r
 | Production AI copilot | `system_review_graph/production_ai_copilot_manifest.json` |
 | AI output contracts | `system_review_graph/production_ai_output_contracts.json` |
 | AI safety checks | `system_review_graph/production_ai_safety_checks.json` |
+| Production expert review network | `system_review_graph/production_expert_review_network_manifest.json` |
+| Reviewer profile requirements | `system_review_graph/production_reviewer_profiles.json` |
+| Scoped review requests | `system_review_graph/production_review_requests.json` |
+| Review finding contracts | `system_review_graph/production_review_finding_contracts.json` |
 | Tests | `tests/test_business_logic.py`, `tests/test_completion_platform.py` |
 | Product proof | `python3 scripts/check_product.py` |
 | Root proof | `python3 scripts/product_project_check.py` |
@@ -356,6 +360,7 @@ Payments remain downstream. Live checkout stays disabled until scope, support, r
 - explicit separation between safe preparation/source-routing statements and blocked external claims
 - production decision scoring engine with six separate capped scores and no single readiness score
 - production AI copilot engine with label-bound outputs and no gate-opening authority
+- production expert review network with credential-required reviewer lanes, scoped requests, finding templates, and no completed signoff recorded
 - official sample document library and synthetic parser QA fixtures for local parser validation
 - Canada/Vietnam/India/Generic country-pack rows with route checks
 - source-monitor contract with source metadata and executable evidence freshness evaluation

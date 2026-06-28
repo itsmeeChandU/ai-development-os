@@ -181,6 +181,7 @@ def _status_context() -> dict[str, Any]:
     production_claim_gate = _load_json(GRAPH / "production_evidence_claim_gate_manifest.json")
     production_scoring = _load_json(GRAPH / "production_decision_scoring_manifest.json")
     production_ai = _load_json(GRAPH / "production_ai_copilot_manifest.json")
+    production_expert = _load_json(GRAPH / "production_expert_review_network_manifest.json")
     row = business["packet_rows"][0]
     return {
         "today": date.today().isoformat(),
@@ -192,6 +193,7 @@ def _status_context() -> dict[str, Any]:
         "production_claim_gate": production_claim_gate,
         "production_scoring": production_scoring,
         "production_ai": production_ai,
+        "production_expert": production_expert,
         "packet": row,
     }
 
@@ -203,6 +205,7 @@ def _functional(ctx: dict[str, Any]) -> ReviewerDocument:
     claim_gate = ctx["production_claim_gate"]
     scoring = ctx["production_scoring"]
     ai_copilot = ctx["production_ai"]
+    expert_review = ctx["production_expert"]
     return ReviewerDocument(
         title="Functional Requirements For External Review",
         filename="functional_requirements_for_review.md",
@@ -297,6 +300,17 @@ def _functional(ctx: dict[str, Any]) -> ReviewerDocument:
                 ),
             ),
             Section(
+                "Expert Review Network Implemented",
+                bullets=(
+                    f"Expert review status: `{expert_review['status']}`.",
+                    f"Reviewer lanes: `{expert_review.get('reviewer_lane_count')}`.",
+                    f"Draft scoped review requests: `{expert_review.get('review_request_count')}`.",
+                    f"Finding templates: `{expert_review.get('finding_template_count')}`.",
+                    "The product records what a reviewer may review, which credentials are required, what evidence must be attached, and which claims remain out of scope.",
+                    "No real reviewer signoff is recorded yet; review links are draft-only and no external claims are opened.",
+                ),
+            ),
+            Section(
                 "Enterprise And Advisor Use Cases",
                 bullets=(
                     "Broker or trade advisor can manage multiple client packets and export missing-evidence or broker-review packets.",
@@ -349,6 +363,7 @@ def _business_logic(ctx: dict[str, Any]) -> ReviewerDocument:
     claim_gate = ctx["production_claim_gate"]
     scoring = ctx["production_scoring"]
     ai_copilot = ctx["production_ai"]
+    expert_review = ctx["production_expert"]
     buyer_supplier = packet["buyer_supplier_evidence"]
     gate = packet["business_gate_decision"]
     market = packet["market_intelligence"]["market_signal_evaluation"]
@@ -448,6 +463,20 @@ def _business_logic(ctx: dict[str, Any]) -> ReviewerDocument:
                 ),
             ),
             Section(
+                "Expert Review Logic Implemented Now",
+                body=(
+                    "Human review is now a product workflow with reviewer lanes, credential requirements, scoped requests, finding templates, and claim-gate impact records.",
+                ),
+                bullets=(
+                    f"Reviewer lanes generated: `{expert_review.get('reviewer_lane_count')}`.",
+                    f"Profile requirement records: `{expert_review.get('profile_requirement_count')}`.",
+                    f"Scoped review requests: `{expert_review.get('review_request_count')}`.",
+                    f"Gate-impact rows: `{expert_review.get('gate_impact_count')}`.",
+                    "A reviewer can approve only the exact scope they reviewed, and only after credential evidence, artifacts reviewed, evidence attachments, source checks, and a dated finding are stored.",
+                    "The local product does not record completed reviews or treat review routing as approval.",
+                ),
+            ),
+            Section(
                 "Current Sample Packet Result",
                 bullets=(
                     f"Packet reviewed: `{packet['packet_id']}`.",
@@ -502,6 +531,7 @@ def _non_functional(ctx: dict[str, Any]) -> ReviewerDocument:
     claim_gate = ctx["production_claim_gate"]
     scoring = ctx["production_scoring"]
     ai_copilot = ctx["production_ai"]
+    expert_review = ctx["production_expert"]
     return ReviewerDocument(
         title="Non-Functional Requirements For External Review",
         filename="non_functional_requirements_for_review.md",
@@ -563,6 +593,17 @@ def _non_functional(ctx: dict[str, Any]) -> ReviewerDocument:
                     "Live model calls remain disabled.",
                     "Provider terms review and qualified AI safety review remain incomplete.",
                     "AI output contracts cannot open product gates.",
+                ),
+            ),
+            Section(
+                "Expert Review Controls",
+                bullets=(
+                    f"Expert review status: `{expert_review['status']}`.",
+                    f"Reviewer lanes: `{expert_review.get('reviewer_lane_count')}`.",
+                    f"Credential profiles required: `{expert_review.get('profile_requirement_count')}`.",
+                    f"Pending findings: `{expert_review.get('pending_finding_count')}`.",
+                    "All reviewer profiles require real credentials, identity, conflict, scope, source, and evidence attachments before a finding can be used.",
+                    "Draft review requests do not contact reviewers, do not record approval, and do not open claims.",
                 ),
             ),
             Section(

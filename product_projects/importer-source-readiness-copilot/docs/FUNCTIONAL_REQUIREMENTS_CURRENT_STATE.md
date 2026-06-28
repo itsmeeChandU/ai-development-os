@@ -55,6 +55,7 @@ The product helps users prepare trade readiness packets, organize evidence, revi
 | FR-27 | Decide which packet statements can be shown | Implemented locally with evidence trails and closed external claims | `production_evidence_claim_gate_manifest.json`, `production_claim_gate_decisions.json` |
 | FR-28 | Explain packet decisions with separate capped scores | Implemented locally without a single readiness score | `production_decision_scoring_manifest.json`, `production_decision_score_records.json` |
 | FR-29 | Provide AI assistance without authority | Implemented locally with role/output contracts and safety checks | `production_ai_copilot_manifest.json`, `production_ai_output_contracts.json` |
+| FR-30 | Route scoped expert reviews without recorded approval | Implemented locally with reviewer lanes, credential requirements, draft requests, finding templates, and gate impacts | `production_expert_review_network_manifest.json`, `production_review_requests.json` |
 
 ## Current Main Workflows
 

@@ -75,6 +75,7 @@ python3 scripts/run_production_document_intelligence_engine.py
 python3 scripts/run_production_evidence_claim_gate_engine.py
 python3 scripts/run_production_decision_scoring_engine.py
 python3 scripts/run_production_ai_copilot_engine.py
+python3 scripts/run_production_expert_review_network.py
 python3 scripts/audit_external_package.py --root .
 python3 scripts/check_product.py
 ```
@@ -147,6 +148,10 @@ system_review_graph/production_score_cap_policy.json
 system_review_graph/production_ai_copilot_manifest.json
 system_review_graph/production_ai_output_contracts.json
 system_review_graph/production_ai_safety_checks.json
+system_review_graph/production_expert_review_network_manifest.json
+system_review_graph/production_reviewer_profiles.json
+system_review_graph/production_review_requests.json
+system_review_graph/production_review_finding_contracts.json
 system_review_graph/production_redevelopment_plan.json
 system_review_graph/production_research_anchors.json
 data/official_sample_documents/canada/*.pdf
@@ -164,6 +169,7 @@ docs/PRODUCTION_DOCUMENT_INTELLIGENCE_ENGINE.md
 docs/PRODUCTION_EVIDENCE_CLAIM_GATE_ENGINE.md
 docs/PRODUCTION_DECISION_SCORING_ENGINE.md
 docs/PRODUCTION_AI_COPILOT_ENGINE.md
+docs/PRODUCTION_EXPERT_REVIEW_NETWORK.md
 docs/PRODUCTION_MARKET_INTELLIGENCE_ENGINE.md
 docs/PRODUCTION_REDEVELOPMENT.md
 output/pdf/external_validation_reviewer_brief.pdf
@@ -358,6 +364,18 @@ summaries, market research, packet drafting, reviewer work orders, redaction,
 and QA. Outputs are labeled as draft, source-backed, confirmation-needed,
 expert-review-needed, or blocked. AI cannot open product gates, and live model
 calls remain disabled.
+
+The expected production expert review status is:
+
+```text
+production_expert_review_network_ready_scope_limited_no_external_claims
+```
+
+That means reviewer lanes, credential requirements, scoped review requests,
+finding templates, gate-impact rows, and audit records are generated locally.
+The product does not record completed reviews, does not send review links, and
+does not open external claims without real reviewer credentials and dated
+scope-limited findings.
 
 The expected customer source-packet status is:
 

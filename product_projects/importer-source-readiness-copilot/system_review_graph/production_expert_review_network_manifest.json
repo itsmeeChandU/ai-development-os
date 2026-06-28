@@ -1,0 +1,2847 @@
+{
+  "audit_event_count": 10,
+  "audit_events": [
+    {
+      "audit_event_id": "audit:production-review:packet-frozen-tuna-canada-001:customs_trade_reviewer",
+      "claims_opened": false,
+      "created_at": "2026-06-28T14:50:22+00:00",
+      "detail": "Draft scoped review request generated locally; no reviewer contacted and no approval recorded.",
+      "event_type": "production_review_request_drafted",
+      "external_effects_created": false,
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "reviewer_lane_id": "customs_trade_reviewer"
+    },
+    {
+      "audit_event_id": "audit:production-review:packet-frozen-tuna-canada-001:regulated_food_product_reviewer",
+      "claims_opened": false,
+      "created_at": "2026-06-28T14:50:22+00:00",
+      "detail": "Draft scoped review request generated locally; no reviewer contacted and no approval recorded.",
+      "event_type": "production_review_request_drafted",
+      "external_effects_created": false,
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "reviewer_lane_id": "regulated_food_product_reviewer"
+    },
+    {
+      "audit_event_id": "audit:production-review:packet-frozen-tuna-canada-001:freight_logistics_reviewer",
+      "claims_opened": false,
+      "created_at": "2026-06-28T14:50:22+00:00",
+      "detail": "Draft scoped review request generated locally; no reviewer contacted and no approval recorded.",
+      "event_type": "production_review_request_drafted",
+      "external_effects_created": false,
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "reviewer_lane_id": "freight_logistics_reviewer"
+    },
+    {
+      "audit_event_id": "audit:production-review:packet-frozen-tuna-canada-001:market_trade_consultant_reviewer",
+      "claims_opened": false,
+      "created_at": "2026-06-28T14:50:22+00:00",
+      "detail": "Draft scoped review request generated locally; no reviewer contacted and no approval recorded.",
+      "event_type": "production_review_request_drafted",
+      "external_effects_created": false,
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "reviewer_lane_id": "market_trade_consultant_reviewer"
+    },
+    {
+      "audit_event_id": "audit:production-review:packet-frozen-tuna-canada-001:supplier_evidence_reviewer",
+      "claims_opened": false,
+      "created_at": "2026-06-28T14:50:22+00:00",
+      "detail": "Draft scoped review request generated locally; no reviewer contacted and no approval recorded.",
+      "event_type": "production_review_request_drafted",
+      "external_effects_created": false,
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "reviewer_lane_id": "supplier_evidence_reviewer"
+    },
+    {
+      "audit_event_id": "audit:production-review:packet-frozen-tuna-canada-001:privacy_legal_reviewer",
+      "claims_opened": false,
+      "created_at": "2026-06-28T14:50:22+00:00",
+      "detail": "Draft scoped review request generated locally; no reviewer contacted and no approval recorded.",
+      "event_type": "production_review_request_drafted",
+      "external_effects_created": false,
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "reviewer_lane_id": "privacy_legal_reviewer"
+    },
+    {
+      "audit_event_id": "audit:production-review:packet-frozen-tuna-canada-001:security_upload_reviewer",
+      "claims_opened": false,
+      "created_at": "2026-06-28T14:50:22+00:00",
+      "detail": "Draft scoped review request generated locally; no reviewer contacted and no approval recorded.",
+      "event_type": "production_review_request_drafted",
+      "external_effects_created": false,
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "reviewer_lane_id": "security_upload_reviewer"
+    },
+    {
+      "audit_event_id": "audit:production-review:packet-frozen-tuna-canada-001:ai_safety_reviewer",
+      "claims_opened": false,
+      "created_at": "2026-06-28T14:50:22+00:00",
+      "detail": "Draft scoped review request generated locally; no reviewer contacted and no approval recorded.",
+      "event_type": "production_review_request_drafted",
+      "external_effects_created": false,
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "reviewer_lane_id": "ai_safety_reviewer"
+    },
+    {
+      "audit_event_id": "audit:production-review:packet-frozen-tuna-canada-001:report_language_reviewer",
+      "claims_opened": false,
+      "created_at": "2026-06-28T14:50:22+00:00",
+      "detail": "Draft scoped review request generated locally; no reviewer contacted and no approval recorded.",
+      "event_type": "production_review_request_drafted",
+      "external_effects_created": false,
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "reviewer_lane_id": "report_language_reviewer"
+    },
+    {
+      "audit_event_id": "audit:production-review:packet-frozen-tuna-canada-001:payment_billing_reviewer",
+      "claims_opened": false,
+      "created_at": "2026-06-28T14:50:22+00:00",
+      "detail": "Draft scoped review request generated locally; no reviewer contacted and no approval recorded.",
+      "event_type": "production_review_request_drafted",
+      "external_effects_created": false,
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "reviewer_lane_id": "payment_billing_reviewer"
+    }
+  ],
+  "can_open_customs_tariff_cfia_buyer_supplier_security_privacy_payment_launch_gate": false,
+  "claims_opened": false,
+  "external_effects_created": false,
+  "finding_template_count": 10,
+  "finding_templates": [
+    {
+      "allowed_decisions": [
+        "approved_for_scope",
+        "needs_changes",
+        "blocked",
+        "not_my_scope"
+      ],
+      "approved_for_scope_requires": [
+        "real reviewer identity",
+        "credential basis",
+        "scope reviewed",
+        "dated finding",
+        "artifacts reviewed",
+        "source/evidence attachments",
+        "explicit blocked-claim list"
+      ],
+      "can_open_external_claim_gate": false,
+      "can_update_only_scope_limited_wording": true,
+      "evidence_attachments_required": true,
+      "finding_template_id": "finding-template:customs_trade_reviewer",
+      "forbidden_claims_remain_blocked": [
+        "customs_ready",
+        "tariff_confirmed",
+        "cfia_approved",
+        "buyer_validated",
+        "supplier_verified",
+        "shipment_approved",
+        "legal_or_privacy_approved",
+        "security_approved",
+        "payment_live_ready",
+        "public_launch_ready"
+      ],
+      "required_fields": [
+        "finding_id",
+        "review_request_id",
+        "reviewer_profile_id",
+        "reviewer_name",
+        "reviewer_credential_basis",
+        "scope_reviewed",
+        "artifacts_reviewed",
+        "sources_checked",
+        "evidence_attachments",
+        "decision",
+        "severity",
+        "approved_scope",
+        "required_changes",
+        "blocked_claims",
+        "signed_at"
+      ],
+      "reviewer_lane_id": "customs_trade_reviewer",
+      "severity_levels": [
+        "info",
+        "low",
+        "medium",
+        "high",
+        "critical"
+      ],
+      "source_ids_required": [
+        "cbsa-licensed-customs-brokers",
+        "cbsa-import-commercial-goods",
+        "cbsa-customs-tariff-2026",
+        "wco-harmonized-system"
+      ]
+    },
+    {
+      "allowed_decisions": [
+        "approved_for_scope",
+        "needs_changes",
+        "blocked",
+        "not_my_scope"
+      ],
+      "approved_for_scope_requires": [
+        "real reviewer identity",
+        "credential basis",
+        "scope reviewed",
+        "dated finding",
+        "artifacts reviewed",
+        "source/evidence attachments",
+        "explicit blocked-claim list"
+      ],
+      "can_open_external_claim_gate": false,
+      "can_update_only_scope_limited_wording": true,
+      "evidence_attachments_required": true,
+      "finding_template_id": "finding-template:regulated_food_product_reviewer",
+      "forbidden_claims_remain_blocked": [
+        "customs_ready",
+        "tariff_confirmed",
+        "cfia_approved",
+        "buyer_validated",
+        "supplier_verified",
+        "shipment_approved",
+        "legal_or_privacy_approved",
+        "security_approved",
+        "payment_live_ready",
+        "public_launch_ready"
+      ],
+      "required_fields": [
+        "finding_id",
+        "review_request_id",
+        "reviewer_profile_id",
+        "reviewer_name",
+        "reviewer_credential_basis",
+        "scope_reviewed",
+        "artifacts_reviewed",
+        "sources_checked",
+        "evidence_attachments",
+        "decision",
+        "severity",
+        "approved_scope",
+        "required_changes",
+        "blocked_claims",
+        "signed_at"
+      ],
+      "reviewer_lane_id": "regulated_food_product_reviewer",
+      "severity_levels": [
+        "info",
+        "low",
+        "medium",
+        "high",
+        "critical"
+      ],
+      "source_ids_required": [
+        "cfia-airs",
+        "cbsa-import-commercial-goods"
+      ]
+    },
+    {
+      "allowed_decisions": [
+        "approved_for_scope",
+        "needs_changes",
+        "blocked",
+        "not_my_scope"
+      ],
+      "approved_for_scope_requires": [
+        "real reviewer identity",
+        "credential basis",
+        "scope reviewed",
+        "dated finding",
+        "artifacts reviewed",
+        "source/evidence attachments",
+        "explicit blocked-claim list"
+      ],
+      "can_open_external_claim_gate": false,
+      "can_update_only_scope_limited_wording": true,
+      "evidence_attachments_required": true,
+      "finding_template_id": "finding-template:freight_logistics_reviewer",
+      "forbidden_claims_remain_blocked": [
+        "customs_ready",
+        "tariff_confirmed",
+        "cfia_approved",
+        "buyer_validated",
+        "supplier_verified",
+        "shipment_approved",
+        "legal_or_privacy_approved",
+        "security_approved",
+        "payment_live_ready",
+        "public_launch_ready"
+      ],
+      "required_fields": [
+        "finding_id",
+        "review_request_id",
+        "reviewer_profile_id",
+        "reviewer_name",
+        "reviewer_credential_basis",
+        "scope_reviewed",
+        "artifacts_reviewed",
+        "sources_checked",
+        "evidence_attachments",
+        "decision",
+        "severity",
+        "approved_scope",
+        "required_changes",
+        "blocked_claims",
+        "signed_at"
+      ],
+      "reviewer_lane_id": "freight_logistics_reviewer",
+      "severity_levels": [
+        "info",
+        "low",
+        "medium",
+        "high",
+        "critical"
+      ],
+      "source_ids_required": [
+        "icc-incoterms-2020",
+        "cbsa-import-commercial-goods"
+      ]
+    },
+    {
+      "allowed_decisions": [
+        "approved_for_scope",
+        "needs_changes",
+        "blocked",
+        "not_my_scope"
+      ],
+      "approved_for_scope_requires": [
+        "real reviewer identity",
+        "credential basis",
+        "scope reviewed",
+        "dated finding",
+        "artifacts reviewed",
+        "source/evidence attachments",
+        "explicit blocked-claim list"
+      ],
+      "can_open_external_claim_gate": false,
+      "can_update_only_scope_limited_wording": true,
+      "evidence_attachments_required": true,
+      "finding_template_id": "finding-template:market_trade_consultant_reviewer",
+      "forbidden_claims_remain_blocked": [
+        "customs_ready",
+        "tariff_confirmed",
+        "cfia_approved",
+        "buyer_validated",
+        "supplier_verified",
+        "shipment_approved",
+        "legal_or_privacy_approved",
+        "security_approved",
+        "payment_live_ready",
+        "public_launch_ready"
+      ],
+      "required_fields": [
+        "finding_id",
+        "review_request_id",
+        "reviewer_profile_id",
+        "reviewer_name",
+        "reviewer_credential_basis",
+        "scope_reviewed",
+        "artifacts_reviewed",
+        "sources_checked",
+        "evidence_attachments",
+        "decision",
+        "severity",
+        "approved_scope",
+        "required_changes",
+        "blocked_claims",
+        "signed_at"
+      ],
+      "reviewer_lane_id": "market_trade_consultant_reviewer",
+      "severity_levels": [
+        "info",
+        "low",
+        "medium",
+        "high",
+        "critical"
+      ],
+      "source_ids_required": [
+        "ised-trade-data-online",
+        "canada-cid",
+        "itc-trade-map",
+        "world-bank-wits"
+      ]
+    },
+    {
+      "allowed_decisions": [
+        "approved_for_scope",
+        "needs_changes",
+        "blocked",
+        "not_my_scope"
+      ],
+      "approved_for_scope_requires": [
+        "real reviewer identity",
+        "credential basis",
+        "scope reviewed",
+        "dated finding",
+        "artifacts reviewed",
+        "source/evidence attachments",
+        "explicit blocked-claim list"
+      ],
+      "can_open_external_claim_gate": false,
+      "can_update_only_scope_limited_wording": true,
+      "evidence_attachments_required": true,
+      "finding_template_id": "finding-template:supplier_evidence_reviewer",
+      "forbidden_claims_remain_blocked": [
+        "customs_ready",
+        "tariff_confirmed",
+        "cfia_approved",
+        "buyer_validated",
+        "supplier_verified",
+        "shipment_approved",
+        "legal_or_privacy_approved",
+        "security_approved",
+        "payment_live_ready",
+        "public_launch_ready"
+      ],
+      "required_fields": [
+        "finding_id",
+        "review_request_id",
+        "reviewer_profile_id",
+        "reviewer_name",
+        "reviewer_credential_basis",
+        "scope_reviewed",
+        "artifacts_reviewed",
+        "sources_checked",
+        "evidence_attachments",
+        "decision",
+        "severity",
+        "approved_scope",
+        "required_changes",
+        "blocked_claims",
+        "signed_at"
+      ],
+      "reviewer_lane_id": "supplier_evidence_reviewer",
+      "severity_levels": [
+        "info",
+        "low",
+        "medium",
+        "high",
+        "critical"
+      ],
+      "source_ids_required": [
+        "india-dgft-foreign-trade-policy"
+      ]
+    },
+    {
+      "allowed_decisions": [
+        "approved_for_scope",
+        "needs_changes",
+        "blocked",
+        "not_my_scope"
+      ],
+      "approved_for_scope_requires": [
+        "real reviewer identity",
+        "credential basis",
+        "scope reviewed",
+        "dated finding",
+        "artifacts reviewed",
+        "source/evidence attachments",
+        "explicit blocked-claim list"
+      ],
+      "can_open_external_claim_gate": false,
+      "can_update_only_scope_limited_wording": true,
+      "evidence_attachments_required": true,
+      "finding_template_id": "finding-template:privacy_legal_reviewer",
+      "forbidden_claims_remain_blocked": [
+        "customs_ready",
+        "tariff_confirmed",
+        "cfia_approved",
+        "buyer_validated",
+        "supplier_verified",
+        "shipment_approved",
+        "legal_or_privacy_approved",
+        "security_approved",
+        "payment_live_ready",
+        "public_launch_ready"
+      ],
+      "required_fields": [
+        "finding_id",
+        "review_request_id",
+        "reviewer_profile_id",
+        "reviewer_name",
+        "reviewer_credential_basis",
+        "scope_reviewed",
+        "artifacts_reviewed",
+        "sources_checked",
+        "evidence_attachments",
+        "decision",
+        "severity",
+        "approved_scope",
+        "required_changes",
+        "blocked_claims",
+        "signed_at"
+      ],
+      "reviewer_lane_id": "privacy_legal_reviewer",
+      "severity_levels": [
+        "info",
+        "low",
+        "medium",
+        "high",
+        "critical"
+      ],
+      "source_ids_required": [
+        "opc-pipeda-principles"
+      ]
+    },
+    {
+      "allowed_decisions": [
+        "approved_for_scope",
+        "needs_changes",
+        "blocked",
+        "not_my_scope"
+      ],
+      "approved_for_scope_requires": [
+        "real reviewer identity",
+        "credential basis",
+        "scope reviewed",
+        "dated finding",
+        "artifacts reviewed",
+        "source/evidence attachments",
+        "explicit blocked-claim list"
+      ],
+      "can_open_external_claim_gate": false,
+      "can_update_only_scope_limited_wording": true,
+      "evidence_attachments_required": true,
+      "finding_template_id": "finding-template:security_upload_reviewer",
+      "forbidden_claims_remain_blocked": [
+        "customs_ready",
+        "tariff_confirmed",
+        "cfia_approved",
+        "buyer_validated",
+        "supplier_verified",
+        "shipment_approved",
+        "legal_or_privacy_approved",
+        "security_approved",
+        "payment_live_ready",
+        "public_launch_ready"
+      ],
+      "required_fields": [
+        "finding_id",
+        "review_request_id",
+        "reviewer_profile_id",
+        "reviewer_name",
+        "reviewer_credential_basis",
+        "scope_reviewed",
+        "artifacts_reviewed",
+        "sources_checked",
+        "evidence_attachments",
+        "decision",
+        "severity",
+        "approved_scope",
+        "required_changes",
+        "blocked_claims",
+        "signed_at"
+      ],
+      "reviewer_lane_id": "security_upload_reviewer",
+      "severity_levels": [
+        "info",
+        "low",
+        "medium",
+        "high",
+        "critical"
+      ],
+      "source_ids_required": [
+        "owasp-file-upload"
+      ]
+    },
+    {
+      "allowed_decisions": [
+        "approved_for_scope",
+        "needs_changes",
+        "blocked",
+        "not_my_scope"
+      ],
+      "approved_for_scope_requires": [
+        "real reviewer identity",
+        "credential basis",
+        "scope reviewed",
+        "dated finding",
+        "artifacts reviewed",
+        "source/evidence attachments",
+        "explicit blocked-claim list"
+      ],
+      "can_open_external_claim_gate": false,
+      "can_update_only_scope_limited_wording": true,
+      "evidence_attachments_required": true,
+      "finding_template_id": "finding-template:ai_safety_reviewer",
+      "forbidden_claims_remain_blocked": [
+        "customs_ready",
+        "tariff_confirmed",
+        "cfia_approved",
+        "buyer_validated",
+        "supplier_verified",
+        "shipment_approved",
+        "legal_or_privacy_approved",
+        "security_approved",
+        "payment_live_ready",
+        "public_launch_ready"
+      ],
+      "required_fields": [
+        "finding_id",
+        "review_request_id",
+        "reviewer_profile_id",
+        "reviewer_name",
+        "reviewer_credential_basis",
+        "scope_reviewed",
+        "artifacts_reviewed",
+        "sources_checked",
+        "evidence_attachments",
+        "decision",
+        "severity",
+        "approved_scope",
+        "required_changes",
+        "blocked_claims",
+        "signed_at"
+      ],
+      "reviewer_lane_id": "ai_safety_reviewer",
+      "severity_levels": [
+        "info",
+        "low",
+        "medium",
+        "high",
+        "critical"
+      ],
+      "source_ids_required": [
+        "owasp-llm01-prompt-injection",
+        "nist-ai-rmf"
+      ]
+    },
+    {
+      "allowed_decisions": [
+        "approved_for_scope",
+        "needs_changes",
+        "blocked",
+        "not_my_scope"
+      ],
+      "approved_for_scope_requires": [
+        "real reviewer identity",
+        "credential basis",
+        "scope reviewed",
+        "dated finding",
+        "artifacts reviewed",
+        "source/evidence attachments",
+        "explicit blocked-claim list"
+      ],
+      "can_open_external_claim_gate": false,
+      "can_update_only_scope_limited_wording": true,
+      "evidence_attachments_required": true,
+      "finding_template_id": "finding-template:report_language_reviewer",
+      "forbidden_claims_remain_blocked": [
+        "customs_ready",
+        "tariff_confirmed",
+        "cfia_approved",
+        "buyer_validated",
+        "supplier_verified",
+        "shipment_approved",
+        "legal_or_privacy_approved",
+        "security_approved",
+        "payment_live_ready",
+        "public_launch_ready"
+      ],
+      "required_fields": [
+        "finding_id",
+        "review_request_id",
+        "reviewer_profile_id",
+        "reviewer_name",
+        "reviewer_credential_basis",
+        "scope_reviewed",
+        "artifacts_reviewed",
+        "sources_checked",
+        "evidence_attachments",
+        "decision",
+        "severity",
+        "approved_scope",
+        "required_changes",
+        "blocked_claims",
+        "signed_at"
+      ],
+      "reviewer_lane_id": "report_language_reviewer",
+      "severity_levels": [
+        "info",
+        "low",
+        "medium",
+        "high",
+        "critical"
+      ],
+      "source_ids_required": [
+        "cbsa-licensed-customs-brokers",
+        "opc-pipeda-principles",
+        "owasp-llm01-prompt-injection"
+      ]
+    },
+    {
+      "allowed_decisions": [
+        "approved_for_scope",
+        "needs_changes",
+        "blocked",
+        "not_my_scope"
+      ],
+      "approved_for_scope_requires": [
+        "real reviewer identity",
+        "credential basis",
+        "scope reviewed",
+        "dated finding",
+        "artifacts reviewed",
+        "source/evidence attachments",
+        "explicit blocked-claim list"
+      ],
+      "can_open_external_claim_gate": false,
+      "can_update_only_scope_limited_wording": true,
+      "evidence_attachments_required": true,
+      "finding_template_id": "finding-template:payment_billing_reviewer",
+      "forbidden_claims_remain_blocked": [
+        "customs_ready",
+        "tariff_confirmed",
+        "cfia_approved",
+        "buyer_validated",
+        "supplier_verified",
+        "shipment_approved",
+        "legal_or_privacy_approved",
+        "security_approved",
+        "payment_live_ready",
+        "public_launch_ready"
+      ],
+      "required_fields": [
+        "finding_id",
+        "review_request_id",
+        "reviewer_profile_id",
+        "reviewer_name",
+        "reviewer_credential_basis",
+        "scope_reviewed",
+        "artifacts_reviewed",
+        "sources_checked",
+        "evidence_attachments",
+        "decision",
+        "severity",
+        "approved_scope",
+        "required_changes",
+        "blocked_claims",
+        "signed_at"
+      ],
+      "reviewer_lane_id": "payment_billing_reviewer",
+      "severity_levels": [
+        "info",
+        "low",
+        "medium",
+        "high",
+        "critical"
+      ],
+      "source_ids_required": [
+        "stripe-go-live"
+      ]
+    }
+  ],
+  "gate_impact_count": 19,
+  "gate_impacts": [
+    {
+      "can_open_external_claim_gate": false,
+      "can_show_after_local_request_only": false,
+      "can_show_after_real_scope_finding": "scope_limited_preparation_language_only",
+      "claim_type": "hs_candidate_research_route",
+      "current_status": "blocked_or_reference_only",
+      "forbidden_claims_remain_blocked": [
+        "customs_ready",
+        "tariff_confirmed",
+        "cfia_approved",
+        "buyer_validated",
+        "supplier_verified",
+        "shipment_approved",
+        "legal_or_privacy_approved",
+        "security_approved",
+        "payment_live_ready",
+        "public_launch_ready"
+      ],
+      "gate_impact_id": "gate-impact:production-review:packet-frozen-tuna-canada-001:customs_trade_reviewer:hs_candidate_research_route",
+      "impact_without_real_finding": "claim_remains_blocked_or_reference_only",
+      "review_request_id": "production-review:packet-frozen-tuna-canada-001:customs_trade_reviewer",
+      "reviewer_lane_id": "customs_trade_reviewer"
+    },
+    {
+      "can_open_external_claim_gate": false,
+      "can_show_after_local_request_only": false,
+      "can_show_after_real_scope_finding": "scope_limited_preparation_language_only",
+      "claim_type": "tariff_route_identified",
+      "current_status": "blocked_or_reference_only",
+      "forbidden_claims_remain_blocked": [
+        "customs_ready",
+        "tariff_confirmed",
+        "cfia_approved",
+        "buyer_validated",
+        "supplier_verified",
+        "shipment_approved",
+        "legal_or_privacy_approved",
+        "security_approved",
+        "payment_live_ready",
+        "public_launch_ready"
+      ],
+      "gate_impact_id": "gate-impact:production-review:packet-frozen-tuna-canada-001:customs_trade_reviewer:tariff_route_identified",
+      "impact_without_real_finding": "claim_remains_blocked_or_reference_only",
+      "review_request_id": "production-review:packet-frozen-tuna-canada-001:customs_trade_reviewer",
+      "reviewer_lane_id": "customs_trade_reviewer"
+    },
+    {
+      "can_open_external_claim_gate": false,
+      "can_show_after_local_request_only": false,
+      "can_show_after_real_scope_finding": "scope_limited_preparation_language_only",
+      "claim_type": "tariff_confirmed",
+      "current_status": "blocked_or_reference_only",
+      "forbidden_claims_remain_blocked": [
+        "customs_ready",
+        "tariff_confirmed",
+        "cfia_approved",
+        "buyer_validated",
+        "supplier_verified",
+        "shipment_approved",
+        "legal_or_privacy_approved",
+        "security_approved",
+        "payment_live_ready",
+        "public_launch_ready"
+      ],
+      "gate_impact_id": "gate-impact:production-review:packet-frozen-tuna-canada-001:customs_trade_reviewer:tariff_confirmed",
+      "impact_without_real_finding": "claim_remains_blocked_or_reference_only",
+      "review_request_id": "production-review:packet-frozen-tuna-canada-001:customs_trade_reviewer",
+      "reviewer_lane_id": "customs_trade_reviewer"
+    },
+    {
+      "can_open_external_claim_gate": false,
+      "can_show_after_local_request_only": false,
+      "can_show_after_real_scope_finding": "scope_limited_preparation_language_only",
+      "claim_type": "customs_ready",
+      "current_status": "blocked_or_reference_only",
+      "forbidden_claims_remain_blocked": [
+        "customs_ready",
+        "tariff_confirmed",
+        "cfia_approved",
+        "buyer_validated",
+        "supplier_verified",
+        "shipment_approved",
+        "legal_or_privacy_approved",
+        "security_approved",
+        "payment_live_ready",
+        "public_launch_ready"
+      ],
+      "gate_impact_id": "gate-impact:production-review:packet-frozen-tuna-canada-001:customs_trade_reviewer:customs_ready",
+      "impact_without_real_finding": "claim_remains_blocked_or_reference_only",
+      "review_request_id": "production-review:packet-frozen-tuna-canada-001:customs_trade_reviewer",
+      "reviewer_lane_id": "customs_trade_reviewer"
+    },
+    {
+      "can_open_external_claim_gate": false,
+      "can_show_after_local_request_only": false,
+      "can_show_after_real_scope_finding": "scope_limited_preparation_language_only",
+      "claim_type": "cfia_relevance_route",
+      "current_status": "blocked_or_reference_only",
+      "forbidden_claims_remain_blocked": [
+        "customs_ready",
+        "tariff_confirmed",
+        "cfia_approved",
+        "buyer_validated",
+        "supplier_verified",
+        "shipment_approved",
+        "legal_or_privacy_approved",
+        "security_approved",
+        "payment_live_ready",
+        "public_launch_ready"
+      ],
+      "gate_impact_id": "gate-impact:production-review:packet-frozen-tuna-canada-001:regulated_food_product_reviewer:cfia_relevance_route",
+      "impact_without_real_finding": "claim_remains_blocked_or_reference_only",
+      "review_request_id": "production-review:packet-frozen-tuna-canada-001:regulated_food_product_reviewer",
+      "reviewer_lane_id": "regulated_food_product_reviewer"
+    },
+    {
+      "can_open_external_claim_gate": false,
+      "can_show_after_local_request_only": false,
+      "can_show_after_real_scope_finding": "scope_limited_preparation_language_only",
+      "claim_type": "regulated_product_review_needed",
+      "current_status": "blocked_or_reference_only",
+      "forbidden_claims_remain_blocked": [
+        "customs_ready",
+        "tariff_confirmed",
+        "cfia_approved",
+        "buyer_validated",
+        "supplier_verified",
+        "shipment_approved",
+        "legal_or_privacy_approved",
+        "security_approved",
+        "payment_live_ready",
+        "public_launch_ready"
+      ],
+      "gate_impact_id": "gate-impact:production-review:packet-frozen-tuna-canada-001:regulated_food_product_reviewer:regulated_product_review_needed",
+      "impact_without_real_finding": "claim_remains_blocked_or_reference_only",
+      "review_request_id": "production-review:packet-frozen-tuna-canada-001:regulated_food_product_reviewer",
+      "reviewer_lane_id": "regulated_food_product_reviewer"
+    },
+    {
+      "can_open_external_claim_gate": false,
+      "can_show_after_local_request_only": false,
+      "can_show_after_real_scope_finding": "scope_limited_preparation_language_only",
+      "claim_type": "cfia_approved",
+      "current_status": "blocked_or_reference_only",
+      "forbidden_claims_remain_blocked": [
+        "customs_ready",
+        "tariff_confirmed",
+        "cfia_approved",
+        "buyer_validated",
+        "supplier_verified",
+        "shipment_approved",
+        "legal_or_privacy_approved",
+        "security_approved",
+        "payment_live_ready",
+        "public_launch_ready"
+      ],
+      "gate_impact_id": "gate-impact:production-review:packet-frozen-tuna-canada-001:regulated_food_product_reviewer:cfia_approved",
+      "impact_without_real_finding": "claim_remains_blocked_or_reference_only",
+      "review_request_id": "production-review:packet-frozen-tuna-canada-001:regulated_food_product_reviewer",
+      "reviewer_lane_id": "regulated_food_product_reviewer"
+    },
+    {
+      "can_open_external_claim_gate": false,
+      "can_show_after_local_request_only": false,
+      "can_show_after_real_scope_finding": "scope_limited_preparation_language_only",
+      "claim_type": "incoterms_responsibility_path",
+      "current_status": "blocked_or_reference_only",
+      "forbidden_claims_remain_blocked": [
+        "customs_ready",
+        "tariff_confirmed",
+        "cfia_approved",
+        "buyer_validated",
+        "supplier_verified",
+        "shipment_approved",
+        "legal_or_privacy_approved",
+        "security_approved",
+        "payment_live_ready",
+        "public_launch_ready"
+      ],
+      "gate_impact_id": "gate-impact:production-review:packet-frozen-tuna-canada-001:freight_logistics_reviewer:incoterms_responsibility_path",
+      "impact_without_real_finding": "claim_remains_blocked_or_reference_only",
+      "review_request_id": "production-review:packet-frozen-tuna-canada-001:freight_logistics_reviewer",
+      "reviewer_lane_id": "freight_logistics_reviewer"
+    },
+    {
+      "can_open_external_claim_gate": false,
+      "can_show_after_local_request_only": false,
+      "can_show_after_real_scope_finding": "scope_limited_preparation_language_only",
+      "claim_type": "shipment_approved",
+      "current_status": "blocked_or_reference_only",
+      "forbidden_claims_remain_blocked": [
+        "customs_ready",
+        "tariff_confirmed",
+        "cfia_approved",
+        "buyer_validated",
+        "supplier_verified",
+        "shipment_approved",
+        "legal_or_privacy_approved",
+        "security_approved",
+        "payment_live_ready",
+        "public_launch_ready"
+      ],
+      "gate_impact_id": "gate-impact:production-review:packet-frozen-tuna-canada-001:freight_logistics_reviewer:shipment_approved",
+      "impact_without_real_finding": "claim_remains_blocked_or_reference_only",
+      "review_request_id": "production-review:packet-frozen-tuna-canada-001:freight_logistics_reviewer",
+      "reviewer_lane_id": "freight_logistics_reviewer"
+    },
+    {
+      "can_open_external_claim_gate": false,
+      "can_show_after_local_request_only": false,
+      "can_show_after_real_scope_finding": "scope_limited_preparation_language_only",
+      "claim_type": "market_signal_source_routed",
+      "current_status": "blocked_or_reference_only",
+      "forbidden_claims_remain_blocked": [
+        "customs_ready",
+        "tariff_confirmed",
+        "cfia_approved",
+        "buyer_validated",
+        "supplier_verified",
+        "shipment_approved",
+        "legal_or_privacy_approved",
+        "security_approved",
+        "payment_live_ready",
+        "public_launch_ready"
+      ],
+      "gate_impact_id": "gate-impact:production-review:packet-frozen-tuna-canada-001:market_trade_consultant_reviewer:market_signal_source_routed",
+      "impact_without_real_finding": "claim_remains_blocked_or_reference_only",
+      "review_request_id": "production-review:packet-frozen-tuna-canada-001:market_trade_consultant_reviewer",
+      "reviewer_lane_id": "market_trade_consultant_reviewer"
+    },
+    {
+      "can_open_external_claim_gate": false,
+      "can_show_after_local_request_only": false,
+      "can_show_after_real_scope_finding": "scope_limited_preparation_language_only",
+      "claim_type": "buyer_lead_route_identified",
+      "current_status": "blocked_or_reference_only",
+      "forbidden_claims_remain_blocked": [
+        "customs_ready",
+        "tariff_confirmed",
+        "cfia_approved",
+        "buyer_validated",
+        "supplier_verified",
+        "shipment_approved",
+        "legal_or_privacy_approved",
+        "security_approved",
+        "payment_live_ready",
+        "public_launch_ready"
+      ],
+      "gate_impact_id": "gate-impact:production-review:packet-frozen-tuna-canada-001:market_trade_consultant_reviewer:buyer_lead_route_identified",
+      "impact_without_real_finding": "claim_remains_blocked_or_reference_only",
+      "review_request_id": "production-review:packet-frozen-tuna-canada-001:market_trade_consultant_reviewer",
+      "reviewer_lane_id": "market_trade_consultant_reviewer"
+    },
+    {
+      "can_open_external_claim_gate": false,
+      "can_show_after_local_request_only": false,
+      "can_show_after_real_scope_finding": "scope_limited_preparation_language_only",
+      "claim_type": "buyer_validated",
+      "current_status": "blocked_or_reference_only",
+      "forbidden_claims_remain_blocked": [
+        "customs_ready",
+        "tariff_confirmed",
+        "cfia_approved",
+        "buyer_validated",
+        "supplier_verified",
+        "shipment_approved",
+        "legal_or_privacy_approved",
+        "security_approved",
+        "payment_live_ready",
+        "public_launch_ready"
+      ],
+      "gate_impact_id": "gate-impact:production-review:packet-frozen-tuna-canada-001:market_trade_consultant_reviewer:buyer_validated",
+      "impact_without_real_finding": "claim_remains_blocked_or_reference_only",
+      "review_request_id": "production-review:packet-frozen-tuna-canada-001:market_trade_consultant_reviewer",
+      "reviewer_lane_id": "market_trade_consultant_reviewer"
+    },
+    {
+      "can_open_external_claim_gate": false,
+      "can_show_after_local_request_only": false,
+      "can_show_after_real_scope_finding": "scope_limited_preparation_language_only",
+      "claim_type": "supplier_evidence_collected",
+      "current_status": "blocked_or_reference_only",
+      "forbidden_claims_remain_blocked": [
+        "customs_ready",
+        "tariff_confirmed",
+        "cfia_approved",
+        "buyer_validated",
+        "supplier_verified",
+        "shipment_approved",
+        "legal_or_privacy_approved",
+        "security_approved",
+        "payment_live_ready",
+        "public_launch_ready"
+      ],
+      "gate_impact_id": "gate-impact:production-review:packet-frozen-tuna-canada-001:supplier_evidence_reviewer:supplier_evidence_collected",
+      "impact_without_real_finding": "claim_remains_blocked_or_reference_only",
+      "review_request_id": "production-review:packet-frozen-tuna-canada-001:supplier_evidence_reviewer",
+      "reviewer_lane_id": "supplier_evidence_reviewer"
+    },
+    {
+      "can_open_external_claim_gate": false,
+      "can_show_after_local_request_only": false,
+      "can_show_after_real_scope_finding": "scope_limited_preparation_language_only",
+      "claim_type": "supplier_verified",
+      "current_status": "blocked_or_reference_only",
+      "forbidden_claims_remain_blocked": [
+        "customs_ready",
+        "tariff_confirmed",
+        "cfia_approved",
+        "buyer_validated",
+        "supplier_verified",
+        "shipment_approved",
+        "legal_or_privacy_approved",
+        "security_approved",
+        "payment_live_ready",
+        "public_launch_ready"
+      ],
+      "gate_impact_id": "gate-impact:production-review:packet-frozen-tuna-canada-001:supplier_evidence_reviewer:supplier_verified",
+      "impact_without_real_finding": "claim_remains_blocked_or_reference_only",
+      "review_request_id": "production-review:packet-frozen-tuna-canada-001:supplier_evidence_reviewer",
+      "reviewer_lane_id": "supplier_evidence_reviewer"
+    },
+    {
+      "can_open_external_claim_gate": false,
+      "can_show_after_local_request_only": false,
+      "can_show_after_real_scope_finding": "scope_limited_preparation_language_only",
+      "claim_type": "legal_or_privacy_approved",
+      "current_status": "blocked_until_real_finding",
+      "forbidden_claims_remain_blocked": [
+        "customs_ready",
+        "tariff_confirmed",
+        "cfia_approved",
+        "buyer_validated",
+        "supplier_verified",
+        "shipment_approved",
+        "legal_or_privacy_approved",
+        "security_approved",
+        "payment_live_ready",
+        "public_launch_ready"
+      ],
+      "gate_impact_id": "gate-impact:production-review:packet-frozen-tuna-canada-001:privacy_legal_reviewer:legal_or_privacy_approved",
+      "impact_without_real_finding": "claim_remains_blocked_or_reference_only",
+      "review_request_id": "production-review:packet-frozen-tuna-canada-001:privacy_legal_reviewer",
+      "reviewer_lane_id": "privacy_legal_reviewer"
+    },
+    {
+      "can_open_external_claim_gate": false,
+      "can_show_after_local_request_only": false,
+      "can_show_after_real_scope_finding": "scope_limited_preparation_language_only",
+      "claim_type": "security_approved",
+      "current_status": "blocked_until_real_finding",
+      "forbidden_claims_remain_blocked": [
+        "customs_ready",
+        "tariff_confirmed",
+        "cfia_approved",
+        "buyer_validated",
+        "supplier_verified",
+        "shipment_approved",
+        "legal_or_privacy_approved",
+        "security_approved",
+        "payment_live_ready",
+        "public_launch_ready"
+      ],
+      "gate_impact_id": "gate-impact:production-review:packet-frozen-tuna-canada-001:security_upload_reviewer:security_approved",
+      "impact_without_real_finding": "claim_remains_blocked_or_reference_only",
+      "review_request_id": "production-review:packet-frozen-tuna-canada-001:security_upload_reviewer",
+      "reviewer_lane_id": "security_upload_reviewer"
+    },
+    {
+      "can_open_external_claim_gate": false,
+      "can_show_after_local_request_only": false,
+      "can_show_after_real_scope_finding": "scope_limited_preparation_language_only",
+      "claim_type": "ai_output_allowed",
+      "current_status": "blocked_until_real_finding",
+      "forbidden_claims_remain_blocked": [
+        "customs_ready",
+        "tariff_confirmed",
+        "cfia_approved",
+        "buyer_validated",
+        "supplier_verified",
+        "shipment_approved",
+        "legal_or_privacy_approved",
+        "security_approved",
+        "payment_live_ready",
+        "public_launch_ready"
+      ],
+      "gate_impact_id": "gate-impact:production-review:packet-frozen-tuna-canada-001:ai_safety_reviewer:ai_output_allowed",
+      "impact_without_real_finding": "claim_remains_blocked_or_reference_only",
+      "review_request_id": "production-review:packet-frozen-tuna-canada-001:ai_safety_reviewer",
+      "reviewer_lane_id": "ai_safety_reviewer"
+    },
+    {
+      "can_open_external_claim_gate": false,
+      "can_show_after_local_request_only": false,
+      "can_show_after_real_scope_finding": "scope_limited_preparation_language_only",
+      "claim_type": "report_language_scope",
+      "current_status": "blocked_until_real_finding",
+      "forbidden_claims_remain_blocked": [
+        "customs_ready",
+        "tariff_confirmed",
+        "cfia_approved",
+        "buyer_validated",
+        "supplier_verified",
+        "shipment_approved",
+        "legal_or_privacy_approved",
+        "security_approved",
+        "payment_live_ready",
+        "public_launch_ready"
+      ],
+      "gate_impact_id": "gate-impact:production-review:packet-frozen-tuna-canada-001:report_language_reviewer:report_language_scope",
+      "impact_without_real_finding": "claim_remains_blocked_or_reference_only",
+      "review_request_id": "production-review:packet-frozen-tuna-canada-001:report_language_reviewer",
+      "reviewer_lane_id": "report_language_reviewer"
+    },
+    {
+      "can_open_external_claim_gate": false,
+      "can_show_after_local_request_only": false,
+      "can_show_after_real_scope_finding": "scope_limited_preparation_language_only",
+      "claim_type": "payment_live_ready",
+      "current_status": "blocked_until_real_finding",
+      "forbidden_claims_remain_blocked": [
+        "customs_ready",
+        "tariff_confirmed",
+        "cfia_approved",
+        "buyer_validated",
+        "supplier_verified",
+        "shipment_approved",
+        "legal_or_privacy_approved",
+        "security_approved",
+        "payment_live_ready",
+        "public_launch_ready"
+      ],
+      "gate_impact_id": "gate-impact:production-review:packet-frozen-tuna-canada-001:payment_billing_reviewer:payment_live_ready",
+      "impact_without_real_finding": "claim_remains_blocked_or_reference_only",
+      "review_request_id": "production-review:packet-frozen-tuna-canada-001:payment_billing_reviewer",
+      "reviewer_lane_id": "payment_billing_reviewer"
+    }
+  ],
+  "generated_at": "2026-06-28T14:50:22+00:00",
+  "pending_finding_count": 10,
+  "pending_findings": [
+    {
+      "approved_scope": "",
+      "claims_opened": false,
+      "decision": "not_submitted",
+      "evidence_attachments": [],
+      "external_effects_created": false,
+      "finding_id": "pending-finding:production-review:packet-frozen-tuna-canada-001:customs_trade_reviewer",
+      "next_valid_move": "Send this scoped packet to a real qualified reviewer, attach credential evidence and dated findings, then rerun claim gates.",
+      "review_request_id": "production-review:packet-frozen-tuna-canada-001:customs_trade_reviewer",
+      "reviewer_lane_id": "customs_trade_reviewer",
+      "severity": "unknown",
+      "status": "awaiting_real_reviewer_finding"
+    },
+    {
+      "approved_scope": "",
+      "claims_opened": false,
+      "decision": "not_submitted",
+      "evidence_attachments": [],
+      "external_effects_created": false,
+      "finding_id": "pending-finding:production-review:packet-frozen-tuna-canada-001:regulated_food_product_reviewer",
+      "next_valid_move": "Send this scoped packet to a real qualified reviewer, attach credential evidence and dated findings, then rerun claim gates.",
+      "review_request_id": "production-review:packet-frozen-tuna-canada-001:regulated_food_product_reviewer",
+      "reviewer_lane_id": "regulated_food_product_reviewer",
+      "severity": "unknown",
+      "status": "awaiting_real_reviewer_finding"
+    },
+    {
+      "approved_scope": "",
+      "claims_opened": false,
+      "decision": "not_submitted",
+      "evidence_attachments": [],
+      "external_effects_created": false,
+      "finding_id": "pending-finding:production-review:packet-frozen-tuna-canada-001:freight_logistics_reviewer",
+      "next_valid_move": "Send this scoped packet to a real qualified reviewer, attach credential evidence and dated findings, then rerun claim gates.",
+      "review_request_id": "production-review:packet-frozen-tuna-canada-001:freight_logistics_reviewer",
+      "reviewer_lane_id": "freight_logistics_reviewer",
+      "severity": "unknown",
+      "status": "awaiting_real_reviewer_finding"
+    },
+    {
+      "approved_scope": "",
+      "claims_opened": false,
+      "decision": "not_submitted",
+      "evidence_attachments": [],
+      "external_effects_created": false,
+      "finding_id": "pending-finding:production-review:packet-frozen-tuna-canada-001:market_trade_consultant_reviewer",
+      "next_valid_move": "Send this scoped packet to a real qualified reviewer, attach credential evidence and dated findings, then rerun claim gates.",
+      "review_request_id": "production-review:packet-frozen-tuna-canada-001:market_trade_consultant_reviewer",
+      "reviewer_lane_id": "market_trade_consultant_reviewer",
+      "severity": "unknown",
+      "status": "awaiting_real_reviewer_finding"
+    },
+    {
+      "approved_scope": "",
+      "claims_opened": false,
+      "decision": "not_submitted",
+      "evidence_attachments": [],
+      "external_effects_created": false,
+      "finding_id": "pending-finding:production-review:packet-frozen-tuna-canada-001:supplier_evidence_reviewer",
+      "next_valid_move": "Send this scoped packet to a real qualified reviewer, attach credential evidence and dated findings, then rerun claim gates.",
+      "review_request_id": "production-review:packet-frozen-tuna-canada-001:supplier_evidence_reviewer",
+      "reviewer_lane_id": "supplier_evidence_reviewer",
+      "severity": "unknown",
+      "status": "awaiting_real_reviewer_finding"
+    },
+    {
+      "approved_scope": "",
+      "claims_opened": false,
+      "decision": "not_submitted",
+      "evidence_attachments": [],
+      "external_effects_created": false,
+      "finding_id": "pending-finding:production-review:packet-frozen-tuna-canada-001:privacy_legal_reviewer",
+      "next_valid_move": "Send this scoped packet to a real qualified reviewer, attach credential evidence and dated findings, then rerun claim gates.",
+      "review_request_id": "production-review:packet-frozen-tuna-canada-001:privacy_legal_reviewer",
+      "reviewer_lane_id": "privacy_legal_reviewer",
+      "severity": "unknown",
+      "status": "awaiting_real_reviewer_finding"
+    },
+    {
+      "approved_scope": "",
+      "claims_opened": false,
+      "decision": "not_submitted",
+      "evidence_attachments": [],
+      "external_effects_created": false,
+      "finding_id": "pending-finding:production-review:packet-frozen-tuna-canada-001:security_upload_reviewer",
+      "next_valid_move": "Send this scoped packet to a real qualified reviewer, attach credential evidence and dated findings, then rerun claim gates.",
+      "review_request_id": "production-review:packet-frozen-tuna-canada-001:security_upload_reviewer",
+      "reviewer_lane_id": "security_upload_reviewer",
+      "severity": "unknown",
+      "status": "awaiting_real_reviewer_finding"
+    },
+    {
+      "approved_scope": "",
+      "claims_opened": false,
+      "decision": "not_submitted",
+      "evidence_attachments": [],
+      "external_effects_created": false,
+      "finding_id": "pending-finding:production-review:packet-frozen-tuna-canada-001:ai_safety_reviewer",
+      "next_valid_move": "Send this scoped packet to a real qualified reviewer, attach credential evidence and dated findings, then rerun claim gates.",
+      "review_request_id": "production-review:packet-frozen-tuna-canada-001:ai_safety_reviewer",
+      "reviewer_lane_id": "ai_safety_reviewer",
+      "severity": "unknown",
+      "status": "awaiting_real_reviewer_finding"
+    },
+    {
+      "approved_scope": "",
+      "claims_opened": false,
+      "decision": "not_submitted",
+      "evidence_attachments": [],
+      "external_effects_created": false,
+      "finding_id": "pending-finding:production-review:packet-frozen-tuna-canada-001:report_language_reviewer",
+      "next_valid_move": "Send this scoped packet to a real qualified reviewer, attach credential evidence and dated findings, then rerun claim gates.",
+      "review_request_id": "production-review:packet-frozen-tuna-canada-001:report_language_reviewer",
+      "reviewer_lane_id": "report_language_reviewer",
+      "severity": "unknown",
+      "status": "awaiting_real_reviewer_finding"
+    },
+    {
+      "approved_scope": "",
+      "claims_opened": false,
+      "decision": "not_submitted",
+      "evidence_attachments": [],
+      "external_effects_created": false,
+      "finding_id": "pending-finding:production-review:packet-frozen-tuna-canada-001:payment_billing_reviewer",
+      "next_valid_move": "Send this scoped packet to a real qualified reviewer, attach credential evidence and dated findings, then rerun claim gates.",
+      "review_request_id": "production-review:packet-frozen-tuna-canada-001:payment_billing_reviewer",
+      "reviewer_lane_id": "payment_billing_reviewer",
+      "severity": "unknown",
+      "status": "awaiting_real_reviewer_finding"
+    }
+  ],
+  "product": "Trade Readiness Copilot",
+  "profile_requirement_count": 10,
+  "proof_boundary": "The product can draft scoped review requests and finding templates; only real qualified reviewers with evidence attachments can create scoped findings, and those findings cannot become blanket approval.",
+  "qualified_credentials_verified": false,
+  "real_reviewer_signoff_recorded": false,
+  "review_decisions": [
+    "approved_for_scope",
+    "needs_changes",
+    "blocked",
+    "not_my_scope"
+  ],
+  "review_request_count": 10,
+  "review_requests": [
+    {
+      "artifacts_in_scope": [
+        "system_review_graph/production_packet_views/packet-frozen-tuna-canada-001/broker_review_packet.json",
+        "system_review_graph/production_evidence_claim_gate_manifest.json",
+        "system_review_graph/production_decision_scoring_manifest.json",
+        "system_review_graph/production_ai_copilot_manifest.json"
+      ],
+      "claim_dependencies": [
+        {
+          "claim_type": "hs_candidate_research_route",
+          "current_status": "blocked_or_reference_only",
+          "required_evidence_types": [
+            "official_source_reference",
+            "market_signal"
+          ],
+          "required_reviewer_lane": "customs_or_trade_review",
+          "safe_without_real_finding": false
+        },
+        {
+          "claim_type": "tariff_route_identified",
+          "current_status": "blocked_or_reference_only",
+          "required_evidence_types": [
+            "official_source_reference"
+          ],
+          "required_reviewer_lane": "customs_or_trade_review",
+          "safe_without_real_finding": false
+        },
+        {
+          "claim_type": "tariff_confirmed",
+          "current_status": "blocked_or_reference_only",
+          "required_evidence_types": [
+            "reviewer_finding",
+            "official_ruling"
+          ],
+          "required_reviewer_lane": "qualified_customs_review",
+          "safe_without_real_finding": false
+        },
+        {
+          "claim_type": "customs_ready",
+          "current_status": "blocked_or_reference_only",
+          "required_evidence_types": [
+            "reviewer_finding",
+            "broker_finding"
+          ],
+          "required_reviewer_lane": "qualified_customs_review",
+          "safe_without_real_finding": false
+        }
+      ],
+      "claims_opened": false,
+      "external_effects_created": false,
+      "next_valid_move": "Send this scoped packet to a real qualified reviewer, attach credential evidence and dated findings, then rerun claim gates.",
+      "out_of_scope_claims": [
+        "customs_ready",
+        "tariff_confirmed",
+        "cfia_approved",
+        "buyer_validated",
+        "supplier_verified",
+        "shipment_approved",
+        "legal_or_privacy_approved",
+        "security_approved",
+        "payment_live_ready",
+        "public_launch_ready"
+      ],
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "questions": [
+        "Is this packet understandable for your exact review scope?",
+        "Which evidence is missing before the product may show stronger wording?",
+        "Which wording must remain blocked or changed?",
+        "Does the packet correctly avoid acting as a customs broker?",
+        "Are HS/tariff/customs statements limited to source routing or scoped findings?"
+      ],
+      "required_credential_evidence": [
+        "Licensed customs broker status, customs brokerage employment, or documented customs/trade compliance qualification.",
+        "Jurisdiction and product scope statement.",
+        "Dated source list or ruling/official correspondence if stronger tariff wording is requested."
+      ],
+      "review_request_id": "production-review:packet-frozen-tuna-canada-001:customs_trade_reviewer",
+      "review_scope": "HS candidate, tariff route, importer responsibility, broker-boundary, and customs-language review.",
+      "reviewer_lane_id": "customs_trade_reviewer",
+      "scoped_review_link_status": "token_required_not_sent",
+      "source_requirements": [
+        {
+          "available_in_registry": true,
+          "checked_on": "",
+          "claim_boundary": "Reference source only; does not prove a broker relationship, review, or signoff.",
+          "source_id": "cbsa-licensed-customs-brokers",
+          "source_name": "CBSA Licensed Customs Brokers",
+          "url": "https://www.cbsa-asfc.gc.ca/services/cb-cd/cb-cd-eng.html"
+        },
+        {
+          "available_in_registry": true,
+          "checked_on": "",
+          "claim_boundary": "Reference source only; does not replace CBSA, broker, customs, or legal review.",
+          "source_id": "cbsa-import-commercial-goods",
+          "source_name": "CBSA Import Commercial Goods Into Canada",
+          "url": "https://www.cbsa-asfc.gc.ca/import/menu-eng.html"
+        },
+        {
+          "available_in_registry": true,
+          "checked_on": "",
+          "claim_boundary": "Reference source only; classification and tariff treatment require qualified review.",
+          "source_id": "cbsa-customs-tariff-2026",
+          "source_name": "CBSA Customs Tariff 2026",
+          "url": "https://www.cbsa-asfc.gc.ca/trade-commerce/tariff-tarif/2026/menu-eng.html"
+        },
+        {
+          "available_in_registry": true,
+          "checked_on": "",
+          "claim_boundary": "Reference source only; HS candidates are not tariff classification confirmation.",
+          "source_id": "wco-harmonized-system",
+          "source_name": "World Customs Organization Harmonized System",
+          "url": "https://www.wcoomd.org/en/topics/nomenclature/overview/what-is-the-harmonized-system.aspx"
+        }
+      ],
+      "status": "draft_ready_to_send_no_external_effect"
+    },
+    {
+      "artifacts_in_scope": [
+        "system_review_graph/production_packet_views/packet-frozen-tuna-canada-001/broker_review_packet.json",
+        "system_review_graph/production_evidence_claim_gate_manifest.json",
+        "system_review_graph/production_decision_scoring_manifest.json",
+        "system_review_graph/production_ai_copilot_manifest.json"
+      ],
+      "claim_dependencies": [
+        {
+          "claim_type": "cfia_relevance_route",
+          "current_status": "blocked_or_reference_only",
+          "required_evidence_types": [
+            "official_source_reference"
+          ],
+          "required_reviewer_lane": "canada_food_or_regulated_goods_review",
+          "safe_without_real_finding": false
+        },
+        {
+          "claim_type": "regulated_product_review_needed",
+          "current_status": "blocked_or_reference_only",
+          "required_evidence_types": [
+            "official_source_reference"
+          ],
+          "required_reviewer_lane": "canada_food_or_regulated_goods_review",
+          "safe_without_real_finding": false
+        },
+        {
+          "claim_type": "cfia_approved",
+          "current_status": "blocked_or_reference_only",
+          "required_evidence_types": [
+            "reviewer_finding",
+            "official_permit_or_result"
+          ],
+          "required_reviewer_lane": "canada_food_or_regulated_goods_review",
+          "safe_without_real_finding": false
+        }
+      ],
+      "claims_opened": false,
+      "external_effects_created": false,
+      "next_valid_move": "Send this scoped packet to a real qualified reviewer, attach credential evidence and dated findings, then rerun claim gates.",
+      "out_of_scope_claims": [
+        "customs_ready",
+        "tariff_confirmed",
+        "cfia_approved",
+        "buyer_validated",
+        "supplier_verified",
+        "shipment_approved",
+        "legal_or_privacy_approved",
+        "security_approved",
+        "payment_live_ready",
+        "public_launch_ready"
+      ],
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "questions": [
+        "Is this packet understandable for your exact review scope?",
+        "Which evidence is missing before the product may show stronger wording?",
+        "Which wording must remain blocked or changed?",
+        "Does the packet route food/agri/seafood or regulated-product questions to the right official source path?",
+        "What product details, permits, certificates, or dated source results are missing?"
+      ],
+      "required_credential_evidence": [
+        "Regulated-food, seafood, agri, plant, animal, CFIA, or import-control review experience.",
+        "Product-specific composition, intended-use, and country lane reviewed.",
+        "Dated AIRS/official-source result or reason it is not applicable."
+      ],
+      "review_request_id": "production-review:packet-frozen-tuna-canada-001:regulated_food_product_reviewer",
+      "review_scope": "Food, seafood, agri, plant, animal, CFIA/AIRS, permit, certificate, and admissibility-language review.",
+      "reviewer_lane_id": "regulated_food_product_reviewer",
+      "scoped_review_link_status": "token_required_not_sent",
+      "source_requirements": [
+        {
+          "available_in_registry": true,
+          "checked_on": "",
+          "claim_boundary": "Reference source only; product-specific food import compliance requires qualified review and source verification.",
+          "source_id": "cfia-airs",
+          "source_name": "CFIA Automated Import Reference System (AIRS)",
+          "url": "https://inspection.canada.ca/en/importing-food-plants-animals/airs"
+        },
+        {
+          "available_in_registry": true,
+          "checked_on": "",
+          "claim_boundary": "Reference source only; does not replace CBSA, broker, customs, or legal review.",
+          "source_id": "cbsa-import-commercial-goods",
+          "source_name": "CBSA Import Commercial Goods Into Canada",
+          "url": "https://www.cbsa-asfc.gc.ca/import/menu-eng.html"
+        }
+      ],
+      "status": "draft_ready_to_send_no_external_effect"
+    },
+    {
+      "artifacts_in_scope": [
+        "system_review_graph/production_packet_views/packet-frozen-tuna-canada-001/broker_review_packet.json",
+        "system_review_graph/production_evidence_claim_gate_manifest.json",
+        "system_review_graph/production_decision_scoring_manifest.json",
+        "system_review_graph/production_ai_copilot_manifest.json"
+      ],
+      "claim_dependencies": [
+        {
+          "claim_type": "incoterms_responsibility_path",
+          "current_status": "blocked_or_reference_only",
+          "required_evidence_types": [
+            "user_input",
+            "official_source_reference"
+          ],
+          "required_reviewer_lane": "freight_or_legal_review",
+          "safe_without_real_finding": false
+        },
+        {
+          "claim_type": "shipment_approved",
+          "current_status": "blocked_or_reference_only",
+          "required_evidence_types": [
+            "reviewer_finding",
+            "broker_finding",
+            "freight_forwarder_finding"
+          ],
+          "required_reviewer_lane": "final_owner_gate",
+          "safe_without_real_finding": false
+        }
+      ],
+      "claims_opened": false,
+      "external_effects_created": false,
+      "next_valid_move": "Send this scoped packet to a real qualified reviewer, attach credential evidence and dated findings, then rerun claim gates.",
+      "out_of_scope_claims": [
+        "customs_ready",
+        "tariff_confirmed",
+        "cfia_approved",
+        "buyer_validated",
+        "supplier_verified",
+        "shipment_approved",
+        "legal_or_privacy_approved",
+        "security_approved",
+        "payment_live_ready",
+        "public_launch_ready"
+      ],
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "questions": [
+        "Is this packet understandable for your exact review scope?",
+        "Which evidence is missing before the product may show stronger wording?",
+        "Which wording must remain blocked or changed?",
+        "Are importer-of-record, Incoterms, packing, temperature, and route responsibilities clear enough for planning?",
+        "Which shipment decisions remain unsafe?"
+      ],
+      "required_credential_evidence": [
+        "Freight forwarding, logistics, customs operations, or shipment planning experience.",
+        "Mode, route, Incoterms, packing, and party-responsibility assumptions reviewed.",
+        "Clear out-of-scope note for legal/customs approval language."
+      ],
+      "review_request_id": "production-review:packet-frozen-tuna-canada-001:freight_logistics_reviewer",
+      "review_scope": "Shipment path, Incoterms responsibility split, importer of record, packing, temperature, insurance, and forwarder questions.",
+      "reviewer_lane_id": "freight_logistics_reviewer",
+      "scoped_review_link_status": "token_required_not_sent",
+      "source_requirements": [
+        {
+          "available_in_registry": true,
+          "checked_on": "",
+          "claim_boundary": "Reference source only; responsibility guidance requires user confirmation and qualified review where legal or contract interpretation is needed.",
+          "source_id": "icc-incoterms-2020",
+          "source_name": "ICC Incoterms 2020",
+          "url": "https://iccwbo.org/business-solutions/incoterms-rules/incoterms-2020/"
+        },
+        {
+          "available_in_registry": true,
+          "checked_on": "",
+          "claim_boundary": "Reference source only; does not replace CBSA, broker, customs, or legal review.",
+          "source_id": "cbsa-import-commercial-goods",
+          "source_name": "CBSA Import Commercial Goods Into Canada",
+          "url": "https://www.cbsa-asfc.gc.ca/import/menu-eng.html"
+        }
+      ],
+      "status": "draft_ready_to_send_no_external_effect"
+    },
+    {
+      "artifacts_in_scope": [
+        "system_review_graph/production_packet_views/packet-frozen-tuna-canada-001/broker_review_packet.json",
+        "system_review_graph/production_evidence_claim_gate_manifest.json",
+        "system_review_graph/production_decision_scoring_manifest.json",
+        "system_review_graph/production_ai_copilot_manifest.json"
+      ],
+      "claim_dependencies": [
+        {
+          "claim_type": "market_signal_source_routed",
+          "current_status": "blocked_or_reference_only",
+          "required_evidence_types": [
+            "market_signal"
+          ],
+          "required_reviewer_lane": "market_or_operator_review",
+          "safe_without_real_finding": false
+        },
+        {
+          "claim_type": "buyer_lead_route_identified",
+          "current_status": "blocked_or_reference_only",
+          "required_evidence_types": [
+            "official_source_reference",
+            "buyer_signal"
+          ],
+          "required_reviewer_lane": "buyer_validation_review",
+          "safe_without_real_finding": false
+        },
+        {
+          "claim_type": "buyer_validated",
+          "current_status": "blocked_or_reference_only",
+          "required_evidence_types": [
+            "buyer_reply",
+            "buyer_meeting",
+            "loi",
+            "purchase_order",
+            "paid_order"
+          ],
+          "required_reviewer_lane": "buyer_validation_review",
+          "safe_without_real_finding": false
+        }
+      ],
+      "claims_opened": false,
+      "external_effects_created": false,
+      "next_valid_move": "Send this scoped packet to a real qualified reviewer, attach credential evidence and dated findings, then rerun claim gates.",
+      "out_of_scope_claims": [
+        "customs_ready",
+        "tariff_confirmed",
+        "cfia_approved",
+        "buyer_validated",
+        "supplier_verified",
+        "shipment_approved",
+        "legal_or_privacy_approved",
+        "security_approved",
+        "payment_live_ready",
+        "public_launch_ready"
+      ],
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "questions": [
+        "Is this packet understandable for your exact review scope?",
+        "Which evidence is missing before the product may show stronger wording?",
+        "Which wording must remain blocked or changed?",
+        "Does the market/buyer evidence language distinguish source-backed signal from demand proof?",
+        "What direct buyer evidence is needed next?"
+      ],
+      "required_credential_evidence": [
+        "Trade advisory, export development, buyer research, CRM, or market validation experience.",
+        "Dated dataset/source rows and buyer-evidence level reviewed.",
+        "Explicit distinction between lead discovery, reply evidence, LOI, PO, and paid-order evidence."
+      ],
+      "review_request_id": "production-review:packet-frozen-tuna-canada-001:market_trade_consultant_reviewer",
+      "review_scope": "Market signal, buyer lead route, outreach-readiness, and demand-language review.",
+      "reviewer_lane_id": "market_trade_consultant_reviewer",
+      "scoped_review_link_status": "token_required_not_sent",
+      "source_requirements": [
+        {
+          "available_in_registry": true,
+          "checked_on": "",
+          "claim_boundary": "Reference source only; does not prove market size, buyer demand, or revenue.",
+          "source_id": "ised-trade-data-online",
+          "source_name": "ISED Trade Data Online",
+          "url": "https://ised-isde.canada.ca/site/trade-data-online/en/overview"
+        },
+        {
+          "available_in_registry": true,
+          "checked_on": "",
+          "claim_boundary": "Reference source only; does not prove buyer validation, supplier fit, customs advice, or freshness of a specific product row.",
+          "source_id": "canada-cid",
+          "source_name": "Canadian Importers Database",
+          "url": "https://ised-isde.canada.ca/site/ised/en/research-and-business-intelligence/canadian-importers-database"
+        },
+        {
+          "available_in_registry": true,
+          "checked_on": "",
+          "claim_boundary": "Reference source only; company or market rows are research signals and lead routes, not buyer validation or demand proof.",
+          "source_id": "itc-trade-map",
+          "source_name": "International Trade Centre Trade Map",
+          "url": "https://www.trademap.org/"
+        },
+        {
+          "available_in_registry": true,
+          "checked_on": "",
+          "claim_boundary": "Reference source only; does not prove buyer demand, profitability, market entry approval, or compliance.",
+          "source_id": "world-bank-wits",
+          "source_name": "World Bank World Integrated Trade Solution",
+          "url": "https://wits.worldbank.org/"
+        }
+      ],
+      "status": "draft_ready_to_send_no_external_effect"
+    },
+    {
+      "artifacts_in_scope": [
+        "system_review_graph/production_packet_views/packet-frozen-tuna-canada-001/broker_review_packet.json",
+        "system_review_graph/production_evidence_claim_gate_manifest.json",
+        "system_review_graph/production_decision_scoring_manifest.json",
+        "system_review_graph/production_ai_copilot_manifest.json"
+      ],
+      "claim_dependencies": [
+        {
+          "claim_type": "supplier_evidence_collected",
+          "current_status": "blocked_or_reference_only",
+          "required_evidence_types": [
+            "supplier_registration",
+            "supplier_document",
+            "inspection_report",
+            "reviewer_finding"
+          ],
+          "required_reviewer_lane": "supplier_evidence_review",
+          "safe_without_real_finding": false
+        },
+        {
+          "claim_type": "supplier_verified",
+          "current_status": "blocked_or_reference_only",
+          "required_evidence_types": [
+            "supplier_registration",
+            "inspection_report",
+            "reviewer_finding"
+          ],
+          "required_reviewer_lane": "supplier_evidence_review",
+          "safe_without_real_finding": false
+        }
+      ],
+      "claims_opened": false,
+      "external_effects_created": false,
+      "next_valid_move": "Send this scoped packet to a real qualified reviewer, attach credential evidence and dated findings, then rerun claim gates.",
+      "out_of_scope_claims": [
+        "customs_ready",
+        "tariff_confirmed",
+        "cfia_approved",
+        "buyer_validated",
+        "supplier_verified",
+        "shipment_approved",
+        "legal_or_privacy_approved",
+        "security_approved",
+        "payment_live_ready",
+        "public_launch_ready"
+      ],
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "questions": [
+        "Is this packet understandable for your exact review scope?",
+        "Which evidence is missing before the product may show stronger wording?",
+        "Which wording must remain blocked or changed?",
+        "Are supplier registration, export ability, product documents, certificates, inspections, and prior shipment evidence separated correctly?",
+        "Which supplier-verification wording must stay blocked?"
+      ],
+      "required_credential_evidence": [
+        "Supplier due-diligence, sourcing, inspection, trade compliance, or product certification review experience.",
+        "Attached supplier registration/product/certificate/inspection evidence reviewed.",
+        "Clear statement that the product does not certify or verify the supplier."
+      ],
+      "review_request_id": "production-review:packet-frozen-tuna-canada-001:supplier_evidence_reviewer",
+      "review_scope": "Supplier evidence checklist, registrations, product documents, certificates, inspections, and supplier-language review.",
+      "reviewer_lane_id": "supplier_evidence_reviewer",
+      "scoped_review_link_status": "token_required_not_sent",
+      "source_requirements": [
+        {
+          "available_in_registry": true,
+          "checked_on": "",
+          "claim_boundary": "Reference source only; does not prove export permission, licensing status, incentive eligibility, or product-specific export compliance.",
+          "source_id": "india-dgft-foreign-trade-policy",
+          "source_name": "India Directorate General of Foreign Trade",
+          "url": "https://www.dgft.gov.in/"
+        }
+      ],
+      "status": "draft_ready_to_send_no_external_effect"
+    },
+    {
+      "artifacts_in_scope": [
+        "system_review_graph/production_packet_views/packet-frozen-tuna-canada-001/broker_review_packet.json",
+        "system_review_graph/production_evidence_claim_gate_manifest.json",
+        "system_review_graph/production_decision_scoring_manifest.json",
+        "system_review_graph/production_ai_copilot_manifest.json"
+      ],
+      "claim_dependencies": [
+        {
+          "claim_type": "legal_or_privacy_approved",
+          "current_status": "blocked_until_real_finding",
+          "required_evidence_types": [
+            "reviewer_finding"
+          ],
+          "required_reviewer_lane": "privacy_legal_reviewer",
+          "safe_without_real_finding": false
+        }
+      ],
+      "claims_opened": false,
+      "external_effects_created": false,
+      "next_valid_move": "Send this scoped packet to a real qualified reviewer, attach credential evidence and dated findings, then rerun claim gates.",
+      "out_of_scope_claims": [
+        "customs_ready",
+        "tariff_confirmed",
+        "cfia_approved",
+        "buyer_validated",
+        "supplier_verified",
+        "shipment_approved",
+        "legal_or_privacy_approved",
+        "security_approved",
+        "payment_live_ready",
+        "public_launch_ready"
+      ],
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "questions": [
+        "Is this packet understandable for your exact review scope?",
+        "Which evidence is missing before the product may show stronger wording?",
+        "Which wording must remain blocked or changed?",
+        "Are consent, purpose, retention, deletion, safeguards, and AI-use language adequate for the reviewed scope?",
+        "Which legal or privacy claims must not be made?"
+      ],
+      "required_credential_evidence": [
+        "Privacy, legal, compliance, or data-protection review qualification.",
+        "Product-specific data-flow, retention, deletion, vendor, and AI-use scope reviewed.",
+        "Signed limitation that the finding is not blanket legal approval."
+      ],
+      "review_request_id": "production-review:packet-frozen-tuna-canada-001:privacy_legal_reviewer",
+      "review_scope": "Privacy notice, consent, retention, deletion, data processing, legal-language, and customer-claim boundary review.",
+      "reviewer_lane_id": "privacy_legal_reviewer",
+      "scoped_review_link_status": "token_required_not_sent",
+      "source_requirements": [
+        {
+          "available_in_registry": true,
+          "checked_on": "",
+          "claim_boundary": "Reference source only; does not prove privacy compliance, legal approval, or production data-processing readiness.",
+          "source_id": "opc-pipeda-principles",
+          "source_name": "Office of the Privacy Commissioner of Canada PIPEDA principles",
+          "url": "https://www.priv.gc.ca/en/privacy-topics/privacy-laws-in-canada/the-personal-information-protection-and-electronic-documents-act-pipeda/"
+        }
+      ],
+      "status": "draft_ready_to_send_no_external_effect"
+    },
+    {
+      "artifacts_in_scope": [
+        "system_review_graph/production_packet_views/packet-frozen-tuna-canada-001/broker_review_packet.json",
+        "system_review_graph/production_evidence_claim_gate_manifest.json",
+        "system_review_graph/production_decision_scoring_manifest.json",
+        "system_review_graph/production_ai_copilot_manifest.json"
+      ],
+      "claim_dependencies": [
+        {
+          "claim_type": "security_approved",
+          "current_status": "blocked_until_real_finding",
+          "required_evidence_types": [
+            "reviewer_finding"
+          ],
+          "required_reviewer_lane": "security_upload_reviewer",
+          "safe_without_real_finding": false
+        }
+      ],
+      "claims_opened": false,
+      "external_effects_created": false,
+      "next_valid_move": "Send this scoped packet to a real qualified reviewer, attach credential evidence and dated findings, then rerun claim gates.",
+      "out_of_scope_claims": [
+        "customs_ready",
+        "tariff_confirmed",
+        "cfia_approved",
+        "buyer_validated",
+        "supplier_verified",
+        "shipment_approved",
+        "legal_or_privacy_approved",
+        "security_approved",
+        "payment_live_ready",
+        "public_launch_ready"
+      ],
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "questions": [
+        "Is this packet understandable for your exact review scope?",
+        "Which evidence is missing before the product may show stronger wording?",
+        "Which wording must remain blocked or changed?",
+        "Are upload controls, scanning, quarantine, storage isolation, authorization, audit, and deletion proof sufficient for the reviewed environment?",
+        "What production security proof is missing?"
+      ],
+      "required_credential_evidence": [
+        "Application security, cloud security, secure upload, or threat-model review experience.",
+        "Evidence of tested file controls, scanning, storage isolation, authorization, CSRF/rate limits, and logging.",
+        "Hosted environment and restore/monitoring proof for production scope."
+      ],
+      "review_request_id": "production-review:packet-frozen-tuna-canada-001:security_upload_reviewer",
+      "review_scope": "File upload pipeline, malware scanning, quarantine, storage isolation, auth, audit, and deletion review.",
+      "reviewer_lane_id": "security_upload_reviewer",
+      "scoped_review_link_status": "token_required_not_sent",
+      "source_requirements": [
+        {
+          "available_in_registry": true,
+          "checked_on": "",
+          "claim_boundary": "Reference source only; hosted upload readiness requires product-specific security controls, scans, storage isolation, and review evidence.",
+          "source_id": "owasp-file-upload",
+          "source_name": "OWASP File Upload Cheat Sheet",
+          "url": "https://cheatsheetseries.owasp.org/cheatsheets/File_Upload_Cheat_Sheet.html"
+        }
+      ],
+      "status": "draft_ready_to_send_no_external_effect"
+    },
+    {
+      "artifacts_in_scope": [
+        "system_review_graph/production_packet_views/packet-frozen-tuna-canada-001/broker_review_packet.json",
+        "system_review_graph/production_evidence_claim_gate_manifest.json",
+        "system_review_graph/production_decision_scoring_manifest.json",
+        "system_review_graph/production_ai_copilot_manifest.json"
+      ],
+      "claim_dependencies": [
+        {
+          "claim_type": "ai_output_allowed",
+          "current_status": "blocked_until_real_finding",
+          "required_evidence_types": [
+            "reviewer_finding"
+          ],
+          "required_reviewer_lane": "ai_safety_reviewer",
+          "safe_without_real_finding": false
+        }
+      ],
+      "claims_opened": false,
+      "external_effects_created": false,
+      "next_valid_move": "Send this scoped packet to a real qualified reviewer, attach credential evidence and dated findings, then rerun claim gates.",
+      "out_of_scope_claims": [
+        "customs_ready",
+        "tariff_confirmed",
+        "cfia_approved",
+        "buyer_validated",
+        "supplier_verified",
+        "shipment_approved",
+        "legal_or_privacy_approved",
+        "security_approved",
+        "payment_live_ready",
+        "public_launch_ready"
+      ],
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "questions": [
+        "Is this packet understandable for your exact review scope?",
+        "Which evidence is missing before the product may show stronger wording?",
+        "Which wording must remain blocked or changed?",
+        "Do prompt-injection, redaction, model-routing, and no-AI controls keep AI draft-only?",
+        "What provider terms or AI-risk evidence is missing?"
+      ],
+      "required_credential_evidence": [
+        "AI safety, model risk, prompt-injection, security, privacy, or product-governance review experience.",
+        "Prompt-injection test results, redaction tests, model-routing policy, and provider terms reviewed.",
+        "Explicit finding that AI remains draft-only and cannot open product gates."
+      ],
+      "review_request_id": "production-review:packet-frozen-tuna-canada-001:ai_safety_reviewer",
+      "review_scope": "Prompt injection, AI data policy, redaction, no-AI path, provider terms, and model-output label review.",
+      "reviewer_lane_id": "ai_safety_reviewer",
+      "scoped_review_link_status": "token_required_not_sent",
+      "source_requirements": [
+        {
+          "available_in_registry": true,
+          "checked_on": "",
+          "claim_boundary": "Reference source only; does not prove AI safety, document safety, or model-output reliability.",
+          "source_id": "owasp-llm01-prompt-injection",
+          "source_name": "OWASP GenAI prompt injection guidance",
+          "url": "https://genai.owasp.org/llmrisk/llm01-prompt-injection/"
+        },
+        {
+          "available_in_registry": true,
+          "checked_on": "",
+          "claim_boundary": "Reference source only; does not certify the product or authorize AI to open compliance, customs, payment, privacy, or launch gates.",
+          "source_id": "nist-ai-rmf",
+          "source_name": "NIST AI Risk Management Framework",
+          "url": "https://www.nist.gov/itl/ai-risk-management-framework"
+        }
+      ],
+      "status": "draft_ready_to_send_no_external_effect"
+    },
+    {
+      "artifacts_in_scope": [
+        "system_review_graph/production_packet_views/packet-frozen-tuna-canada-001/broker_review_packet.json",
+        "system_review_graph/production_evidence_claim_gate_manifest.json",
+        "system_review_graph/production_decision_scoring_manifest.json",
+        "system_review_graph/production_ai_copilot_manifest.json"
+      ],
+      "claim_dependencies": [
+        {
+          "claim_type": "report_language_scope",
+          "current_status": "blocked_until_real_finding",
+          "required_evidence_types": [
+            "reviewer_finding"
+          ],
+          "required_reviewer_lane": "report_language_reviewer",
+          "safe_without_real_finding": false
+        }
+      ],
+      "claims_opened": false,
+      "external_effects_created": false,
+      "next_valid_move": "Send this scoped packet to a real qualified reviewer, attach credential evidence and dated findings, then rerun claim gates.",
+      "out_of_scope_claims": [
+        "customs_ready",
+        "tariff_confirmed",
+        "cfia_approved",
+        "buyer_validated",
+        "supplier_verified",
+        "shipment_approved",
+        "legal_or_privacy_approved",
+        "security_approved",
+        "payment_live_ready",
+        "public_launch_ready"
+      ],
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "questions": [
+        "Is this packet understandable for your exact review scope?",
+        "Which evidence is missing before the product may show stronger wording?",
+        "Which wording must remain blocked or changed?",
+        "Does report wording preserve uncertainty, blocked claims, and source boundaries?",
+        "Which phrases should be approved for exact scope or removed?"
+      ],
+      "required_credential_evidence": [
+        "Trade, legal/compliance, customer communication, or regulated-product wording review experience.",
+        "Exact report artifacts, blocked wording, and allowed scope language reviewed.",
+        "Approved wording list and claims the product must not make."
+      ],
+      "review_request_id": "production-review:packet-frozen-tuna-canada-001:report_language_reviewer",
+      "review_scope": "Customer-facing report wording, uncertainty labels, blocked-claim section, and non-approval language review.",
+      "reviewer_lane_id": "report_language_reviewer",
+      "scoped_review_link_status": "token_required_not_sent",
+      "source_requirements": [
+        {
+          "available_in_registry": true,
+          "checked_on": "",
+          "claim_boundary": "Reference source only; does not prove a broker relationship, review, or signoff.",
+          "source_id": "cbsa-licensed-customs-brokers",
+          "source_name": "CBSA Licensed Customs Brokers",
+          "url": "https://www.cbsa-asfc.gc.ca/services/cb-cd/cb-cd-eng.html"
+        },
+        {
+          "available_in_registry": true,
+          "checked_on": "",
+          "claim_boundary": "Reference source only; does not prove privacy compliance, legal approval, or production data-processing readiness.",
+          "source_id": "opc-pipeda-principles",
+          "source_name": "Office of the Privacy Commissioner of Canada PIPEDA principles",
+          "url": "https://www.priv.gc.ca/en/privacy-topics/privacy-laws-in-canada/the-personal-information-protection-and-electronic-documents-act-pipeda/"
+        },
+        {
+          "available_in_registry": true,
+          "checked_on": "",
+          "claim_boundary": "Reference source only; does not prove AI safety, document safety, or model-output reliability.",
+          "source_id": "owasp-llm01-prompt-injection",
+          "source_name": "OWASP GenAI prompt injection guidance",
+          "url": "https://genai.owasp.org/llmrisk/llm01-prompt-injection/"
+        }
+      ],
+      "status": "draft_ready_to_send_no_external_effect"
+    },
+    {
+      "artifacts_in_scope": [
+        "system_review_graph/production_packet_views/packet-frozen-tuna-canada-001/broker_review_packet.json",
+        "system_review_graph/production_evidence_claim_gate_manifest.json",
+        "system_review_graph/production_decision_scoring_manifest.json",
+        "system_review_graph/production_ai_copilot_manifest.json"
+      ],
+      "claim_dependencies": [
+        {
+          "claim_type": "payment_live_ready",
+          "current_status": "blocked_until_real_finding",
+          "required_evidence_types": [
+            "reviewer_finding"
+          ],
+          "required_reviewer_lane": "payment_billing_reviewer",
+          "safe_without_real_finding": false
+        }
+      ],
+      "claims_opened": false,
+      "external_effects_created": false,
+      "next_valid_move": "Send this scoped packet to a real qualified reviewer, attach credential evidence and dated findings, then rerun claim gates.",
+      "out_of_scope_claims": [
+        "customs_ready",
+        "tariff_confirmed",
+        "cfia_approved",
+        "buyer_validated",
+        "supplier_verified",
+        "shipment_approved",
+        "legal_or_privacy_approved",
+        "security_approved",
+        "payment_live_ready",
+        "public_launch_ready"
+      ],
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "questions": [
+        "Is this packet understandable for your exact review scope?",
+        "Which evidence is missing before the product may show stronger wording?",
+        "Which wording must remain blocked or changed?",
+        "Does paid scope clearly sell preparation, not approval?",
+        "Which live checkout, webhook, refund, support, tax, and logging proof is missing?"
+      ],
+      "required_credential_evidence": [
+        "Payments, billing operations, finance, Stripe, tax/accounting, or SaaS monetization review experience.",
+        "Live-mode object, webhook, API key, duplicate/delayed/out-of-order event, logging, refund, and support evidence reviewed.",
+        "Clear confirmation that paid scope is preparation, not approval."
+      ],
+      "review_request_id": "production-review:packet-frozen-tuna-canada-001:payment_billing_reviewer",
+      "review_scope": "Paid scope, refund/support wording, checkout, webhook, tax/accounting handoff, and live-payment gate review.",
+      "reviewer_lane_id": "payment_billing_reviewer",
+      "scoped_review_link_status": "token_required_not_sent",
+      "source_requirements": [
+        {
+          "available_in_registry": true,
+          "checked_on": "",
+          "claim_boundary": "Reference source only; does not prove live payment readiness, tax review, refund/support readiness, webhook safety, or secure key handling.",
+          "source_id": "stripe-go-live",
+          "source_name": "Stripe go-live checklist",
+          "url": "https://docs.stripe.com/get-started/checklist/go-live"
+        }
+      ],
+      "status": "draft_ready_to_send_no_external_effect"
+    }
+  ],
+  "reviewer_lane_count": 10,
+  "reviewer_lanes": [
+    {
+      "claim_types": [
+        "hs_candidate_research_route",
+        "tariff_route_identified",
+        "tariff_confirmed",
+        "customs_ready"
+      ],
+      "label": "Customs / Trade Boundary Reviewer",
+      "required_credential_evidence": [
+        "Licensed customs broker status, customs brokerage employment, or documented customs/trade compliance qualification.",
+        "Jurisdiction and product scope statement.",
+        "Dated source list or ruling/official correspondence if stronger tariff wording is requested."
+      ],
+      "reviewer_lane_id": "customs_trade_reviewer",
+      "scope": "HS candidate, tariff route, importer responsibility, broker-boundary, and customs-language review.",
+      "source_ids": [
+        "cbsa-licensed-customs-brokers",
+        "cbsa-import-commercial-goods",
+        "cbsa-customs-tariff-2026",
+        "wco-harmonized-system"
+      ]
+    },
+    {
+      "claim_types": [
+        "cfia_relevance_route",
+        "regulated_product_review_needed",
+        "cfia_approved"
+      ],
+      "label": "Food / Regulated Goods Reviewer",
+      "required_credential_evidence": [
+        "Regulated-food, seafood, agri, plant, animal, CFIA, or import-control review experience.",
+        "Product-specific composition, intended-use, and country lane reviewed.",
+        "Dated AIRS/official-source result or reason it is not applicable."
+      ],
+      "reviewer_lane_id": "regulated_food_product_reviewer",
+      "scope": "Food, seafood, agri, plant, animal, CFIA/AIRS, permit, certificate, and admissibility-language review.",
+      "source_ids": [
+        "cfia-airs",
+        "cbsa-import-commercial-goods"
+      ]
+    },
+    {
+      "claim_types": [
+        "incoterms_responsibility_path",
+        "shipment_approved"
+      ],
+      "label": "Freight / Logistics Reviewer",
+      "required_credential_evidence": [
+        "Freight forwarding, logistics, customs operations, or shipment planning experience.",
+        "Mode, route, Incoterms, packing, and party-responsibility assumptions reviewed.",
+        "Clear out-of-scope note for legal/customs approval language."
+      ],
+      "reviewer_lane_id": "freight_logistics_reviewer",
+      "scope": "Shipment path, Incoterms responsibility split, importer of record, packing, temperature, insurance, and forwarder questions.",
+      "source_ids": [
+        "icc-incoterms-2020",
+        "cbsa-import-commercial-goods"
+      ]
+    },
+    {
+      "claim_types": [
+        "market_signal_source_routed",
+        "buyer_lead_route_identified",
+        "buyer_validated"
+      ],
+      "label": "Market / Buyer Evidence Reviewer",
+      "required_credential_evidence": [
+        "Trade advisory, export development, buyer research, CRM, or market validation experience.",
+        "Dated dataset/source rows and buyer-evidence level reviewed.",
+        "Explicit distinction between lead discovery, reply evidence, LOI, PO, and paid-order evidence."
+      ],
+      "reviewer_lane_id": "market_trade_consultant_reviewer",
+      "scope": "Market signal, buyer lead route, outreach-readiness, and demand-language review.",
+      "source_ids": [
+        "ised-trade-data-online",
+        "canada-cid",
+        "itc-trade-map",
+        "world-bank-wits"
+      ]
+    },
+    {
+      "claim_types": [
+        "supplier_evidence_collected",
+        "supplier_verified"
+      ],
+      "label": "Supplier Evidence Reviewer",
+      "required_credential_evidence": [
+        "Supplier due-diligence, sourcing, inspection, trade compliance, or product certification review experience.",
+        "Attached supplier registration/product/certificate/inspection evidence reviewed.",
+        "Clear statement that the product does not certify or verify the supplier."
+      ],
+      "reviewer_lane_id": "supplier_evidence_reviewer",
+      "scope": "Supplier evidence checklist, registrations, product documents, certificates, inspections, and supplier-language review.",
+      "source_ids": [
+        "india-dgft-foreign-trade-policy"
+      ]
+    },
+    {
+      "claim_types": [
+        "legal_or_privacy_approved"
+      ],
+      "label": "Privacy / Legal Reviewer",
+      "required_credential_evidence": [
+        "Privacy, legal, compliance, or data-protection review qualification.",
+        "Product-specific data-flow, retention, deletion, vendor, and AI-use scope reviewed.",
+        "Signed limitation that the finding is not blanket legal approval."
+      ],
+      "reviewer_lane_id": "privacy_legal_reviewer",
+      "scope": "Privacy notice, consent, retention, deletion, data processing, legal-language, and customer-claim boundary review.",
+      "source_ids": [
+        "opc-pipeda-principles"
+      ]
+    },
+    {
+      "claim_types": [
+        "security_approved"
+      ],
+      "label": "Security / Upload Reviewer",
+      "required_credential_evidence": [
+        "Application security, cloud security, secure upload, or threat-model review experience.",
+        "Evidence of tested file controls, scanning, storage isolation, authorization, CSRF/rate limits, and logging.",
+        "Hosted environment and restore/monitoring proof for production scope."
+      ],
+      "reviewer_lane_id": "security_upload_reviewer",
+      "scope": "File upload pipeline, malware scanning, quarantine, storage isolation, auth, audit, and deletion review.",
+      "source_ids": [
+        "owasp-file-upload"
+      ]
+    },
+    {
+      "claim_types": [
+        "ai_output_allowed"
+      ],
+      "label": "AI Safety Reviewer",
+      "required_credential_evidence": [
+        "AI safety, model risk, prompt-injection, security, privacy, or product-governance review experience.",
+        "Prompt-injection test results, redaction tests, model-routing policy, and provider terms reviewed.",
+        "Explicit finding that AI remains draft-only and cannot open product gates."
+      ],
+      "reviewer_lane_id": "ai_safety_reviewer",
+      "scope": "Prompt injection, AI data policy, redaction, no-AI path, provider terms, and model-output label review.",
+      "source_ids": [
+        "owasp-llm01-prompt-injection",
+        "nist-ai-rmf"
+      ]
+    },
+    {
+      "claim_types": [
+        "report_language_scope"
+      ],
+      "label": "Report Language Reviewer",
+      "required_credential_evidence": [
+        "Trade, legal/compliance, customer communication, or regulated-product wording review experience.",
+        "Exact report artifacts, blocked wording, and allowed scope language reviewed.",
+        "Approved wording list and claims the product must not make."
+      ],
+      "reviewer_lane_id": "report_language_reviewer",
+      "scope": "Customer-facing report wording, uncertainty labels, blocked-claim section, and non-approval language review.",
+      "source_ids": [
+        "cbsa-licensed-customs-brokers",
+        "opc-pipeda-principles",
+        "owasp-llm01-prompt-injection"
+      ]
+    },
+    {
+      "claim_types": [
+        "payment_live_ready"
+      ],
+      "label": "Payment / Billing Reviewer",
+      "required_credential_evidence": [
+        "Payments, billing operations, finance, Stripe, tax/accounting, or SaaS monetization review experience.",
+        "Live-mode object, webhook, API key, duplicate/delayed/out-of-order event, logging, refund, and support evidence reviewed.",
+        "Clear confirmation that paid scope is preparation, not approval."
+      ],
+      "reviewer_lane_id": "payment_billing_reviewer",
+      "scope": "Paid scope, refund/support wording, checkout, webhook, tax/accounting handoff, and live-payment gate review.",
+      "source_ids": [
+        "stripe-go-live"
+      ]
+    }
+  ],
+  "reviewer_profiles": [
+    {
+      "allowed_decisions": [
+        "approved_for_scope",
+        "needs_changes",
+        "blocked",
+        "not_my_scope"
+      ],
+      "can_approve_only_exact_scope": true,
+      "can_open_external_claim_gate": false,
+      "can_replace_customs_broker_legal_security_payment_approval": false,
+      "conflict_check_status": "missing",
+      "credential_status": "missing",
+      "identity_verification_status": "missing",
+      "label": "Customs / Trade Boundary Reviewer",
+      "local_gate_status": "blocked_until_real_credential_and_signed_finding",
+      "profile_status": "missing_real_reviewer",
+      "required_credential_evidence": [
+        "Licensed customs broker status, customs brokerage employment, or documented customs/trade compliance qualification.",
+        "Jurisdiction and product scope statement.",
+        "Dated source list or ruling/official correspondence if stronger tariff wording is requested."
+      ],
+      "reviewer_lane_id": "customs_trade_reviewer",
+      "reviewer_profile_id": "profile-required:customs_trade_reviewer",
+      "scope": "HS candidate, tariff route, importer responsibility, broker-boundary, and customs-language review.",
+      "severity_levels": [
+        "info",
+        "low",
+        "medium",
+        "high",
+        "critical"
+      ],
+      "source_requirements": [
+        {
+          "available_in_registry": true,
+          "checked_on": "",
+          "claim_boundary": "Reference source only; does not prove a broker relationship, review, or signoff.",
+          "source_id": "cbsa-licensed-customs-brokers",
+          "source_name": "CBSA Licensed Customs Brokers",
+          "url": "https://www.cbsa-asfc.gc.ca/services/cb-cd/cb-cd-eng.html"
+        },
+        {
+          "available_in_registry": true,
+          "checked_on": "",
+          "claim_boundary": "Reference source only; does not replace CBSA, broker, customs, or legal review.",
+          "source_id": "cbsa-import-commercial-goods",
+          "source_name": "CBSA Import Commercial Goods Into Canada",
+          "url": "https://www.cbsa-asfc.gc.ca/import/menu-eng.html"
+        },
+        {
+          "available_in_registry": true,
+          "checked_on": "",
+          "claim_boundary": "Reference source only; classification and tariff treatment require qualified review.",
+          "source_id": "cbsa-customs-tariff-2026",
+          "source_name": "CBSA Customs Tariff 2026",
+          "url": "https://www.cbsa-asfc.gc.ca/trade-commerce/tariff-tarif/2026/menu-eng.html"
+        },
+        {
+          "available_in_registry": true,
+          "checked_on": "",
+          "claim_boundary": "Reference source only; HS candidates are not tariff classification confirmation.",
+          "source_id": "wco-harmonized-system",
+          "source_name": "World Customs Organization Harmonized System",
+          "url": "https://www.wcoomd.org/en/topics/nomenclature/overview/what-is-the-harmonized-system.aspx"
+        }
+      ]
+    },
+    {
+      "allowed_decisions": [
+        "approved_for_scope",
+        "needs_changes",
+        "blocked",
+        "not_my_scope"
+      ],
+      "can_approve_only_exact_scope": true,
+      "can_open_external_claim_gate": false,
+      "can_replace_customs_broker_legal_security_payment_approval": false,
+      "conflict_check_status": "missing",
+      "credential_status": "missing",
+      "identity_verification_status": "missing",
+      "label": "Food / Regulated Goods Reviewer",
+      "local_gate_status": "blocked_until_real_credential_and_signed_finding",
+      "profile_status": "missing_real_reviewer",
+      "required_credential_evidence": [
+        "Regulated-food, seafood, agri, plant, animal, CFIA, or import-control review experience.",
+        "Product-specific composition, intended-use, and country lane reviewed.",
+        "Dated AIRS/official-source result or reason it is not applicable."
+      ],
+      "reviewer_lane_id": "regulated_food_product_reviewer",
+      "reviewer_profile_id": "profile-required:regulated_food_product_reviewer",
+      "scope": "Food, seafood, agri, plant, animal, CFIA/AIRS, permit, certificate, and admissibility-language review.",
+      "severity_levels": [
+        "info",
+        "low",
+        "medium",
+        "high",
+        "critical"
+      ],
+      "source_requirements": [
+        {
+          "available_in_registry": true,
+          "checked_on": "",
+          "claim_boundary": "Reference source only; product-specific food import compliance requires qualified review and source verification.",
+          "source_id": "cfia-airs",
+          "source_name": "CFIA Automated Import Reference System (AIRS)",
+          "url": "https://inspection.canada.ca/en/importing-food-plants-animals/airs"
+        },
+        {
+          "available_in_registry": true,
+          "checked_on": "",
+          "claim_boundary": "Reference source only; does not replace CBSA, broker, customs, or legal review.",
+          "source_id": "cbsa-import-commercial-goods",
+          "source_name": "CBSA Import Commercial Goods Into Canada",
+          "url": "https://www.cbsa-asfc.gc.ca/import/menu-eng.html"
+        }
+      ]
+    },
+    {
+      "allowed_decisions": [
+        "approved_for_scope",
+        "needs_changes",
+        "blocked",
+        "not_my_scope"
+      ],
+      "can_approve_only_exact_scope": true,
+      "can_open_external_claim_gate": false,
+      "can_replace_customs_broker_legal_security_payment_approval": false,
+      "conflict_check_status": "missing",
+      "credential_status": "missing",
+      "identity_verification_status": "missing",
+      "label": "Freight / Logistics Reviewer",
+      "local_gate_status": "blocked_until_real_credential_and_signed_finding",
+      "profile_status": "missing_real_reviewer",
+      "required_credential_evidence": [
+        "Freight forwarding, logistics, customs operations, or shipment planning experience.",
+        "Mode, route, Incoterms, packing, and party-responsibility assumptions reviewed.",
+        "Clear out-of-scope note for legal/customs approval language."
+      ],
+      "reviewer_lane_id": "freight_logistics_reviewer",
+      "reviewer_profile_id": "profile-required:freight_logistics_reviewer",
+      "scope": "Shipment path, Incoterms responsibility split, importer of record, packing, temperature, insurance, and forwarder questions.",
+      "severity_levels": [
+        "info",
+        "low",
+        "medium",
+        "high",
+        "critical"
+      ],
+      "source_requirements": [
+        {
+          "available_in_registry": true,
+          "checked_on": "",
+          "claim_boundary": "Reference source only; responsibility guidance requires user confirmation and qualified review where legal or contract interpretation is needed.",
+          "source_id": "icc-incoterms-2020",
+          "source_name": "ICC Incoterms 2020",
+          "url": "https://iccwbo.org/business-solutions/incoterms-rules/incoterms-2020/"
+        },
+        {
+          "available_in_registry": true,
+          "checked_on": "",
+          "claim_boundary": "Reference source only; does not replace CBSA, broker, customs, or legal review.",
+          "source_id": "cbsa-import-commercial-goods",
+          "source_name": "CBSA Import Commercial Goods Into Canada",
+          "url": "https://www.cbsa-asfc.gc.ca/import/menu-eng.html"
+        }
+      ]
+    },
+    {
+      "allowed_decisions": [
+        "approved_for_scope",
+        "needs_changes",
+        "blocked",
+        "not_my_scope"
+      ],
+      "can_approve_only_exact_scope": true,
+      "can_open_external_claim_gate": false,
+      "can_replace_customs_broker_legal_security_payment_approval": false,
+      "conflict_check_status": "missing",
+      "credential_status": "missing",
+      "identity_verification_status": "missing",
+      "label": "Market / Buyer Evidence Reviewer",
+      "local_gate_status": "blocked_until_real_credential_and_signed_finding",
+      "profile_status": "missing_real_reviewer",
+      "required_credential_evidence": [
+        "Trade advisory, export development, buyer research, CRM, or market validation experience.",
+        "Dated dataset/source rows and buyer-evidence level reviewed.",
+        "Explicit distinction between lead discovery, reply evidence, LOI, PO, and paid-order evidence."
+      ],
+      "reviewer_lane_id": "market_trade_consultant_reviewer",
+      "reviewer_profile_id": "profile-required:market_trade_consultant_reviewer",
+      "scope": "Market signal, buyer lead route, outreach-readiness, and demand-language review.",
+      "severity_levels": [
+        "info",
+        "low",
+        "medium",
+        "high",
+        "critical"
+      ],
+      "source_requirements": [
+        {
+          "available_in_registry": true,
+          "checked_on": "",
+          "claim_boundary": "Reference source only; does not prove market size, buyer demand, or revenue.",
+          "source_id": "ised-trade-data-online",
+          "source_name": "ISED Trade Data Online",
+          "url": "https://ised-isde.canada.ca/site/trade-data-online/en/overview"
+        },
+        {
+          "available_in_registry": true,
+          "checked_on": "",
+          "claim_boundary": "Reference source only; does not prove buyer validation, supplier fit, customs advice, or freshness of a specific product row.",
+          "source_id": "canada-cid",
+          "source_name": "Canadian Importers Database",
+          "url": "https://ised-isde.canada.ca/site/ised/en/research-and-business-intelligence/canadian-importers-database"
+        },
+        {
+          "available_in_registry": true,
+          "checked_on": "",
+          "claim_boundary": "Reference source only; company or market rows are research signals and lead routes, not buyer validation or demand proof.",
+          "source_id": "itc-trade-map",
+          "source_name": "International Trade Centre Trade Map",
+          "url": "https://www.trademap.org/"
+        },
+        {
+          "available_in_registry": true,
+          "checked_on": "",
+          "claim_boundary": "Reference source only; does not prove buyer demand, profitability, market entry approval, or compliance.",
+          "source_id": "world-bank-wits",
+          "source_name": "World Bank World Integrated Trade Solution",
+          "url": "https://wits.worldbank.org/"
+        }
+      ]
+    },
+    {
+      "allowed_decisions": [
+        "approved_for_scope",
+        "needs_changes",
+        "blocked",
+        "not_my_scope"
+      ],
+      "can_approve_only_exact_scope": true,
+      "can_open_external_claim_gate": false,
+      "can_replace_customs_broker_legal_security_payment_approval": false,
+      "conflict_check_status": "missing",
+      "credential_status": "missing",
+      "identity_verification_status": "missing",
+      "label": "Supplier Evidence Reviewer",
+      "local_gate_status": "blocked_until_real_credential_and_signed_finding",
+      "profile_status": "missing_real_reviewer",
+      "required_credential_evidence": [
+        "Supplier due-diligence, sourcing, inspection, trade compliance, or product certification review experience.",
+        "Attached supplier registration/product/certificate/inspection evidence reviewed.",
+        "Clear statement that the product does not certify or verify the supplier."
+      ],
+      "reviewer_lane_id": "supplier_evidence_reviewer",
+      "reviewer_profile_id": "profile-required:supplier_evidence_reviewer",
+      "scope": "Supplier evidence checklist, registrations, product documents, certificates, inspections, and supplier-language review.",
+      "severity_levels": [
+        "info",
+        "low",
+        "medium",
+        "high",
+        "critical"
+      ],
+      "source_requirements": [
+        {
+          "available_in_registry": true,
+          "checked_on": "",
+          "claim_boundary": "Reference source only; does not prove export permission, licensing status, incentive eligibility, or product-specific export compliance.",
+          "source_id": "india-dgft-foreign-trade-policy",
+          "source_name": "India Directorate General of Foreign Trade",
+          "url": "https://www.dgft.gov.in/"
+        }
+      ]
+    },
+    {
+      "allowed_decisions": [
+        "approved_for_scope",
+        "needs_changes",
+        "blocked",
+        "not_my_scope"
+      ],
+      "can_approve_only_exact_scope": true,
+      "can_open_external_claim_gate": false,
+      "can_replace_customs_broker_legal_security_payment_approval": false,
+      "conflict_check_status": "missing",
+      "credential_status": "missing",
+      "identity_verification_status": "missing",
+      "label": "Privacy / Legal Reviewer",
+      "local_gate_status": "blocked_until_real_credential_and_signed_finding",
+      "profile_status": "missing_real_reviewer",
+      "required_credential_evidence": [
+        "Privacy, legal, compliance, or data-protection review qualification.",
+        "Product-specific data-flow, retention, deletion, vendor, and AI-use scope reviewed.",
+        "Signed limitation that the finding is not blanket legal approval."
+      ],
+      "reviewer_lane_id": "privacy_legal_reviewer",
+      "reviewer_profile_id": "profile-required:privacy_legal_reviewer",
+      "scope": "Privacy notice, consent, retention, deletion, data processing, legal-language, and customer-claim boundary review.",
+      "severity_levels": [
+        "info",
+        "low",
+        "medium",
+        "high",
+        "critical"
+      ],
+      "source_requirements": [
+        {
+          "available_in_registry": true,
+          "checked_on": "",
+          "claim_boundary": "Reference source only; does not prove privacy compliance, legal approval, or production data-processing readiness.",
+          "source_id": "opc-pipeda-principles",
+          "source_name": "Office of the Privacy Commissioner of Canada PIPEDA principles",
+          "url": "https://www.priv.gc.ca/en/privacy-topics/privacy-laws-in-canada/the-personal-information-protection-and-electronic-documents-act-pipeda/"
+        }
+      ]
+    },
+    {
+      "allowed_decisions": [
+        "approved_for_scope",
+        "needs_changes",
+        "blocked",
+        "not_my_scope"
+      ],
+      "can_approve_only_exact_scope": true,
+      "can_open_external_claim_gate": false,
+      "can_replace_customs_broker_legal_security_payment_approval": false,
+      "conflict_check_status": "missing",
+      "credential_status": "missing",
+      "identity_verification_status": "missing",
+      "label": "Security / Upload Reviewer",
+      "local_gate_status": "blocked_until_real_credential_and_signed_finding",
+      "profile_status": "missing_real_reviewer",
+      "required_credential_evidence": [
+        "Application security, cloud security, secure upload, or threat-model review experience.",
+        "Evidence of tested file controls, scanning, storage isolation, authorization, CSRF/rate limits, and logging.",
+        "Hosted environment and restore/monitoring proof for production scope."
+      ],
+      "reviewer_lane_id": "security_upload_reviewer",
+      "reviewer_profile_id": "profile-required:security_upload_reviewer",
+      "scope": "File upload pipeline, malware scanning, quarantine, storage isolation, auth, audit, and deletion review.",
+      "severity_levels": [
+        "info",
+        "low",
+        "medium",
+        "high",
+        "critical"
+      ],
+      "source_requirements": [
+        {
+          "available_in_registry": true,
+          "checked_on": "",
+          "claim_boundary": "Reference source only; hosted upload readiness requires product-specific security controls, scans, storage isolation, and review evidence.",
+          "source_id": "owasp-file-upload",
+          "source_name": "OWASP File Upload Cheat Sheet",
+          "url": "https://cheatsheetseries.owasp.org/cheatsheets/File_Upload_Cheat_Sheet.html"
+        }
+      ]
+    },
+    {
+      "allowed_decisions": [
+        "approved_for_scope",
+        "needs_changes",
+        "blocked",
+        "not_my_scope"
+      ],
+      "can_approve_only_exact_scope": true,
+      "can_open_external_claim_gate": false,
+      "can_replace_customs_broker_legal_security_payment_approval": false,
+      "conflict_check_status": "missing",
+      "credential_status": "missing",
+      "identity_verification_status": "missing",
+      "label": "AI Safety Reviewer",
+      "local_gate_status": "blocked_until_real_credential_and_signed_finding",
+      "profile_status": "missing_real_reviewer",
+      "required_credential_evidence": [
+        "AI safety, model risk, prompt-injection, security, privacy, or product-governance review experience.",
+        "Prompt-injection test results, redaction tests, model-routing policy, and provider terms reviewed.",
+        "Explicit finding that AI remains draft-only and cannot open product gates."
+      ],
+      "reviewer_lane_id": "ai_safety_reviewer",
+      "reviewer_profile_id": "profile-required:ai_safety_reviewer",
+      "scope": "Prompt injection, AI data policy, redaction, no-AI path, provider terms, and model-output label review.",
+      "severity_levels": [
+        "info",
+        "low",
+        "medium",
+        "high",
+        "critical"
+      ],
+      "source_requirements": [
+        {
+          "available_in_registry": true,
+          "checked_on": "",
+          "claim_boundary": "Reference source only; does not prove AI safety, document safety, or model-output reliability.",
+          "source_id": "owasp-llm01-prompt-injection",
+          "source_name": "OWASP GenAI prompt injection guidance",
+          "url": "https://genai.owasp.org/llmrisk/llm01-prompt-injection/"
+        },
+        {
+          "available_in_registry": true,
+          "checked_on": "",
+          "claim_boundary": "Reference source only; does not certify the product or authorize AI to open compliance, customs, payment, privacy, or launch gates.",
+          "source_id": "nist-ai-rmf",
+          "source_name": "NIST AI Risk Management Framework",
+          "url": "https://www.nist.gov/itl/ai-risk-management-framework"
+        }
+      ]
+    },
+    {
+      "allowed_decisions": [
+        "approved_for_scope",
+        "needs_changes",
+        "blocked",
+        "not_my_scope"
+      ],
+      "can_approve_only_exact_scope": true,
+      "can_open_external_claim_gate": false,
+      "can_replace_customs_broker_legal_security_payment_approval": false,
+      "conflict_check_status": "missing",
+      "credential_status": "missing",
+      "identity_verification_status": "missing",
+      "label": "Report Language Reviewer",
+      "local_gate_status": "blocked_until_real_credential_and_signed_finding",
+      "profile_status": "missing_real_reviewer",
+      "required_credential_evidence": [
+        "Trade, legal/compliance, customer communication, or regulated-product wording review experience.",
+        "Exact report artifacts, blocked wording, and allowed scope language reviewed.",
+        "Approved wording list and claims the product must not make."
+      ],
+      "reviewer_lane_id": "report_language_reviewer",
+      "reviewer_profile_id": "profile-required:report_language_reviewer",
+      "scope": "Customer-facing report wording, uncertainty labels, blocked-claim section, and non-approval language review.",
+      "severity_levels": [
+        "info",
+        "low",
+        "medium",
+        "high",
+        "critical"
+      ],
+      "source_requirements": [
+        {
+          "available_in_registry": true,
+          "checked_on": "",
+          "claim_boundary": "Reference source only; does not prove a broker relationship, review, or signoff.",
+          "source_id": "cbsa-licensed-customs-brokers",
+          "source_name": "CBSA Licensed Customs Brokers",
+          "url": "https://www.cbsa-asfc.gc.ca/services/cb-cd/cb-cd-eng.html"
+        },
+        {
+          "available_in_registry": true,
+          "checked_on": "",
+          "claim_boundary": "Reference source only; does not prove privacy compliance, legal approval, or production data-processing readiness.",
+          "source_id": "opc-pipeda-principles",
+          "source_name": "Office of the Privacy Commissioner of Canada PIPEDA principles",
+          "url": "https://www.priv.gc.ca/en/privacy-topics/privacy-laws-in-canada/the-personal-information-protection-and-electronic-documents-act-pipeda/"
+        },
+        {
+          "available_in_registry": true,
+          "checked_on": "",
+          "claim_boundary": "Reference source only; does not prove AI safety, document safety, or model-output reliability.",
+          "source_id": "owasp-llm01-prompt-injection",
+          "source_name": "OWASP GenAI prompt injection guidance",
+          "url": "https://genai.owasp.org/llmrisk/llm01-prompt-injection/"
+        }
+      ]
+    },
+    {
+      "allowed_decisions": [
+        "approved_for_scope",
+        "needs_changes",
+        "blocked",
+        "not_my_scope"
+      ],
+      "can_approve_only_exact_scope": true,
+      "can_open_external_claim_gate": false,
+      "can_replace_customs_broker_legal_security_payment_approval": false,
+      "conflict_check_status": "missing",
+      "credential_status": "missing",
+      "identity_verification_status": "missing",
+      "label": "Payment / Billing Reviewer",
+      "local_gate_status": "blocked_until_real_credential_and_signed_finding",
+      "profile_status": "missing_real_reviewer",
+      "required_credential_evidence": [
+        "Payments, billing operations, finance, Stripe, tax/accounting, or SaaS monetization review experience.",
+        "Live-mode object, webhook, API key, duplicate/delayed/out-of-order event, logging, refund, and support evidence reviewed.",
+        "Clear confirmation that paid scope is preparation, not approval."
+      ],
+      "reviewer_lane_id": "payment_billing_reviewer",
+      "reviewer_profile_id": "profile-required:payment_billing_reviewer",
+      "scope": "Paid scope, refund/support wording, checkout, webhook, tax/accounting handoff, and live-payment gate review.",
+      "severity_levels": [
+        "info",
+        "low",
+        "medium",
+        "high",
+        "critical"
+      ],
+      "source_requirements": [
+        {
+          "available_in_registry": true,
+          "checked_on": "",
+          "claim_boundary": "Reference source only; does not prove live payment readiness, tax review, refund/support readiness, webhook safety, or secure key handling.",
+          "source_id": "stripe-go-live",
+          "source_name": "Stripe go-live checklist",
+          "url": "https://docs.stripe.com/get-started/checklist/go-live"
+        }
+      ]
+    }
+  ],
+  "scope_limited_approval_recorded": false,
+  "severity_levels": [
+    "info",
+    "low",
+    "medium",
+    "high",
+    "critical"
+  ],
+  "source_ids": [
+    "canada-cid",
+    "cbsa-customs-tariff-2026",
+    "cbsa-import-commercial-goods",
+    "cbsa-licensed-customs-brokers",
+    "cfia-airs",
+    "icc-incoterms-2020",
+    "india-dgft-foreign-trade-policy",
+    "ised-trade-data-online",
+    "itc-trade-map",
+    "nist-ai-rmf",
+    "opc-pipeda-principles",
+    "owasp-file-upload",
+    "owasp-llm01-prompt-injection",
+    "stripe-go-live",
+    "wco-harmonized-system",
+    "world-bank-wits"
+  ],
+  "source_registry_coverage_count": 16,
+  "status": "production_expert_review_network_ready_scope_limited_no_external_claims"
+}

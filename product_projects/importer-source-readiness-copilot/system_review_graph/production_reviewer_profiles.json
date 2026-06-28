@@ -1,0 +1,513 @@
+{
+  "profiles": [
+    {
+      "allowed_decisions": [
+        "approved_for_scope",
+        "needs_changes",
+        "blocked",
+        "not_my_scope"
+      ],
+      "can_approve_only_exact_scope": true,
+      "can_open_external_claim_gate": false,
+      "can_replace_customs_broker_legal_security_payment_approval": false,
+      "conflict_check_status": "missing",
+      "credential_status": "missing",
+      "identity_verification_status": "missing",
+      "label": "Customs / Trade Boundary Reviewer",
+      "local_gate_status": "blocked_until_real_credential_and_signed_finding",
+      "profile_status": "missing_real_reviewer",
+      "required_credential_evidence": [
+        "Licensed customs broker status, customs brokerage employment, or documented customs/trade compliance qualification.",
+        "Jurisdiction and product scope statement.",
+        "Dated source list or ruling/official correspondence if stronger tariff wording is requested."
+      ],
+      "reviewer_lane_id": "customs_trade_reviewer",
+      "reviewer_profile_id": "profile-required:customs_trade_reviewer",
+      "scope": "HS candidate, tariff route, importer responsibility, broker-boundary, and customs-language review.",
+      "severity_levels": [
+        "info",
+        "low",
+        "medium",
+        "high",
+        "critical"
+      ],
+      "source_requirements": [
+        {
+          "available_in_registry": true,
+          "checked_on": "",
+          "claim_boundary": "Reference source only; does not prove a broker relationship, review, or signoff.",
+          "source_id": "cbsa-licensed-customs-brokers",
+          "source_name": "CBSA Licensed Customs Brokers",
+          "url": "https://www.cbsa-asfc.gc.ca/services/cb-cd/cb-cd-eng.html"
+        },
+        {
+          "available_in_registry": true,
+          "checked_on": "",
+          "claim_boundary": "Reference source only; does not replace CBSA, broker, customs, or legal review.",
+          "source_id": "cbsa-import-commercial-goods",
+          "source_name": "CBSA Import Commercial Goods Into Canada",
+          "url": "https://www.cbsa-asfc.gc.ca/import/menu-eng.html"
+        },
+        {
+          "available_in_registry": true,
+          "checked_on": "",
+          "claim_boundary": "Reference source only; classification and tariff treatment require qualified review.",
+          "source_id": "cbsa-customs-tariff-2026",
+          "source_name": "CBSA Customs Tariff 2026",
+          "url": "https://www.cbsa-asfc.gc.ca/trade-commerce/tariff-tarif/2026/menu-eng.html"
+        },
+        {
+          "available_in_registry": true,
+          "checked_on": "",
+          "claim_boundary": "Reference source only; HS candidates are not tariff classification confirmation.",
+          "source_id": "wco-harmonized-system",
+          "source_name": "World Customs Organization Harmonized System",
+          "url": "https://www.wcoomd.org/en/topics/nomenclature/overview/what-is-the-harmonized-system.aspx"
+        }
+      ]
+    },
+    {
+      "allowed_decisions": [
+        "approved_for_scope",
+        "needs_changes",
+        "blocked",
+        "not_my_scope"
+      ],
+      "can_approve_only_exact_scope": true,
+      "can_open_external_claim_gate": false,
+      "can_replace_customs_broker_legal_security_payment_approval": false,
+      "conflict_check_status": "missing",
+      "credential_status": "missing",
+      "identity_verification_status": "missing",
+      "label": "Food / Regulated Goods Reviewer",
+      "local_gate_status": "blocked_until_real_credential_and_signed_finding",
+      "profile_status": "missing_real_reviewer",
+      "required_credential_evidence": [
+        "Regulated-food, seafood, agri, plant, animal, CFIA, or import-control review experience.",
+        "Product-specific composition, intended-use, and country lane reviewed.",
+        "Dated AIRS/official-source result or reason it is not applicable."
+      ],
+      "reviewer_lane_id": "regulated_food_product_reviewer",
+      "reviewer_profile_id": "profile-required:regulated_food_product_reviewer",
+      "scope": "Food, seafood, agri, plant, animal, CFIA/AIRS, permit, certificate, and admissibility-language review.",
+      "severity_levels": [
+        "info",
+        "low",
+        "medium",
+        "high",
+        "critical"
+      ],
+      "source_requirements": [
+        {
+          "available_in_registry": true,
+          "checked_on": "",
+          "claim_boundary": "Reference source only; product-specific food import compliance requires qualified review and source verification.",
+          "source_id": "cfia-airs",
+          "source_name": "CFIA Automated Import Reference System (AIRS)",
+          "url": "https://inspection.canada.ca/en/importing-food-plants-animals/airs"
+        },
+        {
+          "available_in_registry": true,
+          "checked_on": "",
+          "claim_boundary": "Reference source only; does not replace CBSA, broker, customs, or legal review.",
+          "source_id": "cbsa-import-commercial-goods",
+          "source_name": "CBSA Import Commercial Goods Into Canada",
+          "url": "https://www.cbsa-asfc.gc.ca/import/menu-eng.html"
+        }
+      ]
+    },
+    {
+      "allowed_decisions": [
+        "approved_for_scope",
+        "needs_changes",
+        "blocked",
+        "not_my_scope"
+      ],
+      "can_approve_only_exact_scope": true,
+      "can_open_external_claim_gate": false,
+      "can_replace_customs_broker_legal_security_payment_approval": false,
+      "conflict_check_status": "missing",
+      "credential_status": "missing",
+      "identity_verification_status": "missing",
+      "label": "Freight / Logistics Reviewer",
+      "local_gate_status": "blocked_until_real_credential_and_signed_finding",
+      "profile_status": "missing_real_reviewer",
+      "required_credential_evidence": [
+        "Freight forwarding, logistics, customs operations, or shipment planning experience.",
+        "Mode, route, Incoterms, packing, and party-responsibility assumptions reviewed.",
+        "Clear out-of-scope note for legal/customs approval language."
+      ],
+      "reviewer_lane_id": "freight_logistics_reviewer",
+      "reviewer_profile_id": "profile-required:freight_logistics_reviewer",
+      "scope": "Shipment path, Incoterms responsibility split, importer of record, packing, temperature, insurance, and forwarder questions.",
+      "severity_levels": [
+        "info",
+        "low",
+        "medium",
+        "high",
+        "critical"
+      ],
+      "source_requirements": [
+        {
+          "available_in_registry": true,
+          "checked_on": "",
+          "claim_boundary": "Reference source only; responsibility guidance requires user confirmation and qualified review where legal or contract interpretation is needed.",
+          "source_id": "icc-incoterms-2020",
+          "source_name": "ICC Incoterms 2020",
+          "url": "https://iccwbo.org/business-solutions/incoterms-rules/incoterms-2020/"
+        },
+        {
+          "available_in_registry": true,
+          "checked_on": "",
+          "claim_boundary": "Reference source only; does not replace CBSA, broker, customs, or legal review.",
+          "source_id": "cbsa-import-commercial-goods",
+          "source_name": "CBSA Import Commercial Goods Into Canada",
+          "url": "https://www.cbsa-asfc.gc.ca/import/menu-eng.html"
+        }
+      ]
+    },
+    {
+      "allowed_decisions": [
+        "approved_for_scope",
+        "needs_changes",
+        "blocked",
+        "not_my_scope"
+      ],
+      "can_approve_only_exact_scope": true,
+      "can_open_external_claim_gate": false,
+      "can_replace_customs_broker_legal_security_payment_approval": false,
+      "conflict_check_status": "missing",
+      "credential_status": "missing",
+      "identity_verification_status": "missing",
+      "label": "Market / Buyer Evidence Reviewer",
+      "local_gate_status": "blocked_until_real_credential_and_signed_finding",
+      "profile_status": "missing_real_reviewer",
+      "required_credential_evidence": [
+        "Trade advisory, export development, buyer research, CRM, or market validation experience.",
+        "Dated dataset/source rows and buyer-evidence level reviewed.",
+        "Explicit distinction between lead discovery, reply evidence, LOI, PO, and paid-order evidence."
+      ],
+      "reviewer_lane_id": "market_trade_consultant_reviewer",
+      "reviewer_profile_id": "profile-required:market_trade_consultant_reviewer",
+      "scope": "Market signal, buyer lead route, outreach-readiness, and demand-language review.",
+      "severity_levels": [
+        "info",
+        "low",
+        "medium",
+        "high",
+        "critical"
+      ],
+      "source_requirements": [
+        {
+          "available_in_registry": true,
+          "checked_on": "",
+          "claim_boundary": "Reference source only; does not prove market size, buyer demand, or revenue.",
+          "source_id": "ised-trade-data-online",
+          "source_name": "ISED Trade Data Online",
+          "url": "https://ised-isde.canada.ca/site/trade-data-online/en/overview"
+        },
+        {
+          "available_in_registry": true,
+          "checked_on": "",
+          "claim_boundary": "Reference source only; does not prove buyer validation, supplier fit, customs advice, or freshness of a specific product row.",
+          "source_id": "canada-cid",
+          "source_name": "Canadian Importers Database",
+          "url": "https://ised-isde.canada.ca/site/ised/en/research-and-business-intelligence/canadian-importers-database"
+        },
+        {
+          "available_in_registry": true,
+          "checked_on": "",
+          "claim_boundary": "Reference source only; company or market rows are research signals and lead routes, not buyer validation or demand proof.",
+          "source_id": "itc-trade-map",
+          "source_name": "International Trade Centre Trade Map",
+          "url": "https://www.trademap.org/"
+        },
+        {
+          "available_in_registry": true,
+          "checked_on": "",
+          "claim_boundary": "Reference source only; does not prove buyer demand, profitability, market entry approval, or compliance.",
+          "source_id": "world-bank-wits",
+          "source_name": "World Bank World Integrated Trade Solution",
+          "url": "https://wits.worldbank.org/"
+        }
+      ]
+    },
+    {
+      "allowed_decisions": [
+        "approved_for_scope",
+        "needs_changes",
+        "blocked",
+        "not_my_scope"
+      ],
+      "can_approve_only_exact_scope": true,
+      "can_open_external_claim_gate": false,
+      "can_replace_customs_broker_legal_security_payment_approval": false,
+      "conflict_check_status": "missing",
+      "credential_status": "missing",
+      "identity_verification_status": "missing",
+      "label": "Supplier Evidence Reviewer",
+      "local_gate_status": "blocked_until_real_credential_and_signed_finding",
+      "profile_status": "missing_real_reviewer",
+      "required_credential_evidence": [
+        "Supplier due-diligence, sourcing, inspection, trade compliance, or product certification review experience.",
+        "Attached supplier registration/product/certificate/inspection evidence reviewed.",
+        "Clear statement that the product does not certify or verify the supplier."
+      ],
+      "reviewer_lane_id": "supplier_evidence_reviewer",
+      "reviewer_profile_id": "profile-required:supplier_evidence_reviewer",
+      "scope": "Supplier evidence checklist, registrations, product documents, certificates, inspections, and supplier-language review.",
+      "severity_levels": [
+        "info",
+        "low",
+        "medium",
+        "high",
+        "critical"
+      ],
+      "source_requirements": [
+        {
+          "available_in_registry": true,
+          "checked_on": "",
+          "claim_boundary": "Reference source only; does not prove export permission, licensing status, incentive eligibility, or product-specific export compliance.",
+          "source_id": "india-dgft-foreign-trade-policy",
+          "source_name": "India Directorate General of Foreign Trade",
+          "url": "https://www.dgft.gov.in/"
+        }
+      ]
+    },
+    {
+      "allowed_decisions": [
+        "approved_for_scope",
+        "needs_changes",
+        "blocked",
+        "not_my_scope"
+      ],
+      "can_approve_only_exact_scope": true,
+      "can_open_external_claim_gate": false,
+      "can_replace_customs_broker_legal_security_payment_approval": false,
+      "conflict_check_status": "missing",
+      "credential_status": "missing",
+      "identity_verification_status": "missing",
+      "label": "Privacy / Legal Reviewer",
+      "local_gate_status": "blocked_until_real_credential_and_signed_finding",
+      "profile_status": "missing_real_reviewer",
+      "required_credential_evidence": [
+        "Privacy, legal, compliance, or data-protection review qualification.",
+        "Product-specific data-flow, retention, deletion, vendor, and AI-use scope reviewed.",
+        "Signed limitation that the finding is not blanket legal approval."
+      ],
+      "reviewer_lane_id": "privacy_legal_reviewer",
+      "reviewer_profile_id": "profile-required:privacy_legal_reviewer",
+      "scope": "Privacy notice, consent, retention, deletion, data processing, legal-language, and customer-claim boundary review.",
+      "severity_levels": [
+        "info",
+        "low",
+        "medium",
+        "high",
+        "critical"
+      ],
+      "source_requirements": [
+        {
+          "available_in_registry": true,
+          "checked_on": "",
+          "claim_boundary": "Reference source only; does not prove privacy compliance, legal approval, or production data-processing readiness.",
+          "source_id": "opc-pipeda-principles",
+          "source_name": "Office of the Privacy Commissioner of Canada PIPEDA principles",
+          "url": "https://www.priv.gc.ca/en/privacy-topics/privacy-laws-in-canada/the-personal-information-protection-and-electronic-documents-act-pipeda/"
+        }
+      ]
+    },
+    {
+      "allowed_decisions": [
+        "approved_for_scope",
+        "needs_changes",
+        "blocked",
+        "not_my_scope"
+      ],
+      "can_approve_only_exact_scope": true,
+      "can_open_external_claim_gate": false,
+      "can_replace_customs_broker_legal_security_payment_approval": false,
+      "conflict_check_status": "missing",
+      "credential_status": "missing",
+      "identity_verification_status": "missing",
+      "label": "Security / Upload Reviewer",
+      "local_gate_status": "blocked_until_real_credential_and_signed_finding",
+      "profile_status": "missing_real_reviewer",
+      "required_credential_evidence": [
+        "Application security, cloud security, secure upload, or threat-model review experience.",
+        "Evidence of tested file controls, scanning, storage isolation, authorization, CSRF/rate limits, and logging.",
+        "Hosted environment and restore/monitoring proof for production scope."
+      ],
+      "reviewer_lane_id": "security_upload_reviewer",
+      "reviewer_profile_id": "profile-required:security_upload_reviewer",
+      "scope": "File upload pipeline, malware scanning, quarantine, storage isolation, auth, audit, and deletion review.",
+      "severity_levels": [
+        "info",
+        "low",
+        "medium",
+        "high",
+        "critical"
+      ],
+      "source_requirements": [
+        {
+          "available_in_registry": true,
+          "checked_on": "",
+          "claim_boundary": "Reference source only; hosted upload readiness requires product-specific security controls, scans, storage isolation, and review evidence.",
+          "source_id": "owasp-file-upload",
+          "source_name": "OWASP File Upload Cheat Sheet",
+          "url": "https://cheatsheetseries.owasp.org/cheatsheets/File_Upload_Cheat_Sheet.html"
+        }
+      ]
+    },
+    {
+      "allowed_decisions": [
+        "approved_for_scope",
+        "needs_changes",
+        "blocked",
+        "not_my_scope"
+      ],
+      "can_approve_only_exact_scope": true,
+      "can_open_external_claim_gate": false,
+      "can_replace_customs_broker_legal_security_payment_approval": false,
+      "conflict_check_status": "missing",
+      "credential_status": "missing",
+      "identity_verification_status": "missing",
+      "label": "AI Safety Reviewer",
+      "local_gate_status": "blocked_until_real_credential_and_signed_finding",
+      "profile_status": "missing_real_reviewer",
+      "required_credential_evidence": [
+        "AI safety, model risk, prompt-injection, security, privacy, or product-governance review experience.",
+        "Prompt-injection test results, redaction tests, model-routing policy, and provider terms reviewed.",
+        "Explicit finding that AI remains draft-only and cannot open product gates."
+      ],
+      "reviewer_lane_id": "ai_safety_reviewer",
+      "reviewer_profile_id": "profile-required:ai_safety_reviewer",
+      "scope": "Prompt injection, AI data policy, redaction, no-AI path, provider terms, and model-output label review.",
+      "severity_levels": [
+        "info",
+        "low",
+        "medium",
+        "high",
+        "critical"
+      ],
+      "source_requirements": [
+        {
+          "available_in_registry": true,
+          "checked_on": "",
+          "claim_boundary": "Reference source only; does not prove AI safety, document safety, or model-output reliability.",
+          "source_id": "owasp-llm01-prompt-injection",
+          "source_name": "OWASP GenAI prompt injection guidance",
+          "url": "https://genai.owasp.org/llmrisk/llm01-prompt-injection/"
+        },
+        {
+          "available_in_registry": true,
+          "checked_on": "",
+          "claim_boundary": "Reference source only; does not certify the product or authorize AI to open compliance, customs, payment, privacy, or launch gates.",
+          "source_id": "nist-ai-rmf",
+          "source_name": "NIST AI Risk Management Framework",
+          "url": "https://www.nist.gov/itl/ai-risk-management-framework"
+        }
+      ]
+    },
+    {
+      "allowed_decisions": [
+        "approved_for_scope",
+        "needs_changes",
+        "blocked",
+        "not_my_scope"
+      ],
+      "can_approve_only_exact_scope": true,
+      "can_open_external_claim_gate": false,
+      "can_replace_customs_broker_legal_security_payment_approval": false,
+      "conflict_check_status": "missing",
+      "credential_status": "missing",
+      "identity_verification_status": "missing",
+      "label": "Report Language Reviewer",
+      "local_gate_status": "blocked_until_real_credential_and_signed_finding",
+      "profile_status": "missing_real_reviewer",
+      "required_credential_evidence": [
+        "Trade, legal/compliance, customer communication, or regulated-product wording review experience.",
+        "Exact report artifacts, blocked wording, and allowed scope language reviewed.",
+        "Approved wording list and claims the product must not make."
+      ],
+      "reviewer_lane_id": "report_language_reviewer",
+      "reviewer_profile_id": "profile-required:report_language_reviewer",
+      "scope": "Customer-facing report wording, uncertainty labels, blocked-claim section, and non-approval language review.",
+      "severity_levels": [
+        "info",
+        "low",
+        "medium",
+        "high",
+        "critical"
+      ],
+      "source_requirements": [
+        {
+          "available_in_registry": true,
+          "checked_on": "",
+          "claim_boundary": "Reference source only; does not prove a broker relationship, review, or signoff.",
+          "source_id": "cbsa-licensed-customs-brokers",
+          "source_name": "CBSA Licensed Customs Brokers",
+          "url": "https://www.cbsa-asfc.gc.ca/services/cb-cd/cb-cd-eng.html"
+        },
+        {
+          "available_in_registry": true,
+          "checked_on": "",
+          "claim_boundary": "Reference source only; does not prove privacy compliance, legal approval, or production data-processing readiness.",
+          "source_id": "opc-pipeda-principles",
+          "source_name": "Office of the Privacy Commissioner of Canada PIPEDA principles",
+          "url": "https://www.priv.gc.ca/en/privacy-topics/privacy-laws-in-canada/the-personal-information-protection-and-electronic-documents-act-pipeda/"
+        },
+        {
+          "available_in_registry": true,
+          "checked_on": "",
+          "claim_boundary": "Reference source only; does not prove AI safety, document safety, or model-output reliability.",
+          "source_id": "owasp-llm01-prompt-injection",
+          "source_name": "OWASP GenAI prompt injection guidance",
+          "url": "https://genai.owasp.org/llmrisk/llm01-prompt-injection/"
+        }
+      ]
+    },
+    {
+      "allowed_decisions": [
+        "approved_for_scope",
+        "needs_changes",
+        "blocked",
+        "not_my_scope"
+      ],
+      "can_approve_only_exact_scope": true,
+      "can_open_external_claim_gate": false,
+      "can_replace_customs_broker_legal_security_payment_approval": false,
+      "conflict_check_status": "missing",
+      "credential_status": "missing",
+      "identity_verification_status": "missing",
+      "label": "Payment / Billing Reviewer",
+      "local_gate_status": "blocked_until_real_credential_and_signed_finding",
+      "profile_status": "missing_real_reviewer",
+      "required_credential_evidence": [
+        "Payments, billing operations, finance, Stripe, tax/accounting, or SaaS monetization review experience.",
+        "Live-mode object, webhook, API key, duplicate/delayed/out-of-order event, logging, refund, and support evidence reviewed.",
+        "Clear confirmation that paid scope is preparation, not approval."
+      ],
+      "reviewer_lane_id": "payment_billing_reviewer",
+      "reviewer_profile_id": "profile-required:payment_billing_reviewer",
+      "scope": "Paid scope, refund/support wording, checkout, webhook, tax/accounting handoff, and live-payment gate review.",
+      "severity_levels": [
+        "info",
+        "low",
+        "medium",
+        "high",
+        "critical"
+      ],
+      "source_requirements": [
+        {
+          "available_in_registry": true,
+          "checked_on": "",
+          "claim_boundary": "Reference source only; does not prove live payment readiness, tax review, refund/support readiness, webhook safety, or secure key handling.",
+          "source_id": "stripe-go-live",
+          "source_name": "Stripe go-live checklist",
+          "url": "https://docs.stripe.com/get-started/checklist/go-live"
+        }
+      ]
+    }
+  ],
+  "status": "production_reviewer_profiles_credentials_required"
+}

@@ -33,6 +33,10 @@ from .production_evidence_claim_gate_engine import (
     can_show_claim,
     write_production_evidence_claim_gate_engine_artifacts,
 )
+from .production_expert_review_network import (
+    build_production_expert_review_network,
+    write_production_expert_review_network_artifacts,
+)
 from .production_market_intelligence_engine import (
     build_production_market_intelligence_engine,
     write_production_market_intelligence_engine_artifacts,
@@ -55,6 +59,7 @@ __all__ = [
     "build_production_decision_scoring_engine",
     "build_production_document_intelligence_engine",
     "build_production_evidence_claim_gate_engine",
+    "build_production_expert_review_network",
     "build_production_market_intelligence_engine",
     "build_production_packet_engine",
     "build_production_redevelopment_plan",
@@ -79,6 +84,7 @@ __all__ = [
     "write_production_decision_scoring_engine_artifacts",
     "write_production_document_intelligence_engine_artifacts",
     "write_production_evidence_claim_gate_engine_artifacts",
+    "write_production_expert_review_network_artifacts",
     "write_production_market_intelligence_engine_artifacts",
     "write_production_packet_engine_artifacts",
     "write_production_redevelopment_artifacts",

@@ -45,6 +45,15 @@ The document engine is ready for local review and parser QA. It is not yet appro
 - Provider terms review and qualified AI safety review remain incomplete.
 - AI output contracts cannot open product gates.
 
+## Expert Review Controls
+
+- Expert review status: `production_expert_review_network_ready_scope_limited_no_external_claims`.
+- Reviewer lanes: `10`.
+- Credential profiles required: `10`.
+- Pending findings: `10`.
+- All reviewer profiles require real credentials, identity, conflict, scope, source, and evidence attachments before a finding can be used.
+- Draft review requests do not contact reviewers, do not record approval, and do not open claims.
+
 ## Claim Safety
 
 - Evidence claim-gate status: `production_evidence_claim_gate_engine_ready_claims_fail_closed`.

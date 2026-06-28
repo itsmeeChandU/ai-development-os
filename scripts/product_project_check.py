@@ -91,6 +91,7 @@ def main() -> int:
         PROJECT / "src" / "importer_source_readiness" / "production_decision_scoring_engine.py",
         PROJECT / "src" / "importer_source_readiness" / "production_document_intelligence_engine.py",
         PROJECT / "src" / "importer_source_readiness" / "production_evidence_claim_gate_engine.py",
+        PROJECT / "src" / "importer_source_readiness" / "production_expert_review_network.py",
         PROJECT / "src" / "importer_source_readiness" / "production_market_intelligence_engine.py",
         PROJECT / "src" / "importer_source_readiness" / "production_packet_engine.py",
         PROJECT / "src" / "importer_source_readiness" / "production_redevelopment.py",
@@ -117,6 +118,7 @@ def main() -> int:
         PROJECT / "tests" / "test_production_decision_scoring_engine.py",
         PROJECT / "tests" / "test_production_document_intelligence_engine.py",
         PROJECT / "tests" / "test_production_evidence_claim_gate_engine.py",
+        PROJECT / "tests" / "test_production_expert_review_network.py",
         PROJECT / "tests" / "test_production_market_intelligence_engine.py",
         PROJECT / "tests" / "test_production_packet_engine.py",
         PROJECT / "tests" / "test_production_redevelopment.py",
@@ -142,6 +144,7 @@ def main() -> int:
         PROJECT / "scripts" / "run_production_decision_scoring_engine.py",
         PROJECT / "scripts" / "run_production_document_intelligence_engine.py",
         PROJECT / "scripts" / "run_production_evidence_claim_gate_engine.py",
+        PROJECT / "scripts" / "run_production_expert_review_network.py",
         PROJECT / "scripts" / "run_production_market_intelligence_engine.py",
         PROJECT / "scripts" / "run_production_packet_engine.py",
         PROJECT / "scripts" / "run_production_redevelopment.py",
@@ -170,6 +173,7 @@ def main() -> int:
         PROJECT / "docs" / "PRODUCTION_DECISION_SCORING_ENGINE.md",
         PROJECT / "docs" / "PRODUCTION_DOCUMENT_INTELLIGENCE_ENGINE.md",
         PROJECT / "docs" / "PRODUCTION_EVIDENCE_CLAIM_GATE_ENGINE.md",
+        PROJECT / "docs" / "PRODUCTION_EXPERT_REVIEW_NETWORK.md",
         PROJECT / "docs" / "PRODUCTION_MARKET_INTELLIGENCE_ENGINE.md",
         PROJECT / "docs" / "PRODUCTION_PACKET_ENGINE.md",
         PROJECT / "docs" / "PRODUCTION_REDEVELOPMENT.md",
@@ -256,6 +260,10 @@ def main() -> int:
         PROJECT / "system_review_graph" / "production_document_pipeline.json",
         PROJECT / "system_review_graph" / "production_document_extracted_fields.json",
         PROJECT / "system_review_graph" / "production_evidence_claim_gate_manifest.json",
+        PROJECT / "system_review_graph" / "production_expert_review_network_manifest.json",
+        PROJECT / "system_review_graph" / "production_reviewer_profiles.json",
+        PROJECT / "system_review_graph" / "production_review_requests.json",
+        PROJECT / "system_review_graph" / "production_review_finding_contracts.json",
         PROJECT / "system_review_graph" / "production_claim_gate_decisions.json",
         PROJECT / "system_review_graph" / "production_evidence_claim_mappers.json",
         PROJECT / "data" / "official_sample_documents" / "canada" / "cbsa-ci1-canada-customs-invoice.pdf",
@@ -396,6 +404,7 @@ def main() -> int:
         ["python3", "scripts/run_production_evidence_claim_gate_engine.py"],
         ["python3", "scripts/run_production_decision_scoring_engine.py"],
         ["python3", "scripts/run_production_ai_copilot_engine.py"],
+        ["python3", "scripts/run_production_expert_review_network.py"],
         ["python3", "scripts/build_external_review_packet.py"],
         ["python3", "scripts/export_operator_dashboard.py"],
         ["python3", "scripts/audit_external_package.py", "--root", "."],
@@ -621,6 +630,11 @@ def main() -> int:
     )
     production_ai_copilot = json.loads(
         (PROJECT / "system_review_graph" / "production_ai_copilot_manifest.json").read_text(encoding="utf-8")
+    )
+    production_expert_review = json.loads(
+        (PROJECT / "system_review_graph" / "production_expert_review_network_manifest.json").read_text(
+            encoding="utf-8"
+        )
     )
     official_source_registry = json.loads(
         (PROJECT / "data" / "official_source_registry.json").read_text(encoding="utf-8")
@@ -1874,6 +1888,83 @@ def main() -> int:
             print("Product project check: FAIL")
             print(f"prompt injection check {result.get('test_id')} should fail closed")
             return 1
+    if (
+        production_expert_review.get("status") != "production_expert_review_network_ready_scope_limited_no_external_claims"
+        or production_expert_review.get("reviewer_lane_count") != 10
+        or production_expert_review.get("profile_requirement_count") != 10
+        or production_expert_review.get("finding_template_count") != 10
+        or production_expert_review.get("review_request_count", 0) < 10
+        or production_expert_review.get("gate_impact_count", 0) < 10
+        or production_expert_review.get("source_registry_coverage_count", 0) < 9
+        or production_expert_review.get("real_reviewer_signoff_recorded") is not False
+        or production_expert_review.get("qualified_credentials_verified") is not False
+        or production_expert_review.get("scope_limited_approval_recorded") is not False
+        or production_expert_review.get("can_open_customs_tariff_cfia_buyer_supplier_security_privacy_payment_launch_gate") is not False
+        or production_expert_review.get("external_effects_created") is not False
+        or production_expert_review.get("claims_opened") is not False
+    ):
+        print("Product project check: FAIL")
+        print("production expert review network should create scoped review lanes while keeping real signoff and gates closed")
+        return 1
+    expected_reviewer_lanes = {
+        "customs_trade_reviewer",
+        "regulated_food_product_reviewer",
+        "freight_logistics_reviewer",
+        "market_trade_consultant_reviewer",
+        "supplier_evidence_reviewer",
+        "privacy_legal_reviewer",
+        "security_upload_reviewer",
+        "ai_safety_reviewer",
+        "report_language_reviewer",
+        "payment_billing_reviewer",
+    }
+    reviewer_lanes = {row.get("reviewer_lane_id") for row in production_expert_review.get("reviewer_profiles", [])}
+    if reviewer_lanes != expected_reviewer_lanes:
+        print("Product project check: FAIL")
+        print("production expert review profile lanes are incomplete")
+        return 1
+    for profile in production_expert_review.get("reviewer_profiles", []):
+        if (
+            profile.get("profile_status") != "missing_real_reviewer"
+            or profile.get("credential_status") != "missing"
+            or not profile.get("required_credential_evidence")
+            or not profile.get("source_requirements")
+            or profile.get("can_open_external_claim_gate") is not False
+        ):
+            print("Product project check: FAIL")
+            print(f"reviewer profile {profile.get('reviewer_lane_id')} should require credentials and keep gates closed")
+            return 1
+    for request in production_expert_review.get("review_requests", []):
+        if (
+            request.get("status") != "draft_ready_to_send_no_external_effect"
+            or request.get("scoped_review_link_status") != "token_required_not_sent"
+            or request.get("external_effects_created") is not False
+            or request.get("claims_opened") is not False
+            or "tariff_confirmed" not in request.get("out_of_scope_claims", [])
+        ):
+            print("Product project check: FAIL")
+            print(f"review request {request.get('review_request_id')} should be draft-only and scoped")
+            return 1
+    for template in production_expert_review.get("finding_templates", []):
+        if template.get("can_open_external_claim_gate") is not False or not template.get("evidence_attachments_required"):
+            print("Product project check: FAIL")
+            print(f"finding template {template.get('finding_template_id')} should require evidence and keep gates closed")
+            return 1
+    for finding in production_expert_review.get("pending_findings", []):
+        if (
+            finding.get("status") != "awaiting_real_reviewer_finding"
+            or finding.get("decision") != "not_submitted"
+            or finding.get("claims_opened") is not False
+            or finding.get("external_effects_created") is not False
+        ):
+            print("Product project check: FAIL")
+            print(f"pending finding {finding.get('finding_id')} should not record a reviewer decision")
+            return 1
+    for impact in production_expert_review.get("gate_impacts", []):
+        if impact.get("can_show_after_local_request_only") is not False or impact.get("can_open_external_claim_gate") is not False:
+            print("Product project check: FAIL")
+            print(f"gate impact {impact.get('gate_impact_id')} should not open claims")
+            return 1
     external_validation_pdf = PROJECT / "output" / "pdf" / "external_validation_requirements.pdf"
     if not external_validation_pdf.exists() or not external_validation_pdf.read_bytes().startswith(b"%PDF"):
         print("Product project check: FAIL")
@@ -2161,6 +2252,9 @@ def main() -> int:
     print(f"production_ai_copilot_status={production_ai_copilot['status']}")
     print(f"production_ai_roles={production_ai_copilot['ai_role_count']}")
     print(f"production_ai_live_model_calls={production_ai_copilot['live_model_calls_enabled']}")
+    print(f"production_expert_review_status={production_expert_review['status']}")
+    print(f"production_expert_reviewer_lanes={production_expert_review['reviewer_lane_count']}")
+    print(f"production_expert_real_signoff_recorded={production_expert_review['real_reviewer_signoff_recorded']}")
     print(f"external_validation_pdf={external_validation_pdf.relative_to(PROJECT)}")
     print(f"external_validation_reviewer_brief_pdf={external_validation_reviewer_brief_pdf.relative_to(PROJECT)}")
     print(f"go_live_input_status={go_live_input_readiness['status']}")
