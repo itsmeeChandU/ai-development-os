@@ -40,6 +40,17 @@ Document logic is now part of the packet decision system. The product accepts no
 - Official samples and synthetic QA files do not count as customer proof.
 - Every extracted field has provenance, confidence, user-confirmation status, claim boundary, supported claims, and blocked claims.
 
+## Claim Gate Logic Implemented Now
+
+The product now checks packet statements through a claim gate before showing them. This prevents a source route, user input, parser draft, or missing-document placeholder from being presented as real approval.
+
+- Claim decisions generated: `17`.
+- Safe preparation/source-routing statements: `7`.
+- Blocked statements: `10`.
+- HS candidate, tariff route, CFIA route, market signal, and buyer lead-route statements can be shown only as preparation language.
+- Origin evidence, supplier evidence, Incoterms responsibility, and document extraction stay blocked when the required proof is missing.
+- Tariff confirmed, CFIA approved, buyer validated, supplier verified, customs ready, and shipment approved remain forbidden external claims.
+
 ## Current Sample Packet Result
 
 - Packet reviewed: `packet-frozen-tuna-canada-001`.

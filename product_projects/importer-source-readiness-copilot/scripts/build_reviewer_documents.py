@@ -178,6 +178,7 @@ def _status_context() -> dict[str, Any]:
     final_go_live = _load_json(GRAPH / "final_go_live_decision_report.json")
     external_validation = _load_json(GRAPH / "external_validation_requirements_report.json")
     production_document = _load_json(GRAPH / "production_document_intelligence_manifest.json")
+    production_claim_gate = _load_json(GRAPH / "production_evidence_claim_gate_manifest.json")
     row = business["packet_rows"][0]
     return {
         "today": date.today().isoformat(),
@@ -186,6 +187,7 @@ def _status_context() -> dict[str, Any]:
         "final_go_live": final_go_live,
         "external_validation": external_validation,
         "production_document": production_document,
+        "production_claim_gate": production_claim_gate,
         "packet": row,
     }
 
@@ -194,6 +196,7 @@ def _functional(ctx: dict[str, Any]) -> ReviewerDocument:
     packet = ctx["packet"]
     ops = ctx["product_ops"]
     document = ctx["production_document"]
+    claim_gate = ctx["production_claim_gate"]
     return ReviewerDocument(
         title="Functional Requirements For External Review",
         filename="functional_requirements_for_review.md",
@@ -257,6 +260,17 @@ def _functional(ctx: dict[str, Any]) -> ReviewerDocument:
                 ),
             ),
             Section(
+                "Claim Gate Implemented",
+                bullets=(
+                    f"Claim-gate status: `{claim_gate['status']}`.",
+                    f"Packet statements evaluated: `{claim_gate.get('claim_gate_decision_count')}`.",
+                    f"Safe preparation statements currently showable: `{claim_gate.get('safe_research_claim_count')}`.",
+                    f"Blocked packet statements: `{claim_gate.get('blocked_claim_count')}`.",
+                    "The product can show source-routing and preparation language with an evidence trail.",
+                    "It still blocks tariff confirmed, CFIA approved, buyer validated, supplier verified, customs ready, and shipment approved.",
+                ),
+            ),
+            Section(
                 "Enterprise And Advisor Use Cases",
                 bullets=(
                     "Broker or trade advisor can manage multiple client packets and export missing-evidence or broker-review packets.",
@@ -306,6 +320,7 @@ def _business_logic(ctx: dict[str, Any]) -> ReviewerDocument:
     business = ctx["business"]
     packet = ctx["packet"]
     document = ctx["production_document"]
+    claim_gate = ctx["production_claim_gate"]
     buyer_supplier = packet["buyer_supplier_evidence"]
     gate = packet["business_gate_decision"]
     market = packet["market_intelligence"]["market_signal_evaluation"]
@@ -364,6 +379,20 @@ def _business_logic(ctx: dict[str, Any]) -> ReviewerDocument:
                 ),
             ),
             Section(
+                "Claim Gate Logic Implemented Now",
+                body=(
+                    "The product now checks packet statements through a claim gate before showing them. This prevents a source route, user input, parser draft, or missing-document placeholder from being presented as real approval.",
+                ),
+                bullets=(
+                    f"Claim decisions generated: `{claim_gate.get('claim_gate_decision_count')}`.",
+                    f"Safe preparation/source-routing statements: `{claim_gate.get('safe_research_claim_count')}`.",
+                    f"Blocked statements: `{claim_gate.get('blocked_claim_count')}`.",
+                    "HS candidate, tariff route, CFIA route, market signal, and buyer lead-route statements can be shown only as preparation language.",
+                    "Origin evidence, supplier evidence, Incoterms responsibility, and document extraction stay blocked when the required proof is missing.",
+                    "Tariff confirmed, CFIA approved, buyer validated, supplier verified, customs ready, and shipment approved remain forbidden external claims.",
+                ),
+            ),
+            Section(
                 "Current Sample Packet Result",
                 bullets=(
                     f"Packet reviewed: `{packet['packet_id']}`.",
@@ -415,6 +444,7 @@ def _business_logic(ctx: dict[str, Any]) -> ReviewerDocument:
 
 def _non_functional(ctx: dict[str, Any]) -> ReviewerDocument:
     document = ctx["production_document"]
+    claim_gate = ctx["production_claim_gate"]
     return ReviewerDocument(
         title="Non-Functional Requirements For External Review",
         filename="non_functional_requirements_for_review.md",
@@ -465,6 +495,16 @@ def _non_functional(ctx: dict[str, Any]) -> ReviewerDocument:
                     "AI can summarize, structure, and create findings only when permitted.",
                     "AI cannot approve customs, tariff, CFIA, legal, buyer, supplier, payment, launch, or shipment claims.",
                     "Required before real documents: prompt-injection review, provider routing decision, redaction tests on real examples, incident process, and customer-facing AI-language review.",
+                ),
+            ),
+            Section(
+                "Claim Safety",
+                bullets=(
+                    f"Evidence claim-gate status: `{claim_gate['status']}`.",
+                    f"Evidence mapper rows: `{claim_gate.get('evidence_mapper_count')}`.",
+                    f"Claim mapper rows: `{claim_gate.get('claim_gate_mapper_count')}`.",
+                    "Missing, stale, reference-only, parser-draft, or unreviewed evidence cannot open external claims.",
+                    "AI, source routes, uploaded documents, and generated reports cannot approve customs, tariff, CFIA, buyer, supplier, payment, shipment, legal, or launch claims.",
                 ),
             ),
             Section(

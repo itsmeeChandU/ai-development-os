@@ -88,6 +88,7 @@ def main() -> int:
         PROJECT / "src" / "importer_source_readiness" / "production_country_source_engine.py",
         PROJECT / "src" / "importer_source_readiness" / "production_data_model.py",
         PROJECT / "src" / "importer_source_readiness" / "production_document_intelligence_engine.py",
+        PROJECT / "src" / "importer_source_readiness" / "production_evidence_claim_gate_engine.py",
         PROJECT / "src" / "importer_source_readiness" / "production_market_intelligence_engine.py",
         PROJECT / "src" / "importer_source_readiness" / "production_packet_engine.py",
         PROJECT / "src" / "importer_source_readiness" / "production_redevelopment.py",
@@ -111,6 +112,7 @@ def main() -> int:
         PROJECT / "tests" / "test_production_country_source_engine.py",
         PROJECT / "tests" / "test_production_data_model.py",
         PROJECT / "tests" / "test_production_document_intelligence_engine.py",
+        PROJECT / "tests" / "test_production_evidence_claim_gate_engine.py",
         PROJECT / "tests" / "test_production_market_intelligence_engine.py",
         PROJECT / "tests" / "test_production_packet_engine.py",
         PROJECT / "tests" / "test_production_redevelopment.py",
@@ -133,6 +135,7 @@ def main() -> int:
         PROJECT / "scripts" / "run_production_country_source_engine.py",
         PROJECT / "scripts" / "run_production_data_model.py",
         PROJECT / "scripts" / "run_production_document_intelligence_engine.py",
+        PROJECT / "scripts" / "run_production_evidence_claim_gate_engine.py",
         PROJECT / "scripts" / "run_production_market_intelligence_engine.py",
         PROJECT / "scripts" / "run_production_packet_engine.py",
         PROJECT / "scripts" / "run_production_redevelopment.py",
@@ -158,6 +161,7 @@ def main() -> int:
         PROJECT / "docs" / "PRODUCTION_COUNTRY_SOURCE_ENGINE.md",
         PROJECT / "docs" / "PRODUCTION_DATA_MODEL.md",
         PROJECT / "docs" / "PRODUCTION_DOCUMENT_INTELLIGENCE_ENGINE.md",
+        PROJECT / "docs" / "PRODUCTION_EVIDENCE_CLAIM_GATE_ENGINE.md",
         PROJECT / "docs" / "PRODUCTION_MARKET_INTELLIGENCE_ENGINE.md",
         PROJECT / "docs" / "PRODUCTION_PACKET_ENGINE.md",
         PROJECT / "docs" / "PRODUCTION_REDEVELOPMENT.md",
@@ -237,6 +241,9 @@ def main() -> int:
         PROJECT / "system_review_graph" / "production_document_intelligence_manifest.json",
         PROJECT / "system_review_graph" / "production_document_pipeline.json",
         PROJECT / "system_review_graph" / "production_document_extracted_fields.json",
+        PROJECT / "system_review_graph" / "production_evidence_claim_gate_manifest.json",
+        PROJECT / "system_review_graph" / "production_claim_gate_decisions.json",
+        PROJECT / "system_review_graph" / "production_evidence_claim_mappers.json",
         PROJECT / "data" / "official_sample_documents" / "canada" / "cbsa-ci1-canada-customs-invoice.pdf",
         PROJECT / "data" / "official_sample_documents" / "canada" / "cbsa-a8a-b-cargo-control-document.pdf",
         PROJECT / "data" / "official_sample_documents" / "canada" / "cfia-5272-documentation-review-request.pdf",
@@ -372,6 +379,7 @@ def main() -> int:
         ["python3", "scripts/run_production_country_source_engine.py"],
         ["python3", "scripts/run_production_market_intelligence_engine.py"],
         ["python3", "scripts/run_production_document_intelligence_engine.py"],
+        ["python3", "scripts/run_production_evidence_claim_gate_engine.py"],
         ["python3", "scripts/build_external_review_packet.py"],
         ["python3", "scripts/export_operator_dashboard.py"],
         ["python3", "scripts/audit_external_package.py", "--root", "."],
@@ -588,6 +596,9 @@ def main() -> int:
     )
     production_document_intelligence = json.loads(
         (PROJECT / "system_review_graph" / "production_document_intelligence_manifest.json").read_text(encoding="utf-8")
+    )
+    production_evidence_claim_gate = json.loads(
+        (PROJECT / "system_review_graph" / "production_evidence_claim_gate_manifest.json").read_text(encoding="utf-8")
     )
     official_source_registry = json.loads(
         (PROJECT / "data" / "official_source_registry.json").read_text(encoding="utf-8")
@@ -1658,6 +1669,64 @@ def main() -> int:
                 print("Product project check: FAIL")
                 print(f"production document extracted field missing {key}")
                 return 1
+    if (
+        production_evidence_claim_gate.get("status") != "production_evidence_claim_gate_engine_ready_claims_fail_closed"
+        or production_evidence_claim_gate.get("claim_type_count", 0) < 17
+        or production_evidence_claim_gate.get("claim_gate_decision_count", 0) < production_evidence_claim_gate.get("claim_type_count", 0)
+        or production_evidence_claim_gate.get("safe_research_claim_count", 0) < 1
+        or production_evidence_claim_gate.get("forbidden_external_claim_count", 0) < 6
+        or production_evidence_claim_gate.get("evidence_mapper_count", 0) < 1
+        or production_evidence_claim_gate.get("claim_gate_mapper_count") != production_evidence_claim_gate.get("claim_type_count")
+        or production_evidence_claim_gate.get("external_effects_created") is not False
+        or production_evidence_claim_gate.get("claims_opened") is not False
+        or production_evidence_claim_gate.get("public_launch_ready") is not False
+        or production_evidence_claim_gate.get("live_payment_ready") is not False
+    ):
+        print("Product project check: FAIL")
+        print("production evidence claim-gate should make can_show_claim decisions while keeping external gates closed")
+        return 1
+    claim_decisions = {
+        row.get("claim_type"): row for row in production_evidence_claim_gate.get("claim_gate_decisions", [])
+    }
+    safe_decision = claim_decisions.get("hs_candidate_research_route", {})
+    if safe_decision.get("can_show_claim") is not True:
+        print("Product project check: FAIL")
+        print("HS candidate research route should be showable as preparation only")
+        return 1
+    if "source:wco-harmonized-system" not in {row.get("evidence_id") for row in safe_decision.get("evidence_trail", [])}:
+        print("Product project check: FAIL")
+        print("HS candidate research route should cite WCO source evidence")
+        return 1
+    if claim_decisions.get("document_field_extraction_draft", {}).get("can_show_claim") is not False:
+        print("Product project check: FAIL")
+        print("document field extraction claim must stay blocked until real customer extraction exists")
+        return 1
+    if "missing customer document field extraction" not in claim_decisions.get("document_field_extraction_draft", {}).get("missing_evidence", []):
+        print("Product project check: FAIL")
+        print("document field extraction should explain the missing customer extraction")
+        return 1
+    for claim_type in ("tariff_confirmed", "cfia_approved", "buyer_validated", "supplier_verified", "customs_ready", "shipment_approved"):
+        decision = claim_decisions.get(claim_type, {})
+        if decision.get("can_show_claim") is not False or decision.get("allowed_wording"):
+            print("Product project check: FAIL")
+            print(f"production evidence claim-gate must keep {claim_type} blocked")
+            return 1
+    tariff_source_mapper = next(
+        (
+            row
+            for row in production_evidence_claim_gate.get("evidence_mappers", [])
+            if row.get("evidence_id") == "source:cbsa-customs-tariff-2026"
+        ),
+        {},
+    )
+    if "hs_candidate_research_route" not in tariff_source_mapper.get("supports_claims", []):
+        print("Product project check: FAIL")
+        print("tariff source evidence should support source-routed HS preparation")
+        return 1
+    if "tariff_confirmed" not in tariff_source_mapper.get("blocks_claims", []):
+        print("Product project check: FAIL")
+        print("tariff source evidence should block tariff-confirmed wording without qualified review")
+        return 1
     external_validation_pdf = PROJECT / "output" / "pdf" / "external_validation_requirements.pdf"
     if not external_validation_pdf.exists() or not external_validation_pdf.read_bytes().startswith(b"%PDF"):
         print("Product project check: FAIL")
@@ -1936,6 +2005,9 @@ def main() -> int:
     print(f"production_market_intelligence_status={production_market_intelligence['status']}")
     print(f"production_market_signals={production_market_intelligence['market_signal_count']}")
     print(f"production_market_dataset_connectors={production_market_intelligence['dataset_connector_count']}")
+    print(f"production_evidence_claim_gate_status={production_evidence_claim_gate['status']}")
+    print(f"production_evidence_claim_gate_decisions={production_evidence_claim_gate['claim_gate_decision_count']}")
+    print(f"production_evidence_claim_gate_safe_claims={production_evidence_claim_gate['safe_research_claim_count']}")
     print(f"external_validation_pdf={external_validation_pdf.relative_to(PROJECT)}")
     print(f"external_validation_reviewer_brief_pdf={external_validation_reviewer_brief_pdf.relative_to(PROJECT)}")
     print(f"go_live_input_status={go_live_input_readiness['status']}")

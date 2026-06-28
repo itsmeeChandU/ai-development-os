@@ -135,6 +135,7 @@ def main() -> int:
         [sys.executable, "scripts/run_production_country_source_engine.py"],
         [sys.executable, "scripts/run_production_market_intelligence_engine.py"],
         [sys.executable, "scripts/run_production_document_intelligence_engine.py"],
+        [sys.executable, "scripts/run_production_evidence_claim_gate_engine.py"],
         [sys.executable, "scripts/audit_external_package.py", "--root", "."],
     ]
     for command in commands:
@@ -202,6 +203,7 @@ def main() -> int:
     production_country_source_engine = _load_json(ROOT / "system_review_graph" / "production_country_source_engine_manifest.json")
     production_market_intelligence = _load_json(ROOT / "system_review_graph" / "production_market_intelligence_manifest.json")
     production_document_intelligence = _load_json(ROOT / "system_review_graph" / "production_document_intelligence_manifest.json")
+    production_evidence_claim_gate = _load_json(ROOT / "system_review_graph" / "production_evidence_claim_gate_manifest.json")
     official_source_registry = _load_json(ROOT / "data" / "official_source_registry.json")
     business_core_doc = (ROOT / "docs" / "BUSINESS_CORE_LOGIC_CURRENT_STATE.md").read_text(encoding="utf-8")
     functional_doc = (ROOT / "docs" / "FUNCTIONAL_REQUIREMENTS_CURRENT_STATE.md").read_text(encoding="utf-8")
@@ -269,6 +271,7 @@ def main() -> int:
         "src/importer_source_readiness/production_country_source_engine.py",
         "src/importer_source_readiness/production_data_model.py",
         "src/importer_source_readiness/production_document_intelligence_engine.py",
+        "src/importer_source_readiness/production_evidence_claim_gate_engine.py",
         "src/importer_source_readiness/production_market_intelligence_engine.py",
         "src/importer_source_readiness/production_packet_engine.py",
         "src/importer_source_readiness/production_redevelopment.py",
@@ -283,6 +286,7 @@ def main() -> int:
         "tests/test_production_country_source_engine.py",
         "tests/test_production_data_model.py",
         "tests/test_production_document_intelligence_engine.py",
+        "tests/test_production_evidence_claim_gate_engine.py",
         "tests/test_production_market_intelligence_engine.py",
         "tests/test_production_packet_engine.py",
         "tests/test_production_redevelopment.py",
@@ -297,6 +301,7 @@ def main() -> int:
         "scripts/run_production_country_source_engine.py",
         "scripts/run_production_data_model.py",
         "scripts/run_production_document_intelligence_engine.py",
+        "scripts/run_production_evidence_claim_gate_engine.py",
         "scripts/run_production_market_intelligence_engine.py",
         "scripts/run_production_packet_engine.py",
         "scripts/run_production_redevelopment.py",
@@ -322,6 +327,7 @@ def main() -> int:
         "docs/PRODUCTION_COUNTRY_SOURCE_ENGINE.md",
         "docs/PRODUCTION_DATA_MODEL.md",
         "docs/PRODUCTION_DOCUMENT_INTELLIGENCE_ENGINE.md",
+        "docs/PRODUCTION_EVIDENCE_CLAIM_GATE_ENGINE.md",
         "docs/PRODUCTION_MARKET_INTELLIGENCE_ENGINE.md",
         "docs/PRODUCTION_PACKET_ENGINE.md",
         "docs/PRODUCTION_REDEVELOPMENT.md",
@@ -393,6 +399,9 @@ def main() -> int:
         "system_review_graph/production_document_intelligence_manifest.json",
         "system_review_graph/production_document_pipeline.json",
         "system_review_graph/production_document_extracted_fields.json",
+        "system_review_graph/production_evidence_claim_gate_manifest.json",
+        "system_review_graph/production_claim_gate_decisions.json",
+        "system_review_graph/production_evidence_claim_mappers.json",
         "data/official_sample_documents/canada/cbsa-ci1-canada-customs-invoice.pdf",
         "data/official_sample_documents/canada/cbsa-a8a-b-cargo-control-document.pdf",
         "data/official_sample_documents/canada/cfia-5272-documentation-review-request.pdf",
@@ -823,6 +832,56 @@ def main() -> int:
         if field.get("supports_claims") != []:
             failures.append("production document extracted fields must not support claims directly")
             break
+    if production_evidence_claim_gate.get("status") != "production_evidence_claim_gate_engine_ready_claims_fail_closed":
+        failures.append(
+            "production evidence claim-gate status expected production_evidence_claim_gate_engine_ready_claims_fail_closed, "
+            f"got {production_evidence_claim_gate.get('status')!r}"
+        )
+    if production_evidence_claim_gate.get("claim_type_count", 0) < 17:
+        failures.append("production evidence claim-gate should include the Phase 11 claim types")
+    if production_evidence_claim_gate.get("claim_gate_decision_count", 0) < production_evidence_claim_gate.get("claim_type_count", 0):
+        failures.append("production evidence claim-gate should emit a decision for every claim type")
+    if production_evidence_claim_gate.get("safe_research_claim_count", 0) < 1:
+        failures.append("production evidence claim-gate should allow safe preparation/source-routing statements")
+    if production_evidence_claim_gate.get("forbidden_external_claim_count", 0) < 6:
+        failures.append("production evidence claim-gate should register the forbidden external claim set")
+    if production_evidence_claim_gate.get("evidence_mapper_count", 0) < 1:
+        failures.append("production evidence claim-gate should emit evidence mappers")
+    if production_evidence_claim_gate.get("claim_gate_mapper_count") != production_evidence_claim_gate.get("claim_type_count"):
+        failures.append("production evidence claim-gate should emit one mapper per claim type")
+    for key in ("external_effects_created", "claims_opened", "public_launch_ready", "live_payment_ready"):
+        if production_evidence_claim_gate.get(key) is not False:
+            failures.append(f"production evidence claim-gate expected {key}=false")
+    claim_decisions = {
+        row.get("claim_type"): row for row in production_evidence_claim_gate.get("claim_gate_decisions", [])
+    }
+    safe_decision = claim_decisions.get("hs_candidate_research_route", {})
+    if safe_decision.get("can_show_claim") is not True:
+        failures.append("production evidence claim-gate should allow HS candidate research route as preparation only")
+    if "source:wco-harmonized-system" not in {row.get("evidence_id") for row in safe_decision.get("evidence_trail", [])}:
+        failures.append("HS candidate research route should include WCO source evidence")
+    if claim_decisions.get("document_field_extraction_draft", {}).get("can_show_claim") is not False:
+        failures.append("document field extraction claim must stay blocked until a real customer extraction exists")
+    if "missing customer document field extraction" not in claim_decisions.get("document_field_extraction_draft", {}).get("missing_evidence", []):
+        failures.append("document field extraction should explain the missing customer extraction")
+    for claim_type in ("tariff_confirmed", "cfia_approved", "buyer_validated", "supplier_verified", "customs_ready", "shipment_approved"):
+        decision = claim_decisions.get(claim_type, {})
+        if decision.get("can_show_claim") is not False:
+            failures.append(f"production evidence claim-gate must keep {claim_type} blocked")
+        if decision.get("allowed_wording"):
+            failures.append(f"production evidence claim-gate must not provide allowed wording for {claim_type}")
+    tariff_source_mapper = next(
+        (
+            row
+            for row in production_evidence_claim_gate.get("evidence_mappers", [])
+            if row.get("evidence_id") == "source:cbsa-customs-tariff-2026"
+        ),
+        {},
+    )
+    if "hs_candidate_research_route" not in tariff_source_mapper.get("supports_claims", []):
+        failures.append("tariff source evidence should support only source-routed HS preparation")
+    if "tariff_confirmed" not in tariff_source_mapper.get("blocks_claims", []):
+        failures.append("tariff source evidence should block tariff-confirmed wording without qualified review")
     if not screenshot_manifest_path.exists():
         failures.append("operator screenshot manifest was not generated")
     if screenshot_manifest.get("status") != "screenshots_ready":
@@ -1635,6 +1694,9 @@ def main() -> int:
     print(f"production_market_intelligence_status={production_market_intelligence['status']}")
     print(f"production_market_signals={production_market_intelligence['market_signal_count']}")
     print(f"production_market_dataset_connectors={production_market_intelligence['dataset_connector_count']}")
+    print(f"production_evidence_claim_gate_status={production_evidence_claim_gate['status']}")
+    print(f"production_evidence_claim_gate_decisions={production_evidence_claim_gate['claim_gate_decision_count']}")
+    print(f"production_evidence_claim_gate_safe_claims={production_evidence_claim_gate['safe_research_claim_count']}")
     print(f"external_validation_pdf={pdf_path.relative_to(ROOT)}")
     print(f"external_validation_reviewer_brief_pdf={brief_pdf_path.relative_to(ROOT)}")
     print(f"go_live_input_status={go_live_input_readiness['status']}")

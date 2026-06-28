@@ -329,6 +329,9 @@ Payments remain downstream. Live checkout stays disabled until scope, support, r
 | Production document intelligence | `system_review_graph/production_document_intelligence_manifest.json` |
 | Production document pipeline | `system_review_graph/production_document_pipeline.json` |
 | Extracted-field proof | `system_review_graph/production_document_extracted_fields.json` |
+| Production evidence claim gate | `system_review_graph/production_evidence_claim_gate_manifest.json` |
+| Claim decision proof | `system_review_graph/production_claim_gate_decisions.json` |
+| Evidence/claim mapper proof | `system_review_graph/production_evidence_claim_mappers.json` |
 | Tests | `tests/test_business_logic.py`, `tests/test_completion_platform.py` |
 | Product proof | `python3 scripts/check_product.py` |
 | Root proof | `python3 scripts/product_project_check.py` |
@@ -343,6 +346,8 @@ Payments remain downstream. Live checkout stays disabled until scope, support, r
 - executable starter flow
 - no-document quick-check packet path
 - production document-intelligence pipeline for expected trade document classes
+- production evidence claim-gate engine for `can_show_claim` decisions
+- explicit separation between safe preparation/source-routing statements and blocked external claims
 - official sample document library and synthetic parser QA fixtures for local parser validation
 - Canada/Vietnam/India/Generic country-pack rows with route checks
 - source-monitor contract with source metadata and executable evidence freshness evaluation

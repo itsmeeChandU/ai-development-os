@@ -470,6 +470,14 @@ def build_redevelopment_phases() -> list[dict[str, Any]]:
             "source_track": ["cbsa-customs-tariff-2026", "cfia-airs", "wco-harmonized-system", "icc-incoterms-2020", "ised-trade-data-online"],
             "evidence_track": ["claim reason", "evidence trail", "source snapshot", "reviewer requirement"],
             "gate_track": ["no_evidence_no_claim", "stale_evidence_blocks_claim"],
+            "implementation_status": "local_evidence_claim_gate_engine_ready_claims_fail_closed",
+            "artifacts": [
+                "system_review_graph/production_evidence_claim_gate_manifest.json",
+                "system_review_graph/production_claim_gate_decisions.json",
+                "system_review_graph/production_evidence_claim_mappers.json",
+                "docs/PRODUCTION_EVIDENCE_CLAIM_GATE_ENGINE.md",
+            ],
+            "proof": "can_show_claim decisions, evidence trails, required evidence types, stale/reference-only evidence blockers, and claim/evidence mapper rows are generated from local packet, source, market, document, and review artifacts by scripts/run_production_evidence_claim_gate_engine.py while external claims remain closed.",
         },
         {
             "phase": 12,

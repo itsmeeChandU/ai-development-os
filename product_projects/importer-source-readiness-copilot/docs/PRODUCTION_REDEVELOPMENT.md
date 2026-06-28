@@ -164,6 +164,10 @@ Trade Readiness Copilot keeps the current business-rule engine and rebuilds the 
 - Claims still closed: no_evidence_no_claim, stale_evidence_blocks_claim.
 - Next valid move: Build the production implementation for this phase and attach the listed evidence before any gated claim can open.
 
+- Implementation status: `local_evidence_claim_gate_engine_ready_claims_fail_closed`
+- Implementation artifacts: system_review_graph/production_evidence_claim_gate_manifest.json, system_review_graph/production_claim_gate_decisions.json, system_review_graph/production_evidence_claim_mappers.json, docs/PRODUCTION_EVIDENCE_CLAIM_GATE_ENGINE.md.
+- Implementation proof: can_show_claim decisions, evidence trails, required evidence types, stale/reference-only evidence blockers, and claim/evidence mapper rows are generated from local packet, source, market, document, and review artifacts by scripts/run_production_evidence_claim_gate_engine.py while external claims remain closed.
+
 ### Phase 12: Decision and scoring engine
 
 - Local status: `phase_research_build_source_evidence_gate_tracks_ready`

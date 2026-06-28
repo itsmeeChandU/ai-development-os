@@ -47,6 +47,15 @@ The current product is usable for local review and controlled preparation. It do
 - Parser output is draft evidence only and requires user confirmation before sharing.
 - No document parser output opens customs, tariff, CFIA, buyer, supplier, shipment, payment, legal, or launch gates.
 
+## Claim Gate Implemented
+
+- Claim-gate status: `production_evidence_claim_gate_engine_ready_claims_fail_closed`.
+- Packet statements evaluated: `17`.
+- Safe preparation statements currently showable: `7`.
+- Blocked packet statements: `10`.
+- The product can show source-routing and preparation language with an evidence trail.
+- It still blocks tariff confirmed, CFIA approved, buyer validated, supplier verified, customs ready, and shipment approved.
+
 ## Enterprise And Advisor Use Cases
 
 - Broker or trade advisor can manage multiple client packets and export missing-evidence or broker-review packets.

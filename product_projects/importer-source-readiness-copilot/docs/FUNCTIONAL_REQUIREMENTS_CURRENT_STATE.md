@@ -52,6 +52,7 @@ The product helps users prepare trade readiness packets, organize evidence, revi
 | FR-24 | Keep launch controls and go-live blockers visible | Implemented locally | `launch_operations_report.json`, `final_go_live_decision_report.json` |
 | FR-25 | Maintain production document intelligence pipeline | Implemented locally with official sample documents and parser QA fixtures | `production_document_pipeline.json`, `production_document_extracted_fields.json` |
 | FR-26 | Keep uploaded-document actions separate from no-document packets | Implemented locally | no-document quick-check regression test and public result route |
+| FR-27 | Decide which packet statements can be shown | Implemented locally with evidence trails and closed external claims | `production_evidence_claim_gate_manifest.json`, `production_claim_gate_decisions.json` |
 
 ## Current Main Workflows
 

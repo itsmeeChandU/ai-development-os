@@ -62,6 +62,15 @@ registry plus source-refresh records into reference-only country packs, create
 source-routed market signal records without demand or profitability claims,
 and map documents into draft evidence records without authenticity or
 compliance claims.
+The evidence claim-gate slice writes
+`system_review_graph/production_evidence_claim_gate_manifest.json`,
+`system_review_graph/production_claim_gate_decisions.json`,
+`system_review_graph/production_evidence_claim_mappers.json`, and
+`docs/PRODUCTION_EVIDENCE_CLAIM_GATE_ENGINE.md`. It turns the evidence ledger,
+source routes, market signals, document evidence, and review status into
+explicit `can_show_claim` decisions so safe preparation language is separated
+from blocked customs, tariff, CFIA, buyer, supplier, shipment, payment, legal,
+and launch claims.
 Those stages are backed by an executable local operations engine in
 `src/importer_source_readiness/product_operations.py` and
 `scripts/run_product_operations.py`. The engine creates/updates packet intake
@@ -331,6 +340,24 @@ right questions for a buyer, supplier, broker, or reviewer. It still does not
 prove document authenticity, customs readiness, tariff treatment, CFIA
 clearance, malware scanning, private object storage, buyer validation, or
 supplier verification.
+
+## Ready For Production Evidence Claim-Gate Review
+
+- evidence claim-gate status:
+  `production_evidence_claim_gate_engine_ready_claims_fail_closed`
+- machine manifest:
+  `system_review_graph/production_evidence_claim_gate_manifest.json`
+- claim decisions: `system_review_graph/production_claim_gate_decisions.json`
+- evidence and claim mappers:
+  `system_review_graph/production_evidence_claim_mappers.json`
+- reviewer-readable doc: `docs/PRODUCTION_EVIDENCE_CLAIM_GATE_ENGINE.md`
+- proof command: `python3 scripts/run_production_evidence_claim_gate_engine.py`
+
+This means every packet statement has an evidence trail, required evidence
+type, reviewer lane, reason, and next valid move. The engine allows safe
+preparation/source-routing language only. It still blocks tariff confirmed,
+CFIA approved, buyer validated, supplier verified, customs ready, shipment
+approved, payment, legal, and launch claims.
 
 ## Ready For Internal Source-Packet Review
 

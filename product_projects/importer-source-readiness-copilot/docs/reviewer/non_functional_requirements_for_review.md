@@ -36,6 +36,14 @@ The document engine is ready for local review and parser QA. It is not yet appro
 - AI cannot approve customs, tariff, CFIA, legal, buyer, supplier, payment, launch, or shipment claims.
 - Required before real documents: prompt-injection review, provider routing decision, redaction tests on real examples, incident process, and customer-facing AI-language review.
 
+## Claim Safety
+
+- Evidence claim-gate status: `production_evidence_claim_gate_engine_ready_claims_fail_closed`.
+- Evidence mapper rows: `25`.
+- Claim mapper rows: `17`.
+- Missing, stale, reference-only, parser-draft, or unreviewed evidence cannot open external claims.
+- AI, source routes, uploaded documents, and generated reports cannot approve customs, tariff, CFIA, buyer, supplier, payment, shipment, legal, or launch claims.
+
 ## Reliability And Operations
 
 - Implemented locally: repeatable report generation, SQLite workflow store, generated state files, operation log, proof commands, and deployment-readiness artifacts.

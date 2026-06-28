@@ -23,6 +23,11 @@ from .production_document_intelligence_engine import (
     ensure_parser_qa_documents,
     write_production_document_intelligence_engine_artifacts,
 )
+from .production_evidence_claim_gate_engine import (
+    build_production_evidence_claim_gate_engine,
+    can_show_claim,
+    write_production_evidence_claim_gate_engine_artifacts,
+)
 from .production_market_intelligence_engine import (
     build_production_market_intelligence_engine,
     write_production_market_intelligence_engine_artifacts,
@@ -42,10 +47,12 @@ __all__ = [
     "build_production_country_source_engine",
     "build_production_data_model",
     "build_production_document_intelligence_engine",
+    "build_production_evidence_claim_gate_engine",
     "build_production_market_intelligence_engine",
     "build_production_packet_engine",
     "build_production_redevelopment_plan",
     "build_runtime_state",
+    "can_show_claim",
     "build_screenshot_manifest",
     "build_vc_pitch_readiness",
     "evaluate_cards",
@@ -62,6 +69,7 @@ __all__ = [
     "write_production_country_source_engine_artifacts",
     "write_production_data_model_artifacts",
     "write_production_document_intelligence_engine_artifacts",
+    "write_production_evidence_claim_gate_engine_artifacts",
     "write_production_market_intelligence_engine_artifacts",
     "write_production_packet_engine_artifacts",
     "write_production_redevelopment_artifacts",

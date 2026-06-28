@@ -44,6 +44,7 @@ This document describes the current non-functional requirements and boundaries f
 | NFR-16 | Provide proof commands and generated reports | Implemented locally | `check_product.py`, root check scripts |
 | NFR-17 | Keep production document intelligence gated | Implemented locally; real-file production use blocked | `production_document_intelligence_manifest.json`, `production_document_pipeline.json` |
 | NFR-18 | Separate official samples, synthetic QA fixtures, and customer evidence | Implemented locally | `official_sample_documents/`, `parser_qa_documents/` |
+| NFR-19 | Keep evidence-based claims fail closed | Implemented locally; unsupported external claims remain blocked | `production_evidence_claim_gate_manifest.json`, `production_evidence_claim_mappers.json` |
 
 ## Security
 

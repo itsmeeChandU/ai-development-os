@@ -72,6 +72,7 @@ python3 scripts/run_production_packet_engine.py
 python3 scripts/run_production_country_source_engine.py
 python3 scripts/run_production_market_intelligence_engine.py
 python3 scripts/run_production_document_intelligence_engine.py
+python3 scripts/run_production_evidence_claim_gate_engine.py
 python3 scripts/audit_external_package.py --root .
 python3 scripts/check_product.py
 ```
@@ -135,6 +136,9 @@ system_review_graph/production_market_dataset_connectors.json
 system_review_graph/production_document_intelligence_manifest.json
 system_review_graph/production_document_pipeline.json
 system_review_graph/production_document_extracted_fields.json
+system_review_graph/production_evidence_claim_gate_manifest.json
+system_review_graph/production_claim_gate_decisions.json
+system_review_graph/production_evidence_claim_mappers.json
 system_review_graph/production_redevelopment_plan.json
 system_review_graph/production_research_anchors.json
 data/official_sample_documents/canada/*.pdf
@@ -148,6 +152,8 @@ docs/GO_LIVE_INPUT_REQUESTS.md
 docs/PRODUCTION_DATA_MODEL.md
 docs/PRODUCTION_PACKET_ENGINE.md
 docs/PRODUCTION_COUNTRY_SOURCE_ENGINE.md
+docs/PRODUCTION_DOCUMENT_INTELLIGENCE_ENGINE.md
+docs/PRODUCTION_EVIDENCE_CLAIM_GATE_ENGINE.md
 docs/PRODUCTION_MARKET_INTELLIGENCE_ENGINE.md
 docs/PRODUCTION_REDEVELOPMENT.md
 output/pdf/external_validation_reviewer_brief.pdf
@@ -306,6 +312,19 @@ extracted-field provenance, evidence mapping, and redaction previews. It still
 does not prove real upload security, malware scanning, private storage,
 document authenticity, customs readiness, CFIA clearance, buyer validation, or
 supplier verification.
+
+The expected production evidence claim-gate status is:
+
+```text
+production_evidence_claim_gate_engine_ready_claims_fail_closed
+```
+
+That means the product now evaluates each packet statement through
+`can_show_claim(claim_type, packet_id)`. Safe preparation and source-routing
+statements can be shown with evidence trails, while tariff confirmation, CFIA
+approval, buyer validation, supplier verification, customs readiness, and
+shipment approval remain blocked until real official or qualified-review
+evidence exists.
 
 The expected customer source-packet status is:
 
