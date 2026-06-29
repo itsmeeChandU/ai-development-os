@@ -1,19 +1,20 @@
 {
   "classification_counts": {
-    "external_input_gap_language": 39,
+    "external_input_gap_language": 52,
     "fixture_blocker_evidence": 34,
     "generated_audit_language": 7,
     "generator_template_only": 24,
-    "policy_enforcement_code": 58,
+    "policy_enforcement_code": 59,
     "policy_language": 60,
-    "simulated_review_approval_closed": 232,
-    "template_reference": 144
+    "review_input_template_only": 1,
+    "simulated_review_approval_closed": 246,
+    "template_reference": 587
   },
   "disallowed_count": 0,
   "disallowed_findings": [],
-  "finding_count": 598,
-  "generated_at": "2026-06-28T16:26:33+00:00",
-  "head": "6025cb51d75dfb1b9ded2d64fa9f6da843636423",
+  "finding_count": 1070,
+  "generated_at": "2026-06-29T09:48:32+00:00",
+  "head": "e97c36e984a96577024cbdc80eaf86fcac7563df",
   "policy": "docs/NO_SCAFFOLD_DELIVERY_POLICY.md",
   "policy_failures": [],
   "prior_delivery_audit": {
@@ -59,7 +60,7 @@
     ],
     "verdict": "Prior delivery produced a real audit/evaluator package and shareable review inputs, not complete go-live development."
   },
-  "repo": "/Users/chandu/Documents/intelligance os",
+  "repo": "intelligance os",
   "runtime_claim_checks": {
     "blocker_ledger_exists": true,
     "external_validation_hosted_private_beta_ready": false,
@@ -76,7 +77,7 @@
     "go_live_public_launch_ready": false,
     "simulated_ai_review_can_open_gate": false
   },
-  "scanned_file_count": 2740,
+  "scanned_file_count": 2789,
   "skipped_contexts": [
     "external_review_packages",
     "binary files"

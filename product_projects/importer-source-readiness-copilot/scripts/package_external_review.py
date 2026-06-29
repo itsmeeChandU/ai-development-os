@@ -25,6 +25,7 @@ EXECUTIVE_FILES = [
     "FINAL_GO_LIVE_HANDOFF.md",
     "README.md",
     "SOURCE_OF_TRUTH.md",
+    "SOURCE_OF_TRUTH_CURRENT.md",
     "RUN_RESULTS.md",
     "REVIEW_USE_TERMS.md",
     "REDACTION_REPORT.md",
@@ -102,6 +103,7 @@ TECHNICAL_FILES = [
     ".env.example",
     "CUSTOMER_SOURCE_PACKET_SPEC.md",
     "SOURCE_OF_TRUTH.md",
+    "SOURCE_OF_TRUTH_CURRENT.md",
     "RUN_RESULTS.md",
     "PACKAGE_AUDIT.md",
     "OFFLINE_REPRODUCTION.md",
@@ -120,6 +122,17 @@ TECHNICAL_FILES = [
     "system_review_graph/transport_readiness_report.json",
     "system_review_graph/country_coverage_report.json",
     "system_review_graph/opportunity_scanner_report.json",
+    "system_review_graph/production_data_model_manifest.json",
+    "system_review_graph/production_packet_engine_manifest.json",
+    "system_review_graph/production_persistence_snapshot.json",
+    "system_review_graph/production_persistence_row_counts.json",
+    "system_review_graph/production_country_source_engine_manifest.json",
+    "system_review_graph/production_source_lifecycle.json",
+    "system_review_graph/production_source_snapshot_history.json",
+    "system_review_graph/production_source_refresh_audit_events.json",
+    "system_review_graph/production_claim_gate_decisions.json",
+    "system_review_graph/production_decision_score_records.json",
+    "system_review_graph/production_report_exports.json",
 ]
 
 EXCLUDE_PARTS = {

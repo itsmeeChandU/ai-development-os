@@ -10,18 +10,23 @@ from datetime import date
 from pathlib import Path
 from typing import Any
 
-from reportlab.lib import colors
-from reportlab.lib.pagesizes import LETTER
-from reportlab.lib.styles import ParagraphStyle, getSampleStyleSheet
-from reportlab.lib.units import inch
-from reportlab.platypus import (
-    ListFlowable,
-    ListItem,
-    PageBreak,
-    Paragraph,
-    SimpleDocTemplate,
-    Spacer,
-)
+try:
+    from reportlab.lib import colors
+    from reportlab.lib.pagesizes import LETTER
+    from reportlab.lib.styles import ParagraphStyle, getSampleStyleSheet
+    from reportlab.lib.units import inch
+    from reportlab.platypus import (
+        ListFlowable,
+        ListItem,
+        PageBreak,
+        Paragraph,
+        SimpleDocTemplate,
+        Spacer,
+    )
+
+    REPORTLAB_AVAILABLE = True
+except ImportError:
+    REPORTLAB_AVAILABLE = False
 
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -1007,9 +1012,26 @@ def main() -> int:
     outputs = []
     for doc in docs:
         md = _write_markdown(doc)
-        pdf = _write_pdf(doc)
-        outputs.append({"markdown": str(md.relative_to(ROOT)), "pdf": str(pdf.relative_to(ROOT))})
-    print(json.dumps({"status": "reviewer_documents_ready", "outputs": outputs}, indent=2))
+        row = {"markdown": str(md.relative_to(ROOT))}
+        if REPORTLAB_AVAILABLE:
+            pdf = _write_pdf(doc)
+            row["pdf"] = str(pdf.relative_to(ROOT))
+        else:
+            row["pdf"] = "not_generated_reportlab_missing"
+        outputs.append(row)
+    print(
+        json.dumps(
+            {
+                "status": (
+                    "reviewer_documents_ready"
+                    if REPORTLAB_AVAILABLE
+                    else "reviewer_documents_ready_markdown_only_pdf_dependency_missing"
+                ),
+                "outputs": outputs,
+            },
+            indent=2,
+        )
+    )
     return 0
 
 

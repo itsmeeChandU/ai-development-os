@@ -186,7 +186,7 @@
       "requires_pre_authorization": true
     }
   ],
-  "generated_at": "2026-06-28T19:18:38+00:00",
+  "generated_at": "2026-06-29T09:45:17+00:00",
   "heavy_job_policy": {
     "external_charge_created": false,
     "free_plan_behavior": "block_before_worker_execution",

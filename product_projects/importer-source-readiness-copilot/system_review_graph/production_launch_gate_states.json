@@ -31,7 +31,7 @@
       "artifacts": [
         {
           "artifact": "production_country_source_engine_manifest.json",
-          "bytes": 79073,
+          "bytes": 92300,
           "exists": true
         },
         {
@@ -57,7 +57,7 @@
       "artifacts": [
         {
           "artifact": "production_source_lifecycle.json",
-          "bytes": 72244,
+          "bytes": 80903,
           "exists": true
         },
         {

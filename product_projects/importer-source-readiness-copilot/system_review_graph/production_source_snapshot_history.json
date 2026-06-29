@@ -1,0 +1,57 @@
+{
+  "claims_opened": false,
+  "external_effects_created": false,
+  "generated_at": "2026-06-29T09:45:18+00:00",
+  "source_snapshot_count": 3,
+  "source_snapshot_history": [
+    {
+      "change_type": "date_change",
+      "claim_boundary": "Refresh records close stale-source proof only when HTTP access succeeds. They do not approve external claims.",
+      "claims_opened": false,
+      "content_hash": "11c8ad2650b632313b59be06e0a48179f7913102ec6eca4447060701b22871ac",
+      "error": "",
+      "generated_at": "2026-06-29T09:45:12+00:00",
+      "http_status": 200,
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "refresh_run_id": "source-refresh-packet-frozen-tuna-canada-001-2026-06-29T094512Z0000",
+      "snapshot_id": "source-refresh-packet-frozen-tuna-canada-001-2026-06-29T094512Z0000:evidence-frozen-tuna-cid-reference",
+      "source_id": "canada-cid",
+      "source_state": "checked_current_reference_only",
+      "source_url": "https://ised-isde.canada.ca/site/ised/en/research-and-business-intelligence/canadian-importers-database",
+      "verification_status": "verified_reference_only"
+    },
+    {
+      "change_type": "date_change",
+      "claim_boundary": "Refresh records close stale-source proof only when HTTP access succeeds. They do not approve external claims.",
+      "claims_opened": false,
+      "content_hash": "cb32fb77f5957f0826dea999e85b3575aa9f64c5fe64bcbbc666b3f24e2e4a72",
+      "error": "",
+      "generated_at": "2026-06-29T09:45:12+00:00",
+      "http_status": 200,
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "refresh_run_id": "source-refresh-packet-frozen-tuna-canada-001-2026-06-29T094512Z0000",
+      "snapshot_id": "source-refresh-packet-frozen-tuna-canada-001-2026-06-29T094512Z0000:evidence-frozen-tuna-cbsa-import-workflow",
+      "source_id": "cbsa-import-commercial-goods",
+      "source_state": "checked_current_reference_only",
+      "source_url": "https://www.cbsa-asfc.gc.ca/import/menu-eng.html",
+      "verification_status": "verified_reference_only"
+    },
+    {
+      "change_type": "date_change",
+      "claim_boundary": "Refresh records close stale-source proof only when HTTP access succeeds. They do not approve external claims.",
+      "claims_opened": false,
+      "content_hash": "48b45c032fd410d6576c388db764ca42db294072b14a0ebe030fb36ee74370e1",
+      "error": "",
+      "generated_at": "2026-06-29T09:45:12+00:00",
+      "http_status": 200,
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "refresh_run_id": "source-refresh-packet-frozen-tuna-canada-001-2026-06-29T094512Z0000",
+      "snapshot_id": "source-refresh-packet-frozen-tuna-canada-001-2026-06-29T094512Z0000:evidence-frozen-tuna-cfia-airs-reference",
+      "source_id": "cfia-airs",
+      "source_state": "checked_current_reference_only",
+      "source_url": "https://inspection.canada.ca/en/importing-food-plants-animals/airs",
+      "verification_status": "verified_reference_only"
+    }
+  ],
+  "status": "production_source_snapshot_history_recorded_claims_closed"
+}

@@ -12,5 +12,13 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
+      - name: Compile product code
+        run: python -m compileall -q src scripts
+      - name: Regenerate all artifacts
+        run: python scripts/run_all_artifacts.py
+      - name: Run unit tests
+        run: python -m unittest discover -s tests -p 'test_*.py'
       - name: Run product proof gate
         run: python scripts/check_product.py
+      - name: Audit external package hygiene
+        run: python scripts/audit_external_package.py --root .

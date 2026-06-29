@@ -38,6 +38,7 @@ INDIA_REQUIRED_SOURCE_AREAS = (
 
 SOURCE_STATES = (
     "not_checked",
+    "refresh_attempted_not_verified",
     "checked_current_reference_only",
     "changed_minor",
     "changed_material",
@@ -256,10 +257,35 @@ def _facts_for_source(source_id: str) -> list[dict[str, Any]]:
     return [dict(fact) for fact in RESEARCHED_SOURCE_FACTS if fact["source_id"] == source_id]
 
 
-def _refresh_rows(source_refresh_runs: Any) -> dict[str, dict[str, Any]]:
-    rows: dict[str, dict[str, Any]] = {}
+def _normalize_refresh_runs(source_refresh_runs: Any) -> list[dict[str, Any]]:
     if not isinstance(source_refresh_runs, list):
-        return rows
+        if isinstance(source_refresh_runs, dict):
+            return [source_refresh_runs]
+        return []
+    return [run for run in source_refresh_runs if isinstance(run, dict)]
+
+
+def _load_source_refresh_runs(graph: Path) -> list[dict[str, Any]]:
+    runs: list[dict[str, Any]] = []
+    seen: set[str] = set()
+    for run in _normalize_refresh_runs(_load_json(graph / "source_refresh_runs.json", [])):
+        run_id = _text(run.get("refresh_run_id")) or json.dumps(run, sort_keys=True)
+        if run_id not in seen:
+            runs.append(run)
+            seen.add(run_id)
+    for path in sorted(graph.glob("source_refresh_report_*.json")):
+        run = _load_json(path, {})
+        if not isinstance(run, dict):
+            continue
+        run_id = _text(run.get("refresh_run_id")) or path.name
+        if run_id not in seen:
+            runs.append(run)
+            seen.add(run_id)
+    return runs
+
+
+def _refresh_entries(source_refresh_runs: Any) -> list[dict[str, Any]]:
+    rows: list[dict[str, Any]] = []
     for run in source_refresh_runs:
         if not isinstance(run, dict):
             continue
@@ -268,29 +294,48 @@ def _refresh_rows(source_refresh_runs: Any) -> dict[str, dict[str, Any]]:
                 continue
             url = _text(row.get("source_url"))
             if url:
-                rows[url] = {
+                rows.append(
+                    {
                     **row,
                     "refresh_run_id": run.get("refresh_run_id"),
                     "generated_at": run.get("generated_at"),
                     "claim_boundary": run.get("claim_boundary"),
-                }
+                    "packet_id": run.get("packet_id"),
+                    "run_status": run.get("status"),
+                    }
+                )
     return rows
+
+
+def _refresh_rows(source_refresh_runs: Any) -> dict[str, dict[str, Any]]:
+    rows: dict[str, dict[str, Any]] = {}
+    for row in _refresh_entries(source_refresh_runs):
+        rows[_text(row.get("source_url"))] = row
+    return rows
+
+
+def _source_state_from_refresh(refresh: dict[str, Any]) -> tuple[str, str, str]:
+    http_status = int(refresh.get("http_status") or 0)
+    source_changed = bool(refresh.get("source_changed", False))
+    if http_status == 0:
+        return "refresh_attempted_not_verified", "source_unavailable", "network_or_dns_refresh_not_verified"
+    if not (200 <= http_status < 400):
+        return "source_unavailable", "source_unavailable", "http_refresh_not_verified"
+    if source_changed:
+        return "review_required", "material_regulatory_or_tariff_change", "verified_reference_changed_requires_review"
+    return "checked_current_reference_only", "date_change", "verified_reference_only"
 
 
 def _source_lifecycle(source: dict[str, Any], refresh_by_url: dict[str, dict[str, Any]]) -> dict[str, Any]:
     url = _text(source.get("url"))
     refresh = refresh_by_url.get(url, {})
     has_refresh = bool(refresh)
-    source_changed = bool(refresh.get("source_changed", False))
-    if has_refresh and not source_changed:
-        state = "checked_current_reference_only"
-        change_type = "date_change"
-    elif has_refresh and source_changed:
-        state = "review_required"
-        change_type = "material_regulatory_or_tariff_change"
+    if has_refresh:
+        state, change_type, verification_status = _source_state_from_refresh(refresh)
     else:
         state = "not_checked"
         change_type = "baseline_registered"
+        verification_status = "not_checked_for_this_packet"
     facts = _facts_for_source(_text(source.get("id")))
     source_areas = sorted({fact["source_area"] for fact in facts}) or [_source_area(source)]
     return {
@@ -312,9 +357,14 @@ def _source_lifecycle(source: dict[str, Any], refresh_by_url: dict[str, dict[str
         "allowed_states": list(SOURCE_STATES),
         "change_type": change_type,
         "allowed_change_types": list(CHANGE_TYPES),
+        "verification_status": verification_status,
+        "claims_opened": False,
         "content_hash": refresh.get("content_hash", ""),
         "last_checked_at": refresh.get("generated_at", source.get("accessed_at", "")),
         "http_status": refresh.get("http_status", ""),
+        "refresh_error": refresh.get("error", ""),
+        "refresh_run_id": refresh.get("refresh_run_id", ""),
+        "refresh_packet_id": refresh.get("packet_id", ""),
         "usable_facts": [fact["usable_fact"] for fact in facts] or [_text(source.get("evidence_role"))],
         "claim_boundary": "; ".join([fact["claim_boundary"] for fact in facts]) or source.get("claim_boundary", ""),
         "supports_claims": [],
@@ -329,8 +379,55 @@ def _source_lifecycle(source: dict[str, Any], refresh_by_url: dict[str, dict[str
             "ready_to_export",
         ],
         "review_required_if_material_change": True,
-        "packet_impact_rule": "If source changes or is not checked for the packet date, affected packet claims stay blocked.",
+        "packet_impact_rule": "If source changes, cannot be verified, or is not checked for the packet date, affected packet claims stay blocked.",
     }
+
+
+def _source_snapshot_history(source_rows: list[dict[str, Any]], refresh_entries: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    source_by_url = {_text(row.get("canonical_url")): row for row in source_rows}
+    history: list[dict[str, Any]] = []
+    for entry in refresh_entries:
+        source = source_by_url.get(_text(entry.get("source_url")), {})
+        state, change_type, verification_status = _source_state_from_refresh(entry)
+        history.append(
+            {
+                "snapshot_id": f"{entry.get('refresh_run_id') or 'refresh'}:{entry.get('evidence_id') or entry.get('source_url')}",
+                "source_id": source.get("source_id", ""),
+                "packet_id": entry.get("packet_id", ""),
+                "source_url": entry.get("source_url"),
+                "refresh_run_id": entry.get("refresh_run_id"),
+                "generated_at": entry.get("generated_at"),
+                "http_status": entry.get("http_status"),
+                "content_hash": entry.get("content_hash"),
+                "source_state": state,
+                "change_type": change_type,
+                "verification_status": verification_status,
+                "error": entry.get("error", ""),
+                "claims_opened": False,
+                "claim_boundary": entry.get("claim_boundary", ""),
+            }
+        )
+    return history
+
+
+def _source_refresh_audit_events(snapshot_history: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    events: list[dict[str, Any]] = []
+    for snapshot in snapshot_history:
+        events.append(
+            {
+                "event_id": f"audit-{snapshot['snapshot_id']}",
+                "event_type": "source_refresh_attempt_recorded",
+                "source_id": snapshot.get("source_id", ""),
+                "packet_id": snapshot.get("packet_id", ""),
+                "recorded_at": snapshot.get("generated_at", ""),
+                "source_state": snapshot.get("source_state", ""),
+                "claims_opened": False,
+                "next_valid_move": (
+                    "Use reference-only language and route material/unverified source outcomes to scoped review."
+                ),
+            }
+        )
+    return events
 
 
 def _country_pack(
@@ -415,8 +512,13 @@ def _packet_impacts(packets: list[dict[str, Any]], source_rows: list[dict[str, A
             if set(row.get("source_areas", [row["source_area"]])) & needed_areas
             and row["country_code"] in {destination, origin, "INTL"}
         ]
-        unchecked = [row for row in matched if row["source_state"] == "not_checked"]
-        review_required = [row for row in matched if row["source_state"] in {"not_checked", "review_required", "changed_material", "stale"}]
+        unresolved_states = {"not_checked", "refresh_attempted_not_verified", "review_required", "changed_material", "source_unavailable", "stale"}
+        unchecked = [row for row in matched if row["source_state"] in {"not_checked", "refresh_attempted_not_verified", "source_unavailable"}]
+        review_required = [row for row in matched if row["source_state"] in unresolved_states]
+        stale_reasons = [
+            f"{row['source_id']}:{row['source_state']}"
+            for row in review_required
+        ]
         impacts.append(
             {
                 "packet_id": packet.get("packet_id"),
@@ -426,7 +528,13 @@ def _packet_impacts(packets: list[dict[str, Any]], source_rows: list[dict[str, A
                 "matched_source_ids": [row["source_id"] for row in matched],
                 "unchecked_source_ids": [row["source_id"] for row in unchecked],
                 "review_required_source_ids": [row["source_id"] for row in review_required],
-                "packet_source_state": "source_checking_or_reviewer_ready_reference_only",
+                "packet_source_state": (
+                    "source_stale_or_review_required"
+                    if review_required
+                    else "source_checking_or_reviewer_ready_reference_only"
+                ),
+                "packet_stale_status": "stale_until_source_refresh_and_review" if review_required else "not_stale_reference_only",
+                "packet_stale_reasons": stale_reasons,
                 "packet_stale_if_material_change": True,
                 "blocked_claims": [
                     "current_law_confirmed",
@@ -436,7 +544,7 @@ def _packet_impacts(packets: list[dict[str, Any]], source_rows: list[dict[str, A
                     "ready_to_import",
                     "ready_to_export",
                 ],
-                "next_valid_move": "Refresh unchecked sources, preserve reference-only wording, and route the packet to scoped expert review.",
+                "next_valid_move": "Refresh unchecked or unverified sources, preserve reference-only wording, and route the packet to scoped expert review.",
                 "external_claims_opened": False,
             }
         )
@@ -447,9 +555,12 @@ def build_production_country_source_engine(repo_root: Path | None = None) -> dic
     root = repo_root or Path(__file__).resolve().parents[2]
     sources = _load_json(root / "data" / "official_source_registry.json", [])
     packets = _load_json(root / "data" / "customer_source_packets.json", [])
-    refresh_runs = _load_json(root / "system_review_graph" / "source_refresh_runs.json", [])
+    refresh_runs = _load_source_refresh_runs(root / "system_review_graph")
+    refresh_entries = _refresh_entries(refresh_runs)
     refresh_by_url = _refresh_rows(refresh_runs)
     source_rows = [_source_lifecycle(source, refresh_by_url) for source in sources]
+    snapshot_history = _source_snapshot_history(source_rows, refresh_entries)
+    source_refresh_audit_events = _source_refresh_audit_events(snapshot_history)
     packs = [
         _country_pack(
             pack_id="CA-import",
@@ -500,9 +611,12 @@ def build_production_country_source_engine(repo_root: Path | None = None) -> dic
         "packet_impact_count": len(packet_impacts),
         "country_packs": packs,
         "source_lifecycle": source_rows,
+        "source_snapshot_history": snapshot_history,
+        "source_refresh_audit_events": source_refresh_audit_events,
         "packet_source_impacts": packet_impacts,
         "official_source_registry_count": len(_source_registry_by_id(sources)),
-        "source_refresh_record_count": len(refresh_by_url),
+        "source_refresh_run_count": len(refresh_runs),
+        "source_refresh_record_count": len(refresh_entries),
         "external_effects_created": False,
         "claims_opened": False,
         "public_launch_ready": False,
@@ -577,6 +691,8 @@ def write_production_country_source_engine_artifacts(payload: dict[str, Any], re
     manifest_path = graph / "production_country_source_engine_manifest.json"
     packs_path = graph / "production_country_packs.json"
     lifecycle_path = graph / "production_source_lifecycle.json"
+    snapshot_history_path = graph / "production_source_snapshot_history.json"
+    refresh_audit_path = graph / "production_source_refresh_audit_events.json"
     doc_path = docs / "PRODUCTION_COUNTRY_SOURCE_ENGINE.md"
     manifest_path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     packs_path.write_text(
@@ -612,10 +728,44 @@ def write_production_country_source_engine_artifacts(payload: dict[str, Any], re
         + "\n",
         encoding="utf-8",
     )
+    snapshot_history_path.write_text(
+        json.dumps(
+            {
+                "generated_at": payload["generated_at"],
+                "status": "production_source_snapshot_history_recorded_claims_closed",
+                "source_snapshot_count": len(payload["source_snapshot_history"]),
+                "source_snapshot_history": payload["source_snapshot_history"],
+                "external_effects_created": False,
+                "claims_opened": False,
+            },
+            indent=2,
+            sort_keys=True,
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+    refresh_audit_path.write_text(
+        json.dumps(
+            {
+                "generated_at": payload["generated_at"],
+                "status": "production_source_refresh_audit_events_recorded_claims_closed",
+                "source_refresh_audit_event_count": len(payload["source_refresh_audit_events"]),
+                "source_refresh_audit_events": payload["source_refresh_audit_events"],
+                "external_effects_created": False,
+                "claims_opened": False,
+            },
+            indent=2,
+            sort_keys=True,
+        )
+        + "\n",
+        encoding="utf-8",
+    )
     doc_path.write_text(render_country_source_markdown(payload), encoding="utf-8")
     return {
         "manifest": manifest_path,
         "country_packs": packs_path,
         "source_lifecycle": lifecycle_path,
+        "source_snapshot_history": snapshot_history_path,
+        "source_refresh_audit_events": refresh_audit_path,
         "doc": doc_path,
     }

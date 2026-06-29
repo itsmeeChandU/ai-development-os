@@ -84,7 +84,7 @@ This engine turns researched official-source routes into country/source logic. I
 
 ## Packet Impacts
 
-- `packet-frozen-tuna-canada-001`: source_checking_or_reviewer_ready_reference_only; next move: Refresh unchecked sources, preserve reference-only wording, and route the packet to scoped expert review.
+- `packet-frozen-tuna-canada-001`: source_stale_or_review_required; next move: Refresh unchecked or unverified sources, preserve reference-only wording, and route the packet to scoped expert review.
 
 ## Closed Gates
 

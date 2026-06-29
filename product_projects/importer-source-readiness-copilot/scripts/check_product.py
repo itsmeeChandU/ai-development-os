@@ -114,40 +114,9 @@ def _validate_blocker_rows(rows: list[dict[str, Any]], label: str) -> list[str]:
 
 def main() -> int:
     commands = [
-        [sys.executable, "scripts/build_external_review_packet.py"],
+        [sys.executable, "-m", "compileall", "-q", "src", "scripts"],
+        [sys.executable, "scripts/run_all_artifacts.py"],
         [sys.executable, "-m", "unittest", "discover", "-s", "tests", "-p", "test_*.py"],
-        [sys.executable, "scripts/run_readiness.py"],
-        [sys.executable, "scripts/run_external_gates.py"],
-        [sys.executable, "scripts/plan_continuation.py"],
-        [sys.executable, "scripts/build_vc_pitch_packet.py"],
-        [sys.executable, "scripts/build_board_go_live_packet.py"],
-        [sys.executable, "scripts/run_operator_workflow.py"],
-        [sys.executable, "scripts/run_customer_workflow.py"],
-        [sys.executable, "scripts/run_policy_intelligence.py"],
-        [sys.executable, "scripts/run_completion_platform.py"],
-        [sys.executable, "scripts/run_product_operations.py"],
-        [sys.executable, "scripts/export_operator_dashboard.py"],
-        [sys.executable, "scripts/run_final_go_live_review.py"],
-        [sys.executable, "scripts/run_external_validation_requirements.py"],
-        [sys.executable, "scripts/run_production_redevelopment.py"],
-        [sys.executable, "scripts/run_production_data_model.py"],
-        [sys.executable, "scripts/run_production_packet_engine.py"],
-        [sys.executable, "scripts/run_production_country_source_engine.py"],
-        [sys.executable, "scripts/run_production_trade_discovery_engine.py"],
-        [sys.executable, "scripts/run_production_trade_data_catalog_engine.py"],
-        [sys.executable, "scripts/run_production_market_intelligence_engine.py"],
-        [sys.executable, "scripts/run_production_document_intelligence_engine.py"],
-        [sys.executable, "scripts/run_production_evidence_claim_gate_engine.py"],
-        [sys.executable, "scripts/run_production_decision_scoring_engine.py"],
-        [sys.executable, "scripts/run_production_ai_copilot_engine.py"],
-        [sys.executable, "scripts/run_production_expert_review_network.py"],
-        [sys.executable, "scripts/run_production_reports_engine.py"],
-        [sys.executable, "scripts/run_production_portal_workflow_engine.py"],
-        [sys.executable, "scripts/run_production_enterprise_api_platform.py"],
-        [sys.executable, "scripts/run_production_payment_monetization_engine.py"],
-        [sys.executable, "scripts/run_production_security_privacy_reliability_engine.py"],
-        [sys.executable, "scripts/run_production_launch_control_plane.py"],
-        [sys.executable, "scripts/run_production_market_readiness_evidence_room.py"],
         [sys.executable, "scripts/audit_external_package.py", "--root", "."],
     ]
     for command in commands:
@@ -212,6 +181,7 @@ def main() -> int:
     production_research = _load_json(ROOT / "system_review_graph" / "production_research_anchors.json")
     production_data_model = _load_json(ROOT / "system_review_graph" / "production_data_model_manifest.json")
     production_packet_engine = _load_json(ROOT / "system_review_graph" / "production_packet_engine_manifest.json")
+    production_persistence = _load_json(ROOT / "system_review_graph" / "production_persistence_snapshot.json")
     production_country_source_engine = _load_json(ROOT / "system_review_graph" / "production_country_source_engine_manifest.json")
     production_trade_discovery = _load_json(ROOT / "system_review_graph" / "production_trade_discovery_manifest.json")
     production_trade_data_catalog = _load_json(ROOT / "system_review_graph" / "production_trade_data_catalog_manifest.json")
@@ -344,6 +314,7 @@ def main() -> int:
         "scripts/run_policy_intelligence.py",
         "scripts/run_completion_platform.py",
         "scripts/run_product_operations.py",
+        "scripts/run_all_artifacts.py",
         "scripts/audit_external_package.py",
         "scripts/build_external_review_packet.py",
         "scripts/run_final_go_live_review.py",
@@ -362,6 +333,7 @@ def main() -> int:
         "scripts/run_production_trade_data_catalog_engine.py",
         "scripts/run_production_launch_control_plane.py",
         "scripts/run_production_packet_engine.py",
+        "scripts/run_production_persistence.py",
         "scripts/run_production_payment_monetization_engine.py",
         "scripts/run_production_portal_workflow_engine.py",
         "scripts/run_production_reports_engine.py",
@@ -376,6 +348,7 @@ def main() -> int:
         "FINAL_GO_LIVE_HANDOFF.md",
         "CUSTOMER_SOURCE_PACKET_SPEC.md",
         "SOURCE_OF_TRUTH.md",
+        "SOURCE_OF_TRUTH_CURRENT.md",
         "RUN_RESULTS.md",
         "EXTERNAL_REVIEW_SUMMARY.md",
         "REDACTION_REPORT.md",
@@ -400,6 +373,7 @@ def main() -> int:
         "docs/PRODUCTION_TRADE_DATA_CATALOG_ENGINE.md",
         "docs/PRODUCTION_LAUNCH_CONTROL_PLANE.md",
         "docs/PRODUCTION_PACKET_ENGINE.md",
+        "docs/PRODUCTION_PERSISTENCE.md",
         "docs/PRODUCTION_PAYMENT_MONETIZATION_ENGINE.md",
         "docs/PRODUCTION_PORTAL_WORKFLOWS.md",
         "docs/PRODUCTION_REPORTS_ENGINE.md",
@@ -465,6 +439,8 @@ def main() -> int:
         "system_review_graph/production_country_source_engine_manifest.json",
         "system_review_graph/production_country_packs.json",
         "system_review_graph/production_source_lifecycle.json",
+        "system_review_graph/production_source_snapshot_history.json",
+        "system_review_graph/production_source_refresh_audit_events.json",
         "system_review_graph/production_ai_copilot_manifest.json",
         "system_review_graph/production_ai_output_contracts.json",
         "system_review_graph/production_ai_safety_checks.json",
@@ -550,6 +526,9 @@ def main() -> int:
         "data/parser_qa_documents/synthetic-inspection-report-supplier.pdf",
         "system_review_graph/production_packet_engine_manifest.json",
         "system_review_graph/production_packet_events.json",
+        "system_review_graph/production_persistence_snapshot.json",
+        "system_review_graph/production_persistence_row_counts.json",
+        "system_review_graph/production_domain.sqlite",
         "system_review_graph/production_packet_views/packet-frozen-tuna-canada-001/starter_packet.json",
         "system_review_graph/production_packet_views/packet-frozen-tuna-canada-001/market_research_packet.json",
         "system_review_graph/production_packet_views/packet-frozen-tuna-canada-001/buyer_ready_packet.json",
@@ -847,8 +826,11 @@ def main() -> int:
         failures.append("generic fallback country pack should stay generic")
     source_lifecycle = {row.get("source_id"): row for row in production_country_source_engine.get("source_lifecycle", [])}
     for source_id in ("cbsa-import-commercial-goods", "cfia-airs", "canada-cid"):
-        if source_lifecycle.get(source_id, {}).get("source_state") != "checked_current_reference_only":
-            failures.append(f"{source_id} should be checked_current_reference_only from dated refresh records")
+        state = source_lifecycle.get(source_id, {}).get("source_state")
+        if state not in {"checked_current_reference_only", "refresh_attempted_not_verified", "source_unavailable"}:
+            failures.append(f"{source_id} should have a dated source refresh outcome, got {state!r}")
+        if state != "checked_current_reference_only" and source_lifecycle.get(source_id, {}).get("claims_opened") is not False:
+            failures.append(f"{source_id} unverified refresh state must keep claims closed")
     if source_lifecycle.get("cbsa-customs-tariff-2026", {}).get("source_state") != "not_checked":
         failures.append("tariff source should remain not_checked until a dated refresh exists")
     impacts = production_country_source_engine.get("packet_source_impacts", [])
@@ -2443,6 +2425,33 @@ def main() -> int:
         ):
             if table not in policy_tables:
                 failures.append(f"policy intelligence store missing table {table}")
+    production_store_path = ROOT / "system_review_graph" / "production_domain.sqlite"
+    if production_store_path.exists():
+        with sqlite3.connect(production_store_path) as conn:
+            production_tables = {
+                row[0]
+                for row in conn.execute("select name from sqlite_master where type='table'").fetchall()
+            }
+            production_counts = {
+                table: conn.execute(f"select count(*) from {table}").fetchone()[0]
+                for table in production_persistence.get("table_order", [])
+                if table in production_tables
+            }
+            opened_claim_boundaries = conn.execute(
+                "select count(*) from trade_readiness_packets where claim_boundary_status != 'external_claims_closed'"
+            ).fetchone()[0]
+        for table in production_persistence.get("table_order", []):
+            if table not in production_tables:
+                failures.append(f"production domain store missing table {table}")
+            elif production_counts.get(table) != production_persistence.get("row_counts", {}).get(table):
+                failures.append(
+                    f"production domain store table {table} count mismatch "
+                    f"{production_counts.get(table)} != {production_persistence.get('row_counts', {}).get(table)}"
+                )
+        if opened_claim_boundaries:
+            failures.append("production domain store must keep packet claim boundaries closed")
+    else:
+        failures.append("production domain store missing system_review_graph/production_domain.sqlite")
     failures.extend(_validate_blockers(ROOT / "system_review_graph" / "blockers.jsonl"))
     failures.extend(_validate_blockers(ROOT / "system_review_graph" / "external_review_blocker_ledger.jsonl"))
     failures.extend(_validate_blocker_rows(external_review_blockers, "external_review_blocker_ledger"))
@@ -2513,6 +2522,10 @@ def main() -> int:
     print(f"production_packet_engine_packets={production_packet_engine['packet_count']}")
     print(f"production_packet_engine_views={production_packet_engine['packet_view_count']}")
     print(f"production_packet_engine_events={production_packet_engine['packet_event_count']}")
+    print(f"production_persistence_status={production_persistence['status']}")
+    print(f"production_persistence_rows={production_persistence['total_row_count']}")
+    print(f"production_persistence_validation_errors={production_persistence['validation_error_count']}")
+    print(f"production_persistence_hosted_postgres_ready={production_persistence['hosted_postgres_ready']}")
     print(f"production_country_source_engine_status={production_country_source_engine['status']}")
     print(f"production_country_packs={production_country_source_engine['country_pack_count']}")
     print(f"production_source_lifecycle_rows={production_country_source_engine['source_lifecycle_count']}")

@@ -85,6 +85,8 @@ class ProductionDataModelTests(unittest.TestCase):
         self.assertIn("references trade_lanes(trade_lane_id)", sql)
         self.assertIn("constraint packet_state_check", sql)
         self.assertIn("constraint decision_scores_name_check", sql)
+        self.assertIn("refresh_attempted_not_verified", sql)
+        self.assertIn("checked_current_reference_only", sql)
         self.assertIn("buyer_supplier_evidence_score", sql)
         self.assertIn("constraint buyer_profiles_evidence_level_check", sql)
         self.assertIn("po_or_paid_order_received", sql)

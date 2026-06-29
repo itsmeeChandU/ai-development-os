@@ -197,7 +197,7 @@ create table if not exists source_snapshots (
   diff_status text not null default 'not_checked',
   review_required boolean not null default true,
   payload jsonb not null default '{}'::jsonb,
-  constraint source_snapshots_diff_check check (diff_status in ('not_checked','checked_current','changed_minor','changed_material','source_unavailable','stale','review_required'))
+  constraint source_snapshots_diff_check check (diff_status in ('not_checked','refresh_attempted_not_verified','checked_current_reference_only','changed_minor','changed_material','source_unavailable','stale','review_required'))
 );
 create index if not exists source_snapshots_source_idx on source_snapshots (source_id, fetched_at desc)
 

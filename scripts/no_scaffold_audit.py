@@ -294,7 +294,7 @@ def build_report(paths: list[str] | None = None) -> dict[str, Any]:
     return {
         "status": "pass_no_scaffold_completion_claims" if not policy_failures else "fail_scaffold_policy",
         "generated_at": datetime.now(timezone.utc).replace(microsecond=0).isoformat(),
-        "repo": str(ROOT),
+        "repo": ROOT.name,
         "head": _head(),
         "policy": "docs/NO_SCAFFOLD_DELIVERY_POLICY.md",
         "scanned_file_count": len(paths),

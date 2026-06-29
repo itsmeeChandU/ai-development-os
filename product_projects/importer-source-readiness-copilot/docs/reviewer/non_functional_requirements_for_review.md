@@ -1,6 +1,6 @@
 # Non-Functional Requirements For External Review
 
-Prepared on 2026-06-28 for Trade Readiness Copilot. This document focuses on security, privacy, AI safety, reliability, auditability, payments, and launch controls.
+Prepared on 2026-06-29 for Trade Readiness Copilot. This document focuses on security, privacy, AI safety, reliability, auditability, payments, and launch controls.
 
 ## 2-Minute Summary
 

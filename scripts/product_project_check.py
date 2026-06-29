@@ -49,6 +49,7 @@ def main() -> int:
         PROJECT / "PRODUCT_DOCTRINE.md",
         PROJECT / "CUSTOMER_SOURCE_PACKET_SPEC.md",
         PROJECT / "SOURCE_OF_TRUTH.md",
+        PROJECT / "SOURCE_OF_TRUTH_CURRENT.md",
         PROJECT / "RUN_RESULTS.md",
         PROJECT / "EXTERNAL_REVIEW_SUMMARY.md",
         PROJECT / "REDACTION_REPORT.md",
@@ -99,6 +100,7 @@ def main() -> int:
         PROJECT / "src" / "importer_source_readiness" / "production_trade_discovery_engine.py",
         PROJECT / "src" / "importer_source_readiness" / "production_trade_data_catalog_engine.py",
         PROJECT / "src" / "importer_source_readiness" / "production_packet_engine.py",
+        PROJECT / "src" / "importer_source_readiness" / "production_persistence.py",
         PROJECT / "src" / "importer_source_readiness" / "production_payment_monetization_engine.py",
         PROJECT / "src" / "importer_source_readiness" / "production_portal_workflow_engine.py",
         PROJECT / "src" / "importer_source_readiness" / "production_redevelopment.py",
@@ -135,6 +137,8 @@ def main() -> int:
         PROJECT / "tests" / "test_production_trade_discovery_engine.py",
         PROJECT / "tests" / "test_production_trade_data_catalog_engine.py",
         PROJECT / "tests" / "test_production_packet_engine.py",
+        PROJECT / "tests" / "test_production_persistence.py",
+        PROJECT / "tests" / "test_proof_loop.py",
         PROJECT / "tests" / "test_production_payment_monetization_engine.py",
         PROJECT / "tests" / "test_production_portal_workflow_engine.py",
         PROJECT / "tests" / "test_production_redevelopment.py",
@@ -170,6 +174,8 @@ def main() -> int:
         PROJECT / "scripts" / "run_production_trade_discovery_engine.py",
         PROJECT / "scripts" / "run_production_trade_data_catalog_engine.py",
         PROJECT / "scripts" / "run_production_packet_engine.py",
+        PROJECT / "scripts" / "run_production_persistence.py",
+        PROJECT / "scripts" / "run_all_artifacts.py",
         PROJECT / "scripts" / "run_production_payment_monetization_engine.py",
         PROJECT / "scripts" / "run_production_portal_workflow_engine.py",
         PROJECT / "scripts" / "run_production_redevelopment.py",
@@ -197,6 +203,7 @@ def main() -> int:
         PROJECT / "docs" / "PRODUCTION_AI_COPILOT_ENGINE.md",
         PROJECT / "docs" / "PRODUCTION_COUNTRY_SOURCE_ENGINE.md",
         PROJECT / "docs" / "PRODUCTION_DATA_MODEL.md",
+        PROJECT / "docs" / "PRODUCTION_PERSISTENCE.md",
         PROJECT / "docs" / "PRODUCTION_DECISION_SCORING_ENGINE.md",
         PROJECT / "docs" / "PRODUCTION_DOCUMENT_INTELLIGENCE_ENGINE.md",
         PROJECT / "docs" / "PRODUCTION_EVIDENCE_CLAIM_GATE_ENGINE.md",
@@ -284,8 +291,13 @@ def main() -> int:
         PROJECT / "system_review_graph" / "production_country_source_engine_manifest.json",
         PROJECT / "system_review_graph" / "production_country_packs.json",
         PROJECT / "system_review_graph" / "production_source_lifecycle.json",
+        PROJECT / "system_review_graph" / "production_source_snapshot_history.json",
+        PROJECT / "system_review_graph" / "production_source_refresh_audit_events.json",
         PROJECT / "system_review_graph" / "production_data_model_manifest.json",
         PROJECT / "system_review_graph" / "production_data_model_seed.json",
+        PROJECT / "system_review_graph" / "production_persistence_snapshot.json",
+        PROJECT / "system_review_graph" / "production_persistence_row_counts.json",
+        PROJECT / "system_review_graph" / "production_domain.sqlite",
         PROJECT / "system_review_graph" / "production_decision_scoring_manifest.json",
         PROJECT / "system_review_graph" / "production_decision_score_records.json",
         PROJECT / "system_review_graph" / "production_score_cap_policy.json",
@@ -335,6 +347,8 @@ def main() -> int:
         PROJECT / "data" / "parser_qa_documents" / "synthetic-inspection-report-supplier.pdf",
         PROJECT / "system_review_graph" / "production_packet_engine_manifest.json",
         PROJECT / "system_review_graph" / "production_packet_events.json",
+        PROJECT / "system_review_graph" / "production_persistence_snapshot.json",
+        PROJECT / "system_review_graph" / "production_persistence_row_counts.json",
         PROJECT / "system_review_graph" / "production_packet_views" / "packet-frozen-tuna-canada-001" / "starter_packet.json",
         PROJECT / "system_review_graph" / "production_packet_views" / "packet-frozen-tuna-canada-001" / "market_research_packet.json",
         PROJECT / "system_review_graph" / "production_packet_views" / "packet-frozen-tuna-canada-001" / "buyer_ready_packet.json",
@@ -492,6 +506,7 @@ def main() -> int:
         ["python3", "scripts/run_production_ai_copilot_engine.py"],
         ["python3", "scripts/run_production_expert_review_network.py"],
         ["python3", "scripts/run_production_reports_engine.py"],
+        ["python3", "scripts/run_production_persistence.py"],
         ["python3", "scripts/run_production_portal_workflow_engine.py"],
         ["python3", "scripts/run_production_enterprise_api_platform.py"],
         ["python3", "scripts/run_production_payment_monetization_engine.py"],
@@ -705,6 +720,9 @@ def main() -> int:
     )
     production_packet_engine = json.loads(
         (PROJECT / "system_review_graph" / "production_packet_engine_manifest.json").read_text(encoding="utf-8")
+    )
+    production_persistence = json.loads(
+        (PROJECT / "system_review_graph" / "production_persistence_snapshot.json").read_text(encoding="utf-8")
     )
     production_country_source_engine = json.loads(
         (PROJECT / "system_review_graph" / "production_country_source_engine_manifest.json").read_text(encoding="utf-8")
@@ -1659,6 +1677,79 @@ def main() -> int:
     if packet_run.get("reviewer_ready_not_approved") is not True:
         print("Product project check: FAIL")
         print("reviewer-ready packet must explicitly remain not approved")
+        return 1
+    if (
+        production_persistence.get("status") != "production_persistence_ready_local_domain_rows_external_db_gate_closed"
+        or production_persistence.get("total_row_count", 0) < 150
+        or production_persistence.get("validation_error_count") != 0
+        or production_persistence.get("hosted_postgres_ready") is not False
+        or production_persistence.get("production_migration_applied") is not False
+        or production_persistence.get("external_claims_opened") is not False
+        or production_persistence.get("public_launch_ready") is not False
+    ):
+        print("Product project check: FAIL")
+        print("production persistence should load local domain rows while keeping hosted/external gates closed")
+        return 1
+    required_persistence_tables = {
+        "organizations",
+        "users",
+        "workspaces",
+        "trade_lanes",
+        "trade_readiness_packets",
+        "product_profiles",
+        "country_packs",
+        "source_records",
+        "source_snapshots",
+        "evidence_items",
+        "blocked_claims",
+        "claim_gate_mappers",
+        "decision_scores",
+        "review_requests",
+        "reports",
+        "audit_events",
+    }
+    if set(production_persistence.get("table_order", [])) != required_persistence_tables:
+        print("Product project check: FAIL")
+        print("production persistence table order missing required domain tables")
+        return 1
+    for table, minimum in {
+        "trade_readiness_packets": 1,
+        "evidence_items": 3,
+        "source_records": 20,
+        "source_snapshots": 20,
+        "decision_scores": 6,
+        "reports": 12,
+        "audit_events": 3,
+    }.items():
+        if production_persistence.get("row_counts", {}).get(table, 0) < minimum:
+            print("Product project check: FAIL")
+            print(f"production persistence table {table} below minimum row proof")
+            return 1
+    production_store = PROJECT / "system_review_graph" / "production_domain.sqlite"
+    with sqlite3.connect(production_store) as conn:
+        production_store_tables = {
+            row[0]
+            for row in conn.execute("select name from sqlite_master where type='table'").fetchall()
+        }
+        for table in required_persistence_tables:
+            if table not in production_store_tables:
+                print("Product project check: FAIL")
+                print(f"production domain sqlite missing table {table}")
+                return 1
+            count = conn.execute(f"select count(*) from {table}").fetchone()[0]
+            if count != production_persistence.get("row_counts", {}).get(table):
+                print("Product project check: FAIL")
+                print(
+                    f"production domain sqlite table {table} count mismatch "
+                    f"{count} != {production_persistence.get('row_counts', {}).get(table)}"
+                )
+                return 1
+        opened_claim_boundary_count = conn.execute(
+            "select count(*) from trade_readiness_packets where claim_boundary_status != 'external_claims_closed'"
+        ).fetchone()[0]
+    if opened_claim_boundary_count:
+        print("Product project check: FAIL")
+        print("production domain sqlite opened a packet claim boundary")
         return 1
     if (
         production_country_source_engine.get("status") != "production_country_source_engine_ready_reference_packs_claim_gates_closed"
@@ -2886,6 +2977,10 @@ def main() -> int:
     print(f"production_packet_engine_packets={production_packet_engine['packet_count']}")
     print(f"production_packet_engine_views={production_packet_engine['packet_view_count']}")
     print(f"production_packet_engine_events={production_packet_engine['packet_event_count']}")
+    print(f"production_persistence_status={production_persistence['status']}")
+    print(f"production_persistence_rows={production_persistence['total_row_count']}")
+    print(f"production_persistence_validation_errors={production_persistence['validation_error_count']}")
+    print(f"production_persistence_hosted_postgres_ready={production_persistence['hosted_postgres_ready']}")
     print(f"production_country_source_engine_status={production_country_source_engine['status']}")
     print(f"production_country_packs={production_country_source_engine['country_pack_count']}")
     print(f"production_source_lifecycle_rows={production_country_source_engine['source_lifecycle_count']}")

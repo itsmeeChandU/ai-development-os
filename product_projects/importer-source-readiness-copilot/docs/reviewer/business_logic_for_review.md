@@ -1,6 +1,6 @@
 # Business Logic Document For External Review
 
-Prepared on 2026-06-28 for Trade Readiness Copilot. This document explains how the product makes local preparation decisions while keeping real-world claims closed.
+Prepared on 2026-06-29 for Trade Readiness Copilot. This document explains how the product makes local preparation decisions while keeping real-world claims closed.
 
 ## 2-Minute Summary
 

@@ -1,6 +1,6 @@
 # Functional Requirements For External Review
 
-Prepared on 2026-06-28 for Trade Readiness Copilot. This is a current-state review document for the locally implemented product, not a public-launch claim.
+Prepared on 2026-06-29 for Trade Readiness Copilot. This is a current-state review document for the locally implemented product, not a public-launch claim.
 
 ## 2-Minute Summary
 

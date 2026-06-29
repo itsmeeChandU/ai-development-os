@@ -1,0 +1,25 @@
+{
+  "external_claims_opened": false,
+  "generated_at": "2026-06-29T09:45:19+00:00",
+  "row_counts": {
+    "audit_events": 6,
+    "blocked_claims": 25,
+    "claim_gate_mappers": 17,
+    "country_packs": 4,
+    "decision_scores": 6,
+    "evidence_items": 3,
+    "organizations": 3,
+    "product_profiles": 1,
+    "reports": 24,
+    "review_requests": 1,
+    "source_records": 32,
+    "source_snapshots": 35,
+    "trade_lanes": 1,
+    "trade_readiness_packets": 1,
+    "users": 4,
+    "workspaces": 1
+  },
+  "status": "production_persistence_ready_local_domain_rows_external_db_gate_closed",
+  "total_row_count": 164,
+  "validation_error_count": 0
+}
