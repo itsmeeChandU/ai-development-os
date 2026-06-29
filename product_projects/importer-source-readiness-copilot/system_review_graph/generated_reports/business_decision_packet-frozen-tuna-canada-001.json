@@ -1315,10 +1315,10 @@
       ],
       "competitor_source_countries": [
         "United States",
-        "China",
-        "European Union",
         "Vietnam",
-        "Mexico"
+        "Mexico",
+        "European Union",
+        "China"
       ],
       "destination": "Canada",
       "exporter_origin": "Vietnam",

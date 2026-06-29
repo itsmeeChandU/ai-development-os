@@ -1,20 +1,20 @@
 {
   "classification_counts": {
-    "external_input_gap_language": 58,
+    "external_input_gap_language": 70,
     "fixture_blocker_evidence": 34,
     "generated_audit_language": 7,
     "generator_template_only": 24,
     "policy_enforcement_code": 59,
     "policy_language": 60,
     "review_input_template_only": 1,
-    "simulated_review_approval_closed": 270,
+    "simulated_review_approval_closed": 319,
     "template_reference": 587
   },
   "disallowed_count": 0,
   "disallowed_findings": [],
-  "finding_count": 1100,
-  "generated_at": "2026-06-29T10:07:14+00:00",
-  "head": "9ae461c760b118564157dda76af50858bd0b426d",
+  "finding_count": 1161,
+  "generated_at": "2026-06-29T10:21:11+00:00",
+  "head": "c4d7c962c69307b622804f4aba9e1f06da698348",
   "policy": "docs/NO_SCAFFOLD_DELIVERY_POLICY.md",
   "policy_failures": [],
   "prior_delivery_audit": {
@@ -77,7 +77,7 @@
     "go_live_public_launch_ready": false,
     "simulated_ai_review_can_open_gate": false
   },
-  "scanned_file_count": 2796,
+  "scanned_file_count": 2808,
   "skipped_contexts": [
     "external_review_packages",
     "binary files"

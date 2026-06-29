@@ -41,6 +41,7 @@ from .production_enterprise_api_platform import (
     build_production_enterprise_api_platform,
     write_production_enterprise_api_platform_artifacts,
 )
+from .production_api_service import build_production_api_service, write_production_api_service_artifacts
 from .production_market_intelligence_engine import (
     build_production_market_intelligence_engine,
     write_production_market_intelligence_engine_artifacts,
@@ -86,6 +87,7 @@ __all__ = [
     "build_external_gate_report",
     "build_operator_workflow",
     "build_production_ai_copilot_engine",
+    "build_production_api_service",
     "build_production_country_source_engine",
     "build_production_data_model",
     "build_production_decision_scoring_engine",
@@ -122,6 +124,7 @@ __all__ = [
     "write_json",
     "write_operator_workflow",
     "write_production_ai_copilot_engine_artifacts",
+    "write_production_api_service_artifacts",
     "write_production_country_source_engine_artifacts",
     "write_production_data_model_artifacts",
     "write_production_decision_scoring_engine_artifacts",

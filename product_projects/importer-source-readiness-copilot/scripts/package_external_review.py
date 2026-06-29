@@ -129,6 +129,8 @@ TECHNICAL_FILES = [
     "system_review_graph/production_repository_service_manifest.json",
     "system_review_graph/production_repository_packet_context_packet-frozen-tuna-canada-001.json",
     "system_review_graph/production_repository_report_context_packet-frozen-tuna-canada-001.json",
+    "system_review_graph/production_api_service_manifest.json",
+    "system_review_graph/production_api_service_sample_responses.json",
     "system_review_graph/production_country_source_engine_manifest.json",
     "system_review_graph/production_source_lifecycle.json",
     "system_review_graph/production_source_snapshot_history.json",

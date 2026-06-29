@@ -60,7 +60,7 @@
   "external_review_status": "external_review_ready_findings_pending",
   "final_go_live_status": "local_go_live_contract_complete_public_launch_blocked",
   "final_owner_approval_recorded": false,
-  "generated_at": "2026-06-29T10:06:57+00:00",
+  "generated_at": "2026-06-29T10:20:56+00:00",
   "hosted_private_beta_ready": false,
   "launch_gate_count": 13,
   "launch_gates": [

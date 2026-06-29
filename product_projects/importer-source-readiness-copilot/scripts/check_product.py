@@ -198,6 +198,7 @@ def main() -> int:
     production_reports = _load_json(ROOT / "system_review_graph" / "production_reports_engine_manifest.json")
     production_portals = _load_json(ROOT / "system_review_graph" / "production_portal_workflow_manifest.json")
     production_enterprise = _load_json(ROOT / "system_review_graph" / "production_enterprise_api_manifest.json")
+    production_api_service = _load_json(ROOT / "system_review_graph" / "production_api_service_manifest.json")
     production_payments = _load_json(ROOT / "system_review_graph" / "production_payment_monetization_manifest.json")
     production_trust = _load_json(ROOT / "system_review_graph" / "production_security_privacy_reliability_manifest.json")
     production_launch = _load_json(ROOT / "system_review_graph" / "production_launch_control_plane_manifest.json")
@@ -272,6 +273,7 @@ def main() -> int:
         "src/importer_source_readiness/production_document_intelligence_engine.py",
         "src/importer_source_readiness/production_evidence_claim_gate_engine.py",
         "src/importer_source_readiness/production_enterprise_api_platform.py",
+        "src/importer_source_readiness/production_api_service.py",
         "src/importer_source_readiness/production_expert_review_network.py",
         "src/importer_source_readiness/production_market_intelligence_engine.py",
         "src/importer_source_readiness/production_market_readiness_evidence_room.py",
@@ -299,6 +301,7 @@ def main() -> int:
         "tests/test_production_document_intelligence_engine.py",
         "tests/test_production_evidence_claim_gate_engine.py",
         "tests/test_production_enterprise_api_platform.py",
+        "tests/test_production_api_service.py",
         "tests/test_production_expert_review_network.py",
         "tests/test_production_market_intelligence_engine.py",
         "tests/test_production_market_readiness_evidence_room.py",
@@ -327,6 +330,7 @@ def main() -> int:
         "scripts/run_production_document_intelligence_engine.py",
         "scripts/run_production_evidence_claim_gate_engine.py",
         "scripts/run_production_enterprise_api_platform.py",
+        "scripts/run_production_api_service.py",
         "scripts/run_production_expert_review_network.py",
         "scripts/run_production_market_intelligence_engine.py",
         "scripts/run_production_market_readiness_evidence_room.py",
@@ -368,6 +372,7 @@ def main() -> int:
         "docs/PRODUCTION_DOCUMENT_INTELLIGENCE_ENGINE.md",
         "docs/PRODUCTION_EVIDENCE_CLAIM_GATE_ENGINE.md",
         "docs/PRODUCTION_ENTERPRISE_API_PLATFORM.md",
+        "docs/PRODUCTION_API_SERVICE.md",
         "docs/PRODUCTION_EXPERT_REVIEW_NETWORK.md",
         "docs/PRODUCTION_MARKET_INTELLIGENCE_ENGINE.md",
         "docs/PRODUCTION_MARKET_READINESS_EVIDENCE_ROOM.md",
@@ -495,6 +500,8 @@ def main() -> int:
         "system_review_graph/production_enterprise_webhook_policy.json",
         "system_review_graph/production_enterprise_audit_export_policy.json",
         "system_review_graph/production_enterprise_research_references.json",
+        "system_review_graph/production_api_service_manifest.json",
+        "system_review_graph/production_api_service_sample_responses.json",
         "system_review_graph/production_payment_monetization_manifest.json",
         "system_review_graph/production_pricing_tiers.json",
         "system_review_graph/production_paid_scope_policy.json",
@@ -1492,6 +1499,52 @@ def main() -> int:
         failures.append("enterprise white-label policy must forbid removing blocked claims")
     if white_label.get("claims_opened") is not False:
         failures.append("enterprise white-label policy must not open claims")
+    if production_api_service.get("status") != "production_api_service_ready_repository_backed_safe_reads_effects_closed":
+        failures.append("production API service should dispatch repository-backed safe reads with closed effects")
+    if (
+        production_api_service.get("repository_dependency_status")
+        != "production_repository_service_ready_database_backed_packet_context_claim_gates_closed"
+    ):
+        failures.append("production API service should depend on the production repository service")
+    if (
+        production_api_service.get("enterprise_dependency_status")
+        != "production_enterprise_api_platform_ready_local_contracts_external_gates_closed"
+    ):
+        failures.append("production API service should depend on the enterprise API contract manifest")
+    if production_api_service.get("simulated_request_count", 0) < 10:
+        failures.append("production API service should include simulated request/response proof")
+    if production_api_service.get("safe_read_success_count", 0) < 5:
+        failures.append("production API service should prove safe repository reads")
+    if production_api_service.get("tenant_denial_count", 0) < 1:
+        failures.append("production API service should deny cross-tenant packet reads")
+    if production_api_service.get("unauthenticated_denial_count", 0) < 1:
+        failures.append("production API service should deny unauthenticated requests")
+    if production_api_service.get("effect_gate_closed_count", 0) < 3:
+        failures.append("production API service should close effectful routes")
+    sample_responses = {row.get("name"): row.get("response", {}) for row in production_api_service.get("sample_responses", [])}
+    for name, status in {
+        "customer_packet_read": "ok_repository_packet_context",
+        "customer_scores_read": "ok_repository_scores",
+        "customer_blocked_claims_read": "ok_repository_blocked_claims",
+        "customer_report_context": "ok_repository_report_context_no_write",
+        "customer_safe_summary": "ok_safe_summary_no_live_model_call",
+        "other_customer_packet_denied": "access_denied",
+        "anonymous_packet_denied": "authentication_required",
+        "upload_effect_closed": "effect_gate_closed",
+    }.items():
+        if sample_responses.get(name, {}).get("status") != status:
+            failures.append(f"production API service sample {name} expected {status}")
+    for key in (
+        "hosted_api_ready",
+        "live_api_keys_issued",
+        "webhook_delivery_enabled",
+        "real_uploads_enabled",
+        "external_effects_created",
+        "claims_opened",
+        "public_launch_ready",
+    ):
+        if production_api_service.get(key) is not False:
+            failures.append(f"production API service expected {key}=false")
     if production_payments.get("status") != "production_payment_monetization_engine_ready_live_checkout_closed":
         failures.append("production payment monetization status is incorrect")
     if production_payments.get("pricing_tier_count") != 7:
@@ -2598,6 +2651,10 @@ def main() -> int:
     print(f"production_enterprise_status={production_enterprise['status']}")
     print(f"production_enterprise_api_contracts={production_enterprise['api_contract_count']}")
     print(f"production_enterprise_routes_present={production_enterprise['all_required_api_routes_present']}")
+    print(f"production_api_service_status={production_api_service['status']}")
+    print(f"production_api_service_safe_reads={production_api_service['safe_read_success_count']}")
+    print(f"production_api_service_effect_gates_closed={production_api_service['effect_gate_closed_count']}")
+    print(f"production_api_service_tenant_denials={production_api_service['tenant_denial_count']}")
     print(f"production_payments_status={production_payments['status']}")
     print(f"production_payment_tiers={production_payments['pricing_tier_count']}")
     print(f"production_live_checkout_enabled={production_payments['live_checkout_enabled']}")
