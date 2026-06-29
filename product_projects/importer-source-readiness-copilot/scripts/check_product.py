@@ -194,6 +194,7 @@ def main() -> int:
     production_market_readiness_input_history = _load_json(ROOT / "system_review_graph" / "production_market_readiness_input_history.json")
     production_document_intelligence = _load_json(ROOT / "system_review_graph" / "production_document_intelligence_manifest.json")
     production_document_parser_qa = _load_json(ROOT / "system_review_graph" / "production_document_parser_qa_matrix.json")
+    production_document_sample_library = _load_json(ROOT / "system_review_graph" / "production_document_sample_library.json")
     production_evidence_claim_gate = _load_json(ROOT / "system_review_graph" / "production_evidence_claim_gate_manifest.json")
     production_decision_scoring = _load_json(ROOT / "system_review_graph" / "production_decision_scoring_manifest.json")
     production_ai_copilot = _load_json(ROOT / "system_review_graph" / "production_ai_copilot_manifest.json")
@@ -489,6 +490,7 @@ def main() -> int:
         "system_review_graph/production_document_pipeline.json",
         "system_review_graph/production_document_extracted_fields.json",
         "system_review_graph/production_document_parser_qa_matrix.json",
+        "system_review_graph/production_document_sample_library.json",
         "system_review_graph/production_evidence_claim_gate_manifest.json",
         "system_review_graph/production_expert_review_network_manifest.json",
         "system_review_graph/production_reviewer_profiles.json",
@@ -1061,6 +1063,48 @@ def main() -> int:
         failures.append("production document parser QA matrix should pass all fixtures")
     if any(row.get("claims_opened") is not False for row in production_document_parser_qa.get("rows", [])):
         failures.append("production document parser QA rows must not open claims")
+    if production_document_intelligence.get("sample_library_status") != "production_document_sample_library_ready_source_boundaries_closed":
+        failures.append("production document intelligence should expose sample-library status")
+    if production_document_intelligence.get("sample_library_count", 0) < 18:
+        failures.append("production document intelligence sample library should cover official, route-only, and synthetic samples")
+    if production_document_intelligence.get("sample_library_official_pdf_count") != 3:
+        failures.append("production document intelligence sample library should include three official PDF samples")
+    if production_document_intelligence.get("sample_library_source_route_only_count", 0) < 4:
+        failures.append("production document intelligence sample library should include Canada/India/Vietnam route-only rows")
+    if production_document_intelligence.get("sample_library_synthetic_fixture_count") != 11:
+        failures.append("production document intelligence sample library should include eleven synthetic parser fixtures")
+    if production_document_intelligence.get("sample_library_claims_opened") is not False:
+        failures.append("production document intelligence sample library must not open claims")
+    if production_document_sample_library.get("status") != "production_document_sample_library_ready_source_boundaries_closed":
+        failures.append("production document sample library artifact should be generated")
+    if production_document_sample_library.get("official_pdf_count") != 3:
+        failures.append("production document sample library artifact should include three official PDFs")
+    if production_document_sample_library.get("source_route_only_count", 0) < 4:
+        failures.append("production document sample library artifact should include source-route-only rows")
+    if production_document_sample_library.get("synthetic_fixture_count") != 11:
+        failures.append("production document sample library artifact should include all synthetic fixtures")
+    if production_document_sample_library.get("customer_evidence_allowed_count") != 0:
+        failures.append("production document sample library must not allow samples as customer evidence")
+    if production_document_sample_library.get("claims_opened") is not False:
+        failures.append("production document sample library must keep claims closed")
+    if production_document_sample_library.get("missing_file_count") != 0:
+        failures.append("production document sample library should have all file-backed samples present")
+    library_countries = set(production_document_sample_library.get("country_coverage", []))
+    for country_code in ("CA", "IN", "VN", "GENERIC"):
+        if country_code not in library_countries:
+            failures.append(f"production document sample library missing country coverage {country_code}")
+    library_rows = production_document_sample_library.get("rows", [])
+    if any(row.get("customer_evidence_allowed") is not False for row in library_rows):
+        failures.append("production document sample library rows must not allow customer evidence")
+    if any(row.get("claims_opened") is not False for row in library_rows):
+        failures.append("production document sample library rows must not open claims")
+    official_library_rows = [row for row in library_rows if row.get("sample_level") == "official_pdf_downloaded"]
+    if any(not row.get("file_metadata", {}).get("sha256") for row in official_library_rows):
+        failures.append("official document sample rows must include local file hashes")
+    route_only_source_ids = {row.get("source_id") for row in library_rows if row.get("sample_level") == "official_source_route_only"}
+    for source_id in ("india-dgft-appendices-anf", "india-cbic-customs-forms", "vietnam-customs-portal", "cbsa-b3b-commented-menu-route"):
+        if source_id not in route_only_source_ids:
+            failures.append(f"production document sample library missing route-only source {source_id}")
     for key in ("real_uploads_enabled", "malware_scan_proven", "object_storage_ready", "external_effects_created", "claims_opened", "public_launch_ready"):
         if production_document_intelligence.get(key) is not False:
             failures.append(f"production document intelligence expected {key}=false")

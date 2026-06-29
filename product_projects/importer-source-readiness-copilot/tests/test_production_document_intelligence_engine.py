@@ -13,6 +13,7 @@ if str(SRC) not in sys.path:
 
 from importer_source_readiness.production_document_intelligence_engine import (
     REQUIRED_TRADE_DOCUMENT_CLASSES,
+    SAMPLE_LIBRARY_STATUS,
     STATUS,
     SYNTHETIC_FIXTURES,
     build_production_document_intelligence_engine,
@@ -41,6 +42,11 @@ class ProductionDocumentIntelligenceEngineTests(unittest.TestCase):
         self.assertEqual(manifest["parser_qa_passed_count"], len(SYNTHETIC_FIXTURES))
         self.assertEqual(manifest["parser_qa_needs_rule_count"], 0)
         self.assertTrue(manifest["parser_qa_all_fixtures_passed"])
+        self.assertEqual(manifest["sample_library_status"], SAMPLE_LIBRARY_STATUS)
+        self.assertEqual(manifest["sample_library_official_pdf_count"], 3)
+        self.assertGreaterEqual(manifest["sample_library_source_route_only_count"], 4)
+        self.assertEqual(manifest["sample_library_synthetic_fixture_count"], len(SYNTHETIC_FIXTURES))
+        self.assertFalse(manifest["sample_library_claims_opened"])
         self.assertFalse(manifest["real_uploads_enabled"])
         self.assertFalse(manifest["malware_scan_proven"])
         self.assertFalse(manifest["object_storage_ready"])
@@ -72,10 +78,18 @@ class ProductionDocumentIntelligenceEngineTests(unittest.TestCase):
         manifest = build_production_document_intelligence_engine(ROOT)
         records = manifest["document_records"]
         source_records = manifest["source_records"]
+        sample_library = manifest["sample_library"]
 
         sample_levels = {row.get("sample_level") for row in records}
         self.assertIn("official_pdf_downloaded", sample_levels)
         self.assertIn("synthetic_parser_fixture", sample_levels)
+        self.assertEqual(sample_library["status"], SAMPLE_LIBRARY_STATUS)
+        self.assertFalse(sample_library["claims_opened"])
+        self.assertEqual(sample_library["customer_evidence_allowed_count"], 0)
+        self.assertIn("CA", sample_library["country_coverage"])
+        self.assertIn("IN", sample_library["country_coverage"])
+        self.assertIn("VN", sample_library["country_coverage"])
+        self.assertIn("GENERIC", sample_library["country_coverage"])
         self.assertTrue(any(row["source_id"] == "cbsa-ci1-canada-customs-invoice" for row in source_records))
         self.assertTrue(any(row["source_id"] == "india-dgft-appendices-anf" for row in source_records))
         self.assertTrue(any(row["source_id"] == "vietnam-customs-portal" for row in source_records))
@@ -83,6 +97,20 @@ class ProductionDocumentIntelligenceEngineTests(unittest.TestCase):
         official = [row for row in records if row.get("sample_level") == "official_pdf_downloaded"]
         self.assertTrue(all(row["sample_form_only"] for row in official))
         self.assertTrue(all(row["can_support_customer_claims"] is False for row in records))
+        library_rows = sample_library["rows"]
+        official_library_rows = [row for row in library_rows if row["sample_level"] == "official_pdf_downloaded"]
+        route_only_rows = [row for row in library_rows if row["sample_level"] == "official_source_route_only"]
+        synthetic_rows = [row for row in library_rows if row["sample_level"] == "synthetic_parser_fixture"]
+        self.assertEqual(len(official_library_rows), 3)
+        self.assertGreaterEqual(len(route_only_rows), 4)
+        self.assertEqual(len(synthetic_rows), len(SYNTHETIC_FIXTURES))
+        self.assertTrue(all(row["file_metadata"]["local_file_present"] for row in official_library_rows))
+        self.assertTrue(all(row["file_metadata"]["sha256"] for row in official_library_rows))
+        self.assertTrue(all(row["file_metadata"]["pdf_header_present"] for row in official_library_rows))
+        self.assertTrue(all(row["customer_evidence_allowed"] is False for row in library_rows))
+        self.assertTrue(all(row["claims_opened"] is False for row in library_rows))
+        self.assertTrue(any(row["source_id"] == "vietnam-customs-portal" for row in route_only_rows))
+        self.assertTrue(any(row["source_id"] == "india-dgft-appendices-anf" for row in route_only_rows))
 
         covered_classes = {row["classification"]["type"] for row in records}
         required = {row["document_class"] for row in REQUIRED_TRADE_DOCUMENT_CLASSES}
@@ -145,6 +173,7 @@ class ProductionDocumentIntelligenceEngineTests(unittest.TestCase):
             written_pipeline = json.loads(paths["pipeline"].read_text(encoding="utf-8"))
             written_fields = json.loads(paths["fields"].read_text(encoding="utf-8"))
             written_parser_qa = json.loads(paths["parser_qa"].read_text(encoding="utf-8"))
+            written_sample_library = json.loads(paths["sample_library"].read_text(encoding="utf-8"))
             written_doc = paths["doc"].read_text(encoding="utf-8")
 
             self.assertEqual(written_manifest["status"], STATUS)
@@ -152,9 +181,12 @@ class ProductionDocumentIntelligenceEngineTests(unittest.TestCase):
             self.assertEqual(written_fields["status"], "production_document_extracted_fields_ready_draft_only")
             self.assertEqual(written_parser_qa["status"], "production_document_parser_qa_ready_fixture_expectations_checked")
             self.assertEqual(written_parser_qa["needs_rule_count"], 0)
+            self.assertEqual(written_sample_library["status"], SAMPLE_LIBRARY_STATUS)
+            self.assertEqual(written_sample_library["customer_evidence_allowed_count"], 0)
             self.assertTrue(written_fields["parser_outputs_are_draft"])
             self.assertIn("Production Document Intelligence Engine", written_doc)
             self.assertIn("Parser QA fixtures passed", written_doc)
+            self.assertIn("Sample Library", written_doc)
             self.assertIn("Real uploads enabled: false", written_doc)
 
 

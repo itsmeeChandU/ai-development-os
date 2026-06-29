@@ -6,7 +6,7 @@
     "out_of_scope",
     "wrong_reviewer_type"
   ],
-  "generated_at": "2026-06-29T11:19:42Z",
+  "generated_at": "2026-06-29T11:32:08Z",
   "next_valid_move": "Send Wave 1 packets first; convert every finding into a blocker or scoped approval condition.",
   "proof_boundary": "This is an execution plan. It is not evidence that any reviewer has approved the product.",
   "status": "reviewer_wave_execution_plan_ready",

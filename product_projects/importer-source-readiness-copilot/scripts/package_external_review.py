@@ -59,6 +59,7 @@ EXECUTIVE_FILES = [
     "system_review_graph/production_market_readiness_evidence_room_manifest.json",
     "system_review_graph/production_market_readiness_input_ledger.json",
     "system_review_graph/production_market_readiness_input_history.json",
+    "system_review_graph/production_document_sample_library.json",
     "system_review_graph/reviewer_wave_execution_plan.json",
     "system_review_graph/private_beta_smoke_test_plan.json",
     "system_review_graph/all_stage_readiness_report.json",
@@ -149,6 +150,7 @@ TECHNICAL_FILES = [
     "system_review_graph/production_decision_score_records.json",
     "system_review_graph/production_report_exports.json",
     "system_review_graph/production_document_parser_qa_matrix.json",
+    "system_review_graph/production_document_sample_library.json",
 ]
 
 EXCLUDE_PARTS = {

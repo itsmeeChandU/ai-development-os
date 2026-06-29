@@ -30,6 +30,7 @@ The document pipeline is PDF-first and fail-closed. It helps users understand wh
 - `system_review_graph/production_document_extracted_fields.json`
 - `data/official_sample_documents/canada/*.pdf`
 - `data/parser_qa_documents/*.pdf`
+- `system_review_graph/production_document_sample_library.json`
 
 ## Expected Document Set
 
@@ -44,5 +45,14 @@ questions. Filled parser QA PDFs are synthetic test documents only. Neither
 official samples nor synthetic fixtures are customer evidence, authenticity
 proof, customs approval, CFIA clearance, buyer validation, or supplier
 verification.
+
+The sample library separates three kinds of records:
+
+- official Canada PDF samples stored locally for parser orientation
+- India/Vietnam/Canada official source routes where no stable local sample PDF
+  is treated as verified
+- synthetic filled PDFs used only for parser regression tests
+
+Every sample-library row keeps customer-evidence and approval claims closed.
 
 Proof boundary: document processing does not verify authenticity, classify tariffs, clear CFIA/customs requirements, validate buyers, or approve shipments.

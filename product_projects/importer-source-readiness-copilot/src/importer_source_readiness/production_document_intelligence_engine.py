@@ -9,6 +9,7 @@ closed until production controls and qualified review exist.
 from __future__ import annotations
 
 import json
+import hashlib
 import re
 from datetime import datetime, timezone
 from pathlib import Path
@@ -19,6 +20,7 @@ from .document_processing import TRADE_DOCUMENT_TYPES, triage_pdf_upload
 
 STATUS = "production_document_intelligence_engine_ready_local_pipeline_security_gates_closed"
 PARSER_QA_STATUS = "production_document_parser_qa_ready_fixture_expectations_checked"
+SAMPLE_LIBRARY_STATUS = "production_document_sample_library_ready_source_boundaries_closed"
 
 CBSA_CI1_SOURCE_ID = "cbsa-ci1-canada-customs-invoice"
 CBSA_CI1_URL = "https://www.cbsa-asfc.gc.ca/publications/forms-formulaires/ci1.pdf"
@@ -162,6 +164,20 @@ SYNTHETIC_FIXTURES: tuple[dict[str, Any], ...] = (
 )
 
 DOCUMENT_BLOCKED_CLAIMS = (
+    "document_authenticity_verified",
+    "document_complete",
+    "customs_ready",
+    "tariff_confirmed",
+    "cfia_approved",
+    "origin_confirmed",
+    "buyer_validated",
+    "supplier_verified",
+    "shipment_approved",
+)
+
+SAMPLE_LIBRARY_BLOCKED_CLAIMS = (
+    "official_form_current_law",
+    "document_required_for_lane",
     "document_authenticity_verified",
     "document_complete",
     "customs_ready",
@@ -368,6 +384,14 @@ def _slug(value: str) -> str:
 
 def _text(value: Any) -> str:
     return str(value or "").strip()
+
+
+def _sha256(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as handle:
+        for chunk in iter(lambda: handle.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
 
 
 def _is_present(value: Any) -> bool:
@@ -755,6 +779,168 @@ def _synthetic_fixture_records(root: Path) -> tuple[list[dict[str, Any]], list[d
     return documents, fields
 
 
+def _pdf_file_metadata(path: Path, root: Path) -> dict[str, Any]:
+    data = path.read_bytes()
+    return {
+        "local_path": str(path.relative_to(root)),
+        "local_file_present": True,
+        "file_size_bytes": len(data),
+        "sha256": _sha256(path),
+        "pdf_header_present": data.startswith(b"%PDF"),
+        "pdf_eof_present": data.rstrip().endswith(b"%%EOF"),
+    }
+
+
+def _build_document_sample_library(
+    root: Path,
+    source_registry: dict[str, dict[str, Any]],
+    documents: list[dict[str, Any]],
+    fields: list[dict[str, Any]],
+) -> dict[str, Any]:
+    fields_by_document: dict[str, list[dict[str, Any]]] = {}
+    for field in fields:
+        fields_by_document.setdefault(field["document_id"], []).append(field)
+
+    sample_document_map = {
+        document["document_id"]: document
+        for document in documents
+        if document.get("sample_level") in {"official_pdf_downloaded", "synthetic_parser_fixture"}
+    }
+    rows: list[dict[str, Any]] = []
+    official_base = root / "data" / "official_sample_documents"
+    parser_base = root / "data" / "parser_qa_documents"
+
+    for sample in OFFICIAL_SAMPLE_DOCUMENTS:
+        source = source_registry.get(sample["source_id"], {})
+        sample_path = official_base / sample["filename"]
+        packet_id = f"official-sample-{sample['country_code'].lower()}-{_slug(sample['document_class'])}"
+        document_id = f"document:{packet_id}:{_slug(sample_path.name)}"
+        document = sample_document_map.get(document_id, {})
+        rows.append(
+            {
+                "sample_id": sample["source_id"],
+                "country_code": sample["country_code"],
+                "document_class": sample["document_class"],
+                "sample_level": sample["sample_level"],
+                "source_kind": "official_sample_form",
+                "source_id": sample["source_id"],
+                "source_name": source.get("name", sample["source_owner"]),
+                "source_owner": sample["source_owner"],
+                "source_url": source.get("url", sample["url"]),
+                "source_accessed_at": source.get("accessed_at", ""),
+                "retrieval_status": "local_pdf_present" if sample_path.exists() else "missing_local_pdf",
+                "file_metadata": _pdf_file_metadata(sample_path, root) if sample_path.exists() else {"local_file_present": False},
+                "document_id": document.get("document_id", ""),
+                "extracted_field_count": len(fields_by_document.get(document.get("document_id", ""), [])),
+                "parser_orientation_allowed": True,
+                "customer_evidence_allowed": False,
+                "can_support_customer_claims": False,
+                "claims_opened": False,
+                "blocked_claims": list(SAMPLE_LIBRARY_BLOCKED_CLAIMS),
+                "claim_boundary": source.get(
+                    "claim_boundary",
+                    "Official sample form only; not customer evidence or approval.",
+                ),
+                "next_valid_move": "Use for parser orientation and reviewer-question design only; attach real user evidence and scoped review before any customer claim.",
+            }
+        )
+
+    for sample in SOURCE_ROUTE_ONLY_SAMPLES:
+        source = source_registry.get(sample["source_id"], {})
+        rows.append(
+            {
+                "sample_id": sample["source_id"],
+                "country_code": sample["country_code"],
+                "document_class": sample["document_class"],
+                "sample_level": sample["sample_level"],
+                "source_kind": "official_source_route_only",
+                "source_id": sample["source_id"],
+                "source_name": source.get("name", sample["source_owner"]),
+                "source_owner": sample["source_owner"],
+                "source_url": source.get("url", sample["url"]),
+                "source_accessed_at": source.get("accessed_at", ""),
+                "availability_status": sample["availability_status"],
+                "retrieval_status": "route_recorded_no_local_pdf",
+                "file_metadata": {"local_file_present": False},
+                "parser_orientation_allowed": False,
+                "customer_evidence_allowed": False,
+                "can_support_customer_claims": False,
+                "claims_opened": False,
+                "blocked_claims": list(SAMPLE_LIBRARY_BLOCKED_CLAIMS),
+                "claim_boundary": source.get(
+                    "claim_boundary",
+                    "Source route only; no local official sample PDF was verified.",
+                ),
+                "next_valid_move": "Before adding parser orientation for this lane, download a stable official/public sample file or record a manual-review-only source route.",
+            }
+        )
+
+    for fixture in SYNTHETIC_FIXTURES:
+        path = parser_base / fixture["filename"]
+        packet_id = f"parser-qa-{fixture['country_code'].lower()}-{_slug(fixture['document_class'])}"
+        document_id = f"document:{packet_id}:{_slug(path.name)}"
+        document = sample_document_map.get(document_id, {})
+        rows.append(
+            {
+                "sample_id": path.stem,
+                "country_code": fixture["country_code"],
+                "document_class": fixture["document_class"],
+                "sample_level": "synthetic_parser_fixture",
+                "source_kind": "synthetic_parser_fixture",
+                "source_id": "",
+                "source_name": "Local deterministic parser QA fixture",
+                "source_owner": "Trade Readiness Copilot test fixture",
+                "source_url": "",
+                "source_accessed_at": "",
+                "retrieval_status": "local_synthetic_pdf_present" if path.exists() else "missing_synthetic_pdf",
+                "file_metadata": _pdf_file_metadata(path, root) if path.exists() else {"local_file_present": False},
+                "document_id": document.get("document_id", ""),
+                "extracted_field_count": len(fields_by_document.get(document.get("document_id", ""), [])),
+                "parser_orientation_allowed": True,
+                "customer_evidence_allowed": False,
+                "can_support_customer_claims": False,
+                "claims_opened": False,
+                "blocked_claims": list(SAMPLE_LIBRARY_BLOCKED_CLAIMS),
+                "claim_boundary": "Synthetic filled fixture for parser regression only; it is not official, customer, buyer, supplier, customs, CFIA, or shipment evidence.",
+                "next_valid_move": "Keep in regression tests; replace with real uploaded evidence and scoped review before customer claims.",
+            }
+        )
+
+    official_pdf_rows = [row for row in rows if row["sample_level"] == "official_pdf_downloaded"]
+    source_route_rows = [row for row in rows if row["sample_level"] == "official_source_route_only"]
+    synthetic_rows = [row for row in rows if row["sample_level"] == "synthetic_parser_fixture"]
+    missing_files = [
+        row["sample_id"]
+        for row in rows
+        if row["sample_level"] != "official_source_route_only" and not row["file_metadata"].get("local_file_present")
+    ]
+    countries = sorted({row["country_code"] for row in rows})
+    return {
+        "generated_at": _now(),
+        "status": SAMPLE_LIBRARY_STATUS,
+        "sample_count": len(rows),
+        "official_pdf_count": len(official_pdf_rows),
+        "source_route_only_count": len(source_route_rows),
+        "synthetic_fixture_count": len(synthetic_rows),
+        "country_coverage": countries,
+        "document_classes": sorted({row["document_class"] for row in rows}),
+        "missing_file_count": len(missing_files),
+        "missing_files": missing_files,
+        "all_file_backed_samples_present": not missing_files,
+        "parser_orientation_sample_count": sum(1 for row in rows if row["parser_orientation_allowed"]),
+        "customer_evidence_allowed_count": sum(1 for row in rows if row["customer_evidence_allowed"]),
+        "claims_opened": False,
+        "external_effects_created": False,
+        "blocked_claims": list(SAMPLE_LIBRARY_BLOCKED_CLAIMS),
+        "rows": rows,
+        "proof_boundary": (
+            "The sample library records official/public source routes and local parser fixtures. "
+            "It proves sample provenance and parser-orientation coverage only; it does not prove that any "
+            "document is required, complete, authentic, current law, customs-ready, CFIA-approved, or shipment-ready."
+        ),
+    }
+
+
 def _evidence_rows(documents: list[dict[str, Any]]) -> list[dict[str, Any]]:
     rows = []
     for document in documents:
@@ -908,6 +1094,7 @@ def build_production_document_intelligence_engine(repo_root: Path | None = None)
     evidence = _evidence_rows(documents)
     redactions = _redaction_previews(documents, fields)
     parser_qa = _parser_qa_matrix(documents, fields)
+    sample_library = _build_document_sample_library(root, sources, documents, fields)
     categories = {row["classification"]["type"] for row in documents}
 
     return {
@@ -925,6 +1112,13 @@ def build_production_document_intelligence_engine(repo_root: Path | None = None)
         "parser_qa_passed_count": parser_qa["passed_count"],
         "parser_qa_needs_rule_count": parser_qa["needs_rule_count"],
         "parser_qa_all_fixtures_passed": parser_qa["all_fixtures_passed"],
+        "sample_library_status": sample_library["status"],
+        "sample_library_count": sample_library["sample_count"],
+        "sample_library_official_pdf_count": sample_library["official_pdf_count"],
+        "sample_library_source_route_only_count": sample_library["source_route_only_count"],
+        "sample_library_synthetic_fixture_count": sample_library["synthetic_fixture_count"],
+        "sample_library_country_coverage": sample_library["country_coverage"],
+        "sample_library_claims_opened": sample_library["claims_opened"],
         "pipeline_policy": _pipeline_policy(upload_policy, ai_policy, manual_no_ai),
         "pipeline_stages": list(PIPELINE_STAGES),
         "required_trade_document_classes": list(REQUIRED_TRADE_DOCUMENT_CLASSES),
@@ -978,6 +1172,7 @@ def build_production_document_intelligence_engine(repo_root: Path | None = None)
         "evidence_records": evidence,
         "redaction_previews": redactions,
         "parser_qa_matrix": parser_qa,
+        "sample_library": sample_library,
         "ai_analysis_policy": {
             "ai_optional": True,
             "ai_outputs_can_open_gates": False,
@@ -1034,6 +1229,13 @@ def render_document_intelligence_markdown(payload: dict[str, Any]) -> str:
     lines.append(f"- Evidence records: {payload['evidence_record_count']}")
     lines.append(f"- Redaction previews: {payload['redaction_preview_count']}")
     lines.append(f"- Parser QA fixtures passed: {payload['parser_qa_passed_count']} of {payload['parser_qa_fixture_count']}")
+    lines.extend(["", "## Sample Library", ""])
+    lines.append(f"- Status: `{payload['sample_library_status']}`")
+    lines.append(f"- Official PDF samples: {payload['sample_library_official_pdf_count']}")
+    lines.append(f"- Official source-route-only rows: {payload['sample_library_source_route_only_count']}")
+    lines.append(f"- Synthetic parser fixtures: {payload['sample_library_synthetic_fixture_count']}")
+    lines.append(f"- Country coverage: {', '.join(payload['sample_library_country_coverage'])}")
+    lines.append("- Customer evidence allowed from samples: false")
     lines.extend(["", "## Source Records", ""])
     for source in payload["source_records"]:
         lines.append(f"- `{source['source_id']}`: {source['url']}")
@@ -1063,6 +1265,7 @@ def write_production_document_intelligence_engine_artifacts(payload: dict[str, A
     pipeline_path = graph / "production_document_pipeline.json"
     fields_path = graph / "production_document_extracted_fields.json"
     parser_qa_path = graph / "production_document_parser_qa_matrix.json"
+    sample_library_path = graph / "production_document_sample_library.json"
     doc_path = docs / "PRODUCTION_DOCUMENT_INTELLIGENCE_ENGINE.md"
     manifest_path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     pipeline_path.write_text(
@@ -1106,11 +1309,13 @@ def write_production_document_intelligence_engine_artifacts(payload: dict[str, A
         encoding="utf-8",
     )
     parser_qa_path.write_text(json.dumps(payload["parser_qa_matrix"], indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    sample_library_path.write_text(json.dumps(payload["sample_library"], indent=2, sort_keys=True) + "\n", encoding="utf-8")
     doc_path.write_text(render_document_intelligence_markdown(payload), encoding="utf-8")
     return {
         "manifest": manifest_path,
         "pipeline": pipeline_path,
         "fields": fields_path,
         "parser_qa": parser_qa_path,
+        "sample_library": sample_library_path,
         "doc": doc_path,
     }

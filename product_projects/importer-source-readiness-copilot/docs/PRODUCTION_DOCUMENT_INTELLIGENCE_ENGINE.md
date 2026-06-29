@@ -49,6 +49,15 @@ Document intelligence now has a production-shaped local pipeline, official sampl
 - Redaction previews: 17
 - Parser QA fixtures passed: 11 of 11
 
+## Sample Library
+
+- Status: `production_document_sample_library_ready_source_boundaries_closed`
+- Official PDF samples: 3
+- Official source-route-only rows: 4
+- Synthetic parser fixtures: 11
+- Country coverage: CA, GENERIC, IN, VN
+- Customer evidence allowed from samples: false
+
 ## Source Records
 
 - `cbsa-ci1-canada-customs-invoice`: https://www.cbsa-asfc.gc.ca/publications/forms-formulaires/ci1.pdf
