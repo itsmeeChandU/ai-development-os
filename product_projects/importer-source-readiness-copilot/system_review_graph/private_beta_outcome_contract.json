@@ -1,0 +1,168 @@
+{
+  "accepted_required_session_count": 0,
+  "blocked_claims": [
+    "private_beta_approved",
+    "public_launch_approved",
+    "buyer_validated",
+    "supplier_verified",
+    "customs_or_tariff_ready",
+    "cfia_approved",
+    "safe_for_real_uploads"
+  ],
+  "claims_opened": false,
+  "current_accepted_session_count": 0,
+  "current_real_session_count": 0,
+  "current_session_record_count": 0,
+  "external_effects_created": false,
+  "gate_matrix": {
+    "blocked_gate_count": 7,
+    "claims_opened": false,
+    "external_effects_created": false,
+    "gate_count": 7,
+    "generated_at": "2026-06-29T11:46:04Z",
+    "proof_boundary": "The matrix shows beta evidence gates. It does not approve hosted beta or public launch.",
+    "rows": [
+      {
+        "blocks_private_beta": true,
+        "blocks_public_launch": true,
+        "current_evidence": "not_verified_by_this_contract",
+        "gate": "wave_1_external_review_before_beta",
+        "required_evidence": "Real Wave 1 reviewer decisions and resolved P0/P1 findings.",
+        "status": "blocked"
+      },
+      {
+        "blocks_private_beta": true,
+        "blocks_public_launch": true,
+        "current_evidence": "not_verified_by_this_contract",
+        "gate": "hosted_staging_before_real_users",
+        "required_evidence": "Dated staging URL, build, TLS/secrets/storage/logging/rollback proof.",
+        "status": "blocked"
+      },
+      {
+        "blocks_private_beta": true,
+        "blocks_public_launch": true,
+        "current_evidence": "not_verified_by_this_contract",
+        "gate": "privacy_security_legal_scope_before_real_data",
+        "required_evidence": "Scoped privacy/security/legal acceptance for beta data handling.",
+        "status": "blocked"
+      },
+      {
+        "blocks_private_beta": true,
+        "blocks_public_launch": true,
+        "current_evidence": "0 of 5 accepted",
+        "gate": "real_user_session_minimum",
+        "required_evidence": "Five passing real target-user sessions across required segments.",
+        "status": "not_received"
+      },
+      {
+        "blocks_private_beta": true,
+        "blocks_public_launch": true,
+        "current_evidence": "0",
+        "gate": "unsafe_approval_misunderstanding_zero",
+        "required_evidence": "Zero users leave believing the product approved customs, CFIA, buyer, supplier, or shipment readiness.",
+        "status": "not_received"
+      },
+      {
+        "blocks_private_beta": true,
+        "blocks_public_launch": true,
+        "current_evidence": "0",
+        "gate": "critical_privacy_upload_incidents_zero",
+        "required_evidence": "Zero critical upload, consent, retention, or deletion incidents.",
+        "status": "not_received"
+      },
+      {
+        "blocks_private_beta": true,
+        "blocks_public_launch": true,
+        "current_evidence": "external_inputs/real_users_private_beta_outcomes.json",
+        "gate": "returned_input_record_for_go_live_area",
+        "required_evidence": "A scoped returned-input record for real_users_private_beta_outcomes with attached participant/session evidence.",
+        "status": "not_received"
+      }
+    ],
+    "smoke_plan_status": "private_beta_smoke_test_plan_ready_blocked_until_wave_1_and_staging",
+    "status": "private_beta_outcome_gate_matrix_ready_claims_closed"
+  },
+  "generated_at": "2026-06-29T11:46:04Z",
+  "hosted_private_beta_ready": false,
+  "next_valid_move": "Collect Wave 1/staging/privacy approvals first, then run five real target-user sessions and save each session record.",
+  "optional_reviewer_session_count": 0,
+  "privacy_or_upload_failure_count": 0,
+  "proof_boundary": "This contract evaluates real private-beta session evidence. It does not create users, send outreach, approve hosted beta, approve public launch, or open customs, buyer, supplier, payment, privacy, security, or legal claims.",
+  "public_launch_ready": false,
+  "real_user_evidence_ready": false,
+  "required_evidence_categories": [
+    "participant_profile",
+    "consent_or_permission",
+    "session_date_and_environment",
+    "task_results",
+    "claim_comprehension",
+    "privacy_or_deletion_result",
+    "issues_and_changes",
+    "artifact_or_recording_references",
+    "outcome_decision"
+  ],
+  "required_segments_met": false,
+  "required_session_count": 5,
+  "research_mode": "source_backed_beta_evidence_contract",
+  "segment_rows": [
+    {
+      "accepted_session_count": 0,
+      "missing_session_count": 2,
+      "next_valid_move": "Collect 2 more passing real-user session(s).",
+      "received_session_count": 0,
+      "required_count": 2,
+      "requirement_met": false,
+      "segment": "beginner_user_no_documents"
+    },
+    {
+      "accepted_session_count": 0,
+      "missing_session_count": 2,
+      "next_valid_move": "Collect 2 more passing real-user session(s).",
+      "received_session_count": 0,
+      "required_count": 2,
+      "requirement_met": false,
+      "segment": "document_holding_import_or_export_user"
+    },
+    {
+      "accepted_session_count": 0,
+      "missing_session_count": 1,
+      "next_valid_move": "Collect 1 more passing real-user session(s).",
+      "received_session_count": 0,
+      "required_count": 1,
+      "requirement_met": false,
+      "segment": "operator_or_consultant_style_user"
+    }
+  ],
+  "session_validations": [],
+  "simulated_or_internal_session_count": 0,
+  "source_anchors": [
+    {
+      "checked_at": "2026-06-29",
+      "name": "Why You Only Need to Test with 5 Users",
+      "product_use": "Supports a small qualitative first beta wave, not statistical validation.",
+      "publisher": "Nielsen Norman Group",
+      "source_id": "nng-usability-five-users",
+      "url": "https://www.nngroup.com/articles/why-you-only-need-to-test-with-5-users/"
+    },
+    {
+      "checked_at": "2026-06-29",
+      "name": "PIPEDA fair information principles",
+      "product_use": "Requires beta evidence to record purpose, consent, limiting use/retention, safeguards, and deletion handling.",
+      "publisher": "Office of the Privacy Commissioner of Canada",
+      "source_id": "opc-pipeda-principles",
+      "url": "https://www.priv.gc.ca/en/privacy-topics/privacy-laws-in-canada/the-personal-information-protection-and-electronic-documents-act-pipeda/p_principle/"
+    },
+    {
+      "checked_at": "2026-06-29",
+      "name": "File Upload Cheat Sheet",
+      "product_use": "Keeps real user uploads blocked until hosted upload controls are proven.",
+      "publisher": "OWASP",
+      "source_id": "owasp-file-upload",
+      "url": "https://cheatsheetseries.owasp.org/cheatsheets/File_Upload_Cheat_Sheet.html"
+    }
+  ],
+  "status": "private_beta_outcome_contract_ready_real_users_required_claims_closed",
+  "task_count": 9,
+  "unresolved_p0_p1_issue_count": 0,
+  "unsafe_approval_misunderstanding_count": 0
+}

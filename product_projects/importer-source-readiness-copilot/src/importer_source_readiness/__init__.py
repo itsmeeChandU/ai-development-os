@@ -56,6 +56,12 @@ from .go_live_input_evidence import (
     validate_go_live_input_record,
     write_go_live_returned_input_evidence_artifacts,
 )
+from .private_beta_outcomes import (
+    build_private_beta_outcome_contract,
+    build_private_beta_session_schema,
+    validate_private_beta_session_record,
+    write_private_beta_outcome_artifacts,
+)
 from .production_packet_engine import build_production_packet_engine, write_production_packet_engine_artifacts
 from .production_persistence import build_production_persistence_snapshot, write_production_persistence_artifacts
 from .production_repository import build_production_repository_service, write_production_repository_artifacts
@@ -104,6 +110,8 @@ __all__ = [
     "build_market_readiness_input_ledger",
     "build_production_market_readiness_evidence_room",
     "build_go_live_returned_input_evidence_manifest",
+    "build_private_beta_outcome_contract",
+    "build_private_beta_session_schema",
     "build_production_launch_control_plane",
     "build_production_packet_engine",
     "build_production_persistence_snapshot",
@@ -141,6 +149,7 @@ __all__ = [
     "write_production_market_intelligence_engine_artifacts",
     "write_production_market_readiness_evidence_room_artifacts",
     "write_go_live_returned_input_evidence_artifacts",
+    "write_private_beta_outcome_artifacts",
     "write_production_launch_control_plane_artifacts",
     "write_production_packet_engine_artifacts",
     "write_production_persistence_artifacts",
@@ -155,4 +164,5 @@ __all__ = [
     "write_report",
     "write_screenshot_manifest",
     "validate_go_live_input_record",
+    "validate_private_beta_session_record",
 ]

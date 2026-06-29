@@ -214,6 +214,9 @@ def main() -> int:
     go_live_input_readiness = _load_json(ROOT / "system_review_graph" / "go_live_input_readiness_report.json")
     reviewer_wave_plan = _load_json(ROOT / "system_review_graph" / "reviewer_wave_execution_plan.json")
     private_beta_smoke = _load_json(ROOT / "system_review_graph" / "private_beta_smoke_test_plan.json")
+    private_beta_outcome = _load_json(ROOT / "system_review_graph" / "private_beta_outcome_contract.json")
+    private_beta_session_schema = _load_json(ROOT / "system_review_graph" / "private_beta_session_evidence_schema.json")
+    private_beta_outcome_gate_matrix = _load_json(ROOT / "system_review_graph" / "private_beta_outcome_gate_matrix.json")
     external_review = _load_json(ROOT / "system_review_graph" / "external_review_findings_report.json")
     ai_assisted_review = _load_json(ROOT / "system_review_graph" / "ai_assisted_external_review_plan.json")
     ai_assisted_findings = _load_json(ROOT / "system_review_graph" / "ai_assisted_external_review_findings_report.json")
@@ -272,6 +275,7 @@ def main() -> int:
         "src/importer_source_readiness/external_review.py",
         "src/importer_source_readiness/external_validation_research.py",
         "src/importer_source_readiness/go_live_input_evidence.py",
+        "src/importer_source_readiness/private_beta_outcomes.py",
         "src/importer_source_readiness/production_ai_copilot_engine.py",
         "src/importer_source_readiness/production_country_source_engine.py",
         "src/importer_source_readiness/production_data_model.py",
@@ -301,6 +305,7 @@ def main() -> int:
         "tests/test_external_review_workflow.py",
         "tests/test_external_validation_research.py",
         "tests/test_go_live_input_evidence.py",
+        "tests/test_private_beta_outcomes.py",
         "tests/test_production_ai_copilot_engine.py",
         "tests/test_production_country_source_engine.py",
         "tests/test_production_data_model.py",
@@ -330,6 +335,7 @@ def main() -> int:
         "scripts/build_external_review_packet.py",
         "scripts/run_final_go_live_review.py",
         "scripts/run_external_validation_requirements.py",
+        "scripts/run_private_beta_outcomes.py",
         "scripts/run_production_ai_copilot_engine.py",
         "scripts/run_production_country_source_engine.py",
         "scripts/run_production_data_model.py",
@@ -372,6 +378,7 @@ def main() -> int:
         "docs/EXTERNAL_VALIDATION_REQUIREMENTS.md",
         "docs/EXTERNAL_VALIDATION_REVIEWER_BRIEF.md",
         "docs/GO_LIVE_INPUT_REQUESTS.md",
+        "docs/PRIVATE_BETA_OUTCOME_CONTRACT.md",
         "docs/PRODUCTION_AI_COPILOT_ENGINE.md",
         "docs/PRODUCTION_COUNTRY_SOURCE_ENGINE.md",
         "docs/PRODUCTION_DATA_MODEL.md",
@@ -453,6 +460,9 @@ def main() -> int:
         "system_review_graph/go_live_input_readiness_report.json",
         "system_review_graph/go_live_returned_input_evidence_manifest.json",
         "system_review_graph/go_live_returned_input_validation_matrix.json",
+        "system_review_graph/private_beta_outcome_contract.json",
+        "system_review_graph/private_beta_session_evidence_schema.json",
+        "system_review_graph/private_beta_outcome_gate_matrix.json",
         "system_review_graph/production_country_source_engine_manifest.json",
         "system_review_graph/production_country_packs.json",
         "system_review_graph/production_source_lifecycle.json",
@@ -2415,6 +2425,57 @@ def main() -> int:
         failures.append("reviewer wave execution plan should include three waves")
     if private_beta_smoke.get("status") != "private_beta_smoke_test_plan_ready_blocked_until_wave_1_and_staging":
         failures.append("private beta smoke test plan should stay blocked until Wave 1 and staging")
+    if private_beta_session_schema.get("status") != "private_beta_session_evidence_schema_ready_claims_closed":
+        failures.append("private beta session evidence schema should be generated")
+    if private_beta_session_schema.get("required_session_count") != 5:
+        failures.append("private beta session schema should require five real target-user sessions")
+    if private_beta_session_schema.get("task_count") != 9:
+        failures.append("private beta session schema should cover the nine smoke-test tasks")
+    for evidence_category in (
+        "participant_profile",
+        "consent_or_permission",
+        "task_results",
+        "claim_comprehension",
+        "privacy_or_deletion_result",
+        "issues_and_changes",
+        "artifact_or_recording_references",
+    ):
+        if evidence_category not in private_beta_session_schema.get("required_evidence_categories", []):
+            failures.append(f"private beta session schema missing evidence category {evidence_category}")
+    if private_beta_outcome.get("status") != "private_beta_outcome_contract_ready_real_users_required_claims_closed":
+        failures.append("private beta outcome contract should be generated")
+    if private_beta_outcome.get("required_session_count") != 5:
+        failures.append("private beta outcome contract should require five sessions")
+    if private_beta_outcome.get("current_real_session_count") != 0:
+        failures.append("committed private beta outcome contract should show zero real sessions until evidence is returned")
+    if private_beta_outcome.get("current_accepted_session_count") != 0:
+        failures.append("private beta outcome contract should not accept sessions without real beta records")
+    if private_beta_outcome.get("accepted_required_session_count") != 0:
+        failures.append("private beta outcome contract should not count required sessions without real beta records")
+    if private_beta_outcome.get("required_segments_met") is not False:
+        failures.append("private beta outcome contract should keep segment requirements unmet")
+    for key in ("real_user_evidence_ready", "hosted_private_beta_ready", "public_launch_ready", "claims_opened", "external_effects_created"):
+        if private_beta_outcome.get(key) is not False:
+            failures.append(f"private beta outcome contract expected {key}=false")
+    if private_beta_outcome.get("simulated_or_internal_session_count") != 0:
+        failures.append("private beta outcome contract should not count internal/simulated sessions in committed artifacts")
+    if private_beta_outcome.get("unsafe_approval_misunderstanding_count") != 0:
+        failures.append("private beta outcome contract should show no recorded unsafe misunderstandings before sessions exist")
+    beta_segment_ids = {row.get("segment") for row in private_beta_outcome.get("segment_rows", [])}
+    for segment in ("beginner_user_no_documents", "document_holding_import_or_export_user", "operator_or_consultant_style_user"):
+        if segment not in beta_segment_ids:
+            failures.append(f"private beta outcome contract missing required segment {segment}")
+    if private_beta_outcome_gate_matrix.get("status") != "private_beta_outcome_gate_matrix_ready_claims_closed":
+        failures.append("private beta outcome gate matrix should be generated")
+    if private_beta_outcome_gate_matrix.get("gate_count", 0) < 7:
+        failures.append("private beta outcome gate matrix should include pre-beta and post-session gates")
+    if private_beta_outcome_gate_matrix.get("blocked_gate_count", 0) < 7:
+        failures.append("private beta outcome gate matrix should keep all beta gates blocked before evidence")
+    if private_beta_outcome_gate_matrix.get("claims_opened") is not False:
+        failures.append("private beta outcome gate matrix must not open claims")
+    beta_contract_md = (ROOT / "docs" / "PRIVATE_BETA_OUTCOME_CONTRACT.md").read_text(encoding="utf-8")
+    if "Internal demos" not in beta_contract_md or "Real user evidence ready: false" not in beta_contract_md:
+        failures.append("private beta outcome contract doc should distinguish internal QA from real beta evidence")
     operation_coverage = product_operations.get("execution_coverage", {})
     for key in (
         "data_intake",

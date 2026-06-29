@@ -17,6 +17,7 @@ if str(SRC) not in sys.path:
 
 from importer_source_readiness.final_go_live import write_final_go_live_artifacts
 from importer_source_readiness.external_validation_research import write_external_validation_requirements
+from importer_source_readiness.private_beta_outcomes import write_private_beta_outcome_artifacts
 from importer_source_readiness.production_market_readiness_evidence_room import (
     build_production_market_readiness_evidence_room,
     write_production_market_readiness_evidence_room_artifacts,
@@ -48,6 +49,7 @@ EXECUTIVE_FILES = [
     "docs/EXTERNAL_VALIDATION_REVIEWER_BRIEF.md",
     "docs/GO_LIVE_INPUT_REQUESTS.md",
     "docs/GO_LIVE_RETURNED_INPUT_EVIDENCE.md",
+    "docs/PRIVATE_BETA_OUTCOME_CONTRACT.md",
     "system_review_graph/final_go_live_decision_report.json",
     "system_review_graph/current_external_gate_research.json",
     "system_review_graph/external_validation_requirements_report.json",
@@ -62,6 +64,9 @@ EXECUTIVE_FILES = [
     "system_review_graph/production_document_sample_library.json",
     "system_review_graph/reviewer_wave_execution_plan.json",
     "system_review_graph/private_beta_smoke_test_plan.json",
+    "system_review_graph/private_beta_outcome_contract.json",
+    "system_review_graph/private_beta_session_evidence_schema.json",
+    "system_review_graph/private_beta_outcome_gate_matrix.json",
     "system_review_graph/all_stage_readiness_report.json",
     "system_review_graph/private_beta_readiness_checklist.json",
     "system_review_graph/deployment_readiness_report.json",
@@ -151,6 +156,9 @@ TECHNICAL_FILES = [
     "system_review_graph/production_report_exports.json",
     "system_review_graph/production_document_parser_qa_matrix.json",
     "system_review_graph/production_document_sample_library.json",
+    "system_review_graph/private_beta_outcome_contract.json",
+    "system_review_graph/private_beta_session_evidence_schema.json",
+    "system_review_graph/private_beta_outcome_gate_matrix.json",
 ]
 
 EXCLUDE_PARTS = {
@@ -230,6 +238,10 @@ def package_review_bundles(root: Path, output_dir: Path, *, stamp: str | None = 
     stamp = stamp or utc_stamp()
     write_final_go_live_artifacts(root, generated_at=datetime.now(UTC).replace(microsecond=0).isoformat().replace("+00:00", "Z"))
     write_external_validation_requirements(
+        root,
+        generated_at=datetime.now(UTC).replace(microsecond=0).isoformat().replace("+00:00", "Z"),
+    )
+    write_private_beta_outcome_artifacts(
         root,
         generated_at=datetime.now(UTC).replace(microsecond=0).isoformat().replace("+00:00", "Z"),
     )

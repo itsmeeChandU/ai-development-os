@@ -1,0 +1,68 @@
+{
+  "blocked_gate_count": 7,
+  "claims_opened": false,
+  "external_effects_created": false,
+  "gate_count": 7,
+  "generated_at": "2026-06-29T11:46:04Z",
+  "proof_boundary": "The matrix shows beta evidence gates. It does not approve hosted beta or public launch.",
+  "rows": [
+    {
+      "blocks_private_beta": true,
+      "blocks_public_launch": true,
+      "current_evidence": "not_verified_by_this_contract",
+      "gate": "wave_1_external_review_before_beta",
+      "required_evidence": "Real Wave 1 reviewer decisions and resolved P0/P1 findings.",
+      "status": "blocked"
+    },
+    {
+      "blocks_private_beta": true,
+      "blocks_public_launch": true,
+      "current_evidence": "not_verified_by_this_contract",
+      "gate": "hosted_staging_before_real_users",
+      "required_evidence": "Dated staging URL, build, TLS/secrets/storage/logging/rollback proof.",
+      "status": "blocked"
+    },
+    {
+      "blocks_private_beta": true,
+      "blocks_public_launch": true,
+      "current_evidence": "not_verified_by_this_contract",
+      "gate": "privacy_security_legal_scope_before_real_data",
+      "required_evidence": "Scoped privacy/security/legal acceptance for beta data handling.",
+      "status": "blocked"
+    },
+    {
+      "blocks_private_beta": true,
+      "blocks_public_launch": true,
+      "current_evidence": "0 of 5 accepted",
+      "gate": "real_user_session_minimum",
+      "required_evidence": "Five passing real target-user sessions across required segments.",
+      "status": "not_received"
+    },
+    {
+      "blocks_private_beta": true,
+      "blocks_public_launch": true,
+      "current_evidence": "0",
+      "gate": "unsafe_approval_misunderstanding_zero",
+      "required_evidence": "Zero users leave believing the product approved customs, CFIA, buyer, supplier, or shipment readiness.",
+      "status": "not_received"
+    },
+    {
+      "blocks_private_beta": true,
+      "blocks_public_launch": true,
+      "current_evidence": "0",
+      "gate": "critical_privacy_upload_incidents_zero",
+      "required_evidence": "Zero critical upload, consent, retention, or deletion incidents.",
+      "status": "not_received"
+    },
+    {
+      "blocks_private_beta": true,
+      "blocks_public_launch": true,
+      "current_evidence": "external_inputs/real_users_private_beta_outcomes.json",
+      "gate": "returned_input_record_for_go_live_area",
+      "required_evidence": "A scoped returned-input record for real_users_private_beta_outcomes with attached participant/session evidence.",
+      "status": "not_received"
+    }
+  ],
+  "smoke_plan_status": "private_beta_smoke_test_plan_ready_blocked_until_wave_1_and_staging",
+  "status": "private_beta_outcome_gate_matrix_ready_claims_closed"
+}

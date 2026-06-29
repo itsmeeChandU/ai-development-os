@@ -1,7 +1,7 @@
 # No Scaffold Audit Report
 
 Status: `pass_no_scaffold_completion_claims`
-Head: `ca783d0ea8d462af52ef527c1f1b199d22415478`
+Head: `d808830e697fbc621d494c7d062a2e68c76d354e`
 Policy: `docs/NO_SCAFFOLD_DELIVERY_POLICY.md`
 
 ## Prior Delivery Audit
@@ -27,8 +27,8 @@ Verdict: Prior delivery produced a real audit/evaluator package and shareable re
 
 ## Scan Summary
 
-- Scanned files: `2846`
-- Scaffold-like findings: `1162`
+- Scanned files: `2859`
+- Scaffold-like findings: `1170`
 - Disallowed findings: `0`
 
 ## Classification Counts
@@ -40,7 +40,7 @@ Verdict: Prior delivery produced a real audit/evaluator package and shareable re
 - `policy_enforcement_code`: `59`
 - `policy_language`: `60`
 - `review_input_template_only`: `1`
-- `simulated_review_approval_closed`: `319`
+- `simulated_review_approval_closed`: `327`
 - `template_reference`: `587`
 
 ## Result

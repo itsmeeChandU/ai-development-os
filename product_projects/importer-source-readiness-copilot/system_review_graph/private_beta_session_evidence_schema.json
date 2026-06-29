@@ -1,0 +1,191 @@
+{
+  "accepted_task_statuses": [
+    "completed_without_help"
+  ],
+  "allowed_not_applicable_status": "not_applicable_with_reason",
+  "blocked_until": [
+    "Wave 1 external review decisions are received and P0/P1 findings are resolved or explicitly blocking.",
+    "Hosted staging proof exists for the exact beta scope.",
+    "Privacy/security/legal owner accepts scoped beta data handling.",
+    "Five required real target-user sessions pass the required tasks without unsafe claim misunderstanding."
+  ],
+  "claim_comprehension_checks": [
+    {
+      "field": "participant_understood_no_customs_approval",
+      "question": "Did the user understand the product is not customs approval?"
+    },
+    {
+      "field": "participant_understood_no_buyer_validation",
+      "question": "Did the user understand a lead or report is not buyer validation?"
+    },
+    {
+      "field": "participant_understood_no_supplier_verification",
+      "question": "Did the user understand collected supplier documents are not supplier verification?"
+    },
+    {
+      "field": "participant_understood_next_valid_move",
+      "question": "Could the user explain the next valid move in plain language?"
+    }
+  ],
+  "claims_opened": false,
+  "external_effects_created": false,
+  "generated_at": "2026-06-29T11:46:04Z",
+  "non_passing_task_statuses": [
+    "completed_with_help",
+    "failed",
+    "skipped",
+    "not_observed"
+  ],
+  "optional_segments": [
+    {
+      "plain_description": "Customs broker, freight forwarder, or reviewer style user. Useful before launch, not counted in the five-user minimum.",
+      "required_count": 0,
+      "segment": "reviewer_broker_or_freight_forwarder_style_user"
+    }
+  ],
+  "proof_boundary": "This schema defines accepted private-beta evidence. It is not itself user validation or launch approval.",
+  "required_evidence_categories": [
+    "participant_profile",
+    "consent_or_permission",
+    "session_date_and_environment",
+    "task_results",
+    "claim_comprehension",
+    "privacy_or_deletion_result",
+    "issues_and_changes",
+    "artifact_or_recording_references",
+    "outcome_decision"
+  ],
+  "required_record_fields": [
+    "session_id",
+    "participant_segment",
+    "participant_role",
+    "participant_is_real_target_user",
+    "participant_is_internal_team",
+    "session_date",
+    "consent_record_ref",
+    "environment_url_or_ref",
+    "build_or_commit_ref",
+    "task_results",
+    "claim_comprehension",
+    "privacy_or_deletion_result",
+    "issues",
+    "artifact_references",
+    "outcome_decision"
+  ],
+  "required_segments": [
+    {
+      "plain_description": "Beginner exporter or importer who does not yet have trade documents.",
+      "required_count": 2,
+      "segment": "beginner_user_no_documents"
+    },
+    {
+      "plain_description": "Business user who has at least one trade document to inspect.",
+      "required_count": 2,
+      "segment": "document_holding_import_or_export_user"
+    },
+    {
+      "plain_description": "Advisor, operator, consultant, or internal reviewer style user who can assess workflow fit.",
+      "required_count": 1,
+      "segment": "operator_or_consultant_style_user"
+    }
+  ],
+  "required_session_count": 5,
+  "status": "private_beta_session_evidence_schema_ready_claims_closed",
+  "task_count": 9,
+  "tasks": [
+    {
+      "label": "Start a beginner trade-readiness flow",
+      "required_for_segments": [
+        "beginner_user_no_documents",
+        "document_holding_import_or_export_user",
+        "operator_or_consultant_style_user"
+      ],
+      "route": "/start",
+      "task_id": "beginner_starter_flow"
+    },
+    {
+      "allowed_not_applicable_segments": [
+        "beginner_user_no_documents"
+      ],
+      "label": "Run the PDF upload quick check",
+      "required_for_segments": [
+        "document_holding_import_or_export_user",
+        "operator_or_consultant_style_user"
+      ],
+      "route": "/trade-check",
+      "task_id": "pdf_upload_quick_check"
+    },
+    {
+      "label": "Confirm extracted fields or explain why no document was available",
+      "required_for_segments": [
+        "beginner_user_no_documents",
+        "document_holding_import_or_export_user",
+        "operator_or_consultant_style_user"
+      ],
+      "route": "/trade-check",
+      "task_id": "confirm_extracted_fields"
+    },
+    {
+      "label": "Download starter and missing-evidence reports",
+      "required_for_segments": [
+        "beginner_user_no_documents",
+        "document_holding_import_or_export_user",
+        "operator_or_consultant_style_user"
+      ],
+      "route": "/reports",
+      "task_id": "download_reports"
+    },
+    {
+      "label": "Save a packet or open a workspace",
+      "required_for_segments": [
+        "beginner_user_no_documents",
+        "document_holding_import_or_export_user",
+        "operator_or_consultant_style_user"
+      ],
+      "route": "/workspace",
+      "task_id": "save_packet_or_workspace"
+    },
+    {
+      "allowed_not_applicable_segments": [
+        "beginner_user_no_documents"
+      ],
+      "label": "Use deletion or retention controls",
+      "required_for_segments": [
+        "document_holding_import_or_export_user",
+        "operator_or_consultant_style_user"
+      ],
+      "route": "/privacy",
+      "task_id": "delete_files_request"
+    },
+    {
+      "label": "Open the ChatGPT-safe summary or no-AI alternative",
+      "required_for_segments": [
+        "beginner_user_no_documents",
+        "document_holding_import_or_export_user",
+        "operator_or_consultant_style_user"
+      ],
+      "route": "/summary",
+      "task_id": "chatgpt_safe_summary"
+    },
+    {
+      "label": "Open the buyer or broker packet",
+      "required_for_segments": [
+        "beginner_user_no_documents",
+        "document_holding_import_or_export_user",
+        "operator_or_consultant_style_user"
+      ],
+      "route": "/packets",
+      "task_id": "buyer_broker_packet"
+    },
+    {
+      "label": "Read blocked claims and the next valid move",
+      "required_for_segments": [
+        "beginner_user_no_documents",
+        "document_holding_import_or_export_user",
+        "operator_or_consultant_style_user"
+      ],
+      "route": "/blocked-claims",
+      "task_id": "blocked_claims_next_move"
+    }
+  ]
+}
