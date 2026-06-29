@@ -187,6 +187,18 @@ def main() -> int:
     payment_activation_contract = _load_json(ROOT / "system_review_graph" / "payment_activation_proof_contract.json")
     payment_activation_gate_matrix = _load_json(ROOT / "system_review_graph" / "payment_activation_gate_matrix.json")
     payment_activation_blockers = _load_jsonl(ROOT / "system_review_graph" / "payment_activation_blocker_export.jsonl")
+    legal_privacy_security_approval = _load_json(
+        ROOT / "system_review_graph" / "legal_privacy_security_approval_manifest.json"
+    )
+    legal_privacy_security_approval_contract = _load_json(
+        ROOT / "system_review_graph" / "legal_privacy_security_approval_contract.json"
+    )
+    legal_privacy_security_approval_gate_matrix = _load_json(
+        ROOT / "system_review_graph" / "legal_privacy_security_approval_gate_matrix.json"
+    )
+    legal_privacy_security_approval_blockers = _load_jsonl(
+        ROOT / "system_review_graph" / "legal_privacy_security_approval_blocker_export.jsonl"
+    )
     production_redevelopment = _load_json(ROOT / "system_review_graph" / "production_redevelopment_plan.json")
     production_research = _load_json(ROOT / "system_review_graph" / "production_research_anchors.json")
     production_data_model = _load_json(ROOT / "system_review_graph" / "production_data_model_manifest.json")
@@ -290,6 +302,7 @@ def main() -> int:
         "src/importer_source_readiness/go_live_input_evidence.py",
         "src/importer_source_readiness/hosted_deployment_proof.py",
         "src/importer_source_readiness/payment_activation_proof.py",
+        "src/importer_source_readiness/legal_privacy_security_approval.py",
         "src/importer_source_readiness/private_beta_outcomes.py",
         "src/importer_source_readiness/production_ai_copilot_engine.py",
         "src/importer_source_readiness/production_country_source_engine.py",
@@ -323,6 +336,7 @@ def main() -> int:
         "tests/test_go_live_input_evidence.py",
         "tests/test_hosted_deployment_proof.py",
         "tests/test_payment_activation_proof.py",
+        "tests/test_legal_privacy_security_approval.py",
         "tests/test_private_beta_outcomes.py",
         "tests/test_production_ai_copilot_engine.py",
         "tests/test_production_country_source_engine.py",
@@ -356,6 +370,7 @@ def main() -> int:
         "scripts/run_external_validation_requirements.py",
         "scripts/run_hosted_deployment_proof.py",
         "scripts/run_payment_activation_proof.py",
+        "scripts/run_legal_privacy_security_approval.py",
         "scripts/run_private_beta_outcomes.py",
         "scripts/run_production_ai_copilot_engine.py",
         "scripts/run_production_country_source_engine.py",
@@ -402,6 +417,7 @@ def main() -> int:
         "docs/GO_LIVE_INPUT_REQUESTS.md",
         "docs/HOSTED_DEPLOYMENT_PROOF.md",
         "docs/PAYMENT_ACTIVATION_PROOF.md",
+        "docs/LEGAL_PRIVACY_SECURITY_APPROVAL_PROOF.md",
         "docs/PRIVATE_BETA_OUTCOME_CONTRACT.md",
         "docs/PRODUCTION_AI_COPILOT_ENGINE.md",
         "docs/PRODUCTION_COUNTRY_SOURCE_ENGINE.md",
@@ -492,6 +508,10 @@ def main() -> int:
         "system_review_graph/payment_activation_proof_manifest.json",
         "system_review_graph/payment_activation_gate_matrix.json",
         "system_review_graph/payment_activation_blocker_export.jsonl",
+        "system_review_graph/legal_privacy_security_approval_contract.json",
+        "system_review_graph/legal_privacy_security_approval_manifest.json",
+        "system_review_graph/legal_privacy_security_approval_gate_matrix.json",
+        "system_review_graph/legal_privacy_security_approval_blocker_export.jsonl",
         "system_review_graph/private_beta_outcome_contract.json",
         "system_review_graph/private_beta_session_evidence_schema.json",
         "system_review_graph/private_beta_outcome_gate_matrix.json",
@@ -1734,6 +1754,21 @@ def main() -> int:
         failures.append("production trust should keep every production trust gate blocked")
     if production_trust.get("unapproved_vendor_count") != production_trust.get("vendor_record_count"):
         failures.append("production trust should keep every vendor unapproved until real review")
+    if (
+        production_trust.get("legal_privacy_security_approval_evidence_status")
+        != "legal_privacy_security_approval_intake_ready_real_approval_evidence_required_claims_closed"
+    ):
+        failures.append("production trust should consume the legal/privacy/security approval proof manifest")
+    if production_trust.get("legal_privacy_security_approval_record_count") != 0:
+        failures.append("production trust should show zero returned legal/privacy/security approval records")
+    if production_trust.get("legal_privacy_security_accepted_approval_record_count") != 0:
+        failures.append("production trust should not accept legal/privacy/security approval proof in committed state")
+    if production_trust.get("legal_privacy_security_approval_blocked_gate_count") != 14:
+        failures.append("production trust should keep fourteen legal/privacy/security approval gates blocked")
+    if production_trust.get("legal_privacy_security_approved_by_evidence") is not False:
+        failures.append("production trust should keep legal/privacy/security evidence approval false")
+    if production_trust.get("legal_privacy_security_claims_opened_by_intake") is not False:
+        failures.append("production trust should keep legal/privacy/security approval claims closed")
     for key in (
         "managed_auth_ready",
         "admin_mfa_enforced",
@@ -2471,6 +2506,61 @@ def main() -> int:
     payment_activation_md = (ROOT / "docs" / "PAYMENT_ACTIVATION_PROOF.md").read_text(encoding="utf-8")
     if "Live checkout enabled by intake: false" not in payment_activation_md:
         failures.append("payment activation proof doc should show live checkout remains closed")
+    if legal_privacy_security_approval_contract.get("status") != "legal_privacy_security_approval_contract_ready_claims_closed":
+        failures.append("legal/privacy/security approval proof contract should be generated")
+    if legal_privacy_security_approval_contract.get("required_evidence_category_count") != 14:
+        failures.append("legal/privacy/security approval contract should require fourteen evidence categories")
+    if legal_privacy_security_approval_contract.get("source_anchor_count", 0) < 9:
+        failures.append("legal/privacy/security approval contract should include researched privacy/security source anchors")
+    if legal_privacy_security_approval_contract.get("claims_opened") is not False:
+        failures.append("legal/privacy/security approval contract must not open claims")
+    if (
+        legal_privacy_security_approval.get("status")
+        != "legal_privacy_security_approval_intake_ready_real_approval_evidence_required_claims_closed"
+    ):
+        failures.append("legal/privacy/security approval manifest should be generated")
+    if legal_privacy_security_approval.get("approval_record_count") != 0:
+        failures.append("committed legal/privacy/security approval proof should show zero records until real approval arrives")
+    if legal_privacy_security_approval.get("accepted_approval_record_count") != 0:
+        failures.append("legal/privacy/security approval proof should not accept approval records in committed state")
+    if legal_privacy_security_approval.get("required_evidence_category_count") != 14:
+        failures.append("legal/privacy/security approval proof should track fourteen evidence categories")
+    if legal_privacy_security_approval.get("missing_evidence_category_count") != 14:
+        failures.append("legal/privacy/security approval proof should show all approval evidence categories missing")
+    if legal_privacy_security_approval.get("blocked_gate_count") != 14:
+        failures.append("legal/privacy/security approval proof should keep all approval gates blocked before real proof")
+    if legal_privacy_security_approval.get("blocker_export_count") != 14:
+        failures.append("legal/privacy/security approval proof should export one blocker per missing evidence category")
+    for key in (
+        "legal_privacy_security_approved_by_evidence",
+        "real_file_uploads_allowed_by_intake",
+        "hosted_private_beta_ready_by_approval_evidence",
+        "public_launch_ready_by_approval_evidence",
+        "claims_opened_by_intake",
+        "external_effects_created",
+    ):
+        if legal_privacy_security_approval.get(key) is not False:
+            failures.append(f"legal/privacy/security approval proof expected {key}=false")
+    if (
+        legal_privacy_security_approval_gate_matrix.get("status")
+        != "legal_privacy_security_approval_gate_matrix_ready_claims_closed"
+    ):
+        failures.append("legal/privacy/security approval gate matrix should be generated")
+    if legal_privacy_security_approval_gate_matrix.get("gate_count") != 14:
+        failures.append("legal/privacy/security approval gate matrix should include fourteen gates")
+    if legal_privacy_security_approval_gate_matrix.get("blocked_gate_count") != 14:
+        failures.append("legal/privacy/security approval gate matrix should keep all gates blocked before approval proof")
+    if legal_privacy_security_approval_gate_matrix.get("claims_opened") is not False:
+        failures.append("legal/privacy/security approval gate matrix must not open claims")
+    if len(legal_privacy_security_approval_blockers) != 14:
+        failures.append("legal/privacy/security approval blocker export should include fourteen blocker rows")
+    if any(row.get("module") != "legal_privacy_security_approval" for row in legal_privacy_security_approval_blockers):
+        failures.append("legal/privacy/security approval blocker rows should be attributed to the approval module")
+    if any(row.get("gate") != "closed" for row in legal_privacy_security_approval_blockers):
+        failures.append("legal/privacy/security approval blocker rows must stay closed")
+    approval_md = (ROOT / "docs" / "LEGAL_PRIVACY_SECURITY_APPROVAL_PROOF.md").read_text(encoding="utf-8")
+    if "Real file uploads allowed by intake: false" not in approval_md:
+        failures.append("legal/privacy/security approval proof doc should show real uploads remain closed")
     input_md = (ROOT / "docs" / "GO_LIVE_INPUT_REQUESTS.md").read_text(encoding="utf-8")
     if "Once Inputs Are Received" not in input_md or "external_inputs/" not in input_md:
         failures.append("go-live input request doc should explain how returned inputs are used")
@@ -3028,6 +3118,13 @@ def main() -> int:
     print(f"payment_activation_records={payment_activation_proof['payment_record_count']}")
     print(f"payment_activation_blocked_gates={payment_activation_proof['blocked_gate_count']}")
     print(f"payment_activation_live_ready={payment_activation_proof['live_payment_ready_by_payment_evidence']}")
+    print(f"legal_privacy_security_approval_status={legal_privacy_security_approval['status']}")
+    print(f"legal_privacy_security_approval_records={legal_privacy_security_approval['approval_record_count']}")
+    print(f"legal_privacy_security_approval_blocked_gates={legal_privacy_security_approval['blocked_gate_count']}")
+    print(
+        "legal_privacy_security_approved_by_evidence="
+        f"{legal_privacy_security_approval['legal_privacy_security_approved_by_evidence']}"
+    )
     print(f"production_trust_status={production_trust['status']}")
     print(f"production_trust_controls={production_trust['trust_control_count']}")
     print(f"production_real_file_uploads_allowed={production_trust['real_file_uploads_allowed']}")

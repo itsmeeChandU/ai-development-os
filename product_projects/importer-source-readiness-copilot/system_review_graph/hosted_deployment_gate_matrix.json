@@ -3,7 +3,7 @@
   "claims_opened": false,
   "external_effects_created": false,
   "gate_count": 13,
-  "generated_at": "2026-06-29T12:41:56Z",
+  "generated_at": "2026-06-29T12:58:02Z",
   "rows": [
     {
       "blocks_private_beta": true,
@@ -12,7 +12,7 @@
       "claims_opened_by_gate": false,
       "external_effects_created": false,
       "gate_id": "hosted:live_url_or_environment",
-      "generated_at": "2026-06-29T12:41:56Z",
+      "generated_at": "2026-06-29T12:58:02Z",
       "label": "Hosted URL or named environment",
       "status": "missing_real_hosted_evidence",
       "why": "A localhost or local Docker run is not hosted private-beta proof."
@@ -24,7 +24,7 @@
       "claims_opened_by_gate": false,
       "external_effects_created": false,
       "gate_id": "hosted:build_or_commit",
-      "generated_at": "2026-06-29T12:41:56Z",
+      "generated_at": "2026-06-29T12:58:02Z",
       "label": "Build or commit reference",
       "status": "missing_real_hosted_evidence",
       "why": "Reviewers need to know exactly what code and artifact were deployed."
@@ -36,7 +36,7 @@
       "claims_opened_by_gate": false,
       "external_effects_created": false,
       "gate_id": "hosted:tls_https_cookie_flags",
-      "generated_at": "2026-06-29T12:41:56Z",
+      "generated_at": "2026-06-29T12:58:02Z",
       "label": "TLS, HTTPS, and secure cookie proof",
       "status": "missing_real_hosted_evidence",
       "why": "Hosted sessions must be protected in transit and by session cookie settings."
@@ -48,7 +48,7 @@
       "claims_opened_by_gate": false,
       "external_effects_created": false,
       "gate_id": "hosted:managed_auth_and_session_config",
-      "generated_at": "2026-06-29T12:41:56Z",
+      "generated_at": "2026-06-29T12:58:02Z",
       "label": "Managed auth and session configuration",
       "status": "missing_real_hosted_evidence",
       "why": "Real users need account/session controls beyond local seeded sessions."
@@ -60,7 +60,7 @@
       "claims_opened_by_gate": false,
       "external_effects_created": false,
       "gate_id": "hosted:secrets_manager_and_key_rotation",
-      "generated_at": "2026-06-29T12:41:56Z",
+      "generated_at": "2026-06-29T12:58:02Z",
       "label": "Secrets manager and key rotation",
       "status": "missing_real_hosted_evidence",
       "why": "Hosted API, AI, storage, and payment keys must not live in local files or logs."
@@ -72,7 +72,7 @@
       "claims_opened_by_gate": false,
       "external_effects_created": false,
       "gate_id": "hosted:private_database_and_object_storage",
-      "generated_at": "2026-06-29T12:41:56Z",
+      "generated_at": "2026-06-29T12:58:02Z",
       "label": "Private database and object storage",
       "status": "missing_real_hosted_evidence",
       "why": "Real trade files and packet data need private managed persistence, not local filesystem proof."
@@ -84,7 +84,7 @@
       "claims_opened_by_gate": false,
       "external_effects_created": false,
       "gate_id": "hosted:upload_file_safety_controls",
-      "generated_at": "2026-06-29T12:41:56Z",
+      "generated_at": "2026-06-29T12:58:02Z",
       "label": "Upload scanning, quarantine, and file-safety controls",
       "status": "missing_real_hosted_evidence",
       "why": "Real uploads stay closed until hosted malware scanning, type checks, and quarantine are proven."
@@ -96,7 +96,7 @@
       "claims_opened_by_gate": false,
       "external_effects_created": false,
       "gate_id": "hosted:rate_limit_and_abuse_controls",
-      "generated_at": "2026-06-29T12:41:56Z",
+      "generated_at": "2026-06-29T12:58:02Z",
       "label": "Rate-limit and abuse controls",
       "status": "missing_real_hosted_evidence",
       "why": "Public routes and upload/API paths need hosted abuse controls and evidence."
@@ -108,7 +108,7 @@
       "claims_opened_by_gate": false,
       "external_effects_created": false,
       "gate_id": "hosted:smoke_test_result",
-      "generated_at": "2026-06-29T12:41:56Z",
+      "generated_at": "2026-06-29T12:58:02Z",
       "label": "Hosted smoke-test result",
       "status": "missing_real_hosted_evidence",
       "why": "The exact environment must pass core app flows, not just local tests."
@@ -120,7 +120,7 @@
       "claims_opened_by_gate": false,
       "external_effects_created": false,
       "gate_id": "hosted:monitoring_or_logs",
-      "generated_at": "2026-06-29T12:41:56Z",
+      "generated_at": "2026-06-29T12:58:02Z",
       "label": "Monitoring, logs, and alert ownership",
       "status": "missing_real_hosted_evidence",
       "why": "Private beta needs visibility into errors, uploads, auth, AI, jobs, and incidents."
@@ -132,7 +132,7 @@
       "claims_opened_by_gate": false,
       "external_effects_created": false,
       "gate_id": "hosted:backup_restore_or_rollback",
-      "generated_at": "2026-06-29T12:41:56Z",
+      "generated_at": "2026-06-29T12:58:02Z",
       "label": "Backup, restore, or rollback proof",
       "status": "missing_real_hosted_evidence",
       "why": "Operators must prove recovery from bad deploys or data loss before real users."
@@ -144,7 +144,7 @@
       "claims_opened_by_gate": false,
       "external_effects_created": false,
       "gate_id": "hosted:incident_support_owner",
-      "generated_at": "2026-06-29T12:41:56Z",
+      "generated_at": "2026-06-29T12:58:02Z",
       "label": "Incident and support owner",
       "status": "missing_real_hosted_evidence",
       "why": "A real beta needs named support and incident-response ownership."
@@ -156,7 +156,7 @@
       "claims_opened_by_gate": false,
       "external_effects_created": false,
       "gate_id": "hosted:privacy_data_handling_scope",
-      "generated_at": "2026-06-29T12:41:56Z",
+      "generated_at": "2026-06-29T12:58:02Z",
       "label": "Privacy and data-handling scope",
       "status": "missing_real_hosted_evidence",
       "why": "Hosted beta must document whether real files, AI, retention, deletion, and vendors are in scope."

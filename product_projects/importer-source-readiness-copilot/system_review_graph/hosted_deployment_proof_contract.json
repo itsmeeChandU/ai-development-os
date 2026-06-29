@@ -11,7 +11,7 @@
     "external_inputs/hosted_deployment_proofs/*.json"
   ],
   "external_effects_created": false,
-  "generated_at": "2026-06-29T12:41:56Z",
+  "generated_at": "2026-06-29T12:58:02Z",
   "proof_boundary": "This contract defines hosted deployment proof. It is not proof that a hosted environment exists.",
   "required_evidence_categories": [
     {

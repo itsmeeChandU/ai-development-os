@@ -74,6 +74,12 @@ from .payment_activation_proof import (
     validate_payment_activation_record,
     write_payment_activation_proof_artifacts,
 )
+from .legal_privacy_security_approval import (
+    build_legal_privacy_security_approval_contract,
+    build_legal_privacy_security_approval_intake,
+    validate_legal_privacy_security_approval_record,
+    write_legal_privacy_security_approval_artifacts,
+)
 from .private_beta_outcomes import (
     build_private_beta_outcome_contract,
     build_private_beta_session_schema,
@@ -134,6 +140,8 @@ __all__ = [
     "build_hosted_deployment_proof_intake",
     "build_payment_activation_contract",
     "build_payment_activation_proof_intake",
+    "build_legal_privacy_security_approval_contract",
+    "build_legal_privacy_security_approval_intake",
     "build_private_beta_outcome_contract",
     "build_private_beta_session_schema",
     "build_production_launch_control_plane",
@@ -176,6 +184,7 @@ __all__ = [
     "write_returned_external_review_intake_artifacts",
     "write_hosted_deployment_proof_artifacts",
     "write_payment_activation_proof_artifacts",
+    "write_legal_privacy_security_approval_artifacts",
     "write_private_beta_outcome_artifacts",
     "write_production_launch_control_plane_artifacts",
     "write_production_packet_engine_artifacts",
@@ -194,5 +203,6 @@ __all__ = [
     "validate_returned_external_review_record",
     "validate_hosted_deployment_record",
     "validate_payment_activation_record",
+    "validate_legal_privacy_security_approval_record",
     "validate_private_beta_session_record",
 ]

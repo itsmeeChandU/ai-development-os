@@ -31,6 +31,15 @@ class ProductionSecurityPrivacyReliabilityEngineTests(unittest.TestCase):
         self.assertFalse(manifest["hosted_private_beta_ready"])
         self.assertFalse(manifest["production_trust_approved"])
         self.assertFalse(manifest["public_launch_ready"])
+        self.assertEqual(
+            manifest["legal_privacy_security_approval_evidence_status"],
+            "legal_privacy_security_approval_intake_ready_real_approval_evidence_required_claims_closed",
+        )
+        self.assertEqual(manifest["legal_privacy_security_approval_record_count"], 0)
+        self.assertEqual(manifest["legal_privacy_security_accepted_approval_record_count"], 0)
+        self.assertEqual(manifest["legal_privacy_security_approval_blocked_gate_count"], 14)
+        self.assertFalse(manifest["legal_privacy_security_approved_by_evidence"])
+        self.assertFalse(manifest["legal_privacy_security_claims_opened_by_intake"])
 
         source_ids = {row["source_id"] for row in manifest["research_references"]}
         self.assertIn("opc-pipeda-principles", source_ids)
@@ -92,6 +101,7 @@ class ProductionSecurityPrivacyReliabilityEngineTests(unittest.TestCase):
             self.assertEqual(backup["status"], "local_backup_restore_hash_drill_passed")
             self.assertIn("Production Security, Privacy, Reliability", doc)
             self.assertIn("Real file uploads allowed: `false`", doc)
+            self.assertIn("Legal/privacy/security approved by evidence: `false`", doc)
 
 
 if __name__ == "__main__":

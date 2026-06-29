@@ -16,7 +16,7 @@
     "external_inputs/payment_activation_proofs/*.json"
   ],
   "external_effects_created": false,
-  "generated_at": "2026-06-29T12:41:56Z",
+  "generated_at": "2026-06-29T12:58:02Z",
   "proof_boundary": "This contract defines live-payment activation evidence. It does not create Stripe objects, enable checkout, charge customers, or approve public launch.",
   "required_evidence_categories": [
     {

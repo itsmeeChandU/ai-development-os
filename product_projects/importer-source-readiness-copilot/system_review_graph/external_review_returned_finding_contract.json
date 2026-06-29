@@ -21,7 +21,7 @@
     "blocks_private_beta",
     "blocks_public_launch"
   ],
-  "generated_at": "2026-06-29T12:41:56Z",
+  "generated_at": "2026-06-29T12:58:02Z",
   "proof_boundary": "This contract describes acceptable returned-review evidence. It is not itself a review or approval.",
   "required_evidence_categories": [
     "reviewer_identity",

@@ -7,7 +7,7 @@
   "backup_restore_drill": {
     "artifact_count": 6,
     "existing_artifact_count": 6,
-    "generated_at": "2026-06-29T12:41:55+00:00",
+    "generated_at": "2026-06-29T12:57:50+00:00",
     "hash_match_count": 6,
     "production_backup_restore_test_passed": false,
     "proof_boundary": "This proves local artifact backup/restore hashing only; hosted database, private object storage, and managed backup restore proof remain external gates.",
@@ -16,37 +16,37 @@
         "hash_matches": true,
         "relative_path": "system_review_graph/customer_workflow.sqlite",
         "restored": true,
-        "restored_sha256": "7842c5304f7754b9a7eaf4016f6f12b4d6c87e567e2a2426e8e33c6c335fe558",
+        "restored_sha256": "6c769a8f5791d41b8b05306aabd8d23a6a028cd8625cae6274c15dd3af88a51d",
         "source_bytes": 274432,
         "source_exists": true,
-        "source_sha256": "7842c5304f7754b9a7eaf4016f6f12b4d6c87e567e2a2426e8e33c6c335fe558"
+        "source_sha256": "6c769a8f5791d41b8b05306aabd8d23a6a028cd8625cae6274c15dd3af88a51d"
       },
       {
         "hash_matches": true,
         "relative_path": "system_review_graph/product_runtime_state.json",
         "restored": true,
-        "restored_sha256": "4aa5762acec59736dab133119b695f466f28750a3cd27757b86f9e51e1791916",
+        "restored_sha256": "8e64ff33fe1b28c86661132bb28dc704aa7ee3536feaa55aa806d172ae5c5f11",
         "source_bytes": 98771,
         "source_exists": true,
-        "source_sha256": "4aa5762acec59736dab133119b695f466f28750a3cd27757b86f9e51e1791916"
+        "source_sha256": "8e64ff33fe1b28c86661132bb28dc704aa7ee3536feaa55aa806d172ae5c5f11"
       },
       {
         "hash_matches": true,
         "relative_path": "system_review_graph/production_redevelopment_plan.json",
         "restored": true,
-        "restored_sha256": "1fd06e7ca4cb9e90aa2e07bf280a6b1ddc06b16d48b39b4e90f276697c287882",
+        "restored_sha256": "26dd0e23089027b7655cb9db8751925004b76ef91d09d3807b976523cc51811e",
         "source_bytes": 88584,
         "source_exists": true,
-        "source_sha256": "1fd06e7ca4cb9e90aa2e07bf280a6b1ddc06b16d48b39b4e90f276697c287882"
+        "source_sha256": "26dd0e23089027b7655cb9db8751925004b76ef91d09d3807b976523cc51811e"
       },
       {
         "hash_matches": true,
         "relative_path": "system_review_graph/production_payment_monetization_manifest.json",
         "restored": true,
-        "restored_sha256": "8c9c6e8613c0a8ed8bc108ddbcadc3907e7473a09e6414a06c08bd44a935340e",
+        "restored_sha256": "404f316ab21765b49909bcc7a8d4e20f6f4ce20a35ff5ee837a1e26773fbc230",
         "source_bytes": 14521,
         "source_exists": true,
-        "source_sha256": "8c9c6e8613c0a8ed8bc108ddbcadc3907e7473a09e6414a06c08bd44a935340e"
+        "source_sha256": "404f316ab21765b49909bcc7a8d4e20f6f4ce20a35ff5ee837a1e26773fbc230"
       },
       {
         "hash_matches": true,
@@ -74,7 +74,7 @@
   "blocked_trust_gate_count": 16,
   "data_residency_approved": false,
   "deletion_request_count": 0,
-  "generated_at": "2026-06-29T12:41:55+00:00",
+  "generated_at": "2026-06-29T12:57:50+00:00",
   "hosted_private_beta_ready": false,
   "hosted_rate_limits_enforced": false,
   "hosted_secure_sessions_ready": false,
@@ -186,6 +186,12 @@
       ]
     }
   ],
+  "legal_privacy_security_accepted_approval_record_count": 0,
+  "legal_privacy_security_approval_blocked_gate_count": 14,
+  "legal_privacy_security_approval_evidence_status": "legal_privacy_security_approval_intake_ready_real_approval_evidence_required_claims_closed",
+  "legal_privacy_security_approval_record_count": 0,
+  "legal_privacy_security_approved_by_evidence": false,
+  "legal_privacy_security_claims_opened_by_intake": false,
   "local_control_evidence_count": 15,
   "malware_scanning_ready": false,
   "managed_auth_ready": false,

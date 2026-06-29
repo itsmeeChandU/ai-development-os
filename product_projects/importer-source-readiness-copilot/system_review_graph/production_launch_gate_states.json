@@ -109,7 +109,7 @@
       "artifacts": [
         {
           "artifact": "production_security_privacy_reliability_manifest.json",
-          "bytes": 34680,
+          "bytes": 35117,
           "exists": true
         },
         {

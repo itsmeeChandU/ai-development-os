@@ -19,6 +19,7 @@ from typing import Any
 
 
 STATUS = "production_security_privacy_reliability_engine_ready_local_controls_external_trust_gates_closed"
+LEGAL_PRIVACY_SECURITY_APPROVAL_FALLBACK_GATE_COUNT = 14
 
 TRUST_RESEARCH_REFERENCES: tuple[dict[str, str], ...] = (
     {
@@ -437,6 +438,7 @@ def build_production_security_privacy_reliability_engine(repo_root: Path | None 
     ai_policy = _load_json(graph / "ai_data_policy.json", {})
     audit_events = _load_json(graph / "audit_events.json", {})
     deletion_requests = _load_json(graph / "deletion_requests.json", {})
+    approval_proof = _load_json(graph / "legal_privacy_security_approval_manifest.json", {})
     backup_drill = _local_backup_restore_drill(root)
     controls = _trust_control_records(root, backup_drill)
     vendors = _vendor_records()
@@ -480,6 +482,21 @@ def build_production_security_privacy_reliability_engine(repo_root: Path | None 
         "ai_policy_status": ai_policy.get("status", "missing"),
         "audit_event_count": _event_count(audit_events),
         "deletion_request_count": len(deletion_requests.get("requests", [])),
+        "legal_privacy_security_approval_evidence_status": approval_proof.get(
+            "status",
+            "legal_privacy_security_approval_manifest_missing",
+        ),
+        "legal_privacy_security_approval_record_count": approval_proof.get("approval_record_count", 0),
+        "legal_privacy_security_accepted_approval_record_count": approval_proof.get("accepted_approval_record_count", 0),
+        "legal_privacy_security_approval_blocked_gate_count": approval_proof.get(
+            "blocked_gate_count",
+            LEGAL_PRIVACY_SECURITY_APPROVAL_FALLBACK_GATE_COUNT,
+        ),
+        "legal_privacy_security_approved_by_evidence": approval_proof.get(
+            "legal_privacy_security_approved_by_evidence",
+            False,
+        ),
+        "legal_privacy_security_claims_opened_by_intake": approval_proof.get("claims_opened_by_intake", False),
         "managed_auth_ready": False,
         "admin_mfa_enforced": False,
         "hosted_secure_sessions_ready": False,
@@ -542,6 +559,14 @@ also performs a local backup/restore hash drill over critical artifacts.
 - Hosted private beta ready: `{str(manifest['hosted_private_beta_ready']).lower()}`
 - Production trust approved: `{str(manifest['production_trust_approved']).lower()}`
 - Public launch ready: `{str(manifest['public_launch_ready']).lower()}`
+
+## Returned Approval Evidence
+
+- Approval evidence status: `{manifest['legal_privacy_security_approval_evidence_status']}`
+- Approval records received: `{manifest['legal_privacy_security_approval_record_count']}`
+- Accepted approval records: `{manifest['legal_privacy_security_accepted_approval_record_count']}`
+- Approval gates blocked: `{manifest['legal_privacy_security_approval_blocked_gate_count']}`
+- Legal/privacy/security approved by evidence: `{str(manifest['legal_privacy_security_approved_by_evidence']).lower()}`
 
 No local artifact proves hosted authentication, admin MFA, private object
 storage, malware scanning, production monitoring, managed backups, privacy/legal

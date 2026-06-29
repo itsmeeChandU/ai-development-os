@@ -1,0 +1,22 @@
+{
+  "accepted_approval_record_count": 0,
+  "approval_record_count": 0,
+  "attached_evidence_category_count": 0,
+  "blocked_gate_count": 14,
+  "blocker_export_count": 14,
+  "claims_opened_by_intake": false,
+  "external_effects_created": false,
+  "gate_count": 14,
+  "generated_at": "2026-06-29T12:58:02Z",
+  "hosted_private_beta_ready_by_approval_evidence": false,
+  "legal_privacy_security_approved_by_evidence": false,
+  "missing_evidence_category_count": 14,
+  "next_valid_move": "Attach scoped legal/privacy/security approval proof or a demo/no-real-data approval decision, then rerun approval intake.",
+  "proof_boundary": "This validates scoped legal/privacy/security approval evidence only. It does not enable real uploads, hosted private beta, AI/vendor processing, payment activation, or public launch.",
+  "public_launch_ready_by_approval_evidence": false,
+  "real_file_uploads_allowed_by_intake": false,
+  "required_evidence_category_count": 14,
+  "selected_validation": {},
+  "status": "legal_privacy_security_approval_intake_ready_real_approval_evidence_required_claims_closed",
+  "validations": []
+}
