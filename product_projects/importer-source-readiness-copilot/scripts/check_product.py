@@ -179,6 +179,10 @@ def main() -> int:
     go_live_input_templates = _load_json(ROOT / "system_review_graph" / "go_live_input_templates.json")
     go_live_returned_input_evidence = _load_json(ROOT / "system_review_graph" / "go_live_returned_input_evidence_manifest.json")
     go_live_returned_input_matrix = _load_json(ROOT / "system_review_graph" / "go_live_returned_input_validation_matrix.json")
+    hosted_deployment_proof = _load_json(ROOT / "system_review_graph" / "hosted_deployment_proof_manifest.json")
+    hosted_deployment_contract = _load_json(ROOT / "system_review_graph" / "hosted_deployment_proof_contract.json")
+    hosted_deployment_gate_matrix = _load_json(ROOT / "system_review_graph" / "hosted_deployment_gate_matrix.json")
+    hosted_deployment_blockers = _load_jsonl(ROOT / "system_review_graph" / "hosted_deployment_blocker_export.jsonl")
     production_redevelopment = _load_json(ROOT / "system_review_graph" / "production_redevelopment_plan.json")
     production_research = _load_json(ROOT / "system_review_graph" / "production_research_anchors.json")
     production_data_model = _load_json(ROOT / "system_review_graph" / "production_data_model_manifest.json")
@@ -280,6 +284,7 @@ def main() -> int:
         "src/importer_source_readiness/external_review_intake.py",
         "src/importer_source_readiness/external_validation_research.py",
         "src/importer_source_readiness/go_live_input_evidence.py",
+        "src/importer_source_readiness/hosted_deployment_proof.py",
         "src/importer_source_readiness/private_beta_outcomes.py",
         "src/importer_source_readiness/production_ai_copilot_engine.py",
         "src/importer_source_readiness/production_country_source_engine.py",
@@ -311,6 +316,7 @@ def main() -> int:
         "tests/test_external_review_intake.py",
         "tests/test_external_validation_research.py",
         "tests/test_go_live_input_evidence.py",
+        "tests/test_hosted_deployment_proof.py",
         "tests/test_private_beta_outcomes.py",
         "tests/test_production_ai_copilot_engine.py",
         "tests/test_production_country_source_engine.py",
@@ -342,6 +348,7 @@ def main() -> int:
         "scripts/run_external_review_intake.py",
         "scripts/run_final_go_live_review.py",
         "scripts/run_external_validation_requirements.py",
+        "scripts/run_hosted_deployment_proof.py",
         "scripts/run_private_beta_outcomes.py",
         "scripts/run_production_ai_copilot_engine.py",
         "scripts/run_production_country_source_engine.py",
@@ -386,6 +393,7 @@ def main() -> int:
         "docs/EXTERNAL_VALIDATION_REQUIREMENTS.md",
         "docs/EXTERNAL_VALIDATION_REVIEWER_BRIEF.md",
         "docs/GO_LIVE_INPUT_REQUESTS.md",
+        "docs/HOSTED_DEPLOYMENT_PROOF.md",
         "docs/PRIVATE_BETA_OUTCOME_CONTRACT.md",
         "docs/PRODUCTION_AI_COPILOT_ENGINE.md",
         "docs/PRODUCTION_COUNTRY_SOURCE_ENGINE.md",
@@ -468,6 +476,10 @@ def main() -> int:
         "system_review_graph/go_live_input_readiness_report.json",
         "system_review_graph/go_live_returned_input_evidence_manifest.json",
         "system_review_graph/go_live_returned_input_validation_matrix.json",
+        "system_review_graph/hosted_deployment_proof_contract.json",
+        "system_review_graph/hosted_deployment_proof_manifest.json",
+        "system_review_graph/hosted_deployment_gate_matrix.json",
+        "system_review_graph/hosted_deployment_blocker_export.jsonl",
         "system_review_graph/private_beta_outcome_contract.json",
         "system_review_graph/private_beta_session_evidence_schema.json",
         "system_review_graph/private_beta_outcome_gate_matrix.json",
@@ -2340,6 +2352,54 @@ def main() -> int:
         failures.append("go-live returned-input evidence validation must keep claims closed")
     if go_live_returned_input_matrix.get("status") != "go_live_returned_input_validation_matrix_ready_claims_closed":
         failures.append("go-live returned-input validation matrix should be generated")
+    if hosted_deployment_contract.get("status") != "hosted_deployment_proof_contract_ready_claims_closed":
+        failures.append("hosted deployment proof contract should be generated")
+    if hosted_deployment_contract.get("required_evidence_category_count") != 13:
+        failures.append("hosted deployment proof contract should require thirteen evidence categories")
+    if hosted_deployment_contract.get("source_anchor_count", 0) < 5:
+        failures.append("hosted deployment proof contract should include researched deployment/security source anchors")
+    if hosted_deployment_contract.get("claims_opened") is not False:
+        failures.append("hosted deployment proof contract must not open claims")
+    if hosted_deployment_proof.get("status") != "hosted_deployment_proof_intake_ready_real_hosted_evidence_required_claims_closed":
+        failures.append("hosted deployment proof manifest should be generated")
+    if hosted_deployment_proof.get("hosted_record_count") != 0:
+        failures.append("committed hosted deployment proof should show zero hosted records until real hosted proof arrives")
+    if hosted_deployment_proof.get("accepted_hosted_record_count") != 0:
+        failures.append("hosted deployment proof should not accept records without real hosted proof")
+    if hosted_deployment_proof.get("required_evidence_category_count") != 13:
+        failures.append("hosted deployment proof should track thirteen evidence categories")
+    if hosted_deployment_proof.get("missing_evidence_category_count") != 13:
+        failures.append("hosted deployment proof should show all hosted evidence categories missing before real proof")
+    if hosted_deployment_proof.get("blocked_gate_count") != 13:
+        failures.append("hosted deployment proof should keep all hosted gates blocked before real proof")
+    if hosted_deployment_proof.get("blocker_export_count") != 13:
+        failures.append("hosted deployment proof should export one blocker per missing hosted evidence category")
+    for key in (
+        "hosted_private_beta_ready_by_environment_evidence",
+        "public_launch_ready_by_environment_evidence",
+        "real_file_uploads_allowed_by_environment_evidence",
+        "claims_opened_by_intake",
+        "external_effects_created",
+    ):
+        if hosted_deployment_proof.get(key) is not False:
+            failures.append(f"hosted deployment proof expected {key}=false")
+    if hosted_deployment_gate_matrix.get("status") != "hosted_deployment_gate_matrix_ready_claims_closed":
+        failures.append("hosted deployment gate matrix should be generated")
+    if hosted_deployment_gate_matrix.get("gate_count") != 13:
+        failures.append("hosted deployment gate matrix should include thirteen hosted gates")
+    if hosted_deployment_gate_matrix.get("blocked_gate_count") != 13:
+        failures.append("hosted deployment gate matrix should keep all gates blocked before hosted proof")
+    if hosted_deployment_gate_matrix.get("claims_opened") is not False:
+        failures.append("hosted deployment gate matrix must not open claims")
+    if len(hosted_deployment_blockers) != 13:
+        failures.append("hosted deployment blocker export should include thirteen blocker rows")
+    if any(row.get("module") != "hosted_deployment_proof" for row in hosted_deployment_blockers):
+        failures.append("hosted deployment blocker rows should be attributed to hosted_deployment_proof")
+    if any(row.get("gate") != "closed" for row in hosted_deployment_blockers):
+        failures.append("hosted deployment blocker rows must stay closed")
+    hosted_deployment_md = (ROOT / "docs" / "HOSTED_DEPLOYMENT_PROOF.md").read_text(encoding="utf-8")
+    if "Hosted private beta ready by environment evidence: false" not in hosted_deployment_md:
+        failures.append("hosted deployment proof doc should show private beta remains closed")
     input_md = (ROOT / "docs" / "GO_LIVE_INPUT_REQUESTS.md").read_text(encoding="utf-8")
     if "Once Inputs Are Received" not in input_md or "external_inputs/" not in input_md:
         failures.append("go-live input request doc should explain how returned inputs are used")

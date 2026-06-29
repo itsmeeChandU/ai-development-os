@@ -27,7 +27,7 @@
       "scope": "credits, pricing, manual approval, and cost exposure"
     }
   ],
-  "generated_at": "2026-06-29T11:57:03+00:00",
+  "generated_at": "2026-06-29T12:20:30+00:00",
   "operation_status": "expert_network_operational_local_with_human_review_gates",
   "proof_boundary": "The product can prepare and route expert packets locally; real qualified review remains an external evidence gate.",
   "review_queue": [

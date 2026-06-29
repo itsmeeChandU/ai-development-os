@@ -1,36 +1,36 @@
 {
   "claims_opened": false,
   "external_effects_created": false,
-  "generated_at": "2026-06-29T11:57:04+00:00",
+  "generated_at": "2026-06-29T12:20:31+00:00",
   "source_refresh_audit_event_count": 3,
   "source_refresh_audit_events": [
     {
       "claims_opened": false,
-      "event_id": "audit-source-refresh-packet-frozen-tuna-canada-001-2026-06-29T115658Z0000:evidence-frozen-tuna-cid-reference",
+      "event_id": "audit-source-refresh-packet-frozen-tuna-canada-001-2026-06-29T122021Z0000:evidence-frozen-tuna-cid-reference",
       "event_type": "source_refresh_attempt_recorded",
       "next_valid_move": "Use reference-only language and route material/unverified source outcomes to scoped review.",
       "packet_id": "packet-frozen-tuna-canada-001",
-      "recorded_at": "2026-06-29T11:56:58+00:00",
+      "recorded_at": "2026-06-29T12:20:21+00:00",
       "source_id": "canada-cid",
       "source_state": "checked_current_reference_only"
     },
     {
       "claims_opened": false,
-      "event_id": "audit-source-refresh-packet-frozen-tuna-canada-001-2026-06-29T115658Z0000:evidence-frozen-tuna-cbsa-import-workflow",
+      "event_id": "audit-source-refresh-packet-frozen-tuna-canada-001-2026-06-29T122021Z0000:evidence-frozen-tuna-cbsa-import-workflow",
       "event_type": "source_refresh_attempt_recorded",
       "next_valid_move": "Use reference-only language and route material/unverified source outcomes to scoped review.",
       "packet_id": "packet-frozen-tuna-canada-001",
-      "recorded_at": "2026-06-29T11:56:58+00:00",
+      "recorded_at": "2026-06-29T12:20:21+00:00",
       "source_id": "cbsa-import-commercial-goods",
       "source_state": "checked_current_reference_only"
     },
     {
       "claims_opened": false,
-      "event_id": "audit-source-refresh-packet-frozen-tuna-canada-001-2026-06-29T115658Z0000:evidence-frozen-tuna-cfia-airs-reference",
+      "event_id": "audit-source-refresh-packet-frozen-tuna-canada-001-2026-06-29T122021Z0000:evidence-frozen-tuna-cfia-airs-reference",
       "event_type": "source_refresh_attempt_recorded",
       "next_valid_move": "Use reference-only language and route material/unverified source outcomes to scoped review.",
       "packet_id": "packet-frozen-tuna-canada-001",
-      "recorded_at": "2026-06-29T11:56:58+00:00",
+      "recorded_at": "2026-06-29T12:20:21+00:00",
       "source_id": "cfia-airs",
       "source_state": "checked_current_reference_only"
     }

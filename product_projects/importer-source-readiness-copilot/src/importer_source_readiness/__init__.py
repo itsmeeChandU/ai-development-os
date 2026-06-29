@@ -62,6 +62,12 @@ from .external_review_intake import (
     validate_returned_external_review_record,
     write_returned_external_review_intake_artifacts,
 )
+from .hosted_deployment_proof import (
+    build_hosted_deployment_contract,
+    build_hosted_deployment_proof_intake,
+    validate_hosted_deployment_record,
+    write_hosted_deployment_proof_artifacts,
+)
 from .private_beta_outcomes import (
     build_private_beta_outcome_contract,
     build_private_beta_session_schema,
@@ -118,6 +124,8 @@ __all__ = [
     "build_go_live_returned_input_evidence_manifest",
     "build_returned_external_review_contract",
     "build_returned_external_review_intake",
+    "build_hosted_deployment_contract",
+    "build_hosted_deployment_proof_intake",
     "build_private_beta_outcome_contract",
     "build_private_beta_session_schema",
     "build_production_launch_control_plane",
@@ -158,6 +166,7 @@ __all__ = [
     "write_production_market_readiness_evidence_room_artifacts",
     "write_go_live_returned_input_evidence_artifacts",
     "write_returned_external_review_intake_artifacts",
+    "write_hosted_deployment_proof_artifacts",
     "write_private_beta_outcome_artifacts",
     "write_production_launch_control_plane_artifacts",
     "write_production_packet_engine_artifacts",
@@ -174,5 +183,6 @@ __all__ = [
     "write_screenshot_manifest",
     "validate_go_live_input_record",
     "validate_returned_external_review_record",
+    "validate_hosted_deployment_record",
     "validate_private_beta_session_record",
 ]

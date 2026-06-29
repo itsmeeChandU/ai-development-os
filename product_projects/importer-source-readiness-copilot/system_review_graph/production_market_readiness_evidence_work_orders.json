@@ -1,7 +1,7 @@
 {
   "claims_opened": false,
   "external_effects_created": false,
-  "generated_at": "2026-06-29T11:57:22+00:00",
+  "generated_at": "2026-06-29T12:20:34+00:00",
   "status": "production_market_readiness_evidence_work_orders_ready",
   "work_order_count": 8,
   "work_orders": [

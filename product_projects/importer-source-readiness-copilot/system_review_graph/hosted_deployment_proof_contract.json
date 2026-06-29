@@ -1,0 +1,128 @@
+{
+  "allowed_decisions": [
+    "ready_for_private_beta_scope",
+    "demo_hosted_no_real_data_only",
+    "not_ready",
+    "needs_more_evidence"
+  ],
+  "claims_opened": false,
+  "drop_paths": [
+    "external_inputs/hosted_staging_production_proof.json",
+    "external_inputs/hosted_deployment_proofs/*.json"
+  ],
+  "external_effects_created": false,
+  "generated_at": "2026-06-29T12:20:34Z",
+  "proof_boundary": "This contract defines hosted deployment proof. It is not proof that a hosted environment exists.",
+  "required_evidence_categories": [
+    {
+      "category": "live_url_or_environment",
+      "label": "Hosted URL or named environment",
+      "why": "A localhost or local Docker run is not hosted private-beta proof."
+    },
+    {
+      "category": "build_or_commit",
+      "label": "Build or commit reference",
+      "why": "Reviewers need to know exactly what code and artifact were deployed."
+    },
+    {
+      "category": "tls_https_cookie_flags",
+      "label": "TLS, HTTPS, and secure cookie proof",
+      "why": "Hosted sessions must be protected in transit and by session cookie settings."
+    },
+    {
+      "category": "managed_auth_and_session_config",
+      "label": "Managed auth and session configuration",
+      "why": "Real users need account/session controls beyond local seeded sessions."
+    },
+    {
+      "category": "secrets_manager_and_key_rotation",
+      "label": "Secrets manager and key rotation",
+      "why": "Hosted API, AI, storage, and payment keys must not live in local files or logs."
+    },
+    {
+      "category": "private_database_and_object_storage",
+      "label": "Private database and object storage",
+      "why": "Real trade files and packet data need private managed persistence, not local filesystem proof."
+    },
+    {
+      "category": "upload_file_safety_controls",
+      "label": "Upload scanning, quarantine, and file-safety controls",
+      "why": "Real uploads stay closed until hosted malware scanning, type checks, and quarantine are proven."
+    },
+    {
+      "category": "rate_limit_and_abuse_controls",
+      "label": "Rate-limit and abuse controls",
+      "why": "Public routes and upload/API paths need hosted abuse controls and evidence."
+    },
+    {
+      "category": "smoke_test_result",
+      "label": "Hosted smoke-test result",
+      "why": "The exact environment must pass core app flows, not just local tests."
+    },
+    {
+      "category": "monitoring_or_logs",
+      "label": "Monitoring, logs, and alert ownership",
+      "why": "Private beta needs visibility into errors, uploads, auth, AI, jobs, and incidents."
+    },
+    {
+      "category": "backup_restore_or_rollback",
+      "label": "Backup, restore, or rollback proof",
+      "why": "Operators must prove recovery from bad deploys or data loss before real users."
+    },
+    {
+      "category": "incident_support_owner",
+      "label": "Incident and support owner",
+      "why": "A real beta needs named support and incident-response ownership."
+    },
+    {
+      "category": "privacy_data_handling_scope",
+      "label": "Privacy and data-handling scope",
+      "why": "Hosted beta must document whether real files, AI, retention, deletion, and vendors are in scope."
+    }
+  ],
+  "required_evidence_category_count": 13,
+  "source_anchor_count": 5,
+  "source_anchors": [
+    {
+      "checked_at": "2026-06-29",
+      "name": "Baseline cyber security controls for small and medium organizations",
+      "product_use": "Baseline hosted operations, backups, patching, monitoring, and incident-readiness reference.",
+      "publisher": "Canadian Centre for Cyber Security",
+      "source_id": "canadian-centre-baseline-controls",
+      "url": "https://www.cyber.gc.ca/en/guidance/baseline-cyber-security-controls-small-and-medium-organizations"
+    },
+    {
+      "checked_at": "2026-06-29",
+      "name": "Transport Layer Security Cheat Sheet",
+      "product_use": "TLS/HTTPS and transport protection evidence anchor.",
+      "publisher": "OWASP",
+      "source_id": "owasp-tls-cheat-sheet",
+      "url": "https://cheatsheetseries.owasp.org/cheatsheets/Transport_Layer_Security_Cheat_Sheet.html"
+    },
+    {
+      "checked_at": "2026-06-29",
+      "name": "Secrets Management Cheat Sheet",
+      "product_use": "Hosted secrets, tokens, and key-control evidence anchor.",
+      "publisher": "OWASP",
+      "source_id": "owasp-secrets-management",
+      "url": "https://cheatsheetseries.owasp.org/cheatsheets/Secrets_Management_Cheat_Sheet.html"
+    },
+    {
+      "checked_at": "2026-06-29",
+      "name": "Logging Cheat Sheet",
+      "product_use": "Security logging and operational monitoring evidence anchor.",
+      "publisher": "OWASP",
+      "source_id": "owasp-logging-cheat-sheet",
+      "url": "https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html"
+    },
+    {
+      "checked_at": "2026-06-29",
+      "name": "Secure by Design",
+      "product_use": "Secure-by-design/default launch posture and product owner accountability anchor.",
+      "publisher": "Cybersecurity and Infrastructure Security Agency",
+      "source_id": "cisa-secure-by-design",
+      "url": "https://www.cisa.gov/securebydesign"
+    }
+  ],
+  "status": "hosted_deployment_proof_contract_ready_claims_closed"
+}

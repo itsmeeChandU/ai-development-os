@@ -1,0 +1,21 @@
+{
+  "accepted_hosted_record_count": 0,
+  "attached_evidence_category_count": 0,
+  "blocked_gate_count": 13,
+  "blocker_export_count": 13,
+  "claims_opened_by_intake": false,
+  "external_effects_created": false,
+  "gate_count": 13,
+  "generated_at": "2026-06-29T12:20:34Z",
+  "hosted_private_beta_ready_by_environment_evidence": false,
+  "hosted_record_count": 0,
+  "missing_evidence_category_count": 13,
+  "next_valid_move": "Provision or document hosted staging, attach every required proof category, and rerun hosted deployment intake.",
+  "proof_boundary": "This validates hosted deployment evidence only. It does not approve real uploads, hosted private beta, public launch, legal/privacy/security readiness, payments, customs, buyer validation, or supplier verification.",
+  "public_launch_ready_by_environment_evidence": false,
+  "real_file_uploads_allowed_by_environment_evidence": false,
+  "required_evidence_category_count": 13,
+  "selected_validation": {},
+  "status": "hosted_deployment_proof_intake_ready_real_hosted_evidence_required_claims_closed",
+  "validations": []
+}
