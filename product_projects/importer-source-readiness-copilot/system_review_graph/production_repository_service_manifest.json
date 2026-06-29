@@ -1,0 +1,82 @@
+{
+  "blocked_claim_decision_count": 10,
+  "external_claims_opened": false,
+  "generated_at": "2026-06-29T10:06:57+00:00",
+  "hosted_postgres_ready": false,
+  "packet_context_status": "packet_context_ready_from_production_repository",
+  "packet_ids": [
+    "packet-frozen-tuna-canada-001"
+  ],
+  "proof_boundary": "The repository service reads the local production-domain store and fails closed for missing or inaccessible claims. It does not open any external legal, customs, payment, buyer, supplier, hosted, or launch gate.",
+  "public_launch_ready": false,
+  "report_context_status": "database_backed_report_context_ready",
+  "report_export_count": 24,
+  "safe_claim_count": 7,
+  "sample_claim_decisions": [
+    {
+      "allowed_language": "Product, origin, destination, and trade direction can be shown as user-submitted draft context.",
+      "blocked_language": "Do not imply the product or lane is approved.",
+      "can_show_claim": true,
+      "claim_gate_mapper_id": "claim-gate:packet-frozen-tuna-canada-001:product_context_recorded",
+      "claim_type": "product_context_recorded",
+      "external_claims_opened": false,
+      "next_valid_move": "Use the context to build the packet and collect missing evidence.",
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "reason": "safe_research_or_preparation_statement_only",
+      "required_evidence": [
+        "user_input"
+      ],
+      "required_reviewer_lane": ""
+    },
+    {
+      "allowed_language": "",
+      "blocked_language": "Tariff confirmed remains blocked until authoritative tariff/ruling evidence and qualified review exist.",
+      "can_show_claim": false,
+      "claim_gate_mapper_id": "claim-gate:packet-frozen-tuna-canada-001:tariff_confirmed",
+      "claim_type": "tariff_confirmed",
+      "external_claims_opened": false,
+      "next_valid_move": "Obtain a qualified customs review or authoritative ruling evidence.",
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "reason": "reference_only_or_stale_evidence_cannot_open_external_claim",
+      "required_evidence": [
+        "reviewer_finding",
+        "official_ruling"
+      ],
+      "required_reviewer_lane": "qualified_customs_review"
+    },
+    {
+      "allowed_language": "",
+      "blocked_language": "No claim gate exists for this claim type, so the claim fails closed.",
+      "can_show_claim": false,
+      "claim_type": "unknown_future_claim",
+      "external_claims_opened": false,
+      "next_valid_move": "Add an explicit claim-gate mapper with evidence requirements before showing this claim.",
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "reason": "claim_gate_mapper_missing"
+    }
+  ],
+  "sqlite_proof_store": "system_review_graph/production_domain.sqlite",
+  "status": "production_repository_service_ready_database_backed_packet_context_claim_gates_closed",
+  "table_counts": {
+    "audit_events": 6,
+    "blocked_claims": 25,
+    "claim_gate_mappers": 17,
+    "country_packs": 4,
+    "decision_scores": 6,
+    "evidence_items": 3,
+    "organizations": 3,
+    "product_profiles": 1,
+    "reports": 24,
+    "review_requests": 1,
+    "source_records": 32,
+    "source_snapshots": 35,
+    "trade_lanes": 1,
+    "trade_readiness_packets": 1,
+    "users": 4,
+    "workspaces": 1
+  },
+  "tenant_access_control": {
+    "same_org_status": "packet_context_ready_from_production_repository",
+    "wrong_org_status": "access_denied"
+  }
+}

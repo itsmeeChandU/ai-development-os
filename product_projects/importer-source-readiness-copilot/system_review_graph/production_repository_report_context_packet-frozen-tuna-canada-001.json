@@ -1,0 +1,1165 @@
+{
+  "blocked_claims": [
+    {
+      "allowed_language": "",
+      "blocked_language": "Buyer validated remains blocked until dated buyer response, meeting, LOI, PO, or paid-order evidence exists.",
+      "can_show_claim": false,
+      "claim_gate_mapper_id": "claim-gate:packet-frozen-tuna-canada-001:buyer_validated",
+      "claim_type": "buyer_validated",
+      "external_claims_opened": false,
+      "next_valid_move": "Collect dated buyer evidence; directory rows are lead sources only.",
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "reason": "forbidden_external_claim_requires_real_reviewer_or_official_evidence",
+      "required_evidence": [
+        "buyer_reply",
+        "buyer_meeting",
+        "loi",
+        "purchase_order",
+        "paid_order"
+      ],
+      "required_reviewer_lane": "buyer_validation_review"
+    },
+    {
+      "allowed_language": "",
+      "blocked_language": "CFIA approved remains blocked until official permit/admissibility evidence and qualified review exist.",
+      "can_show_claim": false,
+      "claim_gate_mapper_id": "claim-gate:packet-frozen-tuna-canada-001:cfia_approved",
+      "claim_type": "cfia_approved",
+      "external_claims_opened": false,
+      "next_valid_move": "Attach dated CFIA/AIRS result or permit evidence and qualified reviewer finding.",
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "reason": "reference_only_or_stale_evidence_cannot_open_external_claim",
+      "required_evidence": [
+        "reviewer_finding",
+        "official_permit_or_result"
+      ],
+      "required_reviewer_lane": "canada_food_or_regulated_goods_review"
+    },
+    {
+      "allowed_language": "",
+      "blocked_language": "Customs ready remains blocked until broker/customs review and required import/export evidence exist.",
+      "can_show_claim": false,
+      "claim_gate_mapper_id": "claim-gate:packet-frozen-tuna-canada-001:customs_ready",
+      "claim_type": "customs_ready",
+      "external_claims_opened": false,
+      "next_valid_move": "Resolve importer of record, Incoterms, source freshness, and broker/customs review.",
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "reason": "reference_only_or_stale_evidence_cannot_open_external_claim",
+      "required_evidence": [
+        "reviewer_finding",
+        "broker_finding"
+      ],
+      "required_reviewer_lane": "qualified_customs_review"
+    },
+    {
+      "allowed_language": "",
+      "blocked_language": "Do not treat parser output as authenticity, completeness, or compliance proof.",
+      "can_show_claim": false,
+      "claim_gate_mapper_id": "claim-gate:packet-frozen-tuna-canada-001:document_field_extraction_draft",
+      "claim_type": "document_field_extraction_draft",
+      "external_claims_opened": false,
+      "next_valid_move": "Ask the user to confirm extracted fields, then route the packet to the correct reviewer lane.",
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "reason": "missing_required_evidence",
+      "required_evidence": [
+        "document_field"
+      ],
+      "required_reviewer_lane": "document_or_operator_review"
+    },
+    {
+      "allowed_language": "",
+      "blocked_language": "Do not treat missing or unreviewed Incoterms as a legal responsibility decision.",
+      "can_show_claim": false,
+      "claim_gate_mapper_id": "claim-gate:packet-frozen-tuna-canada-001:incoterms_responsibility_path",
+      "claim_type": "incoterms_responsibility_path",
+      "external_claims_opened": false,
+      "next_valid_move": "Ask buyer/importer who is importer of record and which Incoterm applies; route to freight/legal review if needed.",
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "reason": "missing_required_evidence",
+      "required_evidence": [
+        "user_input",
+        "official_source_reference"
+      ],
+      "required_reviewer_lane": "freight_or_legal_review"
+    },
+    {
+      "allowed_language": "",
+      "blocked_language": "Do not say origin is confirmed from a country name or source route.",
+      "can_show_claim": false,
+      "claim_gate_mapper_id": "claim-gate:packet-frozen-tuna-canada-001:origin_evidence_collected",
+      "claim_type": "origin_evidence_collected",
+      "external_claims_opened": false,
+      "next_valid_move": "Attach certificate of origin or origin-supporting documents and route to scoped review.",
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "reason": "missing_required_evidence",
+      "required_evidence": [
+        "document",
+        "origin_document",
+        "reviewer_finding"
+      ],
+      "required_reviewer_lane": "origin_or_customs_review"
+    },
+    {
+      "allowed_language": "",
+      "blocked_language": "Shipment approved is not supported by this product scope.",
+      "can_show_claim": false,
+      "claim_gate_mapper_id": "claim-gate:packet-frozen-tuna-canada-001:shipment_approved",
+      "claim_type": "shipment_approved",
+      "external_claims_opened": false,
+      "next_valid_move": "Use the packet for preparation only; final shipment decisions require qualified professionals and owner approval.",
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "reason": "forbidden_external_claim_requires_real_reviewer_or_official_evidence",
+      "required_evidence": [
+        "reviewer_finding",
+        "broker_finding",
+        "freight_forwarder_finding"
+      ],
+      "required_reviewer_lane": "final_owner_gate"
+    },
+    {
+      "allowed_language": "",
+      "blocked_language": "Do not say supplier verified or recommended.",
+      "can_show_claim": false,
+      "claim_gate_mapper_id": "claim-gate:packet-frozen-tuna-canada-001:supplier_evidence_collected",
+      "claim_type": "supplier_evidence_collected",
+      "external_claims_opened": false,
+      "next_valid_move": "Request supplier registration, export ability, product docs, certificates, inspection, and prior-shipment evidence.",
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "reason": "missing_required_evidence",
+      "required_evidence": [
+        "supplier_registration",
+        "supplier_document",
+        "inspection_report",
+        "reviewer_finding"
+      ],
+      "required_reviewer_lane": "supplier_evidence_review"
+    },
+    {
+      "allowed_language": "",
+      "blocked_language": "Supplier verified remains blocked until registration, export ability, product evidence, certificates/inspection, and reviewer assessment exist.",
+      "can_show_claim": false,
+      "claim_gate_mapper_id": "claim-gate:packet-frozen-tuna-canada-001:supplier_verified",
+      "claim_type": "supplier_verified",
+      "external_claims_opened": false,
+      "next_valid_move": "Collect supplier proof and route to a scoped reviewer.",
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "reason": "forbidden_external_claim_requires_real_reviewer_or_official_evidence",
+      "required_evidence": [
+        "supplier_registration",
+        "inspection_report",
+        "reviewer_finding"
+      ],
+      "required_reviewer_lane": "supplier_evidence_review"
+    },
+    {
+      "allowed_language": "",
+      "blocked_language": "Tariff confirmed remains blocked until authoritative tariff/ruling evidence and qualified review exist.",
+      "can_show_claim": false,
+      "claim_gate_mapper_id": "claim-gate:packet-frozen-tuna-canada-001:tariff_confirmed",
+      "claim_type": "tariff_confirmed",
+      "external_claims_opened": false,
+      "next_valid_move": "Obtain a qualified customs review or authoritative ruling evidence.",
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "reason": "reference_only_or_stale_evidence_cannot_open_external_claim",
+      "required_evidence": [
+        "reviewer_finding",
+        "official_ruling"
+      ],
+      "required_reviewer_lane": "qualified_customs_review"
+    }
+  ],
+  "evidence_count": 3,
+  "external_claims_opened": false,
+  "generated_at": "2026-06-29T10:06:57+00:00",
+  "organization_id": "org-importer-demo",
+  "packet_id": "packet-frozen-tuna-canada-001",
+  "packet_state": "reviewer_ready",
+  "product_name": "Frozen tuna fillet",
+  "proof_boundary": "This context is read from the local production-domain proof store. It is preparation evidence only and does not prove hosted infrastructure, qualified review, legal/customs approval, payments, buyer validation, supplier verification, or public launch readiness.",
+  "public_launch_ready": false,
+  "report_exports": [
+    {
+      "organization_id": "org-importer-demo",
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "path": "output/pdf/production_reports/packet-frozen-tuna-canada-001/audit_export.pdf",
+      "payload": {
+        "blocked_claim_section_included": true,
+        "claims_opened": false,
+        "external_effects_created": false,
+        "format": "pdf",
+        "packet_id": "packet-frozen-tuna-canada-001",
+        "path": "output/pdf/production_reports/packet-frozen-tuna-canada-001/audit_export.pdf",
+        "report_id": "production-report:packet-frozen-tuna-canada-001:audit_export:v1",
+        "report_type": "audit_export",
+        "review_status": "not_reviewed",
+        "status": "export_ready_local",
+        "watermark": "DRAFT - NOT APPROVAL"
+      },
+      "report_id": "production-report:packet-frozen-tuna-canada-001:audit_export:v1",
+      "report_type": "audit_export",
+      "status": "export_ready_local"
+    },
+    {
+      "organization_id": "org-importer-demo",
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "path": "output/pdf/production_reports/packet-frozen-tuna-canada-001/blocked_claims_report.pdf",
+      "payload": {
+        "blocked_claim_section_included": true,
+        "claims_opened": false,
+        "external_effects_created": false,
+        "format": "pdf",
+        "packet_id": "packet-frozen-tuna-canada-001",
+        "path": "output/pdf/production_reports/packet-frozen-tuna-canada-001/blocked_claims_report.pdf",
+        "report_id": "production-report:packet-frozen-tuna-canada-001:blocked_claims_report:v1",
+        "report_type": "blocked_claims_report",
+        "review_status": "not_reviewed",
+        "status": "export_ready_local",
+        "watermark": "DRAFT - NOT APPROVAL"
+      },
+      "report_id": "production-report:packet-frozen-tuna-canada-001:blocked_claims_report:v1",
+      "report_type": "blocked_claims_report",
+      "status": "export_ready_local"
+    },
+    {
+      "organization_id": "org-importer-demo",
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "path": "",
+      "payload": {
+        "ai_involvement_disclosure": "AI simulated review may be included when present; AI never opens approval gates.",
+        "file_id": "",
+        "format": "pdf",
+        "generated_at": "2026-06-25T00:00:00+00:00",
+        "generated_by": "system",
+        "id": "broker_review_packet:packet-frozen-tuna-canada-001:pdf",
+        "included_blocker_ids": [
+          "packet-frozen-tuna-canada-001:evidence-frozen-tuna-cid-reference:stale",
+          "packet-frozen-tuna-canada-001:evidence-frozen-tuna-cbsa-import-workflow:stale",
+          "packet-frozen-tuna-canada-001:evidence-frozen-tuna-cfia-airs-reference:stale",
+          "packet-frozen-tuna-canada-001:restricted_party_screening-missing",
+          "packet-frozen-tuna-canada-001:qualified_review-missing",
+          "packet-frozen-tuna-canada-001:buyer_validation-missing",
+          "packet-frozen-tuna-canada-001:contract-missing"
+        ],
+        "included_claim_ids": [
+          "packet-frozen-tuna-canada-001:source_freshness_claim",
+          "packet-frozen-tuna-canada-001:tariff_classification_claim",
+          "packet-frozen-tuna-canada-001:food_safety_claim",
+          "packet-frozen-tuna-canada-001:export_to_canada_readiness_claim",
+          "packet-frozen-tuna-canada-001:importer_of_record_claim",
+          "packet-frozen-tuna-canada-001:trade_document_completeness_claim",
+          "packet-frozen-tuna-canada-001:trade_agreement_preference_claim",
+          "packet-frozen-tuna-canada-001:source_rights_claim",
+          "packet-frozen-tuna-canada-001:buyer_validation_claim",
+          "packet-frozen-tuna-canada-001:launch_readiness_claim"
+        ],
+        "included_evidence_ids": [
+          "evidence-frozen-tuna-cid-reference",
+          "evidence-frozen-tuna-cbsa-import-workflow",
+          "evidence-frozen-tuna-cfia-airs-reference"
+        ],
+        "packet_id": "packet-frozen-tuna-canada-001",
+        "proof_boundary": "Trade Readiness Copilot organizes import/export evidence and blockers. It does not provide legal, customs, tariff, tax, CFIA, supplier, buyer, compliance, shipment, or launch advice.",
+        "report_type": "broker_review_packet",
+        "source_snapshot_hash": "0a0067f69c0a20ac844b78dddf131b83aef84d028746a98bc8f60350526e9087",
+        "status": "pdf_renderer_ready_basic"
+      },
+      "report_id": "broker_review_packet:packet-frozen-tuna-canada-001:pdf",
+      "report_type": "broker_review_packet",
+      "status": "pdf_renderer_ready_basic"
+    },
+    {
+      "organization_id": "org-importer-demo",
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "path": "output/pdf/production_reports/packet-frozen-tuna-canada-001/broker_review_packet.pdf",
+      "payload": {
+        "blocked_claim_section_included": true,
+        "claims_opened": false,
+        "external_effects_created": false,
+        "format": "pdf",
+        "packet_id": "packet-frozen-tuna-canada-001",
+        "path": "output/pdf/production_reports/packet-frozen-tuna-canada-001/broker_review_packet.pdf",
+        "report_id": "production-report:packet-frozen-tuna-canada-001:broker_review_packet:v1",
+        "report_type": "broker_review_packet",
+        "review_status": "not_reviewed",
+        "status": "export_ready_local",
+        "watermark": "DRAFT - NOT APPROVAL"
+      },
+      "report_id": "production-report:packet-frozen-tuna-canada-001:broker_review_packet:v1",
+      "report_type": "broker_review_packet",
+      "status": "export_ready_local"
+    },
+    {
+      "organization_id": "org-importer-demo",
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "path": "",
+      "payload": {
+        "ai_involvement_disclosure": "AI simulated review may be included when present; AI never opens approval gates.",
+        "file_id": "",
+        "format": "pdf",
+        "generated_at": "2026-06-25T00:00:00+00:00",
+        "generated_by": "system",
+        "id": "buyer_ready_packet:packet-frozen-tuna-canada-001:pdf",
+        "included_blocker_ids": [
+          "packet-frozen-tuna-canada-001:evidence-frozen-tuna-cid-reference:stale",
+          "packet-frozen-tuna-canada-001:evidence-frozen-tuna-cbsa-import-workflow:stale",
+          "packet-frozen-tuna-canada-001:evidence-frozen-tuna-cfia-airs-reference:stale",
+          "packet-frozen-tuna-canada-001:restricted_party_screening-missing",
+          "packet-frozen-tuna-canada-001:qualified_review-missing",
+          "packet-frozen-tuna-canada-001:buyer_validation-missing",
+          "packet-frozen-tuna-canada-001:contract-missing"
+        ],
+        "included_claim_ids": [
+          "packet-frozen-tuna-canada-001:source_freshness_claim",
+          "packet-frozen-tuna-canada-001:tariff_classification_claim",
+          "packet-frozen-tuna-canada-001:food_safety_claim",
+          "packet-frozen-tuna-canada-001:export_to_canada_readiness_claim",
+          "packet-frozen-tuna-canada-001:importer_of_record_claim",
+          "packet-frozen-tuna-canada-001:trade_document_completeness_claim",
+          "packet-frozen-tuna-canada-001:trade_agreement_preference_claim",
+          "packet-frozen-tuna-canada-001:source_rights_claim",
+          "packet-frozen-tuna-canada-001:buyer_validation_claim",
+          "packet-frozen-tuna-canada-001:launch_readiness_claim"
+        ],
+        "included_evidence_ids": [
+          "evidence-frozen-tuna-cid-reference",
+          "evidence-frozen-tuna-cbsa-import-workflow",
+          "evidence-frozen-tuna-cfia-airs-reference"
+        ],
+        "packet_id": "packet-frozen-tuna-canada-001",
+        "proof_boundary": "Trade Readiness Copilot organizes import/export evidence and blockers. It does not provide legal, customs, tariff, tax, CFIA, supplier, buyer, compliance, shipment, or launch advice.",
+        "report_type": "buyer_ready_packet",
+        "source_snapshot_hash": "0a0067f69c0a20ac844b78dddf131b83aef84d028746a98bc8f60350526e9087",
+        "status": "pdf_renderer_ready_basic"
+      },
+      "report_id": "buyer_ready_packet:packet-frozen-tuna-canada-001:pdf",
+      "report_type": "buyer_ready_packet",
+      "status": "pdf_renderer_ready_basic"
+    },
+    {
+      "organization_id": "org-importer-demo",
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "path": "output/pdf/production_reports/packet-frozen-tuna-canada-001/buyer_ready_packet.pdf",
+      "payload": {
+        "blocked_claim_section_included": true,
+        "claims_opened": false,
+        "external_effects_created": false,
+        "format": "pdf",
+        "packet_id": "packet-frozen-tuna-canada-001",
+        "path": "output/pdf/production_reports/packet-frozen-tuna-canada-001/buyer_ready_packet.pdf",
+        "report_id": "production-report:packet-frozen-tuna-canada-001:buyer_ready_packet:v1",
+        "report_type": "buyer_ready_packet",
+        "review_status": "not_reviewed",
+        "status": "export_ready_local",
+        "watermark": "DRAFT - NOT APPROVAL"
+      },
+      "report_id": "production-report:packet-frozen-tuna-canada-001:buyer_ready_packet:v1",
+      "report_type": "buyer_ready_packet",
+      "status": "export_ready_local"
+    },
+    {
+      "organization_id": "org-importer-demo",
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "path": "output/pdf/production_reports/packet-frozen-tuna-canada-001/country_source_map.pdf",
+      "payload": {
+        "blocked_claim_section_included": true,
+        "claims_opened": false,
+        "external_effects_created": false,
+        "format": "pdf",
+        "packet_id": "packet-frozen-tuna-canada-001",
+        "path": "output/pdf/production_reports/packet-frozen-tuna-canada-001/country_source_map.pdf",
+        "report_id": "production-report:packet-frozen-tuna-canada-001:country_source_map:v1",
+        "report_type": "country_source_map",
+        "review_status": "not_reviewed",
+        "status": "export_ready_local",
+        "watermark": "DRAFT - NOT APPROVAL"
+      },
+      "report_id": "production-report:packet-frozen-tuna-canada-001:country_source_map:v1",
+      "report_type": "country_source_map",
+      "status": "export_ready_local"
+    },
+    {
+      "organization_id": "org-importer-demo",
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "path": "",
+      "payload": {
+        "ai_involvement_disclosure": "AI simulated review may be included when present; AI never opens approval gates.",
+        "file_id": "",
+        "format": "markdown",
+        "generated_at": "2026-06-25T00:00:00+00:00",
+        "generated_by": "system",
+        "id": "customer_readiness_report:packet-frozen-tuna-canada-001:markdown",
+        "included_blocker_ids": [
+          "packet-frozen-tuna-canada-001:evidence-frozen-tuna-cid-reference:stale",
+          "packet-frozen-tuna-canada-001:evidence-frozen-tuna-cbsa-import-workflow:stale",
+          "packet-frozen-tuna-canada-001:evidence-frozen-tuna-cfia-airs-reference:stale",
+          "packet-frozen-tuna-canada-001:restricted_party_screening-missing",
+          "packet-frozen-tuna-canada-001:qualified_review-missing",
+          "packet-frozen-tuna-canada-001:buyer_validation-missing",
+          "packet-frozen-tuna-canada-001:contract-missing"
+        ],
+        "included_claim_ids": [
+          "packet-frozen-tuna-canada-001:source_freshness_claim",
+          "packet-frozen-tuna-canada-001:tariff_classification_claim",
+          "packet-frozen-tuna-canada-001:food_safety_claim",
+          "packet-frozen-tuna-canada-001:export_to_canada_readiness_claim",
+          "packet-frozen-tuna-canada-001:importer_of_record_claim",
+          "packet-frozen-tuna-canada-001:trade_document_completeness_claim",
+          "packet-frozen-tuna-canada-001:trade_agreement_preference_claim",
+          "packet-frozen-tuna-canada-001:source_rights_claim",
+          "packet-frozen-tuna-canada-001:buyer_validation_claim",
+          "packet-frozen-tuna-canada-001:launch_readiness_claim"
+        ],
+        "included_evidence_ids": [
+          "evidence-frozen-tuna-cid-reference",
+          "evidence-frozen-tuna-cbsa-import-workflow",
+          "evidence-frozen-tuna-cfia-airs-reference"
+        ],
+        "packet_id": "packet-frozen-tuna-canada-001",
+        "proof_boundary": "Trade Readiness Copilot organizes import/export evidence and blockers. It does not provide legal, customs, tariff, tax, CFIA, supplier, buyer, compliance, shipment, or launch advice.",
+        "report_type": "customer_readiness_report",
+        "source_snapshot_hash": "0a0067f69c0a20ac844b78dddf131b83aef84d028746a98bc8f60350526e9087",
+        "status": "draft_internal_export_ready"
+      },
+      "report_id": "customer_readiness_report:packet-frozen-tuna-canada-001:markdown",
+      "report_type": "customer_readiness_report",
+      "status": "draft_internal_export_ready"
+    },
+    {
+      "organization_id": "org-importer-demo",
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "path": "",
+      "payload": {
+        "ai_involvement_disclosure": "AI simulated review may be included when present; AI never opens approval gates.",
+        "file_id": "",
+        "format": "json",
+        "generated_at": "2026-06-25T00:00:00+00:00",
+        "generated_by": "system",
+        "id": "customer_readiness_report:packet-frozen-tuna-canada-001:json",
+        "included_blocker_ids": [
+          "packet-frozen-tuna-canada-001:evidence-frozen-tuna-cid-reference:stale",
+          "packet-frozen-tuna-canada-001:evidence-frozen-tuna-cbsa-import-workflow:stale",
+          "packet-frozen-tuna-canada-001:evidence-frozen-tuna-cfia-airs-reference:stale",
+          "packet-frozen-tuna-canada-001:restricted_party_screening-missing",
+          "packet-frozen-tuna-canada-001:qualified_review-missing",
+          "packet-frozen-tuna-canada-001:buyer_validation-missing",
+          "packet-frozen-tuna-canada-001:contract-missing"
+        ],
+        "included_claim_ids": [
+          "packet-frozen-tuna-canada-001:source_freshness_claim",
+          "packet-frozen-tuna-canada-001:tariff_classification_claim",
+          "packet-frozen-tuna-canada-001:food_safety_claim",
+          "packet-frozen-tuna-canada-001:export_to_canada_readiness_claim",
+          "packet-frozen-tuna-canada-001:importer_of_record_claim",
+          "packet-frozen-tuna-canada-001:trade_document_completeness_claim",
+          "packet-frozen-tuna-canada-001:trade_agreement_preference_claim",
+          "packet-frozen-tuna-canada-001:source_rights_claim",
+          "packet-frozen-tuna-canada-001:buyer_validation_claim",
+          "packet-frozen-tuna-canada-001:launch_readiness_claim"
+        ],
+        "included_evidence_ids": [
+          "evidence-frozen-tuna-cid-reference",
+          "evidence-frozen-tuna-cbsa-import-workflow",
+          "evidence-frozen-tuna-cfia-airs-reference"
+        ],
+        "packet_id": "packet-frozen-tuna-canada-001",
+        "proof_boundary": "Trade Readiness Copilot organizes import/export evidence and blockers. It does not provide legal, customs, tariff, tax, CFIA, supplier, buyer, compliance, shipment, or launch advice.",
+        "report_type": "customer_readiness_report",
+        "source_snapshot_hash": "0a0067f69c0a20ac844b78dddf131b83aef84d028746a98bc8f60350526e9087",
+        "status": "draft_internal_export_ready"
+      },
+      "report_id": "customer_readiness_report:packet-frozen-tuna-canada-001:json",
+      "report_type": "customer_readiness_report",
+      "status": "draft_internal_export_ready"
+    },
+    {
+      "organization_id": "org-importer-demo",
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "path": "",
+      "payload": {
+        "ai_involvement_disclosure": "AI simulated review may be included when present; AI never opens approval gates.",
+        "file_id": "",
+        "format": "pdf",
+        "generated_at": "2026-06-25T00:00:00+00:00",
+        "generated_by": "system",
+        "id": "customer_readiness_report:packet-frozen-tuna-canada-001:pdf",
+        "included_blocker_ids": [
+          "packet-frozen-tuna-canada-001:evidence-frozen-tuna-cid-reference:stale",
+          "packet-frozen-tuna-canada-001:evidence-frozen-tuna-cbsa-import-workflow:stale",
+          "packet-frozen-tuna-canada-001:evidence-frozen-tuna-cfia-airs-reference:stale",
+          "packet-frozen-tuna-canada-001:restricted_party_screening-missing",
+          "packet-frozen-tuna-canada-001:qualified_review-missing",
+          "packet-frozen-tuna-canada-001:buyer_validation-missing",
+          "packet-frozen-tuna-canada-001:contract-missing"
+        ],
+        "included_claim_ids": [
+          "packet-frozen-tuna-canada-001:source_freshness_claim",
+          "packet-frozen-tuna-canada-001:tariff_classification_claim",
+          "packet-frozen-tuna-canada-001:food_safety_claim",
+          "packet-frozen-tuna-canada-001:export_to_canada_readiness_claim",
+          "packet-frozen-tuna-canada-001:importer_of_record_claim",
+          "packet-frozen-tuna-canada-001:trade_document_completeness_claim",
+          "packet-frozen-tuna-canada-001:trade_agreement_preference_claim",
+          "packet-frozen-tuna-canada-001:source_rights_claim",
+          "packet-frozen-tuna-canada-001:buyer_validation_claim",
+          "packet-frozen-tuna-canada-001:launch_readiness_claim"
+        ],
+        "included_evidence_ids": [
+          "evidence-frozen-tuna-cid-reference",
+          "evidence-frozen-tuna-cbsa-import-workflow",
+          "evidence-frozen-tuna-cfia-airs-reference"
+        ],
+        "packet_id": "packet-frozen-tuna-canada-001",
+        "proof_boundary": "Trade Readiness Copilot organizes import/export evidence and blockers. It does not provide legal, customs, tariff, tax, CFIA, supplier, buyer, compliance, shipment, or launch advice.",
+        "report_type": "customer_readiness_report",
+        "source_snapshot_hash": "0a0067f69c0a20ac844b78dddf131b83aef84d028746a98bc8f60350526e9087",
+        "status": "pdf_renderer_ready_basic"
+      },
+      "report_id": "customer_readiness_report:packet-frozen-tuna-canada-001:pdf",
+      "report_type": "customer_readiness_report",
+      "status": "pdf_renderer_ready_basic"
+    },
+    {
+      "organization_id": "org-importer-demo",
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "path": "",
+      "payload": {
+        "ai_involvement_disclosure": "AI simulated review may be included when present; AI never opens approval gates.",
+        "file_id": "",
+        "format": "pdf",
+        "generated_at": "2026-06-25T00:00:00+00:00",
+        "generated_by": "system",
+        "id": "draft_trade_readiness_report:packet-frozen-tuna-canada-001:pdf",
+        "included_blocker_ids": [
+          "packet-frozen-tuna-canada-001:evidence-frozen-tuna-cid-reference:stale",
+          "packet-frozen-tuna-canada-001:evidence-frozen-tuna-cbsa-import-workflow:stale",
+          "packet-frozen-tuna-canada-001:evidence-frozen-tuna-cfia-airs-reference:stale",
+          "packet-frozen-tuna-canada-001:restricted_party_screening-missing",
+          "packet-frozen-tuna-canada-001:qualified_review-missing",
+          "packet-frozen-tuna-canada-001:buyer_validation-missing",
+          "packet-frozen-tuna-canada-001:contract-missing"
+        ],
+        "included_claim_ids": [
+          "packet-frozen-tuna-canada-001:source_freshness_claim",
+          "packet-frozen-tuna-canada-001:tariff_classification_claim",
+          "packet-frozen-tuna-canada-001:food_safety_claim",
+          "packet-frozen-tuna-canada-001:export_to_canada_readiness_claim",
+          "packet-frozen-tuna-canada-001:importer_of_record_claim",
+          "packet-frozen-tuna-canada-001:trade_document_completeness_claim",
+          "packet-frozen-tuna-canada-001:trade_agreement_preference_claim",
+          "packet-frozen-tuna-canada-001:source_rights_claim",
+          "packet-frozen-tuna-canada-001:buyer_validation_claim",
+          "packet-frozen-tuna-canada-001:launch_readiness_claim"
+        ],
+        "included_evidence_ids": [
+          "evidence-frozen-tuna-cid-reference",
+          "evidence-frozen-tuna-cbsa-import-workflow",
+          "evidence-frozen-tuna-cfia-airs-reference"
+        ],
+        "packet_id": "packet-frozen-tuna-canada-001",
+        "proof_boundary": "Trade Readiness Copilot organizes import/export evidence and blockers. It does not provide legal, customs, tariff, tax, CFIA, supplier, buyer, compliance, shipment, or launch advice.",
+        "report_type": "draft_trade_readiness_report",
+        "source_snapshot_hash": "0a0067f69c0a20ac844b78dddf131b83aef84d028746a98bc8f60350526e9087",
+        "status": "pdf_renderer_ready_basic"
+      },
+      "report_id": "draft_trade_readiness_report:packet-frozen-tuna-canada-001:pdf",
+      "report_type": "draft_trade_readiness_report",
+      "status": "pdf_renderer_ready_basic"
+    },
+    {
+      "organization_id": "org-importer-demo",
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "path": "output/pdf/production_reports/packet-frozen-tuna-canada-001/executive_decision_report.pdf",
+      "payload": {
+        "blocked_claim_section_included": true,
+        "claims_opened": false,
+        "external_effects_created": false,
+        "format": "pdf",
+        "packet_id": "packet-frozen-tuna-canada-001",
+        "path": "output/pdf/production_reports/packet-frozen-tuna-canada-001/executive_decision_report.pdf",
+        "report_id": "production-report:packet-frozen-tuna-canada-001:executive_decision_report:v1",
+        "report_type": "executive_decision_report",
+        "review_status": "not_reviewed",
+        "status": "export_ready_local",
+        "watermark": "DRAFT - NOT APPROVAL"
+      },
+      "report_id": "production-report:packet-frozen-tuna-canada-001:executive_decision_report:v1",
+      "report_type": "executive_decision_report",
+      "status": "export_ready_local"
+    },
+    {
+      "organization_id": "org-importer-demo",
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "path": "",
+      "payload": {
+        "ai_involvement_disclosure": "AI simulated review may be included when present; AI never opens approval gates.",
+        "file_id": "",
+        "format": "markdown",
+        "generated_at": "2026-06-25T00:00:00+00:00",
+        "generated_by": "system",
+        "id": "expert_review_packet:packet-frozen-tuna-canada-001:markdown",
+        "included_blocker_ids": [
+          "packet-frozen-tuna-canada-001:evidence-frozen-tuna-cid-reference:stale",
+          "packet-frozen-tuna-canada-001:evidence-frozen-tuna-cbsa-import-workflow:stale",
+          "packet-frozen-tuna-canada-001:evidence-frozen-tuna-cfia-airs-reference:stale",
+          "packet-frozen-tuna-canada-001:restricted_party_screening-missing",
+          "packet-frozen-tuna-canada-001:qualified_review-missing",
+          "packet-frozen-tuna-canada-001:buyer_validation-missing",
+          "packet-frozen-tuna-canada-001:contract-missing"
+        ],
+        "included_claim_ids": [
+          "packet-frozen-tuna-canada-001:source_freshness_claim",
+          "packet-frozen-tuna-canada-001:tariff_classification_claim",
+          "packet-frozen-tuna-canada-001:food_safety_claim",
+          "packet-frozen-tuna-canada-001:export_to_canada_readiness_claim",
+          "packet-frozen-tuna-canada-001:importer_of_record_claim",
+          "packet-frozen-tuna-canada-001:trade_document_completeness_claim",
+          "packet-frozen-tuna-canada-001:trade_agreement_preference_claim",
+          "packet-frozen-tuna-canada-001:source_rights_claim",
+          "packet-frozen-tuna-canada-001:buyer_validation_claim",
+          "packet-frozen-tuna-canada-001:launch_readiness_claim"
+        ],
+        "included_evidence_ids": [
+          "evidence-frozen-tuna-cid-reference",
+          "evidence-frozen-tuna-cbsa-import-workflow",
+          "evidence-frozen-tuna-cfia-airs-reference"
+        ],
+        "packet_id": "packet-frozen-tuna-canada-001",
+        "proof_boundary": "Trade Readiness Copilot organizes import/export evidence and blockers. It does not provide legal, customs, tariff, tax, CFIA, supplier, buyer, compliance, shipment, or launch advice.",
+        "report_type": "expert_review_packet",
+        "source_snapshot_hash": "0a0067f69c0a20ac844b78dddf131b83aef84d028746a98bc8f60350526e9087",
+        "status": "draft_internal_export_ready"
+      },
+      "report_id": "expert_review_packet:packet-frozen-tuna-canada-001:markdown",
+      "report_type": "expert_review_packet",
+      "status": "draft_internal_export_ready"
+    },
+    {
+      "organization_id": "org-importer-demo",
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "path": "",
+      "payload": {
+        "ai_involvement_disclosure": "AI simulated review may be included when present; AI never opens approval gates.",
+        "file_id": "",
+        "format": "pdf",
+        "generated_at": "2026-06-25T00:00:00+00:00",
+        "generated_by": "system",
+        "id": "expert_review_packet:packet-frozen-tuna-canada-001:pdf",
+        "included_blocker_ids": [
+          "packet-frozen-tuna-canada-001:evidence-frozen-tuna-cid-reference:stale",
+          "packet-frozen-tuna-canada-001:evidence-frozen-tuna-cbsa-import-workflow:stale",
+          "packet-frozen-tuna-canada-001:evidence-frozen-tuna-cfia-airs-reference:stale",
+          "packet-frozen-tuna-canada-001:restricted_party_screening-missing",
+          "packet-frozen-tuna-canada-001:qualified_review-missing",
+          "packet-frozen-tuna-canada-001:buyer_validation-missing",
+          "packet-frozen-tuna-canada-001:contract-missing"
+        ],
+        "included_claim_ids": [
+          "packet-frozen-tuna-canada-001:source_freshness_claim",
+          "packet-frozen-tuna-canada-001:tariff_classification_claim",
+          "packet-frozen-tuna-canada-001:food_safety_claim",
+          "packet-frozen-tuna-canada-001:export_to_canada_readiness_claim",
+          "packet-frozen-tuna-canada-001:importer_of_record_claim",
+          "packet-frozen-tuna-canada-001:trade_document_completeness_claim",
+          "packet-frozen-tuna-canada-001:trade_agreement_preference_claim",
+          "packet-frozen-tuna-canada-001:source_rights_claim",
+          "packet-frozen-tuna-canada-001:buyer_validation_claim",
+          "packet-frozen-tuna-canada-001:launch_readiness_claim"
+        ],
+        "included_evidence_ids": [
+          "evidence-frozen-tuna-cid-reference",
+          "evidence-frozen-tuna-cbsa-import-workflow",
+          "evidence-frozen-tuna-cfia-airs-reference"
+        ],
+        "packet_id": "packet-frozen-tuna-canada-001",
+        "proof_boundary": "Trade Readiness Copilot organizes import/export evidence and blockers. It does not provide legal, customs, tariff, tax, CFIA, supplier, buyer, compliance, shipment, or launch advice.",
+        "report_type": "expert_review_packet",
+        "source_snapshot_hash": "0a0067f69c0a20ac844b78dddf131b83aef84d028746a98bc8f60350526e9087",
+        "status": "pdf_renderer_ready_basic"
+      },
+      "report_id": "expert_review_packet:packet-frozen-tuna-canada-001:pdf",
+      "report_type": "expert_review_packet",
+      "status": "pdf_renderer_ready_basic"
+    },
+    {
+      "organization_id": "org-importer-demo",
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "path": "output/pdf/production_reports/packet-frozen-tuna-canada-001/expert_review_summary.pdf",
+      "payload": {
+        "blocked_claim_section_included": true,
+        "claims_opened": false,
+        "external_effects_created": false,
+        "format": "pdf",
+        "packet_id": "packet-frozen-tuna-canada-001",
+        "path": "output/pdf/production_reports/packet-frozen-tuna-canada-001/expert_review_summary.pdf",
+        "report_id": "production-report:packet-frozen-tuna-canada-001:expert_review_summary:v1",
+        "report_type": "expert_review_summary",
+        "review_status": "not_reviewed",
+        "status": "export_ready_local",
+        "watermark": "DRAFT - NOT APPROVAL"
+      },
+      "report_id": "production-report:packet-frozen-tuna-canada-001:expert_review_summary:v1",
+      "report_type": "expert_review_summary",
+      "status": "export_ready_local"
+    },
+    {
+      "organization_id": "org-importer-demo",
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "path": "output/pdf/production_reports/packet-frozen-tuna-canada-001/market_opportunity_brief.pdf",
+      "payload": {
+        "blocked_claim_section_included": true,
+        "claims_opened": false,
+        "external_effects_created": false,
+        "format": "pdf",
+        "packet_id": "packet-frozen-tuna-canada-001",
+        "path": "output/pdf/production_reports/packet-frozen-tuna-canada-001/market_opportunity_brief.pdf",
+        "report_id": "production-report:packet-frozen-tuna-canada-001:market_opportunity_brief:v1",
+        "report_type": "market_opportunity_brief",
+        "review_status": "not_reviewed",
+        "status": "export_ready_local",
+        "watermark": "DRAFT - NOT APPROVAL"
+      },
+      "report_id": "production-report:packet-frozen-tuna-canada-001:market_opportunity_brief:v1",
+      "report_type": "market_opportunity_brief",
+      "status": "export_ready_local"
+    },
+    {
+      "organization_id": "org-importer-demo",
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "path": "",
+      "payload": {
+        "ai_involvement_disclosure": "AI simulated review may be included when present; AI never opens approval gates.",
+        "file_id": "",
+        "format": "pdf",
+        "generated_at": "2026-06-25T00:00:00+00:00",
+        "generated_by": "system",
+        "id": "missing_evidence_checklist:packet-frozen-tuna-canada-001:pdf",
+        "included_blocker_ids": [
+          "packet-frozen-tuna-canada-001:evidence-frozen-tuna-cid-reference:stale",
+          "packet-frozen-tuna-canada-001:evidence-frozen-tuna-cbsa-import-workflow:stale",
+          "packet-frozen-tuna-canada-001:evidence-frozen-tuna-cfia-airs-reference:stale",
+          "packet-frozen-tuna-canada-001:restricted_party_screening-missing",
+          "packet-frozen-tuna-canada-001:qualified_review-missing",
+          "packet-frozen-tuna-canada-001:buyer_validation-missing",
+          "packet-frozen-tuna-canada-001:contract-missing"
+        ],
+        "included_claim_ids": [
+          "packet-frozen-tuna-canada-001:source_freshness_claim",
+          "packet-frozen-tuna-canada-001:tariff_classification_claim",
+          "packet-frozen-tuna-canada-001:food_safety_claim",
+          "packet-frozen-tuna-canada-001:export_to_canada_readiness_claim",
+          "packet-frozen-tuna-canada-001:importer_of_record_claim",
+          "packet-frozen-tuna-canada-001:trade_document_completeness_claim",
+          "packet-frozen-tuna-canada-001:trade_agreement_preference_claim",
+          "packet-frozen-tuna-canada-001:source_rights_claim",
+          "packet-frozen-tuna-canada-001:buyer_validation_claim",
+          "packet-frozen-tuna-canada-001:launch_readiness_claim"
+        ],
+        "included_evidence_ids": [
+          "evidence-frozen-tuna-cid-reference",
+          "evidence-frozen-tuna-cbsa-import-workflow",
+          "evidence-frozen-tuna-cfia-airs-reference"
+        ],
+        "packet_id": "packet-frozen-tuna-canada-001",
+        "proof_boundary": "Trade Readiness Copilot organizes import/export evidence and blockers. It does not provide legal, customs, tariff, tax, CFIA, supplier, buyer, compliance, shipment, or launch advice.",
+        "report_type": "missing_evidence_checklist",
+        "source_snapshot_hash": "0a0067f69c0a20ac844b78dddf131b83aef84d028746a98bc8f60350526e9087",
+        "status": "pdf_renderer_ready_basic"
+      },
+      "report_id": "missing_evidence_checklist:packet-frozen-tuna-canada-001:pdf",
+      "report_type": "missing_evidence_checklist",
+      "status": "pdf_renderer_ready_basic"
+    },
+    {
+      "organization_id": "org-importer-demo",
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "path": "output/pdf/production_reports/packet-frozen-tuna-canada-001/missing_evidence_report.pdf",
+      "payload": {
+        "blocked_claim_section_included": true,
+        "claims_opened": false,
+        "external_effects_created": false,
+        "format": "pdf",
+        "packet_id": "packet-frozen-tuna-canada-001",
+        "path": "output/pdf/production_reports/packet-frozen-tuna-canada-001/missing_evidence_report.pdf",
+        "report_id": "production-report:packet-frozen-tuna-canada-001:missing_evidence_report:v1",
+        "report_type": "missing_evidence_report",
+        "review_status": "not_reviewed",
+        "status": "export_ready_local",
+        "watermark": "DRAFT - NOT APPROVAL"
+      },
+      "report_id": "production-report:packet-frozen-tuna-canada-001:missing_evidence_report:v1",
+      "report_type": "missing_evidence_report",
+      "status": "export_ready_local"
+    },
+    {
+      "organization_id": "org-importer-demo",
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "path": "",
+      "payload": {
+        "ai_involvement_disclosure": "AI simulated review may be included when present; AI never opens approval gates.",
+        "file_id": "",
+        "format": "html",
+        "generated_at": "2026-06-25T00:00:00+00:00",
+        "generated_by": "system",
+        "id": "operator_blocker_report:packet-frozen-tuna-canada-001:html",
+        "included_blocker_ids": [
+          "packet-frozen-tuna-canada-001:evidence-frozen-tuna-cid-reference:stale",
+          "packet-frozen-tuna-canada-001:evidence-frozen-tuna-cbsa-import-workflow:stale",
+          "packet-frozen-tuna-canada-001:evidence-frozen-tuna-cfia-airs-reference:stale",
+          "packet-frozen-tuna-canada-001:restricted_party_screening-missing",
+          "packet-frozen-tuna-canada-001:qualified_review-missing",
+          "packet-frozen-tuna-canada-001:buyer_validation-missing",
+          "packet-frozen-tuna-canada-001:contract-missing"
+        ],
+        "included_claim_ids": [
+          "packet-frozen-tuna-canada-001:source_freshness_claim",
+          "packet-frozen-tuna-canada-001:tariff_classification_claim",
+          "packet-frozen-tuna-canada-001:food_safety_claim",
+          "packet-frozen-tuna-canada-001:export_to_canada_readiness_claim",
+          "packet-frozen-tuna-canada-001:importer_of_record_claim",
+          "packet-frozen-tuna-canada-001:trade_document_completeness_claim",
+          "packet-frozen-tuna-canada-001:trade_agreement_preference_claim",
+          "packet-frozen-tuna-canada-001:source_rights_claim",
+          "packet-frozen-tuna-canada-001:buyer_validation_claim",
+          "packet-frozen-tuna-canada-001:launch_readiness_claim"
+        ],
+        "included_evidence_ids": [
+          "evidence-frozen-tuna-cid-reference",
+          "evidence-frozen-tuna-cbsa-import-workflow",
+          "evidence-frozen-tuna-cfia-airs-reference"
+        ],
+        "packet_id": "packet-frozen-tuna-canada-001",
+        "proof_boundary": "Trade Readiness Copilot organizes import/export evidence and blockers. It does not provide legal, customs, tariff, tax, CFIA, supplier, buyer, compliance, shipment, or launch advice.",
+        "report_type": "operator_blocker_report",
+        "source_snapshot_hash": "0a0067f69c0a20ac844b78dddf131b83aef84d028746a98bc8f60350526e9087",
+        "status": "draft_internal_export_ready"
+      },
+      "report_id": "operator_blocker_report:packet-frozen-tuna-canada-001:html",
+      "report_type": "operator_blocker_report",
+      "status": "draft_internal_export_ready"
+    },
+    {
+      "organization_id": "org-importer-demo",
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "path": "",
+      "payload": {
+        "ai_involvement_disclosure": "AI simulated review may be included when present; AI never opens approval gates.",
+        "file_id": "",
+        "format": "pdf",
+        "generated_at": "2026-06-25T00:00:00+00:00",
+        "generated_by": "system",
+        "id": "operator_review_report:packet-frozen-tuna-canada-001:pdf",
+        "included_blocker_ids": [
+          "packet-frozen-tuna-canada-001:evidence-frozen-tuna-cid-reference:stale",
+          "packet-frozen-tuna-canada-001:evidence-frozen-tuna-cbsa-import-workflow:stale",
+          "packet-frozen-tuna-canada-001:evidence-frozen-tuna-cfia-airs-reference:stale",
+          "packet-frozen-tuna-canada-001:restricted_party_screening-missing",
+          "packet-frozen-tuna-canada-001:qualified_review-missing",
+          "packet-frozen-tuna-canada-001:buyer_validation-missing",
+          "packet-frozen-tuna-canada-001:contract-missing"
+        ],
+        "included_claim_ids": [
+          "packet-frozen-tuna-canada-001:source_freshness_claim",
+          "packet-frozen-tuna-canada-001:tariff_classification_claim",
+          "packet-frozen-tuna-canada-001:food_safety_claim",
+          "packet-frozen-tuna-canada-001:export_to_canada_readiness_claim",
+          "packet-frozen-tuna-canada-001:importer_of_record_claim",
+          "packet-frozen-tuna-canada-001:trade_document_completeness_claim",
+          "packet-frozen-tuna-canada-001:trade_agreement_preference_claim",
+          "packet-frozen-tuna-canada-001:source_rights_claim",
+          "packet-frozen-tuna-canada-001:buyer_validation_claim",
+          "packet-frozen-tuna-canada-001:launch_readiness_claim"
+        ],
+        "included_evidence_ids": [
+          "evidence-frozen-tuna-cid-reference",
+          "evidence-frozen-tuna-cbsa-import-workflow",
+          "evidence-frozen-tuna-cfia-airs-reference"
+        ],
+        "packet_id": "packet-frozen-tuna-canada-001",
+        "proof_boundary": "Trade Readiness Copilot organizes import/export evidence and blockers. It does not provide legal, customs, tariff, tax, CFIA, supplier, buyer, compliance, shipment, or launch advice.",
+        "report_type": "operator_review_report",
+        "source_snapshot_hash": "0a0067f69c0a20ac844b78dddf131b83aef84d028746a98bc8f60350526e9087",
+        "status": "pdf_renderer_ready_basic"
+      },
+      "report_id": "operator_review_report:packet-frozen-tuna-canada-001:pdf",
+      "report_type": "operator_review_report",
+      "status": "pdf_renderer_ready_basic"
+    },
+    {
+      "organization_id": "org-importer-demo",
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "path": "",
+      "payload": {
+        "ai_involvement_disclosure": "AI simulated review may be included when present; AI never opens approval gates.",
+        "file_id": "",
+        "format": "json",
+        "generated_at": "2026-06-25T00:00:00+00:00",
+        "generated_by": "system",
+        "id": "private_beta_gate_report:packet-frozen-tuna-canada-001:json",
+        "included_blocker_ids": [
+          "packet-frozen-tuna-canada-001:evidence-frozen-tuna-cid-reference:stale",
+          "packet-frozen-tuna-canada-001:evidence-frozen-tuna-cbsa-import-workflow:stale",
+          "packet-frozen-tuna-canada-001:evidence-frozen-tuna-cfia-airs-reference:stale",
+          "packet-frozen-tuna-canada-001:restricted_party_screening-missing",
+          "packet-frozen-tuna-canada-001:qualified_review-missing",
+          "packet-frozen-tuna-canada-001:buyer_validation-missing",
+          "packet-frozen-tuna-canada-001:contract-missing"
+        ],
+        "included_claim_ids": [
+          "packet-frozen-tuna-canada-001:source_freshness_claim",
+          "packet-frozen-tuna-canada-001:tariff_classification_claim",
+          "packet-frozen-tuna-canada-001:food_safety_claim",
+          "packet-frozen-tuna-canada-001:export_to_canada_readiness_claim",
+          "packet-frozen-tuna-canada-001:importer_of_record_claim",
+          "packet-frozen-tuna-canada-001:trade_document_completeness_claim",
+          "packet-frozen-tuna-canada-001:trade_agreement_preference_claim",
+          "packet-frozen-tuna-canada-001:source_rights_claim",
+          "packet-frozen-tuna-canada-001:buyer_validation_claim",
+          "packet-frozen-tuna-canada-001:launch_readiness_claim"
+        ],
+        "included_evidence_ids": [
+          "evidence-frozen-tuna-cid-reference",
+          "evidence-frozen-tuna-cbsa-import-workflow",
+          "evidence-frozen-tuna-cfia-airs-reference"
+        ],
+        "packet_id": "packet-frozen-tuna-canada-001",
+        "proof_boundary": "Trade Readiness Copilot organizes import/export evidence and blockers. It does not provide legal, customs, tariff, tax, CFIA, supplier, buyer, compliance, shipment, or launch advice.",
+        "report_type": "private_beta_gate_report",
+        "source_snapshot_hash": "0a0067f69c0a20ac844b78dddf131b83aef84d028746a98bc8f60350526e9087",
+        "status": "draft_internal_export_ready"
+      },
+      "report_id": "private_beta_gate_report:packet-frozen-tuna-canada-001:json",
+      "report_type": "private_beta_gate_report",
+      "status": "draft_internal_export_ready"
+    },
+    {
+      "organization_id": "org-importer-demo",
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "path": "output/pdf/production_reports/packet-frozen-tuna-canada-001/source_freshness_report.pdf",
+      "payload": {
+        "blocked_claim_section_included": true,
+        "claims_opened": false,
+        "external_effects_created": false,
+        "format": "pdf",
+        "packet_id": "packet-frozen-tuna-canada-001",
+        "path": "output/pdf/production_reports/packet-frozen-tuna-canada-001/source_freshness_report.pdf",
+        "report_id": "production-report:packet-frozen-tuna-canada-001:source_freshness_report:v1",
+        "report_type": "source_freshness_report",
+        "review_status": "not_reviewed",
+        "status": "export_ready_local",
+        "watermark": "DRAFT - NOT APPROVAL"
+      },
+      "report_id": "production-report:packet-frozen-tuna-canada-001:source_freshness_report:v1",
+      "report_type": "source_freshness_report",
+      "status": "export_ready_local"
+    },
+    {
+      "organization_id": "org-importer-demo",
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "path": "output/pdf/production_reports/packet-frozen-tuna-canada-001/starter_trade_readiness_packet.pdf",
+      "payload": {
+        "blocked_claim_section_included": true,
+        "claims_opened": false,
+        "external_effects_created": false,
+        "format": "pdf",
+        "packet_id": "packet-frozen-tuna-canada-001",
+        "path": "output/pdf/production_reports/packet-frozen-tuna-canada-001/starter_trade_readiness_packet.pdf",
+        "report_id": "production-report:packet-frozen-tuna-canada-001:starter_trade_readiness_packet:v1",
+        "report_type": "starter_trade_readiness_packet",
+        "review_status": "not_reviewed",
+        "status": "export_ready_local",
+        "watermark": "DRAFT - NOT APPROVAL"
+      },
+      "report_id": "production-report:packet-frozen-tuna-canada-001:starter_trade_readiness_packet:v1",
+      "report_type": "starter_trade_readiness_packet",
+      "status": "export_ready_local"
+    },
+    {
+      "organization_id": "org-importer-demo",
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "path": "output/pdf/production_reports/packet-frozen-tuna-canada-001/supplier_document_request.pdf",
+      "payload": {
+        "blocked_claim_section_included": true,
+        "claims_opened": false,
+        "external_effects_created": false,
+        "format": "pdf",
+        "packet_id": "packet-frozen-tuna-canada-001",
+        "path": "output/pdf/production_reports/packet-frozen-tuna-canada-001/supplier_document_request.pdf",
+        "report_id": "production-report:packet-frozen-tuna-canada-001:supplier_document_request:v1",
+        "report_type": "supplier_document_request",
+        "review_status": "not_reviewed",
+        "status": "export_ready_local",
+        "watermark": "DRAFT - NOT APPROVAL"
+      },
+      "report_id": "production-report:packet-frozen-tuna-canada-001:supplier_document_request:v1",
+      "report_type": "supplier_document_request",
+      "status": "export_ready_local"
+    }
+  ],
+  "score_summary": [
+    {
+      "cap": 59,
+      "label": "red",
+      "next_action": "Collect dated buyer interaction and supplier evidence, then route to review.",
+      "score_type": "buyer_supplier_evidence_score",
+      "value": 0
+    },
+    {
+      "cap": 39,
+      "label": "red",
+      "next_action": "Generate a compliance review packet and request qualified review.",
+      "score_type": "decision_safety_score",
+      "value": 20
+    },
+    {
+      "cap": 49,
+      "label": "red",
+      "next_action": "Attach missing product, commercial, origin, review, buyer, and source evidence.",
+      "score_type": "evidence_completeness_score",
+      "value": 23
+    },
+    {
+      "cap": 59,
+      "label": "yellow",
+      "next_action": "Attach dated trade dataset rows, market-access comparison, and buyer/operator validation before treating the signal as a decision.",
+      "score_type": "market_signal_score",
+      "value": 45
+    },
+    {
+      "cap": 39,
+      "label": "red",
+      "next_action": "Confirm importer of record, Incoterms, buyer/importer role, and broker review path.",
+      "score_type": "responsibility_clarity_score",
+      "value": 30
+    },
+    {
+      "cap": 39,
+      "label": "red",
+      "next_action": "Run dated source refresh and record hash/change classification.",
+      "score_type": "source_freshness_score",
+      "value": 39
+    }
+  ],
+  "status": "database_backed_report_context_ready",
+  "trade_lane": {
+    "destination_country": "CA",
+    "direction": "import",
+    "organization_id": "org-importer-demo",
+    "origin_country": "VN",
+    "payload": {
+      "destination_country_raw": "Canada",
+      "direction_provenance": "system_derived_needs_user_confirmation",
+      "origin_country_raw": "Vietnam"
+    },
+    "trade_lane_id": "lane:packet-frozen-tuna-canada-001"
+  },
+  "visible_claims": [
+    {
+      "allowed_language": "Importer or buyer lead-discovery routes can be shown as leads only.",
+      "blocked_language": "Do not say buyer validated, demand proven, or customer interest confirmed.",
+      "can_show_claim": true,
+      "claim_gate_mapper_id": "claim-gate:packet-frozen-tuna-canada-001:buyer_lead_route_identified",
+      "claim_type": "buyer_lead_route_identified",
+      "external_claims_opened": false,
+      "next_valid_move": "Collect dated outreach, reply, meeting, LOI, PO, or paid-order evidence before buyer validation language.",
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "reason": "safe_research_or_preparation_statement_only",
+      "required_evidence": [
+        "official_source_reference",
+        "buyer_signal"
+      ],
+      "required_reviewer_lane": "buyer_validation_review"
+    },
+    {
+      "allowed_language": "CFIA/AIRS can be shown as a regulated-product reference route when the product may be food, plant, animal, or seafood.",
+      "blocked_language": "Do not say CFIA clearance, permit, admissibility, or compliance is approved.",
+      "can_show_claim": true,
+      "claim_gate_mapper_id": "claim-gate:packet-frozen-tuna-canada-001:cfia_relevance_route",
+      "claim_type": "cfia_relevance_route",
+      "external_claims_opened": false,
+      "next_valid_move": "Run a dated CFIA/AIRS check and send product specifics to a qualified reviewer.",
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "reason": "safe_research_or_preparation_statement_only",
+      "required_evidence": [
+        "official_source_reference"
+      ],
+      "required_reviewer_lane": "canada_food_or_regulated_goods_review"
+    },
+    {
+      "allowed_language": "An HS candidate and official HS/tariff research routes can be shown for preparation.",
+      "blocked_language": "Do not say HS classification or tariff treatment is confirmed.",
+      "can_show_claim": true,
+      "claim_gate_mapper_id": "claim-gate:packet-frozen-tuna-canada-001:hs_candidate_research_route",
+      "claim_type": "hs_candidate_research_route",
+      "external_claims_opened": false,
+      "next_valid_move": "Ask a qualified customs/trade reviewer to assess the HS candidate before tariff or classification wording is used.",
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "reason": "safe_research_or_preparation_statement_only",
+      "required_evidence": [
+        "official_source_reference",
+        "market_signal"
+      ],
+      "required_reviewer_lane": "customs_or_trade_review"
+    },
+    {
+      "allowed_language": "A source-routed market research signal can be shown without demand or profitability claims.",
+      "blocked_language": "Do not say demand, profitability, market size, or buyer interest is proven.",
+      "can_show_claim": true,
+      "claim_gate_mapper_id": "claim-gate:packet-frozen-tuna-canada-001:market_signal_source_routed",
+      "claim_type": "market_signal_source_routed",
+      "external_claims_opened": false,
+      "next_valid_move": "Attach dated trade dataset rows and buyer evidence before any market conclusion.",
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "reason": "safe_research_or_preparation_statement_only",
+      "required_evidence": [
+        "market_signal"
+      ],
+      "required_reviewer_lane": "market_or_operator_review"
+    },
+    {
+      "allowed_language": "Product, origin, destination, and trade direction can be shown as user-submitted draft context.",
+      "blocked_language": "Do not imply the product or lane is approved.",
+      "can_show_claim": true,
+      "claim_gate_mapper_id": "claim-gate:packet-frozen-tuna-canada-001:product_context_recorded",
+      "claim_type": "product_context_recorded",
+      "external_claims_opened": false,
+      "next_valid_move": "Use the context to build the packet and collect missing evidence.",
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "reason": "safe_research_or_preparation_statement_only",
+      "required_evidence": [
+        "user_input"
+      ],
+      "required_reviewer_lane": ""
+    },
+    {
+      "allowed_language": "The product can be flagged for regulated-product review.",
+      "blocked_language": "Do not say the product is admissible or exempt.",
+      "can_show_claim": true,
+      "claim_gate_mapper_id": "claim-gate:packet-frozen-tuna-canada-001:regulated_product_review_needed",
+      "claim_type": "regulated_product_review_needed",
+      "external_claims_opened": false,
+      "next_valid_move": "Collect product composition/intended-use details and attach a dated regulated-goods review result.",
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "reason": "safe_research_or_preparation_statement_only",
+      "required_evidence": [
+        "official_source_reference"
+      ],
+      "required_reviewer_lane": "canada_food_or_regulated_goods_review"
+    },
+    {
+      "allowed_language": "The relevant tariff research route can be shown as source routing only.",
+      "blocked_language": "Do not say tariff is confirmed or payable amount is known.",
+      "can_show_claim": true,
+      "claim_gate_mapper_id": "claim-gate:packet-frozen-tuna-canada-001:tariff_route_identified",
+      "claim_type": "tariff_route_identified",
+      "external_claims_opened": false,
+      "next_valid_move": "Attach current tariff-source evidence and route to qualified review before tariff treatment is stated.",
+      "packet_id": "packet-frozen-tuna-canada-001",
+      "reason": "safe_research_or_preparation_statement_only",
+      "required_evidence": [
+        "official_source_reference"
+      ],
+      "required_reviewer_lane": "customs_or_trade_review"
+    }
+  ],
+  "watermark": "DRAFT - NOT APPROVAL"
+}

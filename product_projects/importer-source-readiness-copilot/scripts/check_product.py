@@ -182,6 +182,7 @@ def main() -> int:
     production_data_model = _load_json(ROOT / "system_review_graph" / "production_data_model_manifest.json")
     production_packet_engine = _load_json(ROOT / "system_review_graph" / "production_packet_engine_manifest.json")
     production_persistence = _load_json(ROOT / "system_review_graph" / "production_persistence_snapshot.json")
+    production_repository = _load_json(ROOT / "system_review_graph" / "production_repository_service_manifest.json")
     production_country_source_engine = _load_json(ROOT / "system_review_graph" / "production_country_source_engine_manifest.json")
     production_trade_discovery = _load_json(ROOT / "system_review_graph" / "production_trade_discovery_manifest.json")
     production_trade_data_catalog = _load_json(ROOT / "system_review_graph" / "production_trade_data_catalog_manifest.json")
@@ -334,6 +335,7 @@ def main() -> int:
         "scripts/run_production_launch_control_plane.py",
         "scripts/run_production_packet_engine.py",
         "scripts/run_production_persistence.py",
+        "scripts/run_production_repository.py",
         "scripts/run_production_payment_monetization_engine.py",
         "scripts/run_production_portal_workflow_engine.py",
         "scripts/run_production_reports_engine.py",
@@ -374,6 +376,7 @@ def main() -> int:
         "docs/PRODUCTION_LAUNCH_CONTROL_PLANE.md",
         "docs/PRODUCTION_PACKET_ENGINE.md",
         "docs/PRODUCTION_PERSISTENCE.md",
+        "docs/PRODUCTION_REPOSITORY_SERVICE.md",
         "docs/PRODUCTION_PAYMENT_MONETIZATION_ENGINE.md",
         "docs/PRODUCTION_PORTAL_WORKFLOWS.md",
         "docs/PRODUCTION_REPORTS_ENGINE.md",
@@ -529,6 +532,9 @@ def main() -> int:
         "system_review_graph/production_persistence_snapshot.json",
         "system_review_graph/production_persistence_row_counts.json",
         "system_review_graph/production_domain.sqlite",
+        "system_review_graph/production_repository_service_manifest.json",
+        "system_review_graph/production_repository_packet_context_packet-frozen-tuna-canada-001.json",
+        "system_review_graph/production_repository_report_context_packet-frozen-tuna-canada-001.json",
         "system_review_graph/production_packet_views/packet-frozen-tuna-canada-001/starter_packet.json",
         "system_review_graph/production_packet_views/packet-frozen-tuna-canada-001/market_research_packet.json",
         "system_review_graph/production_packet_views/packet-frozen-tuna-canada-001/buyer_ready_packet.json",
@@ -2452,6 +2458,29 @@ def main() -> int:
             failures.append("production domain store must keep packet claim boundaries closed")
     else:
         failures.append("production domain store missing system_review_graph/production_domain.sqlite")
+    if production_repository.get("status") != "production_repository_service_ready_database_backed_packet_context_claim_gates_closed":
+        failures.append("production repository service should be ready from database-backed packet context")
+    if production_repository.get("packet_context_status") != "packet_context_ready_from_production_repository":
+        failures.append("production repository packet context should read from production domain store")
+    if production_repository.get("report_context_status") != "database_backed_report_context_ready":
+        failures.append("production repository report context should be database backed")
+    if production_repository.get("safe_claim_count", 0) < 7:
+        failures.append("production repository should expose safe preparation claims from claim gates")
+    if production_repository.get("blocked_claim_decision_count", 0) < 10:
+        failures.append("production repository should expose blocked claim decisions")
+    if production_repository.get("report_export_count", 0) < 12:
+        failures.append("production repository should expose report exports")
+    if production_repository.get("tenant_access_control", {}).get("wrong_org_status") != "access_denied":
+        failures.append("production repository should deny wrong-organization packet access")
+    sample_claims = {row.get("claim_type"): row for row in production_repository.get("sample_claim_decisions", [])}
+    if sample_claims.get("product_context_recorded", {}).get("can_show_claim") is not True:
+        failures.append("repository should allow product_context_recorded preparation claim")
+    for claim_type in ("tariff_confirmed", "unknown_future_claim"):
+        if sample_claims.get(claim_type, {}).get("can_show_claim") is not False:
+            failures.append(f"repository should fail closed for {claim_type}")
+    for key in ("external_claims_opened", "hosted_postgres_ready", "public_launch_ready"):
+        if production_repository.get(key) is not False:
+            failures.append(f"production repository expected {key}=false")
     failures.extend(_validate_blockers(ROOT / "system_review_graph" / "blockers.jsonl"))
     failures.extend(_validate_blockers(ROOT / "system_review_graph" / "external_review_blocker_ledger.jsonl"))
     failures.extend(_validate_blocker_rows(external_review_blockers, "external_review_blocker_ledger"))
@@ -2526,6 +2555,10 @@ def main() -> int:
     print(f"production_persistence_rows={production_persistence['total_row_count']}")
     print(f"production_persistence_validation_errors={production_persistence['validation_error_count']}")
     print(f"production_persistence_hosted_postgres_ready={production_persistence['hosted_postgres_ready']}")
+    print(f"production_repository_status={production_repository['status']}")
+    print(f"production_repository_safe_claims={production_repository['safe_claim_count']}")
+    print(f"production_repository_blocked_claims={production_repository['blocked_claim_decision_count']}")
+    print(f"production_repository_wrong_org_status={production_repository['tenant_access_control']['wrong_org_status']}")
     print(f"production_country_source_engine_status={production_country_source_engine['status']}")
     print(f"production_country_packs={production_country_source_engine['country_pack_count']}")
     print(f"production_source_lifecycle_rows={production_country_source_engine['source_lifecycle_count']}")

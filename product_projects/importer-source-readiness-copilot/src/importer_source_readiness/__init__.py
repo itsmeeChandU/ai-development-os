@@ -52,6 +52,7 @@ from .production_market_readiness_evidence_room import (
 )
 from .production_packet_engine import build_production_packet_engine, write_production_packet_engine_artifacts
 from .production_persistence import build_production_persistence_snapshot, write_production_persistence_artifacts
+from .production_repository import build_production_repository_service, write_production_repository_artifacts
 from .production_launch_control_plane import (
     build_production_launch_control_plane,
     write_production_launch_control_plane_artifacts,
@@ -98,6 +99,7 @@ __all__ = [
     "build_production_launch_control_plane",
     "build_production_packet_engine",
     "build_production_persistence_snapshot",
+    "build_production_repository_service",
     "build_production_payment_monetization_engine",
     "build_production_portal_workflow_engine",
     "build_production_redevelopment_plan",
@@ -132,6 +134,7 @@ __all__ = [
     "write_production_launch_control_plane_artifacts",
     "write_production_packet_engine_artifacts",
     "write_production_persistence_artifacts",
+    "write_production_repository_artifacts",
     "write_production_payment_monetization_engine_artifacts",
     "write_production_portal_workflow_engine_artifacts",
     "write_production_redevelopment_artifacts",

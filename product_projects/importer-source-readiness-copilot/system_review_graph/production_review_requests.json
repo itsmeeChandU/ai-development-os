@@ -3,7 +3,7 @@
     {
       "audit_event_id": "audit:production-review:packet-frozen-tuna-canada-001:customs_trade_reviewer",
       "claims_opened": false,
-      "created_at": "2026-06-29T09:45:19+00:00",
+      "created_at": "2026-06-29T10:06:56+00:00",
       "detail": "Draft scoped review request generated locally; no reviewer contacted and no approval recorded.",
       "event_type": "production_review_request_drafted",
       "external_effects_created": false,
@@ -13,7 +13,7 @@
     {
       "audit_event_id": "audit:production-review:packet-frozen-tuna-canada-001:regulated_food_product_reviewer",
       "claims_opened": false,
-      "created_at": "2026-06-29T09:45:19+00:00",
+      "created_at": "2026-06-29T10:06:56+00:00",
       "detail": "Draft scoped review request generated locally; no reviewer contacted and no approval recorded.",
       "event_type": "production_review_request_drafted",
       "external_effects_created": false,
@@ -23,7 +23,7 @@
     {
       "audit_event_id": "audit:production-review:packet-frozen-tuna-canada-001:freight_logistics_reviewer",
       "claims_opened": false,
-      "created_at": "2026-06-29T09:45:19+00:00",
+      "created_at": "2026-06-29T10:06:56+00:00",
       "detail": "Draft scoped review request generated locally; no reviewer contacted and no approval recorded.",
       "event_type": "production_review_request_drafted",
       "external_effects_created": false,
@@ -33,7 +33,7 @@
     {
       "audit_event_id": "audit:production-review:packet-frozen-tuna-canada-001:market_trade_consultant_reviewer",
       "claims_opened": false,
-      "created_at": "2026-06-29T09:45:19+00:00",
+      "created_at": "2026-06-29T10:06:56+00:00",
       "detail": "Draft scoped review request generated locally; no reviewer contacted and no approval recorded.",
       "event_type": "production_review_request_drafted",
       "external_effects_created": false,
@@ -43,7 +43,7 @@
     {
       "audit_event_id": "audit:production-review:packet-frozen-tuna-canada-001:supplier_evidence_reviewer",
       "claims_opened": false,
-      "created_at": "2026-06-29T09:45:19+00:00",
+      "created_at": "2026-06-29T10:06:56+00:00",
       "detail": "Draft scoped review request generated locally; no reviewer contacted and no approval recorded.",
       "event_type": "production_review_request_drafted",
       "external_effects_created": false,
@@ -53,7 +53,7 @@
     {
       "audit_event_id": "audit:production-review:packet-frozen-tuna-canada-001:privacy_legal_reviewer",
       "claims_opened": false,
-      "created_at": "2026-06-29T09:45:19+00:00",
+      "created_at": "2026-06-29T10:06:56+00:00",
       "detail": "Draft scoped review request generated locally; no reviewer contacted and no approval recorded.",
       "event_type": "production_review_request_drafted",
       "external_effects_created": false,
@@ -63,7 +63,7 @@
     {
       "audit_event_id": "audit:production-review:packet-frozen-tuna-canada-001:security_upload_reviewer",
       "claims_opened": false,
-      "created_at": "2026-06-29T09:45:19+00:00",
+      "created_at": "2026-06-29T10:06:56+00:00",
       "detail": "Draft scoped review request generated locally; no reviewer contacted and no approval recorded.",
       "event_type": "production_review_request_drafted",
       "external_effects_created": false,
@@ -73,7 +73,7 @@
     {
       "audit_event_id": "audit:production-review:packet-frozen-tuna-canada-001:ai_safety_reviewer",
       "claims_opened": false,
-      "created_at": "2026-06-29T09:45:19+00:00",
+      "created_at": "2026-06-29T10:06:56+00:00",
       "detail": "Draft scoped review request generated locally; no reviewer contacted and no approval recorded.",
       "event_type": "production_review_request_drafted",
       "external_effects_created": false,
@@ -83,7 +83,7 @@
     {
       "audit_event_id": "audit:production-review:packet-frozen-tuna-canada-001:report_language_reviewer",
       "claims_opened": false,
-      "created_at": "2026-06-29T09:45:19+00:00",
+      "created_at": "2026-06-29T10:06:56+00:00",
       "detail": "Draft scoped review request generated locally; no reviewer contacted and no approval recorded.",
       "event_type": "production_review_request_drafted",
       "external_effects_created": false,
@@ -93,7 +93,7 @@
     {
       "audit_event_id": "audit:production-review:packet-frozen-tuna-canada-001:payment_billing_reviewer",
       "claims_opened": false,
-      "created_at": "2026-06-29T09:45:19+00:00",
+      "created_at": "2026-06-29T10:06:56+00:00",
       "detail": "Draft scoped review request generated locally; no reviewer contacted and no approval recorded.",
       "event_type": "production_review_request_drafted",
       "external_effects_created": false,

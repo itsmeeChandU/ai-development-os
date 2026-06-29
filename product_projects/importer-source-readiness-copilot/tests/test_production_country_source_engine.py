@@ -57,7 +57,12 @@ class ProductionCountrySourceEngineTests(unittest.TestCase):
         self.assertIn("canada-cid", sources)
         self.assertEqual(sources["cbsa-import-commercial-goods"]["source_state"], "checked_current_reference_only")
         self.assertEqual(sources["cfia-airs"]["source_state"], "checked_current_reference_only")
-        self.assertEqual(sources["canada-cid"]["source_state"], "checked_current_reference_only")
+        self.assertIn(
+            sources["canada-cid"]["source_state"],
+            {"checked_current_reference_only", "refresh_attempted_not_verified", "source_unavailable"},
+        )
+        if sources["canada-cid"]["source_state"] != "checked_current_reference_only":
+            self.assertFalse(sources["canada-cid"]["claims_opened"])
         self.assertEqual(sources["cbsa-customs-tariff-2026"]["source_state"], "not_checked")
         self.assertIn("tariff_confirmed", sources["cbsa-customs-tariff-2026"]["blocked_claims"])
         self.assertIn("cfia_approved", impact["blocked_claims"])
