@@ -7,14 +7,14 @@
     "policy_enforcement_code": 59,
     "policy_language": 60,
     "review_input_template_only": 1,
-    "simulated_review_approval_closed": 327,
+    "simulated_review_approval_closed": 339,
     "template_reference": 587
   },
   "disallowed_count": 0,
   "disallowed_findings": [],
-  "finding_count": 1170,
-  "generated_at": "2026-06-29T11:45:16+00:00",
-  "head": "d808830e697fbc621d494c7d062a2e68c76d354e",
+  "finding_count": 1182,
+  "generated_at": "2026-06-29T11:56:44+00:00",
+  "head": "adadd50ec08910c3c5e4838d366687f290dc5c60",
   "policy": "docs/NO_SCAFFOLD_DELIVERY_POLICY.md",
   "policy_failures": [],
   "prior_delivery_audit": {
@@ -77,7 +77,7 @@
     "go_live_public_launch_ready": false,
     "simulated_ai_review_can_open_gate": false
   },
-  "scanned_file_count": 2859,
+  "scanned_file_count": 2873,
   "skipped_contexts": [
     "external_review_packages",
     "binary files"

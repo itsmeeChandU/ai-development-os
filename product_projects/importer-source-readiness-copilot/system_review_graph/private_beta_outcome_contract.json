@@ -19,7 +19,7 @@
     "claims_opened": false,
     "external_effects_created": false,
     "gate_count": 7,
-    "generated_at": "2026-06-29T11:46:04Z",
+    "generated_at": "2026-06-29T11:57:22Z",
     "proof_boundary": "The matrix shows beta evidence gates. It does not approve hosted beta or public launch.",
     "rows": [
       {
@@ -82,7 +82,7 @@
     "smoke_plan_status": "private_beta_smoke_test_plan_ready_blocked_until_wave_1_and_staging",
     "status": "private_beta_outcome_gate_matrix_ready_claims_closed"
   },
-  "generated_at": "2026-06-29T11:46:04Z",
+  "generated_at": "2026-06-29T11:57:22Z",
   "hosted_private_beta_ready": false,
   "next_valid_move": "Collect Wave 1/staging/privacy approvals first, then run five real target-user sessions and save each session record.",
   "optional_reviewer_session_count": 0,

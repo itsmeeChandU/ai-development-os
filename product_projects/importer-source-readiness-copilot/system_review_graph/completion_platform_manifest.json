@@ -41,7 +41,7 @@
       "submit_government_form",
       "send_report_externally_without_confirmation"
     ],
-    "generated_at": "2026-06-29T11:45:38+00:00",
+    "generated_at": "2026-06-29T11:57:03+00:00",
     "proof_boundary": "The gateway executes local product operations with external effects disabled; it does not expose a live public API, credentials, payment integration, or claim-opening authority.",
     "status": "agent_api_gateway_ready_local_executor_no_external_effects",
     "tools": [
@@ -413,7 +413,7 @@
       "submit_government_form",
       "send_report_externally_without_confirmation"
     ],
-    "generated_at": "2026-06-29T11:45:38+00:00",
+    "generated_at": "2026-06-29T11:57:03+00:00",
     "proof_boundary": "This is a local API/MCP contract. It does not expose a live public API gateway or payment integration.",
     "safety_rules": [
       "Agents can create packets and reports only through backend claim/blocker rules.",
@@ -431,7 +431,7 @@
   },
   "all_stage_readiness": {
     "external_gate_count": 10,
-    "generated_at": "2026-06-29T11:45:38+00:00",
+    "generated_at": "2026-06-29T11:57:03+00:00",
     "go_live_state_count": 18,
     "implemented_stage_count": 19,
     "proof_boundary": "Stage 0 and Stages 1-18 are represented by local routes, APIs, generated artifacts, tests, and blocker rows. Real reviewers, private-beta users, production hosting, monitoring, legal/privacy/security approval, payment activation, qualified trade review, and public go-live owner approval remain external gates.",
@@ -1124,7 +1124,7 @@
         "requires_pre_authorization": true
       }
     ],
-    "generated_at": "2026-06-29T11:45:38+00:00",
+    "generated_at": "2026-06-29T11:57:03+00:00",
     "heavy_job_policy": {
       "external_charge_created": false,
       "free_plan_behavior": "block_before_worker_execution",
@@ -1190,7 +1190,7 @@
     "status": "billing_credit_controls_ready_local_no_live_checkout"
   },
   "billing_usage_ledger": {
-    "generated_at": "2026-06-29T11:45:38+00:00",
+    "generated_at": "2026-06-29T11:57:03+00:00",
     "proof_boundary": "The usage ledger estimates and blocks cost exposure locally; no payment, invoice, or live checkout is performed.",
     "status": "billing_usage_ledger_ready_local_no_charges",
     "usage_rows": [
@@ -1607,7 +1607,7 @@
       "public_launch_ready": false,
       "status": "local_business_logic_implemented_external_gates_preserved"
     },
-    "generated_at": "2026-06-29T11:45:38+00:00",
+    "generated_at": "2026-06-29T11:57:03+00:00",
     "hosted_beta_control_contract": {
       "controls": [
         {
@@ -3210,11 +3210,11 @@
               "market_access_approved"
             ],
             "competitor_source_countries": [
-              "United States",
-              "European Union",
               "Mexico",
               "Vietnam",
-              "China"
+              "European Union",
+              "China",
+              "United States"
             ],
             "destination": "Canada",
             "exporter_origin": "Vietnam",
@@ -3407,7 +3407,7 @@
               "evidence_id": "evidence-frozen-tuna-cid-reference",
               "freshness_status": "source_fresh_reference_only",
               "human_review_status": "not_reviewed",
-              "last_verified_at": "2026-06-29T11:45:31+00:00",
+              "last_verified_at": "2026-06-29T11:56:58+00:00",
               "packet_impact": "blocks_current_source_claims",
               "source_url": "https://ised-isde.canada.ca/site/ised/en/research-and-business-intelligence/canadian-importers-database"
             },
@@ -3417,7 +3417,7 @@
               "evidence_id": "evidence-frozen-tuna-cbsa-import-workflow",
               "freshness_status": "source_fresh_reference_only",
               "human_review_status": "not_reviewed",
-              "last_verified_at": "2026-06-29T11:45:31+00:00",
+              "last_verified_at": "2026-06-29T11:56:58+00:00",
               "packet_impact": "blocks_current_source_claims",
               "source_url": "https://www.cbsa-asfc.gc.ca/import/menu-eng.html"
             },
@@ -3427,7 +3427,7 @@
               "evidence_id": "evidence-frozen-tuna-cfia-airs-reference",
               "freshness_status": "source_fresh_reference_only",
               "human_review_status": "not_reviewed",
-              "last_verified_at": "2026-06-29T11:45:31+00:00",
+              "last_verified_at": "2026-06-29T11:56:58+00:00",
               "packet_impact": "blocks_current_source_claims",
               "source_url": "https://inspection.canada.ca/en/importing-food-plants-animals/airs"
             }
@@ -5286,7 +5286,7 @@
       "4": "category template support",
       "5": "expert-reviewed templates"
     },
-    "generated_at": "2026-06-29T11:45:38+00:00",
+    "generated_at": "2026-06-29T11:57:03+00:00",
     "packet_coverage": [
       {
         "blocked_country_specific_claims": [
@@ -5382,7 +5382,7 @@
         "scope": "credits, pricing, manual approval, and cost exposure"
       }
     ],
-    "generated_at": "2026-06-29T11:45:38+00:00",
+    "generated_at": "2026-06-29T11:57:03+00:00",
     "proof_boundary": "The product can prepare and route expert packets locally; real qualified review remains an external evidence gate.",
     "review_queue": [
       {
@@ -5433,7 +5433,7 @@
     ],
     "status": "expert_network_ready_local_with_human_review_gates"
   },
-  "generated_at": "2026-06-29T11:45:38+00:00",
+  "generated_at": "2026-06-29T11:57:03+00:00",
   "launch_operations": {
     "controls": [
       {
@@ -5467,7 +5467,7 @@
         "status": "local_contract_ready"
       }
     ],
-    "generated_at": "2026-06-29T11:45:38+00:00",
+    "generated_at": "2026-06-29T11:57:03+00:00",
     "packet_count": 1,
     "private_beta_entry": {
       "human_approval_required": true,
@@ -5501,7 +5501,7 @@
       "tool": "create_trade_packet"
     },
     "create_packet_route": "/packets/new",
-    "generated_at": "2026-06-29T11:45:38+00:00",
+    "generated_at": "2026-06-29T11:57:03+00:00",
     "proof_boundary": "Opportunity rows are signals and research prompts only, not recommendations, demand proof, margin proof, or buyer validation.",
     "signal_count": 1,
     "signals": [
@@ -5739,7 +5739,7 @@
   },
   "proof_boundary": "Stage 0 and go-live States 1-18 each have a route/API/artifact surface where locally implementable; production hosting, payment activation, live expert signoff, source freshness, buyer validation, legal/customs/compliance proof, private-beta outcomes, and public launch approval remain external gates.",
   "research_execution_plan": {
-    "generated_at": "2026-06-29T11:45:38+00:00",
+    "generated_at": "2026-06-29T11:57:03+00:00",
     "proof_boundary": "Research execution routes the work to model-prior, web, official-source, dataset, and expert/user evidence lanes; it does not itself prove the external facts.",
     "rows": [
       {
@@ -5781,7 +5781,7 @@
   },
   "status": "all_local_stages_implemented_with_external_gates",
   "team_workspace": {
-    "generated_at": "2026-06-29T11:45:38+00:00",
+    "generated_at": "2026-06-29T11:57:03+00:00",
     "proof_boundary": "Team workspace roles and approvals are local coordination surfaces; they do not prove real owner approval or external launch permission.",
     "status": "team_workspace_ready_local_with_approval_gates",
     "workspace_count": 1,
@@ -5849,7 +5849,7 @@
     ]
   },
   "traffic_pages_manifest": {
-    "generated_at": "2026-06-29T11:45:38+00:00",
+    "generated_at": "2026-06-29T11:57:03+00:00",
     "pages": [
       {
         "claim_boundary": "Traffic page educates and routes to the tool; it is not legal, customs, tariff, supplier, buyer, or shipment advice.",
@@ -5991,7 +5991,7 @@
       "freight_forwarder_selected",
       "shipment_ready"
     ],
-    "generated_at": "2026-06-29T11:45:38+00:00",
+    "generated_at": "2026-06-29T11:57:03+00:00",
     "packet_count": 1,
     "proof_boundary": "Transport readiness prepares questions only; it does not optimize routes, guarantee costs, or approve shipment.",
     "rows": [

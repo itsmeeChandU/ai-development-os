@@ -56,6 +56,12 @@ from .go_live_input_evidence import (
     validate_go_live_input_record,
     write_go_live_returned_input_evidence_artifacts,
 )
+from .external_review_intake import (
+    build_returned_external_review_contract,
+    build_returned_external_review_intake,
+    validate_returned_external_review_record,
+    write_returned_external_review_intake_artifacts,
+)
 from .private_beta_outcomes import (
     build_private_beta_outcome_contract,
     build_private_beta_session_schema,
@@ -110,6 +116,8 @@ __all__ = [
     "build_market_readiness_input_ledger",
     "build_production_market_readiness_evidence_room",
     "build_go_live_returned_input_evidence_manifest",
+    "build_returned_external_review_contract",
+    "build_returned_external_review_intake",
     "build_private_beta_outcome_contract",
     "build_private_beta_session_schema",
     "build_production_launch_control_plane",
@@ -149,6 +157,7 @@ __all__ = [
     "write_production_market_intelligence_engine_artifacts",
     "write_production_market_readiness_evidence_room_artifacts",
     "write_go_live_returned_input_evidence_artifacts",
+    "write_returned_external_review_intake_artifacts",
     "write_private_beta_outcome_artifacts",
     "write_production_launch_control_plane_artifacts",
     "write_production_packet_engine_artifacts",
@@ -164,5 +173,6 @@ __all__ = [
     "write_report",
     "write_screenshot_manifest",
     "validate_go_live_input_record",
+    "validate_returned_external_review_record",
     "validate_private_beta_session_record",
 ]

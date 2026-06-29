@@ -1,0 +1,21 @@
+{
+  "accepted_review_evidence_count": 0,
+  "blocker_export_count": 9,
+  "claims_opened_by_intake": false,
+  "external_effects_created": false,
+  "generated_at": "2026-06-29T11:57:22Z",
+  "hosted_private_beta_ready_by_review_evidence": false,
+  "live_payment_ready_by_review_evidence": false,
+  "next_valid_move": "Save real returned reviewer decisions under external_review_findings/returned/, rerun intake, then fix or explicitly block every returned P0/P1 before changing beta or launch scope.",
+  "pending_review_count": 9,
+  "proof_boundary": "This intake evaluates returned external review records. It cannot create reviewer evidence, cannot qualify a reviewer by itself, and cannot open private-beta, public-launch, legal, customs, security, privacy, payment, buyer, or supplier claims without the launch control plane.",
+  "public_launch_ready_by_review_evidence": false,
+  "returned_record_count": 0,
+  "review_role_count": 9,
+  "scope_approval_count": 0,
+  "status": "external_review_returned_findings_intake_ready_real_reviews_required_claims_closed",
+  "unresolved_blocking_finding_count": 0,
+  "wave_1_scope_ready_by_evidence": false,
+  "wave_2_scope_ready_by_evidence": false,
+  "wave_3_scope_ready_by_evidence": false
+}

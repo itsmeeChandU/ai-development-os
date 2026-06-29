@@ -17,6 +17,7 @@ ROOT = Path(__file__).resolve().parent.parent
 
 ARTIFACT_GENERATOR_COMMANDS: tuple[tuple[str, ...], ...] = (
     ("scripts/build_external_review_packet.py",),
+    ("scripts/run_external_review_intake.py",),
     ("scripts/build_reviewer_documents.py",),
     ("scripts/run_readiness.py",),
     ("scripts/run_external_gates.py",),

@@ -218,6 +218,10 @@ def main() -> int:
     private_beta_session_schema = _load_json(ROOT / "system_review_graph" / "private_beta_session_evidence_schema.json")
     private_beta_outcome_gate_matrix = _load_json(ROOT / "system_review_graph" / "private_beta_outcome_gate_matrix.json")
     external_review = _load_json(ROOT / "system_review_graph" / "external_review_findings_report.json")
+    external_review_intake = _load_json(ROOT / "system_review_graph" / "external_review_returned_findings_manifest.json")
+    external_review_intake_contract = _load_json(ROOT / "system_review_graph" / "external_review_returned_finding_contract.json")
+    external_review_intake_matrix = _load_json(ROOT / "system_review_graph" / "external_review_returned_review_matrix.json")
+    external_review_intake_blockers = _load_jsonl(ROOT / "system_review_graph" / "external_review_returned_blocker_export.jsonl")
     ai_assisted_review = _load_json(ROOT / "system_review_graph" / "ai_assisted_external_review_plan.json")
     ai_assisted_findings = _load_json(ROOT / "system_review_graph" / "ai_assisted_external_review_findings_report.json")
     external_review_summary = _load_json(ROOT / "external_review_findings" / "EXTERNAL_REVIEW_SUMMARY.json")
@@ -273,6 +277,7 @@ def main() -> int:
         "src/importer_source_readiness/product_operations.py",
         "src/importer_source_readiness/ai_review_validation.py",
         "src/importer_source_readiness/external_review.py",
+        "src/importer_source_readiness/external_review_intake.py",
         "src/importer_source_readiness/external_validation_research.py",
         "src/importer_source_readiness/go_live_input_evidence.py",
         "src/importer_source_readiness/private_beta_outcomes.py",
@@ -303,6 +308,7 @@ def main() -> int:
         "tests/test_completion_platform.py",
         "tests/test_external_package_audit.py",
         "tests/test_external_review_workflow.py",
+        "tests/test_external_review_intake.py",
         "tests/test_external_validation_research.py",
         "tests/test_go_live_input_evidence.py",
         "tests/test_private_beta_outcomes.py",
@@ -333,6 +339,7 @@ def main() -> int:
         "scripts/run_all_artifacts.py",
         "scripts/audit_external_package.py",
         "scripts/build_external_review_packet.py",
+        "scripts/run_external_review_intake.py",
         "scripts/run_final_go_live_review.py",
         "scripts/run_external_validation_requirements.py",
         "scripts/run_private_beta_outcomes.py",
@@ -375,6 +382,7 @@ def main() -> int:
         "OFFLINE_REPRODUCTION.md",
         "PACKAGE_AUDIT.md",
         "docs/EXTERNAL_REVIEW_PROCESS.md",
+        "docs/EXTERNAL_REVIEW_RETURNED_FINDINGS.md",
         "docs/EXTERNAL_VALIDATION_REQUIREMENTS.md",
         "docs/EXTERNAL_VALIDATION_REVIEWER_BRIEF.md",
         "docs/GO_LIVE_INPUT_REQUESTS.md",
@@ -577,6 +585,10 @@ def main() -> int:
         "system_review_graph/private_beta_smoke_test_plan.json",
         "system_review_graph/external_review_findings_report.json",
         "system_review_graph/external_review_blocker_ledger.jsonl",
+        "system_review_graph/external_review_returned_finding_contract.json",
+        "system_review_graph/external_review_returned_findings_manifest.json",
+        "system_review_graph/external_review_returned_review_matrix.json",
+        "system_review_graph/external_review_returned_blocker_export.jsonl",
         "system_review_graph/ai_assisted_external_review_plan.json",
         "system_review_graph/ai_assisted_external_review_findings_report.json",
         "system_review_graph/research_execution_runs.json",
@@ -2546,6 +2558,63 @@ def main() -> int:
         failures.append("external review blocker ledger must block public launch for every pending reviewer role")
     if sum(1 for row in external_review_blockers if row.get("blocks_private_beta") is True) != 5:
         failures.append("external review blocker ledger must block private beta for all five Wave 1 reviewers")
+    if external_review_intake_contract.get("status") != "external_review_returned_finding_contract_ready_claims_closed":
+        failures.append("external review returned-finding contract should be generated")
+    if external_review_intake_contract.get("review_role_count") != 9:
+        failures.append("external review returned-finding contract should cover nine roles")
+    for evidence_category in (
+        "reviewer_identity",
+        "credential_or_qualification",
+        "scope_reviewed",
+        "package_or_commit_reference",
+        "signed_decision",
+        "findings_or_no_findings_rationale",
+    ):
+        if evidence_category not in external_review_intake_contract.get("required_evidence_categories", []):
+            failures.append(f"external review returned-finding contract missing {evidence_category}")
+    if external_review_intake.get("status") != "external_review_returned_findings_intake_ready_real_reviews_required_claims_closed":
+        failures.append("external review returned findings intake should be generated")
+    if external_review_intake.get("review_role_count") != 9:
+        failures.append("external review returned findings intake should cover nine roles")
+    if external_review_intake.get("returned_record_count") != 0:
+        failures.append("committed returned-review intake should show zero returned records until real files arrive")
+    if external_review_intake.get("accepted_review_evidence_count") != 0:
+        failures.append("returned-review intake should not accept evidence without real returned reviews")
+    if external_review_intake.get("pending_review_count") != 9:
+        failures.append("returned-review intake should keep all nine reviews pending")
+    if external_review_intake.get("blocker_export_count") != 9:
+        failures.append("returned-review intake should export one pending blocker per reviewer role")
+    for key in (
+        "wave_1_scope_ready_by_evidence",
+        "wave_2_scope_ready_by_evidence",
+        "wave_3_scope_ready_by_evidence",
+        "hosted_private_beta_ready_by_review_evidence",
+        "public_launch_ready_by_review_evidence",
+        "live_payment_ready_by_review_evidence",
+        "claims_opened_by_intake",
+        "external_effects_created",
+    ):
+        if external_review_intake.get(key) is not False:
+            failures.append(f"returned-review intake expected {key}=false")
+    if external_review_intake_matrix.get("status") != "external_review_returned_review_matrix_ready_claims_closed":
+        failures.append("external review returned review matrix should be generated")
+    if external_review_intake_matrix.get("review_role_count") != 9:
+        failures.append("external review returned review matrix should cover nine roles")
+    if external_review_intake_matrix.get("accepted_review_evidence_count") != 0:
+        failures.append("external review returned review matrix should not accept reviews without evidence")
+    if len(external_review_intake_matrix.get("rows", [])) != 9:
+        failures.append("external review returned review matrix should include one row per reviewer role")
+    if any(row.get("status") != "not_received" for row in external_review_intake_matrix.get("rows", [])):
+        failures.append("external review returned review matrix should show all roles not_received before real files")
+    if len(external_review_intake_blockers) != 9:
+        failures.append("external review returned blocker export should include nine pending blocker rows")
+    if any(row.get("gate") != "closed" for row in external_review_intake_blockers):
+        failures.append("external review returned blocker export must keep every row closed")
+    if any(row.get("module") != "external_review_intake" for row in external_review_intake_blockers):
+        failures.append("external review returned blocker export rows should be attributed to external_review_intake")
+    returned_review_md = (ROOT / "docs" / "EXTERNAL_REVIEW_RETURNED_FINDINGS.md").read_text(encoding="utf-8")
+    if "Where Returned Reviews Go" not in returned_review_md or "Claims opened by intake: false" not in returned_review_md:
+        failures.append("external review returned findings doc should show drop path and closed claims")
     if ai_assisted_review.get("status") != "ai_assisted_external_review_ready":
         failures.append("AI-assisted external review plan must be ready")
     if ai_assisted_review.get("solo_developer_mode") is not True:

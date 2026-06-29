@@ -1314,10 +1314,10 @@
         "market_access_approved"
       ],
       "competitor_source_countries": [
-        "European Union",
         "China",
-        "Vietnam",
         "Mexico",
+        "European Union",
+        "Vietnam",
         "United States"
       ],
       "destination": "Canada",

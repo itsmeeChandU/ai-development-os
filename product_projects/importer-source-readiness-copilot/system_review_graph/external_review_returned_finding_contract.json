@@ -1,0 +1,182 @@
+{
+  "allowed_decisions": [
+    "approve_within_scope",
+    "block",
+    "needs_more_evidence",
+    "out_of_scope",
+    "wrong_reviewer_type"
+  ],
+  "claims_opened": false,
+  "external_effects_created": false,
+  "finding_fields": [
+    "finding_id",
+    "reviewer_role",
+    "severity",
+    "affected_stage",
+    "affected_file_or_artifact",
+    "issue",
+    "owner",
+    "required_fix",
+    "retest_command",
+    "blocks_private_beta",
+    "blocks_public_launch"
+  ],
+  "generated_at": "2026-06-29T11:57:22Z",
+  "proof_boundary": "This contract describes acceptable returned-review evidence. It is not itself a review or approval.",
+  "required_evidence_categories": [
+    "reviewer_identity",
+    "credential_or_qualification",
+    "scope_reviewed",
+    "package_or_commit_reference",
+    "signed_decision",
+    "findings_or_no_findings_rationale"
+  ],
+  "review_role_count": 9,
+  "reviewer_roles": [
+    {
+      "blocks_private_beta": true,
+      "blocks_public_launch": true,
+      "drop_path": "external_review_findings/returned/ux-product.json",
+      "qualification_terms": [
+        "ux",
+        "product",
+        "usability",
+        "research",
+        "customer"
+      ],
+      "reviewer_role": "UX/Product Usability Review",
+      "role_id": "ux-product",
+      "scope": "Can a target importer/exporter understand the flow, blockers, generated reports, and next valid move without unsafe advice?",
+      "wave": 1
+    },
+    {
+      "blocks_private_beta": true,
+      "blocks_public_launch": true,
+      "drop_path": "external_review_findings/returned/security-public-upload.json",
+      "qualification_terms": [
+        "security",
+        "appsec",
+        "upload",
+        "file",
+        "risk"
+      ],
+      "reviewer_role": "Security/Public Upload Review",
+      "role_id": "security-public-upload",
+      "scope": "Review file upload, quarantine, auth/RBAC, scoped expert links, deletion controls, and public route exposure.",
+      "wave": 1
+    },
+    {
+      "blocks_private_beta": true,
+      "blocks_public_launch": true,
+      "drop_path": "external_review_findings/returned/privacy-legal.json",
+      "qualification_terms": [
+        "privacy",
+        "legal",
+        "counsel",
+        "compliance",
+        "pipeda"
+      ],
+      "reviewer_role": "Privacy/Legal Review",
+      "role_id": "privacy-legal",
+      "scope": "Review upload notices, AI/data policy, retention/deletion controls, terms, and claim-boundary language.",
+      "wave": 1
+    },
+    {
+      "blocks_private_beta": true,
+      "blocks_public_launch": true,
+      "drop_path": "external_review_findings/returned/ai-safety.json",
+      "qualification_terms": [
+        "ai",
+        "safety",
+        "prompt",
+        "model",
+        "redaction"
+      ],
+      "reviewer_role": "AI Safety/Prompt Injection Review",
+      "role_id": "ai-safety",
+      "scope": "Review model routing, AI permission controls, redaction previews, manual fallback, and prompt-injection boundaries.",
+      "wave": 1
+    },
+    {
+      "blocks_private_beta": true,
+      "blocks_public_launch": true,
+      "drop_path": "external_review_findings/returned/devops-production-readiness.json",
+      "qualification_terms": [
+        "devops",
+        "sre",
+        "production",
+        "platform",
+        "infrastructure"
+      ],
+      "reviewer_role": "DevOps/Production Readiness Review",
+      "role_id": "devops-production-readiness",
+      "scope": "Review Docker/Compose, env contract, deployment readiness, health routes, logging, and external hosting gaps.",
+      "wave": 1
+    },
+    {
+      "blocks_private_beta": false,
+      "blocks_public_launch": true,
+      "drop_path": "external_review_findings/returned/trade-boundary-customs-language.json",
+      "qualification_terms": [
+        "trade",
+        "customs",
+        "broker",
+        "cfia",
+        "compliance"
+      ],
+      "reviewer_role": "Trade-Boundary/Customs-Language Review",
+      "role_id": "trade-boundary-customs-language",
+      "scope": "Review public report and UI language for unsupported customs, tariff, legal, CFIA, and import/export readiness claims.",
+      "wave": 2
+    },
+    {
+      "blocks_private_beta": false,
+      "blocks_public_launch": true,
+      "drop_path": "external_review_findings/returned/freight-logistics.json",
+      "qualification_terms": [
+        "freight",
+        "logistics",
+        "forwarder",
+        "transport",
+        "incoterms"
+      ],
+      "reviewer_role": "Freight/Logistics Review",
+      "role_id": "freight-logistics",
+      "scope": "Review transport readiness rows, broker/forwarder packets, Incoterms-style questions, and shipment-readiness boundaries.",
+      "wave": 2
+    },
+    {
+      "blocks_private_beta": false,
+      "blocks_public_launch": true,
+      "drop_path": "external_review_findings/returned/report-language.json",
+      "qualification_terms": [
+        "report",
+        "language",
+        "copy",
+        "content",
+        "compliance"
+      ],
+      "reviewer_role": "Report-Language Review",
+      "role_id": "report-language",
+      "scope": "Review generated report types, missing-evidence language, buyer/broker packet wording, and customer-safe next moves.",
+      "wave": 2
+    },
+    {
+      "blocks_private_beta": false,
+      "blocks_public_launch": true,
+      "drop_path": "external_review_findings/returned/billing-payment.json",
+      "qualification_terms": [
+        "billing",
+        "payment",
+        "stripe",
+        "tax",
+        "finance"
+      ],
+      "reviewer_role": "Billing/Payment Review",
+      "role_id": "billing-payment",
+      "scope": "Review billing controls, usage ledger, pricing page, live-checkout disabled state, refund/tax/invoice gaps, and payment-flow blockers.",
+      "wave": 3
+    }
+  ],
+  "status": "external_review_returned_finding_contract_ready_claims_closed"
+}

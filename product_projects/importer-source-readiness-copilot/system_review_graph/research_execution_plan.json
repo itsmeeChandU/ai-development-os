@@ -1,6 +1,6 @@
 {
   "execution_report": "system_review_graph/product_operations_report.json",
-  "generated_at": "2026-06-29T11:45:38+00:00",
+  "generated_at": "2026-06-29T11:57:03+00:00",
   "operation_status": "research_execution_operational_local_with_evidence_gates",
   "proof_boundary": "Research execution routes the work to model-prior, web, official-source, dataset, and expert/user evidence lanes; it does not itself prove the external facts.",
   "rows": [
