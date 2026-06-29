@@ -266,7 +266,7 @@
     "status": "local_business_logic_implemented_external_gates_preserved"
   },
   "execution_report": "system_review_graph/product_operations_report.json",
-  "generated_at": "2026-06-29T12:58:02+00:00",
+  "generated_at": "2026-06-29T13:14:14+00:00",
   "hosted_beta_control_contract": {
     "controls": [
       {
@@ -1871,10 +1871,10 @@
             "market_access_approved"
           ],
           "competitor_source_countries": [
-            "Mexico",
-            "China",
-            "United States",
             "Vietnam",
+            "United States",
+            "China",
+            "Mexico",
             "European Union"
           ],
           "destination": "Canada",
@@ -4627,11 +4627,11 @@
             "market_access_approved"
           ],
           "competitor_source_countries": [
-            "Mexico",
+            "Vietnam",
+            "United States",
             "China",
             "India",
-            "United States",
-            "Vietnam",
+            "Mexico",
             "European Union"
           ],
           "destination": "Canada",

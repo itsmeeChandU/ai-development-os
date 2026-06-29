@@ -21,7 +21,7 @@
     "tool": "create_trade_packet"
   },
   "create_packet_route": "/packets/new",
-  "generated_at": "2026-06-29T12:57:47+00:00",
+  "generated_at": "2026-06-29T13:13:30+00:00",
   "proof_boundary": "Opportunity rows are signals and research prompts only, not recommendations, demand proof, margin proof, or buyer validation.",
   "signal_count": 1,
   "signals": [

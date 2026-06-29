@@ -3,7 +3,7 @@
   "blocker_export_count": 9,
   "claims_opened_by_intake": false,
   "external_effects_created": false,
-  "generated_at": "2026-06-29T12:58:02Z",
+  "generated_at": "2026-06-29T13:14:14Z",
   "hosted_private_beta_ready_by_review_evidence": false,
   "live_payment_ready_by_review_evidence": false,
   "next_valid_move": "Save real returned reviewer decisions under external_review_findings/returned/, rerun intake, then fix or explicitly block every returned P0/P1 before changing beta or launch scope.",

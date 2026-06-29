@@ -1,0 +1,185 @@
+{
+  "allowed_decisions": [
+    "approve_preparation_language_for_scope",
+    "approve_demo_reference_only",
+    "not_applicable_for_this_launch",
+    "keep_blocked",
+    "needs_more_evidence"
+  ],
+  "claims_opened": false,
+  "demo_scope_evidence_categories": [
+    "launch_scope_excludes_trade_claims",
+    "owner_decision",
+    "future_review_trigger"
+  ],
+  "demo_scope_types": [
+    "demo_reference_only",
+    "launch_scope_excludes_trade_claims"
+  ],
+  "drop_paths": [
+    "external_inputs/qualified_customs_trade_review.json",
+    "external_inputs/qualified_customs_trade_reviews/*.json"
+  ],
+  "external_effects_created": false,
+  "generated_at": "2026-06-29T13:14:14Z",
+  "proof_boundary": "This contract defines scoped customs/trade review evidence for preparation-language review only. It does not confirm tariff treatment, approve CFIA/admissibility, act as a customs broker, approve shipment, or approve public launch.",
+  "regulated_goods_reviewer_role": "regulated_goods_reviewer",
+  "required_evidence_categories": [
+    {
+      "category": "review_scope_product_lane",
+      "label": "Review scope, product, and lane",
+      "why": "The reviewer must know the product, origin, destination, direction, intended use, and exact packet scope."
+    },
+    {
+      "category": "reviewer_identity_qualification_scope",
+      "label": "Reviewer identity, qualification, and scope",
+      "why": "Customs/trade review needs a named qualified reviewer and a scope limitation tied to the reviewed packet."
+    },
+    {
+      "category": "cbsa_importer_obligations_review",
+      "label": "CBSA importer obligations review",
+      "why": "Business/RM account, importer responsibility, accounting, and other government requirement routing must be reviewed for the lane."
+    },
+    {
+      "category": "broker_boundary_importer_responsibility",
+      "label": "Broker boundary and importer responsibility",
+      "why": "The product must not act as a customs broker and must preserve importer responsibility language."
+    },
+    {
+      "category": "hs_candidate_classification_boundary",
+      "label": "HS candidate and classification boundary",
+      "why": "HS candidates can support research only; classification and tariff treatment need qualified review or authoritative evidence."
+    },
+    {
+      "category": "customs_tariff_treatment_review",
+      "label": "Customs tariff/treatment review",
+      "why": "Tariff source routes, duty treatment, and tariff wording must be checked before any stronger statement is allowed."
+    },
+    {
+      "category": "origin_preference_document_review",
+      "label": "Origin, preference, and origin-document review",
+      "why": "Origin or preferential treatment language needs origin evidence and reviewer scope, not just origin country text."
+    },
+    {
+      "category": "regulated_goods_cfia_airs_review",
+      "label": "Regulated goods and CFIA/AIRS review",
+      "why": "Food, seafood, plant, animal, and other regulated-product routes need dated CFIA/AIRS or reviewer evidence."
+    },
+    {
+      "category": "sanctions_import_export_controls_review",
+      "label": "Sanctions and import/export controls review",
+      "why": "Restricted countries, parties, controls, and prohibited-goods issues need dated source checks and reviewer notes."
+    },
+    {
+      "category": "required_documents_accounting_review",
+      "label": "Required documents and accounting review",
+      "why": "Commercial invoice, packing list, origin, permits/certificates, accounting, and record requirements need a scoped evidence list."
+    },
+    {
+      "category": "incoterms_importer_of_record_responsibility",
+      "label": "Incoterms, importer of record, and responsibility path",
+      "why": "Responsibility for import, export, customs, freight, documents, and broker review must be explicit."
+    },
+    {
+      "category": "allowed_blocked_claim_language",
+      "label": "Allowed and blocked claim language",
+      "why": "The reviewer must state which preparation language is allowed and which approval-style claims remain blocked."
+    },
+    {
+      "category": "unresolved_findings_next_actions",
+      "label": "Unresolved findings and next actions",
+      "why": "Open customs/trade findings need severity, owner, next action, and review-before-use status."
+    },
+    {
+      "category": "reviewer_signed_scope_decision",
+      "label": "Reviewer signed scope decision",
+      "why": "A dated decision is required before the finding can count as returned qualified review evidence."
+    }
+  ],
+  "required_evidence_category_count": 14,
+  "required_reviewer_roles": [
+    "customs_trade_reviewer"
+  ],
+  "review_scope_types": [
+    "canada_import_preparation",
+    "canada_import_food_or_regulated_goods_preparation",
+    "origin_export_to_canada_preparation",
+    "buyer_broker_packet_language_review"
+  ],
+  "source_anchor_count": 9,
+  "source_anchors": [
+    {
+      "checked_at": "2026-06-29",
+      "name": "Importing commercial goods into Canada",
+      "product_use": "Importer workflow, business/import account, tariff, origin, rulings, accounting, and other government requirement routing.",
+      "publisher": "Canada Border Services Agency",
+      "source_id": "cbsa-import-commercial-goods",
+      "url": "https://www.cbsa-asfc.gc.ca/import/menu-eng.html"
+    },
+    {
+      "checked_at": "2026-06-29",
+      "name": "Licensed customs brokers",
+      "product_use": "Broker boundary, importer responsibility, and licensed-broker review lane anchor.",
+      "publisher": "Canada Border Services Agency",
+      "source_id": "cbsa-licensed-customs-brokers",
+      "url": "https://www.cbsa-asfc.gc.ca/services/cb-cd/cb-cd-eng.html"
+    },
+    {
+      "checked_at": "2026-06-29",
+      "name": "Canadian Customs Tariff 2026",
+      "product_use": "Tariff source routing and HS/tariff candidate review anchor.",
+      "publisher": "Canada Border Services Agency",
+      "source_id": "cbsa-customs-tariff-2026",
+      "url": "https://www.cbsa-asfc.gc.ca/trade-commerce/tariff-tarif/2026/menu-eng.html"
+    },
+    {
+      "checked_at": "2026-06-29",
+      "name": "Automated Import Reference System",
+      "product_use": "CFIA-regulated food, plant, animal, and commodity requirement routing anchor.",
+      "publisher": "Canadian Food Inspection Agency",
+      "source_id": "cfia-airs",
+      "url": "https://inspection.canada.ca/en/importing-food-plants-animals/airs"
+    },
+    {
+      "checked_at": "2026-06-29",
+      "name": "Canadian sanctions",
+      "product_use": "Sanctions, restricted-country, and restricted-party warning route anchor.",
+      "publisher": "Global Affairs Canada",
+      "source_id": "gac-sanctions",
+      "url": "https://www.international.gc.ca/world-monde/international_relations-relations_internationales/sanctions/current-actuelles.aspx"
+    },
+    {
+      "checked_at": "2026-06-29",
+      "name": "Export and import controls",
+      "product_use": "Import/export controls and permits route anchor.",
+      "publisher": "Global Affairs Canada",
+      "source_id": "gac-import-export-controls",
+      "url": "https://www.international.gc.ca/controls-controles/index.aspx"
+    },
+    {
+      "checked_at": "2026-06-29",
+      "name": "Harmonized System",
+      "product_use": "HS six-digit candidate and classification-boundary anchor.",
+      "publisher": "World Customs Organization",
+      "source_id": "wco-harmonized-system",
+      "url": "https://www.wcoomd.org/en/topics/nomenclature/overview/what-is-the-harmonized-system.aspx"
+    },
+    {
+      "checked_at": "2026-06-29",
+      "name": "Incoterms 2020",
+      "product_use": "Responsibility, costs, risk, and seller/buyer task split anchor.",
+      "publisher": "International Chamber of Commerce",
+      "source_id": "icc-incoterms-2020",
+      "url": "https://iccwbo.org/business-solutions/incoterms-rules/incoterms-2020/"
+    },
+    {
+      "checked_at": "2026-06-29",
+      "name": "Importer Exporter Code",
+      "product_use": "India origin/exporter identity and export-readiness routing anchor.",
+      "publisher": "Directorate General of Foreign Trade",
+      "source_id": "india-dgft-iec",
+      "url": "https://www.dgft.gov.in/CP/?opt=iec-profile-management"
+    }
+  ],
+  "status": "qualified_customs_trade_review_contract_ready_claims_closed"
+}

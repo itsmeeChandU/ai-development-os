@@ -15,6 +15,7 @@ from typing import Any
 
 
 STATUS = "production_evidence_claim_gate_engine_ready_claims_fail_closed"
+QUALIFIED_CUSTOMS_TRADE_REVIEW_FALLBACK_GATE_COUNT = 14
 
 SAFE_RESEARCH_LEVEL = "safe_research_or_preparation_statement"
 BLOCKED_LEVEL = "blocked_external_or_unproven_claim"
@@ -719,6 +720,7 @@ def build_production_evidence_claim_gate_engine(repo_root: Path | None = None) -
     document = _load_json(root / "system_review_graph" / "production_document_intelligence_manifest.json", {})
     reviews = _load_json(root / "system_review_graph" / "review_requests.json", [])
     source_refresh = _load_json(root / "system_review_graph" / "source_refresh_runs.json", [])
+    customs_trade_review = _load_json(root / "system_review_graph" / "qualified_customs_trade_review_manifest.json", {})
     packet_lookup = _packet_by_id(customer)
     source_lifecycle = _source_lifecycle_by_id(country)
     market_by_packet = _market_signals_by_packet(market)
@@ -762,6 +764,30 @@ def build_production_evidence_claim_gate_engine(repo_root: Path | None = None) -
         "claim_gate_decisions": decisions,
         "evidence_mappers": evidence_mappers,
         "claim_gate_mappers": claim_gate_mappers,
+        "qualified_customs_trade_review_evidence_status": customs_trade_review.get(
+            "status",
+            "qualified_customs_trade_review_manifest_missing",
+        ),
+        "qualified_customs_trade_review_record_count": customs_trade_review.get("review_record_count", 0),
+        "qualified_customs_trade_accepted_review_record_count": customs_trade_review.get(
+            "accepted_review_record_count",
+            0,
+        ),
+        "qualified_customs_trade_review_blocked_gate_count": customs_trade_review.get(
+            "blocked_gate_count",
+            QUALIFIED_CUSTOMS_TRADE_REVIEW_FALLBACK_GATE_COUNT,
+        ),
+        "qualified_customs_trade_reviewed_by_evidence": customs_trade_review.get(
+            "customs_trade_reviewed_by_evidence",
+            False,
+        ),
+        "tariff_confirmed_by_review_evidence": customs_trade_review.get(
+            "tariff_confirmed_by_review_evidence",
+            False,
+        ),
+        "cfia_approved_by_review_evidence": customs_trade_review.get("cfia_approved_by_review_evidence", False),
+        "customs_ready_by_review_evidence": customs_trade_review.get("customs_ready_by_review_evidence", False),
+        "qualified_customs_trade_claims_opened_by_intake": customs_trade_review.get("claims_opened_by_intake", False),
         "blocked_external_claims": [
             rule["claim_type"] for rule in CLAIM_RULES if rule["forbidden_external_claim"]
         ],
@@ -821,6 +847,11 @@ def render_evidence_claim_gate_markdown(payload: dict[str, Any]) -> str:
         f"- Forbidden external claims: {payload['forbidden_external_claim_count']}",
         f"- Evidence mappers: {payload['evidence_mapper_count']}",
         f"- Claim gate mappers: {payload['claim_gate_mapper_count']}",
+        f"- Qualified customs/trade review status: `{payload['qualified_customs_trade_review_evidence_status']}`",
+        f"- Qualified customs/trade review records: {payload['qualified_customs_trade_review_record_count']}",
+        f"- Qualified customs/trade blocked gates: {payload['qualified_customs_trade_review_blocked_gate_count']}",
+        f"- Tariff confirmed by review evidence: {str(payload['tariff_confirmed_by_review_evidence']).lower()}",
+        f"- CFIA approved by review evidence: {str(payload['cfia_approved_by_review_evidence']).lower()}",
         "",
         "## Packet Decisions",
         "",

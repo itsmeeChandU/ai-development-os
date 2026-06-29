@@ -26,7 +26,7 @@
     "external_inputs/legal_privacy_security_approvals/*.json"
   ],
   "external_effects_created": false,
-  "generated_at": "2026-06-29T12:58:02Z",
+  "generated_at": "2026-06-29T13:14:14Z",
   "proof_boundary": "This contract defines scoped legal/privacy/security approval evidence. It does not enable real uploads, create hosted users, approve AI/vendor processing, or approve public launch.",
   "required_evidence_categories": [
     {

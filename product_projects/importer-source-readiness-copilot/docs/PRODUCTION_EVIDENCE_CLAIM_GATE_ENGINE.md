@@ -13,6 +13,11 @@ The claim-gate engine can show only safe preparation/research statements. Refere
 - Forbidden external claims: 6
 - Evidence mappers: 25
 - Claim gate mappers: 17
+- Qualified customs/trade review status: `qualified_customs_trade_review_intake_ready_real_review_evidence_required_claims_closed`
+- Qualified customs/trade review records: 0
+- Qualified customs/trade blocked gates: 14
+- Tariff confirmed by review evidence: false
+- CFIA approved by review evidence: false
 
 ## Packet Decisions
 

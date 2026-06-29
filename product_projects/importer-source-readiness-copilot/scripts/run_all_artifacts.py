@@ -32,6 +32,7 @@ ARTIFACT_GENERATOR_COMMANDS: tuple[tuple[str, ...], ...] = (
     ("scripts/export_operator_dashboard.py",),
     ("scripts/run_final_go_live_review.py",),
     ("scripts/run_external_validation_requirements.py",),
+    ("scripts/run_qualified_customs_trade_review.py",),
     ("scripts/run_hosted_deployment_proof.py",),
     ("scripts/run_payment_activation_proof.py",),
     ("scripts/run_legal_privacy_security_approval.py",),

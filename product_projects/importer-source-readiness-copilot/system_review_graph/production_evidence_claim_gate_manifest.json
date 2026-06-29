@@ -8,6 +8,7 @@
     "customs_ready",
     "shipment_approved"
   ],
+  "cfia_approved_by_review_evidence": false,
   "claim_gate_decision_count": 17,
   "claim_gate_decisions": [
     {
@@ -1197,6 +1198,7 @@
   ],
   "claim_type_count": 17,
   "claims_opened": false,
+  "customs_ready_by_review_evidence": false,
   "evidence_mapper_count": 25,
   "evidence_mappers": [
     {
@@ -1524,7 +1526,7 @@
   ],
   "external_effects_created": false,
   "forbidden_external_claim_count": 6,
-  "generated_at": "2026-06-29T12:57:49+00:00",
+  "generated_at": "2026-06-29T13:13:32+00:00",
   "live_payment_ready": false,
   "packet_count": 1,
   "packet_ids": [
@@ -1533,8 +1535,15 @@
   "product": "Trade Readiness Copilot",
   "proof_boundary": "The claim-gate engine can show only safe preparation/research statements. Reference-only, stale, missing, parser-draft, or unreviewed evidence blocks customs, tariff, CFIA, buyer, supplier, shipment, payment, legal, and launch claims.",
   "public_launch_ready": false,
+  "qualified_customs_trade_accepted_review_record_count": 0,
+  "qualified_customs_trade_claims_opened_by_intake": false,
+  "qualified_customs_trade_review_blocked_gate_count": 14,
+  "qualified_customs_trade_review_evidence_status": "qualified_customs_trade_review_intake_ready_real_review_evidence_required_claims_closed",
+  "qualified_customs_trade_review_record_count": 0,
+  "qualified_customs_trade_reviewed_by_evidence": false,
   "safe_research_claim_count": 7,
   "source_refresh_record_count": 3,
   "source_route_count": 32,
-  "status": "production_evidence_claim_gate_engine_ready_claims_fail_closed"
+  "status": "production_evidence_claim_gate_engine_ready_claims_fail_closed",
+  "tariff_confirmed_by_review_evidence": false
 }

@@ -21,6 +21,7 @@ from importer_source_readiness.external_review_intake import write_returned_exte
 from importer_source_readiness.hosted_deployment_proof import write_hosted_deployment_proof_artifacts
 from importer_source_readiness.payment_activation_proof import write_payment_activation_proof_artifacts
 from importer_source_readiness.legal_privacy_security_approval import write_legal_privacy_security_approval_artifacts
+from importer_source_readiness.qualified_customs_trade_review import write_qualified_customs_trade_review_artifacts
 from importer_source_readiness.private_beta_outcomes import write_private_beta_outcome_artifacts
 from importer_source_readiness.production_market_readiness_evidence_room import (
     build_production_market_readiness_evidence_room,
@@ -58,6 +59,7 @@ EXECUTIVE_FILES = [
     "docs/HOSTED_DEPLOYMENT_PROOF.md",
     "docs/PAYMENT_ACTIVATION_PROOF.md",
     "docs/LEGAL_PRIVACY_SECURITY_APPROVAL_PROOF.md",
+    "docs/QUALIFIED_CUSTOMS_TRADE_REVIEW_PROOF.md",
     "system_review_graph/final_go_live_decision_report.json",
     "system_review_graph/current_external_gate_research.json",
     "system_review_graph/external_validation_requirements_report.json",
@@ -82,6 +84,10 @@ EXECUTIVE_FILES = [
     "system_review_graph/legal_privacy_security_approval_manifest.json",
     "system_review_graph/legal_privacy_security_approval_gate_matrix.json",
     "system_review_graph/legal_privacy_security_approval_blocker_export.jsonl",
+    "system_review_graph/qualified_customs_trade_review_contract.json",
+    "system_review_graph/qualified_customs_trade_review_manifest.json",
+    "system_review_graph/qualified_customs_trade_review_gate_matrix.json",
+    "system_review_graph/qualified_customs_trade_review_blocker_export.jsonl",
     "system_review_graph/production_market_readiness_evidence_room_manifest.json",
     "system_review_graph/production_market_readiness_input_ledger.json",
     "system_review_graph/production_market_readiness_input_history.json",
@@ -192,6 +198,10 @@ TECHNICAL_FILES = [
     "system_review_graph/legal_privacy_security_approval_manifest.json",
     "system_review_graph/legal_privacy_security_approval_gate_matrix.json",
     "system_review_graph/legal_privacy_security_approval_blocker_export.jsonl",
+    "system_review_graph/qualified_customs_trade_review_contract.json",
+    "system_review_graph/qualified_customs_trade_review_manifest.json",
+    "system_review_graph/qualified_customs_trade_review_gate_matrix.json",
+    "system_review_graph/qualified_customs_trade_review_blocker_export.jsonl",
     "system_review_graph/external_review_returned_finding_contract.json",
     "system_review_graph/external_review_returned_findings_manifest.json",
     "system_review_graph/external_review_returned_review_matrix.json",
@@ -278,6 +288,10 @@ def package_review_bundles(root: Path, output_dir: Path, *, stamp: str | None = 
     stamp = stamp or utc_stamp()
     write_final_go_live_artifacts(root, generated_at=datetime.now(UTC).replace(microsecond=0).isoformat().replace("+00:00", "Z"))
     write_external_validation_requirements(
+        root,
+        generated_at=datetime.now(UTC).replace(microsecond=0).isoformat().replace("+00:00", "Z"),
+    )
+    write_qualified_customs_trade_review_artifacts(
         root,
         generated_at=datetime.now(UTC).replace(microsecond=0).isoformat().replace("+00:00", "Z"),
     )

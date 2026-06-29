@@ -39,6 +39,17 @@ class ProductionEvidenceClaimGateEngineTests(unittest.TestCase):
         self.assertFalse(manifest["claims_opened"])
         self.assertFalse(manifest["public_launch_ready"])
         self.assertFalse(manifest["live_payment_ready"])
+        self.assertEqual(
+            manifest["qualified_customs_trade_review_evidence_status"],
+            "qualified_customs_trade_review_intake_ready_real_review_evidence_required_claims_closed",
+        )
+        self.assertEqual(manifest["qualified_customs_trade_review_record_count"], 0)
+        self.assertEqual(manifest["qualified_customs_trade_accepted_review_record_count"], 0)
+        self.assertEqual(manifest["qualified_customs_trade_review_blocked_gate_count"], 14)
+        self.assertFalse(manifest["qualified_customs_trade_reviewed_by_evidence"])
+        self.assertFalse(manifest["tariff_confirmed_by_review_evidence"])
+        self.assertFalse(manifest["cfia_approved_by_review_evidence"])
+        self.assertFalse(manifest["qualified_customs_trade_claims_opened_by_intake"])
 
     def test_can_show_claim_allows_source_backed_preparation_only(self) -> None:
         manifest = build_production_evidence_claim_gate_engine(ROOT)
@@ -128,6 +139,7 @@ class ProductionEvidenceClaimGateEngineTests(unittest.TestCase):
             self.assertEqual(written_decisions["status"], "production_claim_gate_decisions_ready_fail_closed")
             self.assertEqual(written_mappers["status"], "production_evidence_claim_mappers_ready")
             self.assertIn("Production Evidence Claim-Gate Engine", written_doc)
+            self.assertIn("Qualified customs/trade review status", written_doc)
             self.assertIn("Claims opened: false", written_doc)
 
 

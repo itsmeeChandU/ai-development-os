@@ -199,6 +199,18 @@ def main() -> int:
     legal_privacy_security_approval_blockers = _load_jsonl(
         ROOT / "system_review_graph" / "legal_privacy_security_approval_blocker_export.jsonl"
     )
+    qualified_customs_trade_review = _load_json(
+        ROOT / "system_review_graph" / "qualified_customs_trade_review_manifest.json"
+    )
+    qualified_customs_trade_review_contract = _load_json(
+        ROOT / "system_review_graph" / "qualified_customs_trade_review_contract.json"
+    )
+    qualified_customs_trade_review_gate_matrix = _load_json(
+        ROOT / "system_review_graph" / "qualified_customs_trade_review_gate_matrix.json"
+    )
+    qualified_customs_trade_review_blockers = _load_jsonl(
+        ROOT / "system_review_graph" / "qualified_customs_trade_review_blocker_export.jsonl"
+    )
     production_redevelopment = _load_json(ROOT / "system_review_graph" / "production_redevelopment_plan.json")
     production_research = _load_json(ROOT / "system_review_graph" / "production_research_anchors.json")
     production_data_model = _load_json(ROOT / "system_review_graph" / "production_data_model_manifest.json")
@@ -303,6 +315,7 @@ def main() -> int:
         "src/importer_source_readiness/hosted_deployment_proof.py",
         "src/importer_source_readiness/payment_activation_proof.py",
         "src/importer_source_readiness/legal_privacy_security_approval.py",
+        "src/importer_source_readiness/qualified_customs_trade_review.py",
         "src/importer_source_readiness/private_beta_outcomes.py",
         "src/importer_source_readiness/production_ai_copilot_engine.py",
         "src/importer_source_readiness/production_country_source_engine.py",
@@ -337,6 +350,7 @@ def main() -> int:
         "tests/test_hosted_deployment_proof.py",
         "tests/test_payment_activation_proof.py",
         "tests/test_legal_privacy_security_approval.py",
+        "tests/test_qualified_customs_trade_review.py",
         "tests/test_private_beta_outcomes.py",
         "tests/test_production_ai_copilot_engine.py",
         "tests/test_production_country_source_engine.py",
@@ -371,6 +385,7 @@ def main() -> int:
         "scripts/run_hosted_deployment_proof.py",
         "scripts/run_payment_activation_proof.py",
         "scripts/run_legal_privacy_security_approval.py",
+        "scripts/run_qualified_customs_trade_review.py",
         "scripts/run_private_beta_outcomes.py",
         "scripts/run_production_ai_copilot_engine.py",
         "scripts/run_production_country_source_engine.py",
@@ -418,6 +433,7 @@ def main() -> int:
         "docs/HOSTED_DEPLOYMENT_PROOF.md",
         "docs/PAYMENT_ACTIVATION_PROOF.md",
         "docs/LEGAL_PRIVACY_SECURITY_APPROVAL_PROOF.md",
+        "docs/QUALIFIED_CUSTOMS_TRADE_REVIEW_PROOF.md",
         "docs/PRIVATE_BETA_OUTCOME_CONTRACT.md",
         "docs/PRODUCTION_AI_COPILOT_ENGINE.md",
         "docs/PRODUCTION_COUNTRY_SOURCE_ENGINE.md",
@@ -512,6 +528,10 @@ def main() -> int:
         "system_review_graph/legal_privacy_security_approval_manifest.json",
         "system_review_graph/legal_privacy_security_approval_gate_matrix.json",
         "system_review_graph/legal_privacy_security_approval_blocker_export.jsonl",
+        "system_review_graph/qualified_customs_trade_review_contract.json",
+        "system_review_graph/qualified_customs_trade_review_manifest.json",
+        "system_review_graph/qualified_customs_trade_review_gate_matrix.json",
+        "system_review_graph/qualified_customs_trade_review_blocker_export.jsonl",
         "system_review_graph/private_beta_outcome_contract.json",
         "system_review_graph/private_beta_session_evidence_schema.json",
         "system_review_graph/private_beta_outcome_gate_matrix.json",
@@ -1232,6 +1252,26 @@ def main() -> int:
         failures.append("production evidence claim-gate should emit evidence mappers")
     if production_evidence_claim_gate.get("claim_gate_mapper_count") != production_evidence_claim_gate.get("claim_type_count"):
         failures.append("production evidence claim-gate should emit one mapper per claim type")
+    if (
+        production_evidence_claim_gate.get("qualified_customs_trade_review_evidence_status")
+        != "qualified_customs_trade_review_intake_ready_real_review_evidence_required_claims_closed"
+    ):
+        failures.append("production evidence claim-gate should consume the qualified customs/trade review proof manifest")
+    if production_evidence_claim_gate.get("qualified_customs_trade_review_record_count") != 0:
+        failures.append("production evidence claim-gate should show zero returned qualified customs/trade records")
+    if production_evidence_claim_gate.get("qualified_customs_trade_accepted_review_record_count") != 0:
+        failures.append("production evidence claim-gate should not accept qualified customs/trade proof in committed state")
+    if production_evidence_claim_gate.get("qualified_customs_trade_review_blocked_gate_count") != 14:
+        failures.append("production evidence claim-gate should keep fourteen qualified customs/trade gates blocked")
+    for key in (
+        "qualified_customs_trade_reviewed_by_evidence",
+        "tariff_confirmed_by_review_evidence",
+        "cfia_approved_by_review_evidence",
+        "customs_ready_by_review_evidence",
+        "qualified_customs_trade_claims_opened_by_intake",
+    ):
+        if production_evidence_claim_gate.get(key) is not False:
+            failures.append(f"production evidence claim-gate expected {key}=false")
     for key in ("external_effects_created", "claims_opened", "public_launch_ready", "live_payment_ready"):
         if production_evidence_claim_gate.get(key) is not False:
             failures.append(f"production evidence claim-gate expected {key}=false")
@@ -2561,6 +2601,60 @@ def main() -> int:
     approval_md = (ROOT / "docs" / "LEGAL_PRIVACY_SECURITY_APPROVAL_PROOF.md").read_text(encoding="utf-8")
     if "Real file uploads allowed by intake: false" not in approval_md:
         failures.append("legal/privacy/security approval proof doc should show real uploads remain closed")
+    if qualified_customs_trade_review_contract.get("status") != "qualified_customs_trade_review_contract_ready_claims_closed":
+        failures.append("qualified customs/trade review contract should be generated")
+    if qualified_customs_trade_review_contract.get("required_evidence_category_count") != 14:
+        failures.append("qualified customs/trade review contract should require fourteen evidence categories")
+    if qualified_customs_trade_review_contract.get("source_anchor_count", 0) < 9:
+        failures.append("qualified customs/trade review contract should include researched official-source anchors")
+    if qualified_customs_trade_review_contract.get("claims_opened") is not False:
+        failures.append("qualified customs/trade review contract must not open claims")
+    if (
+        qualified_customs_trade_review.get("status")
+        != "qualified_customs_trade_review_intake_ready_real_review_evidence_required_claims_closed"
+    ):
+        failures.append("qualified customs/trade review manifest should be generated")
+    if qualified_customs_trade_review.get("review_record_count") != 0:
+        failures.append("committed qualified customs/trade review proof should show zero records until real review arrives")
+    if qualified_customs_trade_review.get("accepted_review_record_count") != 0:
+        failures.append("qualified customs/trade review proof should not accept review records in committed state")
+    if qualified_customs_trade_review.get("required_evidence_category_count") != 14:
+        failures.append("qualified customs/trade review proof should track fourteen evidence categories")
+    if qualified_customs_trade_review.get("missing_evidence_category_count") != 14:
+        failures.append("qualified customs/trade review proof should show all review evidence categories missing")
+    if qualified_customs_trade_review.get("blocked_gate_count") != 14:
+        failures.append("qualified customs/trade review proof should keep all review gates blocked before real proof")
+    if qualified_customs_trade_review.get("blocker_export_count") != 14:
+        failures.append("qualified customs/trade review proof should export one blocker per missing category")
+    for key in (
+        "customs_trade_reviewed_by_evidence",
+        "tariff_confirmed_by_review_evidence",
+        "cfia_approved_by_review_evidence",
+        "customs_ready_by_review_evidence",
+        "shipment_ready_by_review_evidence",
+        "public_launch_ready_by_review_evidence",
+        "claims_opened_by_intake",
+        "external_effects_created",
+    ):
+        if qualified_customs_trade_review.get(key) is not False:
+            failures.append(f"qualified customs/trade review proof expected {key}=false")
+    if qualified_customs_trade_review_gate_matrix.get("status") != "qualified_customs_trade_review_gate_matrix_ready_claims_closed":
+        failures.append("qualified customs/trade review gate matrix should be generated")
+    if qualified_customs_trade_review_gate_matrix.get("gate_count") != 14:
+        failures.append("qualified customs/trade review gate matrix should include fourteen gates")
+    if qualified_customs_trade_review_gate_matrix.get("blocked_gate_count") != 14:
+        failures.append("qualified customs/trade review gate matrix should keep all gates blocked before review proof")
+    if qualified_customs_trade_review_gate_matrix.get("claims_opened") is not False:
+        failures.append("qualified customs/trade review gate matrix must not open claims")
+    if len(qualified_customs_trade_review_blockers) != 14:
+        failures.append("qualified customs/trade review blocker export should include fourteen blocker rows")
+    if any(row.get("module") != "qualified_customs_trade_review" for row in qualified_customs_trade_review_blockers):
+        failures.append("qualified customs/trade review blocker rows should be attributed to the customs/trade module")
+    if any(row.get("gate") != "closed" for row in qualified_customs_trade_review_blockers):
+        failures.append("qualified customs/trade review blocker rows must stay closed")
+    customs_trade_md = (ROOT / "docs" / "QUALIFIED_CUSTOMS_TRADE_REVIEW_PROOF.md").read_text(encoding="utf-8")
+    if "Tariff confirmed by review evidence: false" not in customs_trade_md:
+        failures.append("qualified customs/trade review doc should show tariff confirmation remains closed")
     input_md = (ROOT / "docs" / "GO_LIVE_INPUT_REQUESTS.md").read_text(encoding="utf-8")
     if "Once Inputs Are Received" not in input_md or "external_inputs/" not in input_md:
         failures.append("go-live input request doc should explain how returned inputs are used")
@@ -3125,6 +3219,14 @@ def main() -> int:
         "legal_privacy_security_approved_by_evidence="
         f"{legal_privacy_security_approval['legal_privacy_security_approved_by_evidence']}"
     )
+    print(f"qualified_customs_trade_review_status={qualified_customs_trade_review['status']}")
+    print(f"qualified_customs_trade_review_records={qualified_customs_trade_review['review_record_count']}")
+    print(f"qualified_customs_trade_review_blocked_gates={qualified_customs_trade_review['blocked_gate_count']}")
+    print(
+        "qualified_customs_trade_reviewed_by_evidence="
+        f"{qualified_customs_trade_review['customs_trade_reviewed_by_evidence']}"
+    )
+    print(f"tariff_confirmed_by_review_evidence={qualified_customs_trade_review['tariff_confirmed_by_review_evidence']}")
     print(f"production_trust_status={production_trust['status']}")
     print(f"production_trust_controls={production_trust['trust_control_count']}")
     print(f"production_real_file_uploads_allowed={production_trust['real_file_uploads_allowed']}")

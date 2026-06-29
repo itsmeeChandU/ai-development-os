@@ -1,7 +1,7 @@
 {
   "artifact_count": 6,
   "existing_artifact_count": 6,
-  "generated_at": "2026-06-29T12:57:50+00:00",
+  "generated_at": "2026-06-29T13:13:34+00:00",
   "hash_match_count": 6,
   "production_backup_restore_test_passed": false,
   "proof_boundary": "This proves local artifact backup/restore hashing only; hosted database, private object storage, and managed backup restore proof remain external gates.",
@@ -10,37 +10,37 @@
       "hash_matches": true,
       "relative_path": "system_review_graph/customer_workflow.sqlite",
       "restored": true,
-      "restored_sha256": "6c769a8f5791d41b8b05306aabd8d23a6a028cd8625cae6274c15dd3af88a51d",
+      "restored_sha256": "f236c40e20987392270a8370647ec7e38ddf7b663e2897209d775e7039328201",
       "source_bytes": 274432,
       "source_exists": true,
-      "source_sha256": "6c769a8f5791d41b8b05306aabd8d23a6a028cd8625cae6274c15dd3af88a51d"
+      "source_sha256": "f236c40e20987392270a8370647ec7e38ddf7b663e2897209d775e7039328201"
     },
     {
       "hash_matches": true,
       "relative_path": "system_review_graph/product_runtime_state.json",
       "restored": true,
-      "restored_sha256": "8e64ff33fe1b28c86661132bb28dc704aa7ee3536feaa55aa806d172ae5c5f11",
+      "restored_sha256": "15284f429f457d4c73309fe88abdd0f6b10c33f4d47020638ddb729bb1018e37",
       "source_bytes": 98771,
       "source_exists": true,
-      "source_sha256": "8e64ff33fe1b28c86661132bb28dc704aa7ee3536feaa55aa806d172ae5c5f11"
+      "source_sha256": "15284f429f457d4c73309fe88abdd0f6b10c33f4d47020638ddb729bb1018e37"
     },
     {
       "hash_matches": true,
       "relative_path": "system_review_graph/production_redevelopment_plan.json",
       "restored": true,
-      "restored_sha256": "26dd0e23089027b7655cb9db8751925004b76ef91d09d3807b976523cc51811e",
+      "restored_sha256": "f747b750ccf0a9313b13501ad3796a34eedf01cd679ed55b1d341840133fcd87",
       "source_bytes": 88584,
       "source_exists": true,
-      "source_sha256": "26dd0e23089027b7655cb9db8751925004b76ef91d09d3807b976523cc51811e"
+      "source_sha256": "f747b750ccf0a9313b13501ad3796a34eedf01cd679ed55b1d341840133fcd87"
     },
     {
       "hash_matches": true,
       "relative_path": "system_review_graph/production_payment_monetization_manifest.json",
       "restored": true,
-      "restored_sha256": "404f316ab21765b49909bcc7a8d4e20f6f4ce20a35ff5ee837a1e26773fbc230",
+      "restored_sha256": "41e6aab3faefd3cffaf1e72be470db1a7741a32607f600678339ff305979d41c",
       "source_bytes": 14521,
       "source_exists": true,
-      "source_sha256": "404f316ab21765b49909bcc7a8d4e20f6f4ce20a35ff5ee837a1e26773fbc230"
+      "source_sha256": "41e6aab3faefd3cffaf1e72be470db1a7741a32607f600678339ff305979d41c"
     },
     {
       "hash_matches": true,
