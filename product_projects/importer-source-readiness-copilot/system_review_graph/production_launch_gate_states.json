@@ -239,7 +239,7 @@
       "artifacts": [
         {
           "artifact": "production_payment_monetization_manifest.json",
-          "bytes": 14205,
+          "bytes": 14521,
           "exists": true
         },
         {

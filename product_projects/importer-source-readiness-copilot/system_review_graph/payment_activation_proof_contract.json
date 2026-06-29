@@ -1,0 +1,141 @@
+{
+  "allowed_decisions": [
+    "activate_live_checkout_for_scope",
+    "not_applicable_for_this_launch",
+    "keep_live_checkout_disabled",
+    "needs_more_evidence"
+  ],
+  "claims_opened": false,
+  "disabled_scope_evidence_categories": [
+    "launch_scope_excludes_live_payments",
+    "owner_decision",
+    "future_activation_condition"
+  ],
+  "drop_paths": [
+    "external_inputs/live_payment_activation_proof.json",
+    "external_inputs/payment_activation_proofs/*.json"
+  ],
+  "external_effects_created": false,
+  "generated_at": "2026-06-29T12:37:56Z",
+  "proof_boundary": "This contract defines live-payment activation evidence. It does not create Stripe objects, enable checkout, charge customers, or approve public launch.",
+  "required_evidence_categories": [
+    {
+      "category": "launch_scope_and_paid_scope_decision",
+      "label": "Launch scope and paid-scope decision",
+      "why": "The product must charge for preparation only, not approval, legal advice, buyer validation, supplier verification, or shipment decisions."
+    },
+    {
+      "category": "stripe_live_mode_account_review",
+      "label": "Stripe live-mode account review",
+      "why": "A test-mode account or local checkout contract is not live activation proof."
+    },
+    {
+      "category": "live_products_prices_checkout_portal",
+      "label": "Live products, prices, checkout, and portal proof",
+      "why": "Live-mode objects must match the approved paid scope before any customer can pay."
+    },
+    {
+      "category": "production_webhook_endpoint",
+      "label": "Production webhook endpoint",
+      "why": "Live checkout needs a production webhook endpoint tied to the deployed environment."
+    },
+    {
+      "category": "webhook_signature_verification",
+      "label": "Webhook signature verification",
+      "why": "Payment events must be authenticated before updating billing state."
+    },
+    {
+      "category": "webhook_idempotency_duplicate_ordering",
+      "label": "Webhook idempotency, duplicate, delayed, and ordering tests",
+      "why": "Billing state must tolerate retries, duplicates, delayed events, and out-of-order events."
+    },
+    {
+      "category": "api_version_error_logging",
+      "label": "API version, error handling, and logging",
+      "why": "Operators need stable API behavior, logged failures, and traceable payment errors before activation."
+    },
+    {
+      "category": "secure_api_keys_secrets_rotation",
+      "label": "Secure API keys, secrets storage, and rotation",
+      "why": "Live secret keys must be stored outside source code and local files with an owner and rotation process."
+    },
+    {
+      "category": "tax_accounting_invoice_review",
+      "label": "Tax, accounting, and invoice review",
+      "why": "Live payments need tax/accounting treatment and invoice policy reviewed for the launch scope."
+    },
+    {
+      "category": "refund_support_dispute_policy",
+      "label": "Refund, support, and dispute policy",
+      "why": "Customers need clear refund/support handling before money is accepted."
+    },
+    {
+      "category": "payment_security_pci_review",
+      "label": "Payment security and PCI-scope review",
+      "why": "The product must document that card data is handled by the payment provider and review remaining payment-security scope."
+    },
+    {
+      "category": "claim_language_receipt_copy_review",
+      "label": "Claim language, checkout copy, and receipt wording review",
+      "why": "Checkout and receipts must not imply customs approval, legal advice, buyer validation, supplier verification, or shipment approval."
+    },
+    {
+      "category": "activation_owner_go_no_go",
+      "label": "Activation owner go/no-go",
+      "why": "A named accountable owner must approve the exact live-payment scope and rollback path."
+    }
+  ],
+  "required_evidence_category_count": 13,
+  "source_anchor_count": 6,
+  "source_anchors": [
+    {
+      "checked_at": "2026-06-29",
+      "name": "Go-live checklist",
+      "product_use": "Live-mode objects, API versions, logging, webhook, event, and key readiness anchor.",
+      "publisher": "Stripe",
+      "source_id": "stripe-go-live-checklist",
+      "url": "https://docs.stripe.com/get-started/checklist/go-live"
+    },
+    {
+      "checked_at": "2026-06-29",
+      "name": "Webhooks",
+      "product_use": "Production webhook endpoint, delivery, retry, and event handling anchor.",
+      "publisher": "Stripe",
+      "source_id": "stripe-webhooks",
+      "url": "https://docs.stripe.com/webhooks"
+    },
+    {
+      "checked_at": "2026-06-29",
+      "name": "Resolve webhook signature verification errors",
+      "product_use": "Webhook signing secret and signature verification evidence anchor.",
+      "publisher": "Stripe",
+      "source_id": "stripe-webhook-signatures",
+      "url": "https://docs.stripe.com/webhooks/signature"
+    },
+    {
+      "checked_at": "2026-06-29",
+      "name": "Idempotent requests",
+      "product_use": "Duplicate and retry-safe request handling anchor.",
+      "publisher": "Stripe",
+      "source_id": "stripe-idempotent-requests",
+      "url": "https://docs.stripe.com/api/idempotent_requests"
+    },
+    {
+      "checked_at": "2026-06-29",
+      "name": "API keys",
+      "product_use": "Live/test key boundary and secret-key handling anchor.",
+      "publisher": "Stripe",
+      "source_id": "stripe-api-keys",
+      "url": "https://docs.stripe.com/keys"
+    },
+    {
+      "checked_at": "2026-06-29",
+      "name": "Testing",
+      "product_use": "Test-mode evidence boundary; test payment success is not live activation proof.",
+      "publisher": "Stripe",
+      "source_id": "stripe-testing",
+      "url": "https://docs.stripe.com/testing"
+    }
+  ],
+  "status": "payment_activation_proof_contract_ready_claims_closed"
+}

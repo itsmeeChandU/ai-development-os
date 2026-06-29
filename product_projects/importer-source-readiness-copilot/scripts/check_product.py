@@ -183,6 +183,10 @@ def main() -> int:
     hosted_deployment_contract = _load_json(ROOT / "system_review_graph" / "hosted_deployment_proof_contract.json")
     hosted_deployment_gate_matrix = _load_json(ROOT / "system_review_graph" / "hosted_deployment_gate_matrix.json")
     hosted_deployment_blockers = _load_jsonl(ROOT / "system_review_graph" / "hosted_deployment_blocker_export.jsonl")
+    payment_activation_proof = _load_json(ROOT / "system_review_graph" / "payment_activation_proof_manifest.json")
+    payment_activation_contract = _load_json(ROOT / "system_review_graph" / "payment_activation_proof_contract.json")
+    payment_activation_gate_matrix = _load_json(ROOT / "system_review_graph" / "payment_activation_gate_matrix.json")
+    payment_activation_blockers = _load_jsonl(ROOT / "system_review_graph" / "payment_activation_blocker_export.jsonl")
     production_redevelopment = _load_json(ROOT / "system_review_graph" / "production_redevelopment_plan.json")
     production_research = _load_json(ROOT / "system_review_graph" / "production_research_anchors.json")
     production_data_model = _load_json(ROOT / "system_review_graph" / "production_data_model_manifest.json")
@@ -285,6 +289,7 @@ def main() -> int:
         "src/importer_source_readiness/external_validation_research.py",
         "src/importer_source_readiness/go_live_input_evidence.py",
         "src/importer_source_readiness/hosted_deployment_proof.py",
+        "src/importer_source_readiness/payment_activation_proof.py",
         "src/importer_source_readiness/private_beta_outcomes.py",
         "src/importer_source_readiness/production_ai_copilot_engine.py",
         "src/importer_source_readiness/production_country_source_engine.py",
@@ -317,6 +322,7 @@ def main() -> int:
         "tests/test_external_validation_research.py",
         "tests/test_go_live_input_evidence.py",
         "tests/test_hosted_deployment_proof.py",
+        "tests/test_payment_activation_proof.py",
         "tests/test_private_beta_outcomes.py",
         "tests/test_production_ai_copilot_engine.py",
         "tests/test_production_country_source_engine.py",
@@ -349,6 +355,7 @@ def main() -> int:
         "scripts/run_final_go_live_review.py",
         "scripts/run_external_validation_requirements.py",
         "scripts/run_hosted_deployment_proof.py",
+        "scripts/run_payment_activation_proof.py",
         "scripts/run_private_beta_outcomes.py",
         "scripts/run_production_ai_copilot_engine.py",
         "scripts/run_production_country_source_engine.py",
@@ -394,6 +401,7 @@ def main() -> int:
         "docs/EXTERNAL_VALIDATION_REVIEWER_BRIEF.md",
         "docs/GO_LIVE_INPUT_REQUESTS.md",
         "docs/HOSTED_DEPLOYMENT_PROOF.md",
+        "docs/PAYMENT_ACTIVATION_PROOF.md",
         "docs/PRIVATE_BETA_OUTCOME_CONTRACT.md",
         "docs/PRODUCTION_AI_COPILOT_ENGINE.md",
         "docs/PRODUCTION_COUNTRY_SOURCE_ENGINE.md",
@@ -480,6 +488,10 @@ def main() -> int:
         "system_review_graph/hosted_deployment_proof_manifest.json",
         "system_review_graph/hosted_deployment_gate_matrix.json",
         "system_review_graph/hosted_deployment_blocker_export.jsonl",
+        "system_review_graph/payment_activation_proof_contract.json",
+        "system_review_graph/payment_activation_proof_manifest.json",
+        "system_review_graph/payment_activation_gate_matrix.json",
+        "system_review_graph/payment_activation_blocker_export.jsonl",
         "system_review_graph/private_beta_outcome_contract.json",
         "system_review_graph/private_beta_session_evidence_schema.json",
         "system_review_graph/private_beta_outcome_gate_matrix.json",
@@ -1661,6 +1673,16 @@ def main() -> int:
         failures.append("production payments should define seven pricing tiers")
     if production_payments.get("research_reference_count") != 5:
         failures.append("production payments should include five Stripe/payment research references")
+    if production_payments.get("payment_activation_evidence_status") != "payment_activation_proof_intake_ready_real_payment_evidence_required_claims_closed":
+        failures.append("production payments should consume the payment activation proof manifest")
+    if production_payments.get("payment_activation_record_count") != 0:
+        failures.append("production payments should show zero returned payment activation records in committed state")
+    if production_payments.get("payment_activation_accepted_record_count") != 0:
+        failures.append("production payments should not accept payment activation proof in committed state")
+    if production_payments.get("payment_activation_blocked_gate_count") != 13:
+        failures.append("production payments should keep thirteen payment activation proof gates blocked")
+    if production_payments.get("payment_activation_live_ready_by_evidence") is not False:
+        failures.append("production payments should keep payment activation evidence readiness false")
     if production_payments.get("blocked_payment_gate_count") != production_payments.get("payment_gate_count"):
         failures.append("production payments should keep every payment gate blocked")
     if "prepared trade readiness packet" not in production_payments.get("allowed_paid_scope", []):
@@ -2400,6 +2422,55 @@ def main() -> int:
     hosted_deployment_md = (ROOT / "docs" / "HOSTED_DEPLOYMENT_PROOF.md").read_text(encoding="utf-8")
     if "Hosted private beta ready by environment evidence: false" not in hosted_deployment_md:
         failures.append("hosted deployment proof doc should show private beta remains closed")
+    if payment_activation_contract.get("status") != "payment_activation_proof_contract_ready_claims_closed":
+        failures.append("payment activation proof contract should be generated")
+    if payment_activation_contract.get("required_evidence_category_count") != 13:
+        failures.append("payment activation proof contract should require thirteen evidence categories")
+    if payment_activation_contract.get("source_anchor_count", 0) < 6:
+        failures.append("payment activation proof contract should include researched Stripe/payment source anchors")
+    if payment_activation_contract.get("claims_opened") is not False:
+        failures.append("payment activation proof contract must not open claims")
+    if payment_activation_proof.get("status") != "payment_activation_proof_intake_ready_real_payment_evidence_required_claims_closed":
+        failures.append("payment activation proof manifest should be generated")
+    if payment_activation_proof.get("payment_record_count") != 0:
+        failures.append("committed payment activation proof should show zero payment records until real payment proof arrives")
+    if payment_activation_proof.get("accepted_payment_record_count") != 0:
+        failures.append("payment activation proof should not accept records without real payment proof")
+    if payment_activation_proof.get("required_evidence_category_count") != 13:
+        failures.append("payment activation proof should track thirteen evidence categories")
+    if payment_activation_proof.get("missing_evidence_category_count") != 13:
+        failures.append("payment activation proof should show all payment evidence categories missing before real proof")
+    if payment_activation_proof.get("blocked_gate_count") != 13:
+        failures.append("payment activation proof should keep all payment gates blocked before real proof")
+    if payment_activation_proof.get("blocker_export_count") != 13:
+        failures.append("payment activation proof should export one blocker per missing payment evidence category")
+    for key in (
+        "live_payment_ready_by_payment_evidence",
+        "live_checkout_enabled_by_intake",
+        "external_charge_created",
+        "public_launch_ready_by_payment_evidence",
+        "claims_opened_by_intake",
+        "external_effects_created",
+    ):
+        if payment_activation_proof.get(key) is not False:
+            failures.append(f"payment activation proof expected {key}=false")
+    if payment_activation_gate_matrix.get("status") != "payment_activation_gate_matrix_ready_claims_closed":
+        failures.append("payment activation gate matrix should be generated")
+    if payment_activation_gate_matrix.get("gate_count") != 13:
+        failures.append("payment activation gate matrix should include thirteen payment gates")
+    if payment_activation_gate_matrix.get("blocked_gate_count") != 13:
+        failures.append("payment activation gate matrix should keep all gates blocked before payment proof")
+    if payment_activation_gate_matrix.get("claims_opened") is not False:
+        failures.append("payment activation gate matrix must not open claims")
+    if len(payment_activation_blockers) != 13:
+        failures.append("payment activation blocker export should include thirteen blocker rows")
+    if any(row.get("module") != "payment_activation_proof" for row in payment_activation_blockers):
+        failures.append("payment activation blocker rows should be attributed to payment_activation_proof")
+    if any(row.get("gate") != "closed" for row in payment_activation_blockers):
+        failures.append("payment activation blocker rows must stay closed")
+    payment_activation_md = (ROOT / "docs" / "PAYMENT_ACTIVATION_PROOF.md").read_text(encoding="utf-8")
+    if "Live checkout enabled by intake: false" not in payment_activation_md:
+        failures.append("payment activation proof doc should show live checkout remains closed")
     input_md = (ROOT / "docs" / "GO_LIVE_INPUT_REQUESTS.md").read_text(encoding="utf-8")
     if "Once Inputs Are Received" not in input_md or "external_inputs/" not in input_md:
         failures.append("go-live input request doc should explain how returned inputs are used")
@@ -2953,6 +3024,10 @@ def main() -> int:
     print(f"production_payments_status={production_payments['status']}")
     print(f"production_payment_tiers={production_payments['pricing_tier_count']}")
     print(f"production_live_checkout_enabled={production_payments['live_checkout_enabled']}")
+    print(f"payment_activation_status={payment_activation_proof['status']}")
+    print(f"payment_activation_records={payment_activation_proof['payment_record_count']}")
+    print(f"payment_activation_blocked_gates={payment_activation_proof['blocked_gate_count']}")
+    print(f"payment_activation_live_ready={payment_activation_proof['live_payment_ready_by_payment_evidence']}")
     print(f"production_trust_status={production_trust['status']}")
     print(f"production_trust_controls={production_trust['trust_control_count']}")
     print(f"production_real_file_uploads_allowed={production_trust['real_file_uploads_allowed']}")

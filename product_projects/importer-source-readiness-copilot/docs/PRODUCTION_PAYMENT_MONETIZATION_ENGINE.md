@@ -32,6 +32,9 @@ and launch claims out of paid scope.
 
 ## Gate Boundary
 
+- Payment activation evidence status: `payment_activation_proof_intake_ready_real_payment_evidence_required_claims_closed`
+- Payment activation records accepted: 0
+- Payment activation blocked gates: 13
 - Live checkout enabled: false
 - Live payment ready: false
 - External charge created: false

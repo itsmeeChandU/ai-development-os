@@ -68,6 +68,12 @@ from .hosted_deployment_proof import (
     validate_hosted_deployment_record,
     write_hosted_deployment_proof_artifacts,
 )
+from .payment_activation_proof import (
+    build_payment_activation_contract,
+    build_payment_activation_proof_intake,
+    validate_payment_activation_record,
+    write_payment_activation_proof_artifacts,
+)
 from .private_beta_outcomes import (
     build_private_beta_outcome_contract,
     build_private_beta_session_schema,
@@ -126,6 +132,8 @@ __all__ = [
     "build_returned_external_review_intake",
     "build_hosted_deployment_contract",
     "build_hosted_deployment_proof_intake",
+    "build_payment_activation_contract",
+    "build_payment_activation_proof_intake",
     "build_private_beta_outcome_contract",
     "build_private_beta_session_schema",
     "build_production_launch_control_plane",
@@ -167,6 +175,7 @@ __all__ = [
     "write_go_live_returned_input_evidence_artifacts",
     "write_returned_external_review_intake_artifacts",
     "write_hosted_deployment_proof_artifacts",
+    "write_payment_activation_proof_artifacts",
     "write_private_beta_outcome_artifacts",
     "write_production_launch_control_plane_artifacts",
     "write_production_packet_engine_artifacts",
@@ -184,5 +193,6 @@ __all__ = [
     "validate_go_live_input_record",
     "validate_returned_external_review_record",
     "validate_hosted_deployment_record",
+    "validate_payment_activation_record",
     "validate_private_beta_session_record",
 ]

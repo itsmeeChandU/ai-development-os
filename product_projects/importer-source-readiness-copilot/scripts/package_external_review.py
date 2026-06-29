@@ -19,6 +19,7 @@ from importer_source_readiness.final_go_live import write_final_go_live_artifact
 from importer_source_readiness.external_validation_research import write_external_validation_requirements
 from importer_source_readiness.external_review_intake import write_returned_external_review_intake_artifacts
 from importer_source_readiness.hosted_deployment_proof import write_hosted_deployment_proof_artifacts
+from importer_source_readiness.payment_activation_proof import write_payment_activation_proof_artifacts
 from importer_source_readiness.private_beta_outcomes import write_private_beta_outcome_artifacts
 from importer_source_readiness.production_market_readiness_evidence_room import (
     build_production_market_readiness_evidence_room,
@@ -54,6 +55,7 @@ EXECUTIVE_FILES = [
     "docs/GO_LIVE_RETURNED_INPUT_EVIDENCE.md",
     "docs/PRIVATE_BETA_OUTCOME_CONTRACT.md",
     "docs/HOSTED_DEPLOYMENT_PROOF.md",
+    "docs/PAYMENT_ACTIVATION_PROOF.md",
     "system_review_graph/final_go_live_decision_report.json",
     "system_review_graph/current_external_gate_research.json",
     "system_review_graph/external_validation_requirements_report.json",
@@ -70,6 +72,10 @@ EXECUTIVE_FILES = [
     "system_review_graph/hosted_deployment_proof_manifest.json",
     "system_review_graph/hosted_deployment_gate_matrix.json",
     "system_review_graph/hosted_deployment_blocker_export.jsonl",
+    "system_review_graph/payment_activation_proof_contract.json",
+    "system_review_graph/payment_activation_proof_manifest.json",
+    "system_review_graph/payment_activation_gate_matrix.json",
+    "system_review_graph/payment_activation_blocker_export.jsonl",
     "system_review_graph/production_market_readiness_evidence_room_manifest.json",
     "system_review_graph/production_market_readiness_input_ledger.json",
     "system_review_graph/production_market_readiness_input_history.json",
@@ -172,6 +178,10 @@ TECHNICAL_FILES = [
     "system_review_graph/hosted_deployment_proof_manifest.json",
     "system_review_graph/hosted_deployment_gate_matrix.json",
     "system_review_graph/hosted_deployment_blocker_export.jsonl",
+    "system_review_graph/payment_activation_proof_contract.json",
+    "system_review_graph/payment_activation_proof_manifest.json",
+    "system_review_graph/payment_activation_gate_matrix.json",
+    "system_review_graph/payment_activation_blocker_export.jsonl",
     "system_review_graph/external_review_returned_finding_contract.json",
     "system_review_graph/external_review_returned_findings_manifest.json",
     "system_review_graph/external_review_returned_review_matrix.json",
@@ -266,6 +276,10 @@ def package_review_bundles(root: Path, output_dir: Path, *, stamp: str | None = 
         generated_at=datetime.now(UTC).replace(microsecond=0).isoformat().replace("+00:00", "Z"),
     )
     write_hosted_deployment_proof_artifacts(
+        root,
+        generated_at=datetime.now(UTC).replace(microsecond=0).isoformat().replace("+00:00", "Z"),
+    )
+    write_payment_activation_proof_artifacts(
         root,
         generated_at=datetime.now(UTC).replace(microsecond=0).isoformat().replace("+00:00", "Z"),
     )

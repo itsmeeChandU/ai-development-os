@@ -27,6 +27,14 @@ class ProductionPaymentMonetizationEngineTests(unittest.TestCase):
         self.assertEqual(manifest["research_reference_count"], 5)
         self.assertGreaterEqual(manifest["payment_gate_count"], 10)
         self.assertEqual(manifest["blocked_payment_gate_count"], manifest["payment_gate_count"])
+        self.assertEqual(
+            manifest["payment_activation_evidence_status"],
+            "payment_activation_proof_intake_ready_real_payment_evidence_required_claims_closed",
+        )
+        self.assertEqual(manifest["payment_activation_record_count"], 0)
+        self.assertEqual(manifest["payment_activation_accepted_record_count"], 0)
+        self.assertEqual(manifest["payment_activation_blocked_gate_count"], 13)
+        self.assertFalse(manifest["payment_activation_live_ready_by_evidence"])
         self.assertIn("prepared trade readiness packet", manifest["allowed_paid_scope"])
         self.assertIn("customs approval", manifest["forbidden_paid_scope"])
         self.assertFalse(manifest["external_charge_created"])

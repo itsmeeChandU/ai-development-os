@@ -181,6 +181,7 @@ def build_production_payment_monetization_engine(repo_root: Path | None = None) 
     graph = root / "system_review_graph"
     billing_controls = _load_json(graph / "billing_credit_controls.json", {})
     billing_usage = _load_json(graph / "billing_usage_ledger.json", {})
+    payment_activation = _load_json(graph / "payment_activation_proof_manifest.json", {})
     payment_contract = build_payment_pricing_contract()
     tier_records = _tier_records()
     webhook_controls = _webhook_controls()
@@ -205,6 +206,14 @@ def build_production_payment_monetization_engine(repo_root: Path | None = None) 
         "webhook_controls": webhook_controls,
         "billing_action_count": len(billing_controls.get("billable_actions", [])),
         "usage_row_count": len(billing_usage.get("usage_rows", [])),
+        "payment_activation_evidence_status": payment_activation.get(
+            "status",
+            "payment_activation_proof_not_generated",
+        ),
+        "payment_activation_record_count": payment_activation.get("payment_record_count", 0),
+        "payment_activation_accepted_record_count": payment_activation.get("accepted_payment_record_count", 0),
+        "payment_activation_blocked_gate_count": payment_activation.get("blocked_gate_count", len(PAYMENT_GATES)),
+        "payment_activation_live_ready_by_evidence": payment_activation.get("live_payment_ready_by_payment_evidence", False),
         "external_charge_created": False,
         "live_checkout_enabled": False,
         "live_payment_ready": False,
@@ -250,6 +259,9 @@ and launch claims out of paid scope.
 
 ## Gate Boundary
 
+- Payment activation evidence status: `{manifest['payment_activation_evidence_status']}`
+- Payment activation records accepted: {manifest['payment_activation_accepted_record_count']}
+- Payment activation blocked gates: {manifest['payment_activation_blocked_gate_count']}
 - Live checkout enabled: {str(manifest['live_checkout_enabled']).lower()}
 - Live payment ready: {str(manifest['live_payment_ready']).lower()}
 - External charge created: {str(manifest['external_charge_created']).lower()}
