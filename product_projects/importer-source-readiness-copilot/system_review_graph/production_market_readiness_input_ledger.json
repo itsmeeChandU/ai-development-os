@@ -16,14 +16,14 @@
   ],
   "claims_opened_by_ledger": false,
   "external_effects_created": false,
-  "generated_at": "2026-06-29T10:33:28+00:00",
+  "generated_at": "2026-06-29T10:55:21+00:00",
   "history_record_count": 0,
   "incomplete_area_count": 0,
   "input_folder": "external_inputs/",
   "input_history": {
     "claims_opened_by_history": false,
     "external_effects_created": false,
-    "generated_at": "2026-06-29T10:33:28+00:00",
+    "generated_at": "2026-06-29T10:55:21+00:00",
     "history_folder": "external_inputs/history/",
     "history_record_count": 0,
     "history_rows": [],
@@ -41,8 +41,16 @@
       "accepted_for_area": false,
       "claims_opened_by_ledger": false,
       "decision": "",
+      "evidence_reference_count": 0,
+      "evidence_status": "not_received",
       "external_effects_created": false,
       "minimum_input_present": false,
+      "missing_evidence_categories": [
+        "review_scope",
+        "qualified_reviewer_findings",
+        "signed_decision",
+        "package_or_commit_reference"
+      ],
       "missing_fields": [
         "returned input record"
       ],
@@ -56,14 +64,23 @@
       "scope_reviewed": "",
       "signed_at": "",
       "source_file": "external_inputs/real_external_expert_reviews.json",
-      "status": "not_received"
+      "status": "not_received",
+      "usable_evidence_reference_count": 0
     },
     {
       "accepted_for_area": false,
       "claims_opened_by_ledger": false,
       "decision": "",
+      "evidence_reference_count": 0,
+      "evidence_status": "not_received",
       "external_effects_created": false,
       "minimum_input_present": false,
+      "missing_evidence_categories": [
+        "privacy_notice_or_data_map",
+        "security_review_or_scan",
+        "ai_data_policy",
+        "signed_approval"
+      ],
       "missing_fields": [
         "returned input record"
       ],
@@ -77,14 +94,23 @@
       "scope_reviewed": "",
       "signed_at": "",
       "source_file": "external_inputs/legal_privacy_security_approval.json",
-      "status": "not_received"
+      "status": "not_received",
+      "usable_evidence_reference_count": 0
     },
     {
       "accepted_for_area": false,
       "claims_opened_by_ledger": false,
       "decision": "",
+      "evidence_reference_count": 0,
+      "evidence_status": "not_received",
       "external_effects_created": false,
       "minimum_input_present": false,
+      "missing_evidence_categories": [
+        "reviewer_credential",
+        "country_product_scope",
+        "official_source_snapshot",
+        "approved_blocked_claim_language"
+      ],
       "missing_fields": [
         "returned input record"
       ],
@@ -98,14 +124,24 @@
       "scope_reviewed": "",
       "signed_at": "",
       "source_file": "external_inputs/qualified_customs_trade_review.json",
-      "status": "not_received"
+      "status": "not_received",
+      "usable_evidence_reference_count": 0
     },
     {
       "accepted_for_area": false,
       "claims_opened_by_ledger": false,
       "decision": "",
+      "evidence_reference_count": 0,
+      "evidence_status": "not_received",
       "external_effects_created": false,
       "minimum_input_present": false,
+      "missing_evidence_categories": [
+        "live_url_or_environment",
+        "commit_or_build",
+        "smoke_test_result",
+        "monitoring_or_logs",
+        "rollback_or_backup"
+      ],
       "missing_fields": [
         "returned input record"
       ],
@@ -119,14 +155,23 @@
       "scope_reviewed": "",
       "signed_at": "",
       "source_file": "external_inputs/hosted_staging_production_proof.json",
-      "status": "not_received"
+      "status": "not_received",
+      "usable_evidence_reference_count": 0
     },
     {
       "accepted_for_area": false,
       "claims_opened_by_ledger": false,
       "decision": "",
+      "evidence_reference_count": 0,
+      "evidence_status": "not_received",
       "external_effects_created": false,
       "minimum_input_present": false,
+      "missing_evidence_categories": [
+        "stripe_live_or_disabled_scope",
+        "webhook_test",
+        "tax_refund_support_policy",
+        "billing_claim_language"
+      ],
       "missing_fields": [
         "returned input record"
       ],
@@ -140,14 +185,23 @@
       "scope_reviewed": "",
       "signed_at": "",
       "source_file": "external_inputs/live_payment_activation.json",
-      "status": "not_received"
+      "status": "not_received",
+      "usable_evidence_reference_count": 0
     },
     {
       "accepted_for_area": false,
       "claims_opened_by_ledger": false,
       "decision": "",
+      "evidence_reference_count": 0,
+      "evidence_status": "not_received",
       "external_effects_created": false,
       "minimum_input_present": false,
+      "missing_evidence_categories": [
+        "participant_records",
+        "task_results",
+        "claim_comprehension",
+        "issues_and_changes"
+      ],
       "missing_fields": [
         "returned input record"
       ],
@@ -161,14 +215,23 @@
       "scope_reviewed": "",
       "signed_at": "",
       "source_file": "external_inputs/real_users_private_beta_outcomes.json",
-      "status": "not_received"
+      "status": "not_received",
+      "usable_evidence_reference_count": 0
     },
     {
       "accepted_for_area": false,
       "claims_opened_by_ledger": false,
       "decision": "",
+      "evidence_reference_count": 0,
+      "evidence_status": "not_received",
       "external_effects_created": false,
       "minimum_input_present": false,
+      "missing_evidence_categories": [
+        "counterparty_evidence",
+        "problem_validation",
+        "permission_scope",
+        "screening_or_risk_notes"
+      ],
       "missing_fields": [
         "returned input record"
       ],
@@ -182,14 +245,24 @@
       "scope_reviewed": "",
       "signed_at": "",
       "source_file": "external_inputs/buyer_supplier_validation.json",
-      "status": "not_received"
+      "status": "not_received",
+      "usable_evidence_reference_count": 0
     },
     {
       "accepted_for_area": false,
       "claims_opened_by_ledger": false,
       "decision": "",
+      "evidence_reference_count": 0,
+      "evidence_status": "not_received",
       "external_effects_created": false,
       "minimum_input_present": false,
+      "missing_evidence_categories": [
+        "all_gate_summary",
+        "release_scope",
+        "risk_acceptance",
+        "support_and_rollback_owner",
+        "signed_go_no_go"
+      ],
       "missing_fields": [
         "returned input record"
       ],
@@ -203,14 +276,17 @@
       "scope_reviewed": "",
       "signed_at": "",
       "source_file": "external_inputs/public_go_no_go_approval.json",
-      "status": "not_received"
+      "status": "not_received",
+      "usable_evidence_reference_count": 0
     }
   ],
+  "missing_required_evidence_area_count": 0,
   "needs_more_evidence_area_count": 0,
   "next_valid_move": "Collect and record the missing real inputs.",
   "not_received_area_count": 8,
   "proof_boundary": "The ledger validates returned input completeness for operators. It does not approve launch, payments, customs/trade claims, legal/privacy/security claims, buyer validation, or supplier verification.",
   "public_launch_ready_by_ledger": false,
   "review_area_count": 8,
-  "status": "production_market_readiness_input_ledger_ready_claims_closed"
+  "status": "production_market_readiness_input_ledger_ready_claims_closed",
+  "unqualified_area_count": 0
 }

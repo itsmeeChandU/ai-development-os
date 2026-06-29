@@ -29,6 +29,8 @@ def main() -> int:
     print(f"go_live_input_status={result['go_live_input_status']}")
     print(f"ready_input_count={result['ready_input_count']}")
     print(f"missing_input_count={result['missing_input_count']}")
+    print(f"evidence_validation_status={result['evidence_validation_status']}")
+    print(f"missing_evidence_area_count={result['missing_evidence_area_count']}")
     print(f"public_launch_ready={result['public_launch_ready']}")
     print(f"hosted_private_beta_ready={result['hosted_private_beta_ready']}")
     print(f"live_payment_ready={result['live_payment_ready']}")

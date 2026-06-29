@@ -37,6 +37,8 @@ def main() -> int:
                 "matrix": str(paths["matrix"].relative_to(ROOT)),
                 "input_ledger": str(paths["input_ledger"].relative_to(ROOT)),
                 "input_history": str(paths["input_history"].relative_to(ROOT)),
+                "returned_input_evidence": str(paths["returned_input_evidence"].relative_to(ROOT)),
+                "returned_input_validation_matrix": str(paths["returned_input_validation_matrix"].relative_to(ROOT)),
                 "doc": str(paths["doc"].relative_to(ROOT)),
             },
             sort_keys=True,

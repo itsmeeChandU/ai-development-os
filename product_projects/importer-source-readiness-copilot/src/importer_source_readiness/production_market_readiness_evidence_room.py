@@ -13,6 +13,13 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+from .go_live_input_evidence import (
+    STATUS as GO_LIVE_INPUT_EVIDENCE_STATUS,
+    build_go_live_returned_input_evidence_manifest,
+    validate_go_live_input_record,
+    write_go_live_returned_input_evidence_artifacts,
+)
+
 STATUS = "production_market_readiness_evidence_room_ready_inputs_mapped_gates_closed"
 INPUT_RECORD_STATUS = "market_readiness_input_record_saved_local_pending_re_evaluation"
 INPUT_LEDGER_STATUS = "production_market_readiness_input_ledger_ready_claims_closed"
@@ -63,6 +70,32 @@ def _safe_file_stem(value: Any, fallback: str = "record") -> str:
     cleaned = "".join(char if char.isalnum() else "-" for char in str(value or fallback).strip())
     cleaned = "-".join(part for part in cleaned.split("-") if part)
     return cleaned.lower() or fallback
+
+
+def _parse_evidence_artifacts(value: Any) -> dict[str, Any]:
+    if isinstance(value, dict):
+        return {str(key).strip(): item for key, item in value.items() if str(key).strip() and item}
+    artifacts: dict[str, Any] = {}
+    for line in _split_lines(value):
+        if ":" in line:
+            category, reference = line.split(":", 1)
+        elif "=" in line:
+            category, reference = line.split("=", 1)
+        else:
+            continue
+        category = category.strip()
+        reference = reference.strip()
+        if not category or not reference:
+            continue
+        if category in artifacts:
+            existing = artifacts[category]
+            if isinstance(existing, list):
+                existing.append(reference)
+            else:
+                artifacts[category] = [existing, reference]
+        else:
+            artifacts[category] = reference
+    return artifacts
 
 
 def _source_anchors_for_gate(report: dict[str, Any], gate_id: str) -> list[dict[str, Any]]:
@@ -222,12 +255,16 @@ def build_market_readiness_input_record(
         "plain_title": area_by_id[review_area].get("plain_title"),
         "reviewer_name": _clean_text(fields.get("reviewer_name"), 160),
         "reviewer_role": _clean_text(fields.get("reviewer_role"), 160),
+        "qualification_basis": _clean_text(fields.get("qualification_basis"), 300),
         "scope_reviewed": _clean_text(fields.get("scope_reviewed"), 500),
         "decision": decision,
         "signed_at": signed_at,
         "top_issues": _split_lines(fields.get("top_issues")),
         "evidence_missing": _split_lines(fields.get("evidence_missing")),
         "evidence_links_or_files": _split_lines(fields.get("evidence_links_or_files")),
+        "evidence_artifacts": _parse_evidence_artifacts(
+            fields.get("evidence_artifacts") or fields.get("evidence_category_links")
+        ),
         "claims_the_product_must_not_make": _split_lines(fields.get("claims_the_product_must_not_make")),
         "what_would_make_this_ready": _clean_text(fields.get("what_would_make_this_ready"), 1000),
         "minimum_input_present": bool(fields.get("reviewer_name") and fields.get("scope_reviewed") and signed_at),
@@ -394,12 +431,12 @@ def _record_missing_fields(record: dict[str, Any]) -> list[str]:
     return missing
 
 
-def _record_is_accepted(record: dict[str, Any]) -> bool:
-    return not _record_missing_fields(record) and str(record.get("decision") or "") in READY_INPUT_DECISIONS
+def _record_is_accepted(record: dict[str, Any], repo_root: Path | None = None) -> bool:
+    return validate_go_live_input_record(record, repo_root=repo_root).get("accepted_for_area") is True
 
 
-def _selected_input_record(records: list[dict[str, Any]]) -> dict[str, Any] | None:
-    accepted = [record for record in records if _record_is_accepted(record)]
+def _selected_input_record(records: list[dict[str, Any]], repo_root: Path | None = None) -> dict[str, Any] | None:
+    accepted = [record for record in records if _record_is_accepted(record, repo_root)]
     if accepted:
         return sorted(accepted, key=lambda row: str(row.get("recorded_at") or row.get("signed_at") or row.get("source_file") or ""))[-1]
     if records:
@@ -407,11 +444,27 @@ def _selected_input_record(records: list[dict[str, Any]]) -> dict[str, Any] | No
     return None
 
 
-def _input_ledger_row(template: dict[str, Any], records: list[dict[str, Any]]) -> dict[str, Any]:
+def _ledger_status_from_validation(validation: dict[str, Any], selected: dict[str, Any]) -> tuple[str, str]:
+    status = str(validation.get("status") or "")
+    if validation.get("accepted_for_area") is True:
+        return "accepted_for_area", "Keep this scoped input and its evidence attached, then wait for every other area and final owner approval before launch."
+    if status == "received_but_incomplete_identity":
+        return "received_but_incomplete", "Ask the reviewer or owner to add the missing identity, role, scope, decision, or signed date."
+    if status == "received_needs_more_evidence" or selected.get("evidence_missing"):
+        return "received_needs_more_evidence", "Collect the missing evidence listed in the returned input and keep the area blocked."
+    if status == "received_unqualified_reviewer":
+        return "received_unqualified_reviewer", "Route this area to a reviewer or owner with matching qualifications before counting it as ready."
+    if status == "received_without_required_evidence":
+        return "received_missing_required_evidence", "Attach the required evidence categories before counting this area as ready."
+    return "received_not_ready", "Resolve the reviewer decision before this area can be accepted."
+
+
+def _input_ledger_row(template: dict[str, Any], records: list[dict[str, Any]], repo_root: Path | None = None) -> dict[str, Any]:
     review_area = str(template.get("review_area"))
-    selected = _selected_input_record(records)
+    selected = _selected_input_record(records, repo_root)
     if selected is None:
         who_to_ask = str(template.get("who_to_ask") or "the responsible reviewer or owner").strip().rstrip(".")
+        empty_validation = validate_go_live_input_record({"review_area": review_area, "decision": "ready_for_my_area"}, repo_root=repo_root)
         return {
             "review_area": review_area,
             "plain_title": template.get("plain_title"),
@@ -427,27 +480,21 @@ def _input_ledger_row(template: dict[str, Any], records: list[dict[str, Any]]) -
             "ready_decision_candidate": False,
             "accepted_for_area": False,
             "missing_fields": ["returned input record"],
+            "missing_evidence_categories": empty_validation.get("missing_evidence_categories", []),
+            "evidence_status": "not_received",
+            "evidence_reference_count": 0,
+            "usable_evidence_reference_count": 0,
             "next_valid_move": f"Send the scoped request to {who_to_ask}, then save the dated response.",
             "claims_opened_by_ledger": False,
             "external_effects_created": False,
         }
 
     decision = str(selected.get("decision") or "")
+    validation = validate_go_live_input_record(selected, repo_root=repo_root)
     missing_fields = _record_missing_fields(selected)
     ready_decision = decision in READY_INPUT_DECISIONS
-    accepted = not missing_fields and ready_decision
-    if accepted:
-        status = "accepted_for_area"
-        next_valid_move = "Keep this scoped input attached, then wait for every other area and final owner approval before launch."
-    elif decision == "need_more_evidence" or selected.get("evidence_missing"):
-        status = "received_needs_more_evidence"
-        next_valid_move = "Collect the missing evidence listed in the returned input and keep the area blocked."
-    elif missing_fields:
-        status = "received_but_incomplete"
-        next_valid_move = "Ask the reviewer or owner to add the missing fields before counting this area as ready."
-    else:
-        status = "received_not_ready"
-        next_valid_move = "Resolve the reviewer decision before this area can be accepted."
+    accepted = validation.get("accepted_for_area") is True
+    status, next_valid_move = _ledger_status_from_validation(validation, selected)
     return {
         "review_area": review_area,
         "plain_title": template.get("plain_title"),
@@ -463,6 +510,11 @@ def _input_ledger_row(template: dict[str, Any], records: list[dict[str, Any]]) -
         "ready_decision_candidate": ready_decision,
         "accepted_for_area": accepted,
         "missing_fields": missing_fields,
+        "missing_evidence_categories": validation.get("missing_evidence_categories", []),
+        "reviewer_role_matched": validation.get("reviewer_role_matched") is True,
+        "evidence_status": validation.get("status"),
+        "evidence_reference_count": validation.get("evidence_reference_count", 0),
+        "usable_evidence_reference_count": validation.get("usable_evidence_reference_count", 0),
         "top_issues": _split_lines(selected.get("top_issues")),
         "evidence_missing": _split_lines(selected.get("evidence_missing")),
         "claims_the_product_must_not_make": _split_lines(selected.get("claims_the_product_must_not_make")),
@@ -501,13 +553,15 @@ def build_market_readiness_input_ledger(repo_root: Path | None = None) -> dict[s
             )
 
     rows = [
-        _input_ledger_row(template, records_by_area.get(str(template.get("review_area")), []))
+        _input_ledger_row(template, records_by_area.get(str(template.get("review_area")), []), root)
         for template in templates.get("templates", [])
     ]
     accepted_count = len([row for row in rows if row["status"] == "accepted_for_area"])
     not_received_count = len([row for row in rows if row["status"] == "not_received"])
     incomplete_count = len([row for row in rows if row["status"] == "received_but_incomplete"])
     needs_more_evidence_count = len([row for row in rows if row["status"] == "received_needs_more_evidence"])
+    missing_required_evidence_count = len([row for row in rows if row["status"] == "received_missing_required_evidence"])
+    unqualified_count = len([row for row in rows if row["status"] == "received_unqualified_reviewer"])
     invalid_count = len(invalid_records) + len(unassigned_records)
     final_row = next((row for row in rows if row["review_area"] == "public_go_no_go_approval"), {})
     return {
@@ -521,6 +575,8 @@ def build_market_readiness_input_ledger(repo_root: Path | None = None) -> dict[s
         "not_received_area_count": not_received_count,
         "incomplete_area_count": incomplete_count,
         "needs_more_evidence_area_count": needs_more_evidence_count,
+        "missing_required_evidence_area_count": missing_required_evidence_count,
+        "unqualified_area_count": unqualified_count,
         "invalid_record_count": invalid_count,
         "all_areas_accepted": accepted_count == len(rows) and bool(rows),
         "public_launch_ready_by_ledger": accepted_count == len(rows) and final_row.get("decision") == "go_for_public_launch",
@@ -590,6 +646,12 @@ def build_production_market_readiness_evidence_room(repo_root: Path | None = Non
     ready_count = int(readiness.get("ready_input_count", len([row for row in work_orders if row["ready_for_area"]])))
     required_count = int(readiness.get("required_input_count", external_validation.get("gate_count", len(work_orders))))
     input_ledger = build_market_readiness_input_ledger(root)
+    input_records, _invalid_input_records = _input_records_from_folder(root / "external_inputs")
+    returned_input_evidence = build_go_live_returned_input_evidence_manifest(
+        input_records,
+        generated_at=_now(),
+        repo_root=root,
+    )
     return {
         "generated_at": _now(),
         "status": STATUS,
@@ -620,6 +682,9 @@ def build_production_market_readiness_evidence_room(repo_root: Path | None = Non
         "input_form_contract": market_readiness_input_form_contract(root),
         "input_ledger": input_ledger,
         "input_ledger_status": input_ledger["status"],
+        "returned_input_evidence": returned_input_evidence,
+        "returned_input_evidence_status": returned_input_evidence["status"],
+        "returned_input_evidence_route": "/system_review_graph/go_live_returned_input_evidence_manifest.json",
         "input_ledger_route": "/api/market-readiness/input-ledger",
         "input_history_status": input_ledger["input_history"]["status"],
         "input_history_route": "/api/market-readiness/input-history",
@@ -674,8 +739,12 @@ def render_market_readiness_evidence_room_markdown(payload: dict[str, Any]) -> s
         f"- Not received areas: {payload['input_ledger']['not_received_area_count']}",
         f"- Needs more evidence: {payload['input_ledger']['needs_more_evidence_area_count']}",
         f"- Incomplete areas: {payload['input_ledger']['incomplete_area_count']}",
+        f"- Missing required evidence: {payload['input_ledger']['missing_required_evidence_area_count']}",
+        f"- Unqualified reviewer/owner: {payload['input_ledger']['unqualified_area_count']}",
         f"- Preserved history records: {payload['input_ledger']['history_record_count']}",
         f"- Claims opened by ledger: {str(payload['input_ledger']['claims_opened_by_ledger']).lower()}",
+        f"- Evidence validation: `{payload['returned_input_evidence_status']}`",
+        f"- Evidence manifest: `{payload['returned_input_evidence_route']}`",
         "",
         "## Work Orders",
         "",
@@ -763,6 +832,10 @@ def write_production_market_readiness_evidence_room_artifacts(payload: dict[str,
     )
     input_ledger_path.write_text(json.dumps(payload["input_ledger"], indent=2, sort_keys=True) + "\n", encoding="utf-8")
     input_history_path.write_text(json.dumps(payload["input_ledger"]["input_history"], indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    returned_input_evidence_paths = write_go_live_returned_input_evidence_artifacts(
+        payload["returned_input_evidence"],
+        repo_root,
+    )
     doc_path.write_text(render_market_readiness_evidence_room_markdown(payload), encoding="utf-8")
     return {
         "manifest": manifest_path,
@@ -771,5 +844,8 @@ def write_production_market_readiness_evidence_room_artifacts(payload: dict[str,
         "matrix": matrix_path,
         "input_ledger": input_ledger_path,
         "input_history": input_history_path,
+        "returned_input_evidence": returned_input_evidence_paths["manifest"],
+        "returned_input_validation_matrix": returned_input_evidence_paths["matrix"],
+        "returned_input_evidence_doc": returned_input_evidence_paths["doc"],
         "doc": doc_path,
     }

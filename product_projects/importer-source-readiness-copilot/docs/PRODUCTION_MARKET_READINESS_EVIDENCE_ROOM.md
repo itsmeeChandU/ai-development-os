@@ -24,8 +24,12 @@ The evidence room organizes real go-live inputs and review work orders. It is no
 - Not received areas: 8
 - Needs more evidence: 0
 - Incomplete areas: 0
+- Missing required evidence: 0
+- Unqualified reviewer/owner: 0
 - Preserved history records: 0
 - Claims opened by ledger: false
+- Evidence validation: `go_live_returned_input_evidence_ready_claims_closed`
+- Evidence manifest: `/system_review_graph/go_live_returned_input_evidence_manifest.json`
 
 ## Work Orders
 

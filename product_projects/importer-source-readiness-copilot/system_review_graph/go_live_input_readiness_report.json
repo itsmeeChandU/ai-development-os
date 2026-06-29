@@ -1,9 +1,201 @@
 {
   "accepted_inputs": [],
-  "generated_at": "2026-06-29T10:34:07Z",
+  "accepted_with_attached_evidence_count": 0,
+  "claims_opened_by_evidence_validation": false,
+  "evidence_validation_rows": [
+    {
+      "accepted_for_area": false,
+      "claims_opened_by_validation": false,
+      "decision": "",
+      "evidence_reference_count": 0,
+      "external_effects_created": false,
+      "missing_evidence_categories": [
+        "review_scope",
+        "qualified_reviewer_findings",
+        "signed_decision",
+        "package_or_commit_reference"
+      ],
+      "missing_input_fields": [
+        "returned input record"
+      ],
+      "next_valid_move": "Collect a dated returned-input record with attached evidence for this area.",
+      "plain_title": "Outside Expert Review",
+      "record_count_for_area": 0,
+      "review_area": "real_external_expert_reviews",
+      "source_file": "external_inputs/real_external_expert_reviews.json",
+      "status": "not_received",
+      "usable_evidence_reference_count": 0
+    },
+    {
+      "accepted_for_area": false,
+      "claims_opened_by_validation": false,
+      "decision": "",
+      "evidence_reference_count": 0,
+      "external_effects_created": false,
+      "missing_evidence_categories": [
+        "privacy_notice_or_data_map",
+        "security_review_or_scan",
+        "ai_data_policy",
+        "signed_approval"
+      ],
+      "missing_input_fields": [
+        "returned input record"
+      ],
+      "next_valid_move": "Collect a dated returned-input record with attached evidence for this area.",
+      "plain_title": "Legal, Privacy, And Security",
+      "record_count_for_area": 0,
+      "review_area": "legal_privacy_security_approval",
+      "source_file": "external_inputs/legal_privacy_security_approval.json",
+      "status": "not_received",
+      "usable_evidence_reference_count": 0
+    },
+    {
+      "accepted_for_area": false,
+      "claims_opened_by_validation": false,
+      "decision": "",
+      "evidence_reference_count": 0,
+      "external_effects_created": false,
+      "missing_evidence_categories": [
+        "reviewer_credential",
+        "country_product_scope",
+        "official_source_snapshot",
+        "approved_blocked_claim_language"
+      ],
+      "missing_input_fields": [
+        "returned input record"
+      ],
+      "next_valid_move": "Collect a dated returned-input record with attached evidence for this area.",
+      "plain_title": "Customs And Trade Language",
+      "record_count_for_area": 0,
+      "review_area": "qualified_customs_trade_review",
+      "source_file": "external_inputs/qualified_customs_trade_review.json",
+      "status": "not_received",
+      "usable_evidence_reference_count": 0
+    },
+    {
+      "accepted_for_area": false,
+      "claims_opened_by_validation": false,
+      "decision": "",
+      "evidence_reference_count": 0,
+      "external_effects_created": false,
+      "missing_evidence_categories": [
+        "live_url_or_environment",
+        "commit_or_build",
+        "smoke_test_result",
+        "monitoring_or_logs",
+        "rollback_or_backup"
+      ],
+      "missing_input_fields": [
+        "returned input record"
+      ],
+      "next_valid_move": "Collect a dated returned-input record with attached evidence for this area.",
+      "plain_title": "Hosted Staging Or Production",
+      "record_count_for_area": 0,
+      "review_area": "hosted_staging_production_proof",
+      "source_file": "external_inputs/hosted_staging_production_proof.json",
+      "status": "not_received",
+      "usable_evidence_reference_count": 0
+    },
+    {
+      "accepted_for_area": false,
+      "claims_opened_by_validation": false,
+      "decision": "",
+      "evidence_reference_count": 0,
+      "external_effects_created": false,
+      "missing_evidence_categories": [
+        "stripe_live_or_disabled_scope",
+        "webhook_test",
+        "tax_refund_support_policy",
+        "billing_claim_language"
+      ],
+      "missing_input_fields": [
+        "returned input record"
+      ],
+      "next_valid_move": "Collect a dated returned-input record with attached evidence for this area.",
+      "plain_title": "Payments",
+      "record_count_for_area": 0,
+      "review_area": "live_payment_activation",
+      "source_file": "external_inputs/live_payment_activation.json",
+      "status": "not_received",
+      "usable_evidence_reference_count": 0
+    },
+    {
+      "accepted_for_area": false,
+      "claims_opened_by_validation": false,
+      "decision": "",
+      "evidence_reference_count": 0,
+      "external_effects_created": false,
+      "missing_evidence_categories": [
+        "participant_records",
+        "task_results",
+        "claim_comprehension",
+        "issues_and_changes"
+      ],
+      "missing_input_fields": [
+        "returned input record"
+      ],
+      "next_valid_move": "Collect a dated returned-input record with attached evidence for this area.",
+      "plain_title": "Real User Feedback",
+      "record_count_for_area": 0,
+      "review_area": "real_users_private_beta_outcomes",
+      "source_file": "external_inputs/real_users_private_beta_outcomes.json",
+      "status": "not_received",
+      "usable_evidence_reference_count": 0
+    },
+    {
+      "accepted_for_area": false,
+      "claims_opened_by_validation": false,
+      "decision": "",
+      "evidence_reference_count": 0,
+      "external_effects_created": false,
+      "missing_evidence_categories": [
+        "counterparty_evidence",
+        "problem_validation",
+        "permission_scope",
+        "screening_or_risk_notes"
+      ],
+      "missing_input_fields": [
+        "returned input record"
+      ],
+      "next_valid_move": "Collect a dated returned-input record with attached evidence for this area.",
+      "plain_title": "Buyer Or Supplier Validation",
+      "record_count_for_area": 0,
+      "review_area": "buyer_supplier_validation",
+      "source_file": "external_inputs/buyer_supplier_validation.json",
+      "status": "not_received",
+      "usable_evidence_reference_count": 0
+    },
+    {
+      "accepted_for_area": false,
+      "claims_opened_by_validation": false,
+      "decision": "",
+      "evidence_reference_count": 0,
+      "external_effects_created": false,
+      "missing_evidence_categories": [
+        "all_gate_summary",
+        "release_scope",
+        "risk_acceptance",
+        "support_and_rollback_owner",
+        "signed_go_no_go"
+      ],
+      "missing_input_fields": [
+        "returned input record"
+      ],
+      "next_valid_move": "Collect a dated returned-input record with attached evidence for this area.",
+      "plain_title": "Final Go Live Decision",
+      "record_count_for_area": 0,
+      "review_area": "public_go_no_go_approval",
+      "source_file": "external_inputs/public_go_no_go_approval.json",
+      "status": "not_received",
+      "usable_evidence_reference_count": 0
+    }
+  ],
+  "evidence_validation_status": "go_live_returned_input_evidence_ready_claims_closed",
+  "generated_at": "2026-06-29T10:55:20Z",
   "hosted_private_beta_ready": false,
   "input_record_count": 0,
   "live_payment_ready": false,
+  "missing_evidence_area_count": 0,
   "missing_input_count": 8,
   "missing_inputs": [
     {
@@ -14,6 +206,12 @@
         "top issues",
         "missing evidence",
         "signed date"
+      ],
+      "missing_evidence_categories": [
+        "review_scope",
+        "qualified_reviewer_findings",
+        "signed_decision",
+        "package_or_commit_reference"
       ],
       "plain_title": "Outside Expert Review",
       "review_area": "real_external_expert_reviews",
@@ -29,6 +227,12 @@
         "missing evidence",
         "signed date"
       ],
+      "missing_evidence_categories": [
+        "privacy_notice_or_data_map",
+        "security_review_or_scan",
+        "ai_data_policy",
+        "signed_approval"
+      ],
       "plain_title": "Legal, Privacy, And Security",
       "review_area": "legal_privacy_security_approval",
       "simple_question": "Is customer data handling, security, AI use, retention, deletion, and incident handling acceptable for the launch scope?",
@@ -42,6 +246,12 @@
         "wording to avoid",
         "decision",
         "signed date"
+      ],
+      "missing_evidence_categories": [
+        "reviewer_credential",
+        "country_product_scope",
+        "official_source_snapshot",
+        "approved_blocked_claim_language"
       ],
       "plain_title": "Customs And Trade Language",
       "review_area": "qualified_customs_trade_review",
@@ -58,6 +268,13 @@
         "decision",
         "signed date"
       ],
+      "missing_evidence_categories": [
+        "live_url_or_environment",
+        "commit_or_build",
+        "smoke_test_result",
+        "monitoring_or_logs",
+        "rollback_or_backup"
+      ],
       "plain_title": "Hosted Staging Or Production",
       "review_area": "hosted_staging_production_proof",
       "simple_question": "Is there real hosted evidence for the launch scope, not only localhost?",
@@ -71,6 +288,12 @@
         "refund/support owner",
         "decision",
         "signed date"
+      ],
+      "missing_evidence_categories": [
+        "stripe_live_or_disabled_scope",
+        "webhook_test",
+        "tax_refund_support_policy",
+        "billing_claim_language"
       ],
       "plain_title": "Payments",
       "review_area": "live_payment_activation",
@@ -87,6 +310,12 @@
         "decision",
         "signed date"
       ],
+      "missing_evidence_categories": [
+        "participant_records",
+        "task_results",
+        "claim_comprehension",
+        "issues_and_changes"
+      ],
       "plain_title": "Real User Feedback",
       "review_area": "real_users_private_beta_outcomes",
       "simple_question": "Have real target users used the product and understood what is and is not approved?",
@@ -100,6 +329,12 @@
         "permission scope",
         "decision",
         "signed date"
+      ],
+      "missing_evidence_categories": [
+        "counterparty_evidence",
+        "problem_validation",
+        "permission_scope",
+        "screening_or_risk_notes"
       ],
       "plain_title": "Buyer Or Supplier Validation",
       "review_area": "buyer_supplier_validation",
@@ -116,16 +351,24 @@
         "decision",
         "signed date"
       ],
+      "missing_evidence_categories": [
+        "all_gate_summary",
+        "release_scope",
+        "risk_acceptance",
+        "support_and_rollback_owner",
+        "signed_go_no_go"
+      ],
       "plain_title": "Final Go Live Decision",
       "review_area": "public_go_no_go_approval",
       "simple_question": "After all other inputs are in, is this launch approved for the exact stated scope?",
       "who_to_ask": "Named launch owner."
     }
   ],
-  "next_step": "Collect the missing real-person inputs, save them under external_inputs/, and rerun this script.",
-  "proof_boundary": "This report changes to go-live-ready only when real dated inputs are attached. It does not approve launch by itself.",
+  "next_step": "Collect the missing real-person inputs and attached evidence, save them under external_inputs/, and rerun this script.",
+  "proof_boundary": "This report changes to go-live-ready only when real dated inputs include qualified scope and attached evidence. It does not approve launch by itself.",
   "public_launch_ready": false,
   "ready_input_count": 0,
   "required_input_count": 8,
-  "status": "waiting_for_real_inputs_not_ready_yet"
+  "status": "waiting_for_real_inputs_not_ready_yet",
+  "unqualified_area_count": 0
 }

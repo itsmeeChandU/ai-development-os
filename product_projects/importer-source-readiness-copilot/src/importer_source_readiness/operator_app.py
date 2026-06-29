@@ -1664,6 +1664,8 @@ def _render_market_readiness(repo_root: Path) -> str:
         f"<td>{escape(str(row.get('reviewer_name') or 'Not received'))}</td>"
         f"<td>{escape(str(row.get('decision') or 'Waiting'))}</td>"
         f"<td>{escape(', '.join(row.get('missing_fields') or ['None']))}</td>"
+        f"<td>{escape(', '.join(row.get('missing_evidence_categories') or ['None']))}</td>"
+        f"<td>{escape(str(row.get('usable_evidence_reference_count', 0)))}</td>"
         f"<td>{escape(str(row.get('next_valid_move')))}</td>"
         "</tr>"
         for row in input_ledger.get("ledger_rows", [])
@@ -1713,6 +1715,7 @@ def _render_market_readiness(repo_root: Path) -> str:
     <label>Top issues</label><textarea name="top_issues" rows="3" placeholder="One issue per line"></textarea>
     <label>Missing evidence</label><textarea name="evidence_missing" rows="3" placeholder="One missing item per line"></textarea>
     <label>Evidence links or file names</label><textarea name="evidence_links_or_files" rows="3" placeholder="One link or local file path per line"></textarea>
+    <label>Evidence categories and links</label><textarea name="evidence_artifacts" rows="5" placeholder="reviewer_credential: https://...\nofficial_source_snapshot: external_inputs/attachments/source.pdf"></textarea>
     <label>Claims the product must not make</label><textarea name="claims_the_product_must_not_make" rows="2" placeholder="One claim per line"></textarea>
     <label>What would make this ready?</label><textarea name="what_would_make_this_ready" rows="3"></textarea>
     <label><input type="checkbox" name="accept_real_input_notice" value="accepted"> This is a real returned input or an intentionally incomplete response; do not treat AI-only or founder-only notes as approval.</label>
@@ -1726,10 +1729,12 @@ def _render_market_readiness(repo_root: Path) -> str:
     {_metric_card("Accepted Areas", input_ledger.get("accepted_area_count"), "Scoped inputs that pass the local completeness rule.")}
     {_metric_card("Not Received", input_ledger.get("not_received_area_count"), "Real replies still missing.")}
     {_metric_card("Need More Evidence", input_ledger.get("needs_more_evidence_area_count"), "Replies saved but still blocking.")}
+    {_metric_card("Missing Proof", input_ledger.get("missing_required_evidence_area_count"), "Ready answers without required proof.")}
+    {_metric_card("Unqualified", input_ledger.get("unqualified_area_count"), "Input came from the wrong role.")}
   </div>
   <table>
-    <thead><tr><th>Area</th><th>Input Status</th><th>Who Answered</th><th>Decision</th><th>Missing</th><th>Next</th></tr></thead>
-    <tbody>{ledger_rows or '<tr><td colspan="6">Run scripts/run_production_market_readiness_evidence_room.py to generate the input ledger.</td></tr>'}</tbody>
+    <thead><tr><th>Area</th><th>Input Status</th><th>Who Answered</th><th>Decision</th><th>Missing Fields</th><th>Missing Proof</th><th>Proof Refs</th><th>Next</th></tr></thead>
+    <tbody>{ledger_rows or '<tr><td colspan="8">Run scripts/run_production_market_readiness_evidence_room.py to generate the input ledger.</td></tr>'}</tbody>
   </table>
 </section>
 <section class="surface">

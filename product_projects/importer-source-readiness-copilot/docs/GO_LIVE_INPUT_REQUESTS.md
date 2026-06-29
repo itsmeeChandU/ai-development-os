@@ -35,6 +35,9 @@ Minimum input needed:
 - missing evidence
 - signed date
 
+Evidence format:
+- Save category-specific proof as `evidence_artifacts`, for example `official_source_snapshot: external_inputs/attachments/source.pdf`.
+
 ## Legal, Privacy, And Security
 
 Who to ask: Privacy/legal reviewer plus application security reviewer.
@@ -51,6 +54,9 @@ Minimum input needed:
 - missing evidence
 - signed date
 
+Evidence format:
+- Save category-specific proof as `evidence_artifacts`, for example `official_source_snapshot: external_inputs/attachments/source.pdf`.
+
 ## Customs And Trade Language
 
 Who to ask: Licensed customs broker or qualified trade/compliance reviewer.
@@ -66,6 +72,9 @@ Minimum input needed:
 - wording to avoid
 - decision
 - signed date
+
+Evidence format:
+- Save category-specific proof as `evidence_artifacts`, for example `official_source_snapshot: external_inputs/attachments/source.pdf`.
 
 ## Hosted Staging Or Production
 
@@ -84,6 +93,9 @@ Minimum input needed:
 - decision
 - signed date
 
+Evidence format:
+- Save category-specific proof as `evidence_artifacts`, for example `official_source_snapshot: external_inputs/attachments/source.pdf`.
+
 ## Payments
 
 Who to ask: Billing/payment owner, tax/accounting advisor if needed, and support owner.
@@ -99,6 +111,9 @@ Minimum input needed:
 - refund/support owner
 - decision
 - signed date
+
+Evidence format:
+- Save category-specific proof as `evidence_artifacts`, for example `official_source_snapshot: external_inputs/attachments/source.pdf`.
 
 ## Real User Feedback
 
@@ -117,6 +132,9 @@ Minimum input needed:
 - decision
 - signed date
 
+Evidence format:
+- Save category-specific proof as `evidence_artifacts`, for example `official_source_snapshot: external_inputs/attachments/source.pdf`.
+
 ## Buyer Or Supplier Validation
 
 Who to ask: Founder or commercial validation owner.
@@ -132,6 +150,9 @@ Minimum input needed:
 - permission scope
 - decision
 - signed date
+
+Evidence format:
+- Save category-specific proof as `evidence_artifacts`, for example `official_source_snapshot: external_inputs/attachments/source.pdf`.
 
 ## Final Go Live Decision
 
@@ -150,11 +171,15 @@ Minimum input needed:
 - decision
 - signed date
 
+Evidence format:
+- Save category-specific proof as `evidence_artifacts`, for example `official_source_snapshot: external_inputs/attachments/source.pdf`.
+
 
 ## Once Inputs Are Received
 
 1. Save each response as one JSON file in `external_inputs/`.
 2. Rerun the command above.
 3. Open `system_review_graph/go_live_input_readiness_report.json`.
-4. If status is `go_live_ready_after_real_inputs`, use the exact approved launch scope from the final go-live input.
-5. If status is `waiting_for_real_inputs_not_ready_yet`, collect only the missing items shown in that report.
+4. Open `system_review_graph/go_live_returned_input_evidence_manifest.json` and confirm every area says `accepted_for_area_with_attached_evidence`.
+5. If status is `go_live_ready_after_real_inputs`, use the exact approved launch scope from the final go-live input.
+6. If status is `waiting_for_real_inputs_not_ready_yet`, collect only the missing items shown in that report.

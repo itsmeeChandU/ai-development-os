@@ -978,7 +978,7 @@
   "claims_opened": false,
   "demand_claimed": false,
   "external_effects_created": false,
-  "generated_at": "2026-06-29T10:33:26+00:00",
+  "generated_at": "2026-06-29T10:54:40+00:00",
   "ingestion_policy": {
     "approved_connector_required_for_automation": true,
     "blocked_claims": [

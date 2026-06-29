@@ -140,7 +140,7 @@
         },
         {
           "artifact": "go_live_input_readiness_report.json",
-          "bytes": 4612,
+          "bytes": 13059,
           "exists": true
         }
       ],
@@ -270,7 +270,7 @@
         },
         {
           "artifact": "go_live_input_readiness_report.json",
-          "bytes": 4612,
+          "bytes": 13059,
           "exists": true
         }
       ],

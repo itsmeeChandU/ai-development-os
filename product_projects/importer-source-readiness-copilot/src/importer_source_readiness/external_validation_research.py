@@ -13,6 +13,11 @@ from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
 
+from .go_live_input_evidence import (
+    build_go_live_returned_input_evidence_manifest,
+    write_go_live_returned_input_evidence_artifacts,
+)
+
 
 CHECKED_AT = "2026-06-27"
 STATUS = "external_validation_requirements_ready_all_real_world_gates_blocked"
@@ -1285,6 +1290,7 @@ def build_go_live_input_templates(report: dict[str, Any] | None = None) -> dict[
                     "review_area": item["review_area"],
                     "reviewer_name": "",
                     "reviewer_role": "",
+                    "qualification_basis": "",
                     "scope_reviewed": "",
                     "decision": "need_more_evidence",
                     "top_issues": [],
@@ -1292,6 +1298,7 @@ def build_go_live_input_templates(report: dict[str, Any] | None = None) -> dict[
                     "claims_the_product_must_not_make": [],
                     "what_would_make_this_ready": "",
                     "evidence_links_or_files": [],
+                    "evidence_artifacts": {},
                     "signed_at": "",
                 },
             }
@@ -1341,21 +1348,19 @@ def load_go_live_input_records(input_dir: Path) -> list[dict[str, Any]]:
 def evaluate_go_live_input_records(
     records: list[dict[str, Any]],
     generated_at: str | None = None,
+    repo_root: Path | None = None,
 ) -> dict[str, Any]:
     generated_at = generated_at or utc_now()
-    accepted_by_area: dict[str, dict[str, Any]] = {}
-    received_by_area: dict[str, list[dict[str, Any]]] = {row["review_area"]: [] for row in GO_LIVE_INPUT_REQUESTS}
-    for record in records:
-        area = str(record.get("review_area") or "")
-        if area not in received_by_area:
-            continue
-        received_by_area[area].append(record)
-        decision = str(record.get("decision") or "")
-        has_minimum_identity = bool(record.get("reviewer_name") or record.get("approver"))
-        has_signed_date = bool(record.get("signed_at") or record.get("decided_at"))
-        has_scope = bool(record.get("scope_reviewed") or record.get("launch_scope"))
-        if decision in READY_INPUT_DECISIONS and has_minimum_identity and has_signed_date and has_scope:
-            accepted_by_area.setdefault(area, record)
+    evidence_manifest = build_go_live_returned_input_evidence_manifest(
+        records,
+        generated_at=generated_at,
+        repo_root=repo_root,
+    )
+    accepted_by_area: dict[str, dict[str, Any]] = {
+        row["review_area"]: row
+        for row in evidence_manifest["validation_rows"]
+        if row.get("accepted_for_area") is True
+    }
     missing_inputs = [
         {
             "review_area": item["review_area"],
@@ -1363,6 +1368,14 @@ def evaluate_go_live_input_records(
             "who_to_ask": item["who_to_ask"],
             "simple_question": item["simple_question"],
             "minimum_input": item["minimum_input"],
+            "missing_evidence_categories": next(
+                (
+                    row.get("missing_evidence_categories", [])
+                    for row in evidence_manifest["validation_rows"]
+                    if row.get("review_area") == item["review_area"]
+                ),
+                [],
+            ),
         }
         for item in GO_LIVE_INPUT_REQUESTS
         if item["review_area"] not in accepted_by_area
@@ -1379,32 +1392,37 @@ def evaluate_go_live_input_records(
         "ready_input_count": ready_area_count,
         "missing_input_count": len(missing_inputs),
         "public_launch_ready": public_launch_ready,
-        "hosted_private_beta_ready": all(
-            area in accepted_by_area
-            for area in (
-                "real_external_expert_reviews",
-                "legal_privacy_security_approval",
-                "hosted_staging_production_proof",
-            )
-        ),
-        "live_payment_ready": "live_payment_activation" in accepted_by_area,
+        "hosted_private_beta_ready": evidence_manifest["hosted_private_beta_ready_by_evidence"],
+        "live_payment_ready": evidence_manifest["live_payment_ready_by_evidence"],
+        "evidence_validation_status": evidence_manifest["status"],
+        "accepted_with_attached_evidence_count": evidence_manifest["accepted_area_count"],
+        "missing_evidence_area_count": evidence_manifest["missing_evidence_area_count"],
+        "unqualified_area_count": evidence_manifest["unqualified_area_count"],
+        "claims_opened_by_evidence_validation": False,
         "accepted_inputs": [
             {
                 "review_area": area,
                 "reviewer_name": record.get("reviewer_name") or record.get("approver"),
+                "reviewer_role": record.get("reviewer_role"),
                 "decision": record.get("decision"),
                 "signed_at": record.get("signed_at") or record.get("decided_at"),
                 "source_file": record.get("source_file"),
+                "evidence_status": record.get("status"),
+                "usable_evidence_reference_count": record.get("usable_evidence_reference_count", 0),
             }
             for area, record in sorted(accepted_by_area.items())
         ],
         "missing_inputs": missing_inputs,
+        "evidence_validation_rows": evidence_manifest["validation_rows"],
         "next_step": (
             "Go live can be prepared for the exact approved scope."
             if public_launch_ready
-            else "Collect the missing real-person inputs, save them under external_inputs/, and rerun this script."
+            else "Collect the missing real-person inputs and attached evidence, save them under external_inputs/, and rerun this script."
         ),
-        "proof_boundary": "This report changes to go-live-ready only when real dated inputs are attached. It does not approve launch by itself.",
+        "proof_boundary": (
+            "This report changes to go-live-ready only when real dated inputs include qualified scope and attached evidence. "
+            "It does not approve launch by itself."
+        ),
     }
 
 
@@ -1422,6 +1440,9 @@ Ready answer: {item["ready_answer"]}
 
 Minimum input needed:
 {chr(10).join(f"- {field}" for field in item["minimum_input"])}
+
+Evidence format:
+- Save category-specific proof as `evidence_artifacts`, for example `official_source_snapshot: external_inputs/attachments/source.pdf`.
 """
         )
     return f"""# Go Live Input Requests
@@ -1452,8 +1473,9 @@ python3 scripts/run_external_validation_requirements.py --input-dir external_inp
 1. Save each response as one JSON file in `external_inputs/`.
 2. Rerun the command above.
 3. Open `system_review_graph/go_live_input_readiness_report.json`.
-4. If status is `go_live_ready_after_real_inputs`, use the exact approved launch scope from the final go-live input.
-5. If status is `waiting_for_real_inputs_not_ready_yet`, collect only the missing items shown in that report.
+4. Open `system_review_graph/go_live_returned_input_evidence_manifest.json` and confirm every area says `accepted_for_area_with_attached_evidence`.
+5. If status is `go_live_ready_after_real_inputs`, use the exact approved launch scope from the final go-live input.
+6. If status is `waiting_for_real_inputs_not_ready_yet`, collect only the missing items shown in that report.
 """
 
 
@@ -1697,6 +1719,8 @@ def _go_live_input_request_lines(templates: dict[str, Any], readiness: dict[str,
                 f"Ready answer: {item['ready_answer']}",
                 "Minimum input needed:",
                 *[f"- {field}" for field in item["minimum_input"]],
+                "Evidence format:",
+                "- Add category-specific proof in evidence_artifacts, for example category: external_inputs/attachments/file.pdf",
             ]
         )
     return lines
@@ -2214,7 +2238,12 @@ def write_external_validation_requirements(
     evidence = build_evidence_requirements_payload(report)
     templates = build_go_live_input_templates(report)
     input_records = load_go_live_input_records(input_dir or (root / "external_inputs"))
-    input_readiness = evaluate_go_live_input_records(input_records, report["generated_at"])
+    input_readiness = evaluate_go_live_input_records(input_records, report["generated_at"], repo_root=root)
+    input_evidence = build_go_live_returned_input_evidence_manifest(
+        input_records,
+        generated_at=report["generated_at"],
+        repo_root=root,
+    )
     errors = validate_external_validation_requirements(report)
     if errors:
         raise ValueError("; ".join(errors))
@@ -2238,6 +2267,7 @@ def write_external_validation_requirements(
         json.dumps(input_readiness, indent=2, sort_keys=True) + "\n",
         encoding="utf-8",
     )
+    write_go_live_returned_input_evidence_artifacts(input_evidence, root)
     (docs / "EXTERNAL_VALIDATION_REQUIREMENTS.md").write_text(
         render_external_validation_requirements(report),
         encoding="utf-8",
@@ -2269,6 +2299,8 @@ def write_external_validation_requirements(
         "go_live_input_status": input_readiness["status"],
         "ready_input_count": input_readiness["ready_input_count"],
         "missing_input_count": input_readiness["missing_input_count"],
+        "evidence_validation_status": input_evidence["status"],
+        "missing_evidence_area_count": input_evidence["missing_evidence_area_count"],
         "public_launch_ready": report["public_launch_ready"],
         "hosted_private_beta_ready": report["hosted_private_beta_ready"],
         "live_payment_ready": report["live_payment_ready"],

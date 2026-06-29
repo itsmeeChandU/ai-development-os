@@ -172,6 +172,12 @@ class ProductionMarketReadinessEvidenceRoomTests(unittest.TestCase):
                     "scope_reviewed": "Buyer feedback v2",
                     "decision": "ready_for_my_area",
                     "signed_at": "2026-06-28",
+                    "evidence_artifacts": {
+                        "counterparty_evidence": "https://evidence.example/buyer/counterparty.pdf",
+                        "problem_validation": "https://evidence.example/buyer/problem.pdf",
+                        "permission_scope": "https://evidence.example/buyer/permission.pdf",
+                        "screening_or_risk_notes": "https://evidence.example/buyer/screening.pdf",
+                    },
                 },
                 root,
             )
@@ -239,6 +245,13 @@ class ProductionMarketReadinessEvidenceRoomTests(unittest.TestCase):
                         "scope_reviewed": "Production URL and smoke proof",
                         "decision": "ready_for_my_area",
                         "signed_at": "2026-06-28",
+                        "evidence_artifacts": {
+                            "live_url_or_environment": "https://evidence.example/hosted/url.txt",
+                            "commit_or_build": "commit:abcdef123456",
+                            "smoke_test_result": "https://evidence.example/hosted/smoke.pdf",
+                            "monitoring_or_logs": "https://evidence.example/hosted/logs.pdf",
+                            "rollback_or_backup": "https://evidence.example/hosted/rollback.pdf",
+                        },
                     }
                 ),
                 encoding="utf-8",
@@ -296,10 +309,16 @@ class ProductionMarketReadinessEvidenceRoomTests(unittest.TestCase):
             self.assertEqual(written_matrix["status"], "production_market_readiness_gate_status_matrix_ready")
             self.assertEqual(written_input_ledger["status"], INPUT_LEDGER_STATUS)
             self.assertTrue(paths["input_history"].exists())
+            self.assertTrue(paths["returned_input_evidence"].exists())
+            self.assertTrue(paths["returned_input_validation_matrix"].exists())
+            self.assertTrue(paths["returned_input_evidence_doc"].exists())
             written_input_history = json.loads(paths["input_history"].read_text(encoding="utf-8"))
             self.assertEqual(written_input_history["status"], INPUT_HISTORY_STATUS)
+            written_returned_input = json.loads(paths["returned_input_evidence"].read_text(encoding="utf-8"))
+            self.assertEqual(written_returned_input["status"], "go_live_returned_input_evidence_ready_claims_closed")
             self.assertIn("Production Market Readiness Evidence Room", written_doc)
             self.assertIn("Returned Input Ledger", written_doc)
+            self.assertIn("Evidence validation", written_doc)
             self.assertIn("Market-ready claim allowed: false", written_doc)
 
 

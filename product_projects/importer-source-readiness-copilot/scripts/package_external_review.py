@@ -17,6 +17,10 @@ if str(SRC) not in sys.path:
 
 from importer_source_readiness.final_go_live import write_final_go_live_artifacts
 from importer_source_readiness.external_validation_research import write_external_validation_requirements
+from importer_source_readiness.production_market_readiness_evidence_room import (
+    build_production_market_readiness_evidence_room,
+    write_production_market_readiness_evidence_room_artifacts,
+)
 
 EXECUTIVE_FILES = [
     "START_HERE.md",
@@ -43,12 +47,18 @@ EXECUTIVE_FILES = [
     "docs/EXTERNAL_VALIDATION_REQUIREMENTS.md",
     "docs/EXTERNAL_VALIDATION_REVIEWER_BRIEF.md",
     "docs/GO_LIVE_INPUT_REQUESTS.md",
+    "docs/GO_LIVE_RETURNED_INPUT_EVIDENCE.md",
     "system_review_graph/final_go_live_decision_report.json",
     "system_review_graph/current_external_gate_research.json",
     "system_review_graph/external_validation_requirements_report.json",
     "system_review_graph/external_validation_evidence_requirements.json",
     "system_review_graph/go_live_input_templates.json",
     "system_review_graph/go_live_input_readiness_report.json",
+    "system_review_graph/go_live_returned_input_evidence_manifest.json",
+    "system_review_graph/go_live_returned_input_validation_matrix.json",
+    "system_review_graph/production_market_readiness_evidence_room_manifest.json",
+    "system_review_graph/production_market_readiness_input_ledger.json",
+    "system_review_graph/production_market_readiness_input_history.json",
     "system_review_graph/reviewer_wave_execution_plan.json",
     "system_review_graph/private_beta_smoke_test_plan.json",
     "system_review_graph/all_stage_readiness_report.json",
@@ -220,6 +230,8 @@ def package_review_bundles(root: Path, output_dir: Path, *, stamp: str | None = 
         root,
         generated_at=datetime.now(UTC).replace(microsecond=0).isoformat().replace("+00:00", "Z"),
     )
+    market_readiness = build_production_market_readiness_evidence_room(root)
+    write_production_market_readiness_evidence_room_artifacts(market_readiness, root)
     executive_files = _iter_existing(EXECUTIVE_FILES, root)
     technical_files = _iter_existing(TECHNICAL_FILES, root) + _iter_dir_files(TECHNICAL_DIRS, root)
     unique_technical = []

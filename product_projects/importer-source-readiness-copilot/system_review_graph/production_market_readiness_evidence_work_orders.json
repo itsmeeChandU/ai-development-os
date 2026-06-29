@@ -1,7 +1,7 @@
 {
   "claims_opened": false,
   "external_effects_created": false,
-  "generated_at": "2026-06-29T10:33:28+00:00",
+  "generated_at": "2026-06-29T10:55:21+00:00",
   "status": "production_market_readiness_evidence_work_orders_ready",
   "work_order_count": 8,
   "work_orders": [
@@ -48,8 +48,10 @@
       "input_template": {
         "claims_the_product_must_not_make": [],
         "decision": "need_more_evidence",
+        "evidence_artifacts": {},
         "evidence_links_or_files": [],
         "evidence_missing": [],
+        "qualification_basis": "",
         "review_area": "real_external_expert_reviews",
         "reviewer_name": "",
         "reviewer_role": "",
@@ -164,8 +166,10 @@
       "input_template": {
         "claims_the_product_must_not_make": [],
         "decision": "need_more_evidence",
+        "evidence_artifacts": {},
         "evidence_links_or_files": [],
         "evidence_missing": [],
+        "qualification_basis": "",
         "review_area": "legal_privacy_security_approval",
         "reviewer_name": "",
         "reviewer_role": "",
@@ -376,8 +380,10 @@
       "input_template": {
         "claims_the_product_must_not_make": [],
         "decision": "need_more_evidence",
+        "evidence_artifacts": {},
         "evidence_links_or_files": [],
         "evidence_missing": [],
+        "qualification_basis": "",
         "review_area": "qualified_customs_trade_review",
         "reviewer_name": "",
         "reviewer_role": "",
@@ -577,8 +583,10 @@
       "input_template": {
         "claims_the_product_must_not_make": [],
         "decision": "need_more_evidence",
+        "evidence_artifacts": {},
         "evidence_links_or_files": [],
         "evidence_missing": [],
+        "qualification_basis": "",
         "review_area": "hosted_staging_production_proof",
         "reviewer_name": "",
         "reviewer_role": "",
@@ -757,8 +765,10 @@
       "input_template": {
         "claims_the_product_must_not_make": [],
         "decision": "need_more_evidence",
+        "evidence_artifacts": {},
         "evidence_links_or_files": [],
         "evidence_missing": [],
+        "qualification_basis": "",
         "review_area": "live_payment_activation",
         "reviewer_name": "",
         "reviewer_role": "",
@@ -903,8 +913,10 @@
       "input_template": {
         "claims_the_product_must_not_make": [],
         "decision": "need_more_evidence",
+        "evidence_artifacts": {},
         "evidence_links_or_files": [],
         "evidence_missing": [],
+        "qualification_basis": "",
         "review_area": "real_users_private_beta_outcomes",
         "reviewer_name": "",
         "reviewer_role": "",
@@ -1061,8 +1073,10 @@
       "input_template": {
         "claims_the_product_must_not_make": [],
         "decision": "need_more_evidence",
+        "evidence_artifacts": {},
         "evidence_links_or_files": [],
         "evidence_missing": [],
+        "qualification_basis": "",
         "review_area": "buyer_supplier_validation",
         "reviewer_name": "",
         "reviewer_role": "",
@@ -1196,8 +1210,10 @@
       "input_template": {
         "claims_the_product_must_not_make": [],
         "decision": "need_more_evidence",
+        "evidence_artifacts": {},
         "evidence_links_or_files": [],
         "evidence_missing": [],
+        "qualification_basis": "",
         "review_area": "public_go_no_go_approval",
         "reviewer_name": "",
         "reviewer_role": "",

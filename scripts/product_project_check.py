@@ -86,6 +86,7 @@ def main() -> int:
         PROJECT / "src" / "importer_source_readiness" / "external_review.py",
         PROJECT / "src" / "importer_source_readiness" / "final_go_live.py",
         PROJECT / "src" / "importer_source_readiness" / "external_validation_research.py",
+        PROJECT / "src" / "importer_source_readiness" / "go_live_input_evidence.py",
         PROJECT / "src" / "importer_source_readiness" / "production_ai_copilot_engine.py",
         PROJECT / "src" / "importer_source_readiness" / "production_country_source_engine.py",
         PROJECT / "src" / "importer_source_readiness" / "production_data_model.py",
@@ -125,6 +126,7 @@ def main() -> int:
         PROJECT / "tests" / "test_external_review_workflow.py",
         PROJECT / "tests" / "test_final_go_live.py",
         PROJECT / "tests" / "test_external_validation_research.py",
+        PROJECT / "tests" / "test_go_live_input_evidence.py",
         PROJECT / "tests" / "test_production_ai_copilot_engine.py",
         PROJECT / "tests" / "test_production_country_source_engine.py",
         PROJECT / "tests" / "test_production_data_model.py",
@@ -293,6 +295,8 @@ def main() -> int:
         PROJECT / "system_review_graph" / "external_validation_evidence_requirements.json",
         PROJECT / "system_review_graph" / "go_live_input_templates.json",
         PROJECT / "system_review_graph" / "go_live_input_readiness_report.json",
+        PROJECT / "system_review_graph" / "go_live_returned_input_evidence_manifest.json",
+        PROJECT / "system_review_graph" / "go_live_returned_input_validation_matrix.json",
         PROJECT / "system_review_graph" / "production_ai_copilot_manifest.json",
         PROJECT / "system_review_graph" / "production_ai_output_contracts.json",
         PROJECT / "system_review_graph" / "production_ai_safety_checks.json",
@@ -812,6 +816,12 @@ def main() -> int:
     )
     go_live_input_readiness = json.loads(
         (PROJECT / "system_review_graph" / "go_live_input_readiness_report.json").read_text(encoding="utf-8")
+    )
+    go_live_returned_input_evidence = json.loads(
+        (PROJECT / "system_review_graph" / "go_live_returned_input_evidence_manifest.json").read_text(encoding="utf-8")
+    )
+    go_live_returned_input_matrix = json.loads(
+        (PROJECT / "system_review_graph" / "go_live_returned_input_validation_matrix.json").read_text(encoding="utf-8")
     )
     reviewer_wave_plan = json.loads(
         (PROJECT / "system_review_graph" / "reviewer_wave_execution_plan.json").read_text(encoding="utf-8")
@@ -2787,14 +2797,36 @@ def main() -> int:
         go_live_input_readiness.get("status") != "waiting_for_real_inputs_not_ready_yet"
         or go_live_input_readiness.get("public_launch_ready") is not False
         or go_live_input_readiness.get("missing_input_count") != 8
+        or go_live_input_readiness.get("evidence_validation_status") != "go_live_returned_input_evidence_ready_claims_closed"
+        or go_live_input_readiness.get("claims_opened_by_evidence_validation") is not False
     ):
         print("Product project check: FAIL")
-        print("go-live input readiness must wait for eight real returned inputs before public launch")
+        print("go-live input readiness must wait for eight real returned inputs with attached evidence before public launch")
+        return 1
+    if (
+        go_live_returned_input_evidence.get("status") != "go_live_returned_input_evidence_ready_claims_closed"
+        or go_live_returned_input_evidence.get("review_area_count") != 8
+        or go_live_returned_input_evidence.get("accepted_area_count") != 0
+        or go_live_returned_input_evidence.get("not_received_area_count") != 8
+        or go_live_returned_input_evidence.get("public_launch_ready_by_evidence") is not False
+        or go_live_returned_input_evidence.get("claims_opened_by_evidence_validation") is not False
+    ):
+        print("Product project check: FAIL")
+        print("go-live returned-input evidence validation must cover all review areas without opening claims")
+        return 1
+    if go_live_returned_input_matrix.get("status") != "go_live_returned_input_validation_matrix_ready_claims_closed":
+        print("Product project check: FAIL")
+        print("go-live returned-input validation matrix must be generated")
         return 1
     go_live_input_md = (PROJECT / "docs" / "GO_LIVE_INPUT_REQUESTS.md").read_text(encoding="utf-8")
     if "Once Inputs Are Received" not in go_live_input_md or "external_inputs/" not in go_live_input_md:
         print("Product project check: FAIL")
         print("go-live input request doc must explain how returned inputs are used")
+        return 1
+    go_live_input_evidence_md = (PROJECT / "docs" / "GO_LIVE_RETURNED_INPUT_EVIDENCE.md").read_text(encoding="utf-8")
+    if "Validation Matrix" not in go_live_input_evidence_md or "Claims opened by validation: false" not in go_live_input_evidence_md:
+        print("Product project check: FAIL")
+        print("go-live returned-input evidence doc should show validation without opening claims")
         return 1
     if (
         production_market_readiness.get("status") != "production_market_readiness_evidence_room_ready_inputs_mapped_gates_closed"
@@ -2807,6 +2839,8 @@ def main() -> int:
         or production_market_readiness.get("input_capture_route") != "/api/market-readiness/inputs"
         or production_market_readiness.get("input_form_contract", {}).get("status") != "market_readiness_input_form_contract_ready"
         or production_market_readiness.get("input_ledger_status") != "production_market_readiness_input_ledger_ready_claims_closed"
+        or production_market_readiness.get("returned_input_evidence_status") != "go_live_returned_input_evidence_ready_claims_closed"
+        or production_market_readiness.get("returned_input_evidence_route") != "/system_review_graph/go_live_returned_input_evidence_manifest.json"
         or production_market_readiness.get("input_ledger_route") != "/api/market-readiness/input-ledger"
         or production_market_readiness.get("input_history_status") != "production_market_readiness_input_history_ready_local_audit_trail"
         or production_market_readiness.get("input_history_route") != "/api/market-readiness/input-history"
@@ -2826,6 +2860,8 @@ def main() -> int:
         or production_market_readiness_input_ledger.get("claims_opened_by_ledger") is not False
         or production_market_readiness_input_ledger.get("public_launch_ready_by_ledger") is not False
         or production_market_readiness_input_ledger.get("invalid_record_count") != 0
+        or production_market_readiness_input_ledger.get("missing_required_evidence_area_count") != 0
+        or production_market_readiness_input_ledger.get("unqualified_area_count") != 0
     ):
         print("Product project check: FAIL")
         print("market readiness input ledger must track returned-input quality without opening claims")
