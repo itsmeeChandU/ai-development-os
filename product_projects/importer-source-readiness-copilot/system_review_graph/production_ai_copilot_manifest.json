@@ -26,7 +26,7 @@
   },
   "claims_opened": false,
   "external_effects_created": false,
-  "generated_at": "2026-06-29T11:05:24+00:00",
+  "generated_at": "2026-06-29T11:19:39+00:00",
   "live_model_calls_enabled": false,
   "live_payment_ready": false,
   "manual_no_ai_summary": {
@@ -286,7 +286,7 @@
   "public_launch_ready": false,
   "qualified_ai_safety_review_complete": false,
   "redaction_summary": {
-    "document_preview_count": 18,
+    "document_preview_count": 17,
     "production_redaction_proven": false,
     "redaction_required_count": 12,
     "review_required": true,

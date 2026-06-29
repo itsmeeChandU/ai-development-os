@@ -43,10 +43,10 @@ Document intelligence now has a production-shaped local pipeline, official sampl
 
 ## Records
 
-- Document records: 18
+- Document records: 17
 - Extracted fields: 110
-- Evidence records: 18
-- Redaction previews: 18
+- Evidence records: 17
+- Redaction previews: 17
 - Parser QA fixtures passed: 11 of 11
 
 ## Source Records

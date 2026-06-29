@@ -1,6 +1,6 @@
 {
   "claims_opened": false,
-  "document_record_count": 18,
+  "document_record_count": 17,
   "document_records": [
     {
       "blocked_claims": [
@@ -106,60 +106,6 @@
       "source_kind": "packet_declared_document",
       "source_url": "",
       "storage_status": "declared_missing_file",
-      "user_confirmation_required": true
-    },
-    {
-      "blocked_claims": [
-        "document_authenticity_verified",
-        "document_complete",
-        "customs_ready",
-        "tariff_confirmed",
-        "cfia_approved",
-        "origin_confirmed",
-        "buyer_validated",
-        "supplier_verified",
-        "shipment_approved"
-      ],
-      "can_support_customer_claims": false,
-      "claim_boundary": "Document parsing organizes draft evidence only. It does not prove authenticity, completeness, customs/tariff correctness, CFIA clearance, buyer validation, supplier verification, or shipment approval.",
-      "classification": {
-        "confidence": "low",
-        "expected_fields": [
-          "hs_code",
-          "origin_country",
-          "destination_country",
-          "buyer_or_importer",
-          "supplier_or_exporter"
-        ],
-        "label": "Unknown trade document",
-        "signals": [],
-        "type": "unknown_trade_document"
-      },
-      "delete_route": "/api/public/packets/packet-organic-turmeric-powder/delete-files",
-      "document_id": "document:packet-organic-turmeric-powder:complete-transformation-blueprint-pdf",
-      "document_processing_mode": "native_text",
-      "expires_at": "2026-06-27T16:35:53+00:00",
-      "extraction_status": "native_text_extracted_needs_confirmation",
-      "field_count": 0,
-      "field_gaps": [
-        "hs_code",
-        "origin_country",
-        "destination_country",
-        "buyer_or_importer",
-        "supplier_or_exporter"
-      ],
-      "file_signature_status": "not_pdf_or_not_available",
-      "filename": "Complete-Transformation-Blueprint.pdf",
-      "local_path": "system_review_graph/public_uploads/packet-organic-turmeric-powder/quarantine/document-001.pdf",
-      "malware_scan_status": "not_proven_external_gate_required",
-      "next_valid_move": "Attach the actual document file or obtain a searchable copy before extraction can support packet review.",
-      "packet_id": "packet-organic-turmeric-powder",
-      "parser_outputs_are_draft": true,
-      "quarantine_status": "quarantined_local_metadata",
-      "source_id": "",
-      "source_kind": "public_upload_manifest",
-      "source_url": "",
-      "storage_status": "public_upload_manifest_metadata_only_file_not_present",
       "user_confirmation_required": true
     },
     {
@@ -950,7 +896,7 @@
       "user_confirmation_required": true
     }
   ],
-  "evidence_record_count": 18,
+  "evidence_record_count": 17,
   "evidence_records": [
     {
       "blocked_claims": [
@@ -997,29 +943,6 @@
       "review_required": true,
       "supports_claims": [],
       "type": "document_gap"
-    },
-    {
-      "blocked_claims": [
-        "document_authenticity_verified",
-        "document_complete",
-        "customs_ready",
-        "tariff_confirmed",
-        "cfia_approved",
-        "origin_confirmed",
-        "buyer_validated",
-        "supplier_verified",
-        "shipment_approved"
-      ],
-      "claim_boundary": "Document parsing organizes draft evidence only. It does not prove authenticity, completeness, customs/tariff correctness, CFIA clearance, buyer validation, supplier verification, or shipment approval.",
-      "document_id": "document:packet-organic-turmeric-powder:complete-transformation-blueprint-pdf",
-      "evidence_id": "evidence:document:packet-organic-turmeric-powder:complete-transformation-blueprint-pdf",
-      "freshness": "unknown",
-      "next_valid_move": "Attach the actual document file or obtain a searchable copy before extraction can support packet review.",
-      "packet_id": "packet-organic-turmeric-powder",
-      "provenance": "parser_draft",
-      "review_required": true,
-      "supports_claims": [],
-      "type": "document"
     },
     {
       "blocked_claims": [
@@ -1368,7 +1291,7 @@
     }
   ],
   "external_effects_created": false,
-  "generated_at": "2026-06-29T11:05:23+00:00",
+  "generated_at": "2026-06-29T11:19:39+00:00",
   "pipeline_policy": {
     "accepted_file_types": [
       "application/pdf"
@@ -1488,7 +1411,7 @@
       "status": "local_report_route_ready"
     }
   ],
-  "redaction_preview_count": 18,
+  "redaction_preview_count": 17,
   "redaction_previews": [
     {
       "document_id": "document:packet-frozen-tuna-canada-001:supplier-profile-placeholder-pdf",
@@ -1501,14 +1424,6 @@
     {
       "document_id": "document:packet-frozen-tuna-canada-001:product-spec-placeholder-pdf",
       "packet_id": "packet-frozen-tuna-canada-001",
-      "production_redaction_proven": false,
-      "redaction_categories": [],
-      "redaction_required": false,
-      "redaction_status": "not_required"
-    },
-    {
-      "document_id": "document:packet-organic-turmeric-powder:complete-transformation-blueprint-pdf",
-      "packet_id": "packet-organic-turmeric-powder",
       "production_redaction_proven": false,
       "redaction_categories": [],
       "redaction_required": false,

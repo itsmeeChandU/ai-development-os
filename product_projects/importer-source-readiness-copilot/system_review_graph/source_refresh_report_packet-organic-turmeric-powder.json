@@ -1,0 +1,10 @@
+{
+  "actor": "public_quick_check",
+  "claim_boundary": "Refresh records close stale-source proof only when HTTP access succeeds. They do not approve external claims.",
+  "generated_at": "2026-06-29T11:10:49+00:00",
+  "packet_id": "packet-organic-turmeric-powder",
+  "refresh_run_id": "source-refresh-packet-organic-turmeric-powder-2026-06-29T111049Z0000",
+  "row_count": 0,
+  "rows": [],
+  "status": "source_refresh_recorded"
+}
