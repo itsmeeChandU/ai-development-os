@@ -148,6 +148,7 @@ TECHNICAL_FILES = [
     "system_review_graph/production_claim_gate_decisions.json",
     "system_review_graph/production_decision_score_records.json",
     "system_review_graph/production_report_exports.json",
+    "system_review_graph/production_document_parser_qa_matrix.json",
 ]
 
 EXCLUDE_PARTS = {

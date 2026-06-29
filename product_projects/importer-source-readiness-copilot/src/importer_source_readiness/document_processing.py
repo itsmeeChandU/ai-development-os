@@ -199,7 +199,10 @@ def _field_candidates(text: str) -> dict[str, Any]:
     stop_with_delimiter = (
         r"(?:HS|HTS|tariff|invoice|proforma|origin|country of origin|destination|ship to|from|"
         r"supplier|seller|exporter|buyer|importer|consignee|incoterms|"
-        r"product|description|goods|amount|total|quantity|weight|date)"
+        r"product|description|goods|amount|total|quantity|weight|date|carrier|"
+        r"port of loading|port of discharge|shipper|consignee|composition|intended use|"
+        r"test method|result|lab name|sample date|issuing authority|certificate number|"
+        r"inspection body|inspection date|payment terms|governing terms)"
         r"\s*(?:code|classification|no\.?|number|#)?\s*[:#\-]"
     )
     stop_pattern = rf"(?:(?:{stop_with_delimiter})|\b(?:EXW|FCA|FOB|CFR|CIF|CPT|CIP|DAP|DPU|DDP)\b)"
@@ -242,17 +245,57 @@ def _field_candidates(text: str) -> dict[str, Any]:
     amounts = sorted(set(re.findall(r"\b(?:USD|CAD|INR|EUR|\$)\s?[0-9][0-9,]*(?:\.[0-9]{2})?\b", text, re.I)))
     quantities = sorted(set(re.findall(r"\b[0-9][0-9,.]*\s?(?:kg|kgs|kilograms|cartons|boxes|pcs|pieces|units|cases)\b", text, re.I)))
     product_value = labeled_value(r"product|description|goods")
+    carrier_value = labeled_value(r"carrier")
+    port_of_loading = labeled_value(r"port of loading")
+    port_of_discharge = labeled_value(r"port of discharge")
+    shipper_value = labeled_value(r"shipper")
+    consignee_value = labeled_value(r"consignee")
+    composition_value = labeled_value(r"composition")
+    intended_use_value = labeled_value(r"intended use")
+    test_method_value = labeled_value(r"test method")
+    result_value = labeled_value(r"result")
+    lab_name_value = labeled_value(r"lab name")
+    sample_date_value = labeled_value(r"sample date")
+    issuing_authority_value = labeled_value(r"issuing authority")
+    certificate_number_value = labeled_value(r"certificate", allow_number_word=True)
+    inspection_body_value = labeled_value(r"inspection body")
+    inspection_date_value = labeled_value(r"inspection date")
+    payment_terms_value = labeled_value(r"payment terms")
+    governing_terms_value = labeled_value(r"governing terms")
+    weights = [value for value in quantities if re.search(r"\bkg|kgs|kilograms\b", value, re.I)]
+    packages = [value for value in quantities if re.search(r"\bcartons|boxes|pcs|pieces|units|cases\b", value, re.I)]
+    parties = [value for value in [buyer_value, supplier_value] if value]
     return {
         "hs_code": hs_match.group(1).replace(" ", "").replace("-", ".") if hs_match else "",
         "invoice_or_reference": invoice_match.group(1) if invoice_match else "",
         "country_mentions": country_matches[:6],
         "supplier_or_exporter": supplier_value,
         "buyer_or_importer": buyer_value,
+        "shipper": shipper_value or supplier_value,
+        "consignee": consignee_value or buyer_value,
+        "parties": parties[:4],
         "incoterms": [value.upper() for value in incoterms[:6]],
         "dates": dates[:6],
         "amounts": amounts[:6],
         "quantities": quantities[:6],
+        "weights": weights[:6],
+        "packages": packages[:6],
         "product_description": product_value,
+        "carrier": carrier_value,
+        "port_of_loading": port_of_loading,
+        "port_of_discharge": port_of_discharge,
+        "composition": composition_value,
+        "intended_use": intended_use_value,
+        "test_method": test_method_value,
+        "result": result_value,
+        "lab_name": lab_name_value,
+        "sample_date": sample_date_value or (dates[0] if dates else ""),
+        "issuing_authority": issuing_authority_value,
+        "certificate_number": certificate_number_value,
+        "inspection_body": inspection_body_value,
+        "inspection_date": inspection_date_value or (dates[0] if dates else ""),
+        "payment_terms": payment_terms_value,
+        "governing_terms": governing_terms_value,
     }
 
 
@@ -292,7 +335,27 @@ def _present_field_summary(fields: dict[str, Any]) -> list[str]:
         "dates": "dates",
         "amounts": "amounts",
         "quantities": "quantities",
+        "weights": "weights",
+        "packages": "packages",
         "product_description": "product description",
+        "carrier": "carrier",
+        "port_of_loading": "port of loading",
+        "port_of_discharge": "port of discharge",
+        "shipper": "shipper",
+        "consignee": "consignee",
+        "composition": "composition",
+        "intended_use": "intended use",
+        "test_method": "test method",
+        "result": "result",
+        "lab_name": "lab name",
+        "sample_date": "sample date",
+        "issuing_authority": "issuing authority",
+        "certificate_number": "certificate number",
+        "inspection_body": "inspection body",
+        "inspection_date": "inspection date",
+        "parties": "parties",
+        "payment_terms": "payment terms",
+        "governing_terms": "governing terms",
     }
     facts = []
     for key, label in labels.items():
@@ -316,7 +379,27 @@ def _missing_field_summary(fields: dict[str, Any], expected_fields: list[str]) -
         "incoterms": "Incoterms",
         "amounts": "commercial amount",
         "quantities": "quantity/weight",
+        "weights": "weight",
+        "packages": "packages",
         "product_description": "product description",
+        "carrier": "carrier",
+        "port_of_loading": "port of loading",
+        "port_of_discharge": "port of discharge",
+        "shipper": "shipper",
+        "consignee": "consignee",
+        "composition": "composition",
+        "intended_use": "intended use",
+        "test_method": "test method",
+        "result": "result",
+        "lab_name": "lab name",
+        "sample_date": "sample date",
+        "issuing_authority": "issuing authority",
+        "certificate_number": "certificate number",
+        "inspection_body": "inspection body",
+        "inspection_date": "inspection date",
+        "parties": "parties",
+        "payment_terms": "payment terms",
+        "governing_terms": "governing terms",
     }
     missing = []
     for key in expected_fields:

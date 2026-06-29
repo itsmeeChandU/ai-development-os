@@ -36,6 +36,11 @@ class ProductionDocumentIntelligenceEngineTests(unittest.TestCase):
         self.assertEqual(manifest["synthetic_parser_fixture_count"], len(SYNTHETIC_FIXTURES))
         self.assertGreaterEqual(manifest["document_record_count"], len(SYNTHETIC_FIXTURES) + 3)
         self.assertGreater(manifest["extracted_field_count"], 0)
+        self.assertEqual(manifest["parser_qa_status"], "production_document_parser_qa_ready_fixture_expectations_checked")
+        self.assertEqual(manifest["parser_qa_fixture_count"], len(SYNTHETIC_FIXTURES))
+        self.assertEqual(manifest["parser_qa_passed_count"], len(SYNTHETIC_FIXTURES))
+        self.assertEqual(manifest["parser_qa_needs_rule_count"], 0)
+        self.assertTrue(manifest["parser_qa_all_fixtures_passed"])
         self.assertFalse(manifest["real_uploads_enabled"])
         self.assertFalse(manifest["malware_scan_proven"])
         self.assertFalse(manifest["object_storage_ready"])
@@ -111,6 +116,21 @@ class ProductionDocumentIntelligenceEngineTests(unittest.TestCase):
             any(field["user_confirmation_status"] == "needs_user_confirmation" for field in synthetic_fields)
         )
 
+    def test_parser_qa_matrix_checks_expected_fields_per_fixture(self) -> None:
+        manifest = build_production_document_intelligence_engine(ROOT)
+        matrix = manifest["parser_qa_matrix"]
+
+        self.assertEqual(matrix["status"], "production_document_parser_qa_ready_fixture_expectations_checked")
+        self.assertEqual(matrix["fixture_count"], len(SYNTHETIC_FIXTURES))
+        self.assertEqual(matrix["passed_count"], len(SYNTHETIC_FIXTURES))
+        self.assertEqual(matrix["needs_rule_count"], 0)
+        self.assertTrue(matrix["all_fixtures_passed"])
+        for row in matrix["rows"]:
+            self.assertEqual(row["status"], "parser_qa_passed")
+            self.assertEqual(row["missing_fields"], [])
+            self.assertFalse(row["claims_opened"])
+            self.assertFalse(row["can_support_customer_claims"])
+
     def test_writer_creates_manifest_pipeline_fields_and_doc(self) -> None:
         ensure_parser_qa_documents(ROOT)
         manifest = build_production_document_intelligence_engine(ROOT)
@@ -124,13 +144,17 @@ class ProductionDocumentIntelligenceEngineTests(unittest.TestCase):
             written_manifest = json.loads(paths["manifest"].read_text(encoding="utf-8"))
             written_pipeline = json.loads(paths["pipeline"].read_text(encoding="utf-8"))
             written_fields = json.loads(paths["fields"].read_text(encoding="utf-8"))
+            written_parser_qa = json.loads(paths["parser_qa"].read_text(encoding="utf-8"))
             written_doc = paths["doc"].read_text(encoding="utf-8")
 
             self.assertEqual(written_manifest["status"], STATUS)
             self.assertEqual(written_pipeline["status"], "production_document_pipeline_ready_local_controls_gates_closed")
             self.assertEqual(written_fields["status"], "production_document_extracted_fields_ready_draft_only")
+            self.assertEqual(written_parser_qa["status"], "production_document_parser_qa_ready_fixture_expectations_checked")
+            self.assertEqual(written_parser_qa["needs_rule_count"], 0)
             self.assertTrue(written_fields["parser_outputs_are_draft"])
             self.assertIn("Production Document Intelligence Engine", written_doc)
+            self.assertIn("Parser QA fixtures passed", written_doc)
             self.assertIn("Real uploads enabled: false", written_doc)
 
 

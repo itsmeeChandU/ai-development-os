@@ -431,7 +431,7 @@
       "document_id": "document:parser-qa-ca-commercial-invoice:synthetic-commercial-invoice-canada-pdf",
       "document_processing_mode": "native_text",
       "extraction_status": "native_text_extracted_needs_confirmation",
-      "field_count": 9,
+      "field_count": 14,
       "field_gaps": [],
       "file_signature_status": "pdf_signature_checked",
       "filename": "synthetic-commercial-invoice-canada.pdf",
@@ -481,11 +481,8 @@
       "document_id": "document:parser-qa-in-packing-list:synthetic-packing-list-india-export-pdf",
       "document_processing_mode": "native_text",
       "extraction_status": "native_text_extracted_needs_confirmation",
-      "field_count": 5,
-      "field_gaps": [
-        "weights",
-        "packages"
-      ],
+      "field_count": 10,
+      "field_gaps": [],
       "file_signature_status": "pdf_signature_checked",
       "filename": "synthetic-packing-list-india-export.pdf",
       "local_path": "data/parser_qa_documents/synthetic-packing-list-india-export.pdf",
@@ -533,7 +530,7 @@
       "document_id": "document:parser-qa-in-certificate-of-origin:synthetic-certificate-of-origin-india-pdf",
       "document_processing_mode": "native_text",
       "extraction_status": "native_text_extracted_needs_confirmation",
-      "field_count": 4,
+      "field_count": 8,
       "field_gaps": [],
       "file_signature_status": "pdf_signature_checked",
       "filename": "synthetic-certificate-of-origin-india.pdf",
@@ -584,12 +581,8 @@
       "document_id": "document:parser-qa-vn-bill-of-lading:synthetic-bill-of-lading-vietnam-pdf",
       "document_processing_mode": "native_text",
       "extraction_status": "native_text_extracted_needs_confirmation",
-      "field_count": 4,
-      "field_gaps": [
-        "carrier",
-        "port_of_loading",
-        "port_of_discharge"
-      ],
+      "field_count": 11,
+      "field_gaps": [],
       "file_signature_status": "pdf_signature_checked",
       "filename": "synthetic-bill-of-lading-vietnam.pdf",
       "local_path": "data/parser_qa_documents/synthetic-bill-of-lading-vietnam.pdf",
@@ -639,12 +632,8 @@
       "document_id": "document:parser-qa-generic-airway-bill:synthetic-airway-bill-generic-pdf",
       "document_processing_mode": "native_text",
       "extraction_status": "native_text_extracted_needs_confirmation",
-      "field_count": 4,
-      "field_gaps": [
-        "carrier",
-        "shipper",
-        "consignee"
-      ],
+      "field_count": 9,
+      "field_gaps": [],
       "file_signature_status": "pdf_signature_checked",
       "filename": "synthetic-airway-bill-generic.pdf",
       "local_path": "data/parser_qa_documents/synthetic-airway-bill-generic.pdf",
@@ -693,11 +682,8 @@
       "document_id": "document:parser-qa-vn-product-specification:synthetic-product-specification-vietnam-seafood-pdf",
       "document_processing_mode": "native_text",
       "extraction_status": "native_text_extracted_needs_confirmation",
-      "field_count": 4,
-      "field_gaps": [
-        "composition",
-        "intended_use"
-      ],
+      "field_count": 7,
+      "field_gaps": [],
       "file_signature_status": "pdf_signature_checked",
       "filename": "synthetic-product-specification-vietnam-seafood.pdf",
       "local_path": "data/parser_qa_documents/synthetic-product-specification-vietnam-seafood.pdf",
@@ -746,13 +732,8 @@
       "document_id": "document:parser-qa-generic-lab-certificate:synthetic-lab-certificate-food-pdf",
       "document_processing_mode": "native_text",
       "extraction_status": "native_text_extracted_needs_confirmation",
-      "field_count": 2,
-      "field_gaps": [
-        "test_method",
-        "result",
-        "lab_name",
-        "sample_date"
-      ],
+      "field_count": 9,
+      "field_gaps": [],
       "file_signature_status": "pdf_signature_checked",
       "filename": "synthetic-lab-certificate-food.pdf",
       "local_path": "data/parser_qa_documents/synthetic-lab-certificate-food.pdf",
@@ -801,12 +782,8 @@
       "document_id": "document:parser-qa-vn-phytosanitary-or-health-certificate:synthetic-health-certificate-vietnam-pdf",
       "document_processing_mode": "native_text",
       "extraction_status": "native_text_extracted_needs_confirmation",
-      "field_count": 3,
-      "field_gaps": [
-        "issuing_authority",
-        "product",
-        "certificate_number"
-      ],
+      "field_count": 7,
+      "field_gaps": [],
       "file_signature_status": "pdf_signature_checked",
       "filename": "synthetic-health-certificate-vietnam.pdf",
       "local_path": "data/parser_qa_documents/synthetic-health-certificate-vietnam.pdf",
@@ -855,7 +832,7 @@
       "document_id": "document:parser-qa-ca-purchase-order:synthetic-purchase-order-canada-buyer-pdf",
       "document_processing_mode": "native_text",
       "extraction_status": "native_text_extracted_needs_confirmation",
-      "field_count": 6,
+      "field_count": 10,
       "field_gaps": [],
       "file_signature_status": "pdf_signature_checked",
       "filename": "synthetic-purchase-order-canada-buyer.pdf",
@@ -905,12 +882,8 @@
       "document_id": "document:parser-qa-generic-contract:synthetic-contract-incoterms-pdf",
       "document_processing_mode": "native_text",
       "extraction_status": "native_text_extracted_needs_confirmation",
-      "field_count": 6,
-      "field_gaps": [
-        "parties",
-        "payment_terms",
-        "governing_terms"
-      ],
+      "field_count": 13,
+      "field_gaps": [],
       "file_signature_status": "pdf_signature_checked",
       "filename": "synthetic-contract-incoterms.pdf",
       "local_path": "data/parser_qa_documents/synthetic-contract-incoterms.pdf",
@@ -959,13 +932,8 @@
       "document_id": "document:parser-qa-generic-inspection-report:synthetic-inspection-report-supplier-pdf",
       "document_processing_mode": "native_text",
       "extraction_status": "native_text_extracted_needs_confirmation",
-      "field_count": 2,
-      "field_gaps": [
-        "inspection_body",
-        "inspection_date",
-        "result",
-        "product_description"
-      ],
+      "field_count": 9,
+      "field_gaps": [],
       "file_signature_status": "pdf_signature_checked",
       "filename": "synthetic-inspection-report-supplier.pdf",
       "local_path": "data/parser_qa_documents/synthetic-inspection-report-supplier.pdf",
@@ -1400,7 +1368,7 @@
     }
   ],
   "external_effects_created": false,
-  "generated_at": "2026-06-29T10:54:40+00:00",
+  "generated_at": "2026-06-29T11:05:23+00:00",
   "pipeline_policy": {
     "accepted_file_types": [
       "application/pdf"

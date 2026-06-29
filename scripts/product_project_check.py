@@ -339,6 +339,7 @@ def main() -> int:
         PROJECT / "system_review_graph" / "production_document_intelligence_manifest.json",
         PROJECT / "system_review_graph" / "production_document_pipeline.json",
         PROJECT / "system_review_graph" / "production_document_extracted_fields.json",
+        PROJECT / "system_review_graph" / "production_document_parser_qa_matrix.json",
         PROJECT / "system_review_graph" / "production_evidence_claim_gate_manifest.json",
         PROJECT / "system_review_graph" / "production_expert_review_network_manifest.json",
         PROJECT / "system_review_graph" / "production_reviewer_profiles.json",
@@ -775,6 +776,9 @@ def main() -> int:
     )
     production_document_intelligence = json.loads(
         (PROJECT / "system_review_graph" / "production_document_intelligence_manifest.json").read_text(encoding="utf-8")
+    )
+    production_document_parser_qa = json.loads(
+        (PROJECT / "system_review_graph" / "production_document_parser_qa_matrix.json").read_text(encoding="utf-8")
     )
     production_evidence_claim_gate = json.loads(
         (PROJECT / "system_review_graph" / "production_evidence_claim_gate_manifest.json").read_text(encoding="utf-8")
@@ -2078,6 +2082,10 @@ def main() -> int:
         or production_document_intelligence.get("source_route_only_sample_count", 0) < 3
         or production_document_intelligence.get("synthetic_parser_fixture_count") != 11
         or production_document_intelligence.get("extracted_field_count", 0) < 20
+        or production_document_intelligence.get("parser_qa_status") != "production_document_parser_qa_ready_fixture_expectations_checked"
+        or production_document_intelligence.get("parser_qa_fixture_count") != 11
+        or production_document_intelligence.get("parser_qa_passed_count") != 11
+        or production_document_intelligence.get("parser_qa_needs_rule_count") != 0
         or production_document_intelligence.get("real_uploads_enabled") is not False
         or production_document_intelligence.get("malware_scan_proven") is not False
         or production_document_intelligence.get("object_storage_ready") is not False
@@ -2088,6 +2096,16 @@ def main() -> int:
     ):
         print("Product project check: FAIL")
         print("production document intelligence should produce sample-backed draft records with closed security and claim gates")
+        return 1
+    if (
+        production_document_parser_qa.get("status") != "production_document_parser_qa_ready_fixture_expectations_checked"
+        or production_document_parser_qa.get("fixture_count") != 11
+        or production_document_parser_qa.get("passed_count") != 11
+        or production_document_parser_qa.get("needs_rule_count") != 0
+        or any(row.get("claims_opened") is not False for row in production_document_parser_qa.get("rows", []))
+    ):
+        print("Product project check: FAIL")
+        print("production document parser QA matrix must pass all synthetic fixtures without opening claims")
         return 1
     for blocked_claim in ("document_authenticity_verified", "customs_ready", "tariff_confirmed", "cfia_approved", "supplier_verified"):
         if blocked_claim not in production_document_intelligence.get("blocked_claims", []):

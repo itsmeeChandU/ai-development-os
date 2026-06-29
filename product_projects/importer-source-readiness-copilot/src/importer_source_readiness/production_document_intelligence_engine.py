@@ -18,6 +18,7 @@ from .document_processing import TRADE_DOCUMENT_TYPES, triage_pdf_upload
 
 
 STATUS = "production_document_intelligence_engine_ready_local_pipeline_security_gates_closed"
+PARSER_QA_STATUS = "production_document_parser_qa_ready_fixture_expectations_checked"
 
 CBSA_CI1_SOURCE_ID = "cbsa-ci1-canada-customs-invoice"
 CBSA_CI1_URL = "https://www.cbsa-asfc.gc.ca/publications/forms-formulaires/ci1.pdf"
@@ -150,7 +151,7 @@ SYNTHETIC_FIXTURES: tuple[dict[str, Any], ...] = (
         "filename": "synthetic-contract-incoterms.pdf",
         "country_code": "GENERIC",
         "document_class": "contract",
-        "text": "Sales Contract contract number SC-QA-010 buyer: Maple Import Foods Inc supplier: Example Exporter Pvt Ltd product: Organic turmeric powder incoterms: FOB amount USD 12500 date 2026-06-28",
+        "text": "Sales Contract contract number SC-QA-010 buyer: Maple Import Foods Inc supplier: Example Exporter Pvt Ltd product: Organic turmeric powder incoterms: FOB payment terms: 30 percent advance balance before shipment governing terms: Ontario commercial law amount USD 12500 date 2026-06-28",
     },
     {
         "filename": "synthetic-inspection-report-supplier.pdf",
@@ -171,6 +172,15 @@ DOCUMENT_BLOCKED_CLAIMS = (
     "supplier_verified",
     "shipment_approved",
 )
+
+FIELD_ALIASES: dict[str, tuple[str, ...]] = {
+    "origin_country": ("country_mentions",),
+    "destination_country": ("country_mentions",),
+    "product": ("product_description",),
+    "parties": ("parties", "buyer_or_importer", "supplier_or_exporter"),
+    "shipper": ("shipper", "supplier_or_exporter"),
+    "consignee": ("consignee", "buyer_or_importer"),
+}
 
 REQUIRED_TRADE_DOCUMENT_CLASSES: tuple[dict[str, Any], ...] = (
     {
@@ -494,15 +504,16 @@ def _field_records(
     return rows
 
 
+def _field_present(expected: str, fields_by_name: dict[str, Any]) -> bool:
+    names = FIELD_ALIASES.get(expected, (expected,))
+    return any(_is_present(fields_by_name.get(name)) for name in names)
+
+
 def _field_gaps(document_type: dict[str, Any], fields: list[dict[str, Any]]) -> list[str]:
-    present = {row["field_name"] for row in fields}
+    fields_by_name = {row["field_name"]: row.get("extracted_value") for row in fields}
     missing = []
     for expected in document_type.get("expected_fields", []):
-        if expected in {"origin_country", "destination_country"}:
-            if "country_mentions" not in present:
-                missing.append(expected)
-            continue
-        if expected not in present:
+        if not _field_present(expected, fields_by_name):
             missing.append(expected)
     return missing
 
@@ -797,6 +808,60 @@ def _redaction_previews(documents: list[dict[str, Any]], fields: list[dict[str, 
     return previews
 
 
+def _parser_qa_matrix(documents: list[dict[str, Any]], fields: list[dict[str, Any]]) -> dict[str, Any]:
+    fields_by_document: dict[str, list[dict[str, Any]]] = {}
+    for field in fields:
+        fields_by_document.setdefault(field["document_id"], []).append(field)
+    rows = []
+    for document in documents:
+        if document.get("source_kind") != "synthetic_parser_fixture":
+            continue
+        doc_fields = fields_by_document.get(document["document_id"], [])
+        fields_by_name = {row["field_name"]: row.get("extracted_value") for row in doc_fields}
+        expected_fields = list(document.get("classification", {}).get("expected_fields", []))
+        missing_fields = [field for field in expected_fields if not _field_present(field, fields_by_name)]
+        extracted_fields = sorted(
+            field_name
+            for field_name, value in fields_by_name.items()
+            if _is_present(value)
+        )
+        rows.append(
+            {
+                "document_id": document["document_id"],
+                "filename": document["filename"],
+                "country_code": document.get("country_code"),
+                "document_class": document.get("classification", {}).get("type"),
+                "expected_fields": expected_fields,
+                "extracted_fields": extracted_fields,
+                "missing_fields": missing_fields,
+                "status": "parser_qa_passed" if not missing_fields else "parser_qa_needs_parser_rule",
+                "can_support_customer_claims": False,
+                "claims_opened": False,
+                "next_valid_move": (
+                    "Keep this fixture in regression tests."
+                    if not missing_fields
+                    else "Add parser rules or improve the fixture text for the missing fields."
+                ),
+            }
+        )
+    passed = sum(1 for row in rows if row["status"] == "parser_qa_passed")
+    return {
+        "status": PARSER_QA_STATUS,
+        "fixture_count": len(rows),
+        "passed_count": passed,
+        "needs_rule_count": len(rows) - passed,
+        "all_fixtures_passed": passed == len(rows) and bool(rows),
+        "rows": rows,
+        "claims_opened": False,
+        "external_effects_created": False,
+        "proof_boundary": (
+            "Parser QA proves only local extraction behavior on official samples and synthetic filled fixtures. "
+            "It does not prove uploaded document authenticity, completeness, customs readiness, CFIA clearance, "
+            "buyer validation, supplier verification, or shipment approval."
+        ),
+    }
+
+
 def _pipeline_policy(upload_policy: dict[str, Any], ai_policy: dict[str, Any], manual_no_ai: dict[str, Any]) -> dict[str, Any]:
     return {
         "accepted_file_types": upload_policy.get("accepted_file_types", ["application/pdf"]),
@@ -842,6 +907,7 @@ def build_production_document_intelligence_engine(repo_root: Path | None = None)
 
     evidence = _evidence_rows(documents)
     redactions = _redaction_previews(documents, fields)
+    parser_qa = _parser_qa_matrix(documents, fields)
     categories = {row["classification"]["type"] for row in documents}
 
     return {
@@ -854,6 +920,11 @@ def build_production_document_intelligence_engine(repo_root: Path | None = None)
         "extracted_field_count": len(fields),
         "evidence_record_count": len(evidence),
         "redaction_preview_count": len(redactions),
+        "parser_qa_status": parser_qa["status"],
+        "parser_qa_fixture_count": parser_qa["fixture_count"],
+        "parser_qa_passed_count": parser_qa["passed_count"],
+        "parser_qa_needs_rule_count": parser_qa["needs_rule_count"],
+        "parser_qa_all_fixtures_passed": parser_qa["all_fixtures_passed"],
         "pipeline_policy": _pipeline_policy(upload_policy, ai_policy, manual_no_ai),
         "pipeline_stages": list(PIPELINE_STAGES),
         "required_trade_document_classes": list(REQUIRED_TRADE_DOCUMENT_CLASSES),
@@ -906,6 +977,7 @@ def build_production_document_intelligence_engine(repo_root: Path | None = None)
         "extracted_fields": fields,
         "evidence_records": evidence,
         "redaction_previews": redactions,
+        "parser_qa_matrix": parser_qa,
         "ai_analysis_policy": {
             "ai_optional": True,
             "ai_outputs_can_open_gates": False,
@@ -961,6 +1033,7 @@ def render_document_intelligence_markdown(payload: dict[str, Any]) -> str:
     lines.append(f"- Extracted fields: {payload['extracted_field_count']}")
     lines.append(f"- Evidence records: {payload['evidence_record_count']}")
     lines.append(f"- Redaction previews: {payload['redaction_preview_count']}")
+    lines.append(f"- Parser QA fixtures passed: {payload['parser_qa_passed_count']} of {payload['parser_qa_fixture_count']}")
     lines.extend(["", "## Source Records", ""])
     for source in payload["source_records"]:
         lines.append(f"- `{source['source_id']}`: {source['url']}")
@@ -989,6 +1062,7 @@ def write_production_document_intelligence_engine_artifacts(payload: dict[str, A
     manifest_path = graph / "production_document_intelligence_manifest.json"
     pipeline_path = graph / "production_document_pipeline.json"
     fields_path = graph / "production_document_extracted_fields.json"
+    parser_qa_path = graph / "production_document_parser_qa_matrix.json"
     doc_path = docs / "PRODUCTION_DOCUMENT_INTELLIGENCE_ENGINE.md"
     manifest_path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     pipeline_path.write_text(
@@ -1031,10 +1105,12 @@ def write_production_document_intelligence_engine_artifacts(payload: dict[str, A
         + "\n",
         encoding="utf-8",
     )
+    parser_qa_path.write_text(json.dumps(payload["parser_qa_matrix"], indent=2, sort_keys=True) + "\n", encoding="utf-8")
     doc_path.write_text(render_document_intelligence_markdown(payload), encoding="utf-8")
     return {
         "manifest": manifest_path,
         "pipeline": pipeline_path,
         "fields": fields_path,
+        "parser_qa": parser_qa_path,
         "doc": doc_path,
     }

@@ -193,6 +193,7 @@ def main() -> int:
     production_market_readiness_input_ledger = _load_json(ROOT / "system_review_graph" / "production_market_readiness_input_ledger.json")
     production_market_readiness_input_history = _load_json(ROOT / "system_review_graph" / "production_market_readiness_input_history.json")
     production_document_intelligence = _load_json(ROOT / "system_review_graph" / "production_document_intelligence_manifest.json")
+    production_document_parser_qa = _load_json(ROOT / "system_review_graph" / "production_document_parser_qa_matrix.json")
     production_evidence_claim_gate = _load_json(ROOT / "system_review_graph" / "production_evidence_claim_gate_manifest.json")
     production_decision_scoring = _load_json(ROOT / "system_review_graph" / "production_decision_scoring_manifest.json")
     production_ai_copilot = _load_json(ROOT / "system_review_graph" / "production_ai_copilot_manifest.json")
@@ -487,6 +488,7 @@ def main() -> int:
         "system_review_graph/production_document_intelligence_manifest.json",
         "system_review_graph/production_document_pipeline.json",
         "system_review_graph/production_document_extracted_fields.json",
+        "system_review_graph/production_document_parser_qa_matrix.json",
         "system_review_graph/production_evidence_claim_gate_manifest.json",
         "system_review_graph/production_expert_review_network_manifest.json",
         "system_review_graph/production_reviewer_profiles.json",
@@ -1043,6 +1045,22 @@ def main() -> int:
         failures.append("production document intelligence should include one synthetic parser fixture per expected document class")
     if production_document_intelligence.get("extracted_field_count", 0) < 20:
         failures.append("production document intelligence should extract parser QA field rows")
+    if production_document_intelligence.get("parser_qa_status") != "production_document_parser_qa_ready_fixture_expectations_checked":
+        failures.append("production document intelligence should include parser QA status")
+    if production_document_intelligence.get("parser_qa_fixture_count") != 11:
+        failures.append("production document parser QA should cover all eleven synthetic fixtures")
+    if production_document_intelligence.get("parser_qa_passed_count") != 11:
+        failures.append("production document parser QA should pass all eleven synthetic fixtures")
+    if production_document_intelligence.get("parser_qa_needs_rule_count") != 0:
+        failures.append("production document parser QA should have no missing parser rules for synthetic fixtures")
+    if production_document_parser_qa.get("status") != "production_document_parser_qa_ready_fixture_expectations_checked":
+        failures.append("production document parser QA matrix should be generated")
+    if production_document_parser_qa.get("fixture_count") != 11:
+        failures.append("production document parser QA matrix should cover eleven fixtures")
+    if production_document_parser_qa.get("passed_count") != 11 or production_document_parser_qa.get("needs_rule_count") != 0:
+        failures.append("production document parser QA matrix should pass all fixtures")
+    if any(row.get("claims_opened") is not False for row in production_document_parser_qa.get("rows", [])):
+        failures.append("production document parser QA rows must not open claims")
     for key in ("real_uploads_enabled", "malware_scan_proven", "object_storage_ready", "external_effects_created", "claims_opened", "public_launch_ready"):
         if production_document_intelligence.get(key) is not False:
             failures.append(f"production document intelligence expected {key}=false")

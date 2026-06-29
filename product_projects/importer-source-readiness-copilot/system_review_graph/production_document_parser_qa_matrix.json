@@ -1,0 +1,331 @@
+{
+  "all_fixtures_passed": true,
+  "claims_opened": false,
+  "external_effects_created": false,
+  "fixture_count": 11,
+  "needs_rule_count": 0,
+  "passed_count": 11,
+  "proof_boundary": "Parser QA proves only local extraction behavior on official samples and synthetic filled fixtures. It does not prove uploaded document authenticity, completeness, customs readiness, CFIA clearance, buyer validation, supplier verification, or shipment approval.",
+  "rows": [
+    {
+      "can_support_customer_claims": false,
+      "claims_opened": false,
+      "country_code": "CA",
+      "document_class": "commercial_invoice",
+      "document_id": "document:parser-qa-ca-commercial-invoice:synthetic-commercial-invoice-canada-pdf",
+      "expected_fields": [
+        "invoice_or_reference",
+        "buyer_or_importer",
+        "supplier_or_exporter",
+        "origin_country",
+        "destination_country",
+        "amounts"
+      ],
+      "extracted_fields": [
+        "amounts",
+        "buyer_or_importer",
+        "consignee",
+        "country_mentions",
+        "dates",
+        "hs_code",
+        "incoterms",
+        "inspection_date",
+        "invoice_or_reference",
+        "parties",
+        "product_description",
+        "sample_date",
+        "shipper",
+        "supplier_or_exporter"
+      ],
+      "filename": "synthetic-commercial-invoice-canada.pdf",
+      "missing_fields": [],
+      "next_valid_move": "Keep this fixture in regression tests.",
+      "status": "parser_qa_passed"
+    },
+    {
+      "can_support_customer_claims": false,
+      "claims_opened": false,
+      "country_code": "IN",
+      "document_class": "packing_list",
+      "document_id": "document:parser-qa-in-packing-list:synthetic-packing-list-india-export-pdf",
+      "expected_fields": [
+        "quantities",
+        "weights",
+        "packages",
+        "product_description"
+      ],
+      "extracted_fields": [
+        "buyer_or_importer",
+        "consignee",
+        "country_mentions",
+        "packages",
+        "parties",
+        "product_description",
+        "quantities",
+        "shipper",
+        "supplier_or_exporter",
+        "weights"
+      ],
+      "filename": "synthetic-packing-list-india-export.pdf",
+      "missing_fields": [],
+      "next_valid_move": "Keep this fixture in regression tests.",
+      "status": "parser_qa_passed"
+    },
+    {
+      "can_support_customer_claims": false,
+      "claims_opened": false,
+      "country_code": "IN",
+      "document_class": "certificate_of_origin",
+      "document_id": "document:parser-qa-in-certificate-of-origin:synthetic-certificate-of-origin-india-pdf",
+      "expected_fields": [
+        "origin_country",
+        "hs_code",
+        "supplier_or_exporter"
+      ],
+      "extracted_fields": [
+        "buyer_or_importer",
+        "certificate_number",
+        "consignee",
+        "country_mentions",
+        "hs_code",
+        "parties",
+        "shipper",
+        "supplier_or_exporter"
+      ],
+      "filename": "synthetic-certificate-of-origin-india.pdf",
+      "missing_fields": [],
+      "next_valid_move": "Keep this fixture in regression tests.",
+      "status": "parser_qa_passed"
+    },
+    {
+      "can_support_customer_claims": false,
+      "claims_opened": false,
+      "country_code": "VN",
+      "document_class": "bill_of_lading",
+      "document_id": "document:parser-qa-vn-bill-of-lading:synthetic-bill-of-lading-vietnam-pdf",
+      "expected_fields": [
+        "carrier",
+        "port_of_loading",
+        "port_of_discharge",
+        "buyer_or_importer",
+        "supplier_or_exporter"
+      ],
+      "extracted_fields": [
+        "buyer_or_importer",
+        "carrier",
+        "consignee",
+        "country_mentions",
+        "packages",
+        "parties",
+        "port_of_discharge",
+        "port_of_loading",
+        "quantities",
+        "shipper",
+        "supplier_or_exporter"
+      ],
+      "filename": "synthetic-bill-of-lading-vietnam.pdf",
+      "missing_fields": [],
+      "next_valid_move": "Keep this fixture in regression tests.",
+      "status": "parser_qa_passed"
+    },
+    {
+      "can_support_customer_claims": false,
+      "claims_opened": false,
+      "country_code": "GENERIC",
+      "document_class": "airway_bill",
+      "document_id": "document:parser-qa-generic-airway-bill:synthetic-airway-bill-generic-pdf",
+      "expected_fields": [
+        "carrier",
+        "origin_country",
+        "destination_country",
+        "shipper",
+        "consignee"
+      ],
+      "extracted_fields": [
+        "buyer_or_importer",
+        "carrier",
+        "consignee",
+        "country_mentions",
+        "packages",
+        "parties",
+        "product_description",
+        "quantities",
+        "shipper"
+      ],
+      "filename": "synthetic-airway-bill-generic.pdf",
+      "missing_fields": [],
+      "next_valid_move": "Keep this fixture in regression tests.",
+      "status": "parser_qa_passed"
+    },
+    {
+      "can_support_customer_claims": false,
+      "claims_opened": false,
+      "country_code": "VN",
+      "document_class": "product_specification",
+      "document_id": "document:parser-qa-vn-product-specification:synthetic-product-specification-vietnam-seafood-pdf",
+      "expected_fields": [
+        "product_description",
+        "composition",
+        "intended_use",
+        "hs_code"
+      ],
+      "extracted_fields": [
+        "composition",
+        "country_mentions",
+        "hs_code",
+        "intended_use",
+        "product_description",
+        "quantities",
+        "weights"
+      ],
+      "filename": "synthetic-product-specification-vietnam-seafood.pdf",
+      "missing_fields": [],
+      "next_valid_move": "Keep this fixture in regression tests.",
+      "status": "parser_qa_passed"
+    },
+    {
+      "can_support_customer_claims": false,
+      "claims_opened": false,
+      "country_code": "GENERIC",
+      "document_class": "lab_certificate",
+      "document_id": "document:parser-qa-generic-lab-certificate:synthetic-lab-certificate-food-pdf",
+      "expected_fields": [
+        "test_method",
+        "result",
+        "lab_name",
+        "sample_date"
+      ],
+      "extracted_fields": [
+        "certificate_number",
+        "country_mentions",
+        "dates",
+        "inspection_date",
+        "lab_name",
+        "product_description",
+        "result",
+        "sample_date",
+        "test_method"
+      ],
+      "filename": "synthetic-lab-certificate-food.pdf",
+      "missing_fields": [],
+      "next_valid_move": "Keep this fixture in regression tests.",
+      "status": "parser_qa_passed"
+    },
+    {
+      "can_support_customer_claims": false,
+      "claims_opened": false,
+      "country_code": "VN",
+      "document_class": "phytosanitary_or_health_certificate",
+      "document_id": "document:parser-qa-vn-phytosanitary-or-health-certificate:synthetic-health-certificate-vietnam-pdf",
+      "expected_fields": [
+        "issuing_authority",
+        "product",
+        "origin_country",
+        "certificate_number"
+      ],
+      "extracted_fields": [
+        "certificate_number",
+        "country_mentions",
+        "issuing_authority",
+        "parties",
+        "product_description",
+        "shipper",
+        "supplier_or_exporter"
+      ],
+      "filename": "synthetic-health-certificate-vietnam.pdf",
+      "missing_fields": [],
+      "next_valid_move": "Keep this fixture in regression tests.",
+      "status": "parser_qa_passed"
+    },
+    {
+      "can_support_customer_claims": false,
+      "claims_opened": false,
+      "country_code": "CA",
+      "document_class": "purchase_order",
+      "document_id": "document:parser-qa-ca-purchase-order:synthetic-purchase-order-canada-buyer-pdf",
+      "expected_fields": [
+        "buyer_or_importer",
+        "supplier_or_exporter",
+        "product_description",
+        "amounts"
+      ],
+      "extracted_fields": [
+        "amounts",
+        "buyer_or_importer",
+        "consignee",
+        "country_mentions",
+        "packages",
+        "parties",
+        "product_description",
+        "quantities",
+        "shipper",
+        "supplier_or_exporter"
+      ],
+      "filename": "synthetic-purchase-order-canada-buyer.pdf",
+      "missing_fields": [],
+      "next_valid_move": "Keep this fixture in regression tests.",
+      "status": "parser_qa_passed"
+    },
+    {
+      "can_support_customer_claims": false,
+      "claims_opened": false,
+      "country_code": "GENERIC",
+      "document_class": "contract",
+      "document_id": "document:parser-qa-generic-contract:synthetic-contract-incoterms-pdf",
+      "expected_fields": [
+        "parties",
+        "incoterms",
+        "payment_terms",
+        "governing_terms"
+      ],
+      "extracted_fields": [
+        "amounts",
+        "buyer_or_importer",
+        "consignee",
+        "dates",
+        "governing_terms",
+        "incoterms",
+        "inspection_date",
+        "parties",
+        "payment_terms",
+        "product_description",
+        "sample_date",
+        "shipper",
+        "supplier_or_exporter"
+      ],
+      "filename": "synthetic-contract-incoterms.pdf",
+      "missing_fields": [],
+      "next_valid_move": "Keep this fixture in regression tests.",
+      "status": "parser_qa_passed"
+    },
+    {
+      "can_support_customer_claims": false,
+      "claims_opened": false,
+      "country_code": "GENERIC",
+      "document_class": "inspection_report",
+      "document_id": "document:parser-qa-generic-inspection-report:synthetic-inspection-report-supplier-pdf",
+      "expected_fields": [
+        "inspection_body",
+        "inspection_date",
+        "result",
+        "product_description"
+      ],
+      "extracted_fields": [
+        "dates",
+        "inspection_body",
+        "inspection_date",
+        "parties",
+        "product_description",
+        "result",
+        "sample_date",
+        "shipper",
+        "supplier_or_exporter"
+      ],
+      "filename": "synthetic-inspection-report-supplier.pdf",
+      "missing_fields": [],
+      "next_valid_move": "Keep this fixture in regression tests.",
+      "status": "parser_qa_passed"
+    }
+  ],
+  "status": "production_document_parser_qa_ready_fixture_expectations_checked"
+}

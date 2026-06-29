@@ -151,7 +151,7 @@
         },
         {
           "artifact": "production_document_intelligence_manifest.json",
-          "bytes": 142954,
+          "bytes": 220123,
           "exists": true
         }
       ],
@@ -182,7 +182,7 @@
         },
         {
           "artifact": "production_document_intelligence_manifest.json",
-          "bytes": 142954,
+          "bytes": 220123,
           "exists": true
         }
       ],
