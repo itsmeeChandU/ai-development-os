@@ -676,6 +676,9 @@ def main() -> int:
     business_core_doc = (PROJECT / "docs" / "BUSINESS_CORE_LOGIC_CURRENT_STATE.md").read_text(encoding="utf-8")
     functional_doc = (PROJECT / "docs" / "FUNCTIONAL_REQUIREMENTS_CURRENT_STATE.md").read_text(encoding="utf-8")
     non_functional_doc = (PROJECT / "docs" / "NON_FUNCTIONAL_REQUIREMENTS_CURRENT_STATE.md").read_text(encoding="utf-8")
+    operator_app_source = (
+        PROJECT / "src" / "importer_source_readiness" / "operator_app.py"
+    ).read_text(encoding="utf-8")
     transport_readiness = json.loads(
         (PROJECT / "system_review_graph" / "transport_readiness_report.json").read_text(encoding="utf-8")
     )
@@ -2607,6 +2610,15 @@ def main() -> int:
         if api_service_samples.get(name, {}).get("status") != status:
             print("Product project check: FAIL")
             print(f"production API service sample {name} should return {status}")
+            return 1
+    for required_source_text in (
+        "dispatch_production_api_request",
+        "is_production_api_service_route",
+        "_send_production_api_service_response",
+    ):
+        if required_source_text not in operator_app_source:
+            print("Product project check: FAIL")
+            print(f"operator app should delegate production API routes through {required_source_text}")
             return 1
     if (
         production_payments.get("status") != "production_payment_monetization_engine_ready_live_checkout_closed"

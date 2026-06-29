@@ -194,10 +194,11 @@ class OperatorAppTests(unittest.TestCase):
         packet_id = "packet-frozen-tuna-canada-001"
         get_routes = {
             "/api/enterprise-platform": ("status", "production_enterprise_api_platform_ready_local_contracts_external_gates_closed"),
-            f"/api/packets/{packet_id}/scores": ("single_global_readiness_score", False),
+            f"/api/packets/{packet_id}": ("status", "ok_repository_packet_context"),
+            f"/api/packets/{packet_id}/scores": ("status", "ok_repository_scores"),
             f"/api/packets/{packet_id}/blocked-claims": ("claims_opened", False),
-            "/api/api-keys": ("live_keys_issued", False),
-            "/api/webhooks": ("delivery_enabled", False),
+            "/api/api-keys": ("status", "ok_api_key_contracts_no_live_secret"),
+            "/api/webhooks": ("status", "ok_webhook_contracts_delivery_closed"),
         }
         for path, (key, expected) in get_routes.items():
             with self.subTest(path=path):
@@ -205,15 +206,39 @@ class OperatorAppTests(unittest.TestCase):
                     payload = json.loads(response.read().decode("utf-8"))
                 self.assertEqual(response.status, 200)
                 self.assertEqual(payload[key], expected)
+                if path.startswith(f"/api/packets/{packet_id}"):
+                    self.assertFalse(payload["external_effects_created"])
+                    self.assertFalse(payload["claims_opened"])
+
+        with urlopen(f"{self.base_url}/api/packets/{packet_id}/scores", timeout=5) as response:
+            score_payload = json.loads(response.read().decode("utf-8"))
+        self.assertFalse(score_payload["data"]["single_global_score"])
 
         body = urlencode({"packet_id": packet_id, "document_type": "commercial_invoice"}).encode("utf-8")
         request = Request(f"{self.base_url}/api/documents/upload", data=body, method="POST")
-        with urlopen(request, timeout=5) as response:
-            upload_payload = json.loads(response.read().decode("utf-8"))
+        with self.assertRaises(HTTPError) as context:
+            urlopen(request, timeout=5)
+        self.assertEqual(context.exception.code, 423)
+        upload_payload = json.loads(context.exception.read().decode("utf-8"))
+        self.assertEqual(upload_payload["status"], "effect_gate_closed")
+        self.assertFalse(upload_payload["external_effects_created"])
+        self.assertFalse(upload_payload["claims_opened"])
+
+        report_body = urlencode({"packet_id": packet_id}).encode("utf-8")
+        report_request = Request(f"{self.base_url}/api/reports", data=report_body, method="POST")
+        with urlopen(report_request, timeout=5) as response:
+            report_payload = json.loads(response.read().decode("utf-8"))
         self.assertEqual(response.status, 200)
-        self.assertEqual(upload_payload["status"], "document_upload_contract_ready_real_files_blocked")
-        self.assertFalse(upload_payload["real_file_accepted"])
-        self.assertFalse(upload_payload["unrestricted_uploads_enabled"])
+        self.assertEqual(report_payload["status"], "ok_repository_report_context_no_write")
+        self.assertFalse(report_payload["report_written"])
+
+        refresh_request = Request(f"{self.base_url}/api/sources/refresh", data=report_body, method="POST")
+        with self.assertRaises(HTTPError) as refresh_context:
+            urlopen(refresh_request, timeout=5)
+        self.assertEqual(refresh_context.exception.code, 423)
+        refresh_payload = json.loads(refresh_context.exception.read().decode("utf-8"))
+        self.assertEqual(refresh_payload["status"], "effect_gate_closed")
+        self.assertFalse(refresh_payload["external_effects_created"])
 
     def test_market_readiness_page_has_real_input_recorder_and_requires_notice(self) -> None:
         with urlopen(f"{self.base_url}/market-readiness", timeout=5) as response:

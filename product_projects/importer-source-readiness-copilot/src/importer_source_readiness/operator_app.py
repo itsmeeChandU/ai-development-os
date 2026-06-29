@@ -58,6 +58,7 @@ from .product_operations import (
     execute_agent_tool,
     execute_all_local_product_operations,
 )
+from .production_api_service import dispatch_production_api_request, is_production_api_service_route
 from .external_validation_research import write_external_validation_requirements
 from .production_market_readiness_evidence_room import (
     build_production_market_readiness_evidence_room,
@@ -346,6 +347,10 @@ def _actor_from_headers(headers: Any) -> dict[str, Any]:
     token = headers.get("X-ISR-Session") or _parse_cookie(headers.get("Cookie", "")).get("isr_session")
     actor = actor_by_session(token)
     return actor or default_actor()
+
+
+def _session_token_from_headers(headers: Any, actor: dict[str, Any]) -> str | None:
+    return headers.get("X-ISR-Session") or _parse_cookie(headers.get("Cookie", "")).get("isr_session") or actor.get("session_token")
 
 
 def _expert_actor_for_token(token: str, runtime: dict[str, Any]) -> dict[str, Any] | None:
@@ -3219,6 +3224,22 @@ def build_operator_app_handler(repo_root: Path) -> type[BaseHTTPRequestHandler]:
             parsed_fields = parse_qs(raw, keep_blank_values=True)
             return {key: values[-1] for key, values in parsed_fields.items()}
 
+        def _send_production_api_service_response(
+            self,
+            method: str,
+            path: str,
+            actor: dict[str, Any],
+            body: dict[str, Any] | None = None,
+        ) -> None:
+            payload = dispatch_production_api_request(
+                repo_root,
+                method,
+                path,
+                session_token=_session_token_from_headers(self.headers, actor),
+                body=body,
+            )
+            self._send_json(payload, int(payload.get("status_code") or HTTPStatus.OK))
+
         def _append_audit(self, event: dict[str, Any]) -> None:
             path = repo_root / "system_review_graph" / "customer_action_log.json"
             _append_json_list(path, event)
@@ -3812,6 +3833,9 @@ def build_operator_app_handler(repo_root: Path) -> type[BaseHTTPRequestHandler]:
             if path == "/api/product-operations/report":
                 self._send_json(build_product_operations_report(repo_root))
                 return
+            if is_production_api_service_route("GET", path):
+                self._send_production_api_service_response("GET", path, actor)
+                return
             if path in API_ROUTES:
                 self._send_file(API_ROUTES[path], "application/json; charset=utf-8")
                 return
@@ -4084,6 +4108,9 @@ def build_operator_app_handler(repo_root: Path) -> type[BaseHTTPRequestHandler]:
                 self._handle_public_packet_post(path)
                 return
             fields = self._read_fields()
+            if is_production_api_service_route("POST", path):
+                self._send_production_api_service_response("POST", path, actor, fields)
+                return
             now = __import__("datetime").datetime.now(__import__("datetime").timezone.utc).replace(microsecond=0).isoformat()
             if path in {"/api/auth/login", "/api/auth/signup"}:
                 email = str(fields.get("email") or "customer@example.local")
@@ -4568,9 +4595,9 @@ def build_operator_app_handler(repo_root: Path) -> type[BaseHTTPRequestHandler]:
             self.end_headers()
             self.wfile.write(data)
 
-        def _send_json(self, payload: dict[str, Any]) -> None:
+        def _send_json(self, payload: dict[str, Any], status_code: int = HTTPStatus.OK) -> None:
             data = json.dumps(payload, indent=2, sort_keys=True).encode("utf-8")
-            self.send_response(HTTPStatus.OK)
+            self.send_response(status_code)
             self.send_header("Content-Type", "application/json; charset=utf-8")
             self.send_header("Content-Length", str(len(data)))
             self.send_header("Cache-Control", "no-store")

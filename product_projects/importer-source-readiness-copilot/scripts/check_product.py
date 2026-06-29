@@ -206,6 +206,7 @@ def main() -> int:
     business_core_doc = (ROOT / "docs" / "BUSINESS_CORE_LOGIC_CURRENT_STATE.md").read_text(encoding="utf-8")
     functional_doc = (ROOT / "docs" / "FUNCTIONAL_REQUIREMENTS_CURRENT_STATE.md").read_text(encoding="utf-8")
     non_functional_doc = (ROOT / "docs" / "NON_FUNCTIONAL_REQUIREMENTS_CURRENT_STATE.md").read_text(encoding="utf-8")
+    operator_app_source = (ROOT / "src" / "importer_source_readiness" / "operator_app.py").read_text(encoding="utf-8")
     go_live_input_readiness = _load_json(ROOT / "system_review_graph" / "go_live_input_readiness_report.json")
     reviewer_wave_plan = _load_json(ROOT / "system_review_graph" / "reviewer_wave_execution_plan.json")
     private_beta_smoke = _load_json(ROOT / "system_review_graph" / "private_beta_smoke_test_plan.json")
@@ -1545,6 +1546,13 @@ def main() -> int:
     ):
         if production_api_service.get(key) is not False:
             failures.append(f"production API service expected {key}=false")
+    for required_source_text in (
+        "dispatch_production_api_request",
+        "is_production_api_service_route",
+        "_send_production_api_service_response",
+    ):
+        if required_source_text not in operator_app_source:
+            failures.append(f"operator app should delegate production API routes through {required_source_text}")
     if production_payments.get("status") != "production_payment_monetization_engine_ready_live_checkout_closed":
         failures.append("production payment monetization status is incorrect")
     if production_payments.get("pricing_tier_count") != 7:

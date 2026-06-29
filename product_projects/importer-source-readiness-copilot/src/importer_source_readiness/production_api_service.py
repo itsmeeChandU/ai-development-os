@@ -30,6 +30,16 @@ EFFECT_CLOSED_ROUTES = {
     ("POST", "/api/webhooks"),
 }
 
+SERVICE_HANDLED_ROUTES = EFFECT_CLOSED_ROUTES | {
+    ("GET", "/api/packets/:id"),
+    ("GET", "/api/packets/:id/scores"),
+    ("GET", "/api/packets/:id/blocked-claims"),
+    ("GET", "/api/api-keys"),
+    ("GET", "/api/webhooks"),
+    ("POST", "/api/reports"),
+    ("POST", "/api/ai/safe-summary"),
+}
+
 
 def _now() -> str:
     return datetime.now(timezone.utc).replace(microsecond=0).isoformat()
@@ -60,6 +70,13 @@ def _contract(method: str, path: str) -> tuple[dict[str, Any] | None, dict[str, 
         if match:
             return dict(row), match.groupdict()
     return None, {}
+
+
+def is_production_api_service_route(method: str, path: str) -> bool:
+    """Return true when the local app should delegate a route to this service."""
+
+    contract, _params = _contract(method, path)
+    return contract is not None and (method.upper(), contract["path"]) in SERVICE_HANDLED_ROUTES
 
 
 def _permission_row(enterprise: dict[str, Any], method: str, pattern_path: str) -> dict[str, Any]:
